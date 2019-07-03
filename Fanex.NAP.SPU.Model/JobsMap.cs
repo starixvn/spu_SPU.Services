@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FS.Model
+﻿namespace Fanex.NAP.SPU.Model
 {
     using System.Collections.Generic;
     using System.Xml.Serialization;

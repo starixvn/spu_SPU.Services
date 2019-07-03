@@ -5,6 +5,7 @@
     using Quartz;
     using Quartz.Impl;
     using Quartz.Impl.Matchers;
+    using Fanex.NAP.SPU.Model;
 
     [DisallowConcurrentExecution]
     public class JobFS : IJobFS

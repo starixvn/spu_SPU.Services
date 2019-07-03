@@ -6,7 +6,8 @@
     using Fanex.NAP.FS.Service;
     using Fanex.NAP.FS.Model;
     using Fanex.NAP.SPU.ExecutingService.Models;
-    using Fanex.NAP.FS.Core;    
+    using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Model;
 
     public partial class Runner : ServiceBase
     {

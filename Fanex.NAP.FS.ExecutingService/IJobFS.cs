@@ -1,4 +1,4 @@
-﻿using Fanex.NAP.FS.Model;
+﻿using Fanex.NAP.SPU.Model;
 
 namespace Fanex.NAP.SPU.ExecutingService
 {

@@ -18,3 +18,14 @@ D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Model\obj\Debug\Fanex.NAP.FS.
 D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Model\obj\Debug\Fanex.NAP.FS.Model.pdb
 D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Model\bin\Debug\Fanex.NAP.FS.XML.dll
 D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Model\bin\Debug\Fanex.NAP.FS.XML.pdb
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\bin\Debug\Fanex.NAP.FS.Model.dll
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\bin\Debug\Fanex.NAP.FS.Model.pdb
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\bin\Debug\Fanex.NAP.FS.XML.dll
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\bin\Debug\RestSharp.dll
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\bin\Debug\Fanex.NAP.FS.XML.pdb
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\bin\Debug\RestSharp.xml
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\obj\Debug\Fanex.NAP.FS.Model.csprojAssemblyReference.cache
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\obj\Debug\Fanex.NAP.FS.Model.csproj.CoreCompileInputs.cache
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\obj\Debug\Fanex.NAP.FS.Model.csproj.CopyComplete
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\obj\Debug\Fanex.NAP.FS.Model.dll
+D:\Projects\SPU-Services\Fanex.NAP.FS.Model\obj\Debug\Fanex.NAP.FS.Model.pdb

@@ -116,6 +116,9 @@
               },
               "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj": {
                 "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj"
+              },
+              "D:\\Projects\\SPU-Services\\Fanex.NAP.SPU.Model\\Fanex.NAP.SPU.Model.csproj": {
+                "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.SPU.Model\\Fanex.NAP.SPU.Model.csproj"
               }
             }
           }
@@ -363,6 +366,17 @@
         "projectUniqueName": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.XML\\Fanex.NAP.FS.XML.csproj",
         "projectName": "Fanex.NAP.FS.XML",
         "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.XML\\Fanex.NAP.FS.XML.csproj"
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
+    "D:\\Projects\\SPU-Services\\Fanex.NAP.SPU.Model\\Fanex.NAP.SPU.Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\SPU-Services\\Fanex.NAP.SPU.Model\\Fanex.NAP.SPU.Model.csproj",
+        "projectName": "Fanex.NAP.SPU.Model",
+        "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.SPU.Model\\Fanex.NAP.SPU.Model.csproj"
       },
       "frameworks": {
         "net461": {}

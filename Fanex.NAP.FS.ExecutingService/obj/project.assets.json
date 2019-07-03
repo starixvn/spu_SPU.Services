@@ -942,6 +942,15 @@
         "runtime": {
           "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
         }
+      },
+      "Fanex.NAP.SPU.Model/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.SPU.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.SPU.Model.dll": {}
+        }
       }
     },
     ".NETFramework,Version=v4.6.1/win": {
@@ -1812,6 +1821,15 @@
         },
         "runtime": {
           "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        }
+      },
+      "Fanex.NAP.SPU.Model/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.SPU.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.SPU.Model.dll": {}
         }
       }
     },
@@ -2684,6 +2702,15 @@
         "runtime": {
           "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
         }
+      },
+      "Fanex.NAP.SPU.Model/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.SPU.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.SPU.Model.dll": {}
+        }
       }
     },
     ".NETFramework,Version=v4.6.1/win-x86": {
@@ -3554,6 +3581,15 @@
         },
         "runtime": {
           "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        }
+      },
+      "Fanex.NAP.SPU.Model/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.SPU.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.SPU.Model.dll": {}
         }
       }
     }
@@ -4662,6 +4698,11 @@
       "type": "project",
       "path": "../Fanex.NAP.FS.XML/Fanex.NAP.FS.XML.csproj",
       "msbuildProject": "../Fanex.NAP.FS.XML/Fanex.NAP.FS.XML.csproj"
+    },
+    "Fanex.NAP.SPU.Model/1.0.0": {
+      "type": "project",
+      "path": "../Fanex.NAP.SPU.Model/Fanex.NAP.SPU.Model.csproj",
+      "msbuildProject": "../Fanex.NAP.SPU.Model/Fanex.NAP.SPU.Model.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -4675,6 +4716,7 @@
       "Fanex.NAP.FS.Core >= 1.0.0",
       "Fanex.NAP.FS.Model >= 1.0.0",
       "Fanex.NAP.FS.Service >= 1.0.0",
+      "Fanex.NAP.SPU.Model >= 1.0.0",
       "LibLog >= 5.0.6",
       "Microsoft.Web.Infrastructure >= 1.0.0",
       "Quartzmin.SelfHost >= 1.0.3",
@@ -4722,6 +4764,9 @@
             },
             "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj": {
               "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj"
+            },
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.SPU.Model\\Fanex.NAP.SPU.Model.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.SPU.Model\\Fanex.NAP.SPU.Model.csproj"
             }
           }
         }

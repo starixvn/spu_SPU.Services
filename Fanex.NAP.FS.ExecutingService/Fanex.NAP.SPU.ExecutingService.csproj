@@ -104,6 +104,10 @@
       <Project>{e60465e7-1880-4a9e-846c-964af786ce7e}</Project>
       <Name>Fanex.NAP.FS.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
+      <Project>{67fecd9e-043a-4100-bf62-52c1a016b85d}</Project>
+      <Name>Fanex.NAP.SPU.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\JobDataExecuting.xml">

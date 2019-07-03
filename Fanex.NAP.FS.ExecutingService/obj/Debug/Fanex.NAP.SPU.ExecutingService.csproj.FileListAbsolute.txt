@@ -162,3 +162,5 @@ D:\Projects\SPU-Services\Fanex.NAP.FS.ExecutingService\obj\Debug\Fanex.NAP.SPU.E
 D:\Projects\SPU-Services\Fanex.NAP.FS.ExecutingService\obj\Debug\Fanex.NAP.SPU.ExecutingService.csproj.CopyComplete
 D:\Projects\SPU-Services\Fanex.NAP.FS.ExecutingService\obj\Debug\Fanex.NAP.SPU.ExecutingService.exe
 D:\Projects\SPU-Services\Fanex.NAP.FS.ExecutingService\obj\Debug\Fanex.NAP.SPU.ExecutingService.pdb
+D:\Projects\SPU-Services\Fanex.NAP.FS.ExecutingService\bin\Debug\Fanex.NAP.SPU.Model.dll
+D:\Projects\SPU-Services\Fanex.NAP.FS.ExecutingService\bin\Debug\Fanex.NAP.SPU.Model.pdb
