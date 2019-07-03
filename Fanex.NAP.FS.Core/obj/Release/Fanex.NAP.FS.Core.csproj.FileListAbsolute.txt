@@ -1,0 +1,9 @@
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\bin\Release\Fanex.NAP.FS.Core.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\bin\Release\Fanex.NAP.FS.Core.pdb
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\bin\Release\Fanex.NAP.FS.Model.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\bin\Release\Fanex.NAP.FS.Model.pdb
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\obj\Release\Fanex.NAP.FS.Core.csprojAssemblyReference.cache
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\obj\Release\Fanex.NAP.FS.Core.csproj.CoreCompileInputs.cache
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\obj\Release\Fanex.NAP.FS.Core.csproj.CopyComplete
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\obj\Release\Fanex.NAP.FS.Core.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Core\obj\Release\Fanex.NAP.FS.Core.pdb

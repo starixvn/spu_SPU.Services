@@ -1,0 +1,13 @@
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\bin\Debug\Fanex.NAP.FS.Criteria.dll
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\bin\Debug\Fanex.NAP.FS.Criteria.pdb
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\bin\Debug\Dapper.dll
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\bin\Debug\Fanex.Data.dll
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\bin\Debug\Fanex.Data.Repository.dll
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\bin\Debug\System.ValueTuple.dll
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\bin\Debug\Dapper.xml
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\bin\Debug\System.ValueTuple.xml
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\obj\Debug\Fanex.NAP.FS.Criteria.csprojAssemblyReference.cache
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\obj\Debug\Fanex.NAP.FS.Criteria.csproj.CoreCompileInputs.cache
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\obj\Debug\Fanex.NAP.FS.Criteria.csproj.CopyComplete
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\obj\Debug\Fanex.NAP.FS.Criteria.dll
+D:\Projects\SPU.Services\SPU.Services\Fanex.NAP.FS.Criteria\obj\Debug\Fanex.NAP.FS.Criteria.pdb

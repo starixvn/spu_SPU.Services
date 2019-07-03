@@ -1,0 +1,15 @@
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\Fanex.NAP.FS.Queue.dll.config
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\Fanex.NAP.FS.Queue.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\Fanex.NAP.FS.Queue.pdb
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\EasyNetQ.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\Microsoft.Diagnostics.Tracing.EventSource.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\Newtonsoft.Json.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\RabbitMQ.Client.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\Newtonsoft.Json.pdb
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\Newtonsoft.Json.xml
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\bin\Release\RabbitMQ.Client.xml
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\obj\Release\Fanex.NAP.FS.Queue.csprojAssemblyReference.cache
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\obj\Release\Fanex.NAP.FS.Queue.csproj.CoreCompileInputs.cache
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\obj\Release\Fanex.NAP.FS.Queue.csproj.CopyComplete
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\obj\Release\Fanex.NAP.FS.Queue.dll
+D:\Projects\FraudSensor\Fanex.NAP.FS.Queue\obj\Release\Fanex.NAP.FS.Queue.pdb

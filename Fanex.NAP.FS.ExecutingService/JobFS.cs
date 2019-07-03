@@ -1,0 +1,75 @@
+﻿namespace Fanex.NAP.SPU.ExecutingService
+{
+    using Fanex.NAP.SPU.ExecutingService.Jobs;
+    using Fanex.NAP.FS.Model;
+    using Quartz;
+    using Quartz.Impl;
+    using Quartz.Impl.Matchers;
+
+    [DisallowConcurrentExecution]
+    public class JobFS : IJobFS
+    {
+        public IJobDetail Job { get; set; }
+
+        public ITrigger Trigger { get; set; }
+
+        public IScheduler Schedule { get; set; }
+
+        public IJobFS CreateJob(string className, string jobName, string groupName, JobDataExecutingModel jobData)
+        {            
+            var job = JobBuilder.Create(typeof(ExecuteJob))
+               .WithIdentity(jobName, groupName)
+               .UsingJobData("Active", jobData.Active)
+               .UsingJobData("Path", jobData.Path)
+               .Build();
+
+            this.Job = job;
+
+            return this;
+        }       
+
+        public IJobFS CreateTrigger(string triggerName, int interval)
+        {
+            var trigger = TriggerBuilder.Create()
+            .WithIdentity(triggerName)
+            .StartNow()
+            .WithSimpleSchedule(x => x
+                .WithIntervalInSeconds(interval)
+                .RepeatForever())
+            .Build();
+
+            this.Trigger = trigger;
+
+            return this;
+        }        
+
+        public IJobFS CreateSchedule()
+        {
+            this.Schedule = StdSchedulerFactory.GetDefaultScheduler().Result;
+
+            if (this.Job != null && this.Trigger != null)
+            {
+                this.Schedule.ScheduleJob(this.Job, this.Trigger);
+            }            
+
+            return this;
+        }
+
+        public IJobFS CreateListenerJob()
+        {
+            var listener = new ListenerJob(this.Job.Key.Name);
+            IMatcher<JobKey> matcher = KeyMatcher<JobKey>.KeyEquals(this.Job.Key);
+            this.Schedule.ListenerManager.AddJobListener(listener, matcher);
+
+            return this;
+        }
+
+        public void Run()
+        {
+            if (this.Job != null && this.Trigger != null)
+            {
+                this.Schedule.Start();
+            }
+        }
+    }
+}

@@ -1,0 +1,57 @@
+﻿namespace Fanex.NAP.FS.Service
+{
+    using Fanex.Data;
+    using Fanex.Data.ConnectionStringProvider20;
+    using Fanex.NAP.FS.Core;
+    using Fanex.NAP.FS.Model;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Services.Impl;
+    using RestSharp;
+    using System;
+
+    public class BaseService
+    {
+        public int FraudCaseId { get; set; }
+
+        protected IUMControlAdapter maintenanceService;
+
+        public BaseService(FraudCaseId fraudCaseId)
+        {
+            DbSettingProviderManager
+                  .StartNewSession()
+                  .Use(new ConnectionStringProvider20())
+                  .UseDefaultDbSettingProvider(AppSetting.AppData, false)
+                  .Run();
+        
+            FraudCaseId = Convert.ToInt32(fraudCaseId);
+
+            maintenanceService = new UMControlAdapter();
+        }
+
+        public virtual BaseService Precondition() { return this; }
+
+        public virtual BaseService Rule() { return this; }
+
+        public virtual BaseService CleanResult() { return this; }
+
+        public void Report(ReportModel model) {
+
+            var client = new RestClient(AppSetting.HeartBeatUrl);
+            var request = new RestRequest("/api/HealthCheck/beat", Method.POST);
+
+            request.AddQueryParameter("fraudcaseid", this.FraudCaseId.ToString());
+            request.AddQueryParameter("status", model.Status.ToString());
+            request.AddQueryParameter("exception", model.Exception);
+            request.AddQueryParameter("timeout", model.Timeout.ToString());
+            request.AddQueryParameter("isActive", model.IsActive.ToString());
+            request.AddQueryParameter("message", model.Message);
+
+            client.Execute(request);
+        }
+
+        public bool CheckUM()
+        {
+            return maintenanceService.GetUnderMaintenanceTime().IsUnderMaintenanceTime;
+        }
+    }
+}

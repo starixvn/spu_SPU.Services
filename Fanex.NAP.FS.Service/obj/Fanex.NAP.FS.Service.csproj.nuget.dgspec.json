@@ -1,0 +1,258 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj": {}
+  },
+  "projects": {
+    "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj",
+        "projectName": "Fanex.NAP.FS.Core",
+        "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj",
+        "packagesPath": "C:\\Users\\terry.nguyen\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\terry.nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://nuget.nexdev.net/api/v2/": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/cefsharp/": {},
+          "https://www.myget.org/f/aspnetwebstacknightlyrelease/": {}
+        },
+        "frameworks": {
+          "net461": {
+            "projectReferences": {
+              "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj": {
+                "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.2, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[105.2.3, )"
+            },
+            "SonarAnalyzer.CSharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.14.0.8411, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    },
+    "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj",
+        "projectName": "Fanex.NAP.FS.Criteria",
+        "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj"
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
+    "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj",
+        "projectName": "Fanex.NAP.FS.Model",
+        "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj",
+        "frameworks": {
+          "net461": {
+            "projectReferences": {
+              "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.XML\\Fanex.NAP.FS.XML.csproj": {
+                "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.XML\\Fanex.NAP.FS.XML.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
+    "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj",
+        "projectName": "Fanex.NAP.FS.Queue",
+        "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj"
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    },
+    "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj",
+        "projectName": "Fanex.NAP.FS.Service",
+        "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj",
+        "packagesPath": "C:\\Users\\terry.nguyen\\.nuget\\packages\\",
+        "outputPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Service\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "configFilePaths": [
+          "C:\\Users\\terry.nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net461"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://nuget.nexdev.net/api/v2/": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://www.myget.org/F/cefsharp/": {},
+          "https://www.myget.org/f/aspnetwebstacknightlyrelease/": {}
+        },
+        "frameworks": {
+          "net461": {
+            "projectReferences": {
+              "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj": {
+                "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj"
+              },
+              "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj": {
+                "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj"
+              },
+              "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj": {
+                "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj"
+              },
+              "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj": {
+                "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "net461": {
+          "dependencies": {
+            "Dapper": {
+              "target": "Package",
+              "version": "[1.60.6, )"
+            },
+            "EasyNetQ": {
+              "target": "Package",
+              "version": "[3.4.5, )"
+            },
+            "Fanex.Caching": {
+              "target": "Package",
+              "version": "[2.2.1, )"
+            },
+            "Fanex.Data": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Fanex.Data.ConnectionStringProvider20": {
+              "target": "Package",
+              "version": "[3.0.0, )"
+            },
+            "Fanex.Data.Repository": {
+              "target": "Package",
+              "version": "[4.0.1, )"
+            },
+            "Fanex.LetstalkService.Client": {
+              "target": "Package",
+              "version": "[1.0.0.5, )"
+            },
+            "Fanex.Logging": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.7, )"
+            },
+            "Microsoft.Diagnostics.Tracing.EventSource.Redist": {
+              "target": "Package",
+              "version": "[2.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
+            "ONEbook.UM": {
+              "target": "Package",
+              "version": "[2.0.2.9, )"
+            },
+            "RestSharp": {
+              "target": "Package",
+              "version": "[105.2.3, )"
+            },
+            "SonarAnalyzer.CSharp": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.14.0.8411, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
+            },
+            "System.Security.Principal.Windows": {
+              "target": "Package",
+              "version": "[4.5.1, )"
+            },
+            "UMControllerLibrary": {
+              "target": "Package",
+              "version": "[1.0.1872.836, )"
+            }
+          }
+        }
+      },
+      "runtimes": {
+        "win": {
+          "#import": []
+        },
+        "win-x64": {
+          "#import": []
+        },
+        "win-x86": {
+          "#import": []
+        }
+      }
+    },
+    "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.XML\\Fanex.NAP.FS.XML.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.XML\\Fanex.NAP.FS.XML.csproj",
+        "projectName": "Fanex.NAP.FS.XML",
+        "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.XML\\Fanex.NAP.FS.XML.csproj"
+      },
+      "frameworks": {
+        "net461": {}
+      }
+    }
+  }
+}
