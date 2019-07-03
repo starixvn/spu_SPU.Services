@@ -1,12 +1,13 @@
 ﻿namespace Fanex.NAP.SPU.ExecutingService
 {
     using Fanex.Logging;
-    using Fanex.NAP.FS.Core;
-    using Fanex.NAP.FS.Model;
-    using Fanex.NAP.FS.Service;
-    using Fanex.NAP.SPU.Model;
     using System;
-    using System.ServiceProcess;
+    using System.ServiceProcess;    
+    using Fanex.NAP.FS.Service;
+    using Fanex.NAP.FS.Model;
+    using Fanex.NAP.SPU.ExecutingService.Models;
+    using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Model;
 
     public partial class Runner : ServiceBase
     {
@@ -50,7 +51,7 @@
         {
             var fraudCaseService = new FraudCaseService();
 
-            var fraudCases = fraudCaseService.GetFraudCase<FraudCase>(null, 1, AppSetting.Environment);
+            var fraudCases = fraudCaseService.GetFraudCase<FS.Model.FraudCase>(null, 1, AppSetting.Environment);
 
             foreach (var fraudCase in fraudCases)
             {
