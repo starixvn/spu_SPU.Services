@@ -1,0 +1,5 @@
+D:\Projects\SPU-Services\Fanex.NAP.FS.XML\bin\Debug\Fanex.NAP.FS.XML.dll
+D:\Projects\SPU-Services\Fanex.NAP.FS.XML\bin\Debug\Fanex.NAP.FS.XML.pdb
+D:\Projects\SPU-Services\Fanex.NAP.FS.XML\obj\Debug\Fanex.NAP.FS.XML.csproj.CoreCompileInputs.cache
+D:\Projects\SPU-Services\Fanex.NAP.FS.XML\obj\Debug\Fanex.NAP.FS.XML.dll
+D:\Projects\SPU-Services\Fanex.NAP.FS.XML\obj\Debug\Fanex.NAP.FS.XML.pdb

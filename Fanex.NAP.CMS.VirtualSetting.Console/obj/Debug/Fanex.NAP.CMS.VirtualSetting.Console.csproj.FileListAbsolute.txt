@@ -1,0 +1,6 @@
+D:\Projects\SPU-Services\Fanex.NAP.CMS.VirtualSetting.Console\bin\Debug\Fanex.NAP.CMS.VirtualSetting.Console.exe.config
+D:\Projects\SPU-Services\Fanex.NAP.CMS.VirtualSetting.Console\bin\Debug\Fanex.NAP.CMS.VirtualSetting.Console.exe
+D:\Projects\SPU-Services\Fanex.NAP.CMS.VirtualSetting.Console\bin\Debug\Fanex.NAP.CMS.VirtualSetting.Console.pdb
+D:\Projects\SPU-Services\Fanex.NAP.CMS.VirtualSetting.Console\obj\Debug\Fanex.NAP.CMS.VirtualSetting.Console.csproj.CoreCompileInputs.cache
+D:\Projects\SPU-Services\Fanex.NAP.CMS.VirtualSetting.Console\obj\Debug\Fanex.NAP.CMS.VirtualSetting.Console.exe
+D:\Projects\SPU-Services\Fanex.NAP.CMS.VirtualSetting.Console\obj\Debug\Fanex.NAP.CMS.VirtualSetting.Console.pdb
