@@ -1,0 +1,2637 @@
+{
+  "version": 3,
+  "targets": {
+    ".NETFramework,Version=v4.6.1": {
+      "Dapper/1.60.6": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Data",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net451/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Dapper.dll": {}
+        }
+      },
+      "EasyNetQ/3.4.5": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.2",
+          "RabbitMQ.Client": "5.1.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Configuration"
+        ],
+        "compile": {
+          "lib/net451/EasyNetQ.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EasyNetQ.dll": {}
+        }
+      },
+      "Fanex.Caching/2.2.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Fanex.Caching.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Caching.dll": {}
+        }
+      },
+      "Fanex.Data/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "1.50.5"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.Security",
+          "System.Transactions"
+        ],
+        "compile": {
+          "lib/net461/Fanex.Data.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.dll": {}
+        }
+      },
+      "Fanex.Data.ConnectionStringProvider20/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Data": "3.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.Security"
+        ],
+        "compile": {
+          "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
+        }
+      },
+      "Fanex.Data.Repository/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Data": "4.0.1",
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Fanex.Data.Repository.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.Repository.dll": {}
+        }
+      },
+      "Fanex.File/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/IBCFile.dll": {}
+        },
+        "runtime": {
+          "lib/net40/IBCFile.dll": {}
+        }
+      },
+      "Fanex.LetstalkService.Client/1.0.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.3",
+          "Newtonsoft.Json": "10.0.2"
+        },
+        "compile": {
+          "lib/Fanex.LetstalkService.Client.dll": {},
+          "lib/Fanex.LetstalkService.Core.dll": {}
+        },
+        "runtime": {
+          "lib/Fanex.LetstalkService.Client.dll": {},
+          "lib/Fanex.LetstalkService.Core.dll": {}
+        }
+      },
+      "Fanex.Logging/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net461/Fanex.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Logging.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Mvc/5.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
+          "Microsoft.AspNet.WebPages": "[3.2.7, 3.3.0)"
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.7": {
+        "type": "package",
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        }
+      },
+      "Microsoft.Diagnostics.Tracing.EventSource.Redist/2.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
+      "Newtonsoft.Json/12.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "ONEbook.UM/2.0.2.9": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Logging": "1.0.0",
+          "RestSharp": "105.2.3"
+        },
+        "compile": {
+          "lib/net40/ONEbook.UM.dll": {}
+        },
+        "runtime": {
+          "lib/net40/ONEbook.UM.dll": {}
+        }
+      },
+      "RabbitMQ.Client/5.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Diagnostics.Tracing.EventSource.Redist": "1.1.28"
+        },
+        "compile": {
+          "lib/net451/RabbitMQ.Client.dll": {}
+        },
+        "runtime": {
+          "lib/net451/RabbitMQ.Client.dll": {}
+        }
+      },
+      "RestSharp/105.2.3": {
+        "type": "package",
+        "compile": {
+          "lib/net46/RestSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net46/RestSharp.dll": {}
+        }
+      },
+      "SonarAnalyzer.CSharp/7.14.0.8411": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ]
+      },
+      "SPSRemoting/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/SPSRemoting.dll": {}
+        },
+        "runtime": {
+          "lib/net40/SPSRemoting.dll": {}
+        }
+      },
+      "System.Net.Http/4.3.4": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.X509Certificates": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Net.Http.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Net.Http.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.6/System.Net.Http.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net46/System.Net.Http.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Security.Cryptography.Algorithms/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Primitives": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.Algorithms.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Cryptography.Algorithms.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/osx/lib/netstandard1.6/System.Security.Cryptography.Algorithms.dll": {
+            "assetType": "runtime",
+            "rid": "osx"
+          },
+          "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.Algorithms.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net461/System.Security.Cryptography.Algorithms.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Security.Cryptography.Encoding/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Encoding.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Encoding.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.3/System.Security.Cryptography.Encoding.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net46/System.Security.Cryptography.Encoding.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Security.Cryptography.Primitives/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Primitives.dll": {}
+        }
+      },
+      "System.Security.Cryptography.X509Certificates/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.Encoding": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.X509Certificates.dll": {
+            "assetType": "runtime",
+            "rid": "unix"
+          },
+          "runtimes/win/lib/net461/System.Security.Cryptography.X509Certificates.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.Security.Principal.Windows/4.5.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Principal.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Principal.Windows.dll": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win/lib/net461/System.Security.Principal.Windows.dll": {
+            "assetType": "runtime",
+            "rid": "win"
+          }
+        }
+      },
+      "System.ValueTuple/4.5.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.ValueTuple.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.ValueTuple.dll": {}
+        }
+      },
+      "UMControllerLibrary/1.0.1872.836": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.File": "1.0.0",
+          "SPSRemoting": "1.0.0"
+        },
+        "compile": {
+          "lib/net40/UMControllerLibrary.dll": {}
+        },
+        "runtime": {
+          "lib/net40/UMControllerLibrary.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6.1",
+        "dependencies": {
+          "Fanex.NAP.FS.Model": "1.0.0",
+          "Newtonsoft.Json": "12.0.2",
+          "RestSharp": "105.2.3"
+        },
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Core.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Criteria/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Criteria.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Criteria.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Model/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Fanex.NAP.FS.XML": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Model.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Queue/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Queue.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Queue.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.XML/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6.1/win": {
+      "Dapper/1.60.6": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Data",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net451/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Dapper.dll": {}
+        }
+      },
+      "EasyNetQ/3.4.5": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.2",
+          "RabbitMQ.Client": "5.1.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Configuration"
+        ],
+        "compile": {
+          "lib/net451/EasyNetQ.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EasyNetQ.dll": {}
+        }
+      },
+      "Fanex.Caching/2.2.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Fanex.Caching.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Caching.dll": {}
+        }
+      },
+      "Fanex.Data/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "1.50.5"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.Security",
+          "System.Transactions"
+        ],
+        "compile": {
+          "lib/net461/Fanex.Data.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.dll": {}
+        }
+      },
+      "Fanex.Data.ConnectionStringProvider20/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Data": "3.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.Security"
+        ],
+        "compile": {
+          "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
+        }
+      },
+      "Fanex.Data.Repository/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Data": "4.0.1",
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Fanex.Data.Repository.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.Repository.dll": {}
+        }
+      },
+      "Fanex.File/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/IBCFile.dll": {}
+        },
+        "runtime": {
+          "lib/net40/IBCFile.dll": {}
+        }
+      },
+      "Fanex.LetstalkService.Client/1.0.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.3",
+          "Newtonsoft.Json": "10.0.2"
+        },
+        "compile": {
+          "lib/Fanex.LetstalkService.Client.dll": {},
+          "lib/Fanex.LetstalkService.Core.dll": {}
+        },
+        "runtime": {
+          "lib/Fanex.LetstalkService.Client.dll": {},
+          "lib/Fanex.LetstalkService.Core.dll": {}
+        }
+      },
+      "Fanex.Logging/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net461/Fanex.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Logging.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Mvc/5.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
+          "Microsoft.AspNet.WebPages": "[3.2.7, 3.3.0)"
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.7": {
+        "type": "package",
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        }
+      },
+      "Microsoft.Diagnostics.Tracing.EventSource.Redist/2.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        },
+        "runtime": {
+          "runtimes/win/lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
+      "Newtonsoft.Json/12.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "ONEbook.UM/2.0.2.9": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Logging": "1.0.0",
+          "RestSharp": "105.2.3"
+        },
+        "compile": {
+          "lib/net40/ONEbook.UM.dll": {}
+        },
+        "runtime": {
+          "lib/net40/ONEbook.UM.dll": {}
+        }
+      },
+      "RabbitMQ.Client/5.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Diagnostics.Tracing.EventSource.Redist": "1.1.28"
+        },
+        "compile": {
+          "lib/net451/RabbitMQ.Client.dll": {}
+        },
+        "runtime": {
+          "lib/net451/RabbitMQ.Client.dll": {}
+        }
+      },
+      "RestSharp/105.2.3": {
+        "type": "package",
+        "compile": {
+          "lib/net46/RestSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net46/RestSharp.dll": {}
+        }
+      },
+      "SonarAnalyzer.CSharp/7.14.0.8411": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ]
+      },
+      "SPSRemoting/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/SPSRemoting.dll": {}
+        },
+        "runtime": {
+          "lib/net40/SPSRemoting.dll": {}
+        }
+      },
+      "System.Net.Http/4.3.4": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.X509Certificates": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Net.Http.dll": {}
+        },
+        "runtime": {
+          "runtimes/win/lib/net46/System.Net.Http.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Algorithms/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Primitives": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.Algorithms.dll": {}
+        },
+        "runtime": {
+          "runtimes/win/lib/net461/System.Security.Cryptography.Algorithms.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Encoding/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Encoding.dll": {}
+        },
+        "runtime": {
+          "runtimes/win/lib/net46/System.Security.Cryptography.Encoding.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Primitives/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Primitives.dll": {}
+        }
+      },
+      "System.Security.Cryptography.X509Certificates/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.Encoding": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        },
+        "runtime": {
+          "runtimes/win/lib/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        }
+      },
+      "System.Security.Principal.Windows/4.5.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Principal.Windows.dll": {}
+        },
+        "runtime": {
+          "runtimes/win/lib/net461/System.Security.Principal.Windows.dll": {}
+        }
+      },
+      "System.ValueTuple/4.5.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.ValueTuple.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.ValueTuple.dll": {}
+        }
+      },
+      "UMControllerLibrary/1.0.1872.836": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.File": "1.0.0",
+          "SPSRemoting": "1.0.0"
+        },
+        "compile": {
+          "lib/net40/UMControllerLibrary.dll": {}
+        },
+        "runtime": {
+          "lib/net40/UMControllerLibrary.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6.1",
+        "dependencies": {
+          "Fanex.NAP.FS.Model": "1.0.0",
+          "Newtonsoft.Json": "12.0.2",
+          "RestSharp": "105.2.3"
+        },
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Core.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Criteria/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Criteria.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Criteria.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Model/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Fanex.NAP.FS.XML": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Model.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Queue/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Queue.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Queue.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.XML/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6.1/win-x64": {
+      "Dapper/1.60.6": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Data",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net451/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Dapper.dll": {}
+        }
+      },
+      "EasyNetQ/3.4.5": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.2",
+          "RabbitMQ.Client": "5.1.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Configuration"
+        ],
+        "compile": {
+          "lib/net451/EasyNetQ.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EasyNetQ.dll": {}
+        }
+      },
+      "Fanex.Caching/2.2.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Fanex.Caching.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Caching.dll": {}
+        }
+      },
+      "Fanex.Data/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "1.50.5"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.Security",
+          "System.Transactions"
+        ],
+        "compile": {
+          "lib/net461/Fanex.Data.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.dll": {}
+        }
+      },
+      "Fanex.Data.ConnectionStringProvider20/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Data": "3.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.Security"
+        ],
+        "compile": {
+          "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
+        }
+      },
+      "Fanex.Data.Repository/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Data": "4.0.1",
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Fanex.Data.Repository.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.Repository.dll": {}
+        }
+      },
+      "Fanex.File/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/IBCFile.dll": {}
+        },
+        "runtime": {
+          "lib/net40/IBCFile.dll": {}
+        }
+      },
+      "Fanex.LetstalkService.Client/1.0.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.3",
+          "Newtonsoft.Json": "10.0.2"
+        },
+        "compile": {
+          "lib/Fanex.LetstalkService.Client.dll": {},
+          "lib/Fanex.LetstalkService.Core.dll": {}
+        },
+        "runtime": {
+          "lib/Fanex.LetstalkService.Client.dll": {},
+          "lib/Fanex.LetstalkService.Core.dll": {}
+        }
+      },
+      "Fanex.Logging/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net461/Fanex.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Logging.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Mvc/5.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
+          "Microsoft.AspNet.WebPages": "[3.2.7, 3.3.0)"
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.7": {
+        "type": "package",
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        }
+      },
+      "Microsoft.Diagnostics.Tracing.EventSource.Redist/2.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
+      "Newtonsoft.Json/12.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "ONEbook.UM/2.0.2.9": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Logging": "1.0.0",
+          "RestSharp": "105.2.3"
+        },
+        "compile": {
+          "lib/net40/ONEbook.UM.dll": {}
+        },
+        "runtime": {
+          "lib/net40/ONEbook.UM.dll": {}
+        }
+      },
+      "RabbitMQ.Client/5.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Diagnostics.Tracing.EventSource.Redist": "1.1.28"
+        },
+        "compile": {
+          "lib/net451/RabbitMQ.Client.dll": {}
+        },
+        "runtime": {
+          "lib/net451/RabbitMQ.Client.dll": {}
+        }
+      },
+      "RestSharp/105.2.3": {
+        "type": "package",
+        "compile": {
+          "lib/net46/RestSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net46/RestSharp.dll": {}
+        }
+      },
+      "SonarAnalyzer.CSharp/7.14.0.8411": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ]
+      },
+      "SPSRemoting/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/SPSRemoting.dll": {}
+        },
+        "runtime": {
+          "lib/net40/SPSRemoting.dll": {}
+        }
+      },
+      "System.Net.Http/4.3.4": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.X509Certificates": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Net.Http.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Net.Http.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Algorithms/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Primitives": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.Algorithms.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Cryptography.Algorithms.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Encoding/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Encoding.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Encoding.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Primitives/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Primitives.dll": {}
+        }
+      },
+      "System.Security.Cryptography.X509Certificates/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.Encoding": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        }
+      },
+      "System.Security.Principal.Windows/4.5.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Principal.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Principal.Windows.dll": {}
+        }
+      },
+      "System.ValueTuple/4.5.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.ValueTuple.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.ValueTuple.dll": {}
+        }
+      },
+      "UMControllerLibrary/1.0.1872.836": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.File": "1.0.0",
+          "SPSRemoting": "1.0.0"
+        },
+        "compile": {
+          "lib/net40/UMControllerLibrary.dll": {}
+        },
+        "runtime": {
+          "lib/net40/UMControllerLibrary.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6.1",
+        "dependencies": {
+          "Fanex.NAP.FS.Model": "1.0.0",
+          "Newtonsoft.Json": "12.0.2",
+          "RestSharp": "105.2.3"
+        },
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Core.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Criteria/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Criteria.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Criteria.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Model/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Fanex.NAP.FS.XML": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Model.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Queue/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Queue.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Queue.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.XML/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        }
+      }
+    },
+    ".NETFramework,Version=v4.6.1/win-x86": {
+      "Dapper/1.60.6": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "Microsoft.CSharp",
+          "System",
+          "System.Data",
+          "System.Xml",
+          "System.Xml.Linq"
+        ],
+        "compile": {
+          "lib/net451/Dapper.dll": {}
+        },
+        "runtime": {
+          "lib/net451/Dapper.dll": {}
+        }
+      },
+      "EasyNetQ/3.4.5": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "10.0.2",
+          "RabbitMQ.Client": "5.1.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Configuration"
+        ],
+        "compile": {
+          "lib/net451/EasyNetQ.dll": {}
+        },
+        "runtime": {
+          "lib/net451/EasyNetQ.dll": {}
+        }
+      },
+      "Fanex.Caching/2.2.1": {
+        "type": "package",
+        "dependencies": {
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Fanex.Caching.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Caching.dll": {}
+        }
+      },
+      "Fanex.Data/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Dapper": "1.50.5"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.Security",
+          "System.Transactions"
+        ],
+        "compile": {
+          "lib/net461/Fanex.Data.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.dll": {}
+        }
+      },
+      "Fanex.Data.ConnectionStringProvider20/3.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Data": "3.0.0"
+        },
+        "frameworkAssemblies": [
+          "System.Configuration",
+          "System.Security"
+        ],
+        "compile": {
+          "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
+        }
+      },
+      "Fanex.Data.Repository/4.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Data": "4.0.1",
+          "System.ValueTuple": "4.5.0"
+        },
+        "compile": {
+          "lib/net461/Fanex.Data.Repository.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Data.Repository.dll": {}
+        }
+      },
+      "Fanex.File/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/IBCFile.dll": {}
+        },
+        "runtime": {
+          "lib/net40/IBCFile.dll": {}
+        }
+      },
+      "Fanex.LetstalkService.Client/1.0.0.5": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.WebApi.Client": "5.2.3",
+          "Newtonsoft.Json": "10.0.2"
+        },
+        "compile": {
+          "lib/Fanex.LetstalkService.Client.dll": {},
+          "lib/Fanex.LetstalkService.Core.dll": {}
+        },
+        "runtime": {
+          "lib/Fanex.LetstalkService.Client.dll": {},
+          "lib/Fanex.LetstalkService.Core.dll": {}
+        }
+      },
+      "Fanex.Logging/2.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net461/Fanex.Logging.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Fanex.Logging.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Mvc/5.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
+          "Microsoft.AspNet.WebPages": "[3.2.7, 3.3.0)"
+        },
+        "compile": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Mvc.dll": {}
+        }
+      },
+      "Microsoft.AspNet.Razor/3.2.7": {
+        "type": "package",
+        "compile": {
+          "lib/net45/System.Web.Razor.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Razor.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebApi.Client/5.2.3": {
+        "type": "package",
+        "dependencies": {
+          "Newtonsoft.Json": "6.0.4"
+        },
+        "frameworkAssemblies": [
+          "System.Net.Http"
+        ],
+        "compile": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Net.Http.Formatting.dll": {}
+        }
+      },
+      "Microsoft.AspNet.WebPages/3.2.7": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.AspNet.Razor": "[3.2.7, 3.3.0)",
+          "Microsoft.Web.Infrastructure": "1.0.0"
+        },
+        "compile": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        },
+        "runtime": {
+          "lib/net45/System.Web.Helpers.dll": {},
+          "lib/net45/System.Web.WebPages.Deployment.dll": {},
+          "lib/net45/System.Web.WebPages.Razor.dll": {},
+          "lib/net45/System.Web.WebPages.dll": {}
+        }
+      },
+      "Microsoft.Diagnostics.Tracing.EventSource.Redist/2.0.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        },
+        "runtime": {
+          "lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll": {}
+        }
+      },
+      "Microsoft.Web.Infrastructure/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        },
+        "runtime": {
+          "lib/net40/Microsoft.Web.Infrastructure.dll": {}
+        }
+      },
+      "Newtonsoft.Json/12.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        },
+        "runtime": {
+          "lib/net45/Newtonsoft.Json.dll": {}
+        }
+      },
+      "ONEbook.UM/2.0.2.9": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.Logging": "1.0.0",
+          "RestSharp": "105.2.3"
+        },
+        "compile": {
+          "lib/net40/ONEbook.UM.dll": {}
+        },
+        "runtime": {
+          "lib/net40/ONEbook.UM.dll": {}
+        }
+      },
+      "RabbitMQ.Client/5.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Diagnostics.Tracing.EventSource.Redist": "1.1.28"
+        },
+        "compile": {
+          "lib/net451/RabbitMQ.Client.dll": {}
+        },
+        "runtime": {
+          "lib/net451/RabbitMQ.Client.dll": {}
+        }
+      },
+      "RestSharp/105.2.3": {
+        "type": "package",
+        "compile": {
+          "lib/net46/RestSharp.dll": {}
+        },
+        "runtime": {
+          "lib/net46/RestSharp.dll": {}
+        }
+      },
+      "SonarAnalyzer.CSharp/7.14.0.8411": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System"
+        ]
+      },
+      "SPSRemoting/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net40/SPSRemoting.dll": {}
+        },
+        "runtime": {
+          "lib/net40/SPSRemoting.dll": {}
+        }
+      },
+      "System.Net.Http/4.3.4": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.X509Certificates": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Net.Http.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Net.Http.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Algorithms/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Primitives": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.Algorithms.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Cryptography.Algorithms.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Encoding/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Encoding.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Encoding.dll": {}
+        }
+      },
+      "System.Security.Cryptography.Primitives/4.3.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net46/System.Security.Cryptography.Primitives.dll": {}
+        },
+        "runtime": {
+          "lib/net46/System.Security.Cryptography.Primitives.dll": {}
+        }
+      },
+      "System.Security.Cryptography.X509Certificates/4.3.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Security.Cryptography.Algorithms": "4.3.0",
+          "System.Security.Cryptography.Encoding": "4.3.0"
+        },
+        "frameworkAssemblies": [
+          "System",
+          "System.Core",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Cryptography.X509Certificates.dll": {}
+        }
+      },
+      "System.Security.Principal.Windows/4.5.1": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.Security.Principal.Windows.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.Security.Principal.Windows.dll": {}
+        }
+      },
+      "System.ValueTuple/4.5.0": {
+        "type": "package",
+        "frameworkAssemblies": [
+          "System",
+          "mscorlib"
+        ],
+        "compile": {
+          "ref/net461/System.ValueTuple.dll": {}
+        },
+        "runtime": {
+          "lib/net461/System.ValueTuple.dll": {}
+        }
+      },
+      "UMControllerLibrary/1.0.1872.836": {
+        "type": "package",
+        "dependencies": {
+          "Fanex.File": "1.0.0",
+          "SPSRemoting": "1.0.0"
+        },
+        "compile": {
+          "lib/net40/UMControllerLibrary.dll": {}
+        },
+        "runtime": {
+          "lib/net40/UMControllerLibrary.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Core/1.0.0": {
+        "type": "project",
+        "framework": ".NETFramework,Version=v4.6.1",
+        "dependencies": {
+          "Fanex.NAP.FS.Model": "1.0.0",
+          "Newtonsoft.Json": "12.0.2",
+          "RestSharp": "105.2.3"
+        },
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Core.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Core.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Criteria/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Criteria.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Criteria.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Model/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "Fanex.NAP.FS.XML": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Model.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Model.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.Queue/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.Queue.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.Queue.dll": {}
+        }
+      },
+      "Fanex.NAP.FS.XML/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fanex.NAP.FS.XML.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Dapper/1.60.6": {
+      "sha512": "mmnJNhKMeF2KhvVXDoVQlFxre8aJAo71YBJrKqFlvuqzYC2QiXUq94/GCDBJzU7paq4GqpkV2glw3308TcGibw==",
+      "type": "package",
+      "path": "dapper/1.60.6",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "dapper.1.60.6.nupkg.sha512",
+        "dapper.nuspec",
+        "lib/net451/Dapper.dll",
+        "lib/net451/Dapper.xml",
+        "lib/netstandard1.3/Dapper.dll",
+        "lib/netstandard1.3/Dapper.xml",
+        "lib/netstandard2.0/Dapper.dll",
+        "lib/netstandard2.0/Dapper.xml"
+      ]
+    },
+    "EasyNetQ/3.4.5": {
+      "sha512": "UPRYY0Odd09HIYPP+L7BgBeraaWSLwZL8esZxCtxkHuqxPOMgkGXNyb+tLDTsAzUvVuR0n2iN0ulcLePcmp+dw==",
+      "type": "package",
+      "path": "easynetq/3.4.5",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "easynetq.3.4.5.nupkg.sha512",
+        "easynetq.nuspec",
+        "lib/net451/EasyNetQ.dll",
+        "lib/netstandard2.0/EasyNetQ.dll"
+      ]
+    },
+    "Fanex.Caching/2.2.1": {
+      "sha512": "PPJAaqA7dBPkrjUBYytVZ27ZLpYlprHpIc8zzA8+mCbMPlEhQG7mSHzOmmESPa1Wm9/gvRsw4HES+KwklTzS8w==",
+      "type": "package",
+      "path": "fanex.caching/2.2.1",
+      "files": [
+        ".nupkg.metadata",
+        "fanex.caching.2.2.1.nupkg.sha512",
+        "fanex.caching.nuspec",
+        "lib/net461/Fanex.Caching.dll",
+        "lib/netstandard2.0/Fanex.Caching.dll"
+      ]
+    },
+    "Fanex.Data/3.1.0": {
+      "sha512": "BnW3wn5xXpGCu/OMggVGJMd22WoWyTbfYQxCeuVaCRWSPKnwPN/0M3g5lPB4WfhY8jgXfqdFpqbZ0TJoLYfcBw==",
+      "type": "package",
+      "path": "fanex.data/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        "fanex.data.3.1.0.nupkg.sha512",
+        "fanex.data.nuspec",
+        "lib/net461/Fanex.Data.dll",
+        "lib/netcoreapp2.1/Fanex.Data.dll"
+      ]
+    },
+    "Fanex.Data.ConnectionStringProvider20/3.0.0": {
+      "sha512": "1PMAngeuWrBQzv9CkEix5HRKV1JzF7s07ILC7wqNC4T+7SPHwWMrdYTqWMQLmycjGHE+qC663PBIiCTG5d6MMg==",
+      "type": "package",
+      "path": "fanex.data.connectionstringprovider20/3.0.0",
+      "files": [
+        ".nupkg.metadata",
+        "fanex.data.connectionstringprovider20.3.0.0.nupkg.sha512",
+        "fanex.data.connectionstringprovider20.nuspec",
+        "lib/net461/Fanex.Data.ConnectionStringProvider20.dll",
+        "lib/netcoreapp2.1/Fanex.Data.ConnectionStringProvider20.dll"
+      ]
+    },
+    "Fanex.Data.Repository/4.0.1": {
+      "sha512": "RirNpyTdUqs0mE0ZyKpxazR2WrHf4Y+1VzD4e9ccoJXln3QPRwBx22N/cKTloCPfGfNbyn8ui636ag8J67z65Q==",
+      "type": "package",
+      "path": "fanex.data.repository/4.0.1",
+      "files": [
+        ".nupkg.metadata",
+        "fanex.data.repository.4.0.1.nupkg.sha512",
+        "fanex.data.repository.nuspec",
+        "lib/net461/Fanex.Data.Repository.dll",
+        "lib/netstandard2.0/Fanex.Data.Repository.dll"
+      ]
+    },
+    "Fanex.File/1.0.0": {
+      "sha512": "HtbVa1ho0M5N5T0rUjIrjDSouKArFlJvcs29b7eQ2ALgS1Mxu5cOtblSgH0p0AePfrWgRQN7eJqHJPO9a/d4oA==",
+      "type": "package",
+      "path": "fanex.file/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        "fanex.file.1.0.0.nupkg.sha512",
+        "fanex.file.nuspec",
+        "lib/net40/IBCFile.dll"
+      ]
+    },
+    "Fanex.LetstalkService.Client/1.0.0.5": {
+      "sha512": "IXtVY/nW6n1U3NZdf9UCXz+7JHOnTdfuAcmpiqBRUtpNGHLFzgVlCn3NVrD2K2E3P8k+TjhpgEAawFW77MB8yA==",
+      "type": "package",
+      "path": "fanex.letstalkservice.client/1.0.0.5",
+      "files": [
+        ".nupkg.metadata",
+        "content/App.config.transform",
+        "content/Web.config.transform",
+        "fanex.letstalkservice.client.1.0.0.5.nupkg.sha512",
+        "fanex.letstalkservice.client.nuspec",
+        "lib/Fanex.LetstalkService.Client.dll",
+        "lib/Fanex.LetstalkService.Core.dll"
+      ]
+    },
+    "Fanex.Logging/2.0.1": {
+      "sha512": "OSZVQMjqCuTK0yhUakyR4s91u4r9OXHo/I5uf+ChkySkEFHj8e6s/vuGTpccswYVXEbe8MJkeo9d9Yxz/CgCUg==",
+      "type": "package",
+      "path": "fanex.logging/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        "fanex.logging.2.0.1.nupkg.sha512",
+        "fanex.logging.nuspec",
+        "lib/net40/Fanex.Logging.dll",
+        "lib/net461/Fanex.Logging.dll",
+        "lib/netstandard2.0/Fanex.Logging.dll"
+      ]
+    },
+    "Microsoft.AspNet.Mvc/5.2.7": {
+      "sha512": "m3hUsn48k6Qb5El9A8naTwGTLCdSQKGSpGweqIfiVKltGJzAJJxuXvhhaQQtLCGg3i5V88iGjz0JG72/tlFKlg==",
+      "type": "package",
+      "path": "microsoft.aspnet.mvc/5.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Web.config.install.xdt",
+        "Content/Web.config.uninstall.xdt",
+        "lib/net45/System.Web.Mvc.dll",
+        "lib/net45/System.Web.Mvc.xml",
+        "microsoft.aspnet.mvc.5.2.7.nupkg.sha512",
+        "microsoft.aspnet.mvc.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.Razor/3.2.7": {
+      "sha512": "BpWEZ+Ys7g9VAkbAfpG5jr5A1fKcmadCCXv3fYfps5YfTVABJIGV4uc9yvmXKxsNsjL+BzDld2gs+xtgT2gg1g==",
+      "type": "package",
+      "path": "microsoft.aspnet.razor/3.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/System.Web.Razor.dll",
+        "lib/net45/System.Web.Razor.xml",
+        "microsoft.aspnet.razor.3.2.7.nupkg.sha512",
+        "microsoft.aspnet.razor.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.WebApi.Client/5.2.3": {
+      "sha512": "3kiI8peSXbXHDDrRuo+QaX0iCEVRe0nvn2dBDRw656uPX32UalbBlSIDUDlJxu05eau4tnuhsikiUuugvvoUoQ==",
+      "type": "package",
+      "path": "microsoft.aspnet.webapi.client/5.2.3",
+      "files": [
+        ".nupkg.metadata",
+        "lib/net45/System.Net.Http.Formatting.dll",
+        "lib/net45/System.Net.Http.Formatting.xml",
+        "lib/portable-wp8+netcore45+net45+wp81+wpa81/System.Net.Http.Formatting.dll",
+        "lib/portable-wp8+netcore45+net45+wp81+wpa81/System.Net.Http.Formatting.xml",
+        "microsoft.aspnet.webapi.client.5.2.3.nupkg.sha512",
+        "microsoft.aspnet.webapi.client.nuspec"
+      ]
+    },
+    "Microsoft.AspNet.WebPages/3.2.7": {
+      "sha512": "2jwZFB7PvY+tbdz0ZP4iEo7gMrJxkCQUzoGLh6swUc6ZXl6DoKyDslmGcC/j9PFmJXCRMVIqtRorlPSMU2DuRA==",
+      "type": "package",
+      "path": "microsoft.aspnet.webpages/3.2.7",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Content/Web.config.install.xdt",
+        "Content/Web.config.uninstall.xdt",
+        "lib/net45/System.Web.Helpers.dll",
+        "lib/net45/System.Web.Helpers.xml",
+        "lib/net45/System.Web.WebPages.Deployment.dll",
+        "lib/net45/System.Web.WebPages.Deployment.xml",
+        "lib/net45/System.Web.WebPages.Razor.dll",
+        "lib/net45/System.Web.WebPages.Razor.xml",
+        "lib/net45/System.Web.WebPages.dll",
+        "lib/net45/System.Web.WebPages.xml",
+        "microsoft.aspnet.webpages.3.2.7.nupkg.sha512",
+        "microsoft.aspnet.webpages.nuspec"
+      ]
+    },
+    "Microsoft.Diagnostics.Tracing.EventSource.Redist/2.0.1": {
+      "sha512": "FB3eZdHZENlSYI5265CmhHRnq97MVC7Ix8I4vUNBXOdsGzKRajx1Eznbj7ka4G/trmEuRZQzEGWSEFGnBvgB0g==",
+      "type": "package",
+      "path": "microsoft.diagnostics.tracing.eventsource.redist/2.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll",
+        "microsoft.diagnostics.tracing.eventsource.redist.2.0.1.nupkg.sha512",
+        "microsoft.diagnostics.tracing.eventsource.redist.nuspec",
+        "runtimes/win/lib/net461/Microsoft.Diagnostics.Tracing.EventSource.dll",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "Microsoft.Web.Infrastructure/1.0.0": {
+      "sha512": "FNmvLn5m2LTU/Rs2KWVo0SIIh9Ek+U0ojex7xeDaSHw/zgEP77A8vY5cVWgUtBGS8MJfDGNn8rpXJWEIQaPwTg==",
+      "type": "package",
+      "path": "microsoft.web.infrastructure/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        "Microsoft.Web.Infrastructure.1.0.0.nupkg.sha512",
+        "Microsoft.Web.Infrastructure.nuspec",
+        "lib/net40/Microsoft.Web.Infrastructure.dll"
+      ]
+    },
+    "Newtonsoft.Json/12.0.1": {
+      "sha512": "pBR3wCgYWZGiaZDYP+HHYnalVnPJlpP1q55qvVb+adrDHmFMDc1NAKio61xTwftK3Pw5h7TZJPJEEVMd6ty8rg==",
+      "type": "package",
+      "path": "newtonsoft.json/12.0.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.md",
+        "lib/net20/Newtonsoft.Json.dll",
+        "lib/net20/Newtonsoft.Json.pdb",
+        "lib/net20/Newtonsoft.Json.xml",
+        "lib/net35/Newtonsoft.Json.dll",
+        "lib/net35/Newtonsoft.Json.pdb",
+        "lib/net35/Newtonsoft.Json.xml",
+        "lib/net40/Newtonsoft.Json.dll",
+        "lib/net40/Newtonsoft.Json.pdb",
+        "lib/net40/Newtonsoft.Json.xml",
+        "lib/net45/Newtonsoft.Json.dll",
+        "lib/net45/Newtonsoft.Json.pdb",
+        "lib/net45/Newtonsoft.Json.xml",
+        "lib/netstandard1.0/Newtonsoft.Json.dll",
+        "lib/netstandard1.0/Newtonsoft.Json.pdb",
+        "lib/netstandard1.0/Newtonsoft.Json.xml",
+        "lib/netstandard1.3/Newtonsoft.Json.dll",
+        "lib/netstandard1.3/Newtonsoft.Json.pdb",
+        "lib/netstandard1.3/Newtonsoft.Json.xml",
+        "lib/netstandard2.0/Newtonsoft.Json.dll",
+        "lib/netstandard2.0/Newtonsoft.Json.pdb",
+        "lib/netstandard2.0/Newtonsoft.Json.xml",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.pdb",
+        "lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.pdb",
+        "lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml",
+        "newtonsoft.json.12.0.1.nupkg.sha512",
+        "newtonsoft.json.nuspec"
+      ]
+    },
+    "ONEbook.UM/2.0.2.9": {
+      "sha512": "vXQ0h7YjeI8K05pBw+4+rB4thTPXWOi8BcGMh/AClC+1+GrIT3YjYn2vHvrwpDhniGxoPcpc27D0tMETk3G/kg==",
+      "type": "package",
+      "path": "onebook.um/2.0.2.9",
+      "files": [
+        ".nupkg.metadata",
+        "ONEbook.UM.2.0.2.9.nupkg.sha512",
+        "ONEbook.UM.nuspec",
+        "content/app.config.transform",
+        "content/web.config.transform",
+        "lib/net40/ONEbook.UM.dll"
+      ]
+    },
+    "RabbitMQ.Client/5.1.0": {
+      "sha512": "oMXzDw2NLDHYlAYVJs5AHZDGkTsuzmaAPNfHjgkPqq3VfnxAXgsJ643ts6xsdXJftpwPbDAwN5YP65lHm+MiNg==",
+      "type": "package",
+      "path": "rabbitmq.client/5.1.0",
+      "files": [
+        ".nupkg.metadata",
+        "RabbitMQ.Client.5.1.0.nupkg.sha512",
+        "RabbitMQ.Client.nuspec",
+        "lib/net451/RabbitMQ.Client.dll",
+        "lib/net451/RabbitMQ.Client.xml",
+        "lib/netstandard1.5/RabbitMQ.Client.dll",
+        "lib/netstandard1.5/RabbitMQ.Client.xml"
+      ]
+    },
+    "RestSharp/105.2.3": {
+      "sha512": "aR2Td2s7DUHSk+H3EdcJ7pAju3JLYUZMwWmkVNtiEl4pAQuQCnU218YMMAdPbTdw0PJnGqLwrJxWr1RdL4ADeQ==",
+      "type": "package",
+      "path": "restsharp/105.2.3",
+      "files": [
+        ".nupkg.metadata",
+        "RestSharp.105.2.3.nupkg.sha512",
+        "RestSharp.nuspec",
+        "lib/MonoAndroid10/RestSharp.dll",
+        "lib/MonoAndroid10/RestSharp.xml",
+        "lib/MonoTouch10/RestSharp.dll",
+        "lib/MonoTouch10/RestSharp.xml",
+        "lib/Xamarin.iOS10/RestSharp.dll",
+        "lib/Xamarin.iOS10/RestSharp.xml",
+        "lib/net35/RestSharp.dll",
+        "lib/net35/RestSharp.xml",
+        "lib/net4-client/RestSharp.dll",
+        "lib/net4-client/RestSharp.xml",
+        "lib/net4/RestSharp.dll",
+        "lib/net4/RestSharp.xml",
+        "lib/net45/RestSharp.dll",
+        "lib/net45/RestSharp.xml",
+        "lib/net451/RestSharp.dll",
+        "lib/net451/RestSharp.xml",
+        "lib/net452/RestSharp.dll",
+        "lib/net452/RestSharp.xml",
+        "lib/net46/RestSharp.dll",
+        "lib/net46/RestSharp.xml",
+        "lib/sl5/RestSharp.dll",
+        "lib/sl5/RestSharp.xml",
+        "lib/windowsphone8/RestSharp.dll",
+        "lib/windowsphone8/RestSharp.xml",
+        "lib/windowsphone81/RestSharp.dll",
+        "lib/windowsphone81/RestSharp.xml",
+        "readme.txt"
+      ]
+    },
+    "SonarAnalyzer.CSharp/7.14.0.8411": {
+      "sha512": "Sy2/hLWyBPIW/C6EdiXk1dpjgqJB7vhWlVG/4fSc/BgAp6PCMulHnctZz3gwIMx6zj7FaTm2/sfR2I50uMm/Ug==",
+      "type": "package",
+      "path": "sonaranalyzer.csharp/7.14.0.8411",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "License.txt",
+        "analyzers/Google.Protobuf.dll",
+        "analyzers/SonarAnalyzer.CSharp.dll",
+        "analyzers/SonarAnalyzer.dll",
+        "sonaranalyzer.csharp.7.14.0.8411.nupkg.sha512",
+        "sonaranalyzer.csharp.nuspec",
+        "tools/install.ps1",
+        "tools/uninstall.ps1"
+      ]
+    },
+    "SPSRemoting/1.0.0": {
+      "sha512": "3XuXf2jK6+woe4bnzWxL0u2SAoisPoZBdEVd77TC6SrOt65iDDws9XToFCJA38R8UmJ/DH2yKHNyD+rEpbPFQA==",
+      "type": "package",
+      "path": "spsremoting/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        "lib/net40/SPSRemoting.dll",
+        "spsremoting.1.0.0.nupkg.sha512",
+        "spsremoting.nuspec"
+      ]
+    },
+    "System.Net.Http/4.3.4": {
+      "sha512": "Fj7e73NNHwof97gFPTJuq8gv6G895yxkZt14DVnZdEh4gvKl8WrksCwNjIp/JeYX/yu/qxM/iOv9ai+ZY3Fp7Q==",
+      "type": "package",
+      "path": "system.net.http/4.3.4",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/Xamarinmac20/_._",
+        "lib/monoandroid10/_._",
+        "lib/monotouch10/_._",
+        "lib/net45/_._",
+        "lib/net46/System.Net.Http.dll",
+        "lib/portable-net45+win8+wpa81/_._",
+        "lib/win8/_._",
+        "lib/wpa81/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/Xamarinmac20/_._",
+        "ref/monoandroid10/_._",
+        "ref/monotouch10/_._",
+        "ref/net45/_._",
+        "ref/net46/System.Net.Http.dll",
+        "ref/netcore50/System.Net.Http.dll",
+        "ref/netstandard1.1/System.Net.Http.dll",
+        "ref/netstandard1.3/System.Net.Http.dll",
+        "ref/portable-net45+win8+wpa81/_._",
+        "ref/win8/_._",
+        "ref/wpa81/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netstandard1.6/System.Net.Http.dll",
+        "runtimes/win/lib/net46/System.Net.Http.dll",
+        "runtimes/win/lib/netcore50/System.Net.Http.dll",
+        "runtimes/win/lib/netstandard1.3/System.Net.Http.dll",
+        "system.net.http.4.3.4.nupkg.sha512",
+        "system.net.http.nuspec"
+      ]
+    },
+    "System.Security.Cryptography.Algorithms/4.3.0": {
+      "sha512": "W1kd2Y8mYSCgc3ULTAZ0hOP2dSdG5YauTb1089T0/kRcN2MpSAW1izOFROrJgxSlMn3ArsgHXagigyi+ibhevg==",
+      "type": "package",
+      "path": "system.security.cryptography.algorithms/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        "System.Security.Cryptography.Algorithms.4.3.0.nupkg.sha512",
+        "System.Security.Cryptography.Algorithms.nuspec",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Security.Cryptography.Algorithms.dll",
+        "lib/net461/System.Security.Cryptography.Algorithms.dll",
+        "lib/net463/System.Security.Cryptography.Algorithms.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Security.Cryptography.Algorithms.dll",
+        "ref/net461/System.Security.Cryptography.Algorithms.dll",
+        "ref/net463/System.Security.Cryptography.Algorithms.dll",
+        "ref/netstandard1.3/System.Security.Cryptography.Algorithms.dll",
+        "ref/netstandard1.4/System.Security.Cryptography.Algorithms.dll",
+        "ref/netstandard1.6/System.Security.Cryptography.Algorithms.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/osx/lib/netstandard1.6/System.Security.Cryptography.Algorithms.dll",
+        "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.Algorithms.dll",
+        "runtimes/win/lib/net46/System.Security.Cryptography.Algorithms.dll",
+        "runtimes/win/lib/net461/System.Security.Cryptography.Algorithms.dll",
+        "runtimes/win/lib/net463/System.Security.Cryptography.Algorithms.dll",
+        "runtimes/win/lib/netcore50/System.Security.Cryptography.Algorithms.dll",
+        "runtimes/win/lib/netstandard1.6/System.Security.Cryptography.Algorithms.dll"
+      ]
+    },
+    "System.Security.Cryptography.Encoding/4.3.0": {
+      "sha512": "1DEWjZZly9ae9C79vFwqaO5kaOlI5q+3/55ohmq/7dpDyDfc8lYe7YVxJUZ5MF/NtbkRjwFRo14yM4OEo9EmDw==",
+      "type": "package",
+      "path": "system.security.cryptography.encoding/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        "System.Security.Cryptography.Encoding.4.3.0.nupkg.sha512",
+        "System.Security.Cryptography.Encoding.nuspec",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Security.Cryptography.Encoding.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Security.Cryptography.Encoding.dll",
+        "ref/netstandard1.3/System.Security.Cryptography.Encoding.dll",
+        "ref/netstandard1.3/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/de/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/es/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/fr/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/it/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/ja/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/ko/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/ru/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/zh-hans/System.Security.Cryptography.Encoding.xml",
+        "ref/netstandard1.3/zh-hant/System.Security.Cryptography.Encoding.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netstandard1.3/System.Security.Cryptography.Encoding.dll",
+        "runtimes/win/lib/net46/System.Security.Cryptography.Encoding.dll",
+        "runtimes/win/lib/netstandard1.3/System.Security.Cryptography.Encoding.dll"
+      ]
+    },
+    "System.Security.Cryptography.Primitives/4.3.0": {
+      "sha512": "7bDIyVFNL/xKeFHjhobUAQqSpJq9YTOpbEs6mR233Et01STBMXNAc/V+BM6dwYGc95gVh/Zf+iVXWzj3mE8DWg==",
+      "type": "package",
+      "path": "system.security.cryptography.primitives/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        "System.Security.Cryptography.Primitives.4.3.0.nupkg.sha512",
+        "System.Security.Cryptography.Primitives.nuspec",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Security.Cryptography.Primitives.dll",
+        "lib/netstandard1.3/System.Security.Cryptography.Primitives.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Security.Cryptography.Primitives.dll",
+        "ref/netstandard1.3/System.Security.Cryptography.Primitives.dll",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._"
+      ]
+    },
+    "System.Security.Cryptography.X509Certificates/4.3.0": {
+      "sha512": "t2Tmu6Y2NtJ2um0RtcuhP7ZdNNxXEgUm2JeoA/0NvlMjAhKCnM1NX07TDl3244mVp3QU6LPEhT3HTtH1uF7IYw==",
+      "type": "package",
+      "path": "system.security.cryptography.x509certificates/4.3.0",
+      "files": [
+        ".nupkg.metadata",
+        "System.Security.Cryptography.X509Certificates.4.3.0.nupkg.sha512",
+        "System.Security.Cryptography.X509Certificates.nuspec",
+        "ThirdPartyNotices.txt",
+        "dotnet_library_license.txt",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net46/System.Security.Cryptography.X509Certificates.dll",
+        "lib/net461/System.Security.Cryptography.X509Certificates.dll",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net46/System.Security.Cryptography.X509Certificates.dll",
+        "ref/net461/System.Security.Cryptography.X509Certificates.dll",
+        "ref/netstandard1.3/System.Security.Cryptography.X509Certificates.dll",
+        "ref/netstandard1.3/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/de/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/es/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/fr/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/it/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/ja/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/ko/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/ru/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/zh-hans/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.3/zh-hant/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/System.Security.Cryptography.X509Certificates.dll",
+        "ref/netstandard1.4/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/de/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/es/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/fr/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/it/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/ja/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/ko/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/ru/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/zh-hans/System.Security.Cryptography.X509Certificates.xml",
+        "ref/netstandard1.4/zh-hant/System.Security.Cryptography.X509Certificates.xml",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "runtimes/unix/lib/netstandard1.6/System.Security.Cryptography.X509Certificates.dll",
+        "runtimes/win/lib/net46/System.Security.Cryptography.X509Certificates.dll",
+        "runtimes/win/lib/net461/System.Security.Cryptography.X509Certificates.dll",
+        "runtimes/win/lib/netcore50/System.Security.Cryptography.X509Certificates.dll",
+        "runtimes/win/lib/netstandard1.6/System.Security.Cryptography.X509Certificates.dll"
+      ]
+    },
+    "System.Security.Principal.Windows/4.5.1": {
+      "sha512": "L3R/xk1s+AJB/ZRrwXyjXMmKp+RNgLP92LSidWEM0iCouznJoiiBloDCxRTjmo8hTDAKSWaMrltsttUzg1RhjA==",
+      "type": "package",
+      "path": "system.security.principal.windows/4.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/net46/System.Security.Principal.Windows.dll",
+        "lib/net461/System.Security.Principal.Windows.dll",
+        "lib/netstandard1.3/System.Security.Principal.Windows.dll",
+        "lib/netstandard2.0/System.Security.Principal.Windows.dll",
+        "lib/uap10.0.16299/_._",
+        "ref/net46/System.Security.Principal.Windows.dll",
+        "ref/net461/System.Security.Principal.Windows.dll",
+        "ref/net461/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/System.Security.Principal.Windows.dll",
+        "ref/netstandard1.3/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/de/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/es/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/fr/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/it/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/ja/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/ko/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/ru/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/zh-hans/System.Security.Principal.Windows.xml",
+        "ref/netstandard1.3/zh-hant/System.Security.Principal.Windows.xml",
+        "ref/netstandard2.0/System.Security.Principal.Windows.dll",
+        "ref/netstandard2.0/System.Security.Principal.Windows.xml",
+        "ref/uap10.0.16299/_._",
+        "runtimes/unix/lib/netcoreapp2.0/System.Security.Principal.Windows.dll",
+        "runtimes/win/lib/net46/System.Security.Principal.Windows.dll",
+        "runtimes/win/lib/net461/System.Security.Principal.Windows.dll",
+        "runtimes/win/lib/netcoreapp2.0/System.Security.Principal.Windows.dll",
+        "runtimes/win/lib/netstandard1.3/System.Security.Principal.Windows.dll",
+        "runtimes/win/lib/uap10.0.16299/_._",
+        "system.security.principal.windows.4.5.1.nupkg.sha512",
+        "system.security.principal.windows.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "System.ValueTuple/4.5.0": {
+      "sha512": "okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ==",
+      "type": "package",
+      "path": "system.valuetuple/4.5.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "lib/MonoAndroid10/_._",
+        "lib/MonoTouch10/_._",
+        "lib/net461/System.ValueTuple.dll",
+        "lib/net461/System.ValueTuple.xml",
+        "lib/net47/System.ValueTuple.dll",
+        "lib/net47/System.ValueTuple.xml",
+        "lib/netcoreapp2.0/_._",
+        "lib/netstandard1.0/System.ValueTuple.dll",
+        "lib/netstandard1.0/System.ValueTuple.xml",
+        "lib/netstandard2.0/_._",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "lib/portable-net40+sl4+win8+wp8/System.ValueTuple.xml",
+        "lib/uap10.0.16299/_._",
+        "lib/xamarinios10/_._",
+        "lib/xamarinmac20/_._",
+        "lib/xamarintvos10/_._",
+        "lib/xamarinwatchos10/_._",
+        "ref/MonoAndroid10/_._",
+        "ref/MonoTouch10/_._",
+        "ref/net461/System.ValueTuple.dll",
+        "ref/net47/System.ValueTuple.dll",
+        "ref/netcoreapp2.0/_._",
+        "ref/netstandard2.0/_._",
+        "ref/portable-net40+sl4+win8+wp8/System.ValueTuple.dll",
+        "ref/uap10.0.16299/_._",
+        "ref/xamarinios10/_._",
+        "ref/xamarinmac20/_._",
+        "ref/xamarintvos10/_._",
+        "ref/xamarinwatchos10/_._",
+        "system.valuetuple.4.5.0.nupkg.sha512",
+        "system.valuetuple.nuspec",
+        "useSharedDesignerContext.txt",
+        "version.txt"
+      ]
+    },
+    "UMControllerLibrary/1.0.1872.836": {
+      "sha512": "V8b1hNFbHt1JGxJBF/nLoOzpUgM0G75P8b5mPVoLf42pBImvbQBbOm6H+q2pU4vFX0MFBDcOetGuoJOipsnP2w==",
+      "type": "package",
+      "path": "umcontrollerlibrary/1.0.1872.836",
+      "files": [
+        ".nupkg.metadata",
+        "lib/net40/UMControllerLibrary.dll",
+        "umcontrollerlibrary.1.0.1872.836.nupkg.sha512",
+        "umcontrollerlibrary.nuspec"
+      ]
+    },
+    "Fanex.NAP.FS.Core/1.0.0": {
+      "type": "project",
+      "path": "../Fanex.NAP.FS.Core/Fanex.NAP.FS.Core.csproj",
+      "msbuildProject": "../Fanex.NAP.FS.Core/Fanex.NAP.FS.Core.csproj"
+    },
+    "Fanex.NAP.FS.Criteria/1.0.0": {
+      "type": "project",
+      "path": "../Fanex.NAP.FS.Criteria/Fanex.NAP.FS.Criteria.csproj",
+      "msbuildProject": "../Fanex.NAP.FS.Criteria/Fanex.NAP.FS.Criteria.csproj"
+    },
+    "Fanex.NAP.FS.Model/1.0.0": {
+      "type": "project",
+      "path": "../Fanex.NAP.FS.Model/Fanex.NAP.FS.Model.csproj",
+      "msbuildProject": "../Fanex.NAP.FS.Model/Fanex.NAP.FS.Model.csproj"
+    },
+    "Fanex.NAP.FS.Queue/1.0.0": {
+      "type": "project",
+      "path": "../Fanex.NAP.FS.Queue/Fanex.NAP.FS.Queue.csproj",
+      "msbuildProject": "../Fanex.NAP.FS.Queue/Fanex.NAP.FS.Queue.csproj"
+    },
+    "Fanex.NAP.FS.XML/1.0.0": {
+      "type": "project",
+      "path": "../Fanex.NAP.FS.XML/Fanex.NAP.FS.XML.csproj",
+      "msbuildProject": "../Fanex.NAP.FS.XML/Fanex.NAP.FS.XML.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    ".NETFramework,Version=v4.6.1": [
+      "Dapper >= 1.60.6",
+      "EasyNetQ >= 3.4.5",
+      "Fanex.Caching >= 2.2.1",
+      "Fanex.Data >= 3.1.0",
+      "Fanex.Data.ConnectionStringProvider20 >= 3.0.0",
+      "Fanex.Data.Repository >= 4.0.1",
+      "Fanex.LetstalkService.Client >= 1.0.0.5",
+      "Fanex.Logging >= 2.0.1",
+      "Fanex.NAP.FS.Core >= 1.0.0",
+      "Fanex.NAP.FS.Criteria >= 1.0.0",
+      "Fanex.NAP.FS.Model >= 1.0.0",
+      "Fanex.NAP.FS.Queue >= 1.0.0",
+      "Microsoft.AspNet.Mvc >= 5.2.7",
+      "Microsoft.Diagnostics.Tracing.EventSource.Redist >= 2.0.1",
+      "Newtonsoft.Json >= 12.0.1",
+      "ONEbook.UM >= 2.0.2.9",
+      "RestSharp >= 105.2.3",
+      "SonarAnalyzer.CSharp >= 7.14.0.8411",
+      "System.Net.Http >= 4.3.4",
+      "System.Security.Principal.Windows >= 4.5.1",
+      "UMControllerLibrary >= 1.0.1872.836"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\terry.nguyen\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj",
+      "projectName": "Fanex.NAP.FS.Service",
+      "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj",
+      "packagesPath": "C:\\Users\\terry.nguyen\\.nuget\\packages\\",
+      "outputPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\obj\\",
+      "projectStyle": "PackageReference",
+      "skipContentFileWrite": true,
+      "configFilePaths": [
+        "C:\\Users\\terry.nguyen\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net461"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "http://nuget.nexdev.net/api/v2/": {},
+        "https://api.nuget.org/v3/index.json": {},
+        "https://www.myget.org/F/cefsharp/": {},
+        "https://www.myget.org/f/aspnetwebstacknightlyrelease/": {}
+      },
+      "frameworks": {
+        "net461": {
+          "projectReferences": {
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj"
+            },
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj"
+            },
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj"
+            },
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj"
+            }
+          }
+        }
+      }
+    },
+    "frameworks": {
+      "net461": {
+        "dependencies": {
+          "Dapper": {
+            "target": "Package",
+            "version": "[1.60.6, )"
+          },
+          "EasyNetQ": {
+            "target": "Package",
+            "version": "[3.4.5, )"
+          },
+          "Fanex.Caching": {
+            "target": "Package",
+            "version": "[2.2.1, )"
+          },
+          "Fanex.Data": {
+            "target": "Package",
+            "version": "[3.1.0, )"
+          },
+          "Fanex.Data.ConnectionStringProvider20": {
+            "target": "Package",
+            "version": "[3.0.0, )"
+          },
+          "Fanex.Data.Repository": {
+            "target": "Package",
+            "version": "[4.0.1, )"
+          },
+          "Fanex.LetstalkService.Client": {
+            "target": "Package",
+            "version": "[1.0.0.5, )"
+          },
+          "Fanex.Logging": {
+            "target": "Package",
+            "version": "[2.0.1, )"
+          },
+          "Microsoft.AspNet.Mvc": {
+            "target": "Package",
+            "version": "[5.2.7, )"
+          },
+          "Microsoft.Diagnostics.Tracing.EventSource.Redist": {
+            "target": "Package",
+            "version": "[2.0.1, )"
+          },
+          "Newtonsoft.Json": {
+            "target": "Package",
+            "version": "[12.0.1, )"
+          },
+          "ONEbook.UM": {
+            "target": "Package",
+            "version": "[2.0.2.9, )"
+          },
+          "RestSharp": {
+            "target": "Package",
+            "version": "[105.2.3, )"
+          },
+          "SonarAnalyzer.CSharp": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[7.14.0.8411, )"
+          },
+          "System.Net.Http": {
+            "target": "Package",
+            "version": "[4.3.4, )"
+          },
+          "System.Security.Principal.Windows": {
+            "target": "Package",
+            "version": "[4.5.1, )"
+          },
+          "UMControllerLibrary": {
+            "target": "Package",
+            "version": "[1.0.1872.836, )"
+          }
+        }
+      }
+    },
+    "runtimes": {
+      "win": {
+        "#import": []
+      },
+      "win-x64": {
+        "#import": []
+      },
+      "win-x86": {
+        "#import": []
+      }
+    }
+  },
+  "logs": [
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package downgrade: Fanex.Data from 4.0.1 to 3.1.0. Reference the package directly from the project to select a different version. \r\n Fanex.NAP.FS.Service -> Fanex.Data.Repository 4.0.1 -> Fanex.Data (>= 4.0.1) \r\n Fanex.NAP.FS.Service -> Fanex.Data (>= 3.1.0)",
+      "libraryId": "Fanex.Data",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.6.1",
+        ".NETFramework,Version=v4.6.1/win",
+        ".NETFramework,Version=v4.6.1/win-x64",
+        ".NETFramework,Version=v4.6.1/win-x86"
+      ]
+    },
+    {
+      "code": "NU1605",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Detected package downgrade: Newtonsoft.Json from 12.0.2 to 12.0.1. Reference the package directly from the project to select a different version. \r\n Fanex.NAP.FS.Service -> Fanex.NAP.FS.Core -> Newtonsoft.Json (>= 12.0.2) \r\n Fanex.NAP.FS.Service -> Newtonsoft.Json (>= 12.0.1)",
+      "libraryId": "Newtonsoft.Json",
+      "targetGraphs": [
+        ".NETFramework,Version=v4.6.1",
+        ".NETFramework,Version=v4.6.1/win",
+        ".NETFramework,Version=v4.6.1/win-x64",
+        ".NETFramework,Version=v4.6.1/win-x86"
+      ]
+    }
+  ]
+}
