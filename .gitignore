@@ -6,8 +6,8 @@
 /.vs/SPU.Services/v16/.suo
 /.vs/SPU.Services/v16/Server/sqlite3/db.lock
 /.vs/SPU.Services/v16/Server/sqlite3/storage.ide
-
-# User-specific files
+/.vs/SPU.Services/v16/Server/sqlite3/storage.ide-shm
+/.vs/SPU.Services/v16/Server/sqlite3/storage.ide-wal
 *.suo
 *.user
 *.userosscache
