@@ -8,7 +8,7 @@
     using Fanex.NAP.SPU.Model;
 
     [DisallowConcurrentExecution]
-    public class JobFS : IJobFS
+    public class JobBase : IJobBase
     {
         public IJobDetail Job { get; set; }
 
@@ -16,7 +16,7 @@
 
         public IScheduler Schedule { get; set; }
 
-        public IJobFS CreateJob(string className, string jobName, string groupName, JobData jobData)
+        public IJobBase CreateJob(string className, string jobName, string groupName, JobData jobData)
         {            
             var job = JobBuilder.Create(typeof(ExecuteJob))
                .WithIdentity(jobName, groupName)
@@ -29,7 +29,7 @@
             return this;
         }       
 
-        public IJobFS CreateTrigger(string triggerName, int interval)
+        public IJobBase CreateTrigger(string triggerName, int interval)
         {
             var trigger = TriggerBuilder.Create()
             .WithIdentity(triggerName)
@@ -44,7 +44,7 @@
             return this;
         }        
 
-        public IJobFS CreateSchedule()
+        public IJobBase CreateSchedule()
         {
             this.Schedule = StdSchedulerFactory.GetDefaultScheduler().Result;
 
@@ -56,7 +56,7 @@
             return this;
         }
 
-        public IJobFS CreateListenerJob()
+        public IJobBase CreateListenerJob()
         {
             var listener = new ListenerJob(this.Job.Key.Name);
             IMatcher<JobKey> matcher = KeyMatcher<JobKey>.KeyEquals(this.Job.Key);

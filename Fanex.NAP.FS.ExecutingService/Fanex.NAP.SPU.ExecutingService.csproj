@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,7 +25,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -73,8 +73,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IJobFS.cs" />
-    <Compile Include="JobFS.cs" />
+    <Compile Include="IJobBase.cs" />
+    <Compile Include="JobBase.cs" />
     <Compile Include="Jobs\ExecuteJob.cs" />
     <Compile Include="Jobs\ListenerJob.cs" />
     <Compile Include="Models\FraudCase.cs" />
@@ -112,6 +112,7 @@
   <ItemGroup>
     <Content Include="App_Data\JobData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\NAPFSNames.LOCAL.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

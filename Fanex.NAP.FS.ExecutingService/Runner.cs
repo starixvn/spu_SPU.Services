@@ -13,7 +13,7 @@
     public partial class Runner : ServiceBase
     {
         private const string GroupName = "FraudCaseGroup";
-        private List<JobDataSevices> listJobsMap;
+        private List<JobDataSevices> listJobServicesMap;
 
         public Runner()
         {
@@ -24,9 +24,9 @@
         {
             try
             {
-                listJobsMap = GetJobsMap();
+                listJobServicesMap = GetJobServicesMap();
 
-                if (!listJobsMap.Any())
+                if (!listJobServicesMap.Any())
                 {
                     LogService.Info($"Executing service is error message: JobsMap null");
 
@@ -48,40 +48,7 @@
             LogService.Info($"Executing service is STOP at {DateTime.Now}");
         }
 
-        private void ExecuteJobs()
-        {
-            var fraudCaseService = new FraudCaseService();
-
-            var fraudCases = fraudCaseService.GetFraudCase<FS.Model.FraudCase>(null, 1, AppSetting.Environment);
-
-            foreach (var fraudCase in fraudCases)
-            {
-                if (!fraudCase.IsActive)
-                {
-                    continue;
-                }
-
-                if (string.IsNullOrWhiteSpace(Enum.GetName(typeof(FraudCaseId), fraudCase.FraudCaseId)))
-                {
-                    continue;
-                }
-                
-                var job = new JobFS();
-                var fraudCaseName = Enum.GetName(typeof(FraudCaseId), fraudCase.FraudCaseId);
-                var className = string.Format("{0}Job", fraudCaseName);
-                var jobName = className;
-                var triggerName = string.Format("{0}Trigger", fraudCaseName);
-                var mapping = GetJobData(fraudCase.FraudCaseId);
-
-                job.CreateJob(className, jobName, GroupName, mapping)
-                    .CreateTrigger(triggerName, fraudCase.FraudCaseInterval)
-                    .CreateSchedule()
-                    .CreateListenerJob()
-                    .Run();
-            }
-        }
-
-        private List<JobDataSevices> GetJobsMap()
+        private List<JobDataSevices> GetJobServicesMap()
         {
             try
             {
@@ -101,9 +68,92 @@
             return new List<JobDataSevices>();
         }
 
-        private JobData GetJobData(int id)
+        private void ExecuteJobs()
         {
-            return new JobData();
+            foreach (var serviceMap in listJobServicesMap)
+            {
+                if (!serviceMap.Active)
+                {
+                    continue;
+                }
+
+                if (serviceMap.Id == 1)
+                {
+                    CreateJobByFraudCase(serviceMap);
+
+                    continue;
+                }
+
+                CreateJob(serviceMap);
+            }
+        }
+
+        private void CreateJobByFraudCase(JobDataSevices servicesMap)
+        {
+            var fraudCaseService = new FraudCaseService();
+            var fraudCases = fraudCaseService.GetFraudCase<FS.Model.FraudCase>(null, 1, AppSetting.Environment);
+
+            foreach (var fraudCase in fraudCases)
+            {
+                if (!fraudCase.IsActive)
+                {
+                    continue;
+                }
+
+                if (string.IsNullOrWhiteSpace(Enum.GetName(typeof(FraudCaseId), fraudCase.FraudCaseId)))
+                {
+                    continue;
+                }
+
+                var job = new JobBase();
+                var name = Enum.GetName(typeof(FraudCaseId), fraudCase.FraudCaseId);
+                var className = string.Format("{0}Job", name);
+                var jobName = className;
+                var triggerName = string.Format("{0}Trigger", servicesMap.Name);
+                var mapData = GetJobData(fraudCase.FraudCaseId, servicesMap);
+
+                job.CreateJob(className, jobName, GroupName, mapData)
+                    .CreateTrigger(triggerName, fraudCase.FraudCaseInterval)
+                    .CreateSchedule()
+                    .CreateListenerJob()
+                    .Run();
+            }
+            
+        }
+
+        private void CreateJob(JobDataSevices servicesMap)
+        {
+            foreach (var jobData in servicesMap.Jobs)
+            { 
+                var job = new JobBase();                
+                var className = string.Format("{0}Job", jobData.Name);
+                var jobName = className;
+                var triggerName = string.Format("{0}Trigger", servicesMap.Name);                
+
+                job.CreateJob(className, jobName, GroupName, jobData)
+                    .CreateTrigger(triggerName, 60)
+                    .CreateSchedule()
+                    .CreateListenerJob()
+                    .Run();
+            }
+        }
+
+
+        private JobData GetJobData(int jobId, JobDataSevices servicesMap)
+        {
+            var jobData = servicesMap.Jobs.Find(c => c.Id == jobId);
+
+            if (jobData == null)
+            {
+                return new JobData();
+            }
+
+            if (!servicesMap.Active)
+            {
+                jobData.Active = false;
+            }
+
+            return jobData;
         }
     }
 }
