@@ -109,7 +109,7 @@
                 var name = Enum.GetName(typeof(FraudCaseId), fraudCase.FraudCaseId);
                 var className = string.Format("{0}Job", name);
                 var jobName = className;
-                var triggerName = string.Format("{0}Trigger", servicesMap.Name);
+                var triggerName = string.Format("{0}Trigger", name);
                 var mapData = GetJobData(fraudCase.FraudCaseId, servicesMap);
 
                 job.CreateJob(className, jobName, GroupName, mapData)
