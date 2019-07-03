@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fanex.NAP.CMS.VirtualSetting.Model
+namespace Fanex.NAP.CMS.VirtualSetting.Service
 {
-    public class Class1
+    public class VirtualSettingPunterService
     {
+
     }
 }

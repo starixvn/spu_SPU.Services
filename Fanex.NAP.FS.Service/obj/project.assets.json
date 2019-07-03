@@ -80,11 +80,10 @@
           "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
         }
       },
-      "Fanex.Data.Repository/4.0.1": {
+      "Fanex.Data.Repository/3.0.0": {
         "type": "package",
         "dependencies": {
-          "Fanex.Data": "4.0.1",
-          "System.ValueTuple": "4.5.0"
+          "Fanex.Data": "3.0.0"
         },
         "compile": {
           "lib/net461/Fanex.Data.Repository.dll": {}
@@ -566,11 +565,10 @@
           "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
         }
       },
-      "Fanex.Data.Repository/4.0.1": {
+      "Fanex.Data.Repository/3.0.0": {
         "type": "package",
         "dependencies": {
-          "Fanex.Data": "4.0.1",
-          "System.ValueTuple": "4.5.0"
+          "Fanex.Data": "3.0.0"
         },
         "compile": {
           "lib/net461/Fanex.Data.Repository.dll": {}
@@ -996,11 +994,10 @@
           "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
         }
       },
-      "Fanex.Data.Repository/4.0.1": {
+      "Fanex.Data.Repository/3.0.0": {
         "type": "package",
         "dependencies": {
-          "Fanex.Data": "4.0.1",
-          "System.ValueTuple": "4.5.0"
+          "Fanex.Data": "3.0.0"
         },
         "compile": {
           "lib/net461/Fanex.Data.Repository.dll": {}
@@ -1426,11 +1423,10 @@
           "lib/net461/Fanex.Data.ConnectionStringProvider20.dll": {}
         }
       },
-      "Fanex.Data.Repository/4.0.1": {
+      "Fanex.Data.Repository/3.0.0": {
         "type": "package",
         "dependencies": {
-          "Fanex.Data": "4.0.1",
-          "System.ValueTuple": "4.5.0"
+          "Fanex.Data": "3.0.0"
         },
         "compile": {
           "lib/net461/Fanex.Data.Repository.dll": {}
@@ -1845,16 +1841,16 @@
         "lib/netcoreapp2.1/Fanex.Data.ConnectionStringProvider20.dll"
       ]
     },
-    "Fanex.Data.Repository/4.0.1": {
-      "sha512": "RirNpyTdUqs0mE0ZyKpxazR2WrHf4Y+1VzD4e9ccoJXln3QPRwBx22N/cKTloCPfGfNbyn8ui636ag8J67z65Q==",
+    "Fanex.Data.Repository/3.0.0": {
+      "sha512": "0txUspI7r9G9O6E85nIgTwren7DofDIwIbCrVoGNderh7J9mpwPTsewjLgS2wbFOwCCc5XHdUOAuKf1ec2hnTw==",
       "type": "package",
-      "path": "fanex.data.repository/4.0.1",
+      "path": "fanex.data.repository/3.0.0",
       "files": [
         ".nupkg.metadata",
-        "fanex.data.repository.4.0.1.nupkg.sha512",
+        "fanex.data.repository.3.0.0.nupkg.sha512",
         "fanex.data.repository.nuspec",
         "lib/net461/Fanex.Data.Repository.dll",
-        "lib/netstandard2.0/Fanex.Data.Repository.dll"
+        "lib/netcoreapp2.1/Fanex.Data.Repository.dll"
       ]
     },
     "Fanex.File/1.0.0": {
@@ -2454,7 +2450,7 @@
       "Fanex.Caching >= 2.2.1",
       "Fanex.Data >= 3.1.0",
       "Fanex.Data.ConnectionStringProvider20 >= 3.0.0",
-      "Fanex.Data.Repository >= 4.0.1",
+      "Fanex.Data.Repository >= 3.0.0",
       "Fanex.LetstalkService.Client >= 1.0.0.5",
       "Fanex.Logging >= 2.0.1",
       "Fanex.NAP.FS.Core >= 1.0.0",
@@ -2543,7 +2539,7 @@
           },
           "Fanex.Data.Repository": {
             "target": "Package",
-            "version": "[4.0.1, )"
+            "version": "[3.0.0, )"
           },
           "Fanex.LetstalkService.Client": {
             "target": "Package",
@@ -2607,19 +2603,6 @@
     }
   },
   "logs": [
-    {
-      "code": "NU1605",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Detected package downgrade: Fanex.Data from 4.0.1 to 3.1.0. Reference the package directly from the project to select a different version. \r\n Fanex.NAP.FS.Service -> Fanex.Data.Repository 4.0.1 -> Fanex.Data (>= 4.0.1) \r\n Fanex.NAP.FS.Service -> Fanex.Data (>= 3.1.0)",
-      "libraryId": "Fanex.Data",
-      "targetGraphs": [
-        ".NETFramework,Version=v4.6.1",
-        ".NETFramework,Version=v4.6.1/win",
-        ".NETFramework,Version=v4.6.1/win-x64",
-        ".NETFramework,Version=v4.6.1/win-x86"
-      ]
-    },
     {
       "code": "NU1605",
       "level": "Warning",
