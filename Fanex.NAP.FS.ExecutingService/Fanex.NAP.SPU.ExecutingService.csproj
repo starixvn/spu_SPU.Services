@@ -77,7 +77,6 @@
     <Compile Include="JobFS.cs" />
     <Compile Include="Jobs\ExecuteJob.cs" />
     <Compile Include="Jobs\ListenerJob.cs" />
-    <Compile Include="Models\FraudCase.cs" />
     <Compile Include="Runner.cs">
       <SubType>Component</SubType>
     </Compile>
