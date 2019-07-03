@@ -5,14 +5,15 @@
     using System.ServiceProcess;    
     using Fanex.NAP.FS.Service;
     using Fanex.NAP.FS.Model;
-    using Fanex.NAP.SPU.ExecutingService.Models;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public partial class Runner : ServiceBase
     {
         private const string GroupName = "FraudCaseGroup";
-        private JobDataList jobsMap;
+        private List<JobDataSevices> listJobsMap;
 
         public Runner()
         {
@@ -23,9 +24,9 @@
         {
             try
             {
-                jobsMap = GetJobsMap();
+                listJobsMap = GetJobsMap();
 
-                if (jobsMap == null)
+                if (!listJobsMap.Any())
                 {
                     LogService.Info($"Executing service is error message: JobsMap null");
 
@@ -80,26 +81,29 @@
             }
         }
 
-        private JobDataList GetJobsMap()
+        private List<JobDataSevices> GetJobsMap()
         {
             try
             {
                 var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"App_Data\JobData.xml";
-                return Serializer.Deserialize<JobDataList>(xmlPath);
+                var rootMap = Serializer.Deserialize<JobDataRoot>(xmlPath);
+
+                if (rootMap != null)
+                {
+                    return rootMap.Sevices;
+                }
             }
             catch (Exception ex)
             {
                 LogService.Info($"Executing service - GetDataMap error message: { ex.ToString() } at {DateTime.Now}");
             }
 
-            return new JobDataList();
+            return new List<JobDataSevices>();
         }
 
         private JobData GetJobData(int id)
         {
-            var item = jobsMap.JobDataExecutingList.Find(c => c.Id.Equals(id));
-
-            return item ?? new JobData();
+            return new JobData();
         }
     }
 }

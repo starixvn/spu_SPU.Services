@@ -42,7 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JobData.cs" />
-    <Compile Include="JobDataList.cs" />
+    <Compile Include="JobDataSevices.cs" />
+    <Compile Include="JobDataRoot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -32,6 +32,7 @@ D:\Projects\SPU-Services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\Fanex.NAP.FS.Qu
 D:\Projects\SPU-Services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\EasyNetQ.dll
 D:\Projects\SPU-Services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\Fanex.Data.ConnectionStringProvider20.dll
 D:\Projects\SPU-Services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\System.Web.Mvc.dll
+D:\Projects\SPU-Services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\System.ValueTuple.dll
 D:\Projects\SPU-Services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\RabbitMQ.Client.dll
 D:\Projects\SPU-Services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\System.Web.Razor.dll
 D:\Projects\SPU-Services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\System.Web.WebPages.Razor.dll
