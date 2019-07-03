@@ -2478,11 +2478,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj",
+      "projectUniqueName": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj",
       "projectName": "Fanex.NAP.FS.Service",
-      "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj",
+      "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\Fanex.NAP.FS.Service.csproj",
       "packagesPath": "C:\\Users\\terry.nguyen\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Service\\obj\\",
+      "outputPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Service\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
@@ -2502,17 +2502,17 @@
       "frameworks": {
         "net461": {
           "projectReferences": {
-            "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj": {
-              "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj"
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj"
             },
-            "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj": {
-              "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj"
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Criteria\\Fanex.NAP.FS.Criteria.csproj"
             },
-            "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj": {
-              "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj"
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj"
             },
-            "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj": {
-              "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj"
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Queue\\Fanex.NAP.FS.Queue.csproj"
             }
           }
         }

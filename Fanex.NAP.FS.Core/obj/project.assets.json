@@ -301,11 +301,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj",
+      "projectUniqueName": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj",
       "projectName": "Fanex.NAP.FS.Core",
-      "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj",
+      "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Core\\Fanex.NAP.FS.Core.csproj",
       "packagesPath": "C:\\Users\\terry.nguyen\\.nuget\\packages\\",
-      "outputPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Core\\obj\\",
+      "outputPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Core\\obj\\",
       "projectStyle": "PackageReference",
       "skipContentFileWrite": true,
       "configFilePaths": [
@@ -325,8 +325,8 @@
       "frameworks": {
         "net461": {
           "projectReferences": {
-            "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj": {
-              "projectPath": "D:\\Projects\\SPU.Services\\SPU.Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj"
+            "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj": {
+              "projectPath": "D:\\Projects\\SPU-Services\\Fanex.NAP.FS.Model\\Fanex.NAP.FS.Model.csproj"
             }
           }
         }
