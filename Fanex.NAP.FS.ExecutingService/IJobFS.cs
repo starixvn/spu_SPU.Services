@@ -4,7 +4,7 @@ namespace Fanex.NAP.SPU.ExecutingService
 {
     public interface IJobFS
     {
-        IJobFS CreateJob(string className, string jobName, string groupName, JobDataExecutingModel jobData);
+        IJobFS CreateJob(string className, string jobName, string groupName, JobData jobData);
 
         IJobFS CreateTrigger(string triggerName, int interval);        
 

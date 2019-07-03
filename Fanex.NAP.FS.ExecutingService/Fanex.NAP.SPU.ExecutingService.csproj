@@ -110,7 +110,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\JobDataExecuting.xml">
+    <Content Include="App_Data\JobData.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\NAPFSNames.LOCAL.xml">

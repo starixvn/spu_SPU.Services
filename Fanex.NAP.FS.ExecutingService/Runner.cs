@@ -12,7 +12,7 @@
     public partial class Runner : ServiceBase
     {
         private const string GroupName = "FraudCaseGroup";
-        private JobsMap jobsMap;
+        private JobDataList jobsMap;
 
         public Runner()
         {
@@ -80,26 +80,26 @@
             }
         }
 
-        private JobsMap GetJobsMap()
+        private JobDataList GetJobsMap()
         {
             try
             {
-                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"App_Data\JobDataExecuting.xml";
-                return Serializer.Deserialize<JobsMap>(xmlPath);
+                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"App_Data\JobData.xml";
+                return Serializer.Deserialize<JobDataList>(xmlPath);
             }
             catch (Exception ex)
             {
                 LogService.Info($"Executing service - GetDataMap error message: { ex.ToString() } at {DateTime.Now}");
             }
 
-            return new JobsMap();
+            return new JobDataList();
         }
 
-        private JobDataExecutingModel GetJobData(int id)
+        private JobData GetJobData(int id)
         {
-            var item = jobsMap.JobDataExecutingModels.Find(c => c.Id.Equals(id));
+            var item = jobsMap.JobDataExecutingList.Find(c => c.Id.Equals(id));
 
-            return item ?? new JobDataExecutingModel();
+            return item ?? new JobData();
         }
     }
 }

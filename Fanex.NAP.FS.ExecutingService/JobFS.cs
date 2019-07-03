@@ -16,7 +16,7 @@
 
         public IScheduler Schedule { get; set; }
 
-        public IJobFS CreateJob(string className, string jobName, string groupName, JobDataExecutingModel jobData)
+        public IJobFS CreateJob(string className, string jobName, string groupName, JobData jobData)
         {            
             var job = JobBuilder.Create(typeof(ExecuteJob))
                .WithIdentity(jobName, groupName)

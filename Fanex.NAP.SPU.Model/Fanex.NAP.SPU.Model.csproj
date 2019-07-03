@@ -41,8 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JobDataExecutingModel.cs" />
-    <Compile Include="JobsMap.cs" />
+    <Compile Include="JobData.cs" />
+    <Compile Include="JobDataList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
