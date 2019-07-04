@@ -115,6 +115,18 @@
       <Project>{67fecd9e-043a-4100-bf62-52c1a016b85d}</Project>
       <Name>Fanex.NAP.SPU.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Quartz.Plugins.RecentHistory\Quartz.Plugins.RecentHistory.csproj">
+      <Project>{4570b189-0362-45b7-a328-1d5a302890cc}</Project>
+      <Name>Quartz.Plugins.RecentHistory</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quartzmin.SelfHost\Quartzmin.SelfHost.csproj">
+      <Project>{4fb895b9-7d3d-412d-a397-f192d0e86996}</Project>
+      <Name>Quartzmin.SelfHost</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Quartzmin\Quartzmin.csproj">
+      <Project>{87f0fb60-ea43-487a-8a9c-a41f020abdf3}</Project>
+      <Name>Quartzmin</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\JobData.LOCAL.xml">
@@ -179,15 +191,6 @@
     </PackageReference>
     <PackageReference Include="ONEbook.UM">
       <Version>2.0.2.9</Version>
-    </PackageReference>
-    <PackageReference Include="Quartz">
-      <Version>3.0.7</Version>
-    </PackageReference>
-    <PackageReference Include="Quartz.Plugins.RecentHistory">
-      <Version>1.0.3</Version>
-    </PackageReference>
-    <PackageReference Include="Quartzmin.SelfHost">
-      <Version>1.0.3</Version>
     </PackageReference>
     <PackageReference Include="RestSharp">
       <Version>105.2.3</Version>
