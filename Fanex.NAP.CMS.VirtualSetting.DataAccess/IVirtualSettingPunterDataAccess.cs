@@ -5,20 +5,24 @@
     using System;
     using System.Collections.Generic;
 
-    interface IVirtualSettingPunterDataAccess
-    {      
+    public interface IVirtualSettingPunterDataAccess
+    {
         ICommandResult UpdateVirtualSetting(string VirtualMultiplier, int userId, string ip, short sportType);
 
         ICommandResult LogVirtualSetting(string punterVRSettingsDoc, int creatorId, string serviceName, DateTime adjustDate);
 
         IEnumerable<CustomerVirtualRate> GetCurrentCustomerVirtualRate(string custIds);
 
-        ICommandResult InsertCustomerMarginHistory(string customerMarginDoc, DateTime adjustDate);
-
-        IEnumerable<CustomerMargin> GetCustomerMarginHistory(string custIds, byte sportGroupId, int numOfMonth);
-
         IEnumerable<int> GetBACustIds(string custIds);
 
+        IEnumerable<Punter> GetWinningPunterSoccerList(string siteNames, string superIds, double virtualRateThreshold);
 
+        ICommandResult UpdatePunterVirtualSettingForSoccer(IEnumerable<Punter> punters, double virtualMultiplier, int userId, string ip);
+
+        ICommandResult LogPunterVirtualSetting(string serviceName, IEnumerable<Punter> punters, int userId, DateTime adjustDate);
+
+        ICommandResult InsertCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupID, int numOfMonth, string serviceName, DateTime adjustDate);
+
+        IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupId, int numOfMonth);
     }
 }
