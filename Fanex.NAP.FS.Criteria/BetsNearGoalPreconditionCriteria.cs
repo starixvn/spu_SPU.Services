@@ -11,7 +11,7 @@ namespace Fanex.NAP.FS.Criteria
     {
         public override string GetSettingKey()
         {
-            return "FS_FraudCase_BSNG_PreCondition";
+            return "FS_FraudCase_BetsNearGoal_PreCondition";
         }
 
         public override bool IsValid()
