@@ -2,13 +2,13 @@
 <Services>
   <Service Id="1" Name="FS.FraudCase.Scanner" Active="true">
     <Job Id="1" Name="BigStateNearGoal" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.BigStakeNearGoal.Console\bin\Debug\Fanex.NAP.FS.BigStakeNearGoal.Console.exe"></Job>
-    <Job Id="2" Name="ScannedOfficeIP" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.ScannedOfficeIP.Console\bin\Debug\Fanex.NAP.FS.ScannedOfficeIP.Console.exe"></Job>
-    <Job Id="3" Name="CheckBet" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\Fanex.NAP.FS.CheckBet.Console.exe"></Job>
-    <Job Id="4" Name="DailyDataCapture" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.DailyDataCapture.Console\bin\Debug\Fanex.NAP.FS.DailyDataCapture.Console.exe"></Job>
-    <Job Id="6" Name="FlaggedAccount" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.FlaggedAccount.Console\bin\Debug\Fanex.NAP.FS.FlaggedAccount.Console.exe"></Job>
-    <Job Id="8" Name="DelayedGoal" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.DelayGoal.Console\bin\Debug\Fanex.NAP.FS.DelayGoal.Console.exe"></Job>
-    <Job Id="10" Name="Arbitrage" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.Arbitrage.Console\bin\Debug\Fanex.NAP.FS.Arbitrage.Console.exe"></Job>
-    <Job Id="11" Name="BetsNearGoal" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.BetNearGoal.Console\bin\Debug\Fanex.NAP.FS.BetNearGoal.Console.exe"></Job>
+    <Job Id="2" Name="ScannedOfficeIP" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.ScannedOfficeIP.Console\bin\Debug\Fanex.NAP.FS.ScannedOfficeIP.Console.exe"></Job>
+    <Job Id="3" Name="CheckBet" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\Fanex.NAP.FS.CheckBet.Console.exe"></Job>
+    <Job Id="4" Name="DailyDataCapture" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.DailyDataCapture.Console\bin\Debug\Fanex.NAP.FS.DailyDataCapture.Console.exe"></Job>
+    <Job Id="6" Name="FlaggedAccount" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.FlaggedAccount.Console\bin\Debug\Fanex.NAP.FS.FlaggedAccount.Console.exe"></Job>
+    <Job Id="8" Name="DelayedGoal" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.DelayGoal.Console\bin\Debug\Fanex.NAP.FS.DelayGoal.Console.exe"></Job>
+    <Job Id="10" Name="Arbitrage" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.Arbitrage.Console\bin\Debug\Fanex.NAP.FS.Arbitrage.Console.exe"></Job>
+    <Job Id="11" Name="BetsNearGoal" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.BetNearGoal.Console\bin\Debug\Fanex.NAP.FS.BetNearGoal.Console.exe"></Job>
   </Service>
   <Service Id="2" Name="CMS.VirtualSetting.Scanner" Active="true">
     <Job Id="1" Name="UpdateVirtualSetting" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.CMS.VirtualSetting.Console\bin\Debug\Fanex.NAP.CMS.VirtualSetting.Console.exe"></Job>    
