@@ -25,15 +25,10 @@
                         })
                     });
 
-                var _service = new Service();
-
-                if (_service.CheckUM())
-                {
-                    return;
-                }
-
-                _service.Execute();
-
+                var _service = new Service()
+                        .ExecuteForSoccer()
+                        .ExecuteForSportbooks()
+                        .SendMail();
             }
             catch (Exception ex)
             {

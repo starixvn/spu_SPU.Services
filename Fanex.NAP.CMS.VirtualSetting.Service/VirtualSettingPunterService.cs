@@ -36,8 +36,8 @@
                 return this;
             }
 
-            var puntersDict = _punters.Distinct().ToDictionary(p => p.CustID);
-            var custIds = string.Join(",", puntersDict.Keys);
+            _puntersDict = _punters.Distinct().ToDictionary(p => p.CustID);
+            var custIds = string.Join(",", _puntersDict.Keys);
 
             var currentVRs = GetCurrentCustomerVirtualRate(custIds);
             if (currentVRs != null && currentVRs.Any())
@@ -46,12 +46,12 @@
                 {
                     if (currentVR.VRSoccer < _model.VirtualRateThreshold)
                     {
-                        puntersDict[currentVR.CustID].OldVirtualRate = currentVR.VRSoccer;
-                        puntersDict[currentVR.CustID].SportType = 1;
+                        _puntersDict[currentVR.CustID].OldVirtualRate = currentVR.VRSoccer;
+                        _puntersDict[currentVR.CustID].SportType = 1;
                     }
                     else
                     {
-                        puntersDict.Remove(currentVR.CustID);
+                        _puntersDict.Remove(currentVR.CustID);
                     }
                 }
             }
