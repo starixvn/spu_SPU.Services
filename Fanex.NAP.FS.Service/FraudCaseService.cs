@@ -10,7 +10,7 @@
     {        
         public IEnumerable<FraudCase> Get(int? isInternal, int? isActive, int environment)
         {
-            var criteria = new FraudCaseGetCriteria(isInternal, isActive, environment);;
+            var criteria = new FraudCaseGetCriteria(isInternal, isActive, environment);
             
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {                
@@ -20,7 +20,7 @@
 
         public IEnumerable<T> GetFraudCase<T>(int? isInternal, int? isActive, int environment)
         {
-            var criteria = new FraudCaseGetCriteria(isInternal, isActive, environment); ;
+            var criteria = new FraudCaseGetCriteria(isInternal, isActive, environment);
 
             using (var db = new ObjectDb(criteria.GetSettingKey()))
             {

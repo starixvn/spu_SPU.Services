@@ -39,8 +39,7 @@
                     .Precondition()
                     .Rule();
 
-                Thread.Sleep(600000);
-                
+                LogService.Info("Rule is executed.");
             }
             catch (Exception ex)
             {

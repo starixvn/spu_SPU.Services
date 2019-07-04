@@ -37,6 +37,7 @@
                     .Precondition()
                     .Rule();
 
+                LogService.Info("Rule is executed.");
             }
             catch (Exception ex)
             {

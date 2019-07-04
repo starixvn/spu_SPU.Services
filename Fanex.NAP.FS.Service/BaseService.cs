@@ -32,22 +32,7 @@
 
         public virtual BaseService Rule() { return this; }
 
-        public virtual BaseService CleanResult() { return this; }
-
-        public void Report(ReportModel model) {
-
-            var client = new RestClient(AppSetting.HeartBeatUrl);
-            var request = new RestRequest("/api/HealthCheck/beat", Method.POST);
-
-            request.AddQueryParameter("fraudcaseid", this.FraudCaseId.ToString());
-            request.AddQueryParameter("status", model.Status.ToString());
-            request.AddQueryParameter("exception", model.Exception);
-            request.AddQueryParameter("timeout", model.Timeout.ToString());
-            request.AddQueryParameter("isActive", model.IsActive.ToString());
-            request.AddQueryParameter("message", model.Message);
-
-            client.Execute(request);
-        }
+        public virtual BaseService CleanResult() { return this; }        
 
         public bool CheckUM()
         {
