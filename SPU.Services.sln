@@ -21,7 +21,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FS.DelayGoal.Cons
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FS.FlaggedAccount.Console", "Fanex.NAP.FS.FlaggedAccount.Console\Fanex.NAP.FS.FlaggedAccount.Console.csproj", "{FA2F687E-544E-460A-905A-FBAF9CD67271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.ExecutingService", "Fanex.NAP.FS.ExecutingService\Fanex.NAP.SPU.ExecutingService.csproj", "{3E476E98-FD03-461F-842B-CF548129BB7F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.ExecutingService", "Fanex.NAP.SPU.ExecutingService\Fanex.NAP.SPU.ExecutingService.csproj", "{3E476E98-FD03-461F-842B-CF548129BB7F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FS.Core", "Fanex.NAP.FS.Core\Fanex.NAP.FS.Core.csproj", "{F95AB8F2-F7DC-4C12-89E0-090FB0EC6414}"
 EndProject
