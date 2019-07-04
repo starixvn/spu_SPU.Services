@@ -73,7 +73,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FraudSensorJob.cs" />
     <Compile Include="IJobBase.cs" />
+    <Compile Include="ScheduleJob.cs" />
     <Compile Include="JobBase.cs" />
     <Compile Include="Jobs\ExecuteJob.cs" />
     <Compile Include="Jobs\ListenerJob.cs" />
@@ -86,6 +88,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="VirtualSettingJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

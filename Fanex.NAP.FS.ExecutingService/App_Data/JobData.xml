@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Services>
   <Service Id="1" Name="FS.FraudCase.Scanner" Active="true">
-    <Job Id="1" Name="BSNG" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.BigStakeNearGoal.Console\bin\Debug\Fanex.NAP.FS.BigStakeNearGoal.Console.exe"></Job>
+    <Job Id="1" Name="BigStateNearGoal" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.FS.BigStakeNearGoal.Console\bin\Debug\Fanex.NAP.FS.BigStakeNearGoal.Console.exe"></Job>
     <Job Id="2" Name="ScannedOfficeIP" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.ScannedOfficeIP.Console\bin\Debug\Fanex.NAP.FS.ScannedOfficeIP.Console.exe"></Job>
     <Job Id="3" Name="CheckBet" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.CheckBet.Console\bin\Debug\Fanex.NAP.FS.CheckBet.Console.exe"></Job>
     <Job Id="4" Name="DailyDataCapture" Active="false" Path="D:\Projects\spu.services\Fanex.NAP.FS.DailyDataCapture.Console\bin\Debug\Fanex.NAP.FS.DailyDataCapture.Console.exe"></Job>
