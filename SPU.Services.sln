@@ -51,6 +51,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{095D0B99-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{B13F9DEE-1F87-4C87-8FF5-6D260BA7DF29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FS.ScannedOfficeIP.Console", "Fanex.NAP.FS.ScannedOfficeIP.Console\Fanex.NAP.FS.ScannedOfficeIP.Console.csproj", "{B228BEFE-38C5-4D49-8E65-5626DA6F8748}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -137,6 +139,10 @@ Global
 		{B1F2E701-1B8B-4D47-A293-6A151950A21D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F2E701-1B8B-4D47-A293-6A151950A21D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F2E701-1B8B-4D47-A293-6A151950A21D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B228BEFE-38C5-4D49-8E65-5626DA6F8748}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B228BEFE-38C5-4D49-8E65-5626DA6F8748}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B228BEFE-38C5-4D49-8E65-5626DA6F8748}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B228BEFE-38C5-4D49-8E65-5626DA6F8748}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -162,6 +168,7 @@ Global
 		{B1F2E701-1B8B-4D47-A293-6A151950A21D} = {B13F9DEE-1F87-4C87-8FF5-6D260BA7DF29}
 		{095D0B99-DC61-42A7-8BF1-019066CE31AF} = {BD64796B-C186-4369-AA2E-A7E5AAD80637}
 		{B13F9DEE-1F87-4C87-8FF5-6D260BA7DF29} = {B9E4F045-5DCA-4951-A90C-B6F182F3DA6A}
+		{B228BEFE-38C5-4D49-8E65-5626DA6F8748} = {BD64796B-C186-4369-AA2E-A7E5AAD80637}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
