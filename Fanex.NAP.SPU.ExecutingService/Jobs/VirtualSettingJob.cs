@@ -4,7 +4,7 @@
 
     public class VirtualSettingJob : ScheduleJob
     {
-        private const string groupName = "CMS.VirtualSetting";
+        private const string groupName = "VirtualSetting";
 
         public override void CreateScheduleJob(JobDataSevices jobData)
         {
