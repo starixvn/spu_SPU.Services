@@ -67,10 +67,22 @@
 
         public void Run()
         {
-            if (this.Job != null && this.Trigger != null)
+            if (this.Schedule != null)
             {
                 this.Schedule.Start();
             }
+        }              
+     
+        public IJobBase DeleteJob(string jobName, string groupName)
+        {
+            var jobKey = new JobKey(jobName, groupName);
+
+            if(this.Schedule.CheckExists(jobKey).Result)
+            {
+                this.Schedule.DeleteJob(jobKey);
+            }
+
+            return this;
         }
     }
 }

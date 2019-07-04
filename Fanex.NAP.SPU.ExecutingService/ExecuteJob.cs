@@ -3,6 +3,8 @@
     using Fanex.Logging;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.FS.Service;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Services.Impl;
     using Quartz;
     using System;
     using System.Diagnostics;
@@ -15,11 +17,23 @@
     {
         private const string FlagNotExistsFile = "FlagNotExistsFile";
 
+        protected IUMControlAdapter maintenanceService;
+
+        public ExecuteJob()
+        {
+            maintenanceService = new UMControlAdapter();
+        }
+
+        private bool CheckUM()
+        {
+            return maintenanceService.GetUnderMaintenanceTime().IsUnderMaintenanceTime;
+        }
+
         public Task Execute(IJobExecutionContext context)
         {
             try
-            {
-                if (!CheckActive(context) || !CheckFileExist(context))
+            {                
+                if (this.CheckUM() || !CheckActive(context) || !CheckFileExist(context))
                 {
                     return Task.FromResult(false);
                 }

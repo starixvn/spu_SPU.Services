@@ -4,16 +4,11 @@
     using Fanex.Data.ConnectionStringProvider20;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.FS.Model;
-    using ONEbook.UM.Services;
-    using ONEbook.UM.Services.Impl;
-    using RestSharp;
     using System;
 
     public class BaseService
     {
-        public int FraudCaseId { get; set; }
-
-        protected IUMControlAdapter maintenanceService;
+        public int FraudCaseId { get; set; }        
 
         public BaseService(FraudCaseId fraudCaseId)
         {
@@ -25,18 +20,14 @@
         
             FraudCaseId = Convert.ToInt32(fraudCaseId);
 
-            maintenanceService = new UMControlAdapter();
+            
         }
 
         public virtual BaseService Precondition() { return this; }
 
         public virtual BaseService Rule() { return this; }
 
-        public virtual BaseService CleanResult() { return this; }        
-
-        public bool CheckUM()
-        {
-            return maintenanceService.GetUnderMaintenanceTime().IsUnderMaintenanceTime;
-        }
+        public virtual BaseService CleanResult() { return this; }       
+                
     }
 }

@@ -25,12 +25,7 @@
                         })
                     });
 
-                var _service = new Service();
-
-                if (_service.CheckUM())
-                {
-                    return;
-                }
+                var _service = new Service();               
 
                 _service
                     .CleanResult()

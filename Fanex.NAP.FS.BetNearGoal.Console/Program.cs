@@ -26,12 +26,7 @@
                     });
 
                 var _service = new Service();
-
-                if (_service.CheckUM())
-                {
-                    return;
-                }
-
+                
                 _service
                     .CleanResult()
                     .Precondition()

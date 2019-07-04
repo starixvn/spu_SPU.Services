@@ -78,12 +78,6 @@
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
       <Version>1.0.1</Version>
     </PackageReference>
-    <PackageReference Include="ONEbook.UM">
-      <Version>2.0.2.9</Version>
-    </PackageReference>
-    <PackageReference Include="UMControllerLibrary">
-      <Version>1.0.1872.836</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPFSNames.LOCAL.xml">
