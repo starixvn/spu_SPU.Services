@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.SPU.Model;
-
-namespace Fanex.NAP.SPU.ExecutingService
+﻿namespace Fanex.NAP.SPU.ExecutingService.Jobs
 {
-   public class VirtualSettingJob: ScheduleJob
+    using Fanex.NAP.SPU.Model;
+
+    public class VirtualSettingJob : ScheduleJob
     {
+        private const string groupName = "CMS.VirtualSetting";
+
         public override void CreateScheduleJob(JobDataSevices jobData)
         {
             foreach (var job in jobData.Jobs)
@@ -17,8 +14,8 @@ namespace Fanex.NAP.SPU.ExecutingService
                 var jobName = string.Format("{0}Job", job.Name);
                 var triggerName = string.Format("{0}Trigger", job.Name);
 
-                jobBase.CreateJob(jobName, "CMS.VirtualSetting", job)
-                    .CreateTrigger(triggerName, 60)
+                jobBase.CreateJob(jobName, groupName, job)
+                    .CreateTrigger(triggerName, groupName, 60)
                     .CreateSchedule()
                     .CreateListenerJob()
                     .Run();

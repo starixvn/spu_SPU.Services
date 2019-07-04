@@ -2,6 +2,7 @@
 {
     using Fanex.Logging;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.ExecutingService.Jobs;
     using Fanex.NAP.SPU.Model;
     using System;
     using System.Collections.Generic;

@@ -75,13 +75,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FraudSensorJob.cs" />
+    <Compile Include="Jobs\FraudSensorJob.cs" />
     <Compile Include="IJobBase.cs" />
     <Compile Include="ScheduleJob.cs" />
     <Compile Include="JobBase.cs" />
-    <Compile Include="Jobs\ExecuteJob.cs" />
-    <Compile Include="Jobs\ListenerJob.cs" />
-    <Compile Include="Models\FraudCase.cs" />
+    <Compile Include="ExecuteJob.cs" />
+    <Compile Include="ListenerJob.cs" />
     <Compile Include="Runner.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -90,7 +89,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VirtualSettingJob.cs" />
+    <Compile Include="Jobs\VirtualSettingJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

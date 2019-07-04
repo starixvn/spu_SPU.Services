@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.SPU.ExecutingService.Jobs
+﻿namespace Fanex.NAP.SPU.ExecutingService
 {
     using Fanex.Logging;
     using Fanex.NAP.FS.Core;

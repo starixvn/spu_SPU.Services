@@ -29,10 +29,10 @@
             return this;
         }       
 
-        public IJobBase CreateTrigger(string triggerName, int interval)
+        public IJobBase CreateTrigger(string triggerName, string groupName, int interval)
         {
             var trigger = TriggerBuilder.Create()
-            .WithIdentity(triggerName)
+            .WithIdentity(triggerName, groupName)
             .StartNow()
             .WithSimpleSchedule(x => x
                 .WithIntervalInSeconds(interval)
