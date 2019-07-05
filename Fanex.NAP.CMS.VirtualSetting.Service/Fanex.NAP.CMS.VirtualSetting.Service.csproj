@@ -37,14 +37,14 @@
     <Reference Include="Fanex.Common, Version=1.0.404.97, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Common.1.0.404.97\lib\net40\Fanex.Common.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Data, Version=3.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Data.3.1.0\lib\net461\Fanex.Data.dll</HintPath>
+    <Reference Include="Fanex.Data, Version=3.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Data.3.0.2\lib\net461\Fanex.Data.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.Data.ConnectionStringProvider20, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Data.ConnectionStringProvider20.3.0.0\lib\net461\Fanex.Data.ConnectionStringProvider20.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Fanex.NAP.Framework, Version=1.0.0.3, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.NAP.Framework.1.0.0.3\lib\net40\Fanex.NAP.Framework.dll</HintPath>
