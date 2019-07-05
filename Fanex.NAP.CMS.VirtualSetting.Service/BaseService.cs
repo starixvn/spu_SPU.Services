@@ -29,6 +29,8 @@
 
         public virtual BaseService CountAffectedMembers() { return this; }
 
-        public virtual BaseService SendMail() { return this; }
+        public virtual BaseService SendMailExternal(int mailingListId) { return this; }
+
+        public virtual BaseService SendMailInternal(int mailingListId) { return this; }
     }
 }

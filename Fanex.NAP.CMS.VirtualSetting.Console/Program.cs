@@ -34,14 +34,17 @@
 
                 if (service.IsExecutedDate())
                 {
-                    service.ExecuteForSoccer()
+                    service
+                        .StartTime()
+                        .ExecuteForSoccer()
                         .ExecuteForSportbooks()
                         .CountAffectedMembers()
-                        .SendMail();
+                        .SendMailExternal(AppSetting.MailingListId);
                 }
                 else
                 {
-                    service.SendMail();
+                    service
+                        .SendMailInternal(AppSetting.MailingIdToSPU);
                 }
             }
             catch (Exception ex)

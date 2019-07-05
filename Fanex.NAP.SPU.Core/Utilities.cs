@@ -1,7 +1,17 @@
 ﻿namespace Fanex.NAP.SPU.Core
 {
+    using System.IO;
+
     public static class Utilities
     {
+        public static string ReadTextFile(string filePath)
+        {
+            using (var sr = new StreamReader(filePath))
+            {
+                return sr.ReadToEnd();
+            }
+        }
+
         public static string GenerateVirtualSettingXmlForUpdating(string param1, double param2)
         {
             var rate = string.Format(Constants.VirtualSettingXmlForUpdating, param1, param2);

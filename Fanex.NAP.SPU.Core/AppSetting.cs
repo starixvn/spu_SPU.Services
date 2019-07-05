@@ -170,6 +170,66 @@ namespace Fanex.NAP.SPU.Core
             }
         }
 
+        public static decimal Margin200
+        {
+            get
+            {
+                string count = ConfigurationManager.AppSettings["Margin200"];
+
+                if (!string.IsNullOrEmpty(count))
+                {
+                    return Convert.ToDecimal(count);
+                }
+
+                return 4;
+            }
+        }
+
+        public static int MailingListId
+        {
+            get
+            {
+                string mailingListId = ConfigurationManager.AppSettings["MailingListId"];
+
+                if (!string.IsNullOrEmpty(mailingListId))
+                {
+                    return Convert.ToInt32(mailingListId);
+                }
+
+                return 80;
+            }
+        }
+
+        public static int MailingIdToSPU
+        {
+            get
+            {
+                string mailingListId = ConfigurationManager.AppSettings["MailingIdToSPU"];
+
+                if (!string.IsNullOrEmpty(mailingListId))
+                {
+                    return Convert.ToInt32(mailingListId);
+                }
+
+                return 80;
+            }
+        }
+
+        public static int IdleTime
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings["IdleTime"].ToString();
+
+                if (!string.IsNullOrEmpty(value))
+                {
+                    return Convert.ToInt32(value);
+                }
+
+                return 30;
+            }
+        }
+
         public static bool IsStopService
         {
             get
