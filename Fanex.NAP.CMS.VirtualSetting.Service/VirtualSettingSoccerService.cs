@@ -4,10 +4,13 @@
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.SPU.Core;
     using System;
+    using System.Collections.Generic;
 
     public class VirtualSettingSoccerService : IVirtualSettingService
     {
         private IPunterService _punterService;
+
+        public IEnumerable<Punter> Punters { get; set; }
 
         public VirtualSettingSoccerService(string siteIds, string superIds, DateTime adjustDate)
         {
@@ -24,7 +27,7 @@
             var dataAccess = new VirtualSettingPunterDataAccess();
 
             _punterService = new VirtualSettingPunterService(model, dataAccess);
-        }
+        }        
 
         public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
         {
@@ -32,6 +35,8 @@
                     .FilterPunterBaseOnCurrentVirtualRate()
                     .AdjustVirtualSettingForSuperProPunter(AppSetting.NewVirtualMultiplierForSuperProPunter)
                     .AdjustVirtualSettingForNormal(AppSetting.NewVirtualMultiplierForWinning);
+
+            Punters = _punterService.Punters;
 
             return this;
         }

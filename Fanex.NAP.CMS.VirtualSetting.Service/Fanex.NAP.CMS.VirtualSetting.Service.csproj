@@ -98,6 +98,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IVirtualSettingService.cs" />
     <Compile Include="VirtualSettingSoccerService.cs" />
+    <Compile Include="VirtualSettingSportsbookService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.CMS.VirtualSetting.DataAccess\Fanex.NAP.CMS.VirtualSetting.DataAccess.csproj">

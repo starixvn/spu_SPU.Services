@@ -10,11 +10,12 @@
     public class VirtualSettingPunterService : IPunterService
     {
         private IVirtualSettingPunterDataAccess _dataAccess;
-        private VirtualSetting _model;
-        private IEnumerable<Punter> _punters;
+        private VirtualSetting _model;        
         private Dictionary<int, Punter> _puntersDict;
         private IEnumerable<Punter> _proPuntersUpdated;
         private IEnumerable<Punter> _normalPuntersUpdated;
+
+        public IEnumerable<Punter> Punters { get; set; }
 
         public VirtualSettingPunterService(VirtualSetting model, IVirtualSettingPunterDataAccess dataAccess)
         {
@@ -24,19 +25,19 @@
 
         public IPunterService GetPunterList()
         {
-            _punters = _dataAccess.GetWinningPunterSoccerList(_model.SiteIds, _model.SuperIds, _model.VirtualRateThreshold);
+            Punters = _dataAccess.GetWinningPunterSoccerList(_model.SiteIds, _model.SuperIds, _model.VirtualRateThreshold);
 
             return this;
         }
 
         public IPunterService FilterPunterBaseOnCurrentVirtualRate()
         {
-            if (!_punters.Any())
+            if (!Punters.Any())
             {
                 return this;
             }
 
-            _puntersDict = _punters.Distinct().ToDictionary(p => p.CustID);
+            _puntersDict = Punters.Distinct().ToDictionary(p => p.CustID);
             var custIds = string.Join(",", _puntersDict.Keys);
 
             var currentVRs = GetCurrentCustomerVirtualRate(custIds);

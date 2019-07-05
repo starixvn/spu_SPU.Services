@@ -2,17 +2,23 @@
 {
     using Fanex.Data;
     using Fanex.Data.ConnectionStringProvider20;
+    using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.SPU.Core;
+    using System.Collections.Generic;
 
     public class BaseService
     {
+        protected IEnumerable<Punter> PuntersSoccer { get; set; }
+
+        protected IEnumerable<Punter> PuntersSportbooks { get; set; }
+
         public BaseService()
         {
             DbSettingProviderManager
                   .StartNewSession()
                   .Use(new ConnectionStringProvider20())
                   .UseDefaultDbSettingProvider(AppSetting.AppData, false)
-                  .Run();            
+                  .Run();
         }
 
         public virtual BaseService ExecuteForSoccer() { return this; }
