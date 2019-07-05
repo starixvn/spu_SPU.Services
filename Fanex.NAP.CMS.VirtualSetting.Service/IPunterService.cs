@@ -9,7 +9,7 @@
 
         IPunterService GetPunterList();
 
-        IPunterService FilterPunterBaseOnCurrentVirtualRate();
+        IPunterService FilterPunterBaseOnCurrentVirtualRate(short sportType, bool compareVROtherSports);
 
         IPunterService AdjustVirtualSettingForSuperProPunter(double virtualMultiplier);
 

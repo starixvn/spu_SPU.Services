@@ -32,7 +32,7 @@
         public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
         {
             _punterService.GetPunterList()
-                    .FilterPunterBaseOnCurrentVirtualRate()
+                    .FilterPunterBaseOnCurrentVirtualRate(1, false)
                     .AdjustVirtualSettingForSuperProPunter(AppSetting.NewVirtualMultiplierForSuperProPunter)
                     .AdjustVirtualSettingForNormal(AppSetting.NewVirtualMultiplierForWinning);
 

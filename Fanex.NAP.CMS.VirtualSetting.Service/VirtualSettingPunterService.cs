@@ -30,7 +30,7 @@
             return this;
         }
 
-        public IPunterService FilterPunterBaseOnCurrentVirtualRate()
+        public IPunterService FilterPunterBaseOnCurrentVirtualRate(short sportType, bool compareVROtherSports)
         {
             if (!Punters.Any())
             {
@@ -41,6 +41,7 @@
             var custIds = string.Join(",", _puntersDict.Keys);
 
             var currentVRs = GetCurrentCustomerVirtualRate(custIds);
+
             if (currentVRs != null && currentVRs.Any())
             {
                 foreach (var currentVR in currentVRs)
@@ -48,7 +49,12 @@
                     if (currentVR.VRSoccer < _model.VirtualRateThreshold)
                     {
                         _puntersDict[currentVR.CustID].OldVirtualRate = currentVR.VRSoccer;
-                        _puntersDict[currentVR.CustID].SportType = 1;
+                        _puntersDict[currentVR.CustID].SportType = sportType;
+                    }
+                    else if (compareVROtherSports && currentVR.VROtherSports < _model.VirtualRateThreshold)
+                    {
+                        _puntersDict[currentVR.CustID].OldVirtualRate = currentVR.VROtherSports;
+                        _puntersDict[currentVR.CustID].SportType = 2;
                     }
                     else
                     {

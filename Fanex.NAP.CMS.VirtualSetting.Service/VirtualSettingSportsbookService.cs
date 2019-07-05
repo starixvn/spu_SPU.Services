@@ -32,12 +32,13 @@
         public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
         {
             _punterService.GetPunterList()
-                .FilterPunterBaseOnCurrentVirtualRate()
+                .FilterPunterBaseOnCurrentVirtualRate(0, true)
                 .AdjustVirtualSettingForNormal(AppSetting.NewVirtualMultiplierForWinning);
 
             Punters = _punterService.Punters;
 
             return this;
         }
+        
     }
 }

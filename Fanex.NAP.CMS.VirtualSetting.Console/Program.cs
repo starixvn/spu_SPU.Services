@@ -25,10 +25,24 @@
                         })
                     });
 
-                var _service = new Service()
-                        .ExecuteForSoccer()
+                var service = new Service();
+
+                if (service.IsStopService())
+                {
+                    return;
+                }
+
+                if (service.IsExecutedDate())
+                {
+                    service.ExecuteForSoccer()
                         .ExecuteForSportbooks()
+                        .CountAffectedMembers()
                         .SendMail();
+                }
+                else
+                {
+                    service.SendMail();
+                }
             }
             catch (Exception ex)
             {

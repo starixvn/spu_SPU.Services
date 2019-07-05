@@ -12,6 +12,8 @@
 
         protected IEnumerable<Punter> PuntersSportbooks { get; set; }
 
+        protected int TotalAffectedMembers { get; set; }
+
         public BaseService()
         {
             DbSettingProviderManager
@@ -25,7 +27,8 @@
 
         public virtual BaseService ExecuteForSportbooks() { return this; }
 
-        public virtual BaseService SendMail() { return this; }
+        public virtual BaseService CountAffectedMembers() { return this; }
 
+        public virtual BaseService SendMail() { return this; }
     }
 }
