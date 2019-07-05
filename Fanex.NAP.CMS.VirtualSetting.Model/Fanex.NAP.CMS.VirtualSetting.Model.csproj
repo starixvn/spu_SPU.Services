@@ -48,8 +48,5 @@
     <Compile Include="PunterEqualityComparer.cs" />
     <Compile Include="VirtualSetting.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="MailTemplate\MailInformTemplate.cshtml" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,7 +7,9 @@
     {
         IEnumerable<Punter> Punters { get; set; }
 
-        IPunterService GetPunterList();
+        IPunterService GetWinningPunterSoccerList();
+
+        IPunterService GetWinningPunterList();
 
         IPunterService FilterPunterBaseOnCurrentVirtualRate(short sportType, bool compareVROtherSports);
 

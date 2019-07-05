@@ -7,17 +7,15 @@
 
     public interface IVirtualSettingPunterDataAccess
     {
-        ICommandResult UpdateVirtualSetting(string VirtualMultiplier, int userId, string ip, short sportType);
-
-        ICommandResult LogVirtualSetting(string punterVRSettingsDoc, int creatorId, string serviceName, DateTime adjustDate);
-
         IEnumerable<CustomerVirtualRate> GetCurrentCustomerVirtualRate(string custIds);
 
         IEnumerable<int> GetBACustIds(string custIds);
 
         IEnumerable<Punter> GetWinningPunterSoccerList(string siteNames, string superIds, double virtualRateThreshold);
 
-        ICommandResult UpdatePunterVirtualSettingForSoccer(IEnumerable<Punter> punters, double virtualMultiplier, int userId, string ip);
+        IEnumerable<Punter> GetWinningPunterList(string siteNames, string superIds, double virtualRateThreshold);
+
+        ICommandResult UpdatePunterVirtualSetting(IEnumerable<Punter> punters, double virtualMultiplier, int userId, string ip, short sportType);
 
         ICommandResult LogPunterVirtualSetting(string serviceName, IEnumerable<Punter> punters, int userId, DateTime adjustDate);
 

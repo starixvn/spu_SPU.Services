@@ -26,12 +26,12 @@
 
             var dataAccess = new VirtualSettingPunterDataAccess();
 
-            _punterService = new VirtualSettingPunterService(model, dataAccess);
+            _punterService = new VirtualSettingPunterService(model, dataAccess, false);
         }
 
         public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
         {
-            _punterService.GetPunterList()
+            _punterService.GetWinningPunterList()
                 .FilterPunterBaseOnCurrentVirtualRate(0, true)
                 .AdjustVirtualSettingForNormal(AppSetting.NewVirtualMultiplierForWinning);
 

@@ -84,7 +84,7 @@
 
         public override BaseService SendMailExternal(int mailingListId)
         {
-            var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @".\Fanex.NAP.CMS.VirtualSetting.Model\MailTemplate\MailInformTemplate.cshtml";
+            var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @"MailTemplate\MailInformTemplate.cshtml";
 
             var body = Utilities.ReadTextFile(mailTemplatePath);
 

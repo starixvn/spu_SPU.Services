@@ -37,52 +37,7 @@
             };
 
             return _repository.Fetch<CustomerVirtualRate>(criteria);
-        }
-   
-        public ICommandResult InsertCustomerMarginHistory(string customerMarginDoc, DateTime adjustDate)
-        {
-            var criteria = new InsertCustomerMarginHistoryCriteria
-            {
-                CustomerMarginDoc = customerMarginDoc,
-                AdjustDate = adjustDate,
-                ErrCode = 0,
-                ErrMsg = string.Empty
-            };
-
-            _repository.Execute(criteria);
-
-            return new CommandResult
-            {
-                Code = criteria.ErrCode,
-                Message = criteria.ErrMsg
-            };
-        }
-
-        public ICommandResult LogVirtualSetting(string punterVRSettingsDoc, int creatorId, string serviceName, DateTime adjustDate)
-        {
-            var criteria = new LogVirtualSettingCriteria
-            {
-                PunterVRSettingsDoc = punterVRSettingsDoc,
-                CreatorId = creatorId,
-                ServiceName = serviceName,
-                AdjustDate = adjustDate
-            };
-
-            return Execute(criteria);
-        }
-
-        public ICommandResult UpdateVirtualSetting(string VirtualMultiplier, int userId, string ip, short sportType)
-        {
-            var criteria = new UpdateVirtualSettingCriteria
-            {
-                VirtualMultiplier = VirtualMultiplier,
-                UserId = userId,
-                IP = ip,
-                SportType = sportType
-            };
-
-            return Execute(criteria);
-        }
+        }       
 
         public IEnumerable<Punter> GetWinningPunterSoccerList(string siteNames, string superIds, double virtualRateThreshold)
         {
@@ -96,7 +51,19 @@
             return _repository.Fetch<Punter>(criteria);
         }
 
-        public ICommandResult UpdatePunterVirtualSettingForSoccer(IEnumerable<Punter> punters, double virtualMultiplier, int userId, string ip)
+        public IEnumerable<Punter> GetWinningPunterList(string siteNames, string superIds, double virtualRateThreshold)
+        {
+            var criteria = new GetProPrunterCriteria
+            {
+                SiteIds = siteNames,
+                SuperIds = superIds,
+                VirtualRateThreshold = virtualRateThreshold
+            };
+
+            return _repository.Fetch<Punter>(criteria);
+        }
+
+        public ICommandResult UpdatePunterVirtualSetting(IEnumerable<Punter> punters, double virtualMultiplier, int userId, string ip, short sportType)
         {
             var cusIds = string.Join(",", punters.Select(x => x.CustID));
 
@@ -105,11 +72,11 @@
                 VirtualMultiplier = Utilities.GenerateVirtualSettingXmlForUpdating(cusIds, virtualMultiplier),
                 UserId = userId,
                 IP = ip,
-                SportType = 1
+                SportType = sportType
             };
 
             return Execute(criteria);
-        }
+        }        
 
         public ICommandResult LogPunterVirtualSetting(string serviceName, IEnumerable<Punter> punters, int userId, DateTime adjustDate)
         {
@@ -170,6 +137,25 @@
             return this.InsertCustomerMarginHistory(doc, adjustDate);
         }
 
+        private ICommandResult InsertCustomerMarginHistory(string customerMarginDoc, DateTime adjustDate)
+        {
+            var criteria = new InsertCustomerMarginHistoryCriteria
+            {
+                CustomerMarginDoc = customerMarginDoc,
+                AdjustDate = adjustDate,
+                ErrCode = 0,
+                ErrMsg = string.Empty
+            };
+
+            _repository.Execute(criteria);
+
+            return new CommandResult
+            {
+                Code = criteria.ErrCode,
+                Message = criteria.ErrMsg
+            };
+        }
+
         public IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupID, int numOfMonth)
         {
             var criteria = new GetCustomerMarginHistoryCriteria
@@ -180,7 +166,7 @@
             };
 
             return _repository.Fetch<CustomerMargin>(criteria);
-        }
+        }        
 
         private ICommandResult Execute(object criteria)
         {

@@ -3,36 +3,46 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Logging;
     using Fanex.NAP.CMS.VirtualSetting.DataAccess;
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.SPU.Core;
 
     public class VirtualSettingPunterService : IPunterService
     {
+        private bool _soccer;
         private IVirtualSettingPunterDataAccess _dataAccess;
-        private VirtualSetting _model;        
+        private VirtualSetting _model;
         private Dictionary<int, Punter> _puntersDict;
         private IEnumerable<Punter> _proPuntersUpdated;
         private IEnumerable<Punter> _normalPuntersUpdated;
 
         public IEnumerable<Punter> Punters { get; set; }
 
-        public VirtualSettingPunterService(VirtualSetting model, IVirtualSettingPunterDataAccess dataAccess)
+        public VirtualSettingPunterService(VirtualSetting model, IVirtualSettingPunterDataAccess dataAccess, bool soccer)
         {
             _model = model;
             _dataAccess = dataAccess;
+            _soccer = soccer;
         }
 
-        public IPunterService GetPunterList()
+        public IPunterService GetWinningPunterSoccerList()
         {
             Punters = _dataAccess.GetWinningPunterSoccerList(_model.SiteIds, _model.SuperIds, _model.VirtualRateThreshold);
 
             return this;
         }
 
+        public IPunterService GetWinningPunterList()
+        {
+            Punters = _dataAccess.GetWinningPunterList(_model.SiteIds, _model.SuperIds, _model.VirtualRateThreshold);
+
+            return this;
+        }
+
         public IPunterService FilterPunterBaseOnCurrentVirtualRate(short sportType, bool compareVROtherSports)
         {
-            if (!Punters.Any())
+            if (Punters == null || !Punters.Any())
             {
                 return this;
             }
@@ -68,7 +78,7 @@
       
         public IPunterService AdjustVirtualSettingForSuperProPunter(double virtualMultiplier)
         {
-            if (!_puntersDict.Any())
+            if (_puntersDict == null || !_puntersDict.Any())
             {
                 return this;
             }
@@ -91,7 +101,7 @@
 
         public IPunterService AdjustVirtualSettingForNormal(double virtualMultiplier)
         {
-            if (!_puntersDict.Any())
+            if (_puntersDict == null || !_puntersDict.Any())
             {
                 return this;
             }
@@ -120,9 +130,9 @@
             {
                 return _dataAccess.GetCurrentCustomerVirtualRate(custIds);
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                //Logger.Log.Error("Error (exception) for GetCurrentCustomerVirtualRate on " + ServiceName + " ; " + exception.Message);
+                LogService.Error($"VirtualSetting Service - GetCurrentCustomerVirtualRate Exception { ex.Message }");
             }
 
             return null;
@@ -130,9 +140,18 @@
 
         private bool UpdatePunterVirtualSetting(IEnumerable<Punter> punters, double virtualMultiplier, int userId, string ip)
         {
-            var result = _dataAccess.UpdatePunterVirtualSettingForSoccer(punters, virtualMultiplier, userId, ip);
+            switch (_soccer)
+            {
+                case true:
+                    var result = _dataAccess.UpdatePunterVirtualSetting(punters, virtualMultiplier, userId, ip, 1);
 
-            return result.IsSuccessful;
+                    return result.IsSuccessful;
+
+                default:
+                    return UpdatePunterVirtualSettingForAllSports(punters, virtualMultiplier, userId, ip) &&
+                            UpdatePunterVirtualSettingForOtherSports(punters, virtualMultiplier, userId, ip);
+
+            }
         }
 
         public IEnumerable<Punter> UpdateVirtualSetting(IEnumerable<Punter> punters, double newVirtualRate)
@@ -153,18 +172,21 @@
                     if (!updateResult)
                     {
                         _model.FailedUpdatePunterList.AddRange(selectedPunters);
-                        //Logger.Log.Error("Error for updating virtual settings on " + _model.ServiceName);
+
+                        LogService.Error($"VirtualSetting Service - UpdateVirtualSetting error on  { _model.ServiceName }");                        
                     }
                     else
                     {
                         LoggingUpdateVirtualSetting(userId, selectedPunters);
+
                         UpdateCustomerMarginHistory(selectedPunters);
                     }
                 }
                 catch (Exception ex)
                 {
                     _model.FailedUpdatePunterList.AddRange(selectedPunters);
-                    //Logger.Log.Error("Error (exception) for UpdateVirtualSetting on " + ServiceName + " ; " + exception.InnerException.Message);
+
+                    LogService.Error($"VirtualSetting Service - UpdateVirtualSetting Exception { ex.Message }");
                 }
             }
 
@@ -192,10 +214,38 @@
                     }
                 }
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-                //Logger.Log.Error("Error (exception) for DetectBAAccounts on " + _model.ServiceName + " ; " + exception.InnerException.Message);
+                LogService.Error($"VirtualSetting Service - DetectBAAccounts Exception { ex.Message }");
             }
+        }
+
+        private bool UpdatePunterVirtualSettingForAllSports(IEnumerable<Punter> punters, double virtualMultiplier, int userId, string ip)
+        {
+            var puntersForAllSports = punters.Where(p => p.SportType == 0);
+
+            if (puntersForAllSports != null && puntersForAllSports.Any())
+            {
+                var result = _dataAccess.UpdatePunterVirtualSetting(puntersForAllSports, virtualMultiplier, userId, ip, 0);
+
+                return result.IsSuccessful;
+            }
+
+            return true;
+        }
+
+        private bool UpdatePunterVirtualSettingForOtherSports(IEnumerable<Punter> punters, double virtualMultiplier, int userId, string ip)
+        {
+            var puntersForOtherSports = punters.Where(p => p.SportType == 2);
+
+            if (puntersForOtherSports != null & puntersForOtherSports.Any())
+            {
+                var result = _dataAccess.UpdatePunterVirtualSetting(puntersForOtherSports, virtualMultiplier, userId, ip, 2);
+
+                return result.IsSuccessful;
+            }
+
+            return true;
         }
 
         private void LoggingUpdateVirtualSetting(int userId, IEnumerable<Punter> selectedPunters)
@@ -204,7 +254,7 @@
 
             if (!logResult.IsSuccessful)
             {
-                //Logger.Log.Error("Error for logging virtual settings on " + ServiceName);
+                LogService.Error($"VirtualSetting Service - LoggingUpdateVirtualSetting error { _model.ServiceName }");
             }
         }
 
@@ -218,12 +268,12 @@
 
                 if (!result.IsSuccessful)
                 {
-                    //Logger.Log.Error("Error for logging customer margin history on " + ServiceName);
+                    LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory error { _model.ServiceName }");
                 }
             }
             catch (Exception ex)
             {
-                //Logger.Log.Error("Error (exception) for UpdateCustomerMarginHistory on " + ServiceName + " ; " + exception.Message);
+                LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory Exception { ex.Message }");
             }
         }
 

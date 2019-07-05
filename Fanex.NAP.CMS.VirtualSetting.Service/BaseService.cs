@@ -18,7 +18,8 @@
         {
             DbSettingProviderManager
                   .StartNewSession()
-                  .Use(new ConnectionStringProvider20())
+                  .UseDefaultConnectionStringProvider()
+                  //.Use(new ConnectionStringProvider20())
                   .UseDefaultDbSettingProvider(AppSetting.AppData, false)
                   .Run();
         }
