@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Database\Tables\tables_sqlServer.sql" />
     <Content Include="Fanex.NAP.SPU.ExecutingService.exe.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
