@@ -73,11 +73,7 @@
         public static string LetstalkTarget => ConfigurationManager.AppSettings["Letstalk-Target"];
         public static string LetstalkGroup => ConfigurationManager.AppSettings["Letstalk-Group"];
 
-        public static string FraudCaseConsoleRootPath => ConfigurationManager.AppSettings["FraudCaseConsole.RootPath"];
-
-        public static string FraudCaseConsoleInstance => ConfigurationManager.AppSettings["FraudCaseConsole.Instance"];
-
-        public static string FraudCaseConsoleType => ConfigurationManager.AppSettings["FraudCaseConsole.Type"];
+        public static string VSJobCronEveryDay => ConfigurationManager.AppSettings["VS-JobCronEveryDay"];
 
     }
 }

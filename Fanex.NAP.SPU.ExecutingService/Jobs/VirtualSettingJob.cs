@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.SPU.ExecutingService.Jobs
 {
+    using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
 
     public class VirtualSettingJob : ScheduleJob
@@ -15,7 +16,7 @@
                 var triggerName = string.Format("{0}Trigger", job.Name);
 
                 jobBase.CreateJob(jobName, groupName, job)
-                    .CreateTrigger(triggerName, groupName, 60)
+                    .CreateTriggerWithCronSchedule(triggerName, groupName, AppSetting.VSJobCronEveryDay)
                     .CreateSchedule()
                     .CreateListenerJob()
                     .Run();

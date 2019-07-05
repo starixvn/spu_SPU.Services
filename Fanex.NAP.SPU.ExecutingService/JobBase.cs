@@ -1,7 +1,5 @@
 ﻿namespace Fanex.NAP.SPU.ExecutingService
 {
-    using Fanex.NAP.SPU.ExecutingService.Jobs;
-    using Fanex.NAP.FS.Model;
     using Quartz;
     using Quartz.Impl;
     using Quartz.Impl.Matchers;
@@ -42,7 +40,20 @@
             this.Trigger = trigger;
 
             return this;
-        }        
+        }
+
+        public IJobBase CreateTriggerWithCronSchedule(string triggerName, string groupName, string expression)
+        {
+            var trigger = TriggerBuilder.Create()
+                .WithIdentity(triggerName, groupName)
+                .WithCronSchedule(expression)
+                .StartNow()
+                .Build();
+
+            this.Trigger = trigger;
+
+            return this;
+        }
 
         public IJobBase CreateSchedule()
         {

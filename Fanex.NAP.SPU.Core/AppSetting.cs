@@ -110,6 +110,8 @@ namespace Fanex.NAP.SPU.Core
             }
         }
 
+        public static string JobCronEveryDay => ConfigurationManager.AppSettings["JobCronEveryDay"];
+
         public static int NumOfMonth
         {
             get
