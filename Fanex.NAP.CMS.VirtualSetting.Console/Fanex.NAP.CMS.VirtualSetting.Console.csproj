@@ -107,5 +107,11 @@
       <Name>Fanex.NAP.SPU.Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Data\NAPVSNames.PRO.xml" />
+    <Content Include="App_Data\NAPVSNames.UAT.xml" />
+    <Content Include="App_Data\NAPVSNames.LOCAL.xml" />
+    <Content Include="App_Data\NAPVSNames.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
