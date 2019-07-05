@@ -53,7 +53,7 @@
                      .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                      .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error($"CMS.VirtualSetting service - Start Exception {logMessage}");
+                LogService.Error($"VirtualSetting service - Start Exception {logMessage}");
             }
         }
     }

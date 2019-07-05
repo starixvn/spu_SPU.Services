@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CMS.VirtualSetting.Console
 {
+    using Fanex.Logging;
     using Fanex.MailDelivery.Client;
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.CMS.VirtualSetting.Service;
@@ -100,6 +101,8 @@
 
             //MailClientHandler.SendFunctionMail(newMail);
 
+            LogService.Error($"VirtualSetting service - SendMailExternal successful");
+
             return this;
         }
 
@@ -114,6 +117,8 @@
             };
 
             //MailClientHandler.SendFunctionMail(newMail);
+
+            LogService.Error($"VirtualSetting service - SendMailInternal successful");
 
             return this;
         }
