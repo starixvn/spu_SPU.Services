@@ -88,7 +88,7 @@
 
                 if (!context.JobDetail.JobDataMap.Contains(FlagNotExistsFile))
                 {
-                    new LetstalkService().Error(msg);
+                   // new LetstalkService().Error(msg);
                     context.JobDetail.JobDataMap.Put(FlagNotExistsFile, true);
                 }
 

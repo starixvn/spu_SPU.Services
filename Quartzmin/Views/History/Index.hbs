@@ -10,9 +10,15 @@
 </div>
 {{/if}}
 
+<div class="ui small left icon input">
+    <input style="width:350px" type="text" placeholder="Search Job..." id="search-job">
+    <i class="search icon"></i>
+</div>
+
 <table class="ui single line table highlight-rows" id="history-list">
     <thead>
         <tr>
+            <th>#</th>
             <th>Job</th>
             <th>Trigger</th>
             <th>Scheduled Fire Time</th>
@@ -24,6 +30,7 @@
     <tbody>
         {{#each Model}}
         <tr>
+            <td>{{Counter}}</td>
             <td class="job-key">
                 <i class="{{StateIcon}} icon" title="{{State}}"></i>
                 <a href="{{ActionUrl 'Edit' 'Jobs' group=JobGroup name=JobName}}">{{JobGroup}}.{{JobName}}</a>
@@ -54,3 +61,37 @@
     Enable ExecutionHistoryPlugin in Quartz configuration section.
 </div>
 {{/if}}
+
+<script>
+    $('#history-list > tbody > tr').each(function () {
+        const
+            $_ = $(this),
+            jobKey = $_.find('>.job-key').text().trim();
+    
+        $_.data('fulltext', jobKey.toLowerCase());
+    });
+
+    function applyFilter() {
+        const fStr = $('#search-job').val().toLowerCase();
+        $('#history-list > tbody > tr').each(function () {
+
+            const $_ = $(this), txt = $_.data('fulltext');
+
+            if (txt.indexOf(fStr) !== -1) {
+               $_.show();
+            }
+            else {
+                $_.hide();              
+            };
+        });
+    }
+
+    var searchTimer;
+    $('#search-job').on('input', function (e) {
+        window.clearTimeout(searchTimer);
+        searchTimer = window.setTimeout(function () {
+            searchTimer = null;
+            applyFilter();
+        }, 100);
+    });
+</script>

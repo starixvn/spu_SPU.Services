@@ -93,6 +93,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="App_Data\HistoryData\QTZ_SPU_HistoryExecutionService.mdf" />
+    <Content Include="App_Data\HistoryData\QTZ_SPU_HistoryExecutionService_log.ldf">
+      <DependentUpon>QTZ_SPU_HistoryExecutionService.mdf</DependentUpon>
+    </Content>
     <Content Include="Fanex.NAP.SPU.ExecutingService.exe.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

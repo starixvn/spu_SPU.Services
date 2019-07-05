@@ -28,12 +28,14 @@ namespace Quartzmin.Controllers
             if (store == null)
                 return View(null);
 
-            IEnumerable<ExecutionHistoryEntry> history = await store.FilterLast(100);
+            IEnumerable<ExecutionHistoryEntry> history = await store.FilterLast(300);
 
             var list = new List<object>();
+            var counter = 0;
 
             foreach (var h in history.OrderByDescending(x => x.ActualFireTimeUtc))
             {
+                counter++;
                 string state = "Finished", icon = "check";
                 var endTime = h.FinishedTimeUtc;
 
@@ -72,6 +74,7 @@ namespace Quartzmin.Controllers
                     Duration = (endTime - h.ActualFireTimeUtc)?.ToString("hh\\:mm\\:ss"),
                     State = state,
                     StateIcon = icon,
+                    Counter=counter
                 });
             }
 

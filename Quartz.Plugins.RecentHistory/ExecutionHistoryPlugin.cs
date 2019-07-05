@@ -19,7 +19,7 @@ namespace Quartz.Plugins.RecentHistory
             Name = pluginName;
             _scheduler = scheduler;
             _scheduler.ListenerManager.AddJobListener(this, EverythingMatcher<JobKey>.AllJobs());
-            
+
             return Task.FromResult(0);
         }
 
@@ -29,14 +29,12 @@ namespace Quartz.Plugins.RecentHistory
 
             if (_store == null)
             {
-                if (StoreType != null)
-                    _store = (IExecutionHistoryStore)Activator.CreateInstance(StoreType);
-
-                if (_store == null)
-                    throw new Exception(nameof(StoreType) + " is not set.");
+                _store = CreateExecutionHistoryStore();
 
                 _scheduler.Context.SetExecutionHistoryStore(_store);
             }
+
+            _scheduler.Context.SetExecutionHistoryStore(_store);
 
             _store.SchedulerName = _scheduler.SchedulerName;
 
@@ -87,6 +85,14 @@ namespace Quartz.Plugins.RecentHistory
                 entry.Vetoed = true;
                 await _store.Save(entry);
             }
+        }
+
+        protected virtual IExecutionHistoryStore CreateExecutionHistoryStore()
+        {
+            if (StoreType != null)
+                return (IExecutionHistoryStore)Activator.CreateInstance(StoreType);
+
+            throw new Exception(nameof(StoreType) + " is not set.");
         }
     }
 }
