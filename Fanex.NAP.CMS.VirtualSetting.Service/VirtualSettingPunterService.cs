@@ -18,7 +18,7 @@
         private IEnumerable<Punter> _proPuntersUpdated;
         private IEnumerable<Punter> _normalPuntersUpdated;
 
-        public VirtualSettingPunterService(VirtualSetting model, IVirtualSettingPunterDataAccess dataAccess, bool soccer)
+        public VirtualSettingPunterService(VirtualSetting model, IVirtualSettingPunterDataAccess dataAccess, bool soccer = false)
         {
             _model = model;
             _dataAccess = dataAccess;

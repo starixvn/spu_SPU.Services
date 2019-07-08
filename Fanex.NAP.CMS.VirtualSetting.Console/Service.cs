@@ -84,7 +84,7 @@
 
             //MailClientHandler.SendFunctionMail(newMail);
 
-            LogService.Error($"VirtualSetting service - SendMailExternal successful");
+            LogService.Error($"VirtualSetting service - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
             return this;
         }

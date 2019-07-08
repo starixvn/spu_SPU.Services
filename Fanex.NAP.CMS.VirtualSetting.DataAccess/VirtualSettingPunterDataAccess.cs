@@ -148,13 +148,7 @@
                 ErrMsg = string.Empty
             };
 
-            _repository.Execute(criteria);
-
-            return new CommandResult
-            {
-                Code = criteria.ErrCode,
-                Message = criteria.ErrMsg
-            };
+            return ExecuteOutput(criteria);
         }
 
         public IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupID, int numOfMonth)
@@ -190,6 +184,6 @@
                 Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
                 Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
             };
-        }    
+        }
     }
 }

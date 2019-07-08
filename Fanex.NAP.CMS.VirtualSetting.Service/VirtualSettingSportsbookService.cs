@@ -27,7 +27,7 @@
 
             var dataAccess = new VirtualSettingPunterDataAccess();
 
-            _punterService = new VirtualSettingPunterService(model, dataAccess, false);
+            _punterService = new VirtualSettingPunterService(model, dataAccess);
         }
 
         public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
