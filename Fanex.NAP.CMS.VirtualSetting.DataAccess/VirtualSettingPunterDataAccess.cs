@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CMS.VirtualSetting.DataAccess
 {
+    using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.NAP.CMS.VirtualSetting.Criteria;
     using Fanex.NAP.CMS.VirtualSetting.Model;
@@ -75,7 +76,7 @@
                 SportType = sportType
             };
 
-            return Execute(criteria);
+            return ExecuteOutput(criteria);
         }        
 
         public ICommandResult LogPunterVirtualSetting(string serviceName, IEnumerable<Punter> punters, int userId, DateTime adjustDate)
@@ -108,7 +109,7 @@
                 AdjustDate = adjustDate
             };
 
-            return Execute(criteria);
+            return ExecuteOutput(criteria);
         }
 
         public ICommandResult InsertCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupID, int numOfMonth, string serviceName, DateTime adjustDate)
@@ -168,16 +169,27 @@
             return _repository.Fetch<CustomerMargin>(criteria);
         }        
 
-        private ICommandResult Execute(object criteria)
+        private ICommandResult ExecuteOutput(ICriteria criteria)
         {
-            var result = _repository.Execute(criteria);
+            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
+            {
+                var param = criteria.GetSpParams();
+                objectDb.ExecuteNonQuery(param);
+
+                return GetCommandResult(param);
+            }
+        }
+
+        private ICommandResult GetCommandResult(Hashtable hash)
+        {
+            var errCode = hash["errcode"];
+            var errMsg = hash["errmsg"];
 
             return new CommandResult
             {
-                Code = result,
-                Message = string.Empty
+                Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
+                Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
             };
-        }
-
+        }    
     }
 }
