@@ -126,7 +126,7 @@
         {
             if (_proPuntersUpdated != null && _normalPuntersUpdated != null)
             {
-                return _proPuntersUpdated.Union(_normalPuntersUpdated).Count();
+                return _proPuntersUpdated.Union(_normalPuntersUpdated, _model.PunterEqualityComparer).Count();
             }
             else if (_proPuntersUpdated != null)
             {
