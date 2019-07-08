@@ -122,6 +122,24 @@
             return this;
         }
 
+        public int CountAffected()
+        {
+            if (_proPuntersUpdated != null && _normalPuntersUpdated != null)
+            {
+                return _proPuntersUpdated.Union(_normalPuntersUpdated).Count();
+            }
+            else if (_proPuntersUpdated != null)
+            {
+                return _proPuntersUpdated.Count();
+            }
+            else if (_normalPuntersUpdated != null)
+            {
+                return _normalPuntersUpdated.Count();
+            }
+
+            return 0;
+        }
+
         #region Private Methods
 
         private IEnumerable<CustomerVirtualRate> GetCurrentCustomerVirtualRate(string custIds)
@@ -275,7 +293,7 @@
             {
                 LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory Exception { ex.Message }");
             }
-        }
+        }        
 
         #endregion
     }

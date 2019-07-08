@@ -10,7 +10,7 @@
     {
         private IPunterService _punterService;
 
-        public IEnumerable<Punter> Punters { get; set; }
+        public int PuntersUpdated { get; set; }
 
         public VirtualSettingSportsbookService(string siteIds, string superIds, DateTime adjustDate)
         {
@@ -35,10 +35,9 @@
                 .FilterPunterBaseOnCurrentVirtualRate(0, true)
                 .AdjustVirtualSettingForNormal(AppSetting.NewVirtualMultiplierForWinning);
 
-            Punters = _punterService.Punters;
+            PuntersUpdated = _punterService.CountAffected();
 
             return this;
         }
-        
     }
 }

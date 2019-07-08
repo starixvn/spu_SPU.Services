@@ -17,5 +17,6 @@
 
         IPunterService AdjustVirtualSettingForNormal(double virtualMultiplier);
 
+        int CountAffected();
     }
 }

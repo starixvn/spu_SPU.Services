@@ -2,11 +2,9 @@
 {
     using Fanex.Logging;
     using Fanex.MailDelivery.Client;
-    using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.CMS.VirtualSetting.Service;
     using Fanex.NAP.SPU.Core;
     using System;
-    using System.Linq;
 
     public class Service : BaseService
     {
@@ -41,7 +39,7 @@
 
             service.AutoAdjustVirtualSettingsForPunters();
 
-            PuntersSoccer = service.Punters;
+            PuntersUpdatedSoccer = service.PuntersUpdated;
 
             _stopTime = DateTime.Now;
 
@@ -54,7 +52,7 @@
 
             service.AutoAdjustVirtualSettingsForPunters();
 
-            PuntersSportbooks = service.Punters;
+            PuntersUpdatedSportbooks = service.PuntersUpdated;
 
             _stopTime = DateTime.Now;
 
@@ -63,22 +61,7 @@
 
         public override BaseService CountAffectedMembers()
         {
-            if (PuntersSoccer != null && PuntersSportbooks != null)
-            {
-                TotalAffectedMembers = PuntersSoccer.Union(PuntersSportbooks, new PunterEqualityComparer()).Count();
-            }
-            else if (PuntersSoccer != null)
-            {
-                TotalAffectedMembers = PuntersSoccer.Count();
-            }
-            else if (PuntersSportbooks != null)
-            {
-                TotalAffectedMembers = PuntersSportbooks.Count();
-            }
-            else
-            {
-                TotalAffectedMembers = 0;
-            }
+            TotalAffectedMembers = PuntersUpdatedSoccer + PuntersUpdatedSportbooks;
 
             return this;
         }
