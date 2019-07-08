@@ -95,6 +95,8 @@
 
             _proPuntersUpdated = _proPuntersUpdated.Except(_model.FailedUpdatePunterList, _model.PunterEqualityComparer);
 
+            this.LogPunters(_proPuntersUpdated, Constants.VSProPunter);
+
             return this;
         }
 
@@ -117,6 +119,8 @@
             _normalPuntersUpdated = UpdateVirtualSetting(normalPunters, virtualMultiplier);
 
             _normalPuntersUpdated = _normalPuntersUpdated.Except(_model.FailedUpdatePunterList, _model.PunterEqualityComparer);
+
+            this.LogPunters(_normalPuntersUpdated, Constants.VSNormalPunter);
 
             return this;
         }
@@ -293,6 +297,23 @@
                 LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory Exception { ex.Message }");
             }
         }        
+
+        private void LogPunters(IEnumerable<Punter> punters, string type)
+        {
+            if (punters != null && punters.Any())
+            {
+                var info = $"List of {type} updated: { string.Join(",", punters.Select(p => p.CustID))}";
+
+                LogService.Info(info);
+            }
+
+            if (_model != null && _model.FailedUpdatePunterList.Any())
+            {
+                var error = $"List of {type} update fail {string.Join(",", _model.FailedUpdatePunterList.Select(p=>p.CustID))}";
+
+                LogService.Error(error);
+            }
+        }
 
         #endregion
     }

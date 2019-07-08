@@ -22,7 +22,7 @@
                 SiteIds = siteIds,
                 SuperIds = superIds,
                 VirtualRateThreshold = AppSetting.VirtualRateThresholdForWinning,
-                FailedUpdatePunterList = new List<Punter>(),
+                FailedUpdatePunterList = new List<Punter>()
             };
 
             var dataAccess = new VirtualSettingPunterDataAccess();

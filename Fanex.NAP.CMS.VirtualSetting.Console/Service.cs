@@ -68,7 +68,7 @@
 
         public override BaseService SendMailExternal(int mailingListId)
         {
-            var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @"MailTemplate\MailInformTemplate.cshtml";
+            var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + Constants.VSMailInformTemplate;
 
             var body = Utilities.ReadTextFile(mailTemplatePath);
 
@@ -84,7 +84,7 @@
 
             //MailClientHandler.SendFunctionMail(newMail);
 
-            LogService.Error($"VirtualSetting service - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
+            LogService.Info($"VirtualSetting service - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
             return this;
         }
@@ -101,7 +101,7 @@
 
             //MailClientHandler.SendFunctionMail(newMail);
 
-            LogService.Error($"VirtualSetting service - SendMailInternal successful");
+            LogService.Info($"VirtualSetting service - SendMailInternal successful");
 
             return this;
         }

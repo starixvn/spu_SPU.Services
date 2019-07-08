@@ -14,24 +14,24 @@
 
         public static string GenerateVirtualSettingXmlForUpdating(string param1, double param2)
         {
-            var rate = string.Format(Constants.VirtualSettingXmlForUpdating, param1, param2);
+            var rate = string.Format(Constants.VSXmlForUpdating, param1, param2);
 
-            return string.Format(Constants.VirtualSettingXmlRoot, rate);
+            return string.Format(Constants.VSXmlRoot, rate);
         }
 
         public static string GenerateVirtualSettingXmlFromRate(string param)
         {
-            return string.Format(Constants.VirtualSettingXmlRoot, param);
+            return string.Format(Constants.VSXmlRoot, param);
         }
 
         public static string GenerateRateVirtualSettingXmlForLogging(params object[] objParams)
         {
-            return string.Format(Constants.VirtualSettingXmlForLogging, objParams);
+            return string.Format(Constants.VSXmlForLogging, objParams);
         }
 
         public static string GenerateRateVirtualSettingXmlForCustomerMarginHistory(params object[] objParams)
         {
-            return string.Format(Constants.VirtualSettingXmlForCustomerMarginHistory, objParams);
+            return string.Format(Constants.VSXmlForCustomerMarginHistory, objParams);
         }
     }
 }
