@@ -13,11 +13,10 @@
         private bool _soccer;
         private IVirtualSettingPunterDataAccess _dataAccess;
         private VirtualSetting _model;
+        private IEnumerable<Punter> _punters { get; set; }
         private Dictionary<int, Punter> _puntersDict;
         private IEnumerable<Punter> _proPuntersUpdated;
         private IEnumerable<Punter> _normalPuntersUpdated;
-
-        public IEnumerable<Punter> Punters { get; set; }
 
         public VirtualSettingPunterService(VirtualSetting model, IVirtualSettingPunterDataAccess dataAccess, bool soccer)
         {
@@ -28,26 +27,26 @@
 
         public IPunterService GetWinningPunterSoccerList()
         {
-            Punters = _dataAccess.GetWinningPunterSoccerList(_model.SiteIds, _model.SuperIds, _model.VirtualRateThreshold);
+            _punters = _dataAccess.GetWinningPunterSoccerList(_model.SiteIds, _model.SuperIds, _model.VirtualRateThreshold);
 
             return this;
         }
 
         public IPunterService GetWinningPunterList()
         {
-            Punters = _dataAccess.GetWinningPunterList(_model.SiteIds, _model.SuperIds, _model.VirtualRateThreshold);
+            _punters = _dataAccess.GetWinningPunterList(_model.SiteIds, _model.SuperIds, _model.VirtualRateThreshold);
 
             return this;
         }
 
         public IPunterService FilterPunterBaseOnCurrentVirtualRate(short sportType, bool compareVROtherSports)
         {
-            if (Punters == null || !Punters.Any())
+            if (_punters == null || !_punters.Any())
             {
                 return this;
             }
 
-            _puntersDict = Punters.Distinct().ToDictionary(p => p.CustID);
+            _puntersDict = _punters.Distinct().ToDictionary(p => p.CustID);
             var custIds = string.Join(",", _puntersDict.Keys);
 
             var currentVRs = GetCurrentCustomerVirtualRate(custIds);
