@@ -75,7 +75,7 @@
                 MailingListId = mailingListId
             };
 
-            //MailClientHandler.SendFunctionMail(newMail);
+            MailClientHandler.SendFunctionMail(newMail);
 
             LogService.Info($"VirtualSetting service - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
@@ -92,7 +92,7 @@
                 MailingListId = mailingListId
             };
 
-            //MailClientHandler.SendFunctionMail(newMail);
+            MailClientHandler.SendFunctionMail(newMail);
 
             LogService.Info($"VirtualSetting service - SendMailInternal successful");
 
