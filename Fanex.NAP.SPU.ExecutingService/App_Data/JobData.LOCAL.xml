@@ -11,6 +11,6 @@
     <Job Id="11" Name="BetsNearGoal" Active="true" Path="D:\WWW\SPU\Fanex.NAP.FS.BetNearGoal.Console\Fanex.NAP.FS.BetNearGoal.Console.exe"></Job>
   </Service>
   <Service Id="2" Name="CMS.VirtualSetting.Scanner" Active="true">
-    <Job Id="1" Name="UpdateVirtualSetting" Active="false" Path="D:\WWW\SPU\CMS.VirtualSetting.Console\Fanex.NAP.CMS.VirtualSetting.Console.exe"></Job>    
+    <Job Id="1" Name="UpdateVirtualSetting" Active="true" Path="D:\WWW\SPU\Fanex.NAP.CMS.VirtualSetting.Console\Fanex.NAP.CMS.VirtualSetting.Console.exe"></Job>    
   </Service>
 </Services>
