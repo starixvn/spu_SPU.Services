@@ -75,7 +75,7 @@
                 MailingListId = mailingListId
             };
 
-            MailClientHandler.SendFunctionMail(newMail);
+            SendMail(newMail);
 
             LogService.Info($"VirtualSetting service - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
@@ -92,11 +92,20 @@
                 MailingListId = mailingListId
             };
 
-            MailClientHandler.SendFunctionMail(newMail);
+            SendMail(newMail);
 
             LogService.Info($"VirtualSetting service - SendMailInternal successful");
 
             return this;
+        }
+
+        private void SendMail(Fanex.MailDelivery.Core.Models.Mail mail)
+        {
+            MailClientHandler.Start();
+
+            MailClientHandler.SendFunctionMail(mail);
+
+            MailClientHandler.Stop();
         }
     }
 }
