@@ -298,18 +298,20 @@
             }
         }        
 
-        private void LogPunters(IEnumerable<Punter> punters, string type)
+        private void LogPunters(IEnumerable<Punter> punters, string punterType)
         {
+            var sportType = _soccer ? Constants.VSSoccer : Constants.VSSportbook;
+
             if (punters != null && punters.Any())
             {
-                var info = $"List of {type} updated: { string.Join(",", punters.Select(p => p.CustID))}";
+                var info = $"List of { sportType } {punterType} updated: { string.Join(",", punters.Select(p => p.CustID))}";
 
                 LogService.Info(info);
             }
 
             if (_model != null && _model.FailedUpdatePunterList.Any())
             {
-                var error = $"List of {type} update fail {string.Join(",", _model.FailedUpdatePunterList.Select(p=>p.CustID))}";
+                var error = $"List of { sportType } {punterType} update fail {string.Join(",", _model.FailedUpdatePunterList.Select(p=>p.CustID))}";
 
                 LogService.Error(error);
             }

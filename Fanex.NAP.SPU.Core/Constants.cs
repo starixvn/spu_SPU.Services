@@ -17,5 +17,9 @@
         public const string VSProPunter = "Pro Punter(s)";
 
         public const string VSMailInformTemplate = @"MailTemplate\MailInformTemplate.cshtml";
+
+        public const string VSSoccer = "Soccer";
+
+        public const string VSSportbook = "Sport book";
     }
 }
