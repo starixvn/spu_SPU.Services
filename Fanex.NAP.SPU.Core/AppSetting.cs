@@ -230,31 +230,6 @@ namespace Fanex.NAP.SPU.Core
 
                 return 30;
             }
-        }
-
-        public static bool IsStopService
-        {
-            get
-            {
-                var value = ConfigurationManager.AppSettings["IsStopService"].ToString();
-
-                if (!string.IsNullOrEmpty(value))
-                {
-                    return Convert.ToBoolean(value) == true;
-                }
-
-                return false;
-            }
-        }
-
-        public static DateTime SpeciaExecuteDate
-        {
-            get
-            {
-                var time = ConfigurationManager.AppSettings["SpecialExecuteDate"] ?? @"1/1/1";
-
-                return DateTime.Parse(time);
-            }
-        }
+        }         
     }
 }

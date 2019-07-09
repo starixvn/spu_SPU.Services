@@ -27,11 +27,6 @@
 
                 var service = new Service();
 
-                if (service.IsStopService())
-                {
-                    return;
-                }
-
                 if (service.IsExecutedDate())
                 {
                     service

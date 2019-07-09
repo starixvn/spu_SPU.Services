@@ -12,18 +12,11 @@
 
         private DateTime _stopTime;
 
-        public bool IsStopService()
-        {
-            return AppSetting.IsStopService;
-        }
-
         public bool IsExecutedDate()
         {
             var currentDate = DateTime.Today;
-            var specialDay = AppSetting.SpeciaExecuteDate;
-            var isSpecialDay = currentDate.Year == specialDay.Year && currentDate.Month == specialDay.Month && currentDate.Day == specialDay.Day;
 
-            return currentDate.Day == 1 || currentDate.Day == 16 || isSpecialDay;
+            return currentDate.Day == 1 || currentDate.Day == 16;
         }
 
         public Service StartTime()
