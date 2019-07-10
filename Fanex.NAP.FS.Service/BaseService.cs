@@ -11,7 +11,7 @@
     {
         public int FraudCaseId { get; set; }
 
-        public bool FraudCaseIsActive { get; set; }
+        private bool FraudCaseIsActive { get; set; }
 
         public BaseService(FraudCaseId fraudCaseId)
         {
