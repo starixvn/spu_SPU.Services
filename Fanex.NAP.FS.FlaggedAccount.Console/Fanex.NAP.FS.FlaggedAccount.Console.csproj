@@ -63,11 +63,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
-    <None Include="Commands\TaskKill.ps1">
+    <Content Include="Commands\TaskKill.bat">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TaskKill.tt</DependentUpon>
-    </None>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Fanex.NAP.FS.FlaggedAccount.Console.ruleset" />
   </ItemGroup>
   <ItemGroup>
@@ -103,7 +104,7 @@
     </Content>
     <Content Include="Commands\TaskKill.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TaskKill.ps1</LastGenOutput>
+      <LastGenOutput>TaskKill.bat</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
