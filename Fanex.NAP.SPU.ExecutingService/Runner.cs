@@ -4,6 +4,7 @@
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.ExecutingService.Jobs;
     using Fanex.NAP.SPU.Model;
+    using Fanex.NAP.FS.Service;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -22,17 +23,42 @@
             {
                 ExecuteJobs();
 
-                LogService.Info($"Executing service is STARTED");
+                var msg = $"Executing service is STARTED at {DateTime.Now}";
+
+                LogService.Info(msg);
+
+                new LetstalkService().Info(msg);
             }
             catch (Exception ex)
             {
-                LogService.Error($"Executing service is START error message: { ex.Message } at {DateTime.Now}");
+                var errorMsg = $"Executing service is START error message: { ex.Message } at {DateTime.Now}";
+
+                LogService.Error(errorMsg);
+
+                new LetstalkService().Error(errorMsg);
             }
         }
 
         protected override void OnStop()
         {
-            LogService.Info($"Executing service is STOP at {DateTime.Now}");            
+            var msg = $"Executing service is STOP at {DateTime.Now}";
+
+            LogService.Info(msg);
+
+            new LetstalkService().Info(msg);
+
+            base.OnStop();
+        }
+
+        protected override void OnShutdown()
+        {
+            var msg = $"Executing service is SHUTDOWN at {DateTime.Now}";
+
+            LogService.Info(msg);
+
+            new LetstalkService().Info(msg);
+
+            base.OnShutdown();
         }
 
         private void ExecuteJobs()
