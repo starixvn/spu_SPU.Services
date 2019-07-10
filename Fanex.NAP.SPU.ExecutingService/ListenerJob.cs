@@ -61,7 +61,7 @@
                 return Task.FromResult(false);
             }
 
-            //_letstalkService.Error(errorMessage);
+            _letstalkService.Error(errorMessage);
 
             return Task.FromResult(false);
         }

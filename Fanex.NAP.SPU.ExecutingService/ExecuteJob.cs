@@ -16,7 +16,7 @@
     public class ExecuteJob : IJob
     {
         private const string FlagNotExistsFile = "FlagNotExistsFile";
-        private const string FlagIsActive = "FlagIsActive";
+        private const string FlagNotifyInActive = "FlagNotifyInActive";
 
         protected IUMControlAdapter maintenanceService;
 
@@ -33,7 +33,7 @@
         public Task Execute(IJobExecutionContext context)
         {
             try
-            {                
+            {
                 if (this.CheckUM() || !CheckActive(context) || !CheckFileExist(context))
                 {
                     return Task.FromResult(false);
@@ -50,7 +50,7 @@
                 process.ErrorDataReceived += Process_ErrorDataReceived;
                 process.OutputDataReceived += Process_OutputDataReceived;
                 process.BeginErrorReadLine();
-                process.BeginOutputReadLine();                
+                process.BeginOutputReadLine();
 
                 process.WaitForExit();
             }
@@ -62,7 +62,7 @@
 
             return Task.FromResult(true);
         }
-        
+
 
         private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
@@ -77,7 +77,7 @@
         private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (e.Data != null)
-            {                
+            {
                 LogService.Info(e.Data);
                 Console.Write(e.Data);
             }
@@ -85,14 +85,17 @@
 
         private bool CheckActive(IJobExecutionContext context)
         {
-            var active = context.JobDetail.JobDataMap.GetBoolean(FlagIsActive);
+            var active = context.JobDetail.JobDataMap.GetBoolean("Active");
 
             if (!active)
             {
                 var msg = $"{context.JobDetail.Key} - Execute: not activate";
                 LogService.Error(msg);
 
-                context.JobDetail.JobDataMap.Put(FlagIsActive, true);
+                if (!context.JobDetail.JobDataMap.Contains(FlagNotifyInActive))
+                {
+                    context.JobDetail.JobDataMap.Put(FlagNotifyInActive, true);
+                }
             }
 
             return active;
@@ -109,7 +112,7 @@
 
                 if (!context.JobDetail.JobDataMap.Contains(FlagNotExistsFile))
                 {
-                   // new LetstalkService().Error(msg);
+                    new LetstalkService().Error(msg);
                     context.JobDetail.JobDataMap.Put(FlagNotExistsFile, true);
                 }
 
