@@ -13,5 +13,5 @@ if(!Directory.Exists(folderPath))
 string[] filePaths = Directory.GetFiles(folderPath, "*.exe", SearchOption.TopDirectoryOnly);#>
 <#foreach(var file in filePaths){#>
 <#="c:"#>
-<#="tasklist | find /i "+ Path.GetFileName(file) +" && taskkill /im "+ Path.GetFileName(file) +" /F"#>
+<#="tasklist | find /i "+ Path.GetFileName(file) +" && taskkill /im "+ Path.GetFileName(file) +" /F || echo process "+ Path.GetFileName(file) +" not running."#>
 <#}#>
