@@ -26,13 +26,23 @@ namespace Fanex.NAP.FS.ScannedOfficeIP.Console
                     });
 
                 var _service = new Service();
-              
-                _service
-                    .CleanResult()
-                    .Precondition()
-                    .Rule();
 
-                LogService.Info("Rule is executed.");
+                var isActive = _service.GetFraudCaseActive()
+                                   .CheckFraudCaseIsActive();
+
+                if (isActive)
+                {
+                    _service
+                       .CleanResult()
+                       .Precondition()
+                       .Rule();
+
+                    LogService.Info("Rule is executed.");
+                }
+                else
+                {
+                    LogService.Info("Service ScannedOfficeIP is not active in database.");
+                }
             }
             catch (Exception ex)
             {

@@ -2,13 +2,16 @@
 {
     using Fanex.Data;
     using Fanex.Data.ConnectionStringProvider20;
+    using Fanex.Logging;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.FS.Model;
     using System;
 
     public class BaseService
     {
-        public int FraudCaseId { get; set; }        
+        public int FraudCaseId { get; set; }
+
+        public bool FraudCaseIsActive { get; set; }
 
         public BaseService(FraudCaseId fraudCaseId)
         {
@@ -27,7 +30,31 @@
 
         public virtual BaseService Rule() { return this; }
 
-        public virtual BaseService CleanResult() { return this; }       
-                
+        public virtual BaseService CleanResult() { return this; }
+
+        public virtual BaseService GetFraudCaseActive()
+        {
+            var fraudCaseService = new FraudCaseService();
+
+            var fraudCase = fraudCaseService.GetByFraudCaseId(FraudCaseId, AppSetting.Environment);
+
+            if (fraudCase != null)
+            {
+                FraudCaseIsActive = fraudCase.IsActive;
+            }
+            else
+            {
+                LogService.Error($"BaseService - CheckFraudCaseActive Fraud case is null. Please check again.");
+
+                FraudCaseIsActive = false;
+            }
+
+            return this;
+        }
+
+        public bool CheckFraudCaseIsActive()
+        {
+            return FraudCaseIsActive;
+        }
     }
 }

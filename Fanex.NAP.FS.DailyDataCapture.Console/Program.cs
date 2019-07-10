@@ -25,14 +25,24 @@
                         })
                     });
 
-                var _service = new Service();               
+                var _service = new Service();
 
-                _service
-                    .CleanResult()
-                    .Precondition()
-                    .Rule();
+                var isActive = _service.GetFraudCaseActive()
+                                     .CheckFraudCaseIsActive();
 
-                LogService.Info("Rule is executed.");
+                if (isActive)
+                {
+                    _service
+                        .CleanResult()
+                        .Precondition()
+                        .Rule();
+
+                    LogService.Info("Rule is executed.");
+                }
+                else
+                {
+                    LogService.Info("Service DailyDataCapture is not active in database.");
+                }
             }
             catch (Exception ex)
             {
