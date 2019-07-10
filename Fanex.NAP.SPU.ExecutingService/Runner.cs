@@ -32,7 +32,7 @@
 
         protected override void OnStop()
         {
-            LogService.Info($"Executing service is STOP at {DateTime.Now}");
+            LogService.Info($"Executing service is STOP at {DateTime.Now}");            
         }
 
         private void ExecuteJobs()
