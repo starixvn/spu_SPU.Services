@@ -49,16 +49,9 @@
                 process.ErrorDataReceived += Process_ErrorDataReceived;
                 process.OutputDataReceived += Process_OutputDataReceived;
                 process.BeginErrorReadLine();
-                process.BeginOutputReadLine();
-
-                var errorMessage = process.StandardError.ReadToEnd();
+                process.BeginOutputReadLine();                
 
                 process.WaitForExit();
-
-                if (!string.IsNullOrWhiteSpace(errorMessage))
-                {
-                    return Task.FromException(new JobExecutionException(errorMessage));
-                }
             }
 
             catch (Exception ex)
