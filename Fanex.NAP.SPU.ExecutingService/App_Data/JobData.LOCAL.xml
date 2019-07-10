@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Services>
-  <Service Id="1" Name="FS.FraudCase.Scanner" Active="true">
+  <Service Id="1" Name="FS.FraudCase.Scanner" Active="false">
     <Job Id="1" Name="BigStateNearGoal" Active="true" Path="D:\WWW\SPU\Fanex.NAP.FS.BigStakeNearGoal.Console\Fanex.NAP.FS.BigStakeNearGoal.Console.exe"></Job>
     <Job Id="2" Name="ScannedOfficeIP" Active="true" Path="D:\WWW\SPU\Fanex.NAP.FS.ScannedOfficeIP.Console\Fanex.NAP.FS.ScannedOfficeIP.Console.exe"></Job>
     <Job Id="3" Name="CheckBet" Active="true" Path="D:\WWW\SPU\Fanex.NAP.FS.CheckBet.Console\Fanex.NAP.FS.CheckBet.Console.exe"></Job>
@@ -10,7 +10,7 @@
     <Job Id="10" Name="Arbitrage" Active="true" Path="D:\WWW\SPU\Fanex.NAP.FS.Arbitrage.Console\Fanex.NAP.FS.Arbitrage.Console.exe"></Job>
     <Job Id="11" Name="BetsNearGoal" Active="true" Path="D:\WWW\SPU\Fanex.NAP.FS.BetNearGoal.Console\Fanex.NAP.FS.BetNearGoal.Console.exe"></Job>
   </Service>
-  <Service Id="2" Name="CMS.VirtualSetting.Scanner" Active="true">
+  <Service Id="2" Name="CMS.VirtualSetting.Scanner" Active="false">
     <Job Id="1" Name="UpdateVirtualSetting" Active="true" Path="D:\WWW\SPU\Fanex.NAP.CMS.VirtualSetting.Console\Fanex.NAP.CMS.VirtualSetting.Console.exe"></Job>    
   </Service>
 </Services>
