@@ -45,7 +45,12 @@
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.FileName = path;
                 process.Start();
-                
+
+                process.ErrorDataReceived += Process_ErrorDataReceived;
+                process.OutputDataReceived += Process_OutputDataReceived;
+                process.BeginErrorReadLine();
+                process.BeginOutputReadLine();
+
                 var errorMessage = process.StandardError.ReadToEnd();
 
                 process.WaitForExit();
@@ -58,10 +63,30 @@
 
             catch (Exception ex)
             {
-                throw new JobExecutionException(ex);
+                return Task.FromException(new JobExecutionException(ex));
             }
 
             return Task.FromResult(true);
+        }
+        
+
+        private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {
+                LogService.Error(e.Data);
+                new LetstalkService().Error(e.Data);
+                Console.Write(e.Data);
+            }
+        }
+
+        private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (e.Data != null)
+            {                
+                LogService.Info(e.Data);
+                Console.Write(e.Data);
+            }
         }
 
         private bool CheckActive(IJobExecutionContext context)
@@ -97,6 +122,5 @@
 
             return true;
         }
-        
     }
 }
