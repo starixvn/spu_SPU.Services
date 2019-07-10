@@ -35,9 +35,7 @@
             var fraudCase = fraudCaseService.GetByFraudCaseId(FraudCaseId, AppSetting.Environment);
 
             if (fraudCase == null)
-            {
-                LogService.Error($"BaseService - CheckFraudCaseActive Fraud case is null. Please check again.");
-
+            {               
                 return false;
             }
             
