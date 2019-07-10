@@ -16,6 +16,7 @@
     public class ExecuteJob : IJob
     {
         private const string FlagNotExistsFile = "FlagNotExistsFile";
+        private const string FlagIsActive = "FlagIsActive";
 
         protected IUMControlAdapter maintenanceService;
 
@@ -84,12 +85,14 @@
 
         private bool CheckActive(IJobExecutionContext context)
         {
-            var active = context.JobDetail.JobDataMap.GetBoolean("Active");
+            var active = context.JobDetail.JobDataMap.GetBoolean(FlagIsActive);
 
             if (!active)
             {
                 var msg = $"{context.JobDetail.Key} - Execute: not activate";
                 LogService.Error(msg);
+
+                context.JobDetail.JobDataMap.Put(FlagIsActive, true);
             }
 
             return active;
