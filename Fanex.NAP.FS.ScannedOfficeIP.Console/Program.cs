@@ -27,10 +27,7 @@ namespace Fanex.NAP.FS.ScannedOfficeIP.Console
 
                 var _service = new Service();
 
-                var isActive = _service.GetFraudCaseActive()
-                                   .CheckFraudCaseIsActive();
-
-                if (isActive)
+                if (_service.CheckFraudCaseIsActive())
                 {
                     _service
                        .CleanResult()
@@ -41,7 +38,7 @@ namespace Fanex.NAP.FS.ScannedOfficeIP.Console
                 }
                 else
                 {
-                    LogService.Info("Service ScannedOfficeIP is not active in database.");
+                    LogService.Info("Scanned Office IP service - is not active in database.");
                 }
             }
             catch (Exception ex)
@@ -50,7 +47,7 @@ namespace Fanex.NAP.FS.ScannedOfficeIP.Console
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error($"Flagged Account service - Start Exeption {logMessage}");
+                LogService.Error($"Scanned Office IP service - Start Exception {logMessage}");
             }
         }
     }

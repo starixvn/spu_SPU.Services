@@ -11,8 +11,6 @@
     {
         public int FraudCaseId { get; set; }
 
-        private bool FraudCaseIsActive { get; set; }
-
         public BaseService(FraudCaseId fraudCaseId)
         {
             DbSettingProviderManager
@@ -22,8 +20,6 @@
                   .Run();
         
             FraudCaseId = Convert.ToInt32(fraudCaseId);
-
-            
         }
 
         public virtual BaseService Precondition() { return this; }
@@ -32,29 +28,25 @@
 
         public virtual BaseService CleanResult() { return this; }
 
-        public virtual BaseService GetFraudCaseActive()
+        private bool GetFraudCaseActive()
         {
             var fraudCaseService = new FraudCaseService();
 
             var fraudCase = fraudCaseService.GetByFraudCaseId(FraudCaseId, AppSetting.Environment);
 
-            if (fraudCase != null)
-            {
-                FraudCaseIsActive = fraudCase.IsActive;
-            }
-            else
+            if (fraudCase == null)
             {
                 LogService.Error($"BaseService - CheckFraudCaseActive Fraud case is null. Please check again.");
 
-                FraudCaseIsActive = false;
+                return false;
             }
-
-            return this;
+            
+            return fraudCase.IsActive;
         }
 
         public bool CheckFraudCaseIsActive()
         {
-            return FraudCaseIsActive;
+           return GetFraudCaseActive();
         }
     }
 }

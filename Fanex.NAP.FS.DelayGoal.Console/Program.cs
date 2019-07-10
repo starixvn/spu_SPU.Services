@@ -26,11 +26,8 @@
                     });
 
                 var _service = new Service();
-
-                var isActive = _service.GetFraudCaseActive()
-                                   .CheckFraudCaseIsActive();
-
-                if (isActive)
+                
+                if (_service.CheckFraudCaseIsActive())
                 {
                     _service
                        .CleanResult()
@@ -41,7 +38,7 @@
                 }
                 else
                 {
-                    LogService.Info("Service DelayGoal is not active in database.");
+                    LogService.Info("Delay Goal service - is not active in database.");
                 }
             }
             catch (Exception ex)
@@ -50,7 +47,7 @@
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error($"Delay Goal service - Start Exeption {logMessage}");
+                LogService.Error($"Delay Goal service - Start Exception {logMessage}");
             }
         }
     }
