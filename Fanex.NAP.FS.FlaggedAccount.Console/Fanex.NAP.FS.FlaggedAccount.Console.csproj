@@ -55,20 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Fanex.NAP.FS.FlaggedAccount.Console.exe.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.FS.FlaggedAccount.Console.exe.LOCAL.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
-    <Content Include="Commands\TaskKill.bat">
-      <DependentUpon>TaskKill.tt</DependentUpon>
+    <None Include="Commands\TaskKill.ps1">
       <AutoGen>True</AutoGen>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <DesignTime>True</DesignTime>
-    </Content>
+      <DependentUpon>TaskKill.tt</DependentUpon>
+    </None>
     <None Include="Fanex.NAP.FS.FlaggedAccount.Console.ruleset" />
   </ItemGroup>
   <ItemGroup>
@@ -104,7 +103,7 @@
     </Content>
     <Content Include="Commands\TaskKill.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TaskKill.bat</LastGenOutput>
+      <LastGenOutput>TaskKill.ps1</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

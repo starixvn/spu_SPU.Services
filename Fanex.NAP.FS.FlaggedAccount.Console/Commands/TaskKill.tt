@@ -4,7 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="System.IO" #>
-<#@ output extension=".bat" encoding="us-ascii" #>
+<#@ output extension=".ps1" encoding="us-ascii" #>
 <#string folderPath = Host.ResolveAssemblyReference("$(ProjectDir)") + @"bin\debug\";
 if(!Directory.Exists(folderPath))
 {
@@ -12,6 +12,5 @@ if(!Directory.Exists(folderPath))
 }
 string[] filePaths = Directory.GetFiles(folderPath, "*.exe", SearchOption.TopDirectoryOnly);#>
 <#foreach(var file in filePaths){#>
-<#="c:"#>
-<#="tasklist | find /i "+ Path.GetFileName(file) +" && taskkill /im "+ Path.GetFileName(file) +" /F || echo process "+ Path.GetFileName(file) +" not running."#>
+<#="Get-Process | Where-Object { $_.Name -eq '"+ Path.GetFileNameWithoutExtension(file) +"' } | Select-Object -First 1 | Stop-Process -Force"#>
 <#}#>
