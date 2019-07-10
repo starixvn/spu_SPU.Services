@@ -54,6 +54,14 @@
     <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fanex.NAP.FS.FlaggedAccount.Console.exe.PRO.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.FS.FlaggedAccount.Console.exe.LOCAL.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
     <Content Include="Commands\TaskKill.bat">
       <DependentUpon>TaskKill.tt</DependentUpon>
