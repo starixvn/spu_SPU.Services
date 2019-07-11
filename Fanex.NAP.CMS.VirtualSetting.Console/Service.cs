@@ -101,11 +101,11 @@
 
         private void SendMail(Fanex.MailDelivery.Core.Models.Mail mail)
         {
-            MailClientHandler.Start();
+            //MailClientHandler.Start();
 
-            MailClientHandler.SendFunctionMail(mail);
+            //MailClientHandler.SendFunctionMail(mail);
 
-            MailClientHandler.Stop();
+            //MailClientHandler.Stop();
         }
     }
 }
