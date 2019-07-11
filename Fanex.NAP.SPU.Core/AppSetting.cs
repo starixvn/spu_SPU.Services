@@ -26,6 +26,16 @@ namespace Fanex.NAP.SPU.Core
             }
         }
 
+        public static string EnvironmentName
+        {
+            get
+            {
+                int.TryParse(ConfigurationManager.AppSettings["Environment"], out int environment);
+
+                return Enum.GetName(typeof(Model.Environment), environment);
+            }
+        }
+
         public static string AppData => ConfigurationManager.AppSettings["AppData-Path"];
 
         public static string Host => ConfigurationManager.AppSettings["Queue-Host"];

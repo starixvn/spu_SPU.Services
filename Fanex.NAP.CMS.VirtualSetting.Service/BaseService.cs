@@ -2,6 +2,7 @@
 {
     using Fanex.Data;
     using Fanex.NAP.SPU.Core;
+    using Fanex.NAP.SPU.Service;
 
     public class BaseService
     {
@@ -11,6 +12,8 @@
 
         protected int TotalAffectedMembers { get; set; }
 
+        protected LetstalkService _letstalkService;
+
         public BaseService()
         {
             DbSettingProviderManager
@@ -18,6 +21,8 @@
                   .UseDefaultConnectionStringProvider()
                   .UseDefaultDbSettingProvider(AppSetting.AppData, false)
                   .Run();
+
+            _letstalkService = new LetstalkService();
         }
 
         public virtual BaseService ExecuteForSoccer() { return this; }

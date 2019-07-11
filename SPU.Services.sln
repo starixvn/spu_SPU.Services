@@ -63,6 +63,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Quartzmin.SelfHost", "Quart
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Core", "Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj", "{491853DE-C617-4605-BAC7-60EB6CBD213D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Service", "Fanex.NAP.SPU.Service\Fanex.NAP.SPU.Service.csproj", "{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -169,6 +171,10 @@ Global
 		{491853DE-C617-4605-BAC7-60EB6CBD213D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{491853DE-C617-4605-BAC7-60EB6CBD213D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{491853DE-C617-4605-BAC7-60EB6CBD213D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

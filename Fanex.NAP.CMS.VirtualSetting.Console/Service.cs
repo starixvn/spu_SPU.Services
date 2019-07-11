@@ -23,6 +23,8 @@
         {
             _startTime = DateTime.Now;
 
+            //_letstalkService.Info($"Virtual Setting service ({AppSetting.EnvironmentName}) is running");
+
             return this;
         }
 
@@ -61,6 +63,8 @@
 
         public override BaseService SendMailExternal(int mailingListId)
         {
+            var environment = AppSetting.EnvironmentName;
+
             var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + Constants.VSMailInformTemplate;
 
             var body = Utilities.ReadTextFile(mailTemplatePath);
@@ -69,7 +73,7 @@
 
             var newMail = new Fanex.MailDelivery.Core.Models.Mail
             {
-                Subject = "VR Auto Adjustment finished" + " (" + AppSetting.Environment + ")",
+                Subject = "VR Auto Adjustment finished" + " (" + environment + ")",
                 Title = "VR Auto Mail Service",
                 Body = body,
                 MailingListId = mailingListId
@@ -77,16 +81,20 @@
 
             SendMail(newMail);
 
-            LogService.Info($"VirtualSetting service - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
+            LogService.Info($"Virtual Setting service ({ environment }) - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
+
+            //_letstalkService.Info($"Virtual Setting service run complete ({ environment })");
 
             return this;
         }
 
         public override BaseService SendMailInternal(int mailingListId)
         {
+            var environment = AppSetting.EnvironmentName;
+
             var newMail = new Fanex.MailDelivery.Core.Models.Mail
             {
-                Subject = "VR Auto Mail Service - Still alive" + " (" + AppSetting.Environment + ")",
+                Subject = "VR Auto Mail Service - Still alive" + " (" + environment + ")",
                 Title = "VR Auto Mail Service - Still alive",
                 Body = "Is NOT the execution date for Updating Virtual Settings",
                 MailingListId = mailingListId
@@ -94,7 +102,7 @@
 
             SendMail(newMail);
 
-            LogService.Info($"VirtualSetting service - SendMailInternal successful");
+            LogService.Info($"Virtual Setting service ({ environment })- SendMailInternal successful");
 
             return this;
         }
