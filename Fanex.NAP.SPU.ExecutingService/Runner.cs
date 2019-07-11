@@ -4,7 +4,7 @@
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.ExecutingService.Jobs;
     using Fanex.NAP.SPU.Model;
-    using Fanex.NAP.FS.Service;
+    using Fanex.NAP.SPU.Service;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -27,7 +27,10 @@
 
                 LogService.Info(msg);
 
-                new LetstalkService().Info(msg);
+                if (AppSetting.Environment == 3)
+                {
+                    new LetstalkService().Info(msg);
+                }
             }
             catch (Exception ex)
             {
@@ -35,7 +38,10 @@
 
                 LogService.Error(errorMsg);
 
-                new LetstalkService().Error(errorMsg);
+                if (AppSetting.Environment == 3)
+                {
+                    new LetstalkService().Error(errorMsg);
+                }
             }
         }
 
@@ -45,8 +51,11 @@
 
             LogService.Info(msg);
 
-            new LetstalkService().Info(msg);
-
+            if (AppSetting.Environment == 3)
+            {
+                new LetstalkService().Info(msg);
+            }
+            
             base.OnStop();
         }
 
@@ -56,7 +65,10 @@
 
             LogService.Info(msg);
 
-            new LetstalkService().Info(msg);
+            if (AppSetting.Environment == 3)
+            {
+                new LetstalkService().Info(msg);
+            }
 
             base.OnShutdown();
         }

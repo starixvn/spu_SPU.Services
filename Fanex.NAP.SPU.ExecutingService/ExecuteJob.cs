@@ -2,7 +2,7 @@
 {
     using Fanex.Logging;
     using Fanex.NAP.FS.Core;
-    using Fanex.NAP.FS.Service;
+    using Fanex.NAP.SPU.Service;
     using ONEbook.UM.Services;
     using ONEbook.UM.Services.Impl;
     using Quartz;
@@ -69,8 +69,11 @@
             if (e.Data != null)
             {
                 LogService.Error(e.Data);
-                new LetstalkService().Error(e.Data);
-                Console.Write(e.Data);
+
+                if (AppSetting.Environment == 3)
+                {
+                    new LetstalkService().Error(e.Data);
+                }
             }
         }
 
@@ -79,7 +82,6 @@
             if (e.Data != null)
             {
                 LogService.Info(e.Data);
-                Console.Write(e.Data);
             }
         }
 
@@ -112,7 +114,11 @@
 
                 if (!context.JobDetail.JobDataMap.Contains(FlagNotExistsFile))
                 {
-                    new LetstalkService().Error(msg);
+                    if (AppSetting.Environment == 3)
+                    {
+                        new LetstalkService().Error(msg);
+                    }
+                    
                     context.JobDetail.JobDataMap.Put(FlagNotExistsFile, true);
                 }
 

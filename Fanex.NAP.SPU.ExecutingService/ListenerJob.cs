@@ -5,7 +5,8 @@
     using Quartz;
     using Fanex.Logging;
     using System;
-    using Fanex.NAP.FS.Service;
+    using Fanex.NAP.SPU.Service;
+    using Fanex.NAP.FS.Core;
 
     public class ListenerJob : IJobListener
     {
@@ -61,8 +62,11 @@
                 return Task.FromResult(false);
             }
 
-            _letstalkService.Error(errorMessage);
-
+            if (AppSetting.Environment == 3)
+            {
+                _letstalkService.Error(errorMessage);
+            }
+            
             return Task.FromResult(false);
         }
 

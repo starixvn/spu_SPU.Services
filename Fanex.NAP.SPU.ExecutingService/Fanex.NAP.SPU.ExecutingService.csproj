@@ -124,6 +124,10 @@
       <Project>{67fecd9e-043a-4100-bf62-52c1a016b85d}</Project>
       <Name>Fanex.NAP.SPU.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Service\Fanex.NAP.SPU.Service.csproj">
+      <Project>{fd4a2e92-1eb2-43a8-a93a-a1e0a7632097}</Project>
+      <Name>Fanex.NAP.SPU.Service</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Quartz.Plugins.RecentHistory\Quartz.Plugins.RecentHistory.csproj">
       <Project>{4570b189-0362-45b7-a328-1d5a302890cc}</Project>
       <Name>Quartz.Plugins.RecentHistory</Name>
