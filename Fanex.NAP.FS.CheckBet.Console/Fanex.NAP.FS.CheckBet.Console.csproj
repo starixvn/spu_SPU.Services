@@ -55,11 +55,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="Commands\TaskKill.bat">
-      <DependentUpon>TaskKill.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
+    <Content Include="Fanex.NAP.FS.CheckBet.Console.exe.PRO.config">
+	<DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <DesignTime>True</DesignTime>
+    </Content>
+    <Content Include="Fanex.NAP.FS.CheckBet.Console.exe.LOCAL.config">
+	<DependentUpon>App.Config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Fanex.NAP.FS.CheckBet.Console.ruleset" />
   </ItemGroup>
@@ -89,10 +91,6 @@
     </Content>
     <Content Include="App_Data\NAPFSNames.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Commands\TaskKill.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TaskKill.bat</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
