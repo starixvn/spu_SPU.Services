@@ -23,8 +23,11 @@
         {
             _startTime = DateTime.Now;
 
-            //_letstalkService.Info($"Virtual Setting service ({AppSetting.EnvironmentName}) is running");
-
+            if (AppSetting.Environment == 3)
+            {
+                _letstalkService.Info($"Virtual Setting service ({AppSetting.EnvironmentName}) is running");
+            }
+            
             return this;
         }
 
@@ -83,7 +86,10 @@
 
             LogService.Info($"Virtual Setting service ({ environment }) - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
-            //_letstalkService.Info($"Virtual Setting service run complete ({ environment })");
+            if (AppSetting.Environment == 3)
+            {
+                _letstalkService.Info($"Virtual Setting service run complete ({ environment })");
+            }
 
             return this;
         }
