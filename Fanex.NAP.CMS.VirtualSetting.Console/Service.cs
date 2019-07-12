@@ -16,7 +16,7 @@
         {
             var currentDate = DateTime.Today;
 
-            return currentDate.Day == 1 || currentDate.Day == 16;
+            return AppSetting.ExecutedDate.Contains(currentDate.Day);
         }
 
         public Service StartTime()
@@ -35,9 +35,11 @@
         {
             VirtualSettingSoccerService service = new VirtualSettingSoccerService(AppSetting.SiteIds, AppSetting.SuperIds, DateTime.Now);
 
-            service.AutoAdjustVirtualSettingsForPunters();
+            //service.AutoAdjustVirtualSettingsForPunters();
 
-            PuntersUpdatedSoccer = service.PuntersUpdated;
+            //PuntersUpdatedSoccer = service.PuntersUpdated;
+
+            LogService.Info("ExecuteForSoccer is called.");
 
             _stopTime = DateTime.Now;
 
@@ -46,11 +48,13 @@
 
         public override BaseService ExecuteForSportbooks()
         {
-            VirtualSettingSportsbookService service = new VirtualSettingSportsbookService(AppSetting.SiteIds, AppSetting.SuperIds, DateTime.Now);
+            //VirtualSettingSportsbookService service = new VirtualSettingSportsbookService(AppSetting.SiteIds, AppSetting.SuperIds, DateTime.Now);
 
-            service.AutoAdjustVirtualSettingsForPunters();
+            //service.AutoAdjustVirtualSettingsForPunters();
 
-            PuntersUpdatedSportbooks = service.PuntersUpdated;
+            //PuntersUpdatedSportbooks = service.PuntersUpdated;
+
+            LogService.Info("ExecuteForSportbooks is called.");
 
             _stopTime = DateTime.Now;
 
@@ -59,7 +63,9 @@
 
         public override BaseService CountAffectedMembers()
         {
-            TotalAffectedMembers = PuntersUpdatedSoccer + PuntersUpdatedSportbooks;
+            //TotalAffectedMembers = PuntersUpdatedSoccer + PuntersUpdatedSportbooks;
+
+            LogService.Info("CountAffectedMembers is called.");
 
             return this;
         }
@@ -82,7 +88,7 @@
                 MailingListId = mailingListId
             };
 
-            SendMail(newMail);
+           // SendMail(newMail);
 
             LogService.Info($"Virtual Setting service ({ environment }) - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
@@ -115,11 +121,11 @@
 
         private void SendMail(Fanex.MailDelivery.Core.Models.Mail mail)
         {
-            //MailClientHandler.Start();
+            MailClientHandler.Start();
 
-            //MailClientHandler.SendFunctionMail(mail);
+            MailClientHandler.SendFunctionMail(mail);
 
-            //MailClientHandler.Stop();
+            MailClientHandler.Stop();
         }
     }
 }

@@ -240,6 +240,8 @@ namespace Fanex.NAP.SPU.Core
 
                 return 30;
             }
-        }         
+        }
+
+        public static List<int> ExecutedDate => ConfigurationManager.AppSettings["ExecutedDate"].Split(';').Select(x => Convert.ToInt32(x)).ToList();
     }
 }
