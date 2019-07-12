@@ -29,7 +29,8 @@
                     {
                          new SentryLogging(new SentryEngineOptions
                          {
-                             Dsn = new Dsn(AppSetting.SentryLogging)
+                             Dsn = new Dsn(AppSetting.SentryLogging),
+                            WriteLogTimeoutSeconds = 30
                          })
                     });
 
