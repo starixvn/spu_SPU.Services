@@ -66,7 +66,7 @@
                     ArbitrageTicketList = x.ToList()
                 }).ToList();
 
-            var options = new ParallelOptions { MaxDegreeOfParallelism = 2 };
+            var options = new ParallelOptions { MaxDegreeOfParallelism = 1 };
 
             Parallel.ForEach(ticketGroupBy, options, ticket =>
             {
