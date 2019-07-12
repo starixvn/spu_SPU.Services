@@ -203,4 +203,7 @@
         doAction({ action: $(this).data('action'), name: $(this).data('name'), groups: $(this).closest('.group-actions').attr('id') });
     });
 
+    setTimeout(function() {
+        location.reload();
+    }, 60000);
 </script>
