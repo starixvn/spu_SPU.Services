@@ -8,6 +8,7 @@ using MultipartDataMediaFormatter;
 using MultipartDataMediaFormatter.Infrastructure;
 using Owin;
 using Quartzmin.Owin;
+using Quartzmin.Auth;
 using System;
 using System.Globalization;
 using System.Net;
@@ -49,6 +50,8 @@ namespace Quartzmin
                 routeTemplate: "{controller}/{action}",
                 defaults: new { controller = "Scheduler", action = "Index" }
             );
+
+            config.MessageHandlers.Add(new AuthenticationHandler());
 
             config.Formatters.Add(new FormMultipartEncodedMediaTypeFormatter(new MultipartFormatterSettings() { ValidateNonNullableMissedProperty = false, CultureInfo = CultureInfo.InvariantCulture }));
 

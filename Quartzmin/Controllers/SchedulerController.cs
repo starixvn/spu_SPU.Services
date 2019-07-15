@@ -12,6 +12,7 @@ using System.Globalization;
 #region Target-Specific Directives
 #if NETSTANDARD
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 #endif
 #if NETFRAMEWORK
 using System.Web.Http;
@@ -21,6 +22,7 @@ using IActionResult = System.Web.Http.IHttpActionResult;
 
 namespace Quartzmin.Controllers
 {
+    [Authorize]
     public class SchedulerController : PageControllerBase
     {
         [HttpGet]
