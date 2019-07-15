@@ -42,15 +42,12 @@
                 var path = context.JobDetail.JobDataMap.GetString("Path");
                 var process = new Process();
                 process.StartInfo.UseShellExecute = false;
-                process.StartInfo.RedirectStandardOutput = true;
                 process.StartInfo.RedirectStandardError = true;
                 process.StartInfo.FileName = path;
                 process.Start();
 
                 process.ErrorDataReceived += Process_ErrorDataReceived;
-                process.OutputDataReceived += Process_OutputDataReceived;
                 process.BeginErrorReadLine();
-                process.BeginOutputReadLine();
 
                 process.WaitForExit();
             }
@@ -75,15 +72,7 @@
                     new LetstalkService().Error(e.Data);
                 }
             }
-        }
-
-        private void Process_OutputDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            if (e.Data != null)
-            {
-                LogService.Info(e.Data);
-            }
-        }
+        }                
 
         private bool CheckActive(IJobExecutionContext context)
         {
