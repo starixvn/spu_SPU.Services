@@ -155,8 +155,6 @@ namespace Quartzmin.Auth
 
         private void SetPrincipal(HttpRequestMessage request, IPrincipal principal)
         {
-            Thread.CurrentPrincipal = principal;
-                
             var context = request.GetOwinContext();
                 
             if (context.Authentication != null)
