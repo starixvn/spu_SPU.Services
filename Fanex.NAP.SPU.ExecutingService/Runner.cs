@@ -25,7 +25,7 @@
 
                 var msg = $"Executing service is STARTED at {DateTime.Now}";
 
-                //LogService.Info(msg);
+                LogService.Info(msg);
 
                 if (AppSetting.Environment == 3)
                 {

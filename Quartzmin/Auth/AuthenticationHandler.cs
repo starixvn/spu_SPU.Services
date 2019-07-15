@@ -46,7 +46,7 @@ namespace Quartzmin.Auth
 #if NETFRAMEWORK
                         var principal = GetPrincipal(accountIdentity.Model.UserName);
 
-                        AssignPrincipal(request, principal);
+                        SetPrincipal(request, principal);
 #endif
                     }
                     else
@@ -131,7 +131,7 @@ namespace Quartzmin.Auth
 #if NETFRAMEWORK
                  var principal = GetPrincipal(accountIdentity.Model.UserName);
 
-                 AssignPrincipal(request, principal);                
+                 SetPrincipal(request, principal);                
 #endif
             }
 
@@ -153,7 +153,7 @@ namespace Quartzmin.Auth
             return principal;
         }
 
-        private void AssignPrincipal(HttpRequestMessage request, IPrincipal principal)
+        private void SetPrincipal(HttpRequestMessage request, IPrincipal principal)
         {
             Thread.CurrentPrincipal = principal;
                 
