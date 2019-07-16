@@ -41,7 +41,7 @@ namespace Quartzmin.Auth
             {
                 if (string.IsNullOrEmpty(Model.Groups))
                 {
-                    return false;
+                    return true;
                 }                
 
                 var groups = SplitGroup(Model.Groups);

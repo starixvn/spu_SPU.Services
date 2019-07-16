@@ -124,9 +124,7 @@ namespace Quartzmin.Auth
                 return false;
             }
 
-            //var isAccess = accountIdentity.LoginAccount() && accountIdentity.LoginGroups();
-
-            var isAccess = accountIdentity.LoginAccount();
+            var isAccess = accountIdentity.LoginAccount() && accountIdentity.LoginGroups();                       
 
             if (isAccess)
             {
