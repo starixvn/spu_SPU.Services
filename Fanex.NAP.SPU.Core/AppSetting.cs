@@ -30,9 +30,21 @@ namespace Fanex.NAP.SPU.Core
         {
             get
             {
-                int.TryParse(ConfigurationManager.AppSettings["Environment"], out int environment);
-
-                return Enum.GetName(typeof(Model.Environment), environment);
+                switch(Environment)
+                {
+                    case 1:
+                        {
+                            return "LOCAL";
+                        }
+                    case 2:
+                        {
+                            return "UAT";
+                        }
+                    default:
+                        {
+                            return "PRO";
+                        }
+                }
             }
         }
 

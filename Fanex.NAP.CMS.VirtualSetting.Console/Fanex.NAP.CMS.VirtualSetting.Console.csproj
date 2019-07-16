@@ -53,11 +53,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.CMS.VirtualSetting.Console.exe.LOCAL.config">
-	<DependentUpon>App.Config</DependentUpon>
+      <DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.CMS.VirtualSetting.Console.exe.PRO.config">
-	<DependentUpon>App.Config</DependentUpon>
+      <DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="MailTemplate\MailInformTemplate.cshtml">

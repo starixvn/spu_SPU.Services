@@ -13,7 +13,7 @@ namespace Quartzmin.Auth
                     int type, int provider, ref IntPtr token);
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
-        public extern static bool CloseHandle(IntPtr handle);
+        public static extern bool CloseHandle(IntPtr handle);
                 
         private IntPtr _token = IntPtr.Zero;
 
