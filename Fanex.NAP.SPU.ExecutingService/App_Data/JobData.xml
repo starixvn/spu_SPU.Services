@@ -13,4 +13,7 @@
   <Service Id="2" Name="CMS.VirtualSetting.Scanner" Active="true">
     <Job Id="1" Name="UpdateVirtualSetting" Active="true" Path="D:\Projects\spu.services\Fanex.NAP.CMS.VirtualSetting.Console\bin\Debug\Fanex.NAP.CMS.VirtualSetting.Console.exe"></Job>    
   </Service>
+  <Service Id="3" Name="Testing Job" Active="true">
+    <Job Id="1" Name="TestingJob" Active="true" Path="D:\Projects\SPU-Services\Fanex.NAP.SPU.Console.Testing\bin\Debug\Fanex.NAP.SPU.Console.Testing.exe"></Job>
+  </Service>
 </Services>

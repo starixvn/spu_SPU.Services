@@ -98,11 +98,19 @@
 
                                 break;
                             }
-                        default:
+                        case 2:
                             {
                                 var virtualSettingJob = new VirtualSettingJob();
 
                                 virtualSettingJob.CreateScheduleJob(serviceMap);
+
+                                break;
+                            }
+                        default:
+                            {
+                                var testingJob = new TestingJob();
+
+                                testingJob.CreateScheduleJob(serviceMap);
 
                                 break;
                             }

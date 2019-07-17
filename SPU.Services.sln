@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FraudSensor", "FraudSensor", "{BD64796B-C186-4369-AA2E-A7E5AAD80637}"
 EndProject
@@ -64,6 +64,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Core", "Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj", "{491853DE-C617-4605-BAC7-60EB6CBD213D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Service", "Fanex.NAP.SPU.Service\Fanex.NAP.SPU.Service.csproj", "{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Console.Testing", "Fanex.NAP.SPU.Console.Testing\Fanex.NAP.SPU.Console.Testing.csproj", "{A7CB3779-1400-400D-9F13-FCB8874D8A85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -175,6 +177,10 @@ Global
 		{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD4A2E92-1EB2-43A8-A93A-A1E0A7632097}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7CB3779-1400-400D-9F13-FCB8874D8A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7CB3779-1400-400D-9F13-FCB8874D8A85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7CB3779-1400-400D-9F13-FCB8874D8A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7CB3779-1400-400D-9F13-FCB8874D8A85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
