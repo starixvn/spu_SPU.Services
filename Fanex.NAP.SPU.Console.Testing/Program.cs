@@ -13,7 +13,7 @@ namespace Fanex.NAP.SPU.Console.Testing
         {
             var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
 
-            File.AppendAllText(filePath, "Executed at " + DateTime.Now);
+            File.AppendAllText(filePath, "Executed at " + DateTime.Now + Environment.NewLine);
         }
     }
 }
