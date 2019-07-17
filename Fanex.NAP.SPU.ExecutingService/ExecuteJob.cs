@@ -8,6 +8,7 @@
     using Quartz;
     using System;
     using System.Diagnostics;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -34,6 +35,8 @@
         {
             try
             {
+                var outputError = new StringBuilder();
+
                 if (this.CheckUM() || !CheckActive(context) || !CheckFileExist(context))
                 {
                     return Task.FromResult(false);
@@ -46,10 +49,27 @@
                 process.StartInfo.FileName = path;
                 process.Start();
 
-                process.ErrorDataReceived += Process_ErrorDataReceived;
+                process.ErrorDataReceived += (sender, e) =>
+                {
+                    if (e.Data != null)
+                    {
+                        outputError.Append(e.Data);
+                        outputError.Append(Environment.NewLine);
+                    }
+                };
                 process.BeginErrorReadLine();
 
                 process.WaitForExit();
+
+                if (!string.IsNullOrEmpty(outputError.ToString()))
+                {
+                    LogService.Error(outputError.ToString());
+
+                    if (AppSetting.Environment == 3)
+                    {
+                        new LetstalkService().Error(outputError.ToString());
+                    }
+                }
             }
 
             catch (Exception ex)
@@ -59,20 +79,6 @@
 
             return Task.FromResult(true);
         }
-
-
-        private void Process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
-        {
-            if (e.Data != null)
-            {
-                LogService.Error(e.Data);
-
-                if (AppSetting.Environment == 3)
-                {
-                    new LetstalkService().Error(e.Data);
-                }
-            }
-        }                
 
         private bool CheckActive(IJobExecutionContext context)
         {
@@ -107,7 +113,7 @@
                     {
                         new LetstalkService().Error(msg);
                     }
-                    
+
                     context.JobDetail.JobDataMap.Put(FlagNotExistsFile, true);
                 }
 
