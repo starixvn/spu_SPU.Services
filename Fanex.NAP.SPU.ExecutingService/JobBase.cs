@@ -4,6 +4,8 @@
     using Quartz.Impl;
     using Quartz.Impl.Matchers;
     using Fanex.NAP.SPU.Model;
+    using System.Collections.Specialized;
+    using System.Configuration;
 
     [DisallowConcurrentExecution]
     public class JobBase : IJobBase
@@ -57,7 +59,11 @@
 
         public IJobBase CreateSchedule()
         {
-            this.Schedule = StdSchedulerFactory.GetDefaultScheduler().Result;
+            var config = (NameValueCollection)ConfigurationManager.GetSection("quartz");
+
+            ISchedulerFactory factory = new StdSchedulerFactory(config);
+
+            this.Schedule = factory.GetScheduler().Result;
 
             if (this.Job != null && this.Trigger != null)
             {
