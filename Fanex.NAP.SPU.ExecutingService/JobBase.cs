@@ -17,11 +17,23 @@
         public IScheduler Schedule { get; set; }
 
         public IJobBase CreateJob(string jobName, string groupName, JobData jobData)
-        {            
+        {
+            var jobDataMap = new JobDataMap
+            {
+                { "Id", jobData.Id },
+                { "Name", jobData.Name },
+                { "Active", jobData.Active },                
+                { "FileName", jobData.FileName }                               
+            };
+
+            foreach(var executePath in jobData.ExecutePath)
+            {
+                jobDataMap.Add(executePath.InstanceId, executePath.Path);
+            }
+
             var job = JobBuilder.Create(typeof(ExecuteJob))
                .WithIdentity(jobName, groupName)
-               .UsingJobData("Active", jobData.Active)
-               .UsingJobData("Path", jobData.Path)
+               .SetJobData(jobDataMap)
                .Build();
 
             this.Job = job;

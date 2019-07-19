@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.SPU.Model
 {
+    using System.Collections.Generic;
     using System.Xml.Serialization;
 
     [XmlRoot(ElementName = "Job")]
@@ -14,7 +15,10 @@
         [XmlAttribute(AttributeName = "Active")]
         public bool Active { get; set; }
 
-        [XmlAttribute(AttributeName = "Path")]
-        public string Path { get; set; }
+        [XmlAttribute(AttributeName = "FileName")]
+        public string FileName { get; set; }
+
+        [XmlElement(ElementName = "ExecutePath")]
+        public List<ExecutePath> ExecutePath { get; set; }
     }
 }

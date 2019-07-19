@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Environment.cs" />
+    <Compile Include="ExecutePath.cs" />
     <Compile Include="JobData.cs" />
     <Compile Include="JobDataSevices.cs" />
     <Compile Include="JobDataRoot.cs" />
