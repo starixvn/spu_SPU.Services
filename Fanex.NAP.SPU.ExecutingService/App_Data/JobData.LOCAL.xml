@@ -14,8 +14,8 @@
   </Service>
   <Service Id="3" Name="Testing Job" Active="true">
     <Job Id="1" Name="TestingJob" Active="true" FileName="Fanex.NAP.SPU.Console.Testing.exe">
-      <ExecutePath InstanceId="SPUServiceInstance_one" Path="D:\www\SPU\Fanex.NAP.SPU.Console.Testing"/>
-      <ExecutePath InstanceId="SPUServiceInstance_two" Path="E:\www\SPU\Fanex.NAP.SPU.Console.Testing"/>
+      <ExecutePath InstanceId="SPUServiceInstance_one" Path="D:\WWW\SPU\Fanex.NAP.SPU.Console.Testing"/>
+      <ExecutePath InstanceId="SPUServiceInstance_two" Path="D:\Projects\SPU-Services\Fanex.NAP.SPU.Console.Testing\bin\Debug"/>
     </Job>
   </Service>
 </Services>

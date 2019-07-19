@@ -9,12 +9,9 @@
     using Quartz;
     using System;
     using System.Diagnostics;
-    using System.Text;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using System.Linq;
     using System.IO;
-    using System.Collections.Generic;
+    using System.Text;
+    using System.Threading.Tasks;
 
     [PersistJobDataAfterExecution]
     [DisallowConcurrentExecution]
@@ -133,9 +130,7 @@
         }
 
         private bool CheckFileExist(IJobExecutionContext context, string path)
-        {
-            //var path = context.JobDetail.JobDataMap.GetString("Path");
-
+        {           
             if (!Ultilities.CheckFileExist(path))
             {
                 var msg = $"{context.JobDetail.Key} - Execute: does not exists a file - Path: {path}";
