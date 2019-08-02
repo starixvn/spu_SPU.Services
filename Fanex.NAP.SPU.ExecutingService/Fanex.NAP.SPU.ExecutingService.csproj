@@ -98,8 +98,19 @@
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\JobData.Slave.PRO.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\JobData.Master.PRO.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\JobData.PRO.xml">
       <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\NAPFSNames.Slave.PRO.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\NAPFSNames.Slave.LOCAL.xml">
@@ -107,16 +118,20 @@
     </Content>
     <Content Include="Database\Tables\tables_sqlServer.sql" />
     <Content Include="Database\Tables\tables_sqlServer_cluster.sql" />
-    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.PRO.config">
-      <DependentUpon>App.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Master.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Slave.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Master.PRO.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Slave.PRO.config">
+	<DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -166,7 +181,7 @@
     <Content Include="App_Data\NAPFSNames.Master.LOCAL.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="App_Data\NAPFSNames.PRO.xml">
+    <Content Include="App_Data\NAPFSNames.Master.PRO.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\NAPFSNames.UAT.xml">
