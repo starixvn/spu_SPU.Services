@@ -94,7 +94,7 @@
 
             if (AppSetting.Environment == 3)
             {
-                _letstalkService.Info($"Virtual Setting service run complete ({ environment })");
+                _letstalkService.Info($"Virtual Setting service run complete ({ environment }). TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
             }
 
             return this;
@@ -108,7 +108,7 @@
             {
                 Subject = "VR Auto Mail Service - Still alive" + " (" + environment + ")",
                 Title = "VR Auto Mail Service - Still alive",
-                Body = "Is NOT the execution date for Updating Virtual Settings",
+                Body = $"Is NOT the execution date for Updating Virtual Settings.",
                 MailingListId = mailingListId
             };
 
@@ -126,6 +126,6 @@
             MailClientHandler.SendFunctionMail(mail);
 
             MailClientHandler.Stop();
-        }
+        }               
     }
 }

@@ -304,14 +304,14 @@
 
             if (punters != null && punters.Any())
             {
-                var info = $"List of { sportType } {punterType} updated: { string.Join(",", punters.Select(p => p.CustID))}";
+                var info = $"List of { sportType } {punterType} updated({punters.Count()}): { string.Join(",", punters.Select(p => p.CustID))}";
 
                 LogService.Info(info);
             }
 
             if (_model != null && _model.FailedUpdatePunterList.Any())
             {
-                var error = $"List of { sportType } {punterType} update fail {string.Join(",", _model.FailedUpdatePunterList.Select(p=>p.CustID))}";
+                var error = $"List of { sportType } {punterType} update fail({_model.FailedUpdatePunterList.Count}) : {string.Join(",", _model.FailedUpdatePunterList.Select(p=>p.CustID))}";
 
                 LogService.Error(error);
             }

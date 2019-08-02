@@ -94,16 +94,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="App_Data\JobData.Master.LOCAL.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\JobData.PRO.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\NAPFSNames.Slave.LOCAL.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Database\Tables\tables_sqlServer.sql" />
-    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.LOCAL.config">
+    <Content Include="Database\Tables\tables_sqlServer_cluster.sql" />
+    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.PRO.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.PRO.config">
+    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Master.LOCAL.config">
+      <DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Slave.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -143,7 +155,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\JobData.LOCAL.xml">
+    <Content Include="App_Data\JobData.Slave.LOCAL.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -151,7 +163,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="App_Data\NAPFSNames.LOCAL.xml">
+    <Content Include="App_Data\NAPFSNames.Master.LOCAL.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\NAPFSNames.PRO.xml">
