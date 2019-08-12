@@ -7,21 +7,21 @@ namespace Fanex.NAP.SPU.Console.Testing
     {
         static void Main(string[] args)
         {
-            //var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
 
-            //File.AppendAllText(filePath, "Executed at " + DateTime.Now + Environment.NewLine);
+            File.AppendAllText(filePath, "Executed at " + DateTime.Now + Environment.NewLine);
 
-            try
-            {
-                OpenSqlConnection();
+            //try
+            //{
+            //    OpenSqlConnection();
 
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Console.WriteLine(ex.Message);
+            //}
 
-            System.Console.ReadKey();
+            //System.Console.ReadKey();
         }
 
         static private string GetConnectionString()
