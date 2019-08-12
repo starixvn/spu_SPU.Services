@@ -92,17 +92,17 @@
                     {
                         case 1:
                             {
-                               // var fraudSensorJob = new FraudSensorJob();
+                                var fraudSensorJob = new FraudSensorJob();
 
-                               // fraudSensorJob.CreateScheduleJob(serviceMap);
+                                fraudSensorJob.CreateScheduleJob(serviceMap);
 
                                 break;
                             }
                         case 2:
                             {
-                               // var virtualSettingJob = new VirtualSettingJob();
+                                var virtualSettingJob = new VirtualSettingJob();
 
-                               // virtualSettingJob.CreateScheduleJob(serviceMap);
+                                virtualSettingJob.CreateScheduleJob(serviceMap);
 
                                 break;
                             }

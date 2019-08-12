@@ -116,8 +116,8 @@
     <Content Include="App_Data\NAPFSNames.Slave.LOCAL.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Database\Tables\tables_sqlServer.sql" />
     <Content Include="Database\Tables\tables_sqlServer_cluster.sql" />
+    <Content Include="Database\Tables\tables_sqlServer_history.sql" />
     <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Master.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -127,11 +127,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Master.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Slave.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
