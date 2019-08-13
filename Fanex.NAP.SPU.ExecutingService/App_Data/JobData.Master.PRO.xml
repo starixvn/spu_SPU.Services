@@ -29,7 +29,7 @@
       <ExecutePath InstanceId="Master" Path="E:\WWW\SERVICES\SPU\Fanex.NAP.FS.Arbitrage.Console"/>
       <ExecutePath InstanceId="Slave" Path="E:\www\SERVICES\SPU\Fanex.NAP.FS.Arbitrage.Console"/>
     </Job>
-    <Job Id="11" Name="BetsNearGoal" Active="true" FileName="Fanex.NAP.FS.BetNearGoal.Console.exe">
+    <Job Id="11" Name="BetNearGoal" Active="true" FileName="Fanex.NAP.FS.BetNearGoal.Console.exe">
       <ExecutePath InstanceId="Master" Path="E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BetNearGoal.Console"/>
       <ExecutePath InstanceId="Slave" Path="E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BetNearGoal.Console"/>
     </Job>
