@@ -62,7 +62,7 @@
 
                     var jobDataMap = context.JobDetail.JobDataMap;
 
-                    var rootPath = jobDataMap.GetString(context.Scheduler.SchedulerInstanceId);                        
+                    var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);                        
 
                     var path = Path.Combine(rootPath, jobData.FileName);
 

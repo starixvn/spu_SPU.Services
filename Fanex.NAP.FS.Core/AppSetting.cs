@@ -71,9 +71,12 @@
         public static List<int> IgnoreCase => ConfigurationManager.AppSettings["Ignore-fraudcase"].Split(',').Select(Int32.Parse).ToList();
 
         public static string LetstalkTarget => ConfigurationManager.AppSettings["Letstalk-Target"];
+
         public static string LetstalkGroup => ConfigurationManager.AppSettings["Letstalk-Group"];
 
         public static string VSJobCronEveryDay => ConfigurationManager.AppSettings["VS-JobCronEveryDay"];
+
+        public static string ClusterKey => ConfigurationManager.AppSettings["cluster-key"];
 
     }
 }
