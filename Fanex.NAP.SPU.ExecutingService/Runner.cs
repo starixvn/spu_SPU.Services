@@ -7,6 +7,7 @@
     using Fanex.NAP.SPU.Service;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.ServiceProcess;
 
@@ -124,12 +125,16 @@
             try
             {
                 var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"App_Data\JobData.xml";
-                var rootMap = Serializer.Deserialize<JobDataRoot>(xmlPath);
 
-                if (rootMap != null)
+                if(File.Exists(xmlPath))
                 {
-                    return rootMap.Sevices;
-                }
+                    var rootMap = Serializer.Deserialize<JobDataRoot>(xmlPath);
+
+                    if (rootMap != null)
+                    {
+                        return rootMap.Sevices;
+                    }
+                }                
             }
             catch (Exception ex)
             {
