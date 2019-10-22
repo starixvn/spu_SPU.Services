@@ -80,7 +80,7 @@
                 ExecuteGroupCustomer(ticket.MatchId, groupCustomer, ticket.ArbitrageTicketList);
 
                 Thread.Sleep(SleepTime);
-            });            
+            });
         }
 
         private List<ArbitrageCustomer> GroupCustomer(List<int> custIds)
@@ -100,7 +100,24 @@
 
             Task.WhenAll(taskCustomers.ToArray());
 
-            return taskCustomers.SelectMany(t=>t.Result).ToList();
+            var result = taskCustomers.SelectMany(t => t.Result).ToList();
+
+            var missingCustId = custIds.Where(x => !result.Any(z => z.CustId == x)).ToList();
+
+            if (missingCustId != null && missingCustId.Any())
+            {
+                var maxGroupId = result.Max(x => x.GroupId);
+
+                missingCustId.Select(x => new { missingCustId = x, missingGroupId = ++maxGroupId })
+                    .ToList()
+                    .ForEach(x => result.Add(new ArbitrageCustomer
+                    {
+                        CustId = x.missingCustId,
+                        GroupId = x.missingGroupId
+                    }));
+            }
+
+            return result;
         }
 
         private async Task<IEnumerable<ArbitrageCustomer>> GroupCustomer(IEnumerable<int> custids)
