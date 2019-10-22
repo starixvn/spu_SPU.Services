@@ -34,6 +34,8 @@
                         .CleanResult()
                         .Precondition()
                         .Rule();
+
+                    LogService.Info("Rule is executed.");
                 }
                 else
                 {
