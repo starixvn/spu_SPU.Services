@@ -33,9 +33,7 @@
                     _service
                         .CleanResult()
                         .Precondition()
-                        .Rule();
-
-                    LogService.Info("Rule is executed.");
+                        .Rule();                  
                 }
                 else
                 {

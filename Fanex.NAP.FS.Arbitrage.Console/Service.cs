@@ -122,7 +122,7 @@
                 return result;
             }
 
-            return custIds.Select(x => new ArbitrageCustomer { CustId = x, GroupId = 1 }).ToList();
+            return custIds.Select((x, i) => new ArbitrageCustomer { CustId = x, GroupId = i }).ToList();
         }
 
         private async Task<IEnumerable<ArbitrageCustomer>> GroupCustomer(IEnumerable<int> custids)
