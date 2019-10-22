@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Fanex.NAP.FS.Model;
+using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
 
 namespace Fanex.NAP.SPU.Console.Testing
 {
@@ -8,27 +11,22 @@ namespace Fanex.NAP.SPU.Console.Testing
     {
         static void Main(string[] args)
         {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log.txt");
+            var custid = new List<int> { 1, 2, 3, 11, 12, 13 };
 
-            File.AppendAllText(filePath, "Executed at " + DateTime.Now + Environment.NewLine);
+            var result = Test(custid);
 
-            //try
-            //{
-            //    OpenSqlConnection();
+            foreach (var item in result)
+            {
+                System.Console.WriteLine(item.CustId + " - " + item.GroupId);
+            }
 
-            //}
-            //catch (Exception ex)
-            //{
-            //    System.Console.WriteLine(ex.Message);
-            //}
-
-            //System.Console.ReadKey();
+            System.Console.ReadKey();
         }
 
         static private string GetConnectionString()
         {
-           return System.Configuration.ConfigurationManager.
-    ConnectionStrings["DBFS.bodb_FraudSensor.bodbSPUNet"].ConnectionString;
+            return System.Configuration.ConfigurationManager.
+     ConnectionStrings["DBFS.bodb_FraudSensor.bodbSPUNet"].ConnectionString;
         }
 
         private static void OpenSqlConnection()
@@ -42,6 +40,42 @@ namespace Fanex.NAP.SPU.Console.Testing
                 System.Console.WriteLine("ConnectionString: {0}",
                     connection.ConnectionString);
             }
+        }
+
+        private static List<ArbitrageCustomer> Test(List<int> custIds)
+        {
+            var result = new List<ArbitrageCustomer>();
+
+            for (var i = 1; i < 10; i++)
+            {
+                result.Add(new ArbitrageCustomer
+                {
+                    CustId = i,
+                    GroupId = i * 10
+                });
+            }
+
+            if (result != null && result.Any())
+            {
+                var missingCustId = custIds.Where(x => !result.Any(z => z.CustId == x)).ToList();
+
+                if (missingCustId != null && missingCustId.Any())
+                {
+                    var maxGroupId = result.Max(x => x.GroupId);
+
+                    missingCustId.Select(x => new { missingCustId = x, missingGroupId = ++maxGroupId })
+                        .ToList()
+                        .ForEach(x => result.Add(new ArbitrageCustomer
+                        {
+                            CustId = x.missingCustId,
+                            GroupId = x.missingGroupId
+                        }));
+                }
+
+                return result;
+            }
+
+            return new List<ArbitrageCustomer>();
         }
     }
 }

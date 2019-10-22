@@ -52,5 +52,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.FS.Model\Fanex.NAP.FS.Model.csproj">
+      <Project>{5CE0BA40-0A37-4C89-A33B-D61C7944BE08}</Project>
+      <Name>Fanex.NAP.FS.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

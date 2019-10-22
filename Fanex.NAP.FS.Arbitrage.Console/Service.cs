@@ -102,22 +102,27 @@
 
             var result = taskCustomers.SelectMany(t => t.Result).ToList();
 
-            var missingCustId = custIds.Where(x => !result.Any(z => z.CustId == x)).ToList();
-
-            if (missingCustId != null && missingCustId.Any())
+            if (result != null && result.Any())
             {
-                var maxGroupId = result.Max(x => x.GroupId);
+                var missingCustId = custIds.Where(x => !result.Any(z => z.CustId == x)).ToList();
 
-                missingCustId.Select(x => new { missingCustId = x, missingGroupId = ++maxGroupId })
-                    .ToList()
-                    .ForEach(x => result.Add(new ArbitrageCustomer
-                    {
-                        CustId = x.missingCustId,
-                        GroupId = x.missingGroupId
-                    }));
+                if (missingCustId != null && missingCustId.Any())
+                {
+                    var maxGroupId = result.Max(x => x.GroupId);
+
+                    missingCustId.Select(x => new { missingCustId = x, missingGroupId = ++maxGroupId })
+                        .ToList()
+                        .ForEach(x => result.Add(new ArbitrageCustomer
+                        {
+                            CustId = x.missingCustId,
+                            GroupId = x.missingGroupId
+                        }));
+                }
+
+                return result;
             }
 
-            return result;
+            return custIds.Select(x => new ArbitrageCustomer { CustId = x, GroupId = 1 }).ToList();
         }
 
         private async Task<IEnumerable<ArbitrageCustomer>> GroupCustomer(IEnumerable<int> custids)
