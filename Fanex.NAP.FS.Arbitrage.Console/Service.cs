@@ -129,7 +129,11 @@
         {
             try
             {
-                return await ApiHelper.Post<IEnumerable<ArbitrageCustomer>>(AppSetting.GroupCustomerPath, custids);
+                var result = await ApiHelper.Post<IEnumerable<ArbitrageCustomer>>(AppSetting.GroupCustomerPath, custids);
+
+                LogService.Info("API is called. Total of custid is " + custids.Count());
+
+                return result;
             }
             catch (Exception ex)
             {
