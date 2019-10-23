@@ -1,4 +1,5 @@
 ﻿using Fanex.NAP.SPU.Model;
+using Quartz;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace Fanex.NAP.SPU.ExecutingService
     public abstract class ScheduleJob
     {
         public abstract void CreateScheduleJob(JobDataSevices jobData);
+
+        public abstract void Shutdown();
 
         public JobData GetJobData(int jobId, JobDataSevices servicesMap)
         {

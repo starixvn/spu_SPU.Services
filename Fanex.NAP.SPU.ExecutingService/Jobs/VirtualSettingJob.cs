@@ -2,13 +2,20 @@
 {
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
+    using Quartz;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class VirtualSettingJob : ScheduleJob
     {
         private const string groupName = "VirtualSetting";
 
+        private List<IScheduler> schedulers;
+
         public override void CreateScheduleJob(JobDataSevices jobData)
         {
+            schedulers = new List<IScheduler>();
+
             foreach (var job in jobData.Jobs)
             {
                 var jobBase = new JobBase();
@@ -20,6 +27,16 @@
                     .CreateSchedule()
                     .CreateListenerJob()
                     .Run();
+
+                schedulers.Add(jobBase.Schedule);
+            }
+        }
+
+        public override void Shutdown()
+        {
+            if (schedulers.Any())
+            {
+                schedulers.ForEach(x => x.Shutdown(false));
             }
         }
     }

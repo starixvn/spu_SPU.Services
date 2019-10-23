@@ -113,5 +113,13 @@
 
             return this;
         }
+
+        public void Shutdown()
+        {
+            if (this.Schedule != null)
+            {
+                this.Schedule.Shutdown();
+            }
+        }
     }
 }

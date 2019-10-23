@@ -17,5 +17,7 @@ namespace Fanex.NAP.SPU.ExecutingService
         IJobBase CreateListenerJob();
 
         void Run();
+
+        void Shutdown();
     }
 }

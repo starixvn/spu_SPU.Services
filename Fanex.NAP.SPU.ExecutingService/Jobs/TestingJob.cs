@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Fanex.NAP.SPU.Model;
+using Quartz;
 
 namespace Fanex.NAP.SPU.ExecutingService.Jobs
 {
@@ -11,8 +12,12 @@ namespace Fanex.NAP.SPU.ExecutingService.Jobs
     {
         private const string groupName = "TestingGroup";
 
+        private List<IScheduler> schedulers;
+
         public override void CreateScheduleJob(JobDataSevices jobData)
         {
+             schedulers = new List<IScheduler>();
+
             foreach (var job in jobData.Jobs)
             {
                 var jobBase = new JobBase();
@@ -24,6 +29,16 @@ namespace Fanex.NAP.SPU.ExecutingService.Jobs
                     .CreateSchedule()
                     .CreateListenerJob()
                     .Run();
+
+                schedulers.Add(jobBase.Schedule);
+            }           
+        }
+
+        public override void Shutdown()
+        {
+            if (schedulers.Any())
+            {
+                schedulers.ForEach(x => x.Shutdown(false));
             }
         }
     }

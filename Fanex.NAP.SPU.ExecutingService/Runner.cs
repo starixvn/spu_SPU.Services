@@ -13,6 +13,10 @@
 
     public partial class Runner : ServiceBase
     {
+        private FraudSensorJob fraudSensorJob;
+        private VirtualSettingJob virtualSettingJob;
+        private TestingJob testingJob;
+
         public Runner()
         {
             InitializeComponent();
@@ -62,6 +66,10 @@
 
         protected override void OnShutdown()
         {
+            fraudSensorJob.Shutdown();
+            virtualSettingJob.Shutdown();
+            testingJob.Shutdown();
+
             var msg = $"Executing service is SHUTDOWN at {DateTime.Now}";
 
             LogService.Info(msg);
@@ -93,15 +101,15 @@
                     {
                         case 1:
                             {
-                                var fraudSensorJob = new FraudSensorJob();
+                                fraudSensorJob = new FraudSensorJob();
 
-                                fraudSensorJob.CreateScheduleJob(serviceMap);
+                                fraudSensorJob.CreateScheduleJob(serviceMap);                                                               
 
                                 break;
                             }
                         case 2:
                             {
-                                var virtualSettingJob = new VirtualSettingJob();
+                                virtualSettingJob = new VirtualSettingJob();
 
                                 virtualSettingJob.CreateScheduleJob(serviceMap);
 
@@ -109,7 +117,7 @@
                             }
                         default:
                             {
-                                var testingJob = new TestingJob();
+                                testingJob = new TestingJob();
 
                                 testingJob.CreateScheduleJob(serviceMap);
 
