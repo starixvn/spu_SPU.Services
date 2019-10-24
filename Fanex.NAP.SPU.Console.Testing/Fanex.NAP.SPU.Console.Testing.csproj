@@ -58,5 +58,19 @@
       <Name>Fanex.NAP.FS.Model</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fanex.Logging">
+      <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Logging.Sentry">
+      <Version>1.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="ONEbook.UM">
+      <Version>2.0.2.9</Version>
+    </PackageReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
