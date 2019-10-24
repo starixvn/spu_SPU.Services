@@ -11,12 +11,12 @@
     public class ListenerJob : IJobListener
     {
         private const string TriesKey = "TriesKey";
-        private const int MaxRetries = 3;
+        private const int MaxRetries = 10;
         private readonly string _jobName;
         private readonly LetstalkService _letstalkService;
+        public static readonly string TriggerGroup = "failTriggerGroup";
 
         public string Name => _jobName;
-
 
         public ListenerJob(string jobName)
         {
@@ -28,7 +28,7 @@
         {
             LogService.Error($"{context.JobDetail.Key} - JobExecutionVetoed - Job is Vetoed.");
 
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
 
         public Task JobToBeExecuted(IJobExecutionContext context, CancellationToken cancellationToken = default(CancellationToken))
@@ -39,44 +39,46 @@
             }
 
             var numberTries = context.JobDetail.JobDataMap.GetIntValue(TriesKey);
+
             context.JobDetail.JobDataMap.Put(TriesKey, ++numberTries);
 
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
 
-        public Task JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task JobWasExecuted(IJobExecutionContext context, JobExecutionException jobException, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (jobException == null)
             {
-                return Task.FromResult(true);
+                return;
             }
-
-            var errorMessage = $"{context.JobDetail.Key} - JobWasExecuted - Exception: { jobException.Message }";
-            LogService.Error(errorMessage);
 
             var numTries = context.JobDetail.JobDataMap.GetIntValue(TriesKey);
-            if (numTries < MaxRetries)
-            {
-                RescheduleJob(context);
 
-                return Task.FromResult(false);
+            if (numTries > MaxRetries)
+            {
+                LogService.Error(string.Format("Job with ID and type: {0}, {1} has run {2} times and has failed each time.",
+                context.JobDetail.Key, context.JobDetail.JobType, MaxRetries));
+
+                return;
             }
+
+            var errorMessage = string.Format("Job with ID and type: {0}, {1} has thrown the exception: {2}. Running again in {3} seconds.",
+            context.JobDetail.Key, context.JobDetail.JobType, jobException.Message, 15 * numTries);
+
+            LogService.Error(errorMessage);
 
             if (AppSetting.Environment == 3)
-            {
-                _letstalkService.Error(errorMessage);
+            {               
+                _letstalkService.Error(errorMessage);                
             }
-            
-            return Task.FromResult(false);
-        }
 
-        private void RescheduleJob(IJobExecutionContext context)
-        {
-            var trigger = context.Trigger.GetTriggerBuilder()
-                .StartAt(DateTime.Now.AddSeconds(15))
+            var trigger = TriggerBuilder
+                .Create()
+                .WithIdentity(Guid.NewGuid().ToString(), TriggerGroup)
+                .StartAt(DateTime.Now.AddSeconds(15 * numTries))
                 .Build();
 
-            context.Scheduler.RescheduleJob(context.Trigger.Key, trigger);
+            await context.Scheduler.RescheduleJob(context.Trigger.Key, trigger);
         }
     }
 }

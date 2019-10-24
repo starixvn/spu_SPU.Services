@@ -34,7 +34,7 @@
 
         private JobData GetJobDataMapping(IJobExecutionContext context)
         {
-            if(context != null)
+            if (context != null)
             {
                 var jobDataMap = context.JobDetail.JobDataMap;
 
@@ -54,55 +54,54 @@
         {
             try
             {
-                var jobData = GetJobDataMapping(context);
-
-                if(jobData != null)
+                if (!this.CheckUM())
                 {
-                    var outputError = new StringBuilder();
+                    var jobData = GetJobDataMapping(context);
 
-                    var jobDataMap = context.JobDetail.JobDataMap;
-
-                    var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);                        
-
-                    var path = Path.Combine(rootPath, jobData.FileName);
-
-                    if (this.CheckUM() || !CheckActive(context, jobData) || !CheckFileExist(context, path))
+                    if (jobData != null)
                     {
-                        return Task.FromResult(false);
-                    }
+                        var outputError = new StringBuilder();
 
-                    var process = new Process();
-                    process.StartInfo.UseShellExecute = false;
-                    process.StartInfo.RedirectStandardError = true;
-                    process.StartInfo.FileName = path;
-                    process.Start();
+                        var jobDataMap = context.JobDetail.JobDataMap;
 
-                    process.ErrorDataReceived += (sender, e) =>
-                    {
-                        if (e.Data != null)
+                        var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
+
+                        var path = Path.Combine(rootPath, jobData.FileName);
+
+                        if (!CheckActive(context, jobData) || !CheckFileExist(context, path))
                         {
-                            outputError.Append(e.Data);
-                            outputError.Append(System.Environment.NewLine);
+                            return Task.CompletedTask;
                         }
-                    };
-                    process.BeginErrorReadLine();
 
-                    process.WaitForExit();
+                        var process = new Process();
+                        process.StartInfo.UseShellExecute = false;
+                        process.StartInfo.RedirectStandardError = true;
+                        process.StartInfo.FileName = path;
+                        process.Start();
 
-                    if (!string.IsNullOrEmpty(outputError.ToString()))
-                    {
-                        LogService.Error(outputError.ToString());
-
-                        if (AppSetting.Environment == 3)
+                        process.ErrorDataReceived += (sender, e) =>
                         {
-                            new LetstalkService().Error(outputError.ToString());
+                            if (e.Data != null)
+                            {
+                                outputError.Append(e.Data);
+                                outputError.Append(System.Environment.NewLine);
+                            }
+                        };
+                        process.BeginErrorReadLine();
+
+                        process.WaitForExit();
+
+                        if (!string.IsNullOrEmpty(outputError.ToString()))
+                        {
+                            LogService.Error(outputError.ToString());
+
+                            if (AppSetting.Environment == 3)
+                            {
+                                new LetstalkService().Error(outputError.ToString());
+                            }
                         }
-                    }
+                    }                    
                 }
-                else
-                {
-                    return Task.FromResult(false);
-                }                
             }
 
             catch (Exception ex)
@@ -110,11 +109,11 @@
                 return Task.FromException(new JobExecutionException(ex));
             }
 
-            return Task.FromResult(true);
+            return Task.CompletedTask;
         }
 
         private bool CheckActive(IJobExecutionContext context, JobData jobData)
-        {            
+        {
             if (!jobData.Active)
             {
                 var msg = $"{context.JobDetail.Key} - Execute: not activate";
@@ -122,6 +121,11 @@
 
                 if (!context.JobDetail.JobDataMap.Contains(FlagNotifyInActive))
                 {
+                    if (AppSetting.Environment == 3)
+                    {
+                        new LetstalkService().Error(msg);
+                    }
+
                     context.JobDetail.JobDataMap.Put(FlagNotifyInActive, true);
                 }
             }
@@ -130,7 +134,7 @@
         }
 
         private bool CheckFileExist(IJobExecutionContext context, string path)
-        {           
+        {
             if (!Ultilities.CheckFileExist(path))
             {
                 var msg = $"{context.JobDetail.Key} - Execute: does not exists a file - Path: {path}";
