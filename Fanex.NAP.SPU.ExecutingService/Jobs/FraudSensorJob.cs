@@ -32,7 +32,7 @@
                     var mapData = GetJobData(fraudCase.FraudCaseId, jobData);
                     
                     job.CreateJob(jobName, groupName, mapData)
-                        .CreateTrigger(triggerName, groupName, fraudCase.FraudCaseInterval)
+                        .CreateTriggerIntervalInSeconds(triggerName, groupName, fraudCase.FraudCaseInterval)
                         .CreateSchedule()
                         .CreateListenerJob()
                         .Run();

@@ -46,4 +46,27 @@
       <ExecutePath InstanceId="Slave" Path="D:\Projects\SPU-Services\Fanex.NAP.SPU.Console.Testing\bin\Debug"/>
     </Job>
   </Service>
+  <Service Id="4" Name="FPS Job" Active="true">
+    <Job Id="1" Name="UserAgent Job" Active="true" FileName="Fanex.NAP.FPS.Renovation.UserAgent.Console.exe">
+      <ExecutePath InstanceId="Master" Path="D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.UserAgent.Console\bin\Debug"/>
+      <ExecutePath InstanceId="Slave" Path="D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.UserAgent.Console\bin\Debug"/>
+    </Job>
+    <Job Id="2" Name="IPRange Job" Active="true" FileName="Fanex.NAP.FPS.Renovation.IPRange.Console.exe">
+      <ExecutePath InstanceId="Master" Path="D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.IPRange.Console\bin\Debug"/>
+      <ExecutePath InstanceId="Slave" Path="D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.IPRange.Console\bin\Debug"/>
+    </Job>
+    <Job Id="3" Name="Association Job" Active="true" FileName="Fanex.NAP.FPS.Renovation.Association.Console.exe">
+      <ExecutePath InstanceId="Master" Path="D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.Association.Console\bin\Debug"/>
+      <ExecutePath InstanceId="Slave" Path="D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.Association.Console\bin\Debug"/>
+    </Job>
+    <Job Id="4" Name="InsertTrans Job" Active="true" Action="api/active" IntervalInSecond="1">
+      <ExecutePath InstanceId="Master" Path="http://10.23.10.11:9000"/>
+      <ExecutePath InstanceId="Slave" Path="http://10.23.10.11:9000"/>
+    </Job>
+    <Job Id="5" Name="InsertDevice Job" Active="true" Action="api/active" IntervalInSecond="1">
+      <ExecutePath InstanceId="Master" Path="http://10.23.10.11:7000"/>
+      <ExecutePath InstanceId="Slave" Path="http://10.23.10.11:7000"/>
+    </Job>
+  </Service>
+  
 </Services>

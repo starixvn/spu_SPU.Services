@@ -1,0 +1,2 @@
+﻿MATCH (c:Customer {CustId: $CustId})-[r:USED]->(d:Device {DeviceId: $DeviceId})
+RETURN id(r) as Id

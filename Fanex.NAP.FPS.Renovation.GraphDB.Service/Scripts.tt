@@ -1,0 +1,39 @@
+﻿<#@ template hostspecific="true" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="System.XML" #>
+<#@ assembly name="System.xml.linq" #>
+<#@ assembly name="EnvDTE" #>  
+<#@ import namespace="EnvDTE" #>  
+<#@ import namespace="System.IO" #> 
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Xml.Linq" #>
+<#@ output extension=".cs" #>
+
+<#
+    var file = this.Host.TemplateFile;
+	var info = new FileInfo(file);
+	var folder = info.DirectoryName;
+	var app_data = Directory.CreateDirectory(folder + "/App_Data");
+	var xml = GetSps(app_data, "Script.xml");
+#>
+
+namespace Fanex.NAP.FPS.Renovation.GraphDB.Service
+{
+    <# foreach(var function in xml.Elements("Function")){ #>
+        public static class <#= function.Attribute("Name").Value #>
+        {
+            <# foreach(var setting in function.Elements("GraphSetting")){ #>
+                public const string <#= setting.Attribute("Key").Value #> = "<#= setting.Attribute("Key").Value #>";
+            <# }#>
+        }
+    <# }#>
+}
+
+<#+ 
+	public XElement GetSps(DirectoryInfo app_data, string fileName)
+	{
+		return XElement.Load(app_data.FullName + "/" + fileName);
+	}
+#>

@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{343073C5-6A1F-4E08-8C39-C8B6498BBADB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fanex.NAP.FPS.Renovation.Services</RootNamespace>
+    <AssemblyName>Fanex.NAP.FPS.Renovation.Services</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Fanex.Oneyed.Infrastructure.Models">
+      <HintPath>..\Components\Fanex.Oneyed.Infrastructure.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="Implement\CapturingTransactionService.cs" />
+    <Compile Include="Implement\DataCenterService.cs" />
+    <Compile Include="Implement\DataTransformService.cs" />
+    <Compile Include="Implement\IPRangeService.cs" />
+    <Compile Include="Implement\UserAgent.cs" />
+    <Compile Include="Interface\IDataCenterService.cs" />
+    <Compile Include="Interface\IDataTransformService.cs" />
+    <Compile Include="Interface\IPRangeService.cs" />
+    <Compile Include="Interface\IUserAgent.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.FPS.Renovation.Core.csproj">
+      <Project>{91543a37-f0a0-4a4f-8c1d-dbb0bcc75699}</Project>
+      <Name>Fanex.NAP.FPS.Renovation.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Criteria\Fanex.NAP.FPS.Renovation.Criteria.csproj">
+      <Project>{1fda7272-3467-4d5b-a64d-7f4edb287f17}</Project>
+      <Name>Fanex.NAP.FPS.Renovation.Criteria</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.DataAccess\Fanex.NAP.FPS.Renovation.DataAccess.csproj">
+      <Project>{ad798634-bda0-4399-a135-1f91dad9073d}</Project>
+      <Name>Fanex.NAP.FPS.Renovation.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
+      <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
+      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

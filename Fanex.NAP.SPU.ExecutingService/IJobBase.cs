@@ -8,7 +8,7 @@ namespace Fanex.NAP.SPU.ExecutingService
 
         IJobBase DeleteJob(string jobName, string groupName);
 
-        IJobBase CreateTrigger(string triggerName, string groupName, int interval);
+        IJobBase CreateTriggerIntervalInSeconds(string triggerName, string groupName, int interval);
 
         IJobBase CreateTriggerWithCronSchedule(string triggerName, string groupName, string expression);
 

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+
+    <Setting Key="GetAllIP2Location" SpName="GetAllIP2Location" DbName="SQL.IPDB"/>
+    <Setting Key="GetAllIPv62Location" SpName="GetAllIPv62Location" DbName="SQL.IPDB" TimeOut="3600"/>
+    <Setting Key="GetIPDBVersion" SpName="GetIPDBVersion" DbName="SQL.IPDB"/>
+
+    <Setting Key="FPS_DC_UpdateIPTableLog" SpName="FPS_DC_UpdateIPTableLog" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_GetLatestUpdatedDate_IPRange" SpName="FPS_DC_GetLatestUpdatedDate_IPRange" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_UpdateIPRangeLocation" SpName="FPS_DC_UpdateIPRangeLocation" DbName="MySQL.FPS_DataCenter" TimeOut="3600"/>
+  
+  </Function>
+ 
+</Functions>

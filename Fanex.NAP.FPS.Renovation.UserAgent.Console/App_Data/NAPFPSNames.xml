@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+    <Setting Key="FPS_DC_TransformData_UserAgent_GetNullBrowserOSList" SpName="FPS_DC_TransformData_UserAgent_GetNullBrowserOSList" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_TransformData_UserAgent_UpdateOSBrowser" SpName="FPS_DC_TransformData_UserAgent_UpdateOSBrowser" DbName="MySQL.FPS_DataCenter"/>   
+  </Function> 
+</Functions>

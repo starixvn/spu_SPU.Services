@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RuleSet Name="SonarQube - SPU / FPS Nexcel CSharp" ToolsVersion="16.0">
+  <Include Path="..\.sonarlint\fpscsharp.ruleset" Action="Default" />
+</RuleSet>

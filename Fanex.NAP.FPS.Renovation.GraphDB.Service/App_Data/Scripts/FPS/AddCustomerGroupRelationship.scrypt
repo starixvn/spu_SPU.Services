@@ -1,0 +1,5 @@
+﻿MATCH (d:Device {DeviceId: $DeviceId})<-[:USED]-(c:Customer)-[:BELONG_TO]->(g:Group)
+WITH g LIMIT 1
+MATCH (cus:Customer {CustId:$CustId})
+MERGE (cus)-[:BELONG_TO]->(g)
+SET g.CustomerQuantity = g.CustomerQuantity + 1

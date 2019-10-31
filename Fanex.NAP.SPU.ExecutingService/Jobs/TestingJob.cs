@@ -25,7 +25,7 @@ namespace Fanex.NAP.SPU.ExecutingService.Jobs
                 var triggerName = string.Format("{0}Trigger", job.Name);
 
                 jobBase.CreateJob(jobName, groupName, job)
-                    .CreateTrigger(triggerName, groupName, 60)
+                    .CreateTriggerIntervalInSeconds(triggerName, groupName, 60)
                     .CreateSchedule()
                     .CreateListenerJob()
                     .Run();

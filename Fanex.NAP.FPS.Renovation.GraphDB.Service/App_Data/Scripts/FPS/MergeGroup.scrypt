@@ -1,0 +1,24 @@
+﻿MATCH (d:Device {DeviceId: $DeviceId})
+MATCH (c:Customer {CustId: $CustId})
+WITH c, d
+MATCH (d)<-[:USED]-(c1:Customer)-[:BELONG_TO]->(g1:Group)
+WHERE c1.CustId <> c.CustId
+WITH g1, c LIMIT 1
+MATCH (c)-[:BELONG_TO]->(g:Group)
+WITH g, g1 LIMIT 1
+WITH 
+	CASE
+    	WHEN g1.CustomerQuantity > g.CustomerQuantity THEN g1
+        ELSE g END AS bigGroup,
+    CASE
+    	WHEN g1.CustomerQuantity > g.CustomerQuantity THEN g
+        ELSE g1 END AS smallGroup
+WHERE bigGroup <> smallGroup
+WITH bigGroup, smallGroup
+MATCH (needMergeCus:Customer)-[b:BELONG_TO]->(smallGroup)
+SET b.Lock = true
+MERGE (needMergeCus)-[:BELONG_TO]->(bigGroup)
+DELETE b
+WITH DISTINCT bigGroup, smallGroup
+SET bigGroup.CustomerQuantity = bigGroup.CustomerQuantity + smallGroup.CustomerQuantity
+DETACH DELETE smallGroup

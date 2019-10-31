@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">   
+    <Setting Key="FPS_DC_GetAssociationForGraphDB" SpName="FPS_DC_GetAssociationForGraphDB" DbName="MySQL.FPS_DataCenter"/>   
+    <Setting Key="FPS_DC_UpdateIsSyncGraphDBByAssociationID" SpName="FPS_DC_UpdateIsSyncGraphDBByAssociationID" DbName="MySQL.FPS_DataCenter" Timeout="600"/>   
+  </Function>  
+</Functions>

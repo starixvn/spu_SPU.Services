@@ -1,0 +1,9 @@
+﻿MERGE (cus:Customer {CustId:$CustId})
+ON CREATE SET cus.Username=$Username, cus.Username2=$Username2, cus.RoleId=$RoleId, cus.CurrencyId=$CurrencyId, cus.CurrencyName=$CurrencyName, cus.SubscriberId=$SubscriberId, cus.FpsAccountId=$FpsAccountId, cus.IsDeposit=$IsDeposit, cus.CreatedDate=$CreatedDate
+ON MATCH SET cus.Username=$Username, cus.Username2=$Username2, cus.RoleId=$RoleId, cus.CurrencyId=$CurrencyId, cus.CurrencyName=$CurrencyName, cus.SubscriberId=$SubscriberId, cus.FpsAccountId=$FpsAccountId
+MERGE (dev:Device {DeviceId:$DeviceId})
+MERGE (cus) -[:USED]-> (dev)
+WITH cus, dev
+OPTIONAL MATCH (dev)<-[:USED]-(:Customer)-[:BELONG_TO]->(g:Group)
+OPTIONAL MATCH (cus)-[:BELONG_TO]->(g1:Group)
+RETURN COLLECT(DISTINCT g.GroupId) AS DeviceGroups, COLLECT(DISTINCT g1.GroupId) AS CustomerGroups

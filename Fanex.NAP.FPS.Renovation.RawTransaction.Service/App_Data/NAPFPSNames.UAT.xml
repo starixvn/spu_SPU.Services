@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="CapturingTransaction">
+    <Setting Key="RT_RawTrans_InsertByXML" SpName="RT_RawTrans_InsertByXML" DbName="MySQL.FPS_RawTrans">
+    </Setting>
+  </Function>
+</Functions>

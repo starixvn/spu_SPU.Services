@@ -20,5 +20,11 @@
 
         [XmlElement(ElementName = "ExecutePath")]
         public List<ExecutePath> ExecutePath { get; set; }
+
+        [XmlElement(ElementName = "Action")]
+        public string Action { get; set; }
+
+        [XmlElement(ElementName = "IntervalInSecond")]
+        public int IntervalInSecond { get; set; }
     }
 }

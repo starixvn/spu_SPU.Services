@@ -41,7 +41,7 @@
             return this;
         }       
 
-        public IJobBase CreateTrigger(string triggerName, string groupName, int interval)
+        public IJobBase CreateTriggerIntervalInSeconds(string triggerName, string groupName, int interval)
         {
             var trigger = TriggerBuilder.Create()
             .WithIdentity(triggerName, groupName)

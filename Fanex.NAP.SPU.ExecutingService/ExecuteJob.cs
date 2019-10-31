@@ -60,53 +60,67 @@
 
                     if (jobData != null)
                     {
-                        var outputError = new StringBuilder();
-
-                        var jobDataMap = context.JobDetail.JobDataMap;
-
-                        var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
-
-                        var path = Path.Combine(rootPath, jobData.FileName);
-
-                        if (!CheckActive(context, jobData) || !CheckFileExist(context, path))
+                        
+                        if(jobData.Action != null)
                         {
-                            return Task.CompletedTask;
+
                         }
-
-                        var process = new Process();
-                        process.StartInfo.UseShellExecute = false;
-                        process.StartInfo.RedirectStandardError = true;
-                        process.StartInfo.FileName = path;
-                        process.Start();
-
-                        process.ErrorDataReceived += (sender, e) =>
+                        else
                         {
-                            if (e.Data != null)
-                            {
-                                outputError.Append(e.Data);
-                                outputError.Append(System.Environment.NewLine);
-                            }
-                        };
-                        process.BeginErrorReadLine();
-
-                        process.WaitForExit();
-
-                        if (!string.IsNullOrEmpty(outputError.ToString()))
-                        {
-                            LogService.Error(outputError.ToString());
-
-                            if (AppSetting.Environment == 3)
-                            {
-                                new LetstalkService().Error(outputError.ToString());
-                            }
-                        }
+                            return ExecuteConsole(context, jobData);
+                        }                        
                     }                    
                 }
             }
-
             catch (Exception ex)
             {
                 return Task.FromException(new JobExecutionException(ex));
+            }
+
+            return Task.CompletedTask;
+        }
+
+        private Task ExecuteConsole(IJobExecutionContext context, JobData jobData)
+        {
+            var outputError = new StringBuilder();
+
+            var jobDataMap = context.JobDetail.JobDataMap;
+
+            var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
+
+            var path = Path.Combine(rootPath, jobData.FileName);
+
+            if (!CheckActive(context, jobData) || !CheckFileExist(context, path))
+            {
+                return Task.CompletedTask;
+            }
+
+            var process = new Process();
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.RedirectStandardError = true;
+            process.StartInfo.FileName = path;
+            process.Start();
+
+            process.ErrorDataReceived += (sender, e) =>
+            {
+                if (e.Data != null)
+                {
+                    outputError.Append(e.Data);
+                    outputError.Append(System.Environment.NewLine);
+                }
+            };
+            process.BeginErrorReadLine();
+
+            process.WaitForExit();
+
+            if (!string.IsNullOrEmpty(outputError.ToString()))
+            {
+                LogService.Error(outputError.ToString());
+
+                if (AppSetting.Environment == 3)
+                {
+                    new LetstalkService().Error(outputError.ToString());
+                }
             }
 
             return Task.CompletedTask;
