@@ -3,13 +3,12 @@ using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
 using Quartz;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Fanex.NAP.SPU.ExecutingService
 {
+    [PersistJobDataAfterExecution]
+    [DisallowConcurrentExecution]
     public class ExecuteJobBase : IJob
     {
         protected IUMControlAdapter maintenanceService;

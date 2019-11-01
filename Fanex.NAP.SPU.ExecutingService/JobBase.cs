@@ -7,6 +7,7 @@
     using System.Collections.Specialized;
     using System.Configuration;
 
+    [PersistJobDataAfterExecution]
     [DisallowConcurrentExecution]
     public class JobBase : IJobBase
     {
@@ -33,7 +34,7 @@
 
             var job = JobBuilder.Create(typeof(T))
                .WithIdentity(jobName, groupName)
-               .UsingJobData(jobDataMap)
+               .SetJobData(jobDataMap)
                .Build();
 
             this.Job = job;
@@ -95,15 +96,15 @@
         public void Run()
         {
             if (this.Job != null && this.Trigger != null)
-            {
-                if (this.Schedule != null)
+            {               
+                if(this.Schedule.CheckExists(this.Job.Key).Result)
                 {
                     this.Schedule.RescheduleJob(this.Trigger.Key, this.Trigger);
                 }
                 else
                 {
                     this.Schedule.ScheduleJob(this.Job, this.Trigger);
-                }
+                }                
             }
         }
 

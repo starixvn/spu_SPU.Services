@@ -1,10 +1,7 @@
-﻿using System;
+﻿using Fanex.NAP.SPU.Model;
+using Quartz;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.SPU.Model;
-using Quartz;
 
 namespace Fanex.NAP.SPU.ExecutingService.Jobs
 {

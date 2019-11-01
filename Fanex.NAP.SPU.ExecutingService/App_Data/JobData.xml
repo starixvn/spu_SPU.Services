@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Services>
-  <Service Id="1" Name="FS.FraudCase.Scanner" Active="false">
+  <Service Id="1" Name="FS.FraudCase.Scanner" Active="true">
     <Job Id="1" Name="BigStateNearGoal" Active="true" FileName="Fanex.NAP.FS.BigStakeNearGoal.Console.exe">
       <ExecutePath InstanceId="Master" Path="E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BigStakeNearGoal.Console"/>
       <ExecutePath InstanceId="Slave" Path="E:\www\SERVICES\SPU\Fanex.NAP.FS.BigStakeNearGoal.Console"/>

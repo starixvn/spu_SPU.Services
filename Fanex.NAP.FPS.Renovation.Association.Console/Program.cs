@@ -14,12 +14,10 @@ using SharpRaven;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fanex.NAP.FPS.Renovation.Association.Console
 {
-   static class Program
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -85,6 +83,10 @@ namespace Fanex.NAP.FPS.Renovation.Association.Console
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
+            }
+            finally
+            {
+                _rabbitMQ.Disposed();
             }
         }
     }

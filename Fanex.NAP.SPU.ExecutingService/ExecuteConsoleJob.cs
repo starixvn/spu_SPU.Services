@@ -4,17 +4,13 @@
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
     using Fanex.NAP.SPU.Service;
-    using ONEbook.UM.Services;
-    using ONEbook.UM.Services.Impl;
     using Quartz;
     using System;
     using System.Diagnostics;
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
-
-    [PersistJobDataAfterExecution]
-    [DisallowConcurrentExecution]
+    
     public class ExecuteConsoleJob : ExecuteJobBase
     {
         private const string FlagNotExistsFile = "FlagNotExistsFile";
