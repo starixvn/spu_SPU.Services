@@ -12,7 +12,7 @@
 
         private List<IScheduler> schedulers;
 
-        public override void CreateScheduleJob(JobDataSevices jobData)
+        public override void CreateScheduleJob<T>(JobDataSevices jobData)
         {
             schedulers = new List<IScheduler>();
 
@@ -22,7 +22,7 @@
                 var jobName = string.Format("{0}Job", job.Name);
                 var triggerName = string.Format("{0}Trigger", job.Name);
 
-                jobBase.CreateJob(jobName, groupName, job)
+                jobBase.CreateJob<T>(jobName, groupName, job)
                     .CreateTriggerWithCronSchedule(triggerName, groupName, AppSetting.VSJobCronEveryDay)
                     .CreateSchedule()
                     .CreateListenerJob()

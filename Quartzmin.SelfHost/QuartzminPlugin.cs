@@ -33,12 +33,15 @@ namespace Quartzmin.SelfHost
 #if NETSTANDARD
         public async Task Start(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var host = Microsoft.AspNetCore.WebHost.CreateDefaultBuilder().Configure(app => {
+            var host = Microsoft.AspNetCore.WebHost.CreateDefaultBuilder().Configure(app =>
+            {
                 app.UseQuartzmin(CreateQuartzminOptions());
-            }).ConfigureServices(services => {
+            }).ConfigureServices(services =>
+            {
                 services.AddQuartzmin();
             })
-            .ConfigureLogging(logging => {
+            .ConfigureLogging(logging =>
+            {
                 logging.ClearProviders();
             })
             .UseUrls(Url)
@@ -61,7 +64,11 @@ namespace Quartzmin.SelfHost
 #endif
         public Task Shutdown(CancellationToken cancellationToken = default(CancellationToken))
         {
-            _webApp.Dispose();
+            if (_webApp != null)
+            {
+                _webApp.Dispose();
+            }
+
             return Task.FromResult(0);
         }
 

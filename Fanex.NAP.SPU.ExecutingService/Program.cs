@@ -1,9 +1,11 @@
 ﻿namespace Fanex.NAP.SPU.ExecutingService
 {
     using Fanex.Data;
-    using Fanex.Data.ConnectionStringProvider20;
+    using Fanex.Data.MySql;
+    using Fanex.Data.SqlServer;
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.FPS.Renovation.Core;
     using Fanex.NAP.FS.Core;
     using SharpRaven;
     using System;
@@ -19,10 +21,12 @@
         static void Main(string[] args)
         {
             DbSettingProviderManager
-                    .StartNewSession()
-                    .Use(new ConnectionStringProvider20())
-                    .UseDefaultDbSettingProvider(AppSetting.AppData, false)
-                    .Run();
+                .StartNewSession()
+                .WithSqlServer()
+                .WithMySql()
+                .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
+                .UseDefaultConnectionStringProvider()
+                .Run();
 
             LogManager.SetDefaultLogCategory(AppSetting.FanexLogCategory)
                     .Use(new List<ILogEngine>
@@ -40,7 +44,7 @@
                 new Runner()
             };
 
-            if (Environment.UserInteractive)
+            if (System.Environment.UserInteractive)
             {
                 // run console
                 var type = typeof(ServiceBase);

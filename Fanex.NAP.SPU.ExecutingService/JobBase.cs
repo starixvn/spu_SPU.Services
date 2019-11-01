@@ -16,30 +16,30 @@
 
         public IScheduler Schedule { get; set; }
 
-        public IJobBase CreateJob(string jobName, string groupName, JobData jobData)
+        public IJobBase CreateJob<T>(string jobName, string groupName, JobData jobData)
         {
             var jobDataMap = new JobDataMap
             {
                 { "Id", jobData.Id },
                 { "Name", jobData.Name },
-                { "Active", jobData.Active },                
-                { "FileName", jobData.FileName }                               
+                { "Active", jobData.Active },
+                { "FileName", jobData.FileName }
             };
 
-            foreach(var executePath in jobData.ExecutePath)
+            foreach (var executePath in jobData.ExecutePath)
             {
                 jobDataMap.Add(executePath.InstanceId, executePath.Path);
             }
 
-            var job = JobBuilder.Create(typeof(ExecuteJob))
+            var job = JobBuilder.Create(typeof(T))
                .WithIdentity(jobName, groupName)
-               .SetJobData(jobDataMap)
+               .UsingJobData(jobDataMap)
                .Build();
 
             this.Job = job;
 
             return this;
-        }       
+        }
 
         public IJobBase CreateTriggerIntervalInSeconds(string triggerName, string groupName, int interval)
         {
@@ -77,10 +77,7 @@
 
             this.Schedule = factory.GetScheduler().Result;
 
-            if (this.Job != null && this.Trigger != null)
-            {
-                this.Schedule.ScheduleJob(this.Job, this.Trigger);
-            }            
+            this.Schedule.Start();
 
             return this;
         }
@@ -88,6 +85,7 @@
         public IJobBase CreateListenerJob()
         {
             var listener = new ListenerJob(this.Job.Key.Name);
+
             IMatcher<JobKey> matcher = KeyMatcher<JobKey>.KeyEquals(this.Job.Key);
             this.Schedule.ListenerManager.AddJobListener(listener, matcher);
 
@@ -96,17 +94,24 @@
 
         public void Run()
         {
-            if (this.Schedule != null)
+            if (this.Job != null && this.Trigger != null)
             {
-                this.Schedule.Start();
+                if (this.Schedule != null)
+                {
+                    this.Schedule.RescheduleJob(this.Trigger.Key, this.Trigger);
+                }
+                else
+                {
+                    this.Schedule.ScheduleJob(this.Job, this.Trigger);
+                }
             }
-        }              
-     
+        }
+
         public IJobBase DeleteJob(string jobName, string groupName)
         {
             var jobKey = new JobKey(jobName, groupName);
 
-            if(this.Schedule.CheckExists(jobKey).Result)
+            if (this.Schedule.CheckExists(jobKey).Result)
             {
                 this.Schedule.DeleteJob(jobKey);
             }

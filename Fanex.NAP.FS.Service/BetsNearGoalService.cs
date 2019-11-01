@@ -11,7 +11,7 @@
         {
             var criteria = new BetsNearGoalPreconditionCriteria();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<Match>(criteria);
             }

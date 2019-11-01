@@ -16,7 +16,7 @@
         private FraudSensorJob fraudSensorJob;
         private VirtualSettingJob virtualSettingJob;
         private TestingJob testingJob;
-
+        private FPSJob fpsJob;
         public Runner()
         {
             InitializeComponent();
@@ -60,7 +60,7 @@
             {
                 new LetstalkService().Info(msg);
             }
-            
+
             base.OnStop();
         }
 
@@ -103,7 +103,7 @@
                             {
                                 fraudSensorJob = new FraudSensorJob();
 
-                                fraudSensorJob.CreateScheduleJob(serviceMap);                                                               
+                                fraudSensorJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
 
                                 break;
                             }
@@ -111,7 +111,31 @@
                             {
                                 virtualSettingJob = new VirtualSettingJob();
 
-                                virtualSettingJob.CreateScheduleJob(serviceMap);
+                                virtualSettingJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
+
+                                break;
+                            }
+                        case 4:
+                            {
+                                fpsJob = new FPSJob();
+
+                                fpsJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
+
+                                break;
+                            }
+                        case 5:
+                            {
+                                fpsJob = new FPSJob();
+
+                                fpsJob.CreateScheduleJob<ExecuteTransactionAPIJob>(serviceMap);
+
+                                break;
+                            }
+                        case 6:
+                            {
+                                fpsJob = new FPSJob();
+
+                                fpsJob.CreateScheduleJob<ExecuteDeviceAPIJob>(serviceMap);
 
                                 break;
                             }
@@ -119,7 +143,7 @@
                             {
                                 testingJob = new TestingJob();
 
-                                testingJob.CreateScheduleJob(serviceMap);
+                                testingJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
 
                                 break;
                             }
@@ -134,7 +158,7 @@
             {
                 var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"App_Data\JobData.xml";
 
-                if(File.Exists(xmlPath))
+                if (File.Exists(xmlPath))
                 {
                     var rootMap = Serializer.Deserialize<JobDataRoot>(xmlPath);
 
@@ -142,7 +166,7 @@
                     {
                         return rootMap.Sevices;
                     }
-                }                
+                }
             }
             catch (Exception ex)
             {

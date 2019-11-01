@@ -1,12 +1,16 @@
 ﻿using EasyNetQ;
+using Fanex.Data;
+using Fanex.Data.MySql;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.Database;
+using Fanex.Logging.Sentry.RavenClient;
 using Fanex.NAP.FPS.Renovation.Core;
 using Fanex.NAP.FPS.Renovation.Model;
 using Fanex.NAP.FPS.Renovation.Queue;
 using Fanex.NAP.FPS.Renovation.Services.Implement;
 using Newtonsoft.Json;
+using SharpRaven;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +23,24 @@ namespace Fanex.NAP.FPS.Renovation.Association.Console
     {
         static void Main(string[] args)
         {
-           var dataCenterService = new DataCenterService();
+            DbSettingProviderManager
+                .StartNewSession()
+                .WithMySql()                
+                .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
+                .UseDefaultConnectionStringProvider()
+                .Run();
+
+            LogManager
+               .SetDefaultLogCategory(AppSettings.FanexLogCategory)
+               .Use(new List<ILogEngine>
+               {
+                    new SentryLogging(new SentryEngineOptions
+                    {
+                        Dsn = new Dsn(AppSettings.SentryLogging)
+                    })
+               });
+
+            var dataCenterService = new DataCenterService();
 
            var _rabbitMQ = new EasyNetQConnector(AppSettings.Host + ":" + AppSettings.Post,
                 AppSettings.VirtualHost,

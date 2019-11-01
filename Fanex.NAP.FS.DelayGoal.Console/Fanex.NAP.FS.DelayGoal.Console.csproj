@@ -56,11 +56,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.FS.DelayGoal.Console.exe.LOCAL.config">
-	<DependentUpon>App.Config</DependentUpon>
+      <DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.FS.DelayGoal.Console.exe.PRO.config">
-	<DependentUpon>App.Config</DependentUpon>
+      <DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Fanex.NAP.FS.DelayGoal.Console.ruleset" />
@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fanex.Logging.Extensions.Database">
-      <Version>1.0.5</Version>
+      <Version>1.0.8</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
       <Version>1.0.1</Version>
@@ -107,7 +107,7 @@
       <Version>12.0.2</Version>
     </PackageReference>
     <PackageReference Include="SonarAnalyzer.CSharp">
-      <Version>7.14.0.8411</Version>
+      <Version>8.0.0.9566</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>

@@ -1,8 +1,7 @@
 ﻿namespace Fanex.NAP.FS.Service
 {
     using Fanex.Data;
-    using Fanex.Data.ConnectionStringProvider20;
-    using Fanex.Logging;
+    using Fanex.Data.SqlServer;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.FS.Model;
     using System;
@@ -14,11 +13,12 @@
         public BaseService(FraudCaseId fraudCaseId)
         {
             DbSettingProviderManager
-                  .StartNewSession()
-                  .Use(new ConnectionStringProvider20())
-                  .UseDefaultDbSettingProvider(AppSetting.AppData, false)
-                  .Run();
-        
+                 .StartNewSession()
+                 .WithSqlServer()
+                 .UseDefaultDbSettingProvider(AppSetting.AppData)
+                 .UseDefaultConnectionStringProvider()
+                 .Run();
+
             FraudCaseId = Convert.ToInt32(fraudCaseId);
         }
 

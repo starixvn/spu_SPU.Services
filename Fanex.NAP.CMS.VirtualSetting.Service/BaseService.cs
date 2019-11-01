@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CMS.VirtualSetting.Service
 {
     using Fanex.Data;
+    using Fanex.Data.SqlServer;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Service;
 
@@ -17,10 +18,11 @@
         public BaseService()
         {
             DbSettingProviderManager
-                  .StartNewSession()
-                  .UseDefaultConnectionStringProvider()
-                  .UseDefaultDbSettingProvider(AppSetting.AppData, false)
-                  .Run();
+                .StartNewSession()
+                .WithSqlServer()
+                .UseDefaultDbSettingProvider(AppSetting.AppData)
+                .UseDefaultConnectionStringProvider()
+                .Run();
 
             _letstalkService = new LetstalkService();
         }

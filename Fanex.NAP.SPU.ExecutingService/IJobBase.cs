@@ -4,7 +4,7 @@ namespace Fanex.NAP.SPU.ExecutingService
 {
     public interface IJobBase
     {
-        IJobBase CreateJob(string jobName, string groupName, JobData jobData);
+        IJobBase CreateJob<T>(string jobName, string groupName, JobData jobData);
 
         IJobBase DeleteJob(string jobName, string groupName);
 

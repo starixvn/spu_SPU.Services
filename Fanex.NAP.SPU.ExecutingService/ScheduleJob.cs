@@ -10,7 +10,7 @@ namespace Fanex.NAP.SPU.ExecutingService
 {
     public abstract class ScheduleJob
     {
-        public abstract void CreateScheduleJob(JobDataSevices jobData);
+        public abstract void CreateScheduleJob<T>(JobDataSevices jobData);
 
         public abstract void Shutdown();
 

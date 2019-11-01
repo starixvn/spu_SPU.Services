@@ -38,7 +38,7 @@
             };
 
             return _repository.Fetch<CustomerVirtualRate>(criteria);
-        }       
+        }
 
         public IEnumerable<Punter> GetWinningPunterSoccerList(string siteNames, string superIds, double virtualRateThreshold)
         {
@@ -76,8 +76,17 @@
                 SportType = sportType
             };
 
-            return ExecuteOutput(criteria);
-        }        
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+
+                return new CommandResult
+                {
+                    Code = criteria.ErrCode,
+                    Message = criteria.ErrMsg
+                };
+            }
+        }
 
         public ICommandResult LogPunterVirtualSetting(string serviceName, IEnumerable<Punter> punters, int userId, DateTime adjustDate)
         {
@@ -109,13 +118,22 @@
                 AdjustDate = adjustDate
             };
 
-            return ExecuteOutput(criteria);
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+
+                return new CommandResult
+                {
+                    Code = criteria.ErrCode,
+                    Message = criteria.ErrMsg
+                };
+            }
         }
 
         public ICommandResult InsertCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupID, int numOfMonth, string serviceName, DateTime adjustDate)
         {
             var rate = string.Empty;
-            var customerMargins = GetCustomerMarginHistory(punters, sportGroupID, numOfMonth);            
+            var customerMargins = GetCustomerMarginHistory(punters, sportGroupID, numOfMonth);
 
             foreach (var customerMargin in customerMargins)
             {
@@ -148,7 +166,16 @@
                 ErrMsg = string.Empty
             };
 
-            return ExecuteOutput(criteria);
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+
+                return new CommandResult
+                {
+                    Code = criteria.ErrCode,
+                    Message = criteria.ErrMsg
+                };
+            }
         }
 
         public IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupID, int numOfMonth)
@@ -161,29 +188,29 @@
             };
 
             return _repository.Fetch<CustomerMargin>(criteria);
-        }        
-
-        private ICommandResult ExecuteOutput(ICriteria criteria)
-        {
-            using (var objectDb = new ObjectDb(criteria.GetSettingKey()))
-            {
-                var param = criteria.GetSpParams();
-                objectDb.ExecuteNonQuery(param);
-
-                return GetCommandResult(param);
-            }
         }
 
-        private ICommandResult GetCommandResult(Hashtable hash)
-        {
-            var errCode = hash["errcode"];
-            var errMsg = hash["errmsg"];
+        //private ICommandResult ExecuteOutput(ICriteria criteria)
+        //{
+        //    using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+        //    {
+        //        var param = criteria.GetSpParams();
+        //        objectDb.ExecuteNonQuery(param);
 
-            return new CommandResult
-            {
-                Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
-                Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
-            };
-        }
+        //        return GetCommandResult(param);
+        //    }
+        //}
+
+        //private ICommandResult GetCommandResult(Hashtable hash)
+        //{
+        //    var errCode = hash["errcode"];
+        //    var errMsg = hash["errmsg"];
+
+        //    return new CommandResult
+        //    {
+        //        Code = (errCode is DBNull) ? 0 : Convert.ToInt32(errCode),
+        //        Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
+        //    };
+        //}
     }
 }

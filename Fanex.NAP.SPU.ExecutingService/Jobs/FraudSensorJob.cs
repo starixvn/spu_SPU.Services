@@ -14,7 +14,7 @@
         private const string groupName = "FraudSensor";
         private List<IScheduler> schedulers;
 
-        public override void CreateScheduleJob(JobDataSevices jobData)
+        public override void CreateScheduleJob<T>(JobDataSevices jobData)
         {
             var fraudCaseService = new FraudCaseService();
             var fraudCases = fraudCaseService.GetFraudCase<FS.Model.FraudCase>(null, 1, AppSetting.Environment);
@@ -31,7 +31,7 @@
                     var triggerName = string.Format("{0}Trigger", fraudCaseName);
                     var mapData = GetJobData(fraudCase.FraudCaseId, jobData);
                     
-                    job.CreateJob(jobName, groupName, mapData)
+                    job.CreateJob<T>(jobName, groupName, mapData)
                         .CreateTriggerIntervalInSeconds(triggerName, groupName, fraudCase.FraudCaseInterval)
                         .CreateSchedule()
                         .CreateListenerJob()

@@ -75,13 +75,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExecuteDeviceAPIJob.cs" />
+    <Compile Include="ExecuteJobBase.cs" />
+    <Compile Include="ExecuteTransactionAPIJob.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Jobs\FPSJob.cs" />
     <Compile Include="Jobs\FraudSensorJob.cs" />
     <Compile Include="IJobBase.cs" />
     <Compile Include="Jobs\TestingJob.cs" />
     <Compile Include="ScheduleJob.cs" />
     <Compile Include="JobBase.cs" />
-    <Compile Include="ExecuteJob.cs" />
+    <Compile Include="ExecuteConsoleJob.cs" />
     <Compile Include="ListenerJob.cs" />
     <Compile Include="Runner.cs">
       <SubType>Component</SubType>
@@ -137,6 +141,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.FPS.Renovation.Core.csproj">
+      <Project>{91543A37-F0A0-4A4F-8C1D-DBB0BCC75699}</Project>
+      <Name>Fanex.NAP.FPS.Renovation.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
+      <Project>{07F5D4E0-8C77-48A8-BA21-B7F7E0439A64}</Project>
+      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Services\Fanex.NAP.FPS.Renovation.Services.csproj">
+      <Project>{343073c5-6a1f-4e08-8c39-c8b6498bbadb}</Project>
+      <Name>Fanex.NAP.FPS.Renovation.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.FS.Core\Fanex.NAP.FS.Core.csproj">
       <Project>{f95ab8f2-f7dc-4c12-89e0-090fb0ec6414}</Project>
       <Name>Fanex.NAP.FS.Core</Name>
@@ -206,19 +222,31 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper">
-      <Version>1.50.5</Version>
+      <Version>2.0.30</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Caching">
       <Version>2.2.1</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Data">
-      <Version>3.0.2</Version>
+      <Version>4.2.0</Version>
     </PackageReference>
-    <PackageReference Include="Fanex.Data.ConnectionStringProvider20">
-      <Version>3.0.0</Version>
+    <PackageReference Include="Fanex.Data.MySql">
+      <Version>4.2.1</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Data.SqlServer">
+      <Version>4.2.0</Version>
     </PackageReference>
     <PackageReference Include="Fanex.File">
       <Version>1.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Logging">
+      <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Logging.Extensions">
+      <Version>1.0.6</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Logging.Extensions.Database">
+      <Version>1.0.8</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
       <Version>1.0.1</Version>
@@ -238,10 +266,10 @@
       <Version>3.0.7</Version>
     </PackageReference>
     <PackageReference Include="RestSharp">
-      <Version>105.2.3</Version>
+      <Version>106.6.10</Version>
     </PackageReference>
     <PackageReference Include="SonarAnalyzer.CSharp">
-      <Version>7.14.0.8411</Version>
+      <Version>8.0.0.9566</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -249,7 +277,7 @@
       <Version>1.0.0</Version>
     </PackageReference>
     <PackageReference Include="System.Configuration.ConfigurationManager">
-      <Version>4.5.0</Version>
+      <Version>4.6.0</Version>
     </PackageReference>
     <PackageReference Include="UMControllerLibrary">
       <Version>1.0.1872.836</Version>
