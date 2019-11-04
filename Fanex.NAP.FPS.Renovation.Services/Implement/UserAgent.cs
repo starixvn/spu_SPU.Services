@@ -14,27 +14,44 @@ namespace Fanex.NAP.FPS.Renovation.Services.Implement
         public UserAgent()
         {
             dataCenter = new DataCenterDataAccess();
-        }       
+        }
+
+        public ClientInfo ConvertUserAgent(string userAgent)
+        {
+            if (!string.IsNullOrWhiteSpace(userAgent))
+            {
+                var uaParser = Parser.GetDefault();
+
+                return uaParser.Parse(userAgent);
+            }
+
+            return null;
+        }
 
         public List<UserAgentModel> GetUserAgent(int size)
         {
-            var userAgents = dataCenter.GetUserAgent(size);
+            return dataCenter.GetUserAgent(size);           
+        }
 
-            var uaParser = Parser.GetDefault();           
-            
-            return userAgents.Select(x => {
+        public List<UserAgentModel> TransformUserAgent(List<UserAgentModel> userAgents)
+        {
+            if (userAgents != null && userAgents.Any())
+            {
+                return userAgents.Select(x =>
+                {
+                    var clientInfo = ConvertUserAgent(x.UserAgent);
+                    var browserName = clientInfo.UA.Family;
+                    var osName = clientInfo.OS.Family;
 
-                 var clientInfo = uaParser.Parse(x.UserAgent);
-                var browserName = clientInfo.UA.Family;
-                var osName = clientInfo.OS.Family;
-                                
-                x.OSName = osName;
-                x.BrowserName = browserName;
-                
+                    x.OSName = osName;
+                    x.BrowserName = browserName;
 
-                return x;
+                    return x;
 
-            }).ToList();            
+                }).ToList();
+            }
+
+            return new List<UserAgentModel>();
         }
 
         public int UpdateUserAgent(string userAgentJson)

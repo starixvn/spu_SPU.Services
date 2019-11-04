@@ -38,13 +38,18 @@
 
             try
             {
-                var drawUserAgent = userAgent.GetUserAgent(Core.AppSettings.SizeOfUserAgent);
+                var userAgents = userAgent.GetUserAgent(Core.AppSettings.SizeOfUserAgent);
 
-                if (drawUserAgent.Any())
-                {                   
-                    var userAgentJson = JsonConvert.SerializeObject(drawUserAgent);
+                if (userAgents != null && userAgents.Any())
+                {
+                    var transformUserAgents = userAgent.TransformUserAgent(userAgents);
 
-                    userAgent.UpdateUserAgent(userAgentJson);
+                    if (transformUserAgents.Any())
+                    {
+                        var userAgentJson = JsonConvert.SerializeObject(transformUserAgents);
+
+                        userAgent.UpdateUserAgent(userAgentJson);
+                    }
                 }
             }
             catch (Exception ex)

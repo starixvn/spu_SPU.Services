@@ -7,12 +7,14 @@
 
     public static class Cipher
     {
-        const string passwrod = "!QAZxdr5P@ssword";
+        const string password = "!QAZxdr5P@ssword";
 
         public static string Encrypt(string plainText)
         {
+            if (string.IsNullOrWhiteSpace(plainText)) return null;
+
             var bytesToBeEncrypted = Encoding.UTF8.GetBytes(plainText);
-            var passwordBytes = Encoding.UTF8.GetBytes(passwrod);
+            var passwordBytes = Encoding.UTF8.GetBytes(password);
 
             // Hash the password with SHA256
             passwordBytes = SHA256.Create().ComputeHash(passwordBytes);
@@ -22,12 +24,9 @@
             return Convert.ToBase64String(bytesEncrypted);
         }
 
-        public static string Decrypt(string encryptedText, string password)
+        public static string Decrypt(string encryptedText)
         {
-            if (encryptedText == null)
-            {
-                return null;
-            }            
+            if (string.IsNullOrWhiteSpace(encryptedText)) return null;            
 
             var bytesToBeDecrypted = Convert.FromBase64String(encryptedText);
             var passwordBytes = Encoding.UTF8.GetBytes(password);

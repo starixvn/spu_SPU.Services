@@ -105,6 +105,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FPS.Renovation.Se
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{701383CF-2252-44C7-BA0B-697F71F1C2B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Test", "Fanex.NAP.SPU.Test\Fanex.NAP.SPU.Test.csproj", "{89D2F2F7-2910-4393-95CE-E31F2CDFDC0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -279,6 +281,10 @@ Global
 		{343073C5-6A1F-4E08-8C39-C8B6498BBADB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{343073C5-6A1F-4E08-8C39-C8B6498BBADB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{343073C5-6A1F-4E08-8C39-C8B6498BBADB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{89D2F2F7-2910-4393-95CE-E31F2CDFDC0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89D2F2F7-2910-4393-95CE-E31F2CDFDC0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89D2F2F7-2910-4393-95CE-E31F2CDFDC0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89D2F2F7-2910-4393-95CE-E31F2CDFDC0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -331,7 +337,7 @@ Global
 		{343073C5-6A1F-4E08-8C39-C8B6498BBADB} = {2020707F-395A-4E55-A98E-AC6DF05354EA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
