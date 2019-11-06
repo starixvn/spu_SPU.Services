@@ -2,15 +2,15 @@
 {
     public class DevicePackage
     {
-        public long StagingTransId { get; set; }
+        public long TransId { get; set; }
 
         public long AccountId { get; set; }
 
         public long SubscriberId { get; set; }
 
-        public long UserAgentId { get; set; }
+        public long UserAgentKey { get; set; }
 
-        public long DeviceCodeId { get; set; }
+        public long DeviceCodeKey { get; set; }
 
         public int BatchId { get; set; }
     }

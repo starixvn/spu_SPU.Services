@@ -2,7 +2,7 @@
 
 <Functions>
   <Function Name="Data Center">
-    <Setting Key="FPS_DC_TransformData_UserAgent_GetNullBrowserOSList" SpName="FPS_DC_TransformData_UserAgent_GetNullBrowserOSList" DbName="MySQL.FPS_DataCenter"/>
-    <Setting Key="FPS_DC_TransformData_UserAgent_UpdateOSBrowser" SpName="FPS_DC_TransformData_UserAgent_UpdateOSBrowser" DbName="MySQL.FPS_DataCenter"/>   
+    <Setting Key="DCS_DC_TransformData_UserAgent_GetNullBrowserOSList" SpName="DCS_DC_TransformData_UserAgent_GetNullBrowserOSList" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformData_UserAgent_UpdateOSBrowser" SpName="DCS_DC_TransformData_UserAgent_UpdateOSBrowser" DbName="MySQL.DCS_DataCenter"/>   
   </Function> 
 </Functions>

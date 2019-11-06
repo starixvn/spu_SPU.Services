@@ -10,13 +10,15 @@
     using System.IO;
     using System.Text;
     using System.Threading.Tasks;
-    
-    public class ExecuteConsoleJob : ExecuteJobBase
+
+    [PersistJobDataAfterExecution]
+    [DisallowConcurrentExecution]
+    public class ExecuteConsoleJob : ExecuteJobBase, IJob
     {
         private const string FlagNotExistsFile = "FlagNotExistsFile";
         private const string FlagNotifyInActive = "FlagNotifyInActive";          
 
-        public override Task Execute(IJobExecutionContext context)
+        public Task Execute(IJobExecutionContext context)
         {
             try
             {

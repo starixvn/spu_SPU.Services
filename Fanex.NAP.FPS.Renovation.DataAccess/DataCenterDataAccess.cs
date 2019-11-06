@@ -179,8 +179,8 @@
 
             var criteria = new ProcessUnhandleSubscriberActionCriteria
             {
-                FromStagingTransId = fromId,
-                ToStagingTransId = toId
+                FromTransId = fromId,
+                ToTransId = toId
             };
 
             var errCode = repository.Execute(criteria);

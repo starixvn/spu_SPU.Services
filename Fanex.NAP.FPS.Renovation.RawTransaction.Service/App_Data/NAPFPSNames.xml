@@ -2,7 +2,7 @@
 
 <Functions>
   <Function Name="CapturingTransaction">
-    <Setting Key="FPS_RT_RawTrans_Insert" SpName="FPS_RT_RawTrans_Insert" DbName="MySQL.FPS_RawTrans" Timeout="600">
+    <Setting Key="DCS_RT_RawTrans_Insert" SpName="DCS_RT_RawTrans_Insert" DbName="MySQL.DCS_RawTransaction" Timeout="600">
     </Setting>
   </Function>
 </Functions>

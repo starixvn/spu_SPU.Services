@@ -14,8 +14,7 @@
     public partial class Runner : ServiceBase
     {
         private FraudSensorJob fraudSensorJob;
-        private VirtualSettingJob virtualSettingJob;
-        private TestingJob testingJob;
+        private VirtualSettingJob virtualSettingJob;        
         private FPSJob fpsJob;
         public Runner()
         {
@@ -65,11 +64,7 @@
         }
 
         protected override void OnShutdown()
-        {
-            fraudSensorJob.Shutdown();
-            virtualSettingJob.Shutdown();
-            testingJob.Shutdown();
-
+        {      
             var msg = $"Executing service is SHUTDOWN at {DateTime.Now}";
 
             LogService.Info(msg);
@@ -93,61 +88,52 @@
                 return;
             }
 
+            var jobBase = new JobBase();
+
             foreach (var serviceMap in listJobServicesMap)
             {
-                if (serviceMap.Active)
+                switch (serviceMap.Id)
                 {
-                    switch (serviceMap.Id)
-                    {
-                        case 1:
-                            {
-                                fraudSensorJob = new FraudSensorJob();
+                    case 1:
+                        {
+                            fraudSensorJob = new FraudSensorJob(jobBase);
 
-                                fraudSensorJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
+                            fraudSensorJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
 
-                                break;
-                            }
-                        case 2:
-                            {
-                                virtualSettingJob = new VirtualSettingJob();
+                            break;
+                        }
+                    case 2:
+                        {
+                            virtualSettingJob = new VirtualSettingJob(jobBase);
 
-                                virtualSettingJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
+                            virtualSettingJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
 
-                                break;
-                            }
-                        case 4:
-                            {
-                                fpsJob = new FPSJob();
+                            break;
+                        }
+                    case 4:
+                        {
+                            fpsJob = new FPSJob(jobBase);
 
-                                fpsJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
+                            fpsJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
 
-                                break;
-                            }
-                        case 5:
-                            {
-                                fpsJob = new FPSJob();
+                            break;
+                        }
+                    case 5:
+                        {
+                            fpsJob = new FPSJob(jobBase);
 
-                                fpsJob.CreateScheduleJob<ExecuteTransactionAPIJob>(serviceMap);
+                            fpsJob.CreateScheduleJob<ExecuteTransactionAPIJob>(serviceMap);
 
-                                break;
-                            }
-                        case 6:
-                            {
-                                fpsJob = new FPSJob();
+                            break;
+                        }
+                    case 6:
+                        {
+                            fpsJob = new FPSJob(jobBase);
 
-                                fpsJob.CreateScheduleJob<ExecuteDeviceAPIJob>(serviceMap);
+                            fpsJob.CreateScheduleJob<ExecuteDeviceAPIJob>(serviceMap);
 
-                                break;
-                            }
-                        default:
-                            {
-                                testingJob = new TestingJob();
-
-                                testingJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
-
-                                break;
-                            }
-                    }
+                            break;
+                        }
                 }
             }
         }

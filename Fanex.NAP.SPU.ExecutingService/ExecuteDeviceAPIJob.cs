@@ -1,22 +1,24 @@
-﻿using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.NAP.FPS.Renovation.Core;
-using Fanex.NAP.FPS.Renovation.Model;
-using Fanex.NAP.FPS.Renovation.Services.Implement;
-using Fanex.NAP.FPS.Renovation.Services.Interface;
-using Fanex.NAP.FS.Core;
-using Fanex.NAP.SPU.Model;
-using Quartz;
-using RestSharp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.SPU.ExecutingService
+﻿namespace Fanex.NAP.SPU.ExecutingService
 {
-    public class ExecuteDeviceAPIJob : ExecuteJobBase
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.NAP.FPS.Renovation.Core;
+    using Fanex.NAP.FPS.Renovation.Model;
+    using Fanex.NAP.FPS.Renovation.Services.Implement;
+    using Fanex.NAP.FPS.Renovation.Services.Interface;
+    using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Model;
+    using Quartz;
+    using RestSharp;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    [PersistJobDataAfterExecution]
+    [DisallowConcurrentExecution]
+    public class ExecuteDeviceAPIJob : ExecuteJobBase, IJob
     {
         private readonly IDataCenterService dataCenterService;
 
@@ -25,7 +27,7 @@ namespace Fanex.NAP.SPU.ExecutingService
             dataCenterService = new DataCenterService();
         }
 
-        public override async Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
             try
             {
@@ -33,7 +35,7 @@ namespace Fanex.NAP.SPU.ExecutingService
                 {
                     var jobData = GetJobDataMapping(context);
 
-                    if (jobData != null && jobData.Action == null)
+                    if (jobData != null)
                     {
                         await ExecuteAPI(context, jobData);
                     }
@@ -90,7 +92,6 @@ namespace Fanex.NAP.SPU.ExecutingService
 
         private static async Task<IRestResponse> Executing(List<DevicePackage> devices, string apiUrl, string actionPath)
         {
-
             var client = new RestClient(new Uri(apiUrl));
             var request = new RestRequest(actionPath, Method.POST);
 

@@ -6,15 +6,11 @@ namespace Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.Services.In
     interface IDataTransformService
     {
         IDataTransformService Initial(int fromId, int toId);
-
-        IDataTransformService AccountProcessing();
                
         IDataTransformService UserAgentProcessing();
 
         IDataTransformService TransactionProcessing();
 
         IDataTransformService UnhandleSubscriberAccountProcessing();
-
-        IDataTransformService CompleteProcessing();
     }
 }

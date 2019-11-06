@@ -82,7 +82,6 @@
     <Compile Include="Jobs\FPSJob.cs" />
     <Compile Include="Jobs\FraudSensorJob.cs" />
     <Compile Include="IJobBase.cs" />
-    <Compile Include="Jobs\TestingJob.cs" />
     <Compile Include="ScheduleJob.cs" />
     <Compile Include="JobBase.cs" />
     <Compile Include="ExecuteConsoleJob.cs" />

@@ -1,26 +1,17 @@
-﻿using Fanex.NAP.SPU.Model;
-using ONEbook.UM.Services;
-using ONEbook.UM.Services.Impl;
-using Quartz;
-using System;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.SPU.ExecutingService
+﻿namespace Fanex.NAP.SPU.ExecutingService
 {
-    [PersistJobDataAfterExecution]
-    [DisallowConcurrentExecution]
-    public class ExecuteJobBase : IJob
+    using Fanex.NAP.SPU.Model;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Services.Impl;
+    using Quartz;
+
+    public class ExecuteJobBase
     {
         protected IUMControlAdapter maintenanceService;
 
         public ExecuteJobBase()
         {
             maintenanceService = new UMControlAdapter();
-        }
-
-        public virtual Task Execute(IJobExecutionContext context)
-        {
-            throw new NotImplementedException();
         }
 
         public JobData GetJobDataMapping(IJobExecutionContext context)

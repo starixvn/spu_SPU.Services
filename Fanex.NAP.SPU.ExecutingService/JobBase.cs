@@ -1,14 +1,14 @@
 ﻿namespace Fanex.NAP.SPU.ExecutingService
 {
+    using Fanex.NAP.SPU.Model;
     using Quartz;
     using Quartz.Impl;
     using Quartz.Impl.Matchers;
-    using Fanex.NAP.SPU.Model;
+    using System;
     using System.Collections.Specialized;
     using System.Configuration;
+    using System.Linq;
 
-    [PersistJobDataAfterExecution]
-    [DisallowConcurrentExecution]
     public class JobBase : IJobBase
     {
         public IJobDetail Job { get; set; }
@@ -17,14 +17,22 @@
 
         public IScheduler Schedule { get; set; }
 
-        public IJobBase CreateJob<T>(string jobName, string groupName, JobData jobData)
+        public string JobName { get; set; }
+
+        public string GroupName { get; set; }
+
+        public string TriggerName { get; set; }
+
+
+        public IJobBase CreateJob<T>(JobData jobData)
         {
             var jobDataMap = new JobDataMap
             {
                 { "Id", jobData.Id },
                 { "Name", jobData.Name },
                 { "Active", jobData.Active },
-                { "FileName", jobData.FileName }
+                { "FileName", jobData.FileName },
+                { "Action", jobData.Action }
             };
 
             foreach (var executePath in jobData.ExecutePath)
@@ -33,7 +41,7 @@
             }
 
             var job = JobBuilder.Create(typeof(T))
-               .WithIdentity(jobName, groupName)
+               .WithIdentity(this.JobName, this.GroupName)
                .SetJobData(jobDataMap)
                .Build();
 
@@ -42,14 +50,16 @@
             return this;
         }
 
-        public IJobBase CreateTriggerIntervalInSeconds(string triggerName, string groupName, int interval)
+        public IJobBase CreateTriggerIntervalInSeconds(int interval)
         {
+            var startTime = DateTimeOffset.Now.AddSeconds(5);
+
             var trigger = TriggerBuilder.Create()
-            .WithIdentity(triggerName, groupName)
-            .StartNow()
+            .WithIdentity(this.TriggerName, this.GroupName)
             .WithSimpleSchedule(x => x
                 .WithIntervalInSeconds(interval)
                 .RepeatForever())
+            .StartAt(startTime)
             .Build();
 
             this.Trigger = trigger;
@@ -57,12 +67,14 @@
             return this;
         }
 
-        public IJobBase CreateTriggerWithCronSchedule(string triggerName, string groupName, string expression)
+        public IJobBase CreateTriggerWithCronSchedule(string expression)
         {
+            var startTime = DateTimeOffset.Now.AddSeconds(5);
+
             var trigger = TriggerBuilder.Create()
-                .WithIdentity(triggerName, groupName)
+                .WithIdentity(this.TriggerName, this.GroupName)
                 .WithCronSchedule(expression)
-                .StartNow()
+                .StartAt(startTime)
                 .Build();
 
             this.Trigger = trigger;
@@ -70,7 +82,7 @@
             return this;
         }
 
-        public IJobBase CreateSchedule()
+        public IJobBase GetSchedule()
         {
             var config = (NameValueCollection)ConfigurationManager.GetSection("quartz");
 
@@ -78,7 +90,10 @@
 
             this.Schedule = factory.GetScheduler().Result;
 
-            this.Schedule.Start();
+            if (!this.Schedule.IsStarted)
+            {
+                this.Schedule.Start().Wait();
+            }
 
             return this;
         }
@@ -93,29 +108,11 @@
             return this;
         }
 
-        public void Run()
+        public IJobBase DeleteJob(string jobName)
         {
-            if (this.Job != null && this.Trigger != null)
-            {               
-                if(this.Schedule.CheckExists(this.Job.Key).Result)
-                {
-                    this.Schedule.RescheduleJob(this.Trigger.Key, this.Trigger);
-                }
-                else
-                {
-                    this.Schedule.ScheduleJob(this.Job, this.Trigger);
-                }                
-            }
-        }
+            var jobKey = new JobKey(jobName);
 
-        public IJobBase DeleteJob(string jobName, string groupName)
-        {
-            var jobKey = new JobKey(jobName, groupName);
-
-            if (this.Schedule.CheckExists(jobKey).Result)
-            {
-                this.Schedule.DeleteJob(jobKey);
-            }
+            this.Schedule.DeleteJob(jobKey);
 
             return this;
         }
@@ -126,6 +123,22 @@
             {
                 this.Schedule.Shutdown();
             }
-        }
+        }        
+
+        public void Run()
+        {
+            var currentJobs = this.Schedule.GetJobKeys(GroupMatcher<JobKey>.GroupContains(this.GroupName)).Result;
+
+            var isExistingJob = currentJobs.Any(x => x.Name == this.JobName);
+
+            if(isExistingJob)
+            {
+                this.Schedule.RescheduleJob(this.Trigger.Key, this.Trigger);
+            }
+            else
+            {
+                this.Schedule.ScheduleJob(this.Job, this.Trigger);
+            }          
+        }        
     }
 }

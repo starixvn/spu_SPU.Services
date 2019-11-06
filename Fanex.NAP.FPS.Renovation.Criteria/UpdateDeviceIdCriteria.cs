@@ -15,7 +15,7 @@ namespace Fanex.NAP.FPS.Renovation.Criteria
 
         public override string GetSettingKey()
         {
-            return "FPS_DC_TransformData_Device_Insert";
+            return "DCS_DC_TransformData_Device_Insert";
         }
 
         public override bool IsValid()

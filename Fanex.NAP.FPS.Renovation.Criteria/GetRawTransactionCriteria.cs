@@ -22,7 +22,7 @@ namespace Fanex.NAP.FPS.Renovation.Criteria
 
         public override string GetSettingKey()
         {
-            return "FPS_ST_TransformData_GetPackage";
+            return "DCS_ST_TransformData_GetPackage";
         }
 
         public override bool IsValid()

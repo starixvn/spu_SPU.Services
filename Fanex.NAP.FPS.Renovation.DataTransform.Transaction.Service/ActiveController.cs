@@ -1,16 +1,15 @@
-﻿using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.Services.Implement;
-using Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.Services.Interface;
-using Fanex.NAP.FPS.Renovation.Model;
-using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
-using System;
-using System.Web.Http;
-
-namespace Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service
+﻿namespace Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service
 {
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.Services.Implement;
+    using Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.Services.Interface;
+    using Fanex.NAP.FPS.Renovation.Model;
+    using Newtonsoft.Json;
+    using System;
+    using System.Web.Http;
+
     public class ActiveController : ApiController
     {
         private readonly IDataTransformService dataTransformService;
@@ -43,20 +42,18 @@ namespace Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service
         {
             try
             {
-                if (model.MinStagingTransId != 0 && model.MaxStagingTransId != 0)
+                if (model.MinTransId != 0 && model.MaxTransId != 0)
                 {
                     Core.Utilities.WriteLog("InsertTransaction.log", "Start: " + DateTime.Now);
 
-                    Console.WriteLine("============> Min ID:" + model.MinStagingTransId + " - Max ID:" + model.MaxStagingTransId + " <================");
+                    Console.WriteLine("============> Min ID:" + model.MinTransId + " - Max ID:" + model.MaxTransId + " <================");
 
                     dataTransformService
-                    .Initial(model.MinStagingTransId, model.MaxStagingTransId)
+                    .Initial(model.MinTransId, model.MaxTransId)
                     .UnhandleSubscriberAccountProcessing()
                     .UserAgentProcessing()
-                    .AccountProcessing()
-                    .TransactionProcessing()              
-                    .CompleteProcessing();
-
+                    .TransactionProcessing();           
+                    
                     Core.Utilities.WriteLog("InsertTransaction.log", "End: " + DateTime.Now);
 
                     return true;

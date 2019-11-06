@@ -10,15 +10,15 @@ namespace Fanex.NAP.FPS.Renovation.Criteria
 {
     public class ProcessUserAgentCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_FromStagingTransID")]
+        [SpParam(SqlParamName = "ip_FromTransID")]
         public int FromStagingTransId { get; set; }
 
-        [SpParam(SqlParamName = "ip_ToStagingTransID")]
+        [SpParam(SqlParamName = "ip_ToTransID")]
         public int ToStagingTransId { get; set; }
 
         public override string GetSettingKey()
         {
-            return "FPS_DC_TransformData_UserAgent_Insert";
+            return "DCS_DC_TransformData_UserAgent_Insert";
         }
 
         public override bool IsValid()

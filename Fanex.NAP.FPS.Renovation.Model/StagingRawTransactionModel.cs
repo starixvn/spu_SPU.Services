@@ -9,9 +9,9 @@ namespace Fanex.NAP.FPS.Renovation.Model
 {
     public class StagingRawTransactionModel
     {
-        public int MinStagingTransId { get; set; }
+        public int MinTransId { get; set; }
 
-        public int MaxStagingTransId { get; set; }
+        public int MaxTransId { get; set; }
 
         public string APIUrl { get; set; }
     }

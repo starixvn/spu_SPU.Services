@@ -10,15 +10,15 @@ namespace Fanex.NAP.FPS.Renovation.Criteria
 {
     public class ProcessUnhandleSubscriberActionCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_FromStagingTransID")]
-        public int FromStagingTransId { get; set; }
+        [SpParam(SqlParamName = "ip_FromTransID")]
+        public int FromTransId { get; set; }
 
-        [SpParam(SqlParamName = "ip_ToStagingTransID")]
-        public int ToStagingTransId { get; set; }
+        [SpParam(SqlParamName = "ip_ToTransID")]
+        public int ToTransId { get; set; }
 
         public override string GetSettingKey()
         {
-            return "FPS_DC_TransformData_UnhandleSubscriberAction";
+            return "DCS_DC_TransformData_UnhandleSubscriberAction";
         }
 
         public override bool IsValid()

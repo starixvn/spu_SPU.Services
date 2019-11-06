@@ -92,5 +92,7 @@ namespace Fanex.NAP.SPU.Test
             Assert.Equal(expected, result);
         }
 
+
+
     }
 }

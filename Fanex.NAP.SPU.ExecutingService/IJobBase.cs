@@ -4,20 +4,20 @@ namespace Fanex.NAP.SPU.ExecutingService
 {
     public interface IJobBase
     {
-        IJobBase CreateJob<T>(string jobName, string groupName, JobData jobData);
+        IJobBase CreateJob<T>(JobData jobData);
 
-        IJobBase DeleteJob(string jobName, string groupName);
+        IJobBase DeleteJob(string jobName);
 
-        IJobBase CreateTriggerIntervalInSeconds(string triggerName, string groupName, int interval);
+        IJobBase CreateTriggerIntervalInSeconds(int interval);
 
-        IJobBase CreateTriggerWithCronSchedule(string triggerName, string groupName, string expression);
+        IJobBase CreateTriggerWithCronSchedule(string expression);
 
-        IJobBase CreateSchedule();
+        IJobBase GetSchedule();
 
         IJobBase CreateListenerJob();
 
         void Run();
 
-        void Shutdown();
+        void Shutdown();                
     }
 }
