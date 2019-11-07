@@ -79,13 +79,7 @@
     <Compile Include="ExecuteJobBase.cs" />
     <Compile Include="ExecuteTransactionAPIJob.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Jobs\FPSJob.cs" />
-    <Compile Include="Jobs\FraudSensorJob.cs" />
-    <Compile Include="IJobBase.cs" />
-    <Compile Include="ScheduleJob.cs" />
-    <Compile Include="JobBase.cs" />
     <Compile Include="ExecuteConsoleJob.cs" />
-    <Compile Include="ListenerJob.cs" />
     <Compile Include="Runner.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -94,30 +88,16 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Jobs\VirtualSettingJob.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="App_Data\JobData.Master.LOCAL.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\JobData.Slave.PRO.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\JobData.Master.PRO.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\JobData.PRO.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="App_Data\NAPFSNames.Slave.PRO.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\NAPFSNames.Slave.LOCAL.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\quartz_jobs.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Database\Tables\tables_sqlServer_cluster.sql" />
@@ -186,14 +166,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\JobData.Slave.LOCAL.xml">
-      <SubType>Designer</SubType>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="App_Data\JobData.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="App_Data\NAPFSNames.Master.LOCAL.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -260,6 +232,9 @@
     </PackageReference>
     <PackageReference Include="ONEbook.UM">
       <Version>2.0.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="Quartz.Plugins">
+      <Version>3.0.7</Version>
     </PackageReference>
     <PackageReference Include="Quartz.Serialization.Json">
       <Version>3.0.7</Version>

@@ -134,8 +134,7 @@
             var transBit = new BitArray(16);
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
-            {
-                invalidDevice = string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) ? "Empty" : "N/A";
+            {             
                 deviceInfo.DeviceNo = string.Empty;
                 transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);
             }

@@ -47,19 +47,15 @@
             try
             {
                 if (data != null && data.Any())
-                {
-                    Core.Utilities.WriteLog("InsertDevice.log", "Start: " + DateTime.Now);
-
+                {                   
                     var dataBatchs = data.Chunk(100);
 
-                    Parallel.ForEach(dataBatchs, x =>
+                    foreach (var devices in dataBatchs)
                     {
-                        dataCenterService.InsertDevice(x.ToList());
+                        dataCenterService.InsertDevice(devices.ToList());
 
-                        Console.WriteLine($"Device is inserted ({x.Count()})");
-                    });
-
-                    Core.Utilities.WriteLog("InsertDevice.log", "End: " + DateTime.Now);                    
+                        Console.WriteLine($"Device is inserted ({devices.Count()})");
+                    }                 
 
                     return true;
                 }

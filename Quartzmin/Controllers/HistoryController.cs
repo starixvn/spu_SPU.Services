@@ -35,7 +35,7 @@ namespace Quartzmin.Controllers
             var list = new List<object>();
             var counter = 0;
 
-            foreach (var h in history.OrderByDescending(x => x.ActualFireTimeUtc))
+            foreach (var h in history.OrderByDescending(x => x.ActualFireTimeUtc).Where(x => !x.Job.Contains("quartz_jobs_xml")))
             {
                 counter++;
                 string state = "Finished", icon = "check";
@@ -76,7 +76,7 @@ namespace Quartzmin.Controllers
                     Duration = (endTime - h.ActualFireTimeUtc)?.ToString("hh\\:mm\\:ss"),
                     State = state,
                     StateIcon = icon,
-                    Counter=counter
+                    Counter = counter
                 });
             }
 

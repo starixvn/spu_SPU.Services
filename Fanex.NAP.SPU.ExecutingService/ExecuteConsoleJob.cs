@@ -2,7 +2,6 @@
 {
     using Fanex.Logging;
     using Fanex.NAP.FS.Core;
-    using Fanex.NAP.SPU.Model;
     using Fanex.NAP.SPU.Service;
     using Quartz;
     using System;
@@ -16,7 +15,6 @@
     public class ExecuteConsoleJob : ExecuteJobBase, IJob
     {
         private const string FlagNotExistsFile = "FlagNotExistsFile";
-        private const string FlagNotifyInActive = "FlagNotifyInActive";          
 
         public Task Execute(IJobExecutionContext context)
         {
@@ -24,14 +22,9 @@
             {
                 if (!this.CheckUM())
                 {
-                    var jobData = GetJobDataMapping(context);
-
-                    if (jobData != null && jobData.Action == null)
-                    {
-                        return ExecuteConsole(context, jobData);
-                    }                    
+                    return ExecuteConsole(context);
                 }
-            }   
+            }
             catch (Exception ex)
             {
                 return Task.FromException(new JobExecutionException(ex));
@@ -40,7 +33,7 @@
             return Task.CompletedTask;
         }
 
-        private Task ExecuteConsole(IJobExecutionContext context, JobData jobData)
+        private Task ExecuteConsole(IJobExecutionContext context)
         {
             var outputError = new StringBuilder();
 
@@ -48,9 +41,11 @@
 
             var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
 
-            var path = Path.Combine(rootPath, jobData.FileName);
+            var path = Path.Combine(rootPath, jobDataMap.GetString("FileName"));
 
-            if (!CheckActive(context, jobData) || !CheckFileExist(context, path))
+            var isActive = jobDataMap.GetBoolean("Active");
+
+            if (!isActive || !CheckFileExist(context, path))
             {
                 return Task.CompletedTask;
             }
@@ -85,28 +80,7 @@
 
             return Task.CompletedTask;
         }
-
-        private bool CheckActive(IJobExecutionContext context, JobData jobData)
-        {
-            if (!jobData.Active)
-            {
-                var msg = $"{context.JobDetail.Key} - Execute: not activate";
-                LogService.Error(msg);
-
-                if (!context.JobDetail.JobDataMap.Contains(FlagNotifyInActive))
-                {
-                    if (AppSetting.Environment == 3)
-                    {
-                        new LetstalkService().Error(msg);
-                    }
-
-                    context.JobDetail.JobDataMap.Put(FlagNotifyInActive, true);
-                }
-            }
-
-            return jobData.Active;
-        }
-
+       
         private bool CheckFileExist(IJobExecutionContext context, string path)
         {
             if (!Ultilities.CheckFileExist(path))

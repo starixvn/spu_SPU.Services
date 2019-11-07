@@ -32,12 +32,7 @@
             {
                 if (!this.CheckUM())
                 {
-                    var jobData = GetJobDataMapping(context);
-
-                    if (jobData != null)
-                    {
-                        await ExecuteAPI(context, jobData);
-                    }
+                    await ExecuteAPI(context);
                 }
             }
             catch (Exception ex)
@@ -50,13 +45,15 @@
             }
         }
 
-        private async Task ExecuteAPI(IJobExecutionContext context, JobData jobData)
+        private async Task ExecuteAPI(IJobExecutionContext context)
         {
             var jobDataMap = context.JobDetail.JobDataMap;
 
             var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
 
-            if (!string.IsNullOrWhiteSpace(rootPath))
+            var isActive = jobDataMap.GetBoolean("Active");
+
+            if (isActive && !string.IsNullOrWhiteSpace(rootPath))
             {
                 var apiUrls = rootPath.Split(';').ToList();
 
@@ -77,7 +74,7 @@
                     {
                         var task = Task.Run(() =>
                         {
-                            return Executing(trans, jobData.Action);
+                            return Executing(trans, jobDataMap.GetString("Action"));
                         });
 
                         await Task.Delay(10);

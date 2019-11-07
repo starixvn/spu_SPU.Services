@@ -2,20 +2,17 @@
 {
     using Fanex.Logging;
     using Fanex.NAP.FS.Core;
-    using Fanex.NAP.SPU.ExecutingService.Jobs;
-    using Fanex.NAP.SPU.Model;
     using Fanex.NAP.SPU.Service;
+    using Quartz;
+    using Quartz.Impl;
     using System;
-    using System.Collections.Generic;
-    using System.IO;
-    using System.Linq;
+    using System.Collections.Specialized;
+    using System.Configuration;
     using System.ServiceProcess;
+    using System.Threading.Tasks;
 
     public partial class Runner : ServiceBase
     {
-        private FraudSensorJob fraudSensorJob;
-        private VirtualSettingJob virtualSettingJob;        
-        private FPSJob fpsJob;
         public Runner()
         {
             InitializeComponent();
@@ -79,87 +76,18 @@
 
         private void ExecuteJobs()
         {
-            var listJobServicesMap = GetJobServicesMap();
+            var config = (NameValueCollection)ConfigurationManager.GetSection("quartz");
 
-            if (!listJobServicesMap.Any())
+            ISchedulerFactory factory = new StdSchedulerFactory(config);
+
+            var schedule = factory.GetScheduler().Result;
+
+            if (!schedule.IsStarted)
             {
-                LogService.Error($"Executing service is error message: JobsMap null");
+                schedule.Start().Wait();
 
-                return;
-            }
-
-            var jobBase = new JobBase();
-
-            foreach (var serviceMap in listJobServicesMap)
-            {
-                switch (serviceMap.Id)
-                {
-                    case 1:
-                        {
-                            fraudSensorJob = new FraudSensorJob(jobBase);
-
-                            fraudSensorJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
-
-                            break;
-                        }
-                    case 2:
-                        {
-                            virtualSettingJob = new VirtualSettingJob(jobBase);
-
-                            virtualSettingJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
-
-                            break;
-                        }
-                    case 4:
-                        {
-                            fpsJob = new FPSJob(jobBase);
-
-                            fpsJob.CreateScheduleJob<ExecuteConsoleJob>(serviceMap);
-
-                            break;
-                        }
-                    case 5:
-                        {
-                            fpsJob = new FPSJob(jobBase);
-
-                            fpsJob.CreateScheduleJob<ExecuteTransactionAPIJob>(serviceMap);
-
-                            break;
-                        }
-                    case 6:
-                        {
-                            fpsJob = new FPSJob(jobBase);
-
-                            fpsJob.CreateScheduleJob<ExecuteDeviceAPIJob>(serviceMap);
-
-                            break;
-                        }
-                }
-            }
-        }
-
-        private List<JobDataSevices> GetJobServicesMap()
-        {
-            try
-            {
-                var xmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"App_Data\JobData.xml";
-
-                if (File.Exists(xmlPath))
-                {
-                    var rootMap = Serializer.Deserialize<JobDataRoot>(xmlPath);
-
-                    if (rootMap != null)
-                    {
-                        return rootMap.Sevices;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error($"Executing service - GetDataMap error message: { ex.Message } at {DateTime.Now}");
-            }
-
-            return new List<JobDataSevices>();
-        }
+                Task.Delay(TimeSpan.FromMinutes(1)).Wait();
+            }            
+        }        
     }
 }
