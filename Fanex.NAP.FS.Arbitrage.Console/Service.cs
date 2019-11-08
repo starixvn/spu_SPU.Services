@@ -66,9 +66,7 @@
                     ArbitrageTicketList = x.ToList()
                 }).ToList();
 
-            var options = new ParallelOptions { MaxDegreeOfParallelism = 1 };
-
-            Parallel.ForEach(ticketGroupBy, options, ticket =>
+            foreach (var ticket in ticketGroupBy)
             {
                 var custIds = ticket.ArbitrageTicketList
                     .Select(t => t.CustId)
@@ -80,23 +78,14 @@
                 ExecuteGroupCustomer(ticket.MatchId, groupCustomer, ticket.ArbitrageTicketList);
 
                 Thread.Sleep(SleepTime);
-            });
+            }
         }
 
         private List<ArbitrageCustomer> GroupCustomer(List<int> custIds)
         {
-            var arbitrageCustomers = custIds.Chunk(500).ToList();
-
             var taskCustomers = new List<Task<IEnumerable<ArbitrageCustomer>>>();
-
-            foreach (var arbitrageCustomer in arbitrageCustomers)
-            {
-                var taskCustomer = GroupCustomer(arbitrageCustomer);
-
-                taskCustomers.Add(taskCustomer);
-
-                Thread.Sleep(SleepTime);
-            }
+            var taskCustomer = GroupCustomerForGraphDB(custIds);
+            taskCustomers.Add(taskCustomer);
 
             Task.WhenAll(taskCustomers.ToArray());
 
@@ -125,7 +114,7 @@
             return custIds.Select((x, i) => new ArbitrageCustomer { CustId = x, GroupId = i }).ToList();
         }
 
-        private async Task<IEnumerable<ArbitrageCustomer>> GroupCustomer(IEnumerable<int> custids)
+        private async Task<IEnumerable<ArbitrageCustomer>> GroupCustomerForGraphDB(IEnumerable<int> custids)
         {
             try
             {
