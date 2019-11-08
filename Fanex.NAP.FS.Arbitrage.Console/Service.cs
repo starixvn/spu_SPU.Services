@@ -129,7 +129,7 @@
         {
             try
             {
-                var result = await ApiHelper.Post<IEnumerable<ArbitrageCustomer>>(AppSetting.GroupCustomerPath, custids);                               
+                var result = await ApiHelper.Post<IEnumerable<ArbitrageCustomer>>(AppSetting.GroupCustomerOneLevelPath, custids);                               
 
                 return result;
             }
