@@ -83,13 +83,7 @@
 
         private List<ArbitrageCustomer> GroupCustomer(List<int> custIds)
         {
-            var taskCustomers = new List<Task<IEnumerable<ArbitrageCustomer>>>();
-            var taskCustomer = GroupCustomerForGraphDB(custIds);
-            taskCustomers.Add(taskCustomer);
-
-            Task.WhenAll(taskCustomers.ToArray());
-
-            var result = taskCustomers.SelectMany(t => t.Result).ToList();
+            var result = GroupCustomerForGraphDB(custIds).Result.ToList();
 
             if (result != null && result.Any())
             {
