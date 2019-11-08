@@ -36,13 +36,9 @@
         private Task ExecuteConsole(IJobExecutionContext context)
         {
             var outputError = new StringBuilder();
-
             var jobDataMap = context.JobDetail.JobDataMap;
-
             var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
-
             var path = Path.Combine(rootPath, jobDataMap.GetString("FileName"));
-
             var isActive = jobDataMap.GetBoolean("Active");
 
             if (!isActive || !CheckFileExist(context, path))

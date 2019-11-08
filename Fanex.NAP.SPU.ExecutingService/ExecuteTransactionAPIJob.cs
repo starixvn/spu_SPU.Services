@@ -8,7 +8,6 @@
     using Fanex.NAP.FPS.Renovation.Services.Implement;
     using Fanex.NAP.FPS.Renovation.Services.Interface;
     using Fanex.NAP.FS.Core;
-    using Fanex.NAP.SPU.Model;
     using Quartz;
     using RestSharp;
     using System;
