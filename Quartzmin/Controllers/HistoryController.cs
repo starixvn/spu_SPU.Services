@@ -17,7 +17,7 @@ using IActionResult = System.Web.Http.IHttpActionResult;
 
 namespace Quartzmin.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class HistoryController : PageControllerBase
     {
         [HttpGet]
