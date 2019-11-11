@@ -58,8 +58,6 @@
 
                 var stagingTranIds = dataTransformService.GetStagingRawTransaction(0, AppSettings.SizeOfTransaction, apiUrls.Count);
 
-                LogService.Info("StaingTransId: " + stagingTranIds.Count);
-
                 if (stagingTranIds.Any() && stagingTranIds.Any(x => x.MinTransId != 0 && x.MaxTransId != 0))
                 {
                     var stagingTrans = stagingTranIds.Select((v, i) =>
