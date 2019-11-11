@@ -35,7 +35,7 @@ namespace Quartzmin.Controllers
             var list = new List<object>();
             var counter = 0;
 
-            foreach (var h in history.OrderByDescending(x => x.ActualFireTimeUtc).Where(x => !x.Job.Contains("jobs_xml")))
+            foreach (var h in history.OrderByDescending(x => x.ActualFireTimeUtc).Where(x => !x.Job.Contains("XMLSchedulingDataProcessorPlugin")))
             {
                 counter++;
                 string state = "Finished", icon = "check";
