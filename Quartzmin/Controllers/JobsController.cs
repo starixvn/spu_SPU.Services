@@ -21,7 +21,7 @@ using IActionResult = System.Web.Http.IHttpActionResult;
 
 namespace Quartzmin.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     public class JobsController : PageControllerBase
     {
         [HttpGet]
@@ -31,7 +31,7 @@ namespace Quartzmin.Controllers
             var list = new List<JobListItem>();
             var knownTypes = new List<string>();
 
-            foreach (var key in keys)
+            foreach (var key in keys.Where(x => !x.Name.Contains("XMLSchedulingDataProcessorPlugin")))
             {
                 var detail = await GetJobDetail(key);
                 var item = new JobListItem()
@@ -144,7 +144,7 @@ namespace Quartzmin.Controllers
                 throw new InvalidOperationException("Job " + key + " not found.");
 
             return job;
-        } 
+        }
 
         [HttpPost, JsonErrorResponse]
         public async Task<IActionResult> Save([FromForm] JobViewModel model, bool trigger)
@@ -218,7 +218,8 @@ namespace Quartzmin.Controllers
 
                 list.Add(new
                 {
-                    JobName = key.Name, key.Group,
+                    JobName = key.Name,
+                    key.Group,
                     History = historyByJob.TryGet(key.ToString()).ToHistogram(),
                     NextFireTime = nextFires.Where(x => x != null).OrderBy(x => x).FirstOrDefault()?.ToDefaultFormat(),
                 });

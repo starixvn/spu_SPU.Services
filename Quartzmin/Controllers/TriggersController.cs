@@ -30,7 +30,7 @@ namespace Quartzmin.Controllers
             var keys = (await Scheduler.GetTriggerKeys(GroupMatcher<TriggerKey>.AnyGroup())).OrderBy(x => x.ToString());
             var list = new List<TriggerListItem>();
 
-            foreach (var key in keys)
+            foreach (var key in keys.Where(x => !x.Name.Contains("XMLSchedulingDataProcessorPlugin")))
             {
                 var t = await GetTrigger(key);
                 var state = await Scheduler.GetTriggerState(key);
