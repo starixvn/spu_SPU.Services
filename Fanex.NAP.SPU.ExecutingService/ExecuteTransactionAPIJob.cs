@@ -48,42 +48,50 @@
         {
             var jobDataMap = context.JobDetail.JobDataMap;
 
-            var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
-
-            var isActive = jobDataMap.GetBoolean("Active");
-
-            if (isActive && !string.IsNullOrWhiteSpace(rootPath))
+            if(jobDataMap != null)
             {
-                var apiUrls = rootPath.Split(';').ToList();
+                var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
 
-                var stagingTranIds = dataTransformService.GetStagingRawTransaction(0, AppSettings.SizeOfTransaction, apiUrls.Count);
+                var isActive = jobDataMap.GetBoolean("Active");
+                var packageSize = jobDataMap.GetInt("PackageSize");
 
-                if (stagingTranIds.Any() && stagingTranIds.Any(x => x.MinTransId != 0 && x.MaxTransId != 0))
+                if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
-                    var stagingTrans = stagingTranIds.Select((v, i) =>
+                    var apiUrls = rootPath.Split(';').ToList();
+
+                    var stagingTranIds = dataTransformService.GetStagingRawTransaction(0, packageSize, apiUrls.Count);
+
+                    if (stagingTranIds.Any() && stagingTranIds.Any(x => x.MinTransId != 0 && x.MaxTransId != 0))
                     {
-                        v.APIUrl = i > apiUrls.Count ? apiUrls[0] : apiUrls[i];
-
-                        return v;
-                    });
-
-                    var tasks = new List<Task>();
-
-                    foreach (var trans in stagingTrans)
-                    {
-                        var task = Task.Run(() =>
+                        var stagingTrans = stagingTranIds.Select((v, i) =>
                         {
-                            return Executing(trans, jobDataMap.GetString("Action"));
+                            v.APIUrl = i > apiUrls.Count ? apiUrls[0] : apiUrls[i];
+
+                            return v;
                         });
 
-                        await Task.Delay(10);
+                        var tasks = new List<Task>();
 
-                        tasks.Add(task);
+                        foreach (var trans in stagingTrans)
+                        {
+                            var task = Task.Run(() =>
+                            {
+                                return Executing(trans, jobDataMap.GetString("Action"));
+                            });
+
+                            await Task.Delay(10);
+
+                            tasks.Add(task);
+                        }
+
+                        await Task.WhenAll(tasks.ToArray());
                     }
-
-                    await Task.WhenAll(tasks.ToArray());
                 }
             }
+            else
+            {
+                LogService.Error("Job Data cannot be null");
+            }            
         }
 
         private static async Task<IRestResponse> Executing(StagingRawTransactionModel trans, string actionPath)

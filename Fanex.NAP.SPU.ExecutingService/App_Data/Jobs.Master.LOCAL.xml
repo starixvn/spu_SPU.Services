@@ -459,6 +459,10 @@
           <value>true</value>
         </entry>
         <entry>
+          <key>PackageSize</key>
+          <value>500</value>
+        </entry>
+        <entry>
           <key>Action</key>
           <value>api/active</value>
         </entry>
@@ -497,6 +501,10 @@
         <entry>
           <key>Active</key>
           <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>500</value>
         </entry>
         <entry>
           <key>Action</key>

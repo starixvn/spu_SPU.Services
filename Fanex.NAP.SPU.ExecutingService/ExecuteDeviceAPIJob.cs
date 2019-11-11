@@ -49,41 +49,49 @@
         {
             var jobDataMap = context.JobDetail.JobDataMap;
 
-            var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
-
-            var isActive = jobDataMap.GetBoolean("Active");
-
-            if (isActive && !string.IsNullOrWhiteSpace(rootPath))
+            if(jobDataMap != null)
             {
-                var apiUrls = rootPath.Split(';');
+                var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
 
-                var listOfTrans = dataCenterService.GetStagingTransIdForDevice(AppSettings.SizeOfDevice, apiUrls.Count());
+                var isActive = jobDataMap.GetBoolean("Active");
+                var packageSize = jobDataMap.GetInt("PackageSize");
 
-                if (listOfTrans.Any())
+                if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
-                    var groupTrans = listOfTrans.GroupBy(x => x.BatchId);
-                    var tasks = new List<Task>();
-                    var index = 0;
+                    var apiUrls = rootPath.Split(';');
 
-                    foreach (var trans in groupTrans)
+                    var listOfTrans = dataCenterService.GetStagingTransIdForDevice(packageSize, apiUrls.Count());
+
+                    if (listOfTrans.Any())
                     {
-                        var task = Task.Run(() =>
+                        var groupTrans = listOfTrans.GroupBy(x => x.BatchId);
+                        var tasks = new List<Task>();
+                        var index = 0;
+
+                        foreach (var trans in groupTrans)
                         {
-                            var apiUrl = apiUrls[index >= apiUrls.Length ? 0 : index];
+                            var task = Task.Run(() =>
+                            {
+                                var apiUrl = apiUrls[index >= apiUrls.Length ? 0 : index];
 
-                            return Executing(trans.ToList(), apiUrl, jobDataMap.GetString("Action"));
-                        });
+                                return Executing(trans.ToList(), apiUrl, jobDataMap.GetString("Action"));
+                            });
 
-                        await Task.Delay(10);
+                            await Task.Delay(10);
 
-                        tasks.Add(task);
+                            tasks.Add(task);
 
-                        index++;
+                            index++;
+                        }
+
+                        await Task.WhenAll(tasks.ToArray());
                     }
-
-                    await Task.WhenAll(tasks.ToArray());
                 }
             }
+            else
+            {
+                LogService.Error("Job Data cannot be null");
+            }           
         }
 
         private static async Task<IRestResponse> Executing(List<DevicePackage> devices, string apiUrl, string actionPath)
