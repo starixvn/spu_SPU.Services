@@ -11,7 +11,7 @@ namespace Fanex.NAP.FPS.Renovation.Criteria
     {
         public override string GetSettingKey()
         {
-            return "FPS_DC_GetLatestUpdatedDate_IPRange";
+            return "CTS_DC_GetLatestUpdatedDate_IPRange";
         }
 
         public override bool IsValid()

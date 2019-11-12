@@ -11,7 +11,7 @@
 
         public override string GetSettingKey()
         {
-            return "FPS_DC_UpdateIPTableLog";
+            return "CTS_DC_UpdateIPTableLog";
         }
 
         public override bool IsValid()

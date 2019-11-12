@@ -9,7 +9,7 @@
 
     <Setting Key="CTS_DC_UpdateIPTableLog" SpName="CTS_DC_UpdateIPTableLog" DbName="MySQL.CTS_DataCenter"/>
     <Setting Key="CTS_DC_GetLatestUpdatedDate_IPRange" SpName="CTS_DC_GetLatestUpdatedDate_IPRange" DbName="MySQL.CTS_DataCenter"/>
-    <Setting Key="CTS_DC_UpdateIPRangeLocation" SpName="CTS_DC_UpdateIPRangeLocation" DbName="MySQL.CTS_DataCenter" TimeOut="3600"/>
+    <Setting Key="CTS_DC_InsertIPRangeLocation" SpName="CTS_DC_InsertIPRangeLocation" DbName="MySQL.CTS_DataCenter" TimeOut="3600"/>
   
   </Function>
  
