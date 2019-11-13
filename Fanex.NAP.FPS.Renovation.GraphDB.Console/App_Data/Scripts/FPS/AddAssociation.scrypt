@@ -1,0 +1,4 @@
+﻿MERGE (cus:Customer {CustId:$CustId})
+ON CREATE SET cus.Username=$Username, cus.Username2=$Username2, cus.RoleId=$RoleId, cus.CreatedDate=$CreatedDate
+MERGE (dev:Device {DeviceId:$DeviceId})
+MERGE (cus) -[:USED]-> (dev)

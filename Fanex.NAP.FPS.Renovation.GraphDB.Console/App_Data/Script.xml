@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="MiddleSerivce">
+    <GraphSetting Key="GroupCustomer" SpName="GroupCustomer" DbName="DB.MiddleService" />
+  </Function>
+  <Function Name="FPS">
+    <GraphSetting Key="AddCustomerAndAssociation" SpName="AddCustomerAndAssociation" DbName="DB.MiddleService" />
+    <GraphSetting Key="AddNewCustomer" SpName="AddNewCustomer" DbName="DB.MiddleService" />
+    <GraphSetting Key="AddCustomerGroupRelationship" SpName="AddCustomerGroupRelationship" DbName="DB.MiddleService" />
+    <GraphSetting Key="MarkMergeGroup" SpName="MarkMergeGroup" DbName="DB.MiddleService" />
+    <GraphSetting Key="CreateNewGroup" SpName="CreateNewGroup" DbName="DB.MiddleService" />
+    <GraphSetting Key="UpdateCustomerUsername2" SpName="UpdateCustomerUsername2" DbName="DB.MiddleService" />
+    <GraphSetting Key="AddCustomerAndEvidence" SpName="AddCustomerAndEvidence" DbName="DB.MiddleService" />
+    <GraphSetting Key="RemoveEvidenceByCustomerList" SpName="RemoveEvidenceByCustomerList" DbName="DB.MiddleService" />\
+    <GraphSetting Key="GetDirectGroupCriteria" SpName="GetDirectGroupCriteria" DbName="DB.MiddleService" />
+    <GraphSetting Key="GetCustomerById" SpName="GetCustomerById" DbName="DB.MiddleService" />
+    <GraphSetting Key="GetDeviceById" SpName="GetDeviceById" DbName="DB.MiddleService" />
+    <GraphSetting Key="AddAssociation" SpName="AddAssociation" DbName="DB.MiddleService" />
+    <GraphSetting Key="CheckExistedAssociation" SpName="CheckExistedAssociation" DbName="DB.MiddleService" />
+    <GraphSetting Key="MergeGroup" SpName="MergeGroup" DbName="DB.MiddleService" />
+  </Function>
+  <Function Name="Test">
+    <GraphSetting Key="HelloApi" SpName="HelloApi" DbName="DB.MiddleService" />
+  </Function>
+</Functions>

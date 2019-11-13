@@ -1,0 +1,5 @@
+﻿MATCH (cus:Customer {CustId:$CustId})
+CREATE (g:Group)
+SET g.GroupId = ID(g)
+SET g.CustomerQuantity = 1
+MERGE (cus)-[:BELONG_TO]->(g)
