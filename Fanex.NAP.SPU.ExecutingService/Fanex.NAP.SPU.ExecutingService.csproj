@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExecuteAccountAPIJob.cs" />
     <Compile Include="ExecuteDeviceAPIJob.cs" />
     <Compile Include="ExecuteJobBase.cs" />
     <Compile Include="ExecuteTransactionAPIJob.cs" />
@@ -149,6 +150,10 @@
     <ProjectReference Include="..\Fanex.NAP.FS.Service\Fanex.NAP.FS.Service.csproj">
       <Project>{e60465e7-1880-4a9e-846c-964af786ce7e}</Project>
       <Name>Fanex.NAP.FS.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
+      <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
+      <Name>Fanex.NAP.SPU.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
       <Project>{67fecd9e-043a-4100-bf62-52c1a016b85d}</Project>
@@ -239,7 +244,16 @@
     <PackageReference Include="ONEbook.UM">
       <Version>2.0.2.9</Version>
     </PackageReference>
+    <PackageReference Include="Quartz">
+      <Version>3.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="Quartz.Jobs">
+      <Version>3.0.7</Version>
+    </PackageReference>
     <PackageReference Include="Quartz.Plugins">
+      <Version>3.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="Quartz.Plugins.TimeZoneConverter">
       <Version>3.0.7</Version>
     </PackageReference>
     <PackageReference Include="Quartz.Serialization.Json">

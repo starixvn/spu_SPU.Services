@@ -86,7 +86,7 @@
             {
                 schedule.Start().Wait();
 
-                Task.Delay(TimeSpan.FromMinutes(1)).Wait();
+                //Task.Delay(TimeSpan.FromMinutes(1)).Wait();
             }            
         }        
     }

@@ -1,5 +1,6 @@
 ﻿using Fanex.NAP.FPS.Renovation.Core;
 using Fanex.NAP.FPS.Renovation.Queue;
+using Fanex.NAP.SPU.Core;
 using Fanex.Oneyed.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace Fanex.NAP.FPS.Renovation.DataCatching.Service
 
                     if (Subscribers[message.Subscriber] <= AppSettings.TransBatch)
                     {
-                        Utilities.WriteLog(message.Subscriber + ".txt", TransformMessageQueueToString(message));
+                        Core.Utilities.WriteLog(message.Subscriber + ".txt", TransformMessageQueueToString(message));
                     }
                 }
                             

@@ -299,5 +299,19 @@
                 ErrorCode = errCode
             };
         }
+
+        public List<RawAccountModel> GetRawAccount(int numOfTickets, int numOfBatch)
+        {
+            var criteria = new GetRawAccountListCriteria
+            {
+                NumberOfTickets = numOfTickets,
+                NumberOfBatch = numOfBatch
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<RawAccountModel>(criteria).ToList();
+            }
+        }
     }
 }

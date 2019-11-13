@@ -96,15 +96,15 @@
     </Content>
     <None Include="Fanex.NAP.FPS.Renovation.DataTransform.Service.ruleset" />
     <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.LOCAL.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.UAT.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -134,6 +134,10 @@
     <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
       <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
       <Name>Fanex.NAP.FPS.Renovation.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
+      <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
+      <Name>Fanex.NAP.SPU.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

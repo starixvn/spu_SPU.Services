@@ -21,7 +21,7 @@
                 SportGroupID = 1,
                 SiteIds = siteIds,
                 SuperIds = superIds,
-                VirtualRateThreshold = AppSetting.VirtualRateThresholdForWinning,
+                VirtualRateThreshold = AppSettings.VirtualRateThresholdForWinning,
                 FailedUpdatePunterList = new List<Punter>()
             };
 
@@ -34,8 +34,8 @@
         {
             _punterService.GetWinningPunterSoccerList()
                     .FilterPunterBaseOnCurrentVirtualRate(1, false)
-                    .AdjustVirtualSettingForSuperProPunter(AppSetting.NewVirtualMultiplierForSuperProPunter)
-                    .AdjustVirtualSettingForNormal(AppSetting.NewVirtualMultiplierForWinning);
+                    .AdjustVirtualSettingForSuperProPunter(AppSettings.NewVirtualMultiplierForSuperProPunter)
+                    .AdjustVirtualSettingForNormal(AppSettings.NewVirtualMultiplierForWinning);
 
             PuntersUpdated = _punterService.CountAffected();
 

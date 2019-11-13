@@ -9,6 +9,7 @@ using Fanex.NAP.FPS.Renovation.Core;
 using Fanex.NAP.FPS.Renovation.Model;
 using Fanex.NAP.FPS.Renovation.Queue;
 using Fanex.NAP.FPS.Renovation.Services.Implement;
+using Fanex.NAP.SPU.Core;
 using Newtonsoft.Json;
 using SharpRaven;
 using System;

@@ -49,7 +49,7 @@
         {
             var env = string.Empty;
 
-            switch (AppSetting.Environment)
+            switch (AppSettings.Environment)
             {
                 case 3:
                     env = "PRO";
@@ -64,10 +64,10 @@
 
             LetstalkModel messsage = new LetstalkModel()
             {
-                TargetName = AppSetting.LetstalkTarget,
+                TargetName = AppSettings.LetstalkTarget,
                 Subject = subject + " - " + env,
                 Content = content,
-                Group = AppSetting.LetstalkGroup,
+                Group = AppSettings.LetstalkGroup,
                 LetstalkAttachments = new List<LetstalkAttachment>()
             };
 

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.FPS.Renovation.DataTransform.Device.Service
 {
     using Fanex.NAP.FPS.Renovation.Core;
+    using Fanex.NAP.SPU.Core;
     using Microsoft.Owin.Hosting;
     using System;
     using System.Diagnostics;

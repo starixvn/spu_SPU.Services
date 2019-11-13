@@ -4,12 +4,11 @@
     <Setting Key="FS_FraudCase_GetAll" SpName="FS_FraudCase_GetAll" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
     <Setting Key="FS_FraudCase_GetById" SpName="FS_FraudCase_GetById" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
   </Function>
-  <Function Name="FPS">   
-    <Setting Key="DCS_DC_TransformData_Device_Transaction_GetPackage" SpName="DCS_DC_TransformData_Device_Transaction_GetPackage" DbName="MySQL.DCS_DataCenter"/>    
+  
+  <Function Name="DCS">   
+    <Setting Key="DCS_DC_TransformData_Device_Transaction_GetPackage" SpName="DCS_DC_TransformData_Device_Transaction_GetPackage" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformToCST_Account_GetPackage" SpName="DCS_DC_TransformToCST_Account_GetPackage" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_ST_TransformData_GetPackage" SpName="DCS_ST_TransformData_GetPackage" DbName="MySQL.DCS_RawTransaction"/>
   </Function>
-
-  <Function Name="CapturingTransaction">
-    <Setting Key="DCS_ST_TransformData_GetPackage" SpName="DCS_ST_TransformData_GetPackage" DbName="MySQL.DCS_RawTransaction">
-    </Setting>
-  </Function>
+  
 </Functions>

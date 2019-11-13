@@ -6,6 +6,7 @@
     using Fanex.NAP.FPS.Renovation.Core;
     using Fanex.NAP.FPS.Renovation.Model;
     using Fanex.NAP.FPS.Renovation.Queue;
+    using Fanex.NAP.SPU.Core;
     using Fanex.Oneyed.Infrastructure.Models;
     using System;
     using System.Collections;
@@ -13,6 +14,7 @@
     using System.Linq;
     using System.ServiceProcess;
     using System.Timers;
+    using Utilities = Core.Utilities;
 
     public partial class Runner : ServiceBase
     {

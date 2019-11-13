@@ -4,7 +4,7 @@
                 version="2.0">
 
   <processing-directives>
-    <overwrite-existing-data>false</overwrite-existing-data>
+    <overwrite-existing-data>true</overwrite-existing-data>
   </processing-directives>
 
   <schedule>
@@ -18,7 +18,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -58,7 +58,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -98,7 +98,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -138,7 +138,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -178,7 +178,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -218,7 +218,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -257,7 +257,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -297,7 +297,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -337,7 +337,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -468,11 +468,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.18.200.120:9000</value>
+          <value>http://10.23.10.11:9000/transaction</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.18.200.120:9000</value>
+          <value>http://10.23.10.11:9000/transaction</value>
         </entry>
       </job-data-map>
     </job>
@@ -512,11 +512,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.18.200.120:7000</value>
+          <value>http://10.23.10.11:9000/device</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.18.200.120:7000</value>
+          <value>http://10.23.10.11:9000/device</value>
         </entry>
       </job-data-map>
     </job>
@@ -528,6 +528,50 @@
         <description>InsertDeviceTrigger</description>
         <job-name>InsertDeviceJob</job-name>
         <job-group>DataCaptureJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
+
+    <job>
+      <name>InsertAccountJob</name>
+      <group>DataTransformJob</group>
+      <description>InsertAccountJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAccountAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>500</value>
+        </entry>
+        <entry>
+          <key>Action</key>
+          <value>api/active</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>http://10.23.10.11:9000/account</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>http://10.23.10.11:9000/account</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>InsertAccountTrigger</name>
+        <group>DataTransformTrigger</group>
+        <description>InsertAccountTrigger</description>
+        <job-name>InsertAccountJob</job-name>
+        <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
         <repeat-interval>10000</repeat-interval>

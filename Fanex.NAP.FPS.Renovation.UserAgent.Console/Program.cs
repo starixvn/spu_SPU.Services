@@ -7,6 +7,7 @@
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry.RavenClient;
     using Fanex.NAP.FPS.Renovation.Core;
+    using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using SharpRaven;
     using System;
@@ -38,7 +39,7 @@
 
             try
             {
-                var userAgents = userAgent.GetUserAgent(Core.AppSettings.SizeOfUserAgent);
+                var userAgents = userAgent.GetUserAgent(AppSettings.SizeOfUserAgent);
 
                 if (userAgents != null && userAgents.Any())
                 {

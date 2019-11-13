@@ -8,6 +8,7 @@ using Fanex.Logging.Sentry.RavenClient;
 using Fanex.NAP.FPS.Renovation.Core;
 using Fanex.NAP.FPS.Renovation.Services.Implement;
 using Fanex.NAP.FPS.Renovation.Services.Interface;
+using Fanex.NAP.SPU.Core;
 using Renci.SshNet;
 using SharpRaven;
 using System;
@@ -112,7 +113,7 @@ namespace Fanex.NAP.FPS.Renovation.IPRange.Console
                         if (result >= 0)
                         {                            
                             fromId = (toId + 1);
-                            toId += Core.AppSettings.SizeOfIpRange;
+                            toId += SPU.Core.AppSettings.SizeOfIpRange;
 
                             ipRangeService.SaveRangeIpId(fromId, toId, rangeIpUpdatedPath);
                         }

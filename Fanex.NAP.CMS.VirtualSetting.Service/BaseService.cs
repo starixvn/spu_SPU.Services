@@ -20,7 +20,7 @@
             DbSettingProviderManager
                 .StartNewSession()
                 .WithSqlServer()
-                .UseDefaultDbSettingProvider(AppSetting.AppData)
+                .UseDefaultDbSettingProvider(AppSettings.AppData)
                 .UseDefaultConnectionStringProvider()
                 .Run();
 

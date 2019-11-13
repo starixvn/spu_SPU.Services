@@ -62,7 +62,7 @@ namespace Fanex.NAP.FPS.Renovation.GraphDB.Service
 
             if (result != null)
             {
-                if(associations.Count < Core.AppSettings.TransBatch)
+                if(associations.Count < SPU.Core.AppSettings.TransBatch)
                 {
                     associations.Add(new IsSynAssociationModel
                     {

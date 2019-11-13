@@ -35,6 +35,7 @@
     <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.FPS.Renovation.Core.csproj" />
     <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj" />
     <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Queue\Fanex.NAP.FPS.Renovation.Queue.csproj" />
+    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>

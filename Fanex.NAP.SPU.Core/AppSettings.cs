@@ -5,7 +5,7 @@ namespace Fanex.NAP.SPU.Core
     using System.Configuration;
     using System.Linq;
 
-    public static class AppSetting
+    public static class AppSettings
     {
         public static int Environment
         {
@@ -255,5 +255,46 @@ namespace Fanex.NAP.SPU.Core
         }
 
         public static List<int> ExecutedDate => ConfigurationManager.AppSettings["ExecutedDate"].Split(';').Select(x => Convert.ToInt32(x)).ToList();
+              
+
+        public static string QueueName => ConfigurationManager.AppSettings["Queue-Name"];
+
+        public static string RoutingKey => ConfigurationManager.AppSettings["Queue-RoutingKey"];
+
+        public static string AppDataSetting => ConfigurationManager.AppSettings["AppData-Path"];        
+
+        public static int Interval => Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
+
+        public static int TransBatch => Convert.ToInt32(ConfigurationManager.AppSettings["Trans-Batch"]);
+
+        public static string HostPathForTransaction => ConfigurationManager.AppSettings["SelfHost-Url-Trans"];
+
+        public static string HostPathForDevice => ConfigurationManager.AppSettings["SelfHost-Url-Device"];
+
+        public static string HostPathForAccount => ConfigurationManager.AppSettings["SelfHost-Url-Account"];
+
+        public static int SizeOfDevice => Convert.ToInt32(ConfigurationManager.AppSettings["Device-Size"]);
+
+        public static int SizeOfAssociation => Convert.ToInt32(ConfigurationManager.AppSettings["Association-Size"]);
+
+        public static int SizeOfTransaction => Convert.ToInt32(ConfigurationManager.AppSettings["Transaction-Size"]);
+
+        public static int SizeOfAccount => Convert.ToInt32(ConfigurationManager.AppSettings["Account-Size"]);
+
+        public static int SizeOfCustomer => Convert.ToInt32(ConfigurationManager.AppSettings["Customer-Size"]);
+
+        public static int SizeOfIpRange => Convert.ToInt32(ConfigurationManager.AppSettings["IpRange-Size"]);
+
+        public static int SizeOfUserAgent => Convert.ToInt32(ConfigurationManager.AppSettings["UserAgent-Size"]);
+
+        public static string SSHUser => ConfigurationManager.AppSettings["ssh-User"];
+
+        public static string SSHPassword => ConfigurationManager.AppSettings["ssh-Password"];
+
+        public static string SSHHost => ConfigurationManager.AppSettings["ssh-Host"];
+
+        public static int SSHPort => Convert.ToInt32(ConfigurationManager.AppSettings["ssh-Port"]);
+
+        public static string SSHDestinationPath => ConfigurationManager.AppSettings["ssh-DestinationPath"];
     }
 }

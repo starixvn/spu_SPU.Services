@@ -7,6 +7,7 @@
     using Fanex.Logging.Sentry.RavenClient;
     using Fanex.NAP.FPS.Renovation.Core;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Core;
     using SharpRaven;
     using System;
     using System.Collections.Generic;

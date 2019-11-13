@@ -4,7 +4,7 @@
                 version="2.0">
 
   <processing-directives>
-    <overwrite-existing-data>false</overwrite-existing-data>
+    <overwrite-existing-data>true</overwrite-existing-data>
   </processing-directives>
 
   <schedule>
@@ -18,7 +18,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -26,11 +26,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BigStakeNearGoal.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.BigStakeNearGoal.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BigStakeNearGoal.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.BigStakeNearGoal.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -41,7 +41,7 @@
         <group>FraudSensorTrigger</group>
         <description>BigStateNearGoalTrigger</description>
         <job-name>BigStateNearGoalJob</job-name>
-        <job-group>FraudSensorJob</job-group>       
+        <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
         <repeat-interval>60000</repeat-interval>
@@ -58,7 +58,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -66,11 +66,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.Arbitrage.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.Arbitrage.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.Arbitrage.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.Arbitrage.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -98,7 +98,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -106,11 +106,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.FlaggedAccount.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.FlaggedAccount.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.FlaggedAccount.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.FlaggedAccount.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -138,7 +138,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -146,11 +146,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BetsNearGoal.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.BetsNearGoal.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BetsNearGoal.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.BetsNearGoal.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -178,7 +178,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -186,11 +186,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.DelayedGoal.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.DelayedGoal.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.DelayedGoal.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.DelayedGoal.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -218,7 +218,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -226,11 +226,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.DailyDataCapture.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.DailyDataCapture.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.DailyDataCapture.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.DailyDataCapture.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -257,7 +257,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -265,11 +265,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.CheckBet.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.CheckBet.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.CheckBet.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.CheckBet.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -297,7 +297,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -305,11 +305,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.ScannedOfficeIP.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.ScannedOfficeIP.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.ScannedOfficeIP.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.FS.ScannedOfficeIP.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -325,7 +325,7 @@
         <repeat-count>-1</repeat-count>
         <repeat-interval>60000</repeat-interval>
       </simple>
-    </trigger>    
+    </trigger>
 
     <job>
       <name>VirtualSettingJob</name>
@@ -337,7 +337,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>true</value>
+          <value>false</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -345,11 +345,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.CMS.VirtualSetting.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.CMS.VirtualSetting.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.CMS.VirtualSetting.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.CMS.VirtualSetting.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -384,11 +384,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.UserAgent.Console\bin\Debug</value>
+          <value>D:\WWW\FPS40\Fanex.NAP.FPS.Renovation.UserAgent.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.UserAgent.Console\bin\Debug</value>
+          <value>D:\WWW\FPS40\Fanex.NAP.FPS.Renovation.UserAgent.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -424,11 +424,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.IPRange.Console\bin\Debug</value>
+          <value>D:\WWW\FPS40\Fanex.NAP.FPS.Renovation.IPRange.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\Projects\SPU-Services\Fanex.NAP.FPS.Renovation.IPRange.Console\bin\Debug</value>
+          <value>D:\WWW\FPS40\Fanex.NAP.FPS.Renovation.IPRange.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -468,11 +468,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.23.10.11:9000</value>
+          <value>http://10.23.10.11:9000/transaction</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.23.10.11:9000</value>
+          <value>http://10.23.10.11:9000/transaction</value>
         </entry>
       </job-data-map>
     </job>
@@ -512,11 +512,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.23.10.11:7000</value>
+          <value>http://10.23.10.11:9000/device</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.23.10.11:7000</value>
+          <value>http://10.23.10.11:9000/device</value>
         </entry>
       </job-data-map>
     </job>
@@ -533,8 +533,52 @@
         <repeat-interval>10000</repeat-interval>
       </simple>
     </trigger>
-    
-    
+
+    <job>
+      <name>InsertAccountJob</name>
+      <group>DataTransformJob</group>
+      <description>InsertAccountJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAccountAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>500</value>
+        </entry>
+        <entry>
+          <key>Action</key>
+          <value>api/active</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>http://10.23.10.11:9000/account</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>http://10.23.10.11:9000/account</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>InsertAccountTrigger</name>
+        <group>DataTransformTrigger</group>
+        <description>InsertAccountTrigger</description>
+        <job-name>InsertAccountJob</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
+
+
   </schedule>
 
 </job-scheduling-data>

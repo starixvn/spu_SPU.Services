@@ -69,6 +69,10 @@
       <Project>{343073C5-6A1F-4E08-8C39-C8B6498BBADB}</Project>
       <Name>Fanex.NAP.FPS.Renovation.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
+      <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
+      <Name>Fanex.NAP.SPU.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EasyNetQ">

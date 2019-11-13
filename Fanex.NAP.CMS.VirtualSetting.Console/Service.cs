@@ -16,16 +16,16 @@
         {
             var currentDate = DateTime.Today;
 
-            return AppSetting.ExecutedDate.Contains(currentDate.Day);
+            return AppSettings.ExecutedDate.Contains(currentDate.Day);
         }
 
         public Service StartTime()
         {
             _startTime = DateTime.Now;
 
-            if (AppSetting.Environment == 3)
+            if (AppSettings.Environment == 3)
             {
-                _letstalkService.Info($"Virtual Setting service ({AppSetting.EnvironmentName}) is running");
+                _letstalkService.Info($"Virtual Setting service ({AppSettings.EnvironmentName}) is running");
             }
             
             return this;
@@ -33,7 +33,7 @@
 
         public override BaseService ExecuteForSoccer()
         {
-            VirtualSettingSoccerService service = new VirtualSettingSoccerService(AppSetting.SiteIds, AppSetting.SuperIds, DateTime.Now);
+            VirtualSettingSoccerService service = new VirtualSettingSoccerService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
 
             service.AutoAdjustVirtualSettingsForPunters();
 
@@ -48,7 +48,7 @@
 
         public override BaseService ExecuteForSportbooks()
         {
-            VirtualSettingSportsbookService service = new VirtualSettingSportsbookService(AppSetting.SiteIds, AppSetting.SuperIds, DateTime.Now);
+            VirtualSettingSportsbookService service = new VirtualSettingSportsbookService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
 
             service.AutoAdjustVirtualSettingsForPunters();
 
@@ -72,7 +72,7 @@
 
         public override BaseService SendMailExternal(int mailingListId)
         {
-            var environment = AppSetting.EnvironmentName;
+            var environment = AppSettings.EnvironmentName;
 
             var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + Constants.VSMailInformTemplate;
 
@@ -92,7 +92,7 @@
 
             LogService.Info($"Virtual Setting service ({ environment }) - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
-            if (AppSetting.Environment == 3)
+            if (AppSettings.Environment == 3)
             {
                 _letstalkService.Info($"Virtual Setting service run complete ({ environment }). TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
             }
@@ -102,7 +102,7 @@
 
         public override BaseService SendMailInternal(int mailingListId)
         {
-            var environment = AppSetting.EnvironmentName;
+            var environment = AppSettings.EnvironmentName;
 
             var newMail = new Fanex.MailDelivery.Core.Models.Mail
             {

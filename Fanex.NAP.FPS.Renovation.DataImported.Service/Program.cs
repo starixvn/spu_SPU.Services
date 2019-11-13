@@ -1,6 +1,7 @@
 ﻿using EasyNetQ;
 using Fanex.NAP.FPS.Renovation.Core;
 using Fanex.NAP.FPS.Renovation.Queue;
+using Fanex.NAP.SPU.Core;
 using Fanex.Oneyed.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
@@ -97,7 +98,7 @@ namespace Fanex.NAP.FPS.Renovation.DataImported.Service
 
                 if (fileName == "CN88.txt" || fileName == "Alpha789Y.txt" || fileName == "12BET.txt")
                 {
-                    Utilities.DeleteLog(fileName);
+                    Core.Utilities.DeleteLog(fileName);
 
                     var dataLog = File.ReadAllLines(file);
                     
@@ -130,7 +131,7 @@ namespace Fanex.NAP.FPS.Renovation.DataImported.Service
 
                     splitingData[0] = usernames[indexUsername];
 
-                    Utilities.WriteLog(fileName, string.Join("|", splitingData));                                        
+                    Core.Utilities.WriteLog(fileName, string.Join("|", splitingData));                                        
 
                     var objectData = new MessageQueue
                     {

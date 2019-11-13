@@ -5,6 +5,7 @@
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
     using Fanex.NAP.FPS.Renovation.Core;
+    using Fanex.NAP.SPU.Core;
     using SharpRaven;
     using System;
     using System.Collections.Generic;
@@ -40,6 +41,7 @@
             {
                 new Runner()
             };
+
             if (System.Environment.UserInteractive)
             {
                 // run console
