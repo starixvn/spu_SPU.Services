@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fanex.Graph.Data">
-      <HintPath>GraphDBLib\Fanex.Graph.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Neo4j.Driver">
       <HintPath>GraphDBLib\Neo4j.Driver.dll</HintPath>
     </Reference>
@@ -130,6 +127,10 @@
     <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Queue\Fanex.NAP.FPS.Renovation.Queue.csproj">
       <Project>{fa790109-f8c1-44b7-9246-05b5f1a32696}</Project>
       <Name>Fanex.NAP.FPS.Renovation.Queue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Graph.Core\Fanex.NAP.SPU.Graph.Core.csproj">
+      <Project>{2fbc2472-0b90-420b-9e5d-e0b32fd04cd2}</Project>
+      <Name>Fanex.NAP.SPU.Graph.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

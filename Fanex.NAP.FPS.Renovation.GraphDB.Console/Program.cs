@@ -1,6 +1,5 @@
 ﻿using Fanex.Data;
 using Fanex.Data.MySql;
-using Fanex.Graph.Data;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Sentry.RavenClient;
@@ -8,6 +7,8 @@ using Fanex.NAP.FPS.Renovation.GraphDB.Console.Services.Implement;
 using Fanex.NAP.FPS.Renovation.GraphDB.Console.Services.Interface;
 using Fanex.NAP.FPS.Renovation.Model;
 using Fanex.NAP.FPS.Renovation.Queue;
+using Fanex.NAP.SPU.Graph.Core;
+using Fanex.NAP.SPU.Graph.Core.Neo4j;
 using SharpRaven;
 using System;
 using System.Collections.Generic;
@@ -103,67 +104,63 @@ namespace Fanex.NAP.FPS.Renovation.GraphDB.Console
 
         private static void InsertCustomer(AssociationModel criteria)
         {
-            // ko luu SMA, chi luu member, roleid = 1
-            if (criteria.RoleId == 1)
+            // remove test account
+            if (!criteria.Username.Contains("test") || criteria.Username2 == null || !criteria.Username2.Contains("test"))
             {
-                // remove test account
-                if (!criteria.Username.Contains("test") || criteria.Username2 == null || !criteria.Username2.Contains("test"))
+                try
                 {
-                    try
-                    {
-                        var custId = DbSessionFactory.Query<int>(FPS.GetCustomerById, new { criteria.CustId });
-                        var deviceId = DbSessionFactory.Query<int>(FPS.GetDeviceById, new { criteria.DeviceId });
-                        var association = DbSessionFactory.Query<int>(FPS.CheckExistedAssociation, new { criteria.CustId, criteria.DeviceId });
+                    var custId = DbSessionFactory.Query<int>(FPS.GetCustomerById, new { criteria.CustId });
+                    var deviceId = DbSessionFactory.Query<int>(FPS.GetDeviceById, new { criteria.DeviceId });
+                    var association = DbSessionFactory.Query<int>(FPS.CheckExistedAssociation, new { criteria.CustId, criteria.DeviceId });
 
-                        if (criteria.DeviceId == 0)
+                    if (criteria.DeviceId == 0)
+                    {
+                        if (!custId.Any())
                         {
-                            if (!custId.Any())
+                            UpdateData(FPS.AddNewCustomer, criteria);
+                        }
+                    }
+                    else
+                    {
+                        UpdateData(FPS.AddAssociation, criteria);
+
+                        if (custId.Any())
+                        {
+                            if (deviceId.Any())
                             {
-                                UpdateData(FPS.AddNewCustomer, criteria);
+                                // case old account, old device
+                                if (association.Any())
+                                {
+                                    UpdateData(FPS.UpdateCustomerUsername2, criteria);
+                                }
+                                else
+                                {
+                                    UpdateData(FPS.MergeGroup, criteria);
+                                }
                             }
                         }
                         else
                         {
-                            UpdateData(FPS.AddAssociation, criteria);
-
-                            if (custId.Any())
+                            if (deviceId.Any())
                             {
-                                if (deviceId.Any())
-                                {
-                                    // case acc cu, device cu
-                                    if (association.Any())
-                                    {
-                                        UpdateData(FPS.UpdateCustomerUsername2, criteria);
-                                    }
-                                    else
-                                    {
-                                        UpdateData(FPS.MergeGroup, criteria);
-                                    }
-                                }
+                                // case new account, old device
+                                UpdateData(FPS.AddCustomerGroupRelationship, criteria);
                             }
                             else
                             {
-                                if (deviceId.Any())
-                                {
-                                    // case acc moi, device cu
-                                    UpdateData(FPS.AddCustomerGroupRelationship, criteria);
-                                }
-                                else
-                                {
-                                    // case acc moi, device moi
-                                    UpdateData(FPS.CreateNewGroup, criteria);
-                                }
+                                // case new account, old device
+                                UpdateData(FPS.CreateNewGroup, criteria);
                             }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        var logMessage = new LogMessage(ex.Message)
-                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
-                         .ToString();
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
+                     .ToString();
 
-                        LogService.Error(logMessage);
-                    }
+                    LogService.Error(logMessage);
                 }
             }
         }
