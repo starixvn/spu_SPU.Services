@@ -164,7 +164,16 @@
 
         public static IpModel Ip2Long(this string ipAddress)
         {
-            var ipAd = IPAddress.Parse(ipAddress);
+            var isValid = IPAddress.TryParse(ipAddress, out IPAddress ipAd);
+
+            if(!isValid)
+            {
+                return new IpModel
+                {
+                    IpNumber = -1,
+                    IsIpV6 = false
+                };
+            }
 
             BigInteger ipnum = 0;
 

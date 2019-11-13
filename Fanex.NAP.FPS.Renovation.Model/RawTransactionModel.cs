@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace Fanex.NAP.FPS.Renovation.Model
         public DateTime TransTime { get; set; }
 
         public string IP { get; set; }
+
+        public BigInteger IPId { get; set; }
 
         public int PluginID { get; set; }
 

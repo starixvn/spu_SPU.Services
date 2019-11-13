@@ -162,6 +162,7 @@
                 SubscriberName = message.Subscriber,
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
+                IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : url.Split('?')[0],
                 ActionResult = message.ActionResult,
