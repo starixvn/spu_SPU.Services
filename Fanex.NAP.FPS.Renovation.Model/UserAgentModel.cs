@@ -19,7 +19,7 @@ namespace Fanex.NAP.FPS.Renovation.Model
  
         public string BrowserName { get; set; }
 
-        public long UserAgentKey { get; set; }
+        public string UserAgentKey { get; set; }
 
         public DateTime CreatedDate { get; set; }
     }

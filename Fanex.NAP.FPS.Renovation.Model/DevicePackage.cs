@@ -8,9 +8,9 @@
 
         public long SubscriberId { get; set; }
 
-        public long UserAgentKey { get; set; }
+        public string UserAgentKey { get; set; }
 
-        public long DeviceCodeKey { get; set; }
+        public string DeviceCode { get; set; }
 
         public int BatchId { get; set; }
     }
