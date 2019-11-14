@@ -23,12 +23,9 @@ namespace Fanex.NAP.CTS.Services
         {
             var accountJson = JsonConvert.SerializeObject(accountList);
 
-            var result = dataCenterDataAccess.InsertAccount(accountJson);
+            dataCenterDataAccess.InsertAccount(accountJson);
 
-            if (result != 0)
-            {
-                dataCenterDataAccess.TransformAccountCompleted(accountJson);
-            }
+            dataCenterDataAccess.TransformAccountCompleted(accountJson);
         }
     }
 }
