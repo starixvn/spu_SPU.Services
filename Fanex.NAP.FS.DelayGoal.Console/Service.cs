@@ -38,15 +38,17 @@
 
         public override BaseService Precondition()
         {
+            
+            
             _matches = _service.PreCondition<Match>();
 
-            LogService.Info($"Match counter: {_matches.Count()}");
+            Ultilities.WriteLog("log.txt", _matches.Count().ToString());
 
             return base.Precondition();
         }
 
         public override BaseService Rule()
-        {
+        {           
             ExecuteBySeparatedThreads();
 
             return base.Rule();
