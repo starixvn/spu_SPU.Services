@@ -1,5 +1,4 @@
 ﻿using System.IO.IsolatedStorage;
-using System.Linq;
 
 namespace Fanex.NAP.FS.Core
 {
