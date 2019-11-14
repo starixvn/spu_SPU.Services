@@ -327,3 +327,4 @@ ASALocalRun/
 
 node_modules/
 */obj/*
+*/obj/Debug/*
