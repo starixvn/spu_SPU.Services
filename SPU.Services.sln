@@ -123,7 +123,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.Account.Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core", "Fanex.NAP.SPU.Graph.Core\Fanex.NAP.SPU.Graph.Core.csproj", "{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FPS.Renovation.GraphDB.Console", "Fanex.NAP.FPS.Renovation.GraphDB.Console\Fanex.NAP.FPS.Renovation.GraphDB.Console.csproj", "{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.GraphDB.Console", "Fanex.NAP.FPS.Renovation.GraphDB.Console\Fanex.NAP.CTS.GraphDB.Console.csproj", "{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -384,7 +384,7 @@ Global
 		{16A8AC87-AEE3-4A10-B6C6-5E27226CDDD1} = {DD353243-A0C1-4321-BED1-41E443F6CA25}
 		{27B59CF4-AAB3-43F1-ACAB-4306CC7E7E44} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2} = {701383CF-2252-44C7-BA0B-697F71F1C2B0}
-		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
+		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
