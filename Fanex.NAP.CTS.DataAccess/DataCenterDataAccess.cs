@@ -9,11 +9,23 @@ namespace Fanex.NAP.CTS.DataAccess
 {
     public class DataCenterDataAccess
     {
-        public void InsertAccount(string accountJson)
+        public int InsertAccount(string accountJson)
         {
             var repository = new DynamicRepository();
 
             var criteria = new InsertAccountCriteria
+            {
+                AccountJson = accountJson
+            };
+
+            return repository.Execute(criteria);
+        }
+
+        public void TransformAccountCompleted(string accountJson)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new TransformAccountCompletedCriteria
             {
                 AccountJson = accountJson
             };
