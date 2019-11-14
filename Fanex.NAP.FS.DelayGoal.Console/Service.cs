@@ -42,7 +42,7 @@
             
             _matches = _service.PreCondition<Match>();
 
-            Ultilities.WriteLog("log.txt", _matches.Count().ToString());
+            
 
             return base.Precondition();
         }
@@ -65,25 +65,50 @@
 
             var matchChunks = _matches.Chunk(ChunkSize);
 
+            
+
             foreach (var matches in matchChunks)
             {
-                var thread = ExecuteMultiple(matches.ToList());
 
-                _threads.Add(thread);
+                Execute(matches.ToList());
+                //var thread = ExecuteMultiple(matches.ToList());
+
+                //_threads.Add(thread);
             }
 
-            Task.WhenAll(_threads.ToArray());
+           // Task.WhenAll(_threads.ToArray());
+        }
+
+        private static void Execute(List<Match> matches)
+        {
+            try
+            {
+                var matchIds = string.Join(",", matches.Select(t => t.MatchId.ToString()));
+
+                _service.Rule(matchIds);
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage(ex.Message)
+                .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error($"Delay Goal service - ExecuteMultiple Exeption {logMessage}");
+            }
         }
 
         private static Task ExecuteMultiple(List<Match> matches)
         {
+            
+
             var thread = Task.Factory.StartNew(m =>
             {
                 try
-                {
+                {                   
+                    var matchIds = string.Join(",", ((List<Match>)m).Select(t => t.MatchId.ToString()));
+
                     
 
-                    var matchIds = string.Join(",", ((List<Match>)m).Select(t => t.MatchId.ToString()));
                     _service.Rule(matchIds);
                 }
                 catch (Exception ex)
