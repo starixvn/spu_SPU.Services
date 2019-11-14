@@ -52,6 +52,8 @@
 
         private void ExecuteBySeparatedThreads()
         {
+            LogService.Info($"Match counter: {_matches.Count()}");
+
             if (_matches == null)
             {
                 return;
@@ -75,6 +77,8 @@
             {
                 try
                 {
+                    
+
                     var matchIds = string.Join(",", ((List<Match>)m).Select(t => t.MatchId.ToString()));
                     _service.Rule(matchIds);
                 }
