@@ -1,4 +1,5 @@
-﻿using Fanex.NAP.FPS.Renovation.DataAccess;
+﻿using Fanex.Logging;
+using Fanex.NAP.FPS.Renovation.DataAccess;
 using Fanex.NAP.FPS.Renovation.Model;
 using Fanex.NAP.FPS.Renovation.Services.Interface;
 using System.Collections.Generic;
@@ -40,12 +41,16 @@ namespace Fanex.NAP.FPS.Renovation.Services.Implement
                 return userAgents.Select(x =>
                 {
                     var clientInfo = ConvertUserAgent(x.UserAgent);
-                    var browserName = clientInfo.UA.Family;
-                    var osName = clientInfo.OS.Family;
 
-                    x.OSName = osName;
-                    x.BrowserName = browserName;
+                    if(clientInfo != null)
+                    {
+                        var browserName = clientInfo.UA.Family;
+                        var osName = clientInfo.OS.Family;
 
+                        x.OSName = osName;
+                        x.BrowserName = browserName;
+                    } 
+                   
                     return x;
 
                 }).ToList();
