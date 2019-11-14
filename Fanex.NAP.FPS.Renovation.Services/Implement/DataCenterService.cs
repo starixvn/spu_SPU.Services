@@ -75,9 +75,14 @@ namespace Fanex.NAP.FPS.Renovation.Services.Implement
             return dataCenter.UpdateIsSyncGraphDBByAssociationId(association);
         }
 
-        public List<RawAccountModel> GetRawAccount(int numOfTicket, int numOfBatch)
+        public List<RawAccountModel> GetRawAccount(int quantityPerBatch, int numOfBatch)
         {
-            return dataCenter.GetRawAccount(numOfTicket, numOfBatch);
+            return dataCenter.GetRawAccount(quantityPerBatch, numOfBatch);
+        }
+
+        public List<RawAccountModel> GetRawAssociation(int quantityPerBatch, int numOfBatch)
+        {
+            return dataCenter.GetRawAssociation(quantityPerBatch, numOfBatch);
         }
 
         private NewCustomerInfo TransformCustomerInfo(CustomerInfoModel customerInfo)

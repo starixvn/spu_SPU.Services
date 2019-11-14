@@ -25,5 +25,7 @@ namespace Fanex.NAP.FPS.Renovation.Services.Interface
         DataResult InsertDevice(List<DevicePackage> transId);
 
         List<RawAccountModel> GetRawAccount(int numOfTicket, int numOfBatch);
+
+        List<RawAccountModel> GetRawAssociation(int quantityPerBatch, int numOfBatch);
     }
 }

@@ -125,6 +125,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.GraphDB.Console", "Fanex.NAP.FPS.Renovation.GraphDB.Console\Fanex.NAP.CTS.GraphDB.Console.csproj", "{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.Association.Service", "Fanex.NAP.CTS.Association.Service\Fanex.NAP.CTS.Association.Service.csproj", "{D51FA199-0C82-4E99-A44A-40D8482DA4A7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -327,6 +329,10 @@ Global
 		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D51FA199-0C82-4E99-A44A-40D8482DA4A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D51FA199-0C82-4E99-A44A-40D8482DA4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D51FA199-0C82-4E99-A44A-40D8482DA4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D51FA199-0C82-4E99-A44A-40D8482DA4A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -385,6 +391,7 @@ Global
 		{27B59CF4-AAB3-43F1-ACAB-4306CC7E7E44} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2} = {701383CF-2252-44C7-BA0B-697F71F1C2B0}
 		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
+		{D51FA199-0C82-4E99-A44A-40D8482DA4A7} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45

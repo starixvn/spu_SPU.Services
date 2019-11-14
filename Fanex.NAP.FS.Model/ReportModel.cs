@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Fanex.NAP.FS.Model
+﻿namespace Fanex.NAP.FS.Model
 {
     public class ReportModel
     {

@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExecuteAssociationAPIJob.cs" />
     <Compile Include="ExecuteAccountAPIJob.cs" />
     <Compile Include="ExecuteDeviceAPIJob.cs" />
     <Compile Include="ExecuteJobBase.cs" />

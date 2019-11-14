@@ -300,11 +300,25 @@
             };
         }
 
-        public List<RawAccountModel> GetRawAccount(int numOfTickets, int numOfBatch)
+        public List<RawAccountModel> GetRawAccount(int quantityPerBatch, int numOfBatch)
         {
             var criteria = new GetRawAccountListCriteria
             {
-                NumberOfTickets = numOfTickets,
+                NumberOfTickets = quantityPerBatch,
+                NumberOfBatch = numOfBatch
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<RawAccountModel>(criteria).ToList();
+            }
+        }
+
+        public List<RawAccountModel> GetRawAssociation(int quantityPerBatch, int numOfBatch)
+        {
+            var criteria = new GetRawAssociationListCriteria
+            {
+                NumberOfTickets = quantityPerBatch,
                 NumberOfBatch = numOfBatch
             };
 
