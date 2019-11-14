@@ -38,19 +38,19 @@ namespace Fanex.NAP.FPS.Renovation.GraphDB.Console
                 .Run();
 
             LogManager
-                .SetDefaultLogCategory(Core.AppSettings.FanexLogCategory)
+                .SetDefaultLogCategory(SPU.Core.AppSettings.FanexLogCategory)
                 .Use(new List<ILogEngine>
                 {
                     new SentryLogging(new SentryEngineOptions
                     {
-                        Dsn = new Dsn(Core.AppSettings.SentryLogging)
+                        Dsn = new Dsn(SPU.Core.AppSettings.SentryLogging)
                     })
                 });
 
             DbSettingProviderManager
                 .StartNewSession()
                 .WithMySql()
-                .UseDefaultDbSettingProvider(resourcePath: Core.AppSettings.AppDataSetting)
+                .UseDefaultDbSettingProvider(resourcePath: SPU.Core.AppSettings.AppDataSetting)
                 .UseDefaultConnectionStringProvider()
                 .Run();
 
@@ -83,7 +83,7 @@ namespace Fanex.NAP.FPS.Renovation.GraphDB.Console
 
             if (result != null)
             {
-                if (associations.Count < Core.AppSettings.TransBatch)
+                if (associations.Count < SPU.Core.AppSettings.TransBatch)
                 {
                     associations.Add(new IsSynAssociationModel
                     {

@@ -128,6 +128,10 @@
       <Project>{fa790109-f8c1-44b7-9246-05b5f1a32696}</Project>
       <Name>Fanex.NAP.FPS.Renovation.Queue</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
+      <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>
+      <Name>Fanex.NAP.SPU.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Graph.Core\Fanex.NAP.SPU.Graph.Core.csproj">
       <Project>{2fbc2472-0b90-420b-9e5d-e0b32fd04cd2}</Project>
       <Name>Fanex.NAP.SPU.Graph.Core</Name>

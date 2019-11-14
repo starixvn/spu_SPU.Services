@@ -89,8 +89,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FPS.Renovation.Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service", "Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service\Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.csproj", "{763BB29F-AFBC-4039-BFF7-72F571880A08}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FPS.Renovation.GraphDB.Service", "Fanex.NAP.FPS.Renovation.GraphDB.Service\Fanex.NAP.FPS.Renovation.GraphDB.Service.csproj", "{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FPS.Renovation.DataCatching.Service", "Fanex.NAP.FPS.Renovation.DataCatching.Service\Fanex.NAP.FPS.Renovation.DataCatching.Service.csproj", "{51C5873C-D40C-4B76-A631-AF183D3D3D0A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NAP.FPS.Renovation.DataImported.Service", "Fanex.NAP.FPS.Renovation.DataImported.Service\Fanex.NAP.FPS.Renovation.DataImported.Service.csproj", "{41CCC98D-2001-4EC1-AF40-277B7CD37E70}"
@@ -124,6 +122,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.Account.Service", "Fanex.NAP.CTS.Account.Service\Fanex.NAP.CTS.Account.Service.csproj", "{27B59CF4-AAB3-43F1-ACAB-4306CC7E7E44}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core", "Fanex.NAP.SPU.Graph.Core\Fanex.NAP.SPU.Graph.Core.csproj", "{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FPS.Renovation.GraphDB.Console", "Fanex.NAP.FPS.Renovation.GraphDB.Console\Fanex.NAP.FPS.Renovation.GraphDB.Console.csproj", "{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FPS.Renovation.GraphDB.Service", "Fanex.NAP.FPS.Renovation.GraphDB.Service\Fanex.NAP.FPS.Renovation.GraphDB.Service.csproj", "{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -271,10 +273,6 @@ Global
 		{763BB29F-AFBC-4039-BFF7-72F571880A08}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{763BB29F-AFBC-4039-BFF7-72F571880A08}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{763BB29F-AFBC-4039-BFF7-72F571880A08}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{51C5873C-D40C-4B76-A631-AF183D3D3D0A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51C5873C-D40C-4B76-A631-AF183D3D3D0A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51C5873C-D40C-4B76-A631-AF183D3D3D0A}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -327,6 +325,14 @@ Global
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -370,7 +376,6 @@ Global
 		{5132621C-43CF-4924-8FA8-713E9BD1C436} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 		{9E15F9BA-F63F-4E0F-BE29-616E61B1D4A9} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 		{763BB29F-AFBC-4039-BFF7-72F571880A08} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
-		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 		{51C5873C-D40C-4B76-A631-AF183D3D3D0A} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 		{41CCC98D-2001-4EC1-AF40-277B7CD37E70} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 		{EDD7790C-F7E3-4FF5-BD1A-89331412889D} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
@@ -385,9 +390,11 @@ Global
 		{16A8AC87-AEE3-4A10-B6C6-5E27226CDDD1} = {DD353243-A0C1-4321-BED1-41E443F6CA25}
 		{27B59CF4-AAB3-43F1-ACAB-4306CC7E7E44} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2} = {701383CF-2252-44C7-BA0B-697F71F1C2B0}
+		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
+		{0B2122BE-21DC-48AC-B1CB-56BA75E31BBD} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal
