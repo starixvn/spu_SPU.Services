@@ -40,6 +40,8 @@
         {
             _matches = _service.PreCondition<Match>();
 
+            LogService.Info($"Match counter: {_matches.Count()}");
+
             return base.Precondition();
         }
 
@@ -52,7 +54,7 @@
 
         private void ExecuteBySeparatedThreads()
         {
-            LogService.Info($"Match counter: {_matches.Count()}");
+            
 
             if (_matches == null)
             {
