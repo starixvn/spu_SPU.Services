@@ -145,9 +145,6 @@
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
       <Version>1.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Neo4j.Driver">
-      <Version>1.7.2</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="AppSettings.tt">
