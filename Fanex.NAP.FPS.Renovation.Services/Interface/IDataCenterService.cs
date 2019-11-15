@@ -1,4 +1,5 @@
 ﻿using Fanex.NAP.FPS.Renovation.Model;
+using Fanex.NAP.SPU.Model;
 using System.Collections.Generic;
 
 namespace Fanex.NAP.FPS.Renovation.Services.Interface
@@ -24,8 +25,8 @@ namespace Fanex.NAP.FPS.Renovation.Services.Interface
 
         DataResult InsertDevice(List<DevicePackage> transId);
 
-        List<RawAccountModel> GetRawAccount(int numOfTicket, int numOfBatch);
+        List<RawAccountModel> GetRawAccount(int numOfAccount, int numOfBatch);
 
-        List<RawAccountModel> GetRawAssociation(int quantityPerBatch, int numOfBatch);
+        List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch);
     }
 }

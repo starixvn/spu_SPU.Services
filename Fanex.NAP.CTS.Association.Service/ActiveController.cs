@@ -3,9 +3,9 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.CTS.Services.Interface;
+    using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
@@ -28,7 +28,7 @@
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
-                var result = JsonConvert.DeserializeObject<List<RawAccountModel>>(jsonContent);
+                var result = JsonConvert.DeserializeObject<List<RawAssociationModel>>(jsonContent);
 
                 return Process(result);
             }
@@ -40,13 +40,20 @@
             return false;
         }
 
-        private bool Process(List<RawAccountModel> accounts)
+        private bool Process(List<RawAssociationModel> association)
         {
             try
             {
-                if(accounts != null && accounts.Any())
+                if(association != null && association.Any())
                 {
-                    dataCenterService.InsertAccount(accounts);
+                    var associationByCustId = dataCenterService.GetAssociationByAccounts(association);
+
+                    if(associationByCustId != null && associationByCustId.Any())
+                    {
+                        dataCenterService.InsertAssociation(associationByCustId);
+
+                        dataCenterService.TransformAssociationCompleleted(association);
+                    }
 
                     return true;
                 }                

@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Model
 {
-    public class RawAccountModel
+   public class AssociationModel
     {
-        public int BatchId { get; set; }
+        public int CustId { get; set; }
 
-        public int AccountId { get; set; }
-
-        public string LoginNameWithPrefix { get; set; }
+        public int DeviceId { get; set; }
 
         public int SubscriberId { get; set; }
+
+        public DateTime CreatedTime { get; set; }
     }
 }

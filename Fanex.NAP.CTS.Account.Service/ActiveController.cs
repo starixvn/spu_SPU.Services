@@ -6,6 +6,7 @@
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.CTS.Services.Interface;
+    using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;

@@ -1,12 +1,9 @@
 ﻿using Fanex.NAP.CTS.DataAccess;
 using Fanex.NAP.CTS.Model;
 using Fanex.NAP.CTS.Services.Interface;
+using Fanex.NAP.SPU.Model;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Services
 {
@@ -19,6 +16,13 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess = new DataCenterDataAccess();
         }
 
+        public List<AssociationModel> GetAssociationByAccounts(List<RawAssociationModel> rawAssociation)
+        {
+            var associationJson = JsonConvert.SerializeObject(rawAssociation);
+
+            return dataCenterDataAccess.GetAssociationByAccounts(associationJson);
+        }
+
         public void InsertAccount(List<RawAccountModel> accountList)
         {
             var accountJson = JsonConvert.SerializeObject(accountList);
@@ -26,6 +30,20 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.InsertAccount(accountJson);
 
             dataCenterDataAccess.TransformAccountCompleted(accountJson);
+        }
+
+        public void InsertAssociation(List<AssociationModel> associationList)
+        {
+            var associationJson = JsonConvert.SerializeObject(associationList);
+
+            dataCenterDataAccess.InsertAssociation(associationJson);            
+        }
+
+        public void TransformAssociationCompleleted(List<RawAssociationModel> rawAssociation)
+        {
+            var associationJson = JsonConvert.SerializeObject(rawAssociation);
+
+            dataCenterDataAccess.TransformAssociationCompleted(associationJson);
         }
     }
 }

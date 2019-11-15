@@ -5,8 +5,8 @@ namespace Fanex.NAP.FPS.Renovation.Criteria
 {
     public class GetRawAccountListCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "ip_NoOfTickets")]
-        public int NumberOfTickets { get; set; }
+        [SpParam(SqlParamName = "ip_NoOfAccount")]
+        public int NumberOfAccount { get; set; }
 
         [SpParam(SqlParamName = "ip_NoOfBatch")]
         public int NumberOfBatch { get; set; }

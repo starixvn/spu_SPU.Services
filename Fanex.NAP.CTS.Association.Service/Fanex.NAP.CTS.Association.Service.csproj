@@ -102,9 +102,17 @@
       <Project>{16A8AC87-AEE3-4A10-B6C6-5E27226CDDD1}</Project>
       <Name>Fanex.NAP.CTS.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
+      <Project>{07F5D4E0-8C77-48A8-BA21-B7F7E0439A64}</Project>
+      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
+      <Project>{67FECD9E-043A-4100-BF62-52C1A016B85D}</Project>
+      <Name>Fanex.NAP.SPU.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

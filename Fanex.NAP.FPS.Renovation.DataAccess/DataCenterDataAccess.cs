@@ -4,6 +4,7 @@
     using Fanex.Data.Repository;
     using Fanex.NAP.FPS.Renovation.Criteria;
     using Fanex.NAP.FPS.Renovation.Model;
+    using Fanex.NAP.SPU.Model;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -304,7 +305,7 @@
         {
             var criteria = new GetRawAccountListCriteria
             {
-                NumberOfTickets = quantityPerBatch,
+                NumberOfAccount = quantityPerBatch,
                 NumberOfBatch = numOfBatch
             };
 
@@ -314,17 +315,17 @@
             }
         }
 
-        public List<RawAccountModel> GetRawAssociation(int quantityPerBatch, int numOfBatch)
+        public List<RawAssociationModel> GetRawAssociation(int quantityPerBatch, int numOfBatch)
         {
             var criteria = new GetRawAssociationListCriteria
             {
-                NumberOfTickets = quantityPerBatch,
+                NumberOfAssociation = quantityPerBatch,
                 NumberOfBatch = numOfBatch
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<RawAccountModel>(criteria).ToList();
+                return db.Query<RawAssociationModel>(criteria).ToList();
             }
         }
     }

@@ -2,6 +2,7 @@
 using Fanex.NAP.FPS.Renovation.DataAccess;
 using Fanex.NAP.FPS.Renovation.Model;
 using Fanex.NAP.FPS.Renovation.Services.Interface;
+using Fanex.NAP.SPU.Model;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,14 +76,14 @@ namespace Fanex.NAP.FPS.Renovation.Services.Implement
             return dataCenter.UpdateIsSyncGraphDBByAssociationId(association);
         }
 
-        public List<RawAccountModel> GetRawAccount(int quantityPerBatch, int numOfBatch)
+        public List<RawAccountModel> GetRawAccount(int numOfAccount, int numOfBatch)
         {
-            return dataCenter.GetRawAccount(quantityPerBatch, numOfBatch);
+            return dataCenter.GetRawAccount(numOfAccount, numOfBatch);
         }
 
-        public List<RawAccountModel> GetRawAssociation(int quantityPerBatch, int numOfBatch)
+        public List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch)
         {
-            return dataCenter.GetRawAssociation(quantityPerBatch, numOfBatch);
+            return dataCenter.GetRawAssociation(numOfAssociation, numOfBatch);
         }
 
         private NewCustomerInfo TransformCustomerInfo(CustomerInfoModel customerInfo)

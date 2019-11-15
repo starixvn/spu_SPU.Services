@@ -32,5 +32,42 @@ namespace Fanex.NAP.CTS.DataAccess
 
             repository.Execute(criteria);
         }
+
+        public List<AssociationModel> GetAssociationByAccounts(string associationJson)
+        {
+            var criteria = new GetCustomerByAccountCriteria
+            {
+               AssociationList = associationJson
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<AssociationModel>(criteria).ToList();
+            }
+        }
+
+        public int InsertAssociation(string associationJson)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertAssociationCriteria
+            {
+                AssociationJson = associationJson
+            };
+
+            return repository.Execute(criteria);
+        }
+
+        public void TransformAssociationCompleted(string associationJson)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new TransformAssociationCompletedCriteria
+            {
+                AssociationJson = associationJson
+            };
+
+            repository.Execute(criteria);
+        }
     }
 }

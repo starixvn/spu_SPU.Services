@@ -3,10 +3,10 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.FPS.Renovation.Model;
     using Fanex.NAP.FPS.Renovation.Services.Implement;
     using Fanex.NAP.FPS.Renovation.Services.Interface;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Model;
     using Quartz;
     using RestSharp;
     using System;
@@ -58,12 +58,13 @@
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
                     var apiUrls = rootPath.Split(';');
+                    var numOfBatch = apiUrls.Count();
 
-                    var listOfAccount = dataCenterService.GetRawAssociation(packageSize, apiUrls.Count());
+                    var listOfAssociation = dataCenterService.GetRawAssociation(packageSize, numOfBatch);
 
-                    if (listOfAccount.Any())
+                    if (listOfAssociation.Any())
                     {
-                        var groupTrans = listOfAccount.GroupBy(x => x.BatchId);
+                        var groupTrans = listOfAssociation.GroupBy(x => x.BatchId);
                         var tasks = new List<Task>();
                         var index = 0;
 
@@ -93,7 +94,7 @@
             }           
         }
 
-        private static async Task<IRestResponse> Executing(List<RawAccountModel> accounts, string apiUrl, string actionPath)
+        private static async Task<IRestResponse> Executing(List<RawAssociationModel> accounts, string apiUrl, string actionPath)
         {
             var client = new RestClient(new Uri(apiUrl));
             var request = new RestRequest(actionPath, Method.POST);
