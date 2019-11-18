@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FPS.Renovation.Core
+﻿namespace Fanex.NAP.DCS.Core
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@
     using System.IO;
     using System.Net.Sockets;
     using System.Numerics;
-    using Fanex.NAP.FPS.Renovation.Model;
+    using Fanex.NAP.DCS.Model;
     using System.Collections;
 
     public static class Utilities
@@ -135,32 +135,7 @@
             }
 
             return partitions;
-        }
-
-        public static void WriteLog(string filename, string content)
-        {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
-
-            File.AppendAllText(filePath, string.Format("{0}{1}", content, System.Environment.NewLine));
-        }
-
-        public static void DeleteLog(string fileName)
-        {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-        }
-
-        public static void WriteLogAllLine(string filename, string[] content)
-        {
-            var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, filename);
-
-            File.WriteAllLines(filePath, content);
-
-        }
+        }               
 
         public static IpModel Ip2Long(this string ipAddress)
         {

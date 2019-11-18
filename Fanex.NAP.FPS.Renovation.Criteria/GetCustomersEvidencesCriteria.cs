@@ -1,6 +1,6 @@
 ﻿using Fanex.Data.Repository;
 
-namespace Fanex.NAP.FPS.Renovation.Criteria
+namespace Fanex.NAP.DCS.Criteria
 {
     public class GetCustomersEvidencesCriteria : CriteriaBase
     {

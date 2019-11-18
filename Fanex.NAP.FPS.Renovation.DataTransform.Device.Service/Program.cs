@@ -1,10 +1,10 @@
-﻿namespace Fanex.NAP.FPS.Renovation.DataTransform.Device.Service
+﻿namespace Fanex.NAP.DCS.DataTransform.Device.Service
 {
     using Fanex.Data;
     using Fanex.Data.MySql;
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
-    using Fanex.NAP.FPS.Renovation.Core;
+    using Fanex.NAP.DCS.Core;
     using Fanex.NAP.SPU.Core;
     using SharpRaven;
     using System;

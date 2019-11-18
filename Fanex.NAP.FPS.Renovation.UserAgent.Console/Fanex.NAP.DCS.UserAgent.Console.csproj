@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{EDD7790C-F7E3-4FF5-BD1A-89331412889D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fanex.NAP.FPS.Renovation.UserAgent.Console</RootNamespace>
-    <AssemblyName>Fanex.NAP.FPS.Renovation.UserAgent.Console</AssemblyName>
+    <RootNamespace>Fanex.NAP.DCS.UserAgent.Console</RootNamespace>
+    <AssemblyName>Fanex.NAP.DCS.UserAgent.Console</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -50,17 +50,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.FPS.Renovation.Core.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.DCS.Core.csproj">
       <Project>{91543a37-f0a0-4a4f-8c1d-dbb0bcc75699}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Core</Name>
+      <Name>Fanex.NAP.DCS.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.DCS.Model.csproj">
       <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
+      <Name>Fanex.NAP.DCS.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Services\Fanex.NAP.FPS.Renovation.Services.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Services\Fanex.NAP.DCS.Services.csproj">
       <Project>{343073c5-6a1f-4e08-8c39-c8b6498bbadb}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Services</Name>
+      <Name>Fanex.NAP.DCS.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>

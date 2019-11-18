@@ -1,9 +1,10 @@
-﻿namespace Fanex.NAP.FPS.Renovation.Services.Implement
+﻿namespace Fanex.NAP.DCS.Services.Implement
 {
-    using Fanex.NAP.FPS.Renovation.Core;
-    using Fanex.NAP.FPS.Renovation.DataAccess;
-    using Fanex.NAP.FPS.Renovation.Model;
-    using Fanex.NAP.FPS.Renovation.Services.Interface;
+    using Fanex.NAP.DCS.Core;
+    using Fanex.NAP.DCS.DataAccess;
+    using Fanex.NAP.DCS.Model;
+    using Fanex.NAP.DCS.Services.Interface;
+    using Fanex.NAP.SPU.Model;
     using System;
     using System.Collections.Generic;
     using System.IO;

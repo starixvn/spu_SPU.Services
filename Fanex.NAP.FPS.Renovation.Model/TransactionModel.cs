@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Fanex.NAP.FPS.Renovation.Model
+namespace Fanex.NAP.DCS.Model
 {
     [XmlType(TypeName = "transaction")]
     public class TransactionModel: CustomerInfoModel

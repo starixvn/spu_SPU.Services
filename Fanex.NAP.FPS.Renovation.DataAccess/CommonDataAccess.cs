@@ -1,14 +1,14 @@
-﻿using Fanex.NAP.FPS.Renovation.Model;
+﻿using Fanex.NAP.DCS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Fanex.NAP.FPS.Renovation.Criteria;
+using Fanex.NAP.DCS.Criteria;
 using Fanex.Data.Repository;
 using Fanex.Data;
 
-namespace Fanex.NAP.FPS.Renovation.DataAccess
+namespace Fanex.NAP.DCS.DataAccess
 {
     public class CommonDataAccess
     {

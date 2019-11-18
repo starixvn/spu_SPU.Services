@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{AD798634-BDA0-4399-A135-1F91DAD9073D}</ProjectGuid>
+    <ProjectGuid>{1FDA7272-3467-4D5B-A64D-7F4EDB287F17}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Fanex.NAP.FPS.Renovation.DataAccess</RootNamespace>
-    <AssemblyName>Fanex.NAP.FPS.Renovation.DataAccess</AssemblyName>
+    <RootNamespace>Fanex.NAP.DCS.Criteria</RootNamespace>
+    <AssemblyName>Fanex.NAP.DCS.Criteria</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -24,7 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.DataAccess.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.Criteria.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,7 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.DataAccess.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.Criteria.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -57,32 +57,43 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssociationDataAccess.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IPRangeDataAccess.cs" />
-    <Compile Include="RawTransactionDataAccess.cs" />
-    <Compile Include="CommonDataAccess.cs" />
-    <Compile Include="DataCenterDataAccess.cs" />
+    <Compile Include="GetRawAssociationListCriteria.cs" />
+    <Compile Include="GetRawAccountListCriteria.cs" />
+    <Compile Include="GetUpdatedDeviceListCriteria.cs" />
+    <Compile Include="GetUpdatedAccountListCriteria.cs" />
+    <Compile Include="GetUserAgentCriteria.cs" />
+    <Compile Include="InsertFingerPrintCriteria.cs" />
+    <Compile Include="InsertIPTableLogCriteria.cs" />
+    <Compile Include="GetAssociationByCustomerCriteria.cs" />
+    <Compile Include="GetAssociationForGraphDBCriteria.cs" />
+    <Compile Include="GetCustomerInfoCriteria.cs" />
+    <Compile Include="GetCustomersEvidencesCriteria.cs" />
+    <Compile Include="GetIPTableLogLatestUpdatedDateCriteria.cs" />
+    <Compile Include="GetIpV6RangeCriteria.cs" />
+    <Compile Include="GetNewCustomerCriteria.cs" />
+    <Compile Include="GetIPDBVersionCriteria.cs" />
+    <Compile Include="GetTotalAssociationByCustomerCriteria.cs" />
+    <Compile Include="CapturingTransactionCriteria.cs" />
+    <Compile Include="GetRawTransactionCriteria.cs" />
+    <Compile Include="InsertRawAccountCriteria.cs" />
+    <Compile Include="IpInfoCriteria.cs" />
+    <Compile Include="ProcessCompletedCriteria.cs" />
+    <Compile Include="ProcessDeviceCriteria.cs" />
+    <Compile Include="ProcessTransactionCriteria.cs" />
+    <Compile Include="ProcessUnhandleSubscriberActionCriteria.cs" />
+    <Compile Include="ProcessUserAgentCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StagingRawTransactionDataAccess.cs" />
+    <Compile Include="ProcessAccountCriteria.cs" />
+    <Compile Include="UpdateDeviceIdCriteria.cs" />
+    <Compile Include="UpdateAccountIdCriteria.cs" />
+    <Compile Include="UpdateCustomerInfoCriteria.cs" />
+    <Compile Include="UpdateIpRangeCriteria.cs" />
+    <Compile Include="UpdateIsSyncGraphDBByAssociationIdCriteria.cs" />
+    <Compile Include="UpdateUserAgentCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Fanex.NAP.FPS.Renovation.DataAccess.ruleset" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Criteria\Fanex.NAP.FPS.Renovation.Criteria.csproj">
-      <Project>{1FDA7272-3467-4D5B-A64D-7F4EDB287F17}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Criteria</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
-      <Project>{07F5D4E0-8C77-48A8-BA21-B7F7E0439A64}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
-      <Project>{67FECD9E-043A-4100-BF62-52C1A016B85D}</Project>
-      <Name>Fanex.NAP.SPU.Model</Name>
-    </ProjectReference>
+    <None Include="Fanex.NAP.FPS.Renovation.Criteria.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EasyNetQ">

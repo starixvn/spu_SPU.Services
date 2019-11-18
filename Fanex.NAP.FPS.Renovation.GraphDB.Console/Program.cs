@@ -3,18 +3,18 @@ using Fanex.Data.MySql;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.FPS.Renovation.GraphDB.Console.Services.Implement;
-using Fanex.NAP.FPS.Renovation.GraphDB.Console.Services.Interface;
-using Fanex.NAP.FPS.Renovation.Model;
-using Fanex.NAP.FPS.Renovation.Queue;
+using Fanex.NAP.CTS.Renovation.GraphDB.Console.Services.Implement;
+using Fanex.NAP.CTS.Renovation.GraphDB.Console.Services.Interface;
 using Fanex.NAP.SPU.Graph.Core;
 using Fanex.NAP.SPU.Graph.Core.Neo4j;
+using Fanex.NAP.SPU.Model;
+using Fanex.NAP.SPU.Queue;
 using SharpRaven;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fanex.NAP.FPS.Renovation.GraphDB.Console
+namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
 {
     class Program
     {
@@ -91,7 +91,7 @@ namespace Fanex.NAP.FPS.Renovation.GraphDB.Console
                 }
                 else
                 {
-                    var xmlData = Core.Utilities.XMLConvert(associations);
+                    var xmlData = DCS.Core.Utilities.XMLConvert(associations);
 
                     dataCenterService.UpdateIsSyncByAssociationId(xmlData);
 

@@ -1,12 +1,12 @@
-﻿namespace Fanex.NAP.FPS.Renovation.RawTransaction.Service
+﻿namespace Fanex.NAP.DCS.RawTransaction.Service
 {
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.FPS.Renovation.Core;
-    using Fanex.NAP.FPS.Renovation.Model;
-    using Fanex.NAP.FPS.Renovation.Queue;
+    using Fanex.NAP.DCS.Core;
+    using Fanex.NAP.DCS.Model;
     using Fanex.NAP.SPU.Core;
+    using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
     using System;
     using System.Collections;

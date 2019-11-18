@@ -3,8 +3,8 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.FPS.Renovation.Services.Implement;
-    using Fanex.NAP.FPS.Renovation.Services.Interface;
+    using Fanex.NAP.DCS.Services.Implement;
+    using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
     using Quartz;

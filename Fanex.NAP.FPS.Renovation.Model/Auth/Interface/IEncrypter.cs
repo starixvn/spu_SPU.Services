@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FPS.Renovation.Model.Auth
+﻿namespace Fanex.NAP.DCS.Model.Auth
 {
     public interface IEncrypter
     {

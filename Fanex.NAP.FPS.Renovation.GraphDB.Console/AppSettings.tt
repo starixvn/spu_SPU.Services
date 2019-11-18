@@ -19,7 +19,7 @@
 	var xml = GetSettings(info.Directory, "App.config").Element("appSettings");
 #>
 
-namespace Fanex.NAP.FPS.Renovation.GraphDB.Console
+namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
 {
     using System.Configuration;
 

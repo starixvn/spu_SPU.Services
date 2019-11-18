@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fanex.NAP.FPS.Renovation.GraphDB.Console")]
+[assembly: AssemblyTitle("Fanex.NAP.CTS.Renovation.GraphDB.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Fanex.NAP.FPS.Renovation.GraphDB.Console")]
+[assembly: AssemblyProduct("Fanex.NAP.CTS.Renovation.GraphDB.Console")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

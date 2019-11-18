@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fanex.NAP.FPS.Renovation.Model
+namespace Fanex.NAP.DCS.Model
 {
    public class AccountModel
     {

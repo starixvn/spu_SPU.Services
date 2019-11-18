@@ -1,7 +1,7 @@
-﻿namespace Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service
+﻿namespace Fanex.NAP.DCS.DataTransform.Transaction.Service
 {
     using Fanex.Logging;
-    using Fanex.NAP.FPS.Renovation.Core;
+    using Fanex.NAP.DCS.Core;
     using Fanex.NAP.SPU.Core;
     using Microsoft.Owin.Hosting;
     using System;

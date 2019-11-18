@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Fanex.NAP.FPS.Renovation.Model
+namespace Fanex.NAP.DCS.Model
 {
     public class OSModel
     {

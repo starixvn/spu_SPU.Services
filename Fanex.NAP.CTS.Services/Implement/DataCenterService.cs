@@ -16,7 +16,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess = new DataCenterDataAccess();
         }
 
-        public List<AssociationModel> GetAssociationByAccounts(List<RawAssociationModel> rawAssociation)
+        public List<Model.AssociationModel> GetAssociationByAccounts(List<RawAssociationModel> rawAssociation)
         {
             var associationJson = JsonConvert.SerializeObject(rawAssociation);
 
@@ -32,7 +32,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.TransformAccountCompleted(accountJson);
         }
 
-        public void InsertAssociation(List<AssociationModel> associationList)
+        public void InsertAssociation(List<Model.AssociationModel> associationList)
         {
             var associationJson = JsonConvert.SerializeObject(associationList);
 

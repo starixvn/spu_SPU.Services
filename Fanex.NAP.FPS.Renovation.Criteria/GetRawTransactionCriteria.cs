@@ -7,7 +7,7 @@ using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fanex.NAP.FPS.Renovation.Criteria
+namespace Fanex.NAP.DCS.Criteria
 {
     public class GetRawTransactionCriteria : CriteriaBase
     {

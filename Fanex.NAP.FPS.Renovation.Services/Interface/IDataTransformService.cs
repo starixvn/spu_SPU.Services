@@ -1,11 +1,11 @@
-﻿using Fanex.NAP.FPS.Renovation.Model;
+﻿using Fanex.NAP.DCS.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fanex.NAP.FPS.Renovation.Services.Interface
+namespace Fanex.NAP.DCS.Services.Interface
 {
     public interface IDataTransformService
     {

@@ -8,9 +8,9 @@ namespace Fanex.NAP.CTS.Services.Interface
     {
         void InsertAccount(List<RawAccountModel> accountList);
 
-        void InsertAssociation(List<AssociationModel> associationList);
+        void InsertAssociation(List<Model.AssociationModel> associationList);
 
-        List<AssociationModel> GetAssociationByAccounts(List<RawAssociationModel> rawAssociation);
+        List<Model.AssociationModel> GetAssociationByAccounts(List<RawAssociationModel> rawAssociation);
 
         void TransformAssociationCompleleted(List<RawAssociationModel> rawAssociation);
     }

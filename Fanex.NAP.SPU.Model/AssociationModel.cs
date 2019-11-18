@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FPS.Renovation.Model
+﻿namespace Fanex.NAP.SPU.Model
 {
     public class AssociationModel
     {

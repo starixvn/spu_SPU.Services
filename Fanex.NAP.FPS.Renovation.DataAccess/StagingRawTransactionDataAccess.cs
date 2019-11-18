@@ -1,10 +1,10 @@
 ﻿using Fanex.Data;
-using Fanex.NAP.FPS.Renovation.Criteria;
-using Fanex.NAP.FPS.Renovation.Model;
+using Fanex.NAP.DCS.Criteria;
+using Fanex.NAP.DCS.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fanex.NAP.FPS.Renovation.DataAccess
+namespace Fanex.NAP.DCS.DataAccess
 {
     public class StagingRawTransactionDataAccess
     {

@@ -1,9 +1,9 @@
-﻿namespace Fanex.NAP.FPS.Renovation.DataAccess
+﻿namespace Fanex.NAP.DCS.DataAccess
 {
     using Fanex.Data;
     using Fanex.Data.Repository;
-    using Fanex.NAP.FPS.Renovation.Criteria;
-    using Fanex.NAP.FPS.Renovation.Model;
+    using Fanex.NAP.DCS.Criteria;
+    using Fanex.NAP.DCS.Model;
     using Fanex.NAP.SPU.Model;
     using System.Collections.Generic;
     using System.Linq;
@@ -54,7 +54,7 @@
             }
         }
 
-        public List<Model.AssociationModel> GetAssociation(int isSysnGraphDB, int size)
+        public List<AssociationModel> GetAssociation(int isSysnGraphDB, int size)
         {
 
             var criteria = new GetAssociationForGraphDBCriteria

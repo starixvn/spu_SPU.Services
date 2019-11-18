@@ -5,18 +5,17 @@ using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.FPS.Renovation.Core;
-using Fanex.NAP.FPS.Renovation.Model;
-using Fanex.NAP.FPS.Renovation.Queue;
-using Fanex.NAP.FPS.Renovation.Services.Implement;
+using Fanex.NAP.DCS.Services.Implement;
 using Fanex.NAP.SPU.Core;
+using Fanex.NAP.SPU.Model;
+using Fanex.NAP.SPU.Queue;
 using Newtonsoft.Json;
 using SharpRaven;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Fanex.NAP.FPS.Renovation.Association.Console
+namespace Fanex.NAP.DCS.Association.Console
 {
     static class Program
     {

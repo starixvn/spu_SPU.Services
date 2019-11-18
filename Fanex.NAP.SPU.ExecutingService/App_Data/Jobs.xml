@@ -380,15 +380,15 @@
         </entry>
         <entry>
           <key>FileName</key>
-          <value>Fanex.NAP.FPS.Renovation.UserAgent.Console.exe</value>
+          <value>Fanex.NAP.DCS.UserAgent.Console.exe</value>
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\WWW\FPS40\Fanex.NAP.FPS.Renovation.UserAgent.Console</value>
+          <value>D:\WWW\FPS40\Fanex.NAP.DCS.UserAgent.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\WWW\FPS40\Fanex.NAP.FPS.Renovation.UserAgent.Console</value>
+          <value>D:\WWW\FPS40\Fanex.NAP.DCS.UserAgent.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -420,15 +420,15 @@
         </entry>
         <entry>
           <key>FileName</key>
-          <value>Fanex.NAP.FPS.Renovation.IPRange.Console.exe</value>
+          <value>Fanex.NAP.DCS.IPRange.Console.exe</value>
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\WWW\FPS40\Fanex.NAP.FPS.Renovation.IPRange.Console</value>
+          <value>D:\WWW\FPS40\Fanex.NAP.DCS.IPRange.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\WWW\FPS40\Fanex.NAP.FPS.Renovation.IPRange.Console</value>
+          <value>D:\WWW\FPS40\Fanex.NAP.DCS.IPRange.Console</value>
         </entry>
       </job-data-map>
     </job>

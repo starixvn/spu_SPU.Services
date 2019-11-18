@@ -1,9 +1,7 @@
 ﻿using EasyNetQ;
 using EasyNetQ.Topology;
-using System;
-using System.Threading.Tasks;
 
-namespace Fanex.NAP.FPS.Renovation.Queue
+namespace Fanex.NAP.SPU.Queue
 {
     public class EasyNetQConnector
     {

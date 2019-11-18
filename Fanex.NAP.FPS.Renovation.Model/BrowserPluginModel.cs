@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Fanex.NAP.FPS.Renovation.Model
+namespace Fanex.NAP.DCS.Model
 {
     public class BrowserPluginModel
     {

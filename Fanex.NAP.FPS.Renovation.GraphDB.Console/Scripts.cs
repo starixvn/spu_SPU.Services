@@ -3,7 +3,7 @@
  
 
 
-namespace Fanex.NAP.FPS.Renovation.GraphDB.Console
+namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
 {
             public static class MiddleSerivce
         {

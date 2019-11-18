@@ -1,18 +1,18 @@
 ﻿using Fanex.Logging;
-using Fanex.NAP.FPS.Renovation.DataAccess;
-using Fanex.NAP.FPS.Renovation.Model;
-using Fanex.NAP.FPS.Renovation.Services.Interface;
+using Fanex.NAP.DCS.DataAccess;
+using Fanex.NAP.DCS.Model;
+using Fanex.NAP.DCS.Services.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using UAParser;
 
-namespace Fanex.NAP.FPS.Renovation.Services.Implement
+namespace Fanex.NAP.DCS.Services.Implement
 {
-    public class UserAgent : IUserAgent
+    public class UserAgentService : IUserAgent
     {
         private readonly DataAccess.DataCenterDataAccess dataCenter;
 
-        public UserAgent()
+        public UserAgentService()
         {
             dataCenter = new DataCenterDataAccess();
         }

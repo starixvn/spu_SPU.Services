@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E3631CE3-0BBA-46E3-A292-BDFC81FB1BF8}</ProjectGuid>
+    <ProjectGuid>{899A5B90-B312-4109-AFFA-782500B06534}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fanex.NAP.FPS.Renovation.IPRange.Console</RootNamespace>
-    <AssemblyName>Fanex.NAP.FPS.Renovation.IPRange.Console</AssemblyName>
+    <RootNamespace>Fanex.NAP.DCS.Association.Console</RootNamespace>
+    <AssemblyName>Fanex.NAP.DCS.Association.Console</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -34,7 +34,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,54 +51,42 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="Fanex.NAP.FPS.Renovation.IPRange.Console.exe.LOCAL.config">
-      <DependentUpon>App.Config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fanex.NAP.FPS.Renovation.IPRange.Console.exe.PRO.config">
-      <DependentUpon>App.Config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.FPS.Renovation.Core.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.DCS.Core.csproj">
       <Project>{91543A37-F0A0-4A4F-8C1D-DBB0BCC75699}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Core</Name>
+      <Name>Fanex.NAP.DCS.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.DCS.Model.csproj">
       <Project>{07F5D4E0-8C77-48A8-BA21-B7F7E0439A64}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
+      <Name>Fanex.NAP.DCS.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Services\Fanex.NAP.FPS.Renovation.Services.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Queue\Fanex.NAP.SPU.Queue.csproj">
+      <Project>{FA790109-F8C1-44B7-9246-05B5F1A32696}</Project>
+      <Name>Fanex.NAP.SPU.Queue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Services\Fanex.NAP.DCS.Services.csproj">
       <Project>{343073C5-6A1F-4E08-8C39-C8B6498BBADB}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Services</Name>
+      <Name>Fanex.NAP.DCS.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
+      <Project>{67FECD9E-043A-4100-BF62-52C1A016B85D}</Project>
+      <Name>Fanex.NAP.SPU.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Fanex.Data.MySql">
-      <Version>4.2.1</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Data.SqlServer">
-      <Version>4.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Logging">
-      <Version>2.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Logging.Extensions">
-      <Version>1.0.6</Version>
+    <PackageReference Include="EasyNetQ">
+      <Version>3.7.1</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Logging.Extensions.Database">
       <Version>1.0.8</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
       <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="SSH.NET">
-      <Version>2016.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

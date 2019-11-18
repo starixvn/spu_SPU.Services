@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FPS.Renovation.Core
+﻿namespace Fanex.NAP.DCS.Core
 {
     using System;
     using System.IO;

@@ -5,9 +5,9 @@ using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.FPS.Renovation.Core;
-using Fanex.NAP.FPS.Renovation.Services.Implement;
-using Fanex.NAP.FPS.Renovation.Services.Interface;
+using Fanex.NAP.DCS.Core;
+using Fanex.NAP.DCS.Services.Implement;
+using Fanex.NAP.DCS.Services.Interface;
 using Fanex.NAP.SPU.Core;
 using Renci.SshNet;
 using SharpRaven;
@@ -17,7 +17,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
-namespace Fanex.NAP.FPS.Renovation.IPRange.Console
+namespace Fanex.NAP.DCS.IPRange.Console
 {
     static class Program
     {

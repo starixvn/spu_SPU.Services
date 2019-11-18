@@ -1,7 +1,7 @@
-﻿namespace Fanex.NAP.FPS.Renovation.Services.Implement
+﻿namespace Fanex.NAP.DCS.Services.Implement
 {
-    using Fanex.NAP.FPS.Renovation.Services.Interface;
-    using Fanex.NAP.FPS.Renovation.Model;
+    using Fanex.NAP.DCS.Services.Interface;
+    using Fanex.NAP.DCS.Model;
     using System.Collections.Generic;
 
     public class DataTransformService : IDataTransformService

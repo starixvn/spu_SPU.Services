@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FPS.Renovation.CapturingData.Service
+﻿namespace Fanex.NAP.DCS.CapturingData.Service
 {
     using System.ComponentModel;
     using System.ServiceProcess;

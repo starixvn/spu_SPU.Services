@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FPS.Renovation.UserAgent.Console
+﻿namespace Fanex.NAP.DCS.UserAgent.Console
 {
     using Fanex.Data;
     using Fanex.Data.MySql;
@@ -6,7 +6,7 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry.RavenClient;
-    using Fanex.NAP.FPS.Renovation.Core;
+    using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using SharpRaven;
@@ -33,12 +33,12 @@
                     {
                         Dsn = new Dsn(AppSettings.SentryLogging)
                     })
-               });
-
-            var userAgent = new Services.Implement.UserAgent();
+               });            
 
             try
             {
+                var userAgent = new UserAgentService();
+
                 var userAgents = userAgent.GetUserAgent(AppSettings.SizeOfUserAgent);
 
                 if (userAgents != null && userAgents.Any())

@@ -4,14 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{763BB29F-AFBC-4039-BFF7-72F571880A08}</ProjectGuid>
+    <ProjectGuid>{5132621C-43CF-4924-8FA8-713E9BD1C436}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service</RootNamespace>
-    <AssemblyName>Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service</AssemblyName>
+    <RootNamespace>Fanex.NAP.DCS.RawTransaction.Service</RootNamespace>
+    <AssemblyName>Fanex.NAP.DCS.RawTransaction.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -24,10 +25,8 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -38,7 +37,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.DataTransform.Service.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.RawTransaction.Service.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -48,12 +48,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.DataTransform.Service.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.RawTransaction.Service.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Fanex.Oneyed.Infrastructure.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Components\Fanex.Oneyed.Infrastructure.Models.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -75,38 +79,84 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ActiveController.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="Startup.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runner.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Runner.Designer.cs">
       <DependentUpon>Runner.cs</DependentUpon>
     </Compile>
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Implement\DataTransformService.cs" />
-    <Compile Include="Services\Interface\IDataTransformService.cs" />
+    <Compile Include="ServiceInstaller.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ServiceInstaller.Designer.cs">
+      <DependentUpon>ServiceInstaller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Implement\CapturingDataService.cs" />
+    <Compile Include="Services\Interface\ICapturingDataService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="App_Data\NAPFPSNames.Sandbox.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <None Include="Fanex.NAP.FPS.Renovation.DataTransform.Service.ruleset" />
-    <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.LOCAL.config">
+    <Content Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.exe.PRO.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.PRO.config">
+    <Content Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.exe.UAT.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.UAT.config">
+    <Content Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.exe.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.ruleset" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EasyNetQ">
+      <Version>3.7.1</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Data.Repository">
+      <Version>4.2.0</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Logging.Extensions.Database">
+      <Version>1.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Oneyed.DeviceDetector">
+      <Version>2.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.DCS.Core.csproj">
+      <Project>{91543a37-f0a0-4a4f-8c1d-dbb0bcc75699}</Project>
+      <Name>Fanex.NAP.DCS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.DataAccess\Fanex.NAP.DCS.DataAccess.csproj">
+      <Project>{ad798634-bda0-4399-a135-1f91dad9073d}</Project>
+      <Name>Fanex.NAP.DCS.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.DCS.Model.csproj">
+      <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
+      <Name>Fanex.NAP.DCS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Queue\Fanex.NAP.SPU.Queue.csproj">
+      <Project>{fa790109-f8c1-44b7-9246-05b5f1a32696}</Project>
+      <Name>Fanex.NAP.SPU.Queue</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
+      <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
+      <Name>Fanex.NAP.SPU.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPFPSNames.LOCAL.xml">
@@ -123,24 +173,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.FPS.Renovation.Core.csproj">
-      <Project>{91543a37-f0a0-4a4f-8c1d-dbb0bcc75699}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.DataAccess\Fanex.NAP.FPS.Renovation.DataAccess.csproj">
-      <Project>{ad798634-bda0-4399-a135-1f91dad9073d}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.DataAccess</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
-      <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
-      <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
-      <Name>Fanex.NAP.SPU.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
@@ -151,32 +183,6 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="EasyNetQ">
-      <Version>3.7.1</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Data.Repository">
-      <Version>4.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Data.SqlServer">
-      <Version>4.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Logging.Extensions.Database">
-      <Version>1.0.8</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
-      <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.AspNet.WebApi.OwinSelfHost">
-      <Version>5.2.7</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Owin">
-      <Version>1.0.0</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

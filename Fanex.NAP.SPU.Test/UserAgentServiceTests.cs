@@ -1,5 +1,5 @@
-﻿using Fanex.NAP.FPS.Renovation.Model;
-using Fanex.NAP.FPS.Renovation.Services.Interface;
+﻿using Fanex.NAP.DCS.Model;
+using Fanex.NAP.DCS.Services.Interface;
 using System.Collections.Generic;
 using System.Linq;
 using UAParser;
@@ -12,7 +12,7 @@ namespace Fanex.NAP.SPU.Test
         private readonly IUserAgent _userAgentService;
         public UserAgentServiceTests()
         {
-            _userAgentService = new FPS.Renovation.Services.Implement.UserAgent();
+            _userAgentService = new DCS.Services.Implement.UserAgentService();
         }
 
         [Theory]

@@ -3,7 +3,7 @@ using Fanex.Data.MySql;
 using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.FPS.Renovation.Core;
+using Fanex.NAP.DCS.Core;
 using Fanex.NAP.SPU.Core;
 using SharpRaven;
 using System;
@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.ServiceProcess;
 
-namespace Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service
+namespace Fanex.NAP.DCS.DataTransform.Transaction.Service
 {
     static class Program
     {

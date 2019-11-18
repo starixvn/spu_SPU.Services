@@ -4,15 +4,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{51C5873C-D40C-4B76-A631-AF183D3D3D0A}</ProjectGuid>
+    <ProjectGuid>{3BCC5BA1-2833-4F8E-86D8-8F3627A5D70C}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fanex.NAP.FPS.Renovation.DataCatching.Service</RootNamespace>
-    <AssemblyName>Fanex.NAP.FPS.Renovation.DataCatching.Service</AssemblyName>
+    <RootNamespace>Fanex.NAP.DCS.ImportData.Console</RootNamespace>
+    <AssemblyName>Fanex.NAP.DCS.ImportData.Console</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -23,7 +22,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.DataCatching.Service.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -33,23 +31,26 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>Fanex.NAP.FPS.Renovation.DataCatching.Service.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EasyNetQ, Version=3.7.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EasyNetQ.3.7.1\lib\net46\EasyNetQ.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Oneyed.Infrastructure.Models">
       <HintPath>..\Components\Fanex.Oneyed.Infrastructure.Models.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RabbitMQ.Client, Version=5.0.0.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
+      <HintPath>..\packages\RabbitMQ.Client.5.1.1\lib\net451\RabbitMQ.Client.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Design" />
-    <Reference Include="System.Management" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -63,42 +64,17 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.FPS.Renovation.DataCatching.Service.ruleset" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.FPS.Renovation.Core.csproj">
-      <Project>{91543a37-f0a0-4a4f-8c1d-dbb0bcc75699}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
-      <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Queue\Fanex.NAP.FPS.Renovation.Queue.csproj">
-      <Project>{fa790109-f8c1-44b7-9246-05b5f1a32696}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Queue</Name>
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Queue\Fanex.NAP.SPU.Queue.csproj">
+      <Project>{FA790109-F8C1-44B7-9246-05B5F1A32696}</Project>
+      <Name>Fanex.NAP.SPU.Queue</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="EasyNetQ">
-      <Version>3.7.1</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Data.Repository">
-      <Version>4.2.0</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Logging.Extensions.Database">
-      <Version>1.0.8</Version>
-    </PackageReference>
-    <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
-      <Version>1.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.2</Version>
-    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

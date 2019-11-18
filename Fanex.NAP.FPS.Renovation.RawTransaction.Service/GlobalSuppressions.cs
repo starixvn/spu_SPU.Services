@@ -4,5 +4,5 @@
 // Project-level suppressions either have no target or are given 
 // a specific target and scoped to a namespace, type, member, etc.
 
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4144:Methods should not have identical implementations", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.NAP.FPS.Renovation.RawTransaction.Service.Runner.OnShutdown")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Major Code Smell", "S4144:Methods should not have identical implementations", Justification = "<Pending>", Scope = "member", Target = "~M:Fanex.NAP.DCS.RawTransaction.Service.Runner.OnShutdown")]
 

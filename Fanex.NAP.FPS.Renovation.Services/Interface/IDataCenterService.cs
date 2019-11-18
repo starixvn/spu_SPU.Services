@@ -1,8 +1,8 @@
-﻿using Fanex.NAP.FPS.Renovation.Model;
+﻿using Fanex.NAP.DCS.Model;
 using Fanex.NAP.SPU.Model;
 using System.Collections.Generic;
 
-namespace Fanex.NAP.FPS.Renovation.Services.Interface
+namespace Fanex.NAP.DCS.Services.Interface
 {
     public interface IDataCenterService
     {

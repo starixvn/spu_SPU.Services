@@ -71,17 +71,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.FPS.Renovation.Core.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.DCS.Core.csproj">
       <Project>{91543A37-F0A0-4A4F-8C1D-DBB0BCC75699}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Core</Name>
+      <Name>Fanex.NAP.DCS.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.FPS.Renovation.Model.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.DCS.Model.csproj">
       <Project>{07F5D4E0-8C77-48A8-BA21-B7F7E0439A64}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Model</Name>
+      <Name>Fanex.NAP.DCS.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Services\Fanex.NAP.FPS.Renovation.Services.csproj">
+    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Services\Fanex.NAP.DCS.Services.csproj">
       <Project>{343073c5-6a1f-4e08-8c39-c8b6498bbadb}</Project>
-      <Name>Fanex.NAP.FPS.Renovation.Services</Name>
+      <Name>Fanex.NAP.DCS.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

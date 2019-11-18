@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FPS.Renovation.RawTransaction.Service
+﻿namespace Fanex.NAP.DCS.RawTransaction.Service
 {
     partial class Runner
     {

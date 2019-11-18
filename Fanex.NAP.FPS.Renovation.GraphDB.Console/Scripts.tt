@@ -19,7 +19,7 @@
 	var xml = GetSps(app_data, "Script.xml");
 #>
 
-namespace Fanex.NAP.FPS.Renovation.GraphDB.Console
+namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
 {
     <# foreach(var function in xml.Elements("Function")){ #>
         public static class <#= function.Attribute("Name").Value #>

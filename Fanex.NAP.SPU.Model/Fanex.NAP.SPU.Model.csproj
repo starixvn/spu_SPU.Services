@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssociationModel.cs" />
+    <Compile Include="DataResult.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="ExecutePath.cs" />
+    <Compile Include="IsSynAssociationModel.cs" />
     <Compile Include="JobData.cs" />
     <Compile Include="JobDataSevices.cs" />
     <Compile Include="JobDataRoot.cs" />

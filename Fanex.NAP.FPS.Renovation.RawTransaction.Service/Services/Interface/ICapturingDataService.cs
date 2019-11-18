@@ -1,6 +1,6 @@
-﻿namespace Fanex.NAP.FPS.Renovation.RawTransaction.Service
+﻿namespace Fanex.NAP.DCS.RawTransaction.Service
 {
-    using Fanex.NAP.FPS.Renovation.Model;
+    using Fanex.NAP.DCS.Model;
     using System.Collections.Generic;
 
     interface ICapturingDataService

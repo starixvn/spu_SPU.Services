@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service
+﻿namespace Fanex.NAP.DCS.DataTransform.Transaction.Service
 {
     partial class Runner
     {
