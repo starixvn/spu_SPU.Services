@@ -2,6 +2,8 @@
 
 <Functions>
   <Function Name="Data Center">
-    <Setting Key="DCS_DC_TransformData_Device_Insert" SpName="DCS_DC_TransformData_Device_Insert" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="CTS_DC_GetCTSCustomerByAccounts" SpName="CTS_DC_GetCTSCustomerByAccounts" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_InsertAssociation" SpName="CTS_DC_InsertAssociation" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformToCST_Association_Completed" SpName="DCS_DC_TransformToCST_Association_Completed" DbName="MySQL.DCS_DataCenter"/>
   </Function>
 </Functions>

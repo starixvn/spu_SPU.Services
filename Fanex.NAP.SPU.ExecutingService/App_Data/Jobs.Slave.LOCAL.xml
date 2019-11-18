@@ -578,7 +578,49 @@
       </simple>
     </trigger>
 
+    <job>
+      <name>InsertAssociationJob</name>
+      <group>DataTransformJob</group>
+      <description>InsertAssociationJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>100</value>
+        </entry>
+        <entry>
+          <key>Action</key>
+          <value>api/active</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>http://10.18.200.120:9000/association</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>http://10.18.200.120:9000/association</value>
+        </entry>
+      </job-data-map>
+    </job>
 
+    <trigger>
+      <simple>
+        <name>InsertAssociationTrigger</name>
+        <group>DataTransformTrigger</group>
+        <description>InsertAssociationTrigger</description>
+        <job-name>InsertAssociationJob</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
   </schedule>
 
 </job-scheduling-data>
