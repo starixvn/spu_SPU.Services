@@ -1,3 +1,0 @@
-﻿MATCH (c:Customer)-[r:HAS]->(e:Evidence {EviCode: $EviCode})
-WHERE c.CustId IN $CustIdList
-DELETE r

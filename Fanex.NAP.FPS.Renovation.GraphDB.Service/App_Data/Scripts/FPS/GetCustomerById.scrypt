@@ -1,2 +1,0 @@
-﻿MATCH (c:Customer {CustId: $CustId})
-RETURN c.CustId as CustId

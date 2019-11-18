@@ -67,13 +67,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Queue\Fanex.NAP.SPU.Queue.csproj">
-      <Project>{FA790109-F8C1-44B7-9246-05B5F1A32696}</Project>
-      <Name>Fanex.NAP.SPU.Queue</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Queue\Fanex.NAP.SPU.Queue.csproj">
+      <Project>{FA790109-F8C1-44B7-9246-05B5F1A32696}</Project>
+      <Name>Fanex.NAP.SPU.Queue</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

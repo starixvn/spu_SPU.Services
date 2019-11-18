@@ -1,3 +1,0 @@
-﻿MATCH (c: Customer)
-RETURN "Hello world from cust" + c.CustId AS str
-LIMIT 1

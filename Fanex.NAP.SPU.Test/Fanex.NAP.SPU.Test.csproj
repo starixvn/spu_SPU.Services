@@ -71,15 +71,15 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.DCS.Core.csproj">
-      <Project>{91543A37-F0A0-4A4F-8C1D-DBB0BCC75699}</Project>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Core\Fanex.NAP.DCS.Core.csproj">
+      <Project>{91543a37-f0a0-4a4f-8c1d-dbb0bcc75699}</Project>
       <Name>Fanex.NAP.DCS.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Model\Fanex.NAP.DCS.Model.csproj">
-      <Project>{07F5D4E0-8C77-48A8-BA21-B7F7E0439A64}</Project>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Model\Fanex.NAP.DCS.Model.csproj">
+      <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
       <Name>Fanex.NAP.DCS.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Services\Fanex.NAP.DCS.Services.csproj">
+    <ProjectReference Include="..\Fanex.NAP.DCS.Services\Fanex.NAP.DCS.Services.csproj">
       <Project>{343073c5-6a1f-4e08-8c39-c8b6498bbadb}</Project>
       <Name>Fanex.NAP.DCS.Services</Name>
     </ProjectReference>
