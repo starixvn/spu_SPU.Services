@@ -50,7 +50,9 @@ namespace Fanex.NAP.DCS.ImportData.Console
 
         static void ReadDataFromConfig()
         {
-            var files = Directory.GetFiles(@"D:\Projects\FPS 4.0\SubscriberTickets");
+            var localPath = @"D:\Projects\FPS 4.0\SubscriberTickets";
+
+            var files = Directory.GetFiles(localPath);
 
             foreach (var file in files)
             {
@@ -65,7 +67,7 @@ namespace Fanex.NAP.DCS.ImportData.Console
 
                     if (dataLog.Length > 0)
                     {
-                        var usernames = loadCsvFile(@"D:\Projects\FPS 4.0\SubscriberTickets\" + fileNameWithoutExtension + ".csv");
+                        var usernames = loadCsvFile(localPath + "\\" + fileNameWithoutExtension + ".csv");
 
                         Executing(fileName, dataLog, usernames);
                     }

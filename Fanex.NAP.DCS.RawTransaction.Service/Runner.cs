@@ -167,6 +167,7 @@
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : url.Split('?')[0],
+                Action = message.Action,
                 ActionResult = message.ActionResult,
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(deviceInfo.UserAgent) : userAgent,
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : string.Empty,

@@ -27,6 +27,8 @@ namespace Fanex.NAP.DCS.Model
 
         public string ActionResult { get; set; }
 
+        public string Action { get; set; }
+
         public string UserAgent { get; set; }
 
         public string FingerprintCode { get; set; }
