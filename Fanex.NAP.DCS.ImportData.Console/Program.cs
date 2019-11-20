@@ -38,11 +38,8 @@ namespace Fanex.NAP.DCS.ImportData.Console
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
-                var lines = line.Split(',');
-                if (lines.Any())
-                {
-                    searchList.Add(lines[1]);
-                }
+
+                searchList.Add(line.Trim());
             }
 
             return searchList;
