@@ -137,7 +137,7 @@
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {             
-                deviceInfo.DeviceNo = string.Empty;
+                deviceInfo.DeviceNo = null;
                 transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);
             }
             else
@@ -145,7 +145,7 @@
                 if (!Utilities.IsGuidDeviceId(deviceInfo.DeviceNo) || deviceInfo.InvalidDeviceId)
                 {
                     invalidDevice = deviceCode;
-                    deviceInfo.DeviceNo = string.Empty;                    
+                    deviceInfo.DeviceNo = null;                    
                     transBit.Set((int)TransStatus.InvalidDI, true);
                 }
             }
@@ -158,20 +158,20 @@
             return new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
-                InvalidDevice = invalidDevice,
+                InvalidDevice = string.IsNullOrWhiteSpace(invalidDevice) ? null : invalidDevice,
                 TransStatus = Core.Utilities.ConvertBitArray2Int(transBit),
                 LoginName = message.Account,
                 SubscriberName = message.Subscriber,
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
-                PluginID = 0,
+                PluginID = null,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : url.Split('?')[0],
                 Action = message.Action,
                 ActionResult = message.ActionResult,
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(deviceInfo.UserAgent) : userAgent,
-                FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : string.Empty,
-                FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : string.Empty
+                FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
+                FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null
             };
         }
 
@@ -195,7 +195,7 @@
 
         private static string ConvertNA2Empty(string data)
         {
-            return data != "N/A" ? data : string.Empty;
+            return data != "N/A" ? data : null;
         }
 
         private static bool ContainsUnicodeCharacter(string input)

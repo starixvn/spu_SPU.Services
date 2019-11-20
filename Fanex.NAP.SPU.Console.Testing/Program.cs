@@ -22,7 +22,7 @@ namespace Fanex.NAP.SPU.Console.Testing
 
         static void Main(string[] args)
         {
-            var ipv6Number = "0:0:0:0:0:ffff:b4fb:4a8b".Ip2Long().IpNumber;
+            var ipv6Number = "2001:0db8:0000:0042:0000:8a2e:0370:7334".Ip2Long().IpNumber;
 
             System.Console.WriteLine("IpV6->" + ipv6Number);
 
