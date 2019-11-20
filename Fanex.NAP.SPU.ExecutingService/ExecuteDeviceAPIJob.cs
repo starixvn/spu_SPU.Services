@@ -48,12 +48,13 @@
         {
             var jobDataMap = context.JobDetail.JobDataMap;
 
-            if(jobDataMap != null)
+            if (jobDataMap != null)
             {
                 var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
 
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
+                var chunkSize = jobDataMap.GetInt("ChunkSize");
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
@@ -72,8 +73,15 @@
                             var task = Task.Run(() =>
                             {
                                 var apiUrl = apiUrls[index >= apiUrls.Length ? 0 : index];
+                                var action = jobDataMap.GetString("Action");
 
-                                return Executing(trans.ToList(), apiUrl, jobDataMap.GetString("Action"));
+                                return Executing(new TransformDevicePackageModel
+                                {
+                                    Devices = trans.ToList(),
+                                    ChunkSize = chunkSize
+                                },
+                                apiUrl,
+                                action);
                             });
 
                             await Task.Delay(10);
@@ -90,16 +98,16 @@
             else
             {
                 LogService.Error("Job Data cannot be null");
-            }           
+            }
         }
 
-        private static async Task<IRestResponse> Executing(List<DevicePackage> devices, string apiUrl, string actionPath)
+        private static async Task<IRestResponse> Executing(TransformDevicePackageModel transformDevicePackage, string apiUrl, string actionPath)
         {
             var client = new RestClient(new Uri(apiUrl));
             var request = new RestRequest(actionPath, Method.POST);
 
             request.AddHeader("Content-type", "application/json");
-            request.AddJsonBody(devices);
+            request.AddJsonBody(transformDevicePackage);
 
             return await client.ExecuteTaskAsync(request);
         }

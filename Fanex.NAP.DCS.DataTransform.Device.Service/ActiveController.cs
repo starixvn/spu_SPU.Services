@@ -9,9 +9,7 @@
     using Fanex.NAP.DCS.Model;
     using Newtonsoft.Json;
     using System;
-    using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using System.Web.Http;
 
     public class ActiveController : ApiController
@@ -30,7 +28,7 @@
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
-                var result = JsonConvert.DeserializeObject<List<DevicePackage>>(jsonContent);
+                var result = JsonConvert.DeserializeObject<TransformDevicePackageModel>(jsonContent);
 
                 return Process(result);
             }
@@ -42,15 +40,15 @@
             return false;
         }
 
-        private bool Process(List<DevicePackage> data)
+        private bool Process(TransformDevicePackageModel data)
         {
             try
             {
-                if (data != null && data.Any())
+                if (data.Devices != null && data.Devices.Any())
                 {                   
-                    var dataBatchs = data.Chunk(100);
+                    var devicePackageList = data.Devices.Chunk(data.ChunkSize);
 
-                    foreach (var devices in dataBatchs)
+                    foreach (var devices in devicePackageList)
                     {
                         dataCenterService.InsertDevice(devices.ToList());
 

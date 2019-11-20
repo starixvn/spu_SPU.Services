@@ -88,6 +88,7 @@
     <Compile Include="TransactionModel.cs" />
     <Compile Include="StagingRawTransactionModel.cs" />
     <Compile Include="Auth\UserModel.cs" />
+    <Compile Include="TransformDevicePackageModel.cs" />
     <Compile Include="TransStatus.cs" />
     <Compile Include="UserAgentModel.cs" />
   </ItemGroup>

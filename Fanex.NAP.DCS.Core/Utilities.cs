@@ -187,6 +187,21 @@
             }
         }
 
+        public static string Long2DotIP(string bigint)
+        {
+            string retval = "";
+            var intval = BigInteger.Zero;
+
+            if (System.Numerics.BigInteger.TryParse(bigint, out intval))
+            {
+                retval = intval.ToString("x").PadLeft(32, '0');
+                char[] trimme = new[] { ':' };
+                retval = System.Text.RegularExpressions.Regex.Replace(retval, "(.{4})", "$1:").TrimEnd(trimme);
+            }
+
+            return retval;
+        }
+
         public static string ToUncompressedString(this IPAddress ipAddress)
         {
             if (ipAddress.AddressFamily == AddressFamily.InterNetwork)  // IPv4

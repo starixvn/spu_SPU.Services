@@ -507,6 +507,10 @@
           <value>500</value>
         </entry>
         <entry>
+          <key>ChunkSize</key>
+          <value>100</value>
+        </entry>
+        <entry>
           <key>Action</key>
           <value>api/active</value>
         </entry>
