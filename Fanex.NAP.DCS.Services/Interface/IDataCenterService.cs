@@ -12,8 +12,6 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         List<CustomerInfoModel> GetCustomerInfo(List<NewCustomerModel> newCustomers);
 
-        List<AssociationModel> GetAssociationForGrapDB(int isSync, int size);
-
         DataResult UpdateIsSyncByAssociationId(string association);
 
 

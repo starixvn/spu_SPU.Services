@@ -110,6 +110,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.CTS.Model\Fanex.NAP.CTS.Model.csproj">
+      <Project>{aa3e4730-2ee7-43ac-a9f3-992c4ef5dab6}</Project>
+      <Name>Fanex.NAP.CTS.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.CTS.Services\Fanex.NAP.CTS.Services.csproj">
       <Project>{16A8AC87-AEE3-4A10-B6C6-5E27226CDDD1}</Project>
       <Name>Fanex.NAP.CTS.Services</Name>

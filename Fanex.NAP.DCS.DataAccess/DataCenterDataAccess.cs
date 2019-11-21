@@ -54,21 +54,6 @@
             }
         }
 
-        public List<AssociationModel> GetAssociation(int isSysnGraphDB, int size)
-        {
-
-            var criteria = new GetAssociationForGraphDBCriteria
-            {
-                SyncGraphDB = isSysnGraphDB,
-                Size = size
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<AssociationModel>(criteria).ToList();
-            }
-        }
-
         public DataResult UpdateIsSyncGraphDBByAssociationId(string association)
         {
             var repository = new DynamicRepository();
