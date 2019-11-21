@@ -21,7 +21,7 @@ namespace Fanex.NAP.DCS.Model
 
         public BigInteger IPId { get; set; }
 
-        public int? PluginID { get; set; }
+        public int PluginID { get; set; }
 
         public string URL { get; set; }
 
