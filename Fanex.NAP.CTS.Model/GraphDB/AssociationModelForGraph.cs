@@ -1,6 +1,12 @@
-﻿namespace Fanex.NAP.SPU.Model
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Fanex.NAP.CTS.Model.GraphDB
 {
-    public class AssociationModel
+    public class AssociationModelForGraph
     {
         private string username2;
         private int? roleId;

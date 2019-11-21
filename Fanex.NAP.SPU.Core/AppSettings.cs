@@ -48,21 +48,23 @@ namespace Fanex.NAP.SPU.Core
             }
         }
 
-        public static string AppData => ConfigurationManager.AppSettings["AppData-Path"];
+        public static string RabbitMQ_QueueName => ConfigurationManager.AppSettings["Queue-Name"];
 
-        public static string Host => ConfigurationManager.AppSettings["Queue-Host"];
+        public static string RabbitMQ_RoutingKey => ConfigurationManager.AppSettings["Queue-RoutingKey"];
 
-        public static string Post => ConfigurationManager.AppSettings["Queue-Port"];
+        public static string RabbitMQ_Host => ConfigurationManager.AppSettings["Queue-Host"];
 
-        public static string VirtualHost => ConfigurationManager.AppSettings["Queue-VirtualHost"];
+        public static string RabbitMQ_Post => ConfigurationManager.AppSettings["Queue-Port"];
 
-        public static string UserName => ConfigurationManager.AppSettings["Queue-UserName"];
+        public static string RabbitMQ_VirtualHost => ConfigurationManager.AppSettings["Queue-VirtualHost"];
 
-        public static string Password => ConfigurationManager.AppSettings["Queue-Password"];
+        public static string RabbitMQ_UserName => ConfigurationManager.AppSettings["Queue-UserName"];
 
-        public static int PrefetchCount => Convert.ToInt16(ConfigurationManager.AppSettings["Queue-PrefetchCount"]);
+        public static string RabbitMQ_Password => ConfigurationManager.AppSettings["Queue-Password"];
 
-        public static string Exchange => ConfigurationManager.AppSettings["Queue-Exchange"];
+        public static int RabbitMQ_PrefetchCount => Convert.ToInt16(ConfigurationManager.AppSettings["Queue-PrefetchCount"]);
+
+        public static string RabbitMQ_Exchange => ConfigurationManager.AppSettings["Queue-Exchange"];
 
         public static string FanexLogCategory => ConfigurationManager.AppSettings["Fanex.Log.Category"];
 
@@ -255,13 +257,8 @@ namespace Fanex.NAP.SPU.Core
         }
 
         public static List<int> ExecutedDate => ConfigurationManager.AppSettings["ExecutedDate"].Split(';').Select(x => Convert.ToInt32(x)).ToList();
-              
 
-        public static string QueueName => ConfigurationManager.AppSettings["Queue-Name"];
-
-        public static string RoutingKey => ConfigurationManager.AppSettings["Queue-RoutingKey"];
-
-        public static string AppDataSetting => ConfigurationManager.AppSettings["AppData-Path"];        
+        public static string AppDataSetting => ConfigurationManager.AppSettings["AppData-Path"];
 
         public static int Interval => Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
 

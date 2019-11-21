@@ -15,16 +15,16 @@ namespace Fanex.NAP.DCS.ImportData.Console
 
         static void Main(string[] args)
         {
-            _rabbitMQ = new EasyNetQConnector(AppSettings.Host + ":" + AppSettings.Post,
-                                     AppSettings.VirtualHost,
-                                     AppSettings.PrefetchCount,
-                                     AppSettings.UserName,
-                                     AppSettings.Password);
+            _rabbitMQ = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
+                                     AppSettings.RabbitMQ_VirtualHost,
+                                     AppSettings.RabbitMQ_PrefetchCount,
+                                     AppSettings.RabbitMQ_UserName,
+                                     AppSettings.RabbitMQ_Password);
 
             _rabbitMQ.CreateBus()
-                    .DeclareExchange(AppSettings.Exchange)
-                    .DeclareQueue(AppSettings.QueueName)
-                    .DeclareRoutingKey(AppSettings.RoutingKey)
+                    .DeclareExchange(AppSettings.RabbitMQ_Exchange)
+                    .DeclareQueue(AppSettings.RabbitMQ_QueueName)
+                    .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
                     .Bind();
 
             ReadDataFromConfig();

@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssociationModel.cs" />
+    <Compile Include="GraphDB\AssociationModel.cs" />
     <Compile Include="DataResult.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="ExecutePath.cs" />

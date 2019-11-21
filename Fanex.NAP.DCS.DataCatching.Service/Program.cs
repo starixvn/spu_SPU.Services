@@ -13,15 +13,15 @@ namespace Fanex.NAP.DCS.DataCatching.Service
 
         static void Main(string[] args)
         {
-            var _rabbitMQ = new EasyNetQConnector(AppSettings.Host + ":" + AppSettings.Post,
-                                       AppSettings.VirtualHost,
-                                       AppSettings.PrefetchCount,
-                                       AppSettings.UserName,
-                                       AppSettings.Password);
+            var _rabbitMQ = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
+                                       AppSettings.RabbitMQ_VirtualHost,
+                                       AppSettings.RabbitMQ_PrefetchCount,
+                                       AppSettings.RabbitMQ_UserName,
+                                       AppSettings.RabbitMQ_Password);
             _rabbitMQ.CreateBus()
-                     .DeclareExchange(AppSettings.Exchange)
-                     .DeclareQueue(AppSettings.QueueName)
-                     .DeclareRoutingKey(AppSettings.RoutingKey)
+                     .DeclareExchange(AppSettings.RabbitMQ_Exchange)
+                     .DeclareQueue(AppSettings.RabbitMQ_QueueName)
+                     .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
                      .Bind();
 
             _rabbitMQ.AdvanceBus.Consume(_rabbitMQ.Queue, x => x.Add<MessageQueue>((message, info) =>

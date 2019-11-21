@@ -3,6 +3,8 @@ using Fanex.Data.MySql;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Sentry.RavenClient;
+using Fanex.NAP.CTS.Model;
+using Fanex.NAP.CTS.Model.GraphDB;
 using Fanex.NAP.CTS.Renovation.GraphDB.Console.Services.Implement;
 using Fanex.NAP.CTS.Renovation.GraphDB.Console.Services.Interface;
 using Fanex.NAP.SPU.Graph.Core;
@@ -66,32 +68,7 @@ namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
             AddHandlerForGetMassage(InsertCustomer);
         }
 
-        private static void UpdateData(string key, AssociationModel criteria)
-        {
-            var result = DbSessionFactory.Execute(key, criteria);
-
-            if (result != null)
-            {
-                if (associations.Count < SPU.Core.AppSettings.TransBatch)
-                {
-                    associations.Add(new IsSynAssociationModel
-                    {
-                        AssociationId = criteria.AssociationId,
-                        SyncGraphDB = 2
-                    });
-                }
-                else
-                {
-                    var xmlData = DCS.Core.Utilities.XMLConvert(associations);
-
-                    dataCenterService.UpdateIsSyncByAssociationId(xmlData);
-
-                    associations.Clear();
-                }
-            }
-        }
-
-        private static void InsertCustomer(AssociationModel criteria)
+        private static void InsertCustomer(AssociationModelForGraph criteria)
         {
             // remove test account
             if (!criteria.Username.Contains("test") || criteria.Username2 == null || !criteria.Username2.Contains("test"))
@@ -154,10 +131,35 @@ namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
             }
         }
 
-        private static void AddHandlerForGetMassage(Action<AssociationModel> handler)
+        private static void UpdateData(string key, AssociationModelForGraph criteria)
+        {
+            var result = DbSessionFactory.Execute(key, criteria);
+
+            if (result != null)
+            {
+                if (associations.Count < SPU.Core.AppSettings.TransBatch)
+                {
+                    associations.Add(new IsSynAssociationModel
+                    {
+                        AssociationId = criteria.AssociationId,
+                        SyncGraphDB = 2
+                    });
+                }
+                else
+                {
+                    var xmlData = DCS.Core.Utilities.XMLConvert(associations);
+
+                    dataCenterService.UpdateIsSyncByAssociationId(xmlData);
+
+                    associations.Clear();
+                }
+            }
+        }
+
+        private static void AddHandlerForGetMassage(Action<AssociationModelForGraph> handler)
         {
             easyNetQService.AdvanceBus.Consume(easyNetQService.Queue,
-                registration => registration.Add<AssociationModel>((message, info) =>
+                registration => registration.Add<AssociationModelForGraph>((message, info) =>
                 {
                     handler(message.Body);
                 }));
