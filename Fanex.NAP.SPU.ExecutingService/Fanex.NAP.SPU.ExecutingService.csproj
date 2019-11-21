@@ -136,7 +136,7 @@
       <Project>{343073c5-6a1f-4e08-8c39-c8b6498bbadb}</Project>
       <Name>Fanex.NAP.DCS.Services</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.FPS.Renovation.Core\Fanex.NAP.DCS.Core.csproj">
+    <ProjectReference Include="..\Fanex.NAP.DCS.Core\Fanex.NAP.DCS.Core.csproj">
       <Project>{91543A37-F0A0-4A4F-8C1D-DBB0BCC75699}</Project>
       <Name>Fanex.NAP.DCS.Core</Name>
     </ProjectReference>

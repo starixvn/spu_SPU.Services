@@ -66,15 +66,6 @@ namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
             AddHandlerForGetMassage(InsertCustomer);
         }
 
-        private static void AddHandlerForGetMassage(Action<AssociationModel> handler)
-        {
-            easyNetQService.AdvanceBus.Consume(easyNetQService.Queue,
-                registration => registration.Add<AssociationModel>((message, info) =>
-                {
-                    handler(message.Body);
-                }));
-        }
-
         private static void UpdateData(string key, AssociationModel criteria)
         {
             var result = DbSessionFactory.Execute(key, criteria);
@@ -161,6 +152,15 @@ namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
                     LogService.Error(logMessage);
                 }
             }
+        }
+
+        private static void AddHandlerForGetMassage(Action<AssociationModel> handler)
+        {
+            easyNetQService.AdvanceBus.Consume(easyNetQService.Queue,
+                registration => registration.Add<AssociationModel>((message, info) =>
+                {
+                    handler(message.Body);
+                }));
         }
     }
 }
