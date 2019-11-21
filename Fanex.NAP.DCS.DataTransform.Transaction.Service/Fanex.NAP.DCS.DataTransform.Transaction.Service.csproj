@@ -95,15 +95,15 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Fanex.NAP.FPS.Renovation.DataTransform.Service.ruleset" />
-    <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.LOCAL.config">
+    <Content Include="Fanex.NAP.DCS.DataTransform.Transaction.Service.exe.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.PRO.config">
+    <Content Include="Fanex.NAP.DCS.DataTransform.Transaction.Service.exe.PRO.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.FPS.Renovation.DataTransform.Transaction.Service.exe.UAT.config">
+    <Content Include="Fanex.NAP.DCS.DataTransform.Transaction.Service.exe.UAT.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
