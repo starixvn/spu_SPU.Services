@@ -9,7 +9,7 @@
 
   <schedule>
     <job>
-      <name>BigStateNearGoalJob</name>
+      <name>FSBigStateNearGoalJob</name>
       <group>FraudSensorJob</group>
       <description>BigStateNearGoalJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -40,7 +40,7 @@
         <name>BigStateNearGoalTrigger</name>
         <group>FraudSensorTrigger</group>
         <description>BigStateNearGoalTrigger</description>
-        <job-name>BigStateNearGoalJob</job-name>
+        <job-name>FSBigStateNearGoalJob</job-name>
         <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -49,7 +49,7 @@
     </trigger>
 
     <job>
-      <name>ArbitrageJob</name>
+      <name>FSArbitrageJob</name>
       <group>FraudSensorJob</group>
       <description>ArbitrageJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -80,7 +80,7 @@
         <name>ArbitrageTrigger</name>
         <group>FraudSensorTrigger</group>
         <description>ArbitrageTrigger</description>
-        <job-name>ArbitrageJob</job-name>
+        <job-name>FSArbitrageJob</job-name>
         <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -89,7 +89,7 @@
     </trigger>
 
     <job>
-      <name>FlaggedAccountJob</name>
+      <name>FSFlaggedAccountJob</name>
       <group>FraudSensorJob</group>
       <description>FlaggedAccountJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -120,7 +120,7 @@
         <name>FlaggedAccountTrigger</name>
         <group>FraudSensorTrigger</group>
         <description>FlaggedAccountTrigger</description>
-        <job-name>FlaggedAccountJob</job-name>
+        <job-name>FSFlaggedAccountJob</job-name>
         <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -129,7 +129,7 @@
     </trigger>
 
     <job>
-      <name>BetsNearGoalJob</name>
+      <name>FSBetsNearGoalJob</name>
       <group>FraudSensorJob</group>
       <description>BetsNearGoalJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -160,7 +160,7 @@
         <name>BetsNearGoalTrigger</name>
         <group>FraudSensorTrigger</group>
         <description>BetsNearGoalTrigger</description>
-        <job-name>BetsNearGoalJob</job-name>
+        <job-name>FSBetsNearGoalJob</job-name>
         <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -169,7 +169,7 @@
     </trigger>
 
     <job>
-      <name>DelayedGoalJob</name>
+      <name>FSDelayedGoalJob</name>
       <group>FraudSensorJob</group>
       <description>DelayedGoalJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -200,7 +200,7 @@
         <name>DelayedGoalTrigger</name>
         <group>FraudSensorTrigger</group>
         <description>DelayedGoalTrigger</description>
-        <job-name>DelayedGoalJob</job-name>
+        <job-name>FSDelayedGoalJob</job-name>
         <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -209,7 +209,7 @@
     </trigger>
 
     <job>
-      <name>DailyDataCaptureJob</name>
+      <name>FSDailyDataCaptureJob</name>
       <group>FraudSensorJob</group>
       <description>DailyDataCaptureJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -240,7 +240,7 @@
         <name>DailyDataCaptureTrigger</name>
         <group>FraudSensorTrigger</group>
         <description>DailyDataCaptureTrigger</description>
-        <job-name>DailyDataCaptureJob</job-name>
+        <job-name>FSDailyDataCaptureJob</job-name>
         <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <cron-expression>0 0 0 1/1 * ? *</cron-expression>
@@ -248,7 +248,7 @@
     </trigger>
 
     <job>
-      <name>CheckBetJob</name>
+      <name>FSCheckBetJob</name>
       <group>FraudSensorJob</group>
       <description>CheckBetJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -279,7 +279,7 @@
         <name>CheckBetTrigger</name>
         <group>FraudSensorTrigger</group>
         <description>CheckBetTrigger</description>
-        <job-name>CheckBetJob</job-name>
+        <job-name>FSCheckBetJob</job-name>
         <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -288,7 +288,7 @@
     </trigger>
 
     <job>
-      <name>ScannedOfficeIPJob</name>
+      <name>FSScannedOfficeIPJob</name>
       <group>FraudSensorJob</group>
       <description>ScannedOfficeIPJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -319,7 +319,7 @@
         <name>ScannedOfficeIPTrigger</name>
         <group>FraudSensorTrigger</group>
         <description>ScannedOfficeIPTrigger</description>
-        <job-name>ScannedOfficeIPJob</job-name>
+        <job-name>FSScannedOfficeIPJob</job-name>
         <job-group>FraudSensorJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -328,7 +328,7 @@
     </trigger>
 
     <job>
-      <name>VirtualSettingJob</name>
+      <name>CMSVirtualSettingJob</name>
       <group>CMSJob</group>
       <description>VirtualSettingJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -359,7 +359,7 @@
         <name>VirtualSettingTrigger</name>
         <group>VirtualSettingTrigger</group>
         <description>VirtualSettingTrigger</description>
-        <job-name>VirtualSettingJob</job-name>
+        <job-name>CMSVirtualSettingJob</job-name>
         <job-group>CMSJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <cron-expression>0 15 0 * * ?</cron-expression>
@@ -367,7 +367,7 @@
     </trigger>
 
     <job>
-      <name>UserAgentJob</name>
+      <name>DCSUserAgentJob</name>
       <group>DataCaptureJob</group>
       <description>UserAgentJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -398,7 +398,7 @@
         <name>UserAgentTrigger</name>
         <group>DataCaptureTrigger</group>
         <description>UserAgentTrigger</description>
-        <job-name>UserAgentJob</job-name>
+        <job-name>DCSUserAgentJob</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -407,7 +407,7 @@
     </trigger>
 
     <job>
-      <name>IPRangeJob</name>
+      <name>DCSIPRangeJob</name>
       <group>DataCaptureJob</group>
       <description>IPRangeJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -438,7 +438,7 @@
         <name>IPRangeTrigger</name>
         <group>DataCaptureTrigger</group>
         <description>IPRangeTrigger</description>
-        <job-name>IPRangeJob</job-name>
+        <job-name>DCSIPRangeJob</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -447,7 +447,7 @@
     </trigger>
 
     <job>
-      <name>InsertTransJob</name>
+      <name>DCSInsertTransJob</name>
       <group>DataCaptureJob</group>
       <description>InsertTransJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -482,7 +482,7 @@
         <name>InsertTransTrigger</name>
         <group>DataCaptureTrigger</group>
         <description>InsertTransTrigger</description>
-        <job-name>InsertTransJob</job-name>
+        <job-name>DCSInsertTransJob</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -491,7 +491,7 @@
     </trigger>
 
     <job>
-      <name>InsertDeviceJob</name>
+      <name>DCSInsertDeviceJob</name>
       <group>DataCaptureJob</group>
       <description>InsertDeviceJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteDeviceAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -530,7 +530,7 @@
         <name>InsertDeviceTrigger</name>
         <group>DataCaptureTrigger</group>
         <description>InsertDeviceTrigger</description>
-        <job-name>InsertDeviceJob</job-name>
+        <job-name>DCSInsertDeviceJob</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -539,7 +539,7 @@
     </trigger>
 
     <job>
-      <name>InsertAccountJob</name>
+      <name>CTSInsertAccountJob</name>
       <group>DataTransformJob</group>
       <description>InsertAccountJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAccountAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -574,7 +574,7 @@
         <name>InsertAccountTrigger</name>
         <group>DataTransformTrigger</group>
         <description>InsertAccountTrigger</description>
-        <job-name>InsertAccountJob</job-name>
+        <job-name>CTSInsertAccountJob</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -583,7 +583,7 @@
     </trigger>
 
     <job>
-      <name>InsertAssociationJob</name>
+      <name>CTSInsertAssociationJob</name>
       <group>DataTransformJob</group>
       <description>InsertAssociationJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -618,7 +618,7 @@
         <name>InsertAssociationTrigger</name>
         <group>DataTransformTrigger</group>
         <description>InsertAssociationTrigger</description>
-        <job-name>InsertAssociationJob</job-name>
+        <job-name>CTSInsertAssociationJob</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>

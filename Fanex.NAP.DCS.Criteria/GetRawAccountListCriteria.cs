@@ -13,7 +13,7 @@ namespace Fanex.NAP.DCS.Criteria
 
         public override string GetSettingKey()
         {
-            return "DCS_DC_TransformToCST_Account_GetPackage";
+            return "DCS_DC_TransformToCTS_Account_GetPackage";
         }
 
         public override bool IsValid()

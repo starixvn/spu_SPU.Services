@@ -15,7 +15,7 @@ namespace Fanex.NAP.CTS.Criteria
 
         public override string GetSettingKey()
         {
-            return "DCS_DC_TransformToCST_Association_Completed";
+            return "DCS_DC_TransformToCTS_Association_Completed";
         }
 
         public override bool IsValid()
