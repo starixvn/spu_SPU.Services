@@ -4,6 +4,7 @@ using Fanex.NAP.CTS.Services.Interface;
 using Fanex.NAP.SPU.Model;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Fanex.NAP.CTS.Services
 {
@@ -23,13 +24,11 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetAssociationByAccounts(associationJson);
         }
 
-        public void InsertAccount(List<RawAccountModel> accountList)
+        public List<int> TransformDCSAccount(List<RawAccountModel> accountList)
         {
             var accountJson = JsonConvert.SerializeObject(accountList);
 
-            dataCenterDataAccess.InsertAccount(accountJson);
-
-            dataCenterDataAccess.TransformAccountCompleted(accountJson);
+            return dataCenterDataAccess.TransformDCSAccount(accountJson);            
         }
 
         public void InsertAssociation(List<AssociationModel> associationList)
@@ -39,6 +38,13 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.InsertAssociation(associationJson);
 
             dataCenterDataAccess.TransformAssociationCompleted(associationJson);
-        }       
+        }
+
+        public void TransformAccountCompleted(List<RawAccountModel> insertedAccount)
+        {
+            var insertedAccountJson = JsonConvert.SerializeObject(insertedAccount);
+
+            dataCenterDataAccess.TransformAccountCompleted(insertedAccountJson);
+        }
     }
 }

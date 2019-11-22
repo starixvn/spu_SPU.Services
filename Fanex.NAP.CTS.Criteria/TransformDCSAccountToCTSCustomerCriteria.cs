@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Criteria
 {
-    public class InsertAccountCriteria : NonQueryCommand
+    public class TransformDCSAccountToCTSCustomerCriteria : NonQueryCommand
     {
         [SpParam(SqlParamName = "ip_AccountList")]
         public string AccountJson { get; set; }
 
         public override string GetSettingKey()
         {
-            return "CTS_DC_InsertCTSCustomerFromDCSAccount";
+            return "CTS_DC_TransformDCSAccountToCTSCustomer";
         }
 
         public override bool IsValid()

@@ -9,16 +9,17 @@ namespace Fanex.NAP.CTS.DataAccess
 {
     public class DataCenterDataAccess
     {
-        public int InsertAccount(string accountJson)
+        public List<int> TransformDCSAccount(string accountJson)
         {
-            var repository = new DynamicRepository();
-
-            var criteria = new InsertAccountCriteria
+            var criteria = new TransformDCSAccountToCTSCustomerCriteria
             {
                 AccountJson = accountJson
             };
 
-            return repository.Execute(criteria);
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<int>(criteria).ToList();
+            }
         }
 
         public void TransformAccountCompleted(string accountJson)
@@ -35,7 +36,7 @@ namespace Fanex.NAP.CTS.DataAccess
 
         public List<AssociationModel> GetAssociationByAccounts(string associationJson)
         {
-            var criteria = new GetCustomerByAccountCriteria
+            var criteria = new GetAssociationDeviceByAccountsCriteria
             {
                AssociationList = associationJson
             };

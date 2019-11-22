@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Criteria
 {
-    public class GetCustomerByAccountCriteria : CriteriaBase
+    public class GetAssociationDeviceByAccountsCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "ip_AssociationList")]
         public string AssociationList { get; set; }
 
         public override string GetSettingKey()
         {
-            return "CTS_DC_GetCTSCustomerByAccounts";
+            return "CTS_DC_GetAssociationDeviceByAccounts";
         }
 
         public override bool IsValid()

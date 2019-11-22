@@ -61,13 +61,21 @@
         {
             try
             {
-                if(accounts != null && accounts.Any())
+                if (accounts != null && accounts.Any())
                 {
-                    dataCenterService.InsertAccount(accounts);
-                    TransformToGraphDB(accounts);
+                    var accountIsNotInsertedList = dataCenterService.TransformDCSAccount(accounts);
+
+                    var insertedAccount = accounts.Where(x => !accountIsNotInsertedList.Contains(x.AccountId)).ToList();
+
+                    if (insertedAccount != null && insertedAccount.Any())
+                    {                        
+                        dataCenterService.TransformAccountCompleted(insertedAccount);
+
+                        TransformToGraphDB(insertedAccount);
+                    }                    
 
                     return true;
-                }                
+                }
             }
             catch (Exception ex)
             {
