@@ -8,6 +8,8 @@ namespace Fanex.NAP.CTS.Model
 {
    public class AssociationModel
     {
+        public int AssociationId { get; set; }
+
         public int CustId { get; set; }
 
         public int DeviceId { get; set; }

@@ -67,9 +67,7 @@
 
                     if(associationByCustId != null && associationByCustId.Any())
                     {
-                        dataCenterService.InsertAssociation(associationByCustId);
-
-                        dataCenterService.TransformAssociationCompleleted(associations);
+                        dataCenterService.InsertAssociation(associationByCustId);                        
 
                         TransformToGraphDB(associationByCustId);
                     }
