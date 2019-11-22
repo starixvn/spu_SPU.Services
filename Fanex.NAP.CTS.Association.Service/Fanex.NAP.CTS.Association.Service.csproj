@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{D51FA199-0C82-4E99-A44A-40D8482DA4A7}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fanex.NAP.CTS.Account.Service</RootNamespace>
-    <AssemblyName>Fanex.NAP.CTS.Account.Service</AssemblyName>
+    <RootNamespace>Fanex.NAP.CTS.Association.Service</RootNamespace>
+    <AssemblyName>Fanex.NAP.CTS.Association.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

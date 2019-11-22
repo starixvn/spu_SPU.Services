@@ -187,7 +187,7 @@
             }
         }
 
-        public static string Long2DotIP(string bigint)
+        public static string Long2DotIPV6(string bigint)
         {
             string retval = "";
             var intval = BigInteger.Zero;
@@ -200,6 +200,13 @@
             }
 
             return retval;
+        }
+
+        public static string Long2DotIP(BigInteger IPNum)
+        {
+            string result = "";
+            result = ((IPNum / 16777216) % 256) + "." + ((IPNum / 65536) % 256) + "." + ((IPNum / 256) % 256) + "." + (IPNum % 256);
+            return result;
         }
 
         public static string ToUncompressedString(this IPAddress ipAddress)

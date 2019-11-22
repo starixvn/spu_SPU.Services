@@ -26,15 +26,21 @@ namespace Fanex.NAP.SPU.Console.Testing
 
             System.Console.WriteLine("IpV6->" + ipv6Number);
 
-            var ipV6 = Utilities.Long2DotIP(ipv6Number.ToString());
+            IPAddress.TryParse("2001:0db8:0000:0042:0000:8a2e:0370:7334", out IPAddress ipAd);
 
-            System.Console.WriteLine(ipV6);
+            var ipV4FromV6 = ipAd.MapToIPv4().ToString();
 
-            var ipv4Number = "180.251.74.139".Ip2Long().IpNumber;
+            System.Console.WriteLine(ipV4FromV6);
+
+            //var ipV6 = Utilities.Long2DotIP(ipv6Number.ToString());
+
+            //System.Console.WriteLine(ipV6);
+
+            var ipv4Number = ipV4FromV6.Ip2Long().IpNumber;
 
             System.Console.WriteLine("IpV4->" + ipv4Number);
 
-            var ipV4 = Utilities.Long2DotIP(ipv4Number.ToString());
+            var ipV4 = Utilities.Long2DotIP(ipv4Number);
 
             System.Console.WriteLine(ipV4);
 
