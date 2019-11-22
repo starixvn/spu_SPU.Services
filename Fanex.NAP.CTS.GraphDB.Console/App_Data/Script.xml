@@ -19,6 +19,11 @@
     <GraphSetting Key="CheckExistedAssociation" SpName="CheckExistedAssociation" DbName="DB.MiddleService" />
     <GraphSetting Key="MergeGroup" SpName="MergeGroup" DbName="DB.MiddleService" />
   </Function>
+
+  <Function Name="CTS">
+    <GraphSetting Key="TransformFromDCS" SpName="TransformFromDCS" DbName="DB.MiddleService" />
+  </Function>
+
   <Function Name="Test">
     <GraphSetting Key="HelloApi" SpName="HelloApi" DbName="DB.MiddleService" />
   </Function>
