@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Model
 {
-   public class AssociationModel
+    public class AssociationModel
     {
         public int AssociationId { get; set; }
 

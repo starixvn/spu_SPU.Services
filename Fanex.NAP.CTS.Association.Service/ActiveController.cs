@@ -63,13 +63,14 @@
             {
                 if(associations != null && associations.Any())
                 {
-                    var associationByCustId = dataCenterService.GetAssociationByAccounts(associations);
+                    var associationByDevice = dataCenterService.TransformAssociationByDevice(associations);
 
-                    if(associationByCustId != null && associationByCustId.Any())
+                    if(associationByDevice != null && associationByDevice.Any())
                     {
-                        dataCenterService.InsertAssociation(associationByCustId);                        
 
-                        TransformToGraphDB(associationByCustId);
+                        dataCenterService.TransformAssociationCompleted(associationByDevice);
+
+                        TransformToGraphDB(associationByDevice);
                     }
 
                     return true;

@@ -34,9 +34,9 @@ namespace Fanex.NAP.CTS.DataAccess
             repository.Execute(criteria);
         }
 
-        public List<AssociationModel> GetAssociationByAccounts(string associationJson)
+        public List<AssociationModel> TransformAssociationByDevice(string associationJson)
         {
-            var criteria = new GetAssociationDeviceByAccountsCriteria
+            var criteria = new TransformAssociationByDeviceCriteria
             {
                AssociationList = associationJson
             };

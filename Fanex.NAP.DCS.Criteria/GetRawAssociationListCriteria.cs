@@ -5,7 +5,7 @@ namespace Fanex.NAP.DCS.Criteria
 {
     public class GetRawAssociationListCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "ip_NoOfTransaction")]
+        [SpParam(SqlParamName = "ip_NoOfAssociation")]
         public int NumberOfAssociation { get; set; }
 
         [SpParam(SqlParamName = "ip_NoOfBatch")]
