@@ -103,6 +103,9 @@
     <Content Include="App_Data\Scripts\FPS\UpdateCustomerUsername2.scrypt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="App_Data\Scripts\CTS\TransformFromDCS.scrypt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="App_Data\Scripts\HelloApi.scrypt" />
     <Content Include="App_Data\Scripts\MiddleService\GroupCustomer.scrypt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
