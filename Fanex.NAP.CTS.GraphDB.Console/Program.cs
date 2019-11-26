@@ -68,96 +68,19 @@ namespace Fanex.NAP.CTS.Renovation.GraphDB.Console
             AddHandlerForGetMassage(TransformFromCTS);
         }
 
-        private static void InsertCustomer(AssociationModelForGraph criteria)
-        {
-            // remove test account
-            if (!criteria.Username.Contains("test") || criteria.Username2 == null || !criteria.Username2.Contains("test"))
-            {
-                try
-                {
-                    var custId = DbSessionFactory.Query<int>(FPS.GetCustomerById, new { criteria.CustId });
-                    var deviceId = DbSessionFactory.Query<int>(FPS.GetDeviceById, new { criteria.DeviceId });
-                    var association = DbSessionFactory.Query<int>(FPS.CheckExistedAssociation, new { criteria.CustId, criteria.DeviceId });
-
-                    if (criteria.DeviceId == 0)
-                    {
-                        if (!custId.Any())
-                        {
-                            UpdateData(FPS.AddNewCustomer, criteria);
-                        }
-                    }
-                    else
-                    {
-                        UpdateData(FPS.AddAssociation, criteria);
-
-                        if (custId.Any())
-                        {
-                            if (deviceId.Any())
-                            {
-                                // case old account, old device
-                                if (association.Any())
-                                {
-                                    UpdateData(FPS.UpdateCustomerUsername2, criteria);
-                                }
-                                else
-                                {
-                                    UpdateData(FPS.MergeGroup, criteria);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if (deviceId.Any())
-                            {
-                                // case new account, old device
-                                UpdateData(FPS.AddCustomerGroupRelationship, criteria);
-                            }
-                            else
-                            {
-                                // case new account, old device
-                                UpdateData(FPS.CreateNewGroup, criteria);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    var logMessage = new LogMessage(ex.Message)
-                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
-                     .ToString();
-
-                    LogService.Error(logMessage);
-                }
-            }
-        }
-
         private static void TransformFromCTS(AssociationModelForGraph criteria)
         {
-            
-        }
-
-        private static void UpdateData(string key, AssociationModelForGraph criteria)
-        {
-            var result = DbSessionFactory.Execute(key, criteria);
-
-            if (result != null)
+            if (criteria.CustId == 0 && !string.IsNullOrEmpty(criteria.Username2) && criteria.SubscriberId > 0)
             {
-                if (associations.Count < SPU.Core.AppSettings.TransBatch)
-                {
-                    associations.Add(new IsSynAssociationModel
-                    {
-                        AssociationId = criteria.AssociationId,
-                        SyncGraphDB = 2
-                    });
-                }
-                else
-                {
-                    var xmlData = DCS.Core.Utilities.XMLConvert(associations);
-
-                    dataCenterService.UpdateIsSyncByAssociationId(xmlData);
-
-                    associations.Clear();
-                }
+                DbSessionFactory.Execute(CTS.TransformFromDCS, criteria);
+            }
+            else if (criteria.DeviceId > 0)
+            {
+                DbSessionFactory.Execute(CTS.TransformFromDCS, criteria);
+            }
+            else
+            {
+                DbSessionFactory.Execute(CTS.TransformFromDCS, criteria);
             }
         }
 

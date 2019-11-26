@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+    <Setting Key="DC_GetNewCustomer" SpName="DC_GetNewCustomer" DbName="MySQL.FPS_DataCenter">
+    </Setting>
+  </Function>
+</Functions>
