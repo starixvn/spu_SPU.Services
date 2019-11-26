@@ -1,0 +1,24 @@
+﻿namespace Fanex.NAP.SPU.Model
+{
+    using Newtonsoft.Json;
+    using System;
+    using System.Numerics;
+
+    public class RawTransactionByIpModel
+    {
+        [JsonIgnore]
+        public int BatchId { get; set; }
+
+        public int TransId { get; set; }
+
+        public int AccountId { get; set; }
+
+        public int SubscriberId { get; set; }
+
+        public string Ip { get; set; }
+
+        public BigInteger IpId { get; set; }
+
+        public DateTime TransTime { get; set; }
+    }
+}

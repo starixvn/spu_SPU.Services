@@ -26,5 +26,7 @@ namespace Fanex.NAP.DCS.Services.Interface
         List<RawAccountModel> GetRawAccount(int numOfAccount, int numOfBatch);
 
         List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch);
+
+        List<RawTransactionByIpModel> GetRawTransByIp(int numOfTrans, int numOfBatch);
     }
 }

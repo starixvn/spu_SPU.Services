@@ -627,6 +627,50 @@
     </trigger>
 
     <job>
+      <name>CTSInsertAssociationByIPJob</name>
+      <group>DataTransformJob</group>
+      <description>InsertAssociationByIPJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionIPAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>500</value>
+        </entry>
+        <entry>
+          <key>Action</key>
+          <value>api/active</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>http://10.23.10.8:9000/associationbyip</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>http://10.23.10.8:9000/associationbyip</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>InsertAssociationByIPTrigger</name>
+        <group>DataTransformTrigger</group>
+        <description>InsertAssociationByIPTrigger</description>
+        <job-name>CTSInsertAssociationByIPJob</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
+
+    <job>
       <name>CTSTransformForGraphDB</name>
       <group>DataTransformJob</group>
       <description>CTSTransformForGraphDB</description>

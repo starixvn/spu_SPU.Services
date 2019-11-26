@@ -4,3 +4,4 @@
 // a specific target and scoped to a namespace, type, member, etc.
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "<Pending>", Scope = "type", Target = "~T:Fanex.NAP.CTS.Criteria.TransformDCSAccountToCTSCustomerCriteria")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Minor Code Smell", "S101:Types should be named in PascalCase", Justification = "<Pending>", Scope = "type", Target = "~T:Fanex.NAP.CTS.Criteria.TransformDCSTransactionIPToCTSAssociationByIPCriteria")]

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.645
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29411.108
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FraudSensor", "FraudSensor", "{BD64796B-C186-4369-AA2E-A7E5AAD80637}"
 EndProject
@@ -122,6 +122,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.DCS.ImportData.Console", "Fanex.NAP.DCS.ImportData.Console\Fanex.NAP.DCS.ImportData.Console.csproj", "{3BCC5BA1-2833-4F8E-86D8-8F3627A5D70C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Queue", "Fanex.NAP.SPU.Queue\Fanex.NAP.SPU.Queue.csproj", "{FA790109-F8C1-44B7-9246-05B5F1A32696}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.AssociationByIP.Service", "Fanex.NAP.CTS.AssociationByIP.Service\Fanex.NAP.CTS.AssociationByIP.Service.csproj", "{54F61573-BF8A-44CF-AF55-DAD58FD69403}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -325,6 +327,10 @@ Global
 		{FA790109-F8C1-44B7-9246-05B5F1A32696}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA790109-F8C1-44B7-9246-05B5F1A32696}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA790109-F8C1-44B7-9246-05B5F1A32696}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54F61573-BF8A-44CF-AF55-DAD58FD69403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54F61573-BF8A-44CF-AF55-DAD58FD69403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54F61573-BF8A-44CF-AF55-DAD58FD69403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54F61573-BF8A-44CF-AF55-DAD58FD69403}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -375,9 +381,10 @@ Global
 		{D51FA199-0C82-4E99-A44A-40D8482DA4A7} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{00D1CD4E-059C-4366-B3B0-36532801F6B4} = {BD64796B-C186-4369-AA2E-A7E5AAD80637}
 		{3BCC5BA1-2833-4F8E-86D8-8F3627A5D70C} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
+		{54F61573-BF8A-44CF-AF55-DAD58FD69403} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal

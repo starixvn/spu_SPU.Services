@@ -313,5 +313,19 @@
                 return db.Query<RawAssociationModel>(criteria).ToList();
             }
         }
+
+        public List<RawTransactionByIpModel> GetRawTransactionByIp(int quantityPerBatch, int numOfBatch)
+        {
+            var criteria = new GetRawTransactionByIpCriteria
+            {
+                NumberOfTrans = quantityPerBatch,
+                NumberOfBatch = numOfBatch
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<RawTransactionByIpModel>(criteria).ToList();
+            }
+        }
     }
 }

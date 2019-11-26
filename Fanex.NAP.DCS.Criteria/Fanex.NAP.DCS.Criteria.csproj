@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="GetRawAssociationListCriteria.cs" />
     <Compile Include="GetRawAccountListCriteria.cs" />
+    <Compile Include="GetRawTransactionByIpCriteria.cs" />
     <Compile Include="GetUpdatedDeviceListCriteria.cs" />
     <Compile Include="GetUpdatedAccountListCriteria.cs" />
     <Compile Include="GetUserAgentCriteria.cs" />

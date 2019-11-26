@@ -51,6 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformAssociationCompletedCriteria.cs" />
     <Compile Include="TransformAccountCompletedCriteria.cs" />
+    <Compile Include="TransformDCSTransactionIPToCTSAssociationByIPCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fanex.Data.Repository">

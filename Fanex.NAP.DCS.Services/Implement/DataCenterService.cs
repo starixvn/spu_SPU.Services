@@ -97,5 +97,10 @@ namespace Fanex.NAP.DCS.Services.Implement
                 SubscriberID = customerInfo.SubscriberId
             };
         }
+
+        public List<RawTransactionByIpModel> GetRawTransByIp(int numOfTrans, int numOfBatch)
+        {
+            return dataCenter.GetRawTransactionByIp(numOfTrans, numOfBatch);
+        }
     }
 }

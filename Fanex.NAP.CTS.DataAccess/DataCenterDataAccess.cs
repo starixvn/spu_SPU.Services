@@ -70,5 +70,17 @@ namespace Fanex.NAP.CTS.DataAccess
 
             repository.Execute(criteria);
         }
+
+        public void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIPJson)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new TransformDCSTransactionIPToCTSAssociationByIPCriteria
+            {
+                TransactionJson = transactionByIPJson
+            };
+
+            repository.Execute(criteria);
+        }
     }
 }
