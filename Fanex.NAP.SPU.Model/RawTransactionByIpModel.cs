@@ -6,6 +6,8 @@
 
     public class RawTransactionByIpModel
     {
+        private DateTime _transTime;
+
         [JsonIgnore]
         public int BatchId { get; set; }
 
@@ -19,6 +21,16 @@
 
         public long IpId { get; set; }
 
-        public DateTime TransTime { get; set; }
+        public string TransTime
+        {
+            get
+            {
+                return _transTime.ToString("yyyy-MM-dd hh:mm:ss.fff");
+            }
+            set
+            {
+                _transTime = Convert.ToDateTime(value);
+            }
+        }
     }
 }
