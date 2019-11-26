@@ -17,7 +17,7 @@
 
         public string Ip { get; set; }
 
-        public BigInteger IpId { get; set; }
+        public long IpId { get; set; }
 
         public DateTime TransTime { get; set; }
     }

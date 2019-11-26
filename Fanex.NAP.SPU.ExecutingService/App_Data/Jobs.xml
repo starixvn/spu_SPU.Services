@@ -648,11 +648,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.23.10.8:9000/associationbyip</value>
+          <value>http://10.23.10.11:9000/associationbyip</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.23.10.8:9000/associationbyip</value>
+          <value>http://10.23.10.11:9000/associationbyip</value>
         </entry>
       </job-data-map>
     </job>
