@@ -10,6 +10,7 @@
     <Setting Key="DCS_DC_TransformToCTS_Account_GetPackage" SpName="DCS_DC_TransformToCTS_Account_GetPackage" DbName="MySQL.DCS_DataCenter"/>
     <Setting Key="DCS_ST_TransformData_GetPackage" SpName="DCS_ST_TransformData_GetPackage" DbName="MySQL.DCS_RawTransaction"/>
     <Setting Key="DCS_DC_TransformToCTS_Association_GetPackage" SpName="DCS_DC_TransformToCTS_Association_GetPackage" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformToCTS_TransactionIP_GetPackage" SpName="DCS_DC_TransformToCTS_TransactionIP_GetPackage" DbName="MySQL.DCS_DataCenter"/>
   </Function>
   
 </Functions>
