@@ -468,11 +468,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.18.200.120:9000/transaction</value>
+          <value>http://10.18.200.120:9000/transaction;http://10.18.200.120:9000/transaction2</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.18.200.120:9000/transaction</value>
+          <value>http://10.18.200.120:9000/transaction;http://10.18.200.120:9000/transaction2</value>
         </entry>
       </job-data-map>
     </job>
@@ -516,11 +516,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.18.200.120:9000/device</value>
+          <value>http://10.18.200.120:9000/device;http://10.18.200.120:9000/device2</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.18.200.120:9000/device</value>
+          <value>http://10.18.200.120:9000/device;http://10.18.200.120:9000/device2</value>
         </entry>
       </job-data-map>
     </job>
