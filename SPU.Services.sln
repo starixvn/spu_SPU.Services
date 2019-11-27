@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29411.108
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FraudSensor", "FraudSensor", "{BD64796B-C186-4369-AA2E-A7E5AAD80637}"
 EndProject
@@ -113,8 +113,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.Account.Servi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core", "Fanex.NAP.SPU.Graph.Core\Fanex.NAP.SPU.Graph.Core.csproj", "{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.GraphDB.Console", "Fanex.NAP.CTS.GraphDB.Console\Fanex.NAP.CTS.GraphDB.Console.csproj", "{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.Association.Service", "Fanex.NAP.CTS.Association.Service\Fanex.NAP.CTS.Association.Service.csproj", "{D51FA199-0C82-4E99-A44A-40D8482DA4A7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{00D1CD4E-059C-4366-B3B0-36532801F6B4}"
@@ -124,6 +122,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Queue", "Fanex.NAP.SPU.Queue\Fanex.NAP.SPU.Queue.csproj", "{FA790109-F8C1-44B7-9246-05B5F1A32696}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.AssociationByIP.Service", "Fanex.NAP.CTS.AssociationByIP.Service\Fanex.NAP.CTS.AssociationByIP.Service.csproj", "{54F61573-BF8A-44CF-AF55-DAD58FD69403}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.GraphDB.Service", "Fanex.NAP.CTS.GraphDB.Service\Fanex.NAP.CTS.GraphDB.Service.csproj", "{28331F51-1BB7-49EF-89E9-2C8D09026BFE}"
 EndProject
 Global
@@ -312,10 +311,6 @@ Global
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D51FA199-0C82-4E99-A44A-40D8482DA4A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D51FA199-0C82-4E99-A44A-40D8482DA4A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D51FA199-0C82-4E99-A44A-40D8482DA4A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -382,7 +377,6 @@ Global
 		{AA3E4730-2EE7-43AC-A9F3-992C4EF5DAB6} = {DD353243-A0C1-4321-BED1-41E443F6CA25}
 		{16A8AC87-AEE3-4A10-B6C6-5E27226CDDD1} = {DD353243-A0C1-4321-BED1-41E443F6CA25}
 		{27B59CF4-AAB3-43F1-ACAB-4306CC7E7E44} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
-		{6AC2C5B5-D139-46AB-992F-7E8EEE99E943} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{D51FA199-0C82-4E99-A44A-40D8482DA4A7} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{00D1CD4E-059C-4366-B3B0-36532801F6B4} = {BD64796B-C186-4369-AA2E-A7E5AAD80637}
 		{3BCC5BA1-2833-4F8E-86D8-8F3627A5D70C} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
@@ -390,7 +384,7 @@ Global
 		{28331F51-1BB7-49EF-89E9-2C8D09026BFE} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
