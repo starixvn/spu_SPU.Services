@@ -11,6 +11,8 @@ namespace Fanex.NAP.SPU.Model
 
         public string LoginNameWithPrefix { get; set; }
 
+        public string LoginName { get; set; }
+
         public int SubscriberId { get; set; }
     }
 }
