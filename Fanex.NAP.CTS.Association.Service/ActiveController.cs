@@ -61,20 +61,19 @@
         {
             try
             {
-                if(associations != null && associations.Any())
+                if (associations != null && associations.Any())
                 {
                     var associationByDevice = dataCenterService.TransformAssociationByDevice(associations);
 
-                    if(associationByDevice != null && associationByDevice.Any())
+                    if (associationByDevice != null && associationByDevice.Any())
                     {
-
                         dataCenterService.TransformAssociationCompleted(associationByDevice);
 
                         TransformToGraphDB(associationByDevice);
                     }
 
                     return true;
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -102,6 +101,8 @@
                 var message = new Message<AssociationModelForGraph>(data);
                 easyNetQService.AdvanceBus.PublishAsync(easyNetQService.Exchange, easyNetQService.RoutingKey, true, message);
             }
+
+            easyNetQService.Disposed();
         }
     }
 }

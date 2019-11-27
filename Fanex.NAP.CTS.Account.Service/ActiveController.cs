@@ -103,6 +103,8 @@
                 var message = new Message<AssociationModelForGraph>(data);
                 easyNetQService.AdvanceBus.PublishAsync(easyNetQService.Exchange, easyNetQService.RoutingKey, true, message);
             }
+
+            easyNetQService.Disposed();
         }
     }
 }
