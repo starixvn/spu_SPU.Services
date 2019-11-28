@@ -20,22 +20,22 @@
     public class ActiveController : ApiController
     {
         private readonly IDataCenterService dataCenterService;
-        private EasyNetQConnector easyNetQService;
+       // private EasyNetQConnector easyNetQService;
 
         public ActiveController()
         {
             dataCenterService = new DataCenterService();
 
-            easyNetQService = new EasyNetQConnector(AppSettings.RabbitMQ_Host,
-                AppSettings.RabbitMQ_VirtualHost,
-                Convert.ToInt32(AppSettings.RabbitMQ_PrefetchCount),
-                AppSettings.RabbitMQ_UserName,
-                AppSettings.RabbitMQ_Password).CreateBus();
+            //easyNetQService = new EasyNetQConnector(AppSettings.RabbitMQ_Host,
+            //    AppSettings.RabbitMQ_VirtualHost,
+            //    Convert.ToInt32(AppSettings.RabbitMQ_PrefetchCount),
+            //    AppSettings.RabbitMQ_UserName,
+            //    AppSettings.RabbitMQ_Password).CreateBus();
 
-            easyNetQService.DeclareQueue(AppSettings.RabbitMQ_QueueName)
-                            .DeclareExchange(AppSettings.RabbitMQ_Exchange)
-                            .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
-                            .Bind();
+            //easyNetQService.DeclareQueue(AppSettings.RabbitMQ_QueueName)
+            //                .DeclareExchange(AppSettings.RabbitMQ_Exchange)
+            //                .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
+            //                .Bind();
         }
 
         public bool Post()
@@ -63,15 +63,13 @@
             {
                 if (accounts != null && accounts.Any())
                 {
-                    var accountIsNotInsertedList = dataCenterService.TransformDCSAccount(accounts);
-
-                    var insertedAccount = accounts.Where(x => !accountIsNotInsertedList.Contains(x.AccountId)).ToList();
-
-                    if (insertedAccount != null && insertedAccount.Any())
+                    var insertedAccounts = dataCenterService.TransformDCSAccount(accounts);
+                                        
+                    if (insertedAccounts != null && insertedAccounts.Any())
                     {                        
-                        dataCenterService.TransformAccountCompleted(insertedAccount);
+                        dataCenterService.TransformAccountCompleted(insertedAccounts);
 
-                        TransformToGraphDB(insertedAccount);
+                       // TransformToGraphDB(insertedAccount);
                     }                    
 
                     return true;
@@ -90,21 +88,21 @@
             return false;
         }
 
-        private void TransformToGraphDB(List<RawAccountModel> accounts)
-        {
-            foreach (var item in accounts)
-            {
-                var data = new AssociationModelForGraph()
-                {
-                    Username2 = item.LoginNameWithPrefix,
-                    SubscriberId = item.SubscriberId
-                };
+        //private void TransformToGraphDB(List<RawAccountModel> accounts)
+        //{
+        //    foreach (var item in accounts)
+        //    {
+        //        var data = new AssociationModelForGraph()
+        //        {
+        //            Username2 = item.LoginNameWithPrefix,
+        //            SubscriberId = item.SubscriberId
+        //        };
 
-                var message = new Message<AssociationModelForGraph>(data);
-                easyNetQService.AdvanceBus.PublishAsync(easyNetQService.Exchange, easyNetQService.RoutingKey, true, message);
-            }
+        //        var message = new Message<AssociationModelForGraph>(data);
+        //        easyNetQService.AdvanceBus.PublishAsync(easyNetQService.Exchange, easyNetQService.RoutingKey, true, message);
+        //    }
 
-            easyNetQService.Disposed();
-        }
+        //    easyNetQService.Disposed();
+        //}
     }
 }

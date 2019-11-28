@@ -26,16 +26,16 @@
         {
             dataCenterService = new DataCenterService();
 
-            easyNetQService = new EasyNetQConnector(AppSettings.RabbitMQ_Host,
-                AppSettings.RabbitMQ_VirtualHost,
-                Convert.ToInt32(AppSettings.RabbitMQ_PrefetchCount),
-                AppSettings.RabbitMQ_UserName,
-                AppSettings.RabbitMQ_Password).CreateBus();
+            //easyNetQService = new EasyNetQConnector(AppSettings.RabbitMQ_Host,
+            //    AppSettings.RabbitMQ_VirtualHost,
+            //    Convert.ToInt32(AppSettings.RabbitMQ_PrefetchCount),
+            //    AppSettings.RabbitMQ_UserName,
+            //    AppSettings.RabbitMQ_Password).CreateBus();
 
-            easyNetQService.DeclareQueue(AppSettings.RabbitMQ_QueueName)
-                            .DeclareExchange(AppSettings.RabbitMQ_Exchange)
-                            .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
-                            .Bind();
+            //easyNetQService.DeclareQueue(AppSettings.RabbitMQ_QueueName)
+            //                .DeclareExchange(AppSettings.RabbitMQ_Exchange)
+            //                .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
+            //                .Bind();
         }
 
         public bool Post()
@@ -69,7 +69,7 @@
                     {
                         dataCenterService.TransformAssociationCompleted(associationByDevice);
 
-                        TransformToGraphDB(associationByDevice);
+                        //TransformToGraphDB(associationByDevice);
                     }
 
                     return true;

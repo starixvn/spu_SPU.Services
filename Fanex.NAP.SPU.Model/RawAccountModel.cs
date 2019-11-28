@@ -7,9 +7,7 @@ namespace Fanex.NAP.SPU.Model
         [JsonIgnore]
         public int BatchId { get; set; }
 
-        public int AccountId { get; set; }
-
-        public string LoginNameWithPrefix { get; set; }
+        public int AccountId { get; set; }                
 
         public string LoginName { get; set; }
 

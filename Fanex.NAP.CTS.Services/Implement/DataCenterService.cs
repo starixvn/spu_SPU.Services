@@ -28,15 +28,15 @@ namespace Fanex.NAP.CTS.Services
         {
             var accountJson = JsonConvert.SerializeObject(accountList);
 
-            return dataCenterDataAccess.TransformDCSAccount(accountJson);            
+            return dataCenterDataAccess.TransformDCSAccount(accountJson);
         }
 
         public void InsertAssociation(List<AssociationModel> associationList)
         {
             var associationJson = JsonConvert.SerializeObject(associationList);
 
-            dataCenterDataAccess.InsertAssociation(associationJson);           
-        }       
+            dataCenterDataAccess.InsertAssociation(associationJson);
+        }
 
         public void TransformAssociationCompleted(List<AssociationModel> associationList)
         {
@@ -45,9 +45,9 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.TransformAssociationCompleted(associationJson);
         }
 
-        public void TransformAccountCompleted(List<RawAccountModel> insertedAccount)
+        public void TransformAccountCompleted(List<int> insertedAccount)
         {
-            var insertedAccountJson = JsonConvert.SerializeObject(insertedAccount);
+            var insertedAccountJson = JsonConvert.SerializeObject(insertedAccount.Select(x => new { AccountId = x }));
 
             dataCenterDataAccess.TransformAccountCompleted(insertedAccountJson);
         }

@@ -12,7 +12,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         List<AssociationModel> TransformAssociationByDevice(List<RawAssociationModel> rawAssociation);
 
-        void TransformAccountCompleted(List<RawAccountModel> insertedAccount);
+        void TransformAccountCompleted(List<int> insertedAccount);
 
         void TransformAssociationCompleted(List<AssociationModel> associationList);
 
