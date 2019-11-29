@@ -61,6 +61,10 @@ namespace Fanex.NAP.CTS.GraphDB.Service
             {
                 DbSessionFactory.Execute(CTS.TransformAssociation, criteria);
             }
+            else if (criteria.AssociationId > 0)
+            {
+                DbSessionFactory.Execute(CTS.TransformAssociation, criteria);
+            }
             else
             {
                 //DbSessionFactory.Execute(CTS.TransformFromDCS, criteria);
