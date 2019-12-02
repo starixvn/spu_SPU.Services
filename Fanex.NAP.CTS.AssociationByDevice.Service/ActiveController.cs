@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.CTS.Association.Service
+﻿namespace Fanex.NAP.CTS.AssociationByDevice.Service
 {
     using EasyNetQ;
     using Fanex.Logging;

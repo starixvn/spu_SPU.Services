@@ -1,7 +1,7 @@
 ﻿using Owin;
 using System.Web.Http;
 
-namespace Fanex.NAP.CTS.Association.Service
+namespace Fanex.NAP.CTS.AssociationByDevice.Service
 {
     public class Startup
     {

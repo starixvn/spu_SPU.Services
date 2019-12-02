@@ -6,7 +6,7 @@ using System.IO;
 using System.ServiceProcess;
 using Fanex.Logging;
 
-namespace Fanex.NAP.CTS.Association.Service
+namespace Fanex.NAP.CTS.AssociationByDevice.Service
 {
     public partial class Runner : ServiceBase
     {
