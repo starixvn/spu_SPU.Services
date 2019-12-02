@@ -407,7 +407,7 @@
     </trigger>
 
     <job>
-      <name>DCSIPRangeJob</name>
+      <name>DCS.IPRangeLocation.Job</name>
       <group>DataCaptureJob</group>
       <description>IPRangeJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -435,10 +435,10 @@
 
     <trigger>
       <simple>
-        <name>IPRangeTrigger</name>
+        <name>DCS.IPRangeLocation.Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>IPRangeTrigger</description>
-        <job-name>DCSIPRangeJob</job-name>
+        <job-name>DCS.IPRangeLocation.Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -447,7 +447,7 @@
     </trigger>
 
     <job>
-      <name>DCSInsertTransJob</name>
+      <name>DCS.Transform.Transaction.Job</name>
       <group>DataCaptureJob</group>
       <description>InsertTransJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -479,10 +479,10 @@
 
     <trigger>
       <simple>
-        <name>InsertTransTrigger</name>
+        <name>DCS.Transform.Transaction.Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>InsertTransTrigger</description>
-        <job-name>DCSInsertTransJob</job-name>
+        <job-name>DCS.Transform.Transaction.Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -491,7 +491,7 @@
     </trigger>
 
     <job>
-      <name>DCSInsertDeviceJob</name>
+      <name>DCS.Transform.Device.Job</name>
       <group>DataCaptureJob</group>
       <description>InsertDeviceJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteDeviceAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -527,10 +527,10 @@
 
     <trigger>
       <simple>
-        <name>InsertDeviceTrigger</name>
+        <name>DCS.Transform.Device.Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>InsertDeviceTrigger</description>
-        <job-name>DCSInsertDeviceJob</job-name>
+        <job-name>DCS.Transform.Device.Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -539,7 +539,7 @@
     </trigger>
 
     <job>
-      <name>CTSInsertAccountJob</name>
+      <name>CTS.Transform.Account.Job</name>
       <group>DataTransformJob</group>
       <description>InsertAccountJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAccountAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -571,10 +571,10 @@
 
     <trigger>
       <simple>
-        <name>InsertAccountTrigger</name>
+        <name>CTS.Transform.Account.Trigger</name>
         <group>DataTransformTrigger</group>
         <description>InsertAccountTrigger</description>
-        <job-name>CTSInsertAccountJob</job-name>
+        <job-name>CTS.Transform.Account.Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -583,7 +583,7 @@
     </trigger>
 
     <job>
-      <name>CTSInsertAssociationByDeviceJob</name>
+      <name>CTS.Transform.AssociationByDevice.Job</name>
       <group>DataTransformJob</group>
       <description>Insert Association By Device Job</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -615,10 +615,10 @@
 
     <trigger>
       <simple>
-        <name>InsertAssociationByDeviceTrigger</name>
+        <name>CTS.Transform.AssociationByDevice.Trigger</name>
         <group>DataTransformTrigger</group>
         <description>Insert Association by Device Trigger</description>
-        <job-name>CTSInsertAssociationByDeviceJob</job-name>
+        <job-name>CTS.Transform.AssociationByDevice.Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -627,7 +627,7 @@
     </trigger>
 
     <job>
-      <name>CTSInsertAssociationByIPJob</name>
+      <name>CTS.Transform.AssociationByIP.Job</name>
       <group>DataTransformJob</group>
       <description>Insert Association By IP Job</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionIPAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -659,10 +659,10 @@
 
     <trigger>
       <simple>
-        <name>InsertAssociationByIPTrigger</name>
+        <name>CTS.Transform.AssociationByIP.Trigger</name>
         <group>DataTransformTrigger</group>
         <description>InsertAssociationByIPTrigger</description>
-        <job-name>CTSInsertAssociationByIPJob</job-name>
+        <job-name>CTS.Transform.AssociationByIP.Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
