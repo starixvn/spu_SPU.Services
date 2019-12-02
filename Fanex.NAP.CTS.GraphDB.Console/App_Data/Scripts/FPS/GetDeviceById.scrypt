@@ -1,2 +1,0 @@
-﻿MATCH (d:Device {DeviceId: $DeviceId})
-RETURN d.DeviceId as DeviceId

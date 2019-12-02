@@ -99,16 +99,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.exe.PRO.config">
-      <DependentUpon>App.config</DependentUpon>
+    <Content Include="Fanex.NAP.DCS.RawTransaction.Service.exe.LOCAL.config">
+	<DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.exe.UAT.config">
-      <DependentUpon>App.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.exe.LOCAL.config">
-      <DependentUpon>App.config</DependentUpon>
+    <Content Include="Fanex.NAP.DCS.RawTransaction.Service.exe.PRO.config">
+	<DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.ruleset" />

@@ -66,12 +66,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Content Include="Fanex.NAP.DCS.DataTransform.Device.Service.exe.LOCAL.config">
-      <DependentUpon>App.config</DependentUpon>
+    <Content Include="Fanex.NAP.DCS.Device.Service.exe.LOCAL.config">
+	<DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.DCS.DataTransform.Device.Service.PRO.config">
-      <DependentUpon>App.config</DependentUpon>
+    <Content Include="Fanex.NAP.DCS.Device.Service.exe.PRO.config">
+	<DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

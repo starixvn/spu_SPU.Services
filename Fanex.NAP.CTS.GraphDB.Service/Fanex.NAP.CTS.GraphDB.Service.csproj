@@ -164,6 +164,14 @@
     <Content Include="App_Data\Scripts\MiddleService\GroupCustomer.scrypt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fanex.NAP.CTS.GraphDB.Service.exe.LOCAL.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.CTS.GraphDB.Service.exe.PRO.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

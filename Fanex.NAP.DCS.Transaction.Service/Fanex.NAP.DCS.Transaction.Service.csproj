@@ -94,19 +94,15 @@
     <Content Include="App_Data\NAPFPSNames.Sandbox.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fanex.NAP.DCS.Transaction.Service.exe.LOCAL.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.DCS.Transaction.Service.exe.PRO.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Fanex.NAP.FPS.Renovation.DataTransform.Service.ruleset" />
-    <Content Include="Fanex.NAP.DCS.DataTransform.Transaction.Service.exe.LOCAL.config">
-      <DependentUpon>App.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fanex.NAP.DCS.DataTransform.Transaction.Service.exe.PRO.config">
-      <DependentUpon>App.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Fanex.NAP.DCS.DataTransform.Transaction.Service.exe.UAT.config">
-      <DependentUpon>App.config</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPFPSNames.LOCAL.xml">
