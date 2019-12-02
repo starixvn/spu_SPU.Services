@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29411.108
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FraudSensor", "FraudSensor", "{BD64796B-C186-4369-AA2E-A7E5AAD80637}"
 EndProject
@@ -120,8 +120,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.GraphDB.Service", "Fanex.NAP.CTS.GraphDB.Service\Fanex.NAP.CTS.GraphDB.Service.csproj", "{28331F51-1BB7-49EF-89E9-2C8D09026BFE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.CTSCustomer.Service", "Fanex.NAP.CTS.CTSCustomer.Service\Fanex.NAP.CTS.CTSCustomer.Service.csproj", "{D69F948A-7AEE-414F-973A-0AFC8A21E76F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.AssociationByDevice.Service", "Fanex.NAP.CTS.AssociationByDevice.Service\Fanex.NAP.CTS.AssociationByDevice.Service.csproj", "{34C19153-E90D-4480-B7A7-A1FE0D6B90CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.DCS.Device.Service", "Fanex.NAP.DCS.Device.Service\Fanex.NAP.DCS.Device.Service.csproj", "{9E15F9BA-F63F-4E0F-BE29-616E61B1D4A9}"
 EndProject
@@ -325,10 +323,6 @@ Global
 		{D69F948A-7AEE-414F-973A-0AFC8A21E76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D69F948A-7AEE-414F-973A-0AFC8A21E76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D69F948A-7AEE-414F-973A-0AFC8A21E76F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{34C19153-E90D-4480-B7A7-A1FE0D6B90CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34C19153-E90D-4480-B7A7-A1FE0D6B90CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34C19153-E90D-4480-B7A7-A1FE0D6B90CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{34C19153-E90D-4480-B7A7-A1FE0D6B90CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E15F9BA-F63F-4E0F-BE29-616E61B1D4A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9E15F9BA-F63F-4E0F-BE29-616E61B1D4A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9E15F9BA-F63F-4E0F-BE29-616E61B1D4A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -386,12 +380,11 @@ Global
 		{54F61573-BF8A-44CF-AF55-DAD58FD69403} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{28331F51-1BB7-49EF-89E9-2C8D09026BFE} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{D69F948A-7AEE-414F-973A-0AFC8A21E76F} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
-		{34C19153-E90D-4480-B7A7-A1FE0D6B90CA} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{9E15F9BA-F63F-4E0F-BE29-616E61B1D4A9} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 		{763BB29F-AFBC-4039-BFF7-72F571880A08} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal
