@@ -1,8 +1,8 @@
-﻿namespace Fanex.NAP.DCS.DataTransform.Transaction.Service.Services.Implement
+﻿namespace Fanex.NAP.DCS.Transaction.Service.Services.Implement
 {
     using Fanex.NAP.DCS.Core;
     using Fanex.NAP.DCS.DataAccess;
-    using Fanex.NAP.DCS.DataTransform.Transaction.Service.Services.Interface;
+    using Fanex.NAP.DCS.Transaction.Service.Services.Interface;
     using Fanex.NAP.DCS.Model;
     using Newtonsoft.Json;
     using System.Collections.Generic;

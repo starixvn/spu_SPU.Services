@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.DCS.DataTransform.Device.Service
+﻿namespace Fanex.NAP.DCS.Device.Service
 {
     partial class Runner
     {

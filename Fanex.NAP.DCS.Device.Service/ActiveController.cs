@@ -1,11 +1,11 @@
-﻿namespace Fanex.NAP.DCS.DataTransform.Device.Service
+﻿namespace Fanex.NAP.DCS.Device.Service
 {
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.DCS.Core;
-    using Fanex.NAP.DCS.DataTransform.Device.Service.Services.Implement;
-    using Fanex.NAP.DCS.DataTransform.Device.Service.Services.Interface;
+    using Fanex.NAP.DCS.Device.Service.Services.Implement;
+    using Fanex.NAP.DCS.Device.Service.Services.Interface;
     using Fanex.NAP.DCS.Model;
     using Newtonsoft.Json;
     using System;

@@ -1,7 +1,7 @@
 ﻿using Owin;
 using System.Web.Http;
 
-namespace Fanex.NAP.DCS.DataTransform.Device.Service
+namespace Fanex.NAP.DCS.Device.Service
 {
     public class Startup
     {

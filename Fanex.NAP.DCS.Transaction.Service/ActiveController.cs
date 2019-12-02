@@ -1,10 +1,10 @@
-﻿namespace Fanex.NAP.DCS.DataTransform.Transaction.Service
+﻿namespace Fanex.NAP.DCS.Transaction.Service
 {
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.DCS.DataTransform.Transaction.Service.Services.Implement;
-    using Fanex.NAP.DCS.DataTransform.Transaction.Service.Services.Interface;
+    using Fanex.NAP.DCS.Transaction.Service.Services.Implement;
+    using Fanex.NAP.DCS.Transaction.Service.Services.Interface;
     using Fanex.NAP.DCS.Model;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;

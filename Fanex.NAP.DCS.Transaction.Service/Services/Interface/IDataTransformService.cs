@@ -1,7 +1,7 @@
 ﻿using Fanex.NAP.DCS.Model;
 using System.Threading.Tasks;
 
-namespace Fanex.NAP.DCS.DataTransform.Transaction.Service.Services.Interface
+namespace Fanex.NAP.DCS.Transaction.Service.Services.Interface
 {
     interface IDataTransformService
     {

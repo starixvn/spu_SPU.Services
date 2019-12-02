@@ -1,7 +1,7 @@
-﻿namespace Fanex.NAP.DCS.DataTransform.Device.Service.Services.Implement
+﻿namespace Fanex.NAP.DCS.Device.Service.Services.Implement
 {
     using Fanex.NAP.DCS.DataAccess;
-    using Fanex.NAP.DCS.DataTransform.Device.Service.Services.Interface;
+    using Fanex.NAP.DCS.Device.Service.Services.Interface;
     using Fanex.NAP.DCS.Model;
     using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;

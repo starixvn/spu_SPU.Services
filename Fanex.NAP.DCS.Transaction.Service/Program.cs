@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.ServiceProcess;
 
-namespace Fanex.NAP.DCS.DataTransform.Transaction.Service
+namespace Fanex.NAP.DCS.Transaction.Service
 {
     static class Program
     {

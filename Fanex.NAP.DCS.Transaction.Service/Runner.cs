@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.DCS.DataTransform.Transaction.Service
+﻿namespace Fanex.NAP.DCS.Transaction.Service
 {
     using Fanex.Logging;
     using Fanex.NAP.DCS.Core;
