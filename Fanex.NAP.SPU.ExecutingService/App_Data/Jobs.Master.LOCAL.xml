@@ -367,7 +367,7 @@
     </trigger>
 
     <job>
-      <name>DCS.Transform.UserAgent.Job</name>
+      <name>DCS_Transform_UserAgent_Job</name>
       <group>DataCaptureJob</group>
       <description>UserAgentJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -395,10 +395,10 @@
 
     <trigger>
       <simple>
-        <name>DCS.Transform.UserAgent.Trigger</name>
+        <name>DCS_Transform_UserAgent_Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>UserAgentTrigger</description>
-        <job-name>DCS.Transform.UserAgent.Job</job-name>
+        <job-name>DCS_Transform_UserAgent_Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -407,7 +407,7 @@
     </trigger>
 
     <job>
-      <name>DCS.IPRangeLocation.Job</name>
+      <name>DCS_IPRangeLocation_Job</name>
       <group>DataCaptureJob</group>
       <description>IPRangeJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -435,10 +435,10 @@
 
     <trigger>
       <simple>
-        <name>DCS.IPRangeLocation.Trigger</name>
+        <name>DCS_IPRangeLocation_Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>IPRangeTrigger</description>
-        <job-name>DCS.IPRangeLocation.Job</job-name>
+        <job-name>DCS_IPRangeLocation_Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -447,7 +447,7 @@
     </trigger>
 
     <job>
-      <name>DCS.Transform.Transaction.Job</name>
+      <name>DCS_Transform_Transaction_Job</name>
       <group>DataCaptureJob</group>
       <description>InsertTransJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -479,10 +479,10 @@
 
     <trigger>
       <simple>
-        <name>DCS.Transform.Transaction.Trigger</name>
+        <name>DCS_Transform_Transaction_Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>InsertTransTrigger</description>
-        <job-name>DCS.Transform.Transaction.Job</job-name>
+        <job-name>DCS_Transform_Transaction_Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -491,7 +491,7 @@
     </trigger>
 
     <job>
-      <name>DCS.Transform.Device.Job</name>
+      <name>DCS_Transform_Device_Job</name>
       <group>DataCaptureJob</group>
       <description>InsertDeviceJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteDeviceAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -527,10 +527,10 @@
 
     <trigger>
       <simple>
-        <name>DCS.Transform.Device.Trigger</name>
+        <name>DCS_Transform_Device_Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>InsertDeviceTrigger</description>
-        <job-name>DCS.Transform.Device.Job</job-name>
+        <job-name>DCS_Transform_Device_Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -539,7 +539,7 @@
     </trigger>
 
     <job>
-      <name>CTS.Transform.Account.Job</name>
+      <name>CTS_Transform_Account_Job</name>
       <group>DataTransformJob</group>
       <description>InsertAccountJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAccountAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -571,10 +571,10 @@
 
     <trigger>
       <simple>
-        <name>CTS.Transform.Account.Trigger</name>
+        <name>CTS_Transform_Account_Trigger</name>
         <group>DataTransformTrigger</group>
         <description>InsertAccountTrigger</description>
-        <job-name>CTS.Transform.Account.Job</job-name>
+        <job-name>CTS_Transform_Account_Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -583,7 +583,7 @@
     </trigger>
 
     <job>
-      <name>CTS.Transform.AssociationByDevice.Job</name>
+      <name>CTS_Transform_AssociationByDevice_Job</name>
       <group>DataTransformJob</group>
       <description>Insert Association By Device Job</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -615,10 +615,10 @@
 
     <trigger>
       <simple>
-        <name>CTS.Transform.AssociationByDevice.Trigger</name>
+        <name>CTS_Transform_AssociationByDevice_Trigger</name>
         <group>DataTransformTrigger</group>
         <description>Insert Association by Device Trigger</description>
-        <job-name>CTS.Transform.AssociationByDevice.Job</job-name>
+        <job-name>CTS_Transform_AssociationByDevice_Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -627,7 +627,7 @@
     </trigger>
 
     <job>
-      <name>CTS.Transform.AssociationByIP.Job</name>
+      <name>CTS_Transform_AssociationByIP_Job</name>
       <group>DataTransformJob</group>
       <description>Insert Association By IP Job</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionIPAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -659,10 +659,10 @@
 
     <trigger>
       <simple>
-        <name>CTS.Transform.AssociationByIP.Trigger</name>
+        <name>CTS_Transform_AssociationByIP_Trigger</name>
         <group>DataTransformTrigger</group>
         <description>InsertAssociationByIPTrigger</description>
-        <job-name>CTS.Transform.AssociationByIP.Job</job-name>
+        <job-name>CTS_Transform_AssociationByIP_Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
