@@ -367,7 +367,7 @@
     </trigger>
 
     <job>
-      <name>DCSUserAgentJob</name>
+      <name>DCS_Transform_UserAgent_Job</name>
       <group>DataCaptureJob</group>
       <description>UserAgentJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -384,21 +384,21 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\WWW\FPS40\Fanex.NAP.DCS.UserAgent.Console</value>
+          <value>D:\WWW\SPU\DCS\Fanex.NAP.DCS.UserAgent.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\WWW\FPS40\Fanex.NAP.DCS.UserAgent.Console</value>
+          <value>D:\WWW\SPU\DCS\Fanex.NAP.DCS.UserAgent.Console</value>
         </entry>
       </job-data-map>
     </job>
 
     <trigger>
       <simple>
-        <name>UserAgentTrigger</name>
+        <name>DCS_Transform_UserAgent_Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>UserAgentTrigger</description>
-        <job-name>DCSUserAgentJob</job-name>
+        <job-name>DCS_Transform_UserAgent_Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -407,7 +407,7 @@
     </trigger>
 
     <job>
-      <name>DCSIPRangeJob</name>
+      <name>DCS_IPRangeLocation_Job</name>
       <group>DataCaptureJob</group>
       <description>IPRangeJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -424,21 +424,21 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\WWW\FPS40\Fanex.NAP.DCS.IPRange.Console</value>
+          <value>D:\WWW\SPU\DCS\Fanex.NAP.DCS.IPRange.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\WWW\FPS40\Fanex.NAP.DCS.IPRange.Console</value>
+          <value>D:\WWW\SPU\DCS\Fanex.NAP.DCS.IPRange.Console</value>
         </entry>
       </job-data-map>
     </job>
 
     <trigger>
       <simple>
-        <name>IPRangeTrigger</name>
+        <name>DCS_IPRangeLocation_Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>IPRangeTrigger</description>
-        <job-name>DCSIPRangeJob</job-name>
+        <job-name>DCS_IPRangeLocation_Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -447,7 +447,7 @@
     </trigger>
 
     <job>
-      <name>DCSInsertTransJob</name>
+      <name>DCS_Transform_Transaction_Job</name>
       <group>DataCaptureJob</group>
       <description>InsertTransJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -468,21 +468,21 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.18.200.120:9000/transaction;http://10.18.200.120:9000/transaction2</value>
+          <value>http://10.18.200.120:9000/transaction</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.18.200.120:9000/transaction;http://10.18.200.120:9000/transaction2</value>
+          <value>http://10.18.200.120:9000/transaction</value>
         </entry>
       </job-data-map>
     </job>
 
     <trigger>
       <simple>
-        <name>InsertTransTrigger</name>
+        <name>DCS_Transform_Transaction_Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>InsertTransTrigger</description>
-        <job-name>DCSInsertTransJob</job-name>
+        <job-name>DCS_Transform_Transaction_Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -491,7 +491,7 @@
     </trigger>
 
     <job>
-      <name>DCSInsertDeviceJob</name>
+      <name>DCS_Transform_Device_Job</name>
       <group>DataCaptureJob</group>
       <description>InsertDeviceJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteDeviceAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -516,21 +516,21 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.18.200.120:9000/device;http://10.18.200.120:9000/device2</value>
+          <value>http://10.18.200.120:9000/device</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.18.200.120:9000/device;http://10.18.200.120:9000/device2</value>
+          <value>http://10.18.200.120:9000/device</value>
         </entry>
       </job-data-map>
     </job>
 
     <trigger>
       <simple>
-        <name>InsertDeviceTrigger</name>
+        <name>DCS_Transform_Device_Trigger</name>
         <group>DataCaptureTrigger</group>
         <description>InsertDeviceTrigger</description>
-        <job-name>DCSInsertDeviceJob</job-name>
+        <job-name>DCS_Transform_Device_Job</job-name>
         <job-group>DataCaptureJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -539,7 +539,7 @@
     </trigger>
 
     <job>
-      <name>CTSInsertAccountJob</name>
+      <name>CTS_Transform_Account_Job</name>
       <group>DataTransformJob</group>
       <description>InsertAccountJob</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAccountAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
@@ -571,10 +571,10 @@
 
     <trigger>
       <simple>
-        <name>InsertAccountTrigger</name>
+        <name>CTS_Transform_Account_Trigger</name>
         <group>DataTransformTrigger</group>
         <description>InsertAccountTrigger</description>
-        <job-name>CTSInsertAccountJob</job-name>
+        <job-name>CTS_Transform_Account_Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -583,10 +583,10 @@
     </trigger>
 
     <job>
-      <name>CTSInsertAssociationJob</name>
+      <name>CTS_Transform_AssociationByDevice_Job</name>
       <group>DataTransformJob</group>
-      <description>InsertAssociationJob</description>
-      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <description>Insert Association By Device Job</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationDeviceAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
       <durable>true</durable>
       <recover>false</recover>
       <job-data-map>
@@ -604,21 +604,21 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.18.200.120:9000/association</value>
+          <value>http://10.18.200.120:9000/associationbydevice</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.18.200.120:9000/association</value>
+          <value>http://10.18.200.120:9000/associationbydevice</value>
         </entry>
       </job-data-map>
     </job>
 
     <trigger>
       <simple>
-        <name>InsertAssociationTrigger</name>
+        <name>CTS_Transform_AssociationByDevice_Trigger</name>
         <group>DataTransformTrigger</group>
-        <description>InsertAssociationTrigger</description>
-        <job-name>CTSInsertAssociationJob</job-name>
+        <description>Insert Association by Device Trigger</description>
+        <job-name>CTS_Transform_AssociationByDevice_Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
@@ -627,10 +627,10 @@
     </trigger>
 
     <job>
-      <name>CTSInsertAssociationByIPJob</name>
+      <name>CTS_Transform_AssociationByIP_Job</name>
       <group>DataTransformJob</group>
-      <description>InsertAssociationByIPJob</description>
-      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionIPAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <description>Insert Association By IP Job</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationIPAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
       <durable>true</durable>
       <recover>false</recover>
       <job-data-map>
@@ -659,18 +659,16 @@
 
     <trigger>
       <simple>
-        <name>InsertAssociationByIPTrigger</name>
+        <name>CTS_Transform_AssociationByIP_Trigger</name>
         <group>DataTransformTrigger</group>
         <description>InsertAssociationByIPTrigger</description>
-        <job-name>CTSInsertAssociationByIPJob</job-name>
+        <job-name>CTS_Transform_AssociationByIP_Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
         <repeat-interval>10000</repeat-interval>
       </simple>
     </trigger>
-
-
-
   </schedule>
+
 </job-scheduling-data>
