@@ -16,11 +16,11 @@
 
     [PersistJobDataAfterExecution]
     [DisallowConcurrentExecution]
-    public class ExecuteAssociationAPIJob : ExecuteJobBase, IJob
+    public class ExecuteAssociationDeviceAPIJob : ExecuteJobBase, IJob
     {
         private readonly IDataCenterService dataCenterService;
 
-        public ExecuteAssociationAPIJob()
+        public ExecuteAssociationDeviceAPIJob()
         {
             dataCenterService = new DataCenterService();
         }

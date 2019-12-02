@@ -586,7 +586,7 @@
       <name>CTS_Transform_AssociationByDevice_Job</name>
       <group>DataTransformJob</group>
       <description>Insert Association By Device Job</description>
-      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationDeviceAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
       <durable>true</durable>
       <recover>false</recover>
       <job-data-map>
@@ -630,7 +630,7 @@
       <name>CTS_Transform_AssociationByIP_Job</name>
       <group>DataTransformJob</group>
       <description>Insert Association By IP Job</description>
-      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteTransactionIPAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteAssociationIPAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
       <durable>true</durable>
       <recover>false</recover>
       <job-data-map>
