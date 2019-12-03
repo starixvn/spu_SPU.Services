@@ -4,4 +4,17 @@
     <Setting Key="FS_FraudCase_GetAll" SpName="FS_FraudCase_GetAll" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
     <Setting Key="FS_FraudCase_GetById" SpName="FS_FraudCase_GetById" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
   </Function>
+
+  <Function Name="DCS">
+    <Setting Key="DCS_DC_TransformData_Device_Transaction_GetPackage" SpName="DCS_DC_TransformData_Device_Transaction_GetPackage" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformToCTS_Account_GetPackage" SpName="DCS_DC_TransformToCTS_Account_GetPackage" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_ST_TransformData_GetPackage" SpName="DCS_ST_TransformData_GetPackage" DbName="MySQL.DCS_RawTransaction"/>
+    <Setting Key="DCS_DC_TransformToCTS_Association_GetPackage" SpName="DCS_DC_TransformToCTS_Association_GetPackage" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformToCTS_TransactionIP_GetPackage" SpName="DCS_DC_TransformToCTS_TransactionIP_GetPackage" DbName="MySQL.DCS_DataCenter"/>
+  </Function>
+
+  <Function Name="CTS">
+    <Setting Key="CTS_DC_GetMaxCustIdCTSCustomer" SpName="CTS_DC_GetMaxCustIdCTSCustomer" DbName="MySQL.CTS_DataCenter.fps"/>
+    <Setting Key="CTS_GetCustomerInfo" SpName="CTS_GetCustomerInfo" DbName="DBTP.bodb02.bodbSPUNet"/>
+  </Function>
 </Functions>
