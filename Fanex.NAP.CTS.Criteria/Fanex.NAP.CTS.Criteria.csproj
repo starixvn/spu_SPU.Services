@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="TransformAssociationByDeviceCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="TransformCustomerFromMainDbCriteria.cs" />
     <Compile Include="TransformDCSAccountToCTSCustomerCriteria.cs" />
     <Compile Include="InsertAssociationCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

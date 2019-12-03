@@ -18,23 +18,6 @@ namespace Fanex.NAP.DCS.Services.Implement
             dataCenter = new DataCenterDataAccess();
         }
 
-        public List<CustomerInfoModel> GetCustomerInfo(List<NewCustomerModel> newCustomers)
-        {
-            if (newCustomers != null && newCustomers.Any())
-            {
-                var newXmlCustomer = Utilities.XMLConvert(newCustomers);
-
-                return dataCenter.GetCustomerInfo(newXmlCustomer);
-            }
-
-            return new List<CustomerInfoModel>();
-        }       
-
-        public List<NewCustomerModel> GetNewCustomer(int size)
-        {
-            return dataCenter.GetNewCustomer(size);
-        }
-
         public List<int> GetUpdatedAccount(int size)
         {
             return dataCenter.GetUpdatedAccountList(size);
@@ -50,15 +33,6 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.UpdateAccountId(accountIdJson);
         }
 
-        public DataResult UpdateCustomerInfo(List<CustomerInfoModel> customerInfo)
-        {
-            var newCustomerInfo = customerInfo.Select(x => TransformCustomerInfo(x)).ToList();
-
-            var newJsonCustomerInfo = JsonConvert.SerializeObject(newCustomerInfo);
-
-            return dataCenter.UpdateCustomerInfo(newJsonCustomerInfo);
-        }
-
         public DataResult InsertDevice(List<DevicePackage> transId)
         {
             var transJson = JsonConvert.SerializeObject(transId);
@@ -66,14 +40,19 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.InsertDevice(transJson);
         }
 
-        public DataResult UpdateIsSyncByAssociationId(string association)
-        {
-            return dataCenter.UpdateIsSyncGraphDBByAssociationId(association);
-        }
-
         public List<RawAccountModel> GetRawAccount(int numOfAccount, int numOfBatch)
         {
             return dataCenter.GetRawAccount(numOfAccount, numOfBatch);
+        }
+
+        public List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, int numOfBatch, int maxCustId)
+        {
+            return dataCenter.GetCustomerFromMainDB(numOfAccount, numOfBatch, maxCustId);
+        }
+
+        public int GetCurrentMaxCustId()
+        {
+            return dataCenter.GetMaxCustIdInCTSCustomer();
         }
 
         public List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch)
@@ -81,22 +60,6 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.GetRawAssociation(numOfAssociation, numOfBatch);
         }
 
-        private NewCustomerInfo TransformCustomerInfo(CustomerInfoModel customerInfo)
-        {
-            return new NewCustomerInfo
-            {
-                CurrencyID = customerInfo.CurrencyId,
-                CurrencyName = customerInfo.CurrencyName,
-                CustID = customerInfo.SubAccId != 0 ? customerInfo.SubAccId : customerInfo.CustID,
-                IsDeposit = customerInfo.IsDeposit,
-                RoleID = customerInfo.RoleID,
-                Username = customerInfo.Username,
-                Username2 = customerInfo.Username2,
-                CreatedDate = customerInfo.CreatedDate,
-                AccountID = customerInfo.AccountId,
-                SubscriberID = customerInfo.SubscriberId
-            };
-        }
 
         public List<RawTransactionByIpModel> GetRawTransByIp(int numOfTrans, int numOfBatch)
         {

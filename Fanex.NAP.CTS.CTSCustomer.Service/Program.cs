@@ -1,19 +1,16 @@
-﻿using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Logging;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.SPU.Core;
-using SharpRaven;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.CTSCustomer.Service
+﻿namespace Fanex.NAP.CTS.CTSCustomer.Service
 {
+    using Fanex.Data;
+    using Fanex.Data.MySql;
+    using Fanex.Logging;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.SPU.Core;
+    using SharpRaven;
+    using System;
+    using System.Collections.Generic;
+    using System.Reflection;
+    using System.ServiceProcess;
+
     static class Program
     {
         /// <summary>

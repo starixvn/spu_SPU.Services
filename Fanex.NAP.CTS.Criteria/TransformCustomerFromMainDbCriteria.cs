@@ -6,16 +6,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fanex.NAP.DCS.Criteria
+namespace Fanex.NAP.CTS.Criteria
 {
-    public class UpdateCustomerInfoCriteria : NonQueryCommand
+    public class TransformCustomerFromMainDbCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_CustomerInfo")]
-        public string CustomerInfo { get; set; }     
+        [SpParam(SqlParamName = "ip_CustomerList")]
+        public string CustomerJson { get; set; }
 
         public override string GetSettingKey()
         {
-            return "FPS_DC_TransformData_Account_UpdateCustomerInfo";
+            return "CTS_DC_InsertCTSCustomer";
         }
 
         public override bool IsValid()

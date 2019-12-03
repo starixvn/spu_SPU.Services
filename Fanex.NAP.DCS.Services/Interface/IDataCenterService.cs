@@ -6,15 +6,6 @@ namespace Fanex.NAP.DCS.Services.Interface
 {
     public interface IDataCenterService
     {
-        List<NewCustomerModel> GetNewCustomer(int size);
-
-        DataResult UpdateCustomerInfo(List<CustomerInfoModel> customerInfo);
-
-        List<CustomerInfoModel> GetCustomerInfo(List<NewCustomerModel> newCustomers);
-
-        DataResult UpdateIsSyncByAssociationId(string association);
-
-
         List<int> GetUpdatedAccount(int size);
 
         DataResult UpdateAccountId(string accountIdJson);
@@ -24,6 +15,10 @@ namespace Fanex.NAP.DCS.Services.Interface
         DataResult InsertDevice(List<DevicePackage> transId);
 
         List<RawAccountModel> GetRawAccount(int numOfAccount, int numOfBatch);
+
+        List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, int numOfBatch, int maxCustId);
+
+        int GetCurrentMaxCustId();
 
         List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch);
 

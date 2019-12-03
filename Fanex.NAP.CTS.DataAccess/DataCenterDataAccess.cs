@@ -1,12 +1,12 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using Fanex.NAP.CTS.Criteria;
-using Fanex.NAP.CTS.Model;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Fanex.NAP.CTS.DataAccess
+﻿namespace Fanex.NAP.CTS.DataAccess
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using Fanex.NAP.CTS.Criteria;
+    using Fanex.NAP.CTS.Model;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class DataCenterDataAccess
     {
         public List<int> TransformDCSAccount(string accountJson)
@@ -14,6 +14,19 @@ namespace Fanex.NAP.CTS.DataAccess
             var criteria = new TransformDCSAccountToCTSCustomerCriteria
             {
                 AccountJson = accountJson
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<int>(criteria).ToList();
+            }
+        }
+
+        public List<int> TransformCustomerFromMainDB(string customerJson)
+        {
+            var criteria = new TransformCustomerFromMainDbCriteria
+            {
+                CustomerJson = customerJson
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

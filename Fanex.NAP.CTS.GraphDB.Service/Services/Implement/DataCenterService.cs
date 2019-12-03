@@ -12,10 +12,5 @@
         {
             dataCenter = new DataCenterDataAccess();
         }
-
-        public DataResult UpdateIsSyncByAssociationId(string associationXml)
-        {
-            return dataCenter.UpdateIsSyncGraphDBByAssociationId(associationXml);
-        }
     }
 }

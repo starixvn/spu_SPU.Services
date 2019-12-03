@@ -10,67 +10,7 @@
     using System.Threading.Tasks;
 
     public class DataCenterDataAccess
-    {       
-        public List<NewCustomerModel> GetNewCustomer(int size)
-        {           
-            var criteria = new GetNewCustomerCriteria
-            {
-                Size = size
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<NewCustomerModel>(criteria).ToList();
-            }
-        }
-
-        public DataResult UpdateCustomerInfo(string customerInfo)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new UpdateCustomerInfoCriteria
-            {
-                CustomerInfo = customerInfo
-            };
-
-            var errCode = repository.Execute(criteria);
-
-            return new DataResult
-            {
-                ErrorCode = errCode
-            };
-        }
-
-        public List<CustomerInfoModel> GetCustomerInfo(string newCustomers)
-        {
-            var criteria = new GetCustomerInfoCriteria
-            {
-                CustomerList = newCustomers
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<CustomerInfoModel>(criteria).ToList();
-            }
-        }
-
-        public DataResult UpdateIsSyncGraphDBByAssociationId(string association)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new UpdateIsSyncGraphDBByAssociationIdCriteria
-            {
-                Association = association
-            };
-
-            var errCode = repository.Execute(criteria);
-
-            return new DataResult
-            {
-                ErrorCode = errCode
-            };
-        }
-
+    {
         public List<AccountExistedModel> AccountProcess(int fromId, int toId)
         {
             var criteria = new ProcessAccountCriteria
@@ -94,7 +34,7 @@
                 AccountJson = jsonAccounts
             };
 
-            repository.Execute(criteria);           
+            repository.Execute(criteria);
         }
 
         public void UserAgentProcess(int fromId, int toId)
@@ -107,7 +47,7 @@
                 ToStagingTransId = toId
             };
 
-            repository.Execute(criteria);          
+            repository.Execute(criteria);
         }
 
         public void TransactionProcess(int fromId, int toId)
@@ -120,7 +60,7 @@
                 ToStagingTransId = toId
             };
 
-            repository.Execute(criteria);           
+            repository.Execute(criteria);
         }
 
         public DataResult CompleteProcess(int fromId, int toId)
@@ -139,7 +79,7 @@
             {
                 ErrorCode = errCode
             };
-        }       
+        }
 
         public DataResult DeviceProcess(int fromId, int toId)
         {
@@ -181,15 +121,15 @@
         {
             var criteria = new GetUserAgentCriteria
             {
-               Size = size
+                Size = size
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<UserAgentModel>(criteria).ToList();
             }
-        }                
-                
+        }
+
         public DataResult UpdateUserAgent(string userAgentJson)
         {
             var repository = new DynamicRepository();
@@ -297,6 +237,31 @@
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<RawAccountModel>(criteria).ToList();
+            }
+        }
+
+        public List<CustomerMainDbModel> GetCustomerFromMainDB(int quantityPerBatch, int numOfBatch, int maxCustId)
+        {
+            var criteria = new GetCustomersFromMainDbCriteria
+            {
+                MaxCustId = maxCustId,
+                RowSize = quantityPerBatch,
+                NumberOfBatch = numOfBatch
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerMainDbModel>(criteria).ToList();
+            }
+        }
+
+        public int GetMaxCustIdInCTSCustomer()
+        {
+            var criteria = new GetMaxCustIdCriteria();
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<int>(criteria).FirstOrDefault();
             }
         }
 

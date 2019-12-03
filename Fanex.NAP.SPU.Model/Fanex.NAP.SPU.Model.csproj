@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerMainDbModel.cs" />
     <Compile Include="DataResult.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="ExecutePath.cs" />

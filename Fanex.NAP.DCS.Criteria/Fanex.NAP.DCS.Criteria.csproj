@@ -57,8 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetRawAssociationListCriteria.cs" />
+    <Compile Include="GetMaxCustIdCriteria.cs" />
     <Compile Include="GetRawAccountListCriteria.cs" />
+    <Compile Include="GetRawAssociationListCriteria.cs" />
+    <Compile Include="GetCustomersFromMainDbCriteria.cs" />
     <Compile Include="GetRawTransactionByIpCriteria.cs" />
     <Compile Include="GetUpdatedDeviceListCriteria.cs" />
     <Compile Include="GetUpdatedAccountListCriteria.cs" />
@@ -67,11 +69,9 @@
     <Compile Include="InsertIPTableLogCriteria.cs" />
     <Compile Include="GetAssociationByCustomerCriteria.cs" />
     <Compile Include="GetAssociationForGraphDBCriteria.cs" />
-    <Compile Include="GetCustomerInfoCriteria.cs" />
     <Compile Include="GetCustomersEvidencesCriteria.cs" />
     <Compile Include="GetIPTableLogLatestUpdatedDateCriteria.cs" />
     <Compile Include="GetIpV6RangeCriteria.cs" />
-    <Compile Include="GetNewCustomerCriteria.cs" />
     <Compile Include="GetIPDBVersionCriteria.cs" />
     <Compile Include="GetTotalAssociationByCustomerCriteria.cs" />
     <Compile Include="CapturingTransactionCriteria.cs" />
@@ -87,9 +87,7 @@
     <Compile Include="ProcessAccountCriteria.cs" />
     <Compile Include="UpdateDeviceIdCriteria.cs" />
     <Compile Include="UpdateAccountIdCriteria.cs" />
-    <Compile Include="UpdateCustomerInfoCriteria.cs" />
     <Compile Include="UpdateIpRangeCriteria.cs" />
-    <Compile Include="UpdateIsSyncGraphDBByAssociationIdCriteria.cs" />
     <Compile Include="UpdateUserAgentCriteria.cs" />
   </ItemGroup>
   <ItemGroup>

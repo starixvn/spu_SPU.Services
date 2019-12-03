@@ -31,6 +31,13 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.TransformDCSAccount(accountJson);
         }
 
+        public List<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList)
+        {
+            var customerJson = JsonConvert.SerializeObject(customerList);
+
+            return dataCenterDataAccess.TransformCustomerFromMainDB(customerJson);
+        }
+
         public void InsertAssociation(List<AssociationModel> associationList)
         {
             var associationJson = JsonConvert.SerializeObject(associationList);
