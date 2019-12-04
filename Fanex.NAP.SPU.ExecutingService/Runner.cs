@@ -13,16 +13,27 @@
 
     public partial class Runner : ServiceBase
     {
+        IScheduler scheduler;
+
         public Runner()
         {
             InitializeComponent();
+
+            var config = (NameValueCollection)ConfigurationManager.GetSection("quartz");
+
+            ISchedulerFactory factory = new StdSchedulerFactory(config);
+
+            scheduler = factory.GetScheduler().Result;
         }
 
         protected override void OnStart(string[] args)
         {
             try
             {
-                ExecuteJobs();
+                if (!scheduler.IsStarted)
+                {
+                    scheduler.Start().Wait();
+                }
 
                 var msg = $"Executing service is STARTED at {DateTime.Now}";
 
@@ -48,6 +59,11 @@
 
         protected override void OnStop()
         {
+            if(scheduler.IsStarted)
+            {
+                scheduler.Shutdown(false);
+            }
+
             var msg = $"Executing service is STOP at {DateTime.Now}";
 
             LogService.Info(msg);
@@ -61,7 +77,9 @@
         }
 
         protected override void OnShutdown()
-        {      
+        {
+            scheduler.Shutdown(false);
+
             var msg = $"Executing service is SHUTDOWN at {DateTime.Now}";
 
             LogService.Info(msg);
@@ -72,22 +90,6 @@
             }
 
             base.OnShutdown();
-        }
-
-        private void ExecuteJobs()
-        {
-            var config = (NameValueCollection)ConfigurationManager.GetSection("quartz");
-
-            ISchedulerFactory factory = new StdSchedulerFactory(config);
-
-            var schedule = factory.GetScheduler().Result;
-
-            if (!schedule.IsStarted)
-            {
-                schedule.Start().Wait();
-
-                //Task.Delay(TimeSpan.FromMinutes(1)).Wait();
-            }            
         }        
     }
 }
