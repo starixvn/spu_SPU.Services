@@ -47,7 +47,6 @@
                 if (customers != null && customers.Any())
                 {
                     dataCenterService.TransformCustomerFromMainDB(customers);
-                    
                     return true;
                 }
             }

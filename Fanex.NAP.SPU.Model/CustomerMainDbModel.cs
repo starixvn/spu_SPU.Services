@@ -24,7 +24,7 @@ namespace Fanex.NAP.SPU.Model
 
         public int CurrencyId { get; set; }
 
-        public string CurrencyName { get; set; }
+        public string Currency { get; set; }
 
         public int Srecommend { get; set; }
 
