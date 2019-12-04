@@ -2,32 +2,7 @@
 
 <Functions>
   <Function Name="Data Center">
-    <Setting Key="FPS_DC_TransformData_Account_GetForUpdateCustInfo" SpName="FPS_DC_TransformData_Account_GetForUpdateCustInfo" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-    <Setting Key="FPS_DC_TransformData_Account_UpdateCustomerInfo" SpName="FPS_DC_TransformData_Account_UpdateCustomerInfo" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-    <Setting Key="FPS_DC_GetAssociationForGraphDB" SpName="FPS_DC_GetAssociationForGraphDB" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-    <Setting Key="FPS_GetCustomerInfo40" SpName="FPS_GetCustomerInfo40" DbName="SQL.FPS_bodb02"/>
-    
-    <Setting Key="GetAllIPv62Location" SpName="GetAllIPv62Location_xtest" DbName="SQL.IPDB" TimeOut="3600"/>
-    <Setting Key="GetIPDBVersion" SpName="GetIPDBVersion_xtest" DbName="SQL.IPDB"/>
-
-    <Setting Key="FPS_DC_UpdateIPTableLog" SpName="FPS_DC_UpdateIPTableLog" DbName="MySQL.FPS_DataCenter"/>
-    <Setting Key="FPS_DC_GetLatestUpdatedDate_IPRange" SpName="FPS_DC_GetLatestUpdatedDate_IPRange" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-    <Setting Key="FPS_DC_UpdateIPRangeLocation" SpName="FPS_DC_UpdateIPRangeLocation" DbName="MySQL.FPS_DataCenter" TimeOut="3600"/>
-
-    <Setting Key="FPS_DC_UpdateIsSyncGraphDBByAssociationID" SpName="FPS_DC_UpdateIsSyncGraphDBByAssociationID" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-
-    <Setting Key="FPS_DC_TransformData_UserAgent_GetNullBrowserOSList" SpName="FPS_DC_TransformData_UserAgent_GetNullBrowserOSList" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-    <Setting Key="FPS_DC_TransformData_UserAgent_UpdateOSBrowser" SpName="FPS_DC_TransformData_UserAgent_UpdateOSBrowser" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-
-    <Setting Key="FPS_DC_TransformData_Account_Transaction_GetPackage" SpName="FPS_DC_TransformData_Account_Transaction_GetPackage" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-    <Setting Key="FPS_DC_TransformData_Account_Transaction_Update" SpName="FPS_DC_TransformData_Account_Transaction_Update" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-
-    <Setting Key="FPS_DC_TransformData_Device_Transaction_GetPackage" SpName="FPS_DC_TransformData_Device_Transaction_GetPackage" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-    <Setting Key="FPS_DC_TransformData_Device_Insert" SpName="FPS_DC_TransformData_Device_Insert" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
-
-  </Function>
-  <Function Name="CapturingTransaction">
-    <Setting Key="FPS_ST_TransformData_GetPackage" SpName="FPS_ST_TransformData_GetPackage" DbName="MySQL.FPS_RawTransaction" Timeout="600">
-    </Setting>
+    <Setting Key="DCS_DC_TransformData_UserAgent_GetNullBrowserOSList" SpName="DCS_DC_TransformData_UserAgent_GetNullBrowserOSList" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformData_UserAgent_UpdateOSBrowser" SpName="DCS_DC_TransformData_UserAgent_UpdateOSBrowser" DbName="MySQL.DCS_DataCenter"/>
   </Function>
 </Functions>
