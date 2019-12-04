@@ -18,7 +18,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -58,7 +58,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -98,7 +98,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -138,19 +138,19 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>
-          <value>Fanex.NAP.FS.BetsNearGoal.Console.exe</value>
+          <value>Fanex.NAP.FS.BetNearGoal.Console.exe</value>
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BetsNearGoal.Console</value>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BetNearGoal.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BetsNearGoal.Console</value>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.BetNearGoal.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -178,19 +178,19 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>
-          <value>Fanex.NAP.FS.DelayedGoal.Console.exe</value>
+          <value>Fanex.NAP.FS.DelayGoal.Console.exe</value>
         </entry>
         <entry>
           <key>Master</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.DelayedGoal.Console</value>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.DelayGoal.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.DelayedGoal.Console</value>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.DelayGoal.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -218,7 +218,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -257,7 +257,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -297,7 +297,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>
@@ -337,7 +337,7 @@
       <job-data-map>
         <entry>
           <key>Active</key>
-          <value>false</value>
+          <value>true</value>
         </entry>
         <entry>
           <key>FileName</key>

@@ -3,10 +3,9 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
+    using Fanex.NAP.DCS.Model;
     using Fanex.NAP.DCS.Transaction.Service.Services.Implement;
     using Fanex.NAP.DCS.Transaction.Service.Services.Interface;
-    using Fanex.NAP.DCS.Model;
-    using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using System;
     using System.Web.Http;
@@ -44,18 +43,13 @@
             try
             {
                 if (model.MinTransId != 0 && model.MaxTransId != 0)
-                {
-                    Utilities.WriteLog("InsertTransaction.log", "Start: " + DateTime.Now);
-
-                    Console.WriteLine("============> Min ID:" + model.MinTransId + " - Max ID:" + model.MaxTransId + " <================");
-
+                {                    
+                    
                     dataTransformService
                     .Initial(model.MinTransId, model.MaxTransId)
                     .UnhandleSubscriberAccountProcessing()
                     .UserAgentProcessing()
-                    .TransactionProcessing();           
-                    
-                    Utilities.WriteLog("InsertTransaction.log", "End: " + DateTime.Now);
+                    .TransactionProcessing();                                                 
 
                     return true;
                 }
