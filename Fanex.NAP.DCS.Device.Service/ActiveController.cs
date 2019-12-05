@@ -45,15 +45,8 @@
             try
             {
                 if (data.Devices != null && data.Devices.Any())
-                {                   
-                    var devicePackageList = data.Devices.Chunk(data.ChunkSize);
-
-                    foreach (var devices in devicePackageList)
-                    {
-                        dataCenterService.InsertDevice(devices.ToList());
-
-                        Console.WriteLine($"Device is inserted ({devices.Count()})");
-                    }                 
+                {                                 
+                    dataCenterService.InsertDevice(data.Devices);                                        
 
                     return true;
                 }
