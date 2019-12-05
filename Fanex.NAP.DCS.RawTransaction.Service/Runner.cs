@@ -108,7 +108,7 @@
         {
             try
             {
-                _capturingDataService.InsertTransaction(_transactionList);
+                _capturingDataService.InsertTransaction(_transactionList);                
 
                 _lastInsertTrans = DateTime.Now;
                 _transactionList.Clear();
