@@ -73,7 +73,7 @@ namespace Quartzmin.Controllers
                     ScheduledFireTimeUtc = h.ScheduledFireTimeUtc?.ToDefaultFormat(),
                     ActualFireTimeUtc = h.ActualFireTimeUtc.ToDefaultFormat(),
                     FinishedTimeUtc = h.FinishedTimeUtc?.ToDefaultFormat(),
-                    Duration = (endTime - h.ActualFireTimeUtc)?.ToString("hh\\:mm\\:ss\\.fff"),
+                    Duration = (endTime - h.ActualFireTimeUtc)?.ToString("hh\\:mm\\:ss"),
                     State = state,
                     StateIcon = icon,
                     Counter = counter

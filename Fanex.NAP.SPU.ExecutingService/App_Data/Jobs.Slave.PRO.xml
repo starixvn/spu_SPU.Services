@@ -468,11 +468,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.2.23.1:9000/transaction</value>
+          <value>http://10.2.23.1:9000/transaction;http://10.2.23.2:9000/transaction</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.2.23.1:9000/transaction</value>
+          <value>http://10.2.23.1:9000/transaction;http://10.2.23.2:9000/transaction</value>
         </entry>
       </job-data-map>
     </job>
@@ -516,11 +516,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.2.23.1:9000/device</value>
+          <value>http://10.2.23.1:9000/device;http://10.2.23.2:9000/device</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.2.23.1:9000/device</value>
+          <value>http://10.2.23.1:9000/device;http://10.2.23.2:9000/device</value>
         </entry>
       </job-data-map>
     </job>
@@ -560,11 +560,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.2.23.1:9000/account</value>
+          <value>http://10.2.23.1:9000/account;http://10.2.23.2:9000/account</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.2.23.1:9000/account</value>
+          <value>http://10.2.23.1:9000/account;http://10.2.23.2:9000/account</value>
         </entry>
       </job-data-map>
     </job>
@@ -604,11 +604,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.2.23.1:9000/associationbydevice</value>
+          <value>http://10.2.23.1:9000/associationbydevice;http://10.2.23.2:9000/associationbydevice</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.2.23.1:9000/associationbydevice</value>
+          <value>http://10.2.23.1:9000/associationbydevice;http://10.2.23.2:9000/associationbydevice</value>
         </entry>
       </job-data-map>
     </job>
@@ -648,11 +648,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.2.23.1:9000/associationbyip</value>
+          <value>http://10.2.23.1:9000/associationbyip;http://10.2.23.2:9000/associationbyip</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.2.23.1:9000/associationbyip</value>
+          <value>http://10.2.23.1:9000/associationbyip;http://10.2.23.2:9000/associationbyip</value>
         </entry>
       </job-data-map>
     </job>
