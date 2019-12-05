@@ -15,6 +15,6 @@
 
   <Function Name="CTS">
     <Setting Key="CTS_DC_GetMaxCustIdCTSCustomer" SpName="CTS_DC_GetMaxCustIdCTSCustomer" DbName="MySQL.CTS_DataCenter.fps"/>
-    <Setting Key="CTS_GetCustomerInfo" SpName="CTS_GetCustomerInfo" DbName="DBTP.bodb02.bodbSPUNet"/>
+    <Setting Key="CTS_GetCustomerInfo" SpName="CTS_GetCustomerInfo_xtest" DbName="DBTP.bodb02.bodbSPUNet"/>
   </Function>
 </Functions>
