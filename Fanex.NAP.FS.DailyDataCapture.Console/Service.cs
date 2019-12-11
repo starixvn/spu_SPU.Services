@@ -3,8 +3,11 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
+    using Fanex.MailDeliver.Model;
     using Fanex.NAP.FS.Service;
+    using Fanex.NAP.SPU.Core;
     using System;
+    using System.Configuration;
 
     public class Service : BaseService
     {
@@ -27,6 +30,8 @@
             try
             {
                 _service.Rule();
+
+                SendMailInternal();
             }
             catch (Exception ex)
             {
@@ -35,6 +40,25 @@
                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error($"Daily Data Capture service - Execute Exeption {logMessage}");
+            }
+        }
+
+        public void SendMailInternal()
+        {
+            var environment = AppSetting.EnvironmentName;
+
+            using (var client = new Fanex.MailDeliver.MailClient.API.MailDeliver())
+            {
+                var mailItem = new MailRecord
+                {
+                    MailTo = "spu@starixsoft.com",
+                    Subject = "Daily Data Capturing Service" + " (" + environment + ")",
+                    Title = "Daily Data Capturing Service - Still alive",
+                    Body = $"Please be informed that Daily Data Capturing Service is EXECUTED successfully at {DateTime.Now} (GMT-4).",
+                    Priority = System.Net.Mail.MailPriority.High
+                };
+
+                client.SendMail(mailItem);
             }
         }
     }

@@ -56,11 +56,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.FS.DailyDataCapture.Console.exe.PRO.config">
-	<DependentUpon>App.Config</DependentUpon>
+      <DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.FS.DailyDataCapture.Console.exe.LOCAL.config">
-	<DependentUpon>App.Config</DependentUpon>
+      <DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Fanex.NAP.FS.DailyDataCapture.Console.ruleset" />
@@ -77,6 +77,10 @@
     <ProjectReference Include="..\Fanex.NAP.FS.Service\Fanex.NAP.FS.Service.csproj">
       <Project>{e60465e7-1880-4a9e-846c-964af786ce7e}</Project>
       <Name>Fanex.NAP.FS.Service</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
+      <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
+      <Name>Fanex.NAP.SPU.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -102,6 +106,9 @@
     </PackageReference>
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
       <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.MailDeliver.MailClient">
+      <Version>1.0.0.4</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.2</Version>
