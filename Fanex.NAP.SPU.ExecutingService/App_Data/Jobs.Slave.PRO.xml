@@ -516,11 +516,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>http://10.2.23.1:9000/device;http://10.2.23.2:9000/device</value>
+          <value>http://10.2.23.1:9000/device;http://10.2.23.2:9000/device;http://10.2.23.3:9000/device</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>http://10.2.23.1:9000/device;http://10.2.23.2:9000/device</value>
+          <value>http://10.2.23.1:9000/device;http://10.2.23.2:9000/device;http://10.2.23.3:9000/device</value>
         </entry>
       </job-data-map>
     </job>
@@ -552,7 +552,7 @@
         </entry>
         <entry>
           <key>PackageSize</key>
-          <value>100</value>
+          <value>500</value>
         </entry>
         <entry>
           <key>Action</key>
