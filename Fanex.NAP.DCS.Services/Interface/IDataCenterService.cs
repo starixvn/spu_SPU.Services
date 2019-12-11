@@ -18,7 +18,9 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, int numOfBatch, int maxCustId);
 
-        int GetCurrentMaxCustId();
+        List<CustomerMainDbModel> GetCustSubFromMainDB(int numOfAccount, int numOfBatch, int maxCustId);
+
+        int GetCurrentMaxCustId(bool isCustSub);
 
         List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch);
 

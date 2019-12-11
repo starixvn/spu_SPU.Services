@@ -50,9 +50,14 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.GetCustomerFromMainDB(numOfAccount, numOfBatch, maxCustId);
         }
 
-        public int GetCurrentMaxCustId()
+        public List<CustomerMainDbModel> GetCustSubFromMainDB(int numOfAccount, int numOfBatch, int maxCustId)
         {
-            return dataCenter.GetMaxCustIdInCTSCustomer();
+            return dataCenter.GetCustSubFromMainDB(numOfAccount, numOfBatch, maxCustId);
+        }
+
+        public int GetCurrentMaxCustId(bool isCustSub)
+        {
+            return dataCenter.GetMaxCustIdInCTSCustomer(isCustSub);
         }
 
         public List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch)

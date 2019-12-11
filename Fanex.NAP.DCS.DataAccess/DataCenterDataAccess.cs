@@ -255,9 +255,25 @@
             }
         }
 
-        public int GetMaxCustIdInCTSCustomer()
+        public List<CustomerMainDbModel> GetCustSubFromMainDB(int quantityPerBatch, int numOfBatch, int maxCustId)
+        {
+            var criteria = new GetCustSubFromMainDbCriteria
+            {
+                MaxCustId = maxCustId,
+                RowSize = quantityPerBatch,
+                NumberOfBatch = numOfBatch
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerMainDbModel>(criteria).ToList();
+            }
+        }
+
+        public int GetMaxCustIdInCTSCustomer(bool isCustSub)
         {
             var criteria = new GetMaxCustIdCriteria();
+            criteria.IsCustSub = isCustSub;
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {

@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetCustSubFromMainDbCriteria.cs" />
     <Compile Include="GetMaxCustIdCriteria.cs" />
     <Compile Include="GetRawAccountListCriteria.cs" />
     <Compile Include="GetRawAssociationListCriteria.cs" />

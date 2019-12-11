@@ -60,39 +60,47 @@
                     var apiUrls = rootPath.Split(';');
 
                     // we need to implement for CustSub
-                    var maxCustId = dataCenterService.GetCurrentMaxCustId();
+                    var maxCustId = dataCenterService.GetCurrentMaxCustId(false);
                     var listOfCust = dataCenterService.GetCustomerFromMainDB(packageSize, apiUrls.Count(), maxCustId);
 
-                    if (listOfCust.Any())
+                    if (!listOfCust.Any())
                     {
-                        var groupTrans = listOfCust.GroupBy(x => x.BatchId);
-                        var tasks = new List<Task>();
-                        var index = 0;
-
-                        foreach (var trans in groupTrans)
-                        {
-                            var task = Task.Run(() =>
-                            {
-                                var apiUrl = apiUrls[index >= apiUrls.Length ? 0 : index];
-
-                                return Executing(trans.ToList(), apiUrl, jobDataMap.GetString("Action"));
-                            });
-
-                            await Task.Delay(10);
-
-                            tasks.Add(task);
-
-                            index++;
-                        }
-
-                        await Task.WhenAll(tasks.ToArray());
+                        var maxCustSubId = dataCenterService.GetCurrentMaxCustId(true);
+                        listOfCust = dataCenterService.GetCustSubFromMainDB(packageSize, apiUrls.Count(), maxCustSubId);
                     }
+
+                    await SendRequest(listOfCust, apiUrls, jobDataMap);
                 }
             }
             else
             {
                 LogService.Error("Job Data cannot be null");
             }           
+        }
+
+        private async Task SendRequest(List<CustomerMainDbModel> listCust, string[] urlList, JobDataMap mappingData)
+        {
+            var groupTrans = listCust.GroupBy(x => x.BatchId);
+            var tasks = new List<Task>();
+            var index = 0;
+
+            foreach (var trans in groupTrans)
+            {
+                var task = Task.Run(() =>
+                {
+                    var apiUrl = urlList[index >= urlList.Length ? 0 : index];
+
+                    return Executing(trans.ToList(), apiUrl, mappingData.GetString("Action"));
+                });
+
+                await Task.Delay(10);
+
+                tasks.Add(task);
+
+                index++;
+            }
+
+            await Task.WhenAll(tasks.ToArray());
         }
 
         private static async Task<IRestResponse> Executing(List<CustomerMainDbModel> customers, string apiUrl, string actionPath)
