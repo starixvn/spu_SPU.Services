@@ -52,20 +52,27 @@
                 }
             }
             catch (Exception ex)
-            {                
-                if (!ex.InnerException.Message.Contains("Deadlock found when trying to get lock"))
-                {
-                    var logMessage = new LogMessage(ex.Message)
+            {
+                //if (!ex.InnerException.Message.Contains("Deadlock found when trying to get lock"))
+                //{
+                //    var logMessage = new LogMessage(ex.Message)
+                //       .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                //       .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
+                //       .ToString();
+
+                //    LogService.Error(logMessage);
+                //}
+                //else
+                //{
+                //    Console.WriteLine(ex.Message);
+                //}
+
+                var logMessage = new LogMessage(ex.Message)
                        .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                        .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
                        .ToString();
 
-                    LogService.Error(logMessage);
-                }
-                else
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                LogService.Error(logMessage);
             }
 
             return false;
