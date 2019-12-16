@@ -240,6 +240,20 @@
             }
         }
 
+        public List<RawAccountModel> GetRawUnsuccessAccount(int quantityPerBatch, int numOfBatch)
+        {
+            var criteria = new GetRawUnsucessAccountListCriteria
+            {
+                NumberOfAccount = quantityPerBatch,
+                NumberOfBatch = numOfBatch
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<RawAccountModel>(criteria).ToList();
+            }
+        }
+
         public List<CustomerMainDbModel> GetCustomerFromMainDB(int quantityPerBatch, int numOfBatch, int maxCustId)
         {
             var criteria = new GetCustomersFromMainDbCriteria
