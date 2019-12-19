@@ -8,6 +8,8 @@ namespace Fanex.NAP.SPU.Model
 {
     public class CustomerMainDbModel
     {
+        private DateTime createdDate;
+
         public int BatchId { get; set; }
 
         public int CustId { get; set; }
@@ -31,5 +33,11 @@ namespace Fanex.NAP.SPU.Model
         public int Mrecommend { get; set; }
 
         public int Recommend { get; set; }
+
+        public DateTime CreatedDate
+        {
+            get { return Convert.ToDateTime(createdDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")); }
+            set { createdDate = value; }
+        }
     }
 }

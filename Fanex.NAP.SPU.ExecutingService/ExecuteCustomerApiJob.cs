@@ -59,7 +59,6 @@
                 {
                     var apiUrls = rootPath.Split(';');
 
-                    // we need to implement for CustSub
                     var maxCustId = dataCenterService.GetCurrentMaxCustId(false);
                     var listOfCust = dataCenterService.GetCustomerFromMainDB(packageSize, apiUrls.Count(), maxCustId);
 
