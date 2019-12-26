@@ -31,45 +31,59 @@ namespace Fanex.NAP.SPU.Graph.Core
             return this;
         }
 
+        public DbSessionFactory RegisterXmlFile(string dir, string fileName)
+        {
+            var url = Path.Combine(Utilities.ResolvePath(dir), fileName);
+
+            ReadXmlConfig(url);
+
+            return this;
+        }
+
         public DbSessionFactory RegisterXmlFile(string dir)
         {
             var files = Directory.GetFiles(Utilities.ResolvePath(dir), "*.xml", SearchOption.AllDirectories);
 
             foreach (var file in files)
             {
-                var document = XDocument.Load(file);
-
-                foreach (var setting in document.Descendants("GraphSetting"))
-                {
-                    var key = setting.Attribute("Key").Value;
-                    var spName = setting.Attribute("SpName").Value;
-                    var db = setting.Attribute("DbName").Value;
-
-                    if (key is null)
-                    {
-                        throw new InvalidOperationException($"There's no Key attribute for {setting}");
-                    }
-
-                    if (spName is null)
-                    {
-                        throw new InvalidOperationException($"There's no SpName attribute for {setting}");
-                    }
-
-                    if (db is null)
-                    {
-                        throw new InvalidOperationException($"There's no DbName attribute for {setting}");
-                    }
-
-                    settings.Add(setting.Attribute("Key").Value, new GraphSetting
-                    {
-                        DbKey = db,
-                        SpKey = key,
-                        SpName = spName
-                    });
-                }
+                ReadXmlConfig(file);
             }
 
             return this;
+        }
+
+        private void ReadXmlConfig(string url)
+        {
+            var document = XDocument.Load(url);
+
+            foreach (var setting in document.Descendants("GraphSetting"))
+            {
+                var key = setting.Attribute("Key").Value;
+                var spName = setting.Attribute("SpName").Value;
+                var db = setting.Attribute("DbName").Value;
+
+                if (key is null)
+                {
+                    throw new InvalidOperationException($"There's no Key attribute for {setting}");
+                }
+
+                if (spName is null)
+                {
+                    throw new InvalidOperationException($"There's no SpName attribute for {setting}");
+                }
+
+                if (db is null)
+                {
+                    throw new InvalidOperationException($"There's no DbName attribute for {setting}");
+                }
+
+                settings.Add(setting.Attribute("Key").Value, new GraphSetting
+                {
+                    DbKey = db,
+                    SpKey = key,
+                    SpName = spName
+                });
+            }
         }
 
         public DbSessionFactory RegisterDriverFactory(IDriverFactory factory)
