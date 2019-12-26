@@ -64,7 +64,6 @@
                 if (accounts != null && accounts.Any())
                 {
                     var accountJson = JsonConvert.SerializeObject(accounts);
-                    LogService.Info(accountJson);
 
                     var insertedAccounts = dataCenterService.TransformDCSAccount(accounts);
                                         
