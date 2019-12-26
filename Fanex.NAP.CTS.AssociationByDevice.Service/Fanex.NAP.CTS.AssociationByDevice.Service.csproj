@@ -61,11 +61,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.CTS.AssociationByDevice.Service.exe.LOCAL.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.CTS.AssociationByDevice.Service.exe.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -121,10 +121,6 @@
     <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
       <Project>{67FECD9E-043A-4100-BF62-52C1A016B85D}</Project>
       <Name>Fanex.NAP.SPU.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.SPU.Queue\Fanex.NAP.SPU.Queue.csproj">
-      <Project>{fa790109-f8c1-44b7-9246-05b5f1a32696}</Project>
-      <Name>Fanex.NAP.SPU.Queue</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
