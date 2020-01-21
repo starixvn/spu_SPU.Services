@@ -11,8 +11,10 @@ namespace Fanex.NAP.DCS.Model
 
         public string SubscriberName { get; set; }
 
+        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd HH:mm:ss.ffff")]
         public DateTime TransTime { get; set; }
 
+        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd HH:mm:ss.ffff")]
         public DateTime CreatedDate { get; set; }
 
         public string DeviceCode { get; set; }

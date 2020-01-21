@@ -38,7 +38,7 @@ namespace MigrateFPSData
                     {
                          new SentryLogging(new SentryEngineOptions
                          {
-                             Dsn = new Dsn("https://95587e38aa44413094c39b488d4f8425@sentry.nexdev.net/33")
+                             Dsn = new Dsn("http://5db4409de047476aacba9ee1f3c70e26@10.99.99.37:801/63")
                          })
                     });
 
@@ -47,7 +47,8 @@ namespace MigrateFPSData
                 Console.WriteLine("What do you want ?");
                 Console.WriteLine("1. Export CSV file");
                 Console.WriteLine("2. Import CSV file");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("3. Decrypte Device code");
+                Console.WriteLine("4. Exit");
                 Console.Write("Choose menu: ");
                 var menu = Console.ReadLine();
 
@@ -149,9 +150,9 @@ namespace MigrateFPSData
                                         var directoryInfo = Directory.GetParent(f);
                                         var fileName = Path.GetFileName(f);
 
-                                        ImportCSV(connectionInfo, directoryInfo.Name, fileName);
+                                        var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
 
-                                        if (File.Exists(f))
+                                        if (result && File.Exists(f))
                                         {
                                             File.Delete(f);
 
@@ -168,6 +169,17 @@ namespace MigrateFPSData
                             break;
                         }
                     case 3:
+                        {                           
+                            var deviceInfo = GetDeviceInfo("eyJuYSI6Ik4vQSIsImRldmljZUNvZGUiOiI5MjI5MjNiZDdjZTE4MDUxNDJmMjdmY2FiZGFmY2I1M2M5M2ZlNTliOzMxYzcyMGQ1ODVhOGI4YzQzNTVjOWMzZmI3ZjRmZWY2IiwiYXBwVmVyc2lvbiI6IjUuMCAoTGludXg7IEFuZHJvaWQgOTsgUmVkbWkgTm90ZSA1IFBybyBCdWlsZC9QS1ExLjE4MDkwNC4wMDE7IHd2KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBWZXJzaW9uLzQuMCBDaHJvbWUvNzkuMC4zOTQ1LjExNiBNb2JpbGUgU2FmYXJpLzUzNy4zNiIsInRpbWVab25lIjoiLTMzMCIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChMaW51eDsgQW5kcm9pZCA5OyBSZWRtaSBOb3RlIDUgUHJvIEJ1aWxkL1BLUTEuMTgwOTA0LjAwMTsgd3YpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIFZlcnNpb24vNC4wIENocm9tZS83OS4wLjM5NDUuMTE2IE1vYmlsZSBTYWZhcmkvNTM3LjM2Iiwic2NyZWVuIjp7IndpZHRoIjozOTMsImhlaWdodCI6Nzg2LCJjb2xvckRlcHRoIjoyNH0sImRldmljZUlkIjoiMWJmY2JmYzRkZTE0NGUwODk4YWRmYzMyYzUyMjJlNzkiLCJocmVmIjoiaHR0cHM6Ly9hcHAuYWI1MjUyLmNvbS8jL1BheW1lbnRNZXRob2QvRGVwb3NpdE1ldGhvZC9EZXBvc2l0X1VQSS5hc3B4IiwiY2FwdHVyZWREYXRlIjoiNjM3MTQ5MTgyNTM2ODA1NTU4IiwiZ2VvbG9jYXRpb24iOiIiLCJ2ZXJzaW9uIjoiMS4yLjQifQ==");
+
+                            Console.WriteLine("DeviceNo: " + deviceInfo.DeviceNo);
+                            Console.WriteLine("DeviceFPCode: " + deviceInfo.DeviceFPCode);
+                            Console.WriteLine("UserAgent: " + deviceInfo.UserAgent);
+                            Console.WriteLine("CapturedDate: " + deviceInfo.CapturedDate);
+
+                            break;
+                        }
+                    case 4:
                         {
                             break;
                         }
@@ -188,7 +200,7 @@ namespace MigrateFPSData
             }
         }
 
-        private static void ImportCSV(ConnectionInfo connectionInfo, string csvFolder, string csvFileName)
+        private static bool ImportCSV(ConnectionInfo connectionInfo, string csvFolder, string csvFileName)
         {
             using (var client = new SshClient(connectionInfo))
             {
@@ -205,8 +217,12 @@ namespace MigrateFPSData
                 else
                 {
                     Console.WriteLine("-" + csvFolder + "/" + csvFileName + " is imported successfully.");
+
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private static List<SourceModel> GetData(int pageSize)
@@ -224,9 +240,8 @@ namespace MigrateFPSData
 
         private static RawTransactionModel TransformRawTransaction(SourceModel source)
         {
-            var invalidDevice = string.Empty;
-            var deviceCode = Fanex.NAP.DCS.Core.Utilities.GetDeviceCodeFromCapturedData(source.DeviceCode);
-            var deviceInfo = GetDeviceInfo(deviceCode);
+            var invalidDevice = string.Empty;            
+            var deviceInfo = GetDeviceInfo(source.DeviceCode);
             var url = Fanex.NAP.DCS.Core.Utilities.GetURLFromDeviceCode(source.DeviceCode);
             var userAgent = Fanex.NAP.DCS.Core.Utilities.GetUserAgentFromDeviceCode(source.DeviceCode);
             var transBit = new BitArray(16);
@@ -240,7 +255,7 @@ namespace MigrateFPSData
             {
                 if (!Fanex.NAP.DCS.Core.Utilities.IsGuidDeviceId(deviceInfo.DeviceNo) || deviceInfo.InvalidDeviceId)
                 {
-                    invalidDevice = deviceCode;
+                    invalidDevice = source.DeviceCode;
                     deviceInfo.DeviceNo = null;
                     transBit.Set((int)TransStatus.InvalidDI, true);
                 }
