@@ -49,13 +49,14 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.DCS.IPRange.Console.exe.LOCAL.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.DCS.IPRange.Console.exe.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="ShellScript\fps40_mysql_initial_ip_range.sh" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.DCS.Core\Fanex.NAP.DCS.Core.csproj">

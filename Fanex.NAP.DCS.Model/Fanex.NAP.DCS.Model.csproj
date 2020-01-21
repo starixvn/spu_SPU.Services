@@ -112,6 +112,9 @@
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
       <Version>1.0.1</Version>
     </PackageReference>
+    <PackageReference Include="FileHelpers">
+      <Version>3.4.1</Version>
+    </PackageReference>
     <PackageReference Include="Google.Protobuf">
       <Version>3.10.1</Version>
     </PackageReference>
