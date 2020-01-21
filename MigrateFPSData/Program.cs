@@ -1,5 +1,4 @@
 ﻿using Fanex.Data;
-using Fanex.Data.Repository;
 using Fanex.Data.SqlServer;
 using Fanex.DeviceDetector.Factory;
 using Fanex.Logging;
@@ -16,7 +15,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MigrateFPSData
@@ -84,7 +83,7 @@ namespace MigrateFPSData
                                             var chunkTrans = rawTrans.Chunk(pageSize / 10);
                                             var random = new Random();
 
-                                            chunkTrans.AsParallel().ForAll(x =>
+                                            Parallel.ForEach(chunkTrans, new ParallelOptions { MaxDegreeOfParallelism = 5 }, x =>
                                             {
                                                 try
                                                 {
@@ -106,7 +105,7 @@ namespace MigrateFPSData
 
                                                     counter++;
                                                 }
-                                                catch(Exception ex)
+                                                catch (Exception ex)
                                                 {
                                                     var fromTransId = x.Max(a => a.TransId);
                                                     var toTransId = x.Min(a => a.TransId);
@@ -117,7 +116,9 @@ namespace MigrateFPSData
                                         }
 
                                         Console.WriteLine($"Export CSV file is successfully({counter} files).");
-                                    }                                    
+
+                                        Thread.Sleep(2);
+                                    }
 
                                     Console.WriteLine($"=======================================================");
                                 }
@@ -184,7 +185,7 @@ namespace MigrateFPSData
                 Console.WriteLine(ex.Message);
 
                 Console.ReadKey();
-            }            
+            }
         }
 
         private static void ImportCSV(ConnectionInfo connectionInfo, string csvFolder, string csvFileName)
