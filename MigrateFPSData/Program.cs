@@ -48,6 +48,7 @@ namespace MigrateFPSData
                 Console.WriteLine("What do you want ?");
                 Console.WriteLine("1. Export CSV file");
                 Console.WriteLine("2. Import CSV file");
+                Console.WriteLine("3. Exit");
                 Console.Write("Choose menu: ");
                 var menu = Console.ReadLine();
 
@@ -85,35 +86,38 @@ namespace MigrateFPSData
 
                                             chunkTrans.AsParallel().ForAll(x =>
                                             {
-                                                var folderName = ConfigurationManager.AppSettings["csv-destination-root-path"] + DateTime.Now.ToString("yyyMMdd");
-
-                                                if (!Directory.Exists(folderName))
+                                                try
                                                 {
-                                                    Directory.CreateDirectory(folderName);
+                                                    var folderName = ConfigurationManager.AppSettings["csv-destination-root-path"] + DateTime.Now.ToString("yyyMMdd");
+
+                                                    if (!Directory.Exists(folderName))
+                                                    {
+                                                        Directory.CreateDirectory(folderName);
+                                                    }
+
+                                                    var fileName = folderName + "//" + DateTime.Now.ToString("yyyyMMddhhmmss") + random.Next(10000) + ".csv";
+
+                                                    if (File.Exists(fileName))
+                                                    {
+                                                        fileName = folderName + "//" + DateTime.Now.ToString("yyyyMMddhhmmss") + random.Next(10000) + ".csv";
+                                                    }
+
+                                                    engine.WriteFile(fileName, x);
+
+                                                    counter++;
                                                 }
-
-                                                var fileName = folderName + "//" + DateTime.Now.ToString("yyyyMMddhhmmss") + random.Next(10000) + ".csv";
-
-                                                if (File.Exists(fileName))
+                                                catch(Exception ex)
                                                 {
-                                                    fileName = folderName + "//" + DateTime.Now.ToString("yyyyMMddhhmmss") + random.Next(10000) + ".csv";
+                                                    var fromTransId = x.Max(a => a.TransId);
+                                                    var toTransId = x.Min(a => a.TransId);
+
+                                                    LogService.Error($"There is some wrong in Export CSV process(trans:{fromTransId} - {toTransId}). Error msg: {ex.Message}");
                                                 }
-
-                                                engine.WriteFile(fileName, x);
-
-                                                counter++;
-
-                                                trans = new List<SourceModel>();
-                                                // DeleteData();
                                             });
                                         }
 
                                         Console.WriteLine($"Export CSV file is successfully({counter} files).");
-                                    }
-                                    else
-                                    {
-                                        Console.WriteLine("There is no data.");
-                                    }
+                                    }                                    
 
                                     Console.WriteLine($"=======================================================");
                                 }
@@ -124,7 +128,7 @@ namespace MigrateFPSData
 
                             break;
                         }
-                    default:
+                    case 2:
                         {
                             Console.WriteLine("Import CSV file is begining...");
 
@@ -158,6 +162,18 @@ namespace MigrateFPSData
 
                             Console.WriteLine("Import CSV file is DONE. BYE.");
 
+                            Console.ReadKey();
+
+                            break;
+                        }
+                    case 3:
+                        {
+                            break;
+                        }
+                    default:
+                        {
+                            Console.WriteLine("Fuck...");
+
                             break;
                         }
                 }
@@ -165,10 +181,10 @@ namespace MigrateFPSData
             catch (Exception ex)
             {
                 LogService.Error(ex.Message);
-            }
+                Console.WriteLine(ex.Message);
 
-            Console.ReadKey();
-
+                Console.ReadKey();
+            }            
         }
 
         private static void ImportCSV(ConnectionInfo connectionInfo, string csvFolder, string csvFileName)
@@ -203,18 +219,6 @@ namespace MigrateFPSData
             {
                 return db.Query<SourceModel>(criteria).ToList();
             }
-        }
-
-        private static void DeleteData()
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new DeleteDataCriteria
-            {
-
-            };
-
-            repository.Execute(criteria);
         }
 
         private static RawTransactionModel TransformRawTransaction(SourceModel source)
@@ -263,7 +267,8 @@ namespace MigrateFPSData
                 ActionResult = source.ActionResult,
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(deviceInfo.UserAgent) : userAgent,
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
-                FingerprintMoreInfo = null
+                FingerprintMoreInfo = null,
+                TransId = source.TransId
             };
         }
 

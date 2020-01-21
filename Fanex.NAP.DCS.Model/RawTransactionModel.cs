@@ -38,7 +38,10 @@ namespace Fanex.NAP.DCS.Model
 
         public string InvalidDevice { get; set; }
 
-        public int TransStatus { get; set; } 
+        public int TransStatus { get; set; }
+
+        [FieldHidden]
+        public int TransId { get; set; }
     }
 
     public class ConvertBigInteger : ConverterBase

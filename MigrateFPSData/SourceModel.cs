@@ -8,6 +8,8 @@ namespace MigrateFPSData
 {
     public class SourceModel
     {
+        public int TransId { get; set; }
+
         public string LoginName { get; set; }
 
         public string ActionName { get; set; }
