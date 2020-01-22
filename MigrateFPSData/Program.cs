@@ -95,12 +95,13 @@ namespace MigrateFPSData
                                                         Directory.CreateDirectory(folderName);
                                                     }
 
-                                                    var fileName = folderName + "//" + DateTime.Now.ToString("yyyyMMddhhmmss") + random.Next(10000) + ".csv";
+                                                    var fileName = string.Empty;
 
-                                                    if (File.Exists(fileName))
+                                                    do
                                                     {
                                                         fileName = folderName + "//" + DateTime.Now.ToString("yyyyMMddhhmmss") + random.Next(10000) + ".csv";
                                                     }
+                                                    while (File.Exists(fileName));                                               
 
                                                     engine.WriteFile(fileName, x);
 
@@ -163,8 +164,7 @@ namespace MigrateFPSData
 
                                                     if (File.Exists(f))
                                                     {
-                                                        File.Delete(f);
-                                                        Console.WriteLine($"- Removed file {f}");
+                                                        File.Delete(f);                                                        
                                                     }
                                                 }
                                                 else
