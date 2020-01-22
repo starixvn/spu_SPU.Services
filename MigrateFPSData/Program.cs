@@ -112,12 +112,12 @@ namespace MigrateFPSData
                                                     var fromTransId = x.Max(a => a.TransId);
                                                     var toTransId = x.Min(a => a.TransId);
 
-                                                    LogService.Error($"There is some wrong in Export CSV process(trans:{fromTransId} - {toTransId}). Error msg: {ex.Message}");
+                                                    LogService.Error($"There is something wrong in Export CSV process(trans:{fromTransId} - {toTransId}). Error msg: {ex.Message}");
                                                 }
                                             });
                                         }
 
-                                        Console.WriteLine($"Export CSV file is successfully({counter} files).");
+                                        Console.WriteLine($"Exported {counter} files ==> DONE.");
 
                                         Thread.Sleep(2);
                                     }
@@ -160,7 +160,7 @@ namespace MigrateFPSData
 
                                                 if (result)
                                                 {
-                                                    Console.WriteLine("-" + f + " is imported successfully.");
+                                                    Console.WriteLine("-" + f + " ==> DONE.");
 
                                                     if (File.Exists(f))
                                                     {
@@ -192,7 +192,7 @@ namespace MigrateFPSData
                                 }
                                 else
                                 {
-                                    Console.WriteLine("There is no CSV files.");
+                                    Console.WriteLine("There is no any CSV files.");
                                 }
 
                                 Console.WriteLine($"=======================================================");
@@ -207,7 +207,7 @@ namespace MigrateFPSData
                         }
                     case 3:
                         {
-                            var deviceInfo = GetDeviceInfo("eyJuYSI6Ik4vQSIsImRldmljZUNvZGUiOiI5MjI5MjNiZDdjZTE4MDUxNDJmMjdmY2FiZGFmY2I1M2M5M2ZlNTliOzMxYzcyMGQ1ODVhOGI4YzQzNTVjOWMzZmI3ZjRmZWY2IiwiYXBwVmVyc2lvbiI6IjUuMCAoTGludXg7IEFuZHJvaWQgOTsgUmVkbWkgTm90ZSA1IFBybyBCdWlsZC9QS1ExLjE4MDkwNC4wMDE7IHd2KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBWZXJzaW9uLzQuMCBDaHJvbWUvNzkuMC4zOTQ1LjExNiBNb2JpbGUgU2FmYXJpLzUzNy4zNiIsInRpbWVab25lIjoiLTMzMCIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChMaW51eDsgQW5kcm9pZCA5OyBSZWRtaSBOb3RlIDUgUHJvIEJ1aWxkL1BLUTEuMTgwOTA0LjAwMTsgd3YpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIFZlcnNpb24vNC4wIENocm9tZS83OS4wLjM5NDUuMTE2IE1vYmlsZSBTYWZhcmkvNTM3LjM2Iiwic2NyZWVuIjp7IndpZHRoIjozOTMsImhlaWdodCI6Nzg2LCJjb2xvckRlcHRoIjoyNH0sImRldmljZUlkIjoiMWJmY2JmYzRkZTE0NGUwODk4YWRmYzMyYzUyMjJlNzkiLCJocmVmIjoiaHR0cHM6Ly9hcHAuYWI1MjUyLmNvbS8jL1BheW1lbnRNZXRob2QvRGVwb3NpdE1ldGhvZC9EZXBvc2l0X1VQSS5hc3B4IiwiY2FwdHVyZWREYXRlIjoiNjM3MTQ5MTgyNTM2ODA1NTU4IiwiZ2VvbG9jYXRpb24iOiIiLCJ2ZXJzaW9uIjoiMS4yLjQifQ==");
+                            var deviceInfo = GetDeviceInfo("");
 
                             Console.WriteLine("DeviceNo: " + deviceInfo.DeviceNo);
                             Console.WriteLine("DeviceFPCode: " + deviceInfo.DeviceFPCode);
