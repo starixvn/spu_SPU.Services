@@ -65,7 +65,7 @@ namespace MigrateFPSData
                             if (!string.IsNullOrWhiteSpace(number))
                             {
                                 var pageSize = Convert.ToInt32(number);
-                                var trans = new List<SourceModel>();
+                                List<SourceModel> trans = null;
 
                                 do
                                 {
@@ -136,31 +136,68 @@ namespace MigrateFPSData
 
                             var authMethod = new PasswordAuthenticationMethod(AppSettings.SSHUser, AppSettings.SSHPassword);
                             var connectionInfo = new ConnectionInfo(AppSettings.SSHHost, AppSettings.SSHPort, AppSettings.SSHUser, authMethod);
+                            List<string> directories = null;
 
-                            var directories = Directory.GetDirectories(ConfigurationManager.AppSettings["csv-destination-root-path"]);
-
-                            if (directories != null && directories.Any())
+                            do
                             {
-                                directories.ToList().ForEach(x =>
+                                directories = Directory.GetDirectories(ConfigurationManager.AppSettings["csv-destination-root-path"]).ToList();
+
+                                if (directories != null && directories.Any())
                                 {
-                                    var files = Directory.GetFiles(x);
-
-                                    files.ToList().ForEach(f =>
+                                    directories.ToList().ForEach(x =>
                                     {
-                                        var directoryInfo = Directory.GetParent(f);
-                                        var fileName = Path.GetFileName(f);
+                                        var files = Directory.GetFiles(x).ToList();
 
-                                        var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
-
-                                        if (result && File.Exists(f))
+                                        files.ForEach(f =>
                                         {
-                                            File.Delete(f);
+                                            var directoryInfo = Directory.GetParent(f);
+                                            var fileName = Path.GetFileName(f);
 
-                                            Console.WriteLine($"- Removed file {f}");
-                                        }
+                                            try
+                                            {
+                                                var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
+
+                                                if (result)
+                                                {
+                                                    Console.WriteLine("-" + f + " is imported successfully.");
+
+                                                    if (File.Exists(f))
+                                                    {
+                                                        File.Delete(f);
+                                                        Console.WriteLine($"- Removed file {f}");
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    var fullPath = Path.GetFullPath(f);
+                                                    var fileNameWithoutEx = Path.GetFileNameWithoutExtension(f);
+
+                                                    File.Move(f, fullPath + fileNameWithoutEx + "-Error.csv");
+
+                                                    LogService.Error($"Import csv file ERROR({f})");
+                                                }
+                                            }
+                                            catch (Exception ex)
+                                            {
+                                                LogService.Error(ex.Message + $". CVS file({f})");
+
+                                                throw;
+                                            }
+                                        });
                                     });
-                                });
-                            }
+
+                                    directories.Clear();
+
+                                    Thread.Sleep(2);
+                                }
+                                else
+                                {
+                                    Console.WriteLine("There is no CSV files.");
+                                }
+
+                                Console.WriteLine($"=======================================================");
+
+                            } while (directories != null && directories.Any());
 
                             Console.WriteLine("Import CSV file is DONE. BYE.");
 
@@ -169,7 +206,7 @@ namespace MigrateFPSData
                             break;
                         }
                     case 3:
-                        {                           
+                        {
                             var deviceInfo = GetDeviceInfo("eyJuYSI6Ik4vQSIsImRldmljZUNvZGUiOiI5MjI5MjNiZDdjZTE4MDUxNDJmMjdmY2FiZGFmY2I1M2M5M2ZlNTliOzMxYzcyMGQ1ODVhOGI4YzQzNTVjOWMzZmI3ZjRmZWY2IiwiYXBwVmVyc2lvbiI6IjUuMCAoTGludXg7IEFuZHJvaWQgOTsgUmVkbWkgTm90ZSA1IFBybyBCdWlsZC9QS1ExLjE4MDkwNC4wMDE7IHd2KSBBcHBsZVdlYktpdC81MzcuMzYgKEtIVE1MLCBsaWtlIEdlY2tvKSBWZXJzaW9uLzQuMCBDaHJvbWUvNzkuMC4zOTQ1LjExNiBNb2JpbGUgU2FmYXJpLzUzNy4zNiIsInRpbWVab25lIjoiLTMzMCIsInVzZXJBZ2VudCI6Ik1vemlsbGEvNS4wIChMaW51eDsgQW5kcm9pZCA5OyBSZWRtaSBOb3RlIDUgUHJvIEJ1aWxkL1BLUTEuMTgwOTA0LjAwMTsgd3YpIEFwcGxlV2ViS2l0LzUzNy4zNiAoS0hUTUwsIGxpa2UgR2Vja28pIFZlcnNpb24vNC4wIENocm9tZS83OS4wLjM5NDUuMTE2IE1vYmlsZSBTYWZhcmkvNTM3LjM2Iiwic2NyZWVuIjp7IndpZHRoIjozOTMsImhlaWdodCI6Nzg2LCJjb2xvckRlcHRoIjoyNH0sImRldmljZUlkIjoiMWJmY2JmYzRkZTE0NGUwODk4YWRmYzMyYzUyMjJlNzkiLCJocmVmIjoiaHR0cHM6Ly9hcHAuYWI1MjUyLmNvbS8jL1BheW1lbnRNZXRob2QvRGVwb3NpdE1ldGhvZC9EZXBvc2l0X1VQSS5hc3B4IiwiY2FwdHVyZWREYXRlIjoiNjM3MTQ5MTgyNTM2ODA1NTU4IiwiZ2VvbG9jYXRpb24iOiIiLCJ2ZXJzaW9uIjoiMS4yLjQifQ==");
 
                             Console.WriteLine("DeviceNo: " + deviceInfo.DeviceNo);
@@ -213,16 +250,12 @@ namespace MigrateFPSData
                 if (!string.IsNullOrWhiteSpace(sshCommand.Error))
                 {
                     LogService.Error(sshCommand.Error);
-                }
-                else
-                {
-                    Console.WriteLine("-" + csvFolder + "/" + csvFileName + " is imported successfully.");
 
-                    return true;
+                    return false;
                 }
+
+                return true;
             }
-
-            return false;
         }
 
         private static List<SourceModel> GetData(int pageSize)
@@ -240,7 +273,7 @@ namespace MigrateFPSData
 
         private static RawTransactionModel TransformRawTransaction(SourceModel source)
         {
-            var invalidDevice = string.Empty;            
+            var invalidDevice = string.Empty;
             var deviceInfo = GetDeviceInfo(source.DeviceCode);
             var url = Fanex.NAP.DCS.Core.Utilities.GetURLFromDeviceCode(source.DeviceCode);
             var userAgent = Fanex.NAP.DCS.Core.Utilities.GetUserAgentFromDeviceCode(source.DeviceCode);
