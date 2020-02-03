@@ -16,6 +16,8 @@ namespace MigrateFPSDataMonitoring
     class Program
     {
         private static bool isRunning;
+        private static string fileName;
+        private static string filePath;
 
         static void Main(string[] args)
         {
@@ -31,6 +33,14 @@ namespace MigrateFPSDataMonitoring
                          })
                     });
 
+            Console.Write("Input process name(ex: notepad): ");
+            fileName = Console.ReadLine();
+
+            Console.Write("Input process path(ex: c:/notepad.exe): ");
+            filePath = Console.ReadLine();
+
+            StartProcess();
+
             var timer = new Timer(60000);
 
             timer.Elapsed += OnTimedEvent;
@@ -44,9 +54,12 @@ namespace MigrateFPSDataMonitoring
 
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
-            var processName = ConfigurationManager.AppSettings["FileName"];
-            
-            if (!Process.GetProcessesByName(processName).Any())
+            StartProcess();
+        }
+
+        private static void StartProcess()
+        {
+            if (!Process.GetProcessesByName(fileName).Any())
             {
                 try
                 {
@@ -54,21 +67,20 @@ namespace MigrateFPSDataMonitoring
                     {
                         isRunning = false;
 
-                        LogService.Error("Migrate FPS Data service is STOPED. Please check....");
+                        LogService.Error($"{fileName} service is STOPED. Please check....");
                     }
-
-                    var processPath = ConfigurationManager.AppSettings["FilePath"];
 
                     using (Process myProcess = new Process())
                     {
-                        myProcess.StartInfo.UseShellExecute = false;
-                        myProcess.StartInfo.FileName = processPath;
-                        myProcess.StartInfo.CreateNoWindow = true;
+                        myProcess.StartInfo.WindowStyle = ProcessWindowStyle.Normal;
+                        myProcess.StartInfo.FileName = "cmd.exe";
+                        myProcess.StartInfo.Arguments = "/c" + filePath;
+                        
                         myProcess.Start();
 
                         isRunning = true;
 
-                        LogService.Info($"Migrate FPS Data service is STARTING at {DateTime.Now}.");
+                        LogService.Info($"{fileName} service is STARTING at {DateTime.Now}.");
                     }
                 }
                 catch (Exception ex)
