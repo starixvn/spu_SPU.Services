@@ -220,13 +220,13 @@
       <Version>2.2.1</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Data">
-      <Version>4.2.0</Version>
+      <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Data.MySql">
-      <Version>4.2.1</Version>
+      <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Data.SqlServer">
-      <Version>4.2.0</Version>
+      <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="Fanex.File">
       <Version>1.0.0</Version>

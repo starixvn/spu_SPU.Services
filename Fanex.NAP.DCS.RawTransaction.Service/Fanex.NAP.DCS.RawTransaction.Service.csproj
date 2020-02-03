@@ -100,11 +100,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.DCS.RawTransaction.Service.exe.LOCAL.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.DCS.RawTransaction.Service.exe.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="Fanex.NAP.FPS.Renovation.RawTransaction.Service.ruleset" />
@@ -114,7 +114,7 @@
       <Version>3.7.1</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Data.Repository">
-      <Version>4.2.0</Version>
+      <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Logging.Extensions.Database">
       <Version>1.0.8</Version>

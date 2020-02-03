@@ -67,11 +67,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.DCS.Device.Service.exe.LOCAL.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.DCS.Device.Service.exe.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -94,7 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fanex.Data.MySql">
-      <Version>4.2.1</Version>
+      <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Logging">
       <Version>2.0.1</Version>
