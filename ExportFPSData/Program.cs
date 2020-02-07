@@ -166,7 +166,7 @@ namespace ExportFPSData
                 IP = source.IP,
                 IPId = source.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : url.Split('?')[0],
+                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : SubStringUrl(url),
                 Action = source.ActionName,
                 ActionResult = source.ActionResult,
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(deviceInfo.UserAgent) : userAgent,
@@ -174,6 +174,11 @@ namespace ExportFPSData
                 FingerprintMoreInfo = null,
                 TransId = source.TransId
             };
+        }
+
+        private static string SubStringUrl(string url)
+        {
+            return url.IndexOf('?') != -1 ? url.Substring(0, url.IndexOf('?')) : url;
         }
 
         private static DeviceInfoModel GetDeviceInfo(string deviceCode)
@@ -245,7 +250,7 @@ namespace ExportFPSData
 
         private static string ConvertNA2Empty(string data)
         {
-            return data != "N/A" ? data : null;
+            return data != "N/A" ? SubStringUrl(data) : null;
         }
 
         private static bool ContainsUnicodeCharacter(string input)

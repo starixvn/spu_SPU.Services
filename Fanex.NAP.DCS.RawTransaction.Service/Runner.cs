@@ -166,7 +166,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : url.Split('?')[0],
+                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(deviceInfo.UserAgent) : userAgent,
@@ -192,10 +192,14 @@
                 deviceInfo.TimeZone,
                 deviceInfo.LocalIps));
         }
+        private static string SubStringUrl(string url)
+        {
+            return url.IndexOf('?') != -1 ? url.Substring(0, url.IndexOf('?')) : url;
+        }
 
         private static string ConvertNA2Empty(string data)
         {
-            return data != "N/A" ? data : null;
+            return data != "N/A" ? SubStringUrl(data) : null;
         }
 
         private static bool ContainsUnicodeCharacter(string input)

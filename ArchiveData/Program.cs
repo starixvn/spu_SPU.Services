@@ -24,7 +24,8 @@ namespace ArchiveData
                 .UseDefaultConnectionStringProvider()
                 .Run();
 
-            LogManager.SetDefaultLogCategory("Archive-Raw-Data")
+            LogManager
+                    .SetDefaultLogCategory("Archive-Raw-Data")
                     .Use(new List<ILogEngine>
                     {
                          new SentryLogging(new SentryEngineOptions

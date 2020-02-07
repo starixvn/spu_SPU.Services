@@ -33,17 +33,20 @@ namespace ImportFPSData
 
             var authMethod = new PasswordAuthenticationMethod(AppSettings.SSHUser, AppSettings.SSHPassword);
             var connectionInfo = new ConnectionInfo(AppSettings.SSHHost, AppSettings.SSHPort, AppSettings.SSHUser, authMethod);
-            List<string> directories = null;
+            List<DirectoryInfo> subfolders = null;
 
             do
             {
-                directories = Directory.GetDirectories(ConfigurationManager.AppSettings["csv-destination-root-path"]).ToList();
+                var di = new DirectoryInfo(ConfigurationManager.AppSettings["csv-destination-root-path"]);
+                subfolders = di.EnumerateDirectories()
+                                  .OrderBy(d => d.CreationTime)
+                                  .ToList();                               
 
-                if (directories != null && directories.Any())
+                if (subfolders != null && subfolders.Any())
                 {
-                    directories.ToList().ForEach(x =>
+                    subfolders.ForEach(x =>
                     {
-                        var files = Directory.GetFiles(x).ToList();
+                        var files = Directory.GetFiles(x.FullName).ToList();
 
                         files.ForEach(f =>
                         {
@@ -79,10 +82,12 @@ namespace ImportFPSData
 
                                 throw;
                             }
+
+                            Thread.Sleep(60000);
                         });
                     });
 
-                    directories.Clear();
+                    subfolders.Clear();
 
                     Thread.Sleep(2);
                 }
@@ -93,7 +98,7 @@ namespace ImportFPSData
 
                 Console.WriteLine($"=======================================================");
 
-            } while (directories != null && directories.Any());
+            } while (subfolders != null && subfolders.Any());
 
             Console.WriteLine("Import CSV file is DONE. BYE.");
 
