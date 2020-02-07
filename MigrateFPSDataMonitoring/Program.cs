@@ -41,7 +41,7 @@ namespace MigrateFPSDataMonitoring
 
             StartProcess();
 
-            var timer = new Timer(60000);
+            var timer = new Timer(120000);
 
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
@@ -80,7 +80,7 @@ namespace MigrateFPSDataMonitoring
 
                         isRunning = true;
 
-                        LogService.Info($"{fileName} service is STARTING at {DateTime.Now}.");
+                       // LogService.Info($"{fileName} service is STARTING at {DateTime.Now}.");
                     }
                 }
                 catch (Exception ex)
