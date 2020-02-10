@@ -19,7 +19,7 @@
 
         public string Ip { get; set; }
 
-        public BigInteger IpId { get; set; }
+        public string IpId { get; set; }
 
         public string TransTime
         {
