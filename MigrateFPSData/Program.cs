@@ -15,6 +15,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,9 +32,15 @@ namespace MigrateFPSData
             //var url = "https://www.translatoruser-int.com/translate";
             var result = url.IndexOf('?') != -1 ? url.Substring(0, url.IndexOf('?')) : url ;
 
-            Console.WriteLine(result);
+           
 
+            result = "faraon73|ALOG|2020-01-22 10:22:52.0000|2020-02-06 13:00:20.8570|1b672f3372304ffba8c392c4a4129ad7|c8fed374aa54bcdd1f5bfa3386ccf9bbbcc8b609;0171c81e955a09ce7f2498f5fb00c2aa||Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36  |185.118.76.21|3111537685|0|https://play.dafabet.com/NewIndex?act=hdpou&rt=0&webskintype=3|login|login -> successfully||0";
+            Console.WriteLine(StripUnicodeCharactersFromString(result));
             Console.ReadKey();
+        }
+        public static String StripUnicodeCharactersFromString(string inputValue)
+        {
+            return Regex.Replace(inputValue, @"[^\u0000-\u007F]", String.Empty);
         }
 
         private static bool ImportCSV(ConnectionInfo connectionInfo, string csvFolder, string csvFileName)
