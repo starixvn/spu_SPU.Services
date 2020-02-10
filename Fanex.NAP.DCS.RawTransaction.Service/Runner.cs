@@ -13,6 +13,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.ServiceProcess;
+    using System.Text.RegularExpressions;
     using System.Timers;
     using Utilities = Core.Utilities;
 
@@ -166,10 +167,10 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : SubStringUrl(url),
+                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
-                UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(deviceInfo.UserAgent) : userAgent,
+                UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null
             };
@@ -199,7 +200,7 @@
 
         private static string ConvertNA2Empty(string data)
         {
-            return data != "N/A" ? SubStringUrl(data) : null;
+            return data != "N/A" ? data : null;
         }
 
         private static bool ContainsUnicodeCharacter(string input)
@@ -207,6 +208,11 @@
             const int MaxAnsiCode = 255;
 
             return input.Any(c => c > MaxAnsiCode);
-        }       
+        }
+
+        private static String StripUnicodeCharactersFromString(string inputValue)
+        {
+            return Regex.Replace(inputValue, @"[^\u0000-\u007F]", String.Empty);
+        }
     }
 }
