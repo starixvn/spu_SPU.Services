@@ -322,5 +322,19 @@
                 return db.Query<RawTransactionByIpModel>(criteria).ToList();
             }
         }
+
+        public List<RawTransactionByIpModel> GetUnseccessRawTransactionByIp(int quantityPerBatch, int numOfBatch) 
+        {
+            var criteria = new GetRawUnsucessTransactionIPListCriteria
+            {
+                NumberOfTrans = quantityPerBatch,
+                NumberOfBatch = numOfBatch
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<RawTransactionByIpModel>(criteria).ToList();
+            }
+        }
     }
 }

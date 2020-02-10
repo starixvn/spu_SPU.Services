@@ -46,12 +46,7 @@
             {
                 if (accounts != null && accounts.Any())
                 {
-                    var insertedAccounts = dataCenterService.TransformDCSAccount(accounts);
-
-                    if (insertedAccounts != null && insertedAccounts.Any())
-                    {
-                        dataCenterService.TransformAccountCompleted(insertedAccounts);
-                    }
+                    dataCenterService.TransformDCSAccount(accounts);                   
 
                     return true;
                 }

@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="GetCustSubFromMainDbCriteria.cs" />
     <Compile Include="GetMaxCustIdCriteria.cs" />
+    <Compile Include="GetRawUnsucessTransactionIPListCriteria.cs" />
     <Compile Include="GetRawUnsucessAccountListCriteria.cs" />
     <Compile Include="GetRawAccountListCriteria.cs" />
     <Compile Include="GetRawAssociationListCriteria.cs" />

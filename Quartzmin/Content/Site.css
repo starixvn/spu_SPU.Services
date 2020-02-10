@@ -14,8 +14,9 @@
     padding-left: 8px;
 }
 
-.main.container {
-    padding-top: 1em;
+.main.container {    
+    width:auto;
+    padding: 10px;
 }
 
 .ui.menu .item {

@@ -583,6 +583,52 @@
     </trigger>
 
     <job>
+      <name>CTS_Transform_Unsuccess_Account_Job</name>
+      <group>DataTransformJob</group>
+      <description>InsertAccountJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteUnsuccessAccountAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>500</value>
+        </entry>
+        <entry>
+          <key>Action</key>
+          <value>api/active</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>http://10.2.23.1:9000/account;http://10.2.23.2:9000/account</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>http://10.2.23.1:9000/account;http://10.2.23.2:9000/account</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_Transform_Unsuccess_Account_Trigger</name>
+        <group>DataTransformTrigger</group>
+        <description>InsertAccountTrigger</description>
+        <job-name>CTS_Transform_Unsuccess_Account_Job</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
+    
+    
+    
+    <job>
       <name>CTS_Transform_AssociationByDevice_Job</name>
       <group>DataTransformJob</group>
       <description>Insert Association By Device Job</description>
@@ -670,6 +716,50 @@
       </simple>
     </trigger>
 
+    <job>
+      <name>CTS_Transform_Unsuccess_AssociationByIP_Job</name>
+      <group>DataTransformJob</group>
+      <description>Insert Association By IP Job</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteUnsuccessAssociationIPAPIJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>500</value>
+        </entry>
+        <entry>
+          <key>Action</key>
+          <value>api/active</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>http://10.2.23.1:9000/associationbyip;http://10.2.23.2:9000/associationbyip</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>http://10.2.23.1:9000/associationbyip;http://10.2.23.2:9000/associationbyip</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_Transform_Unsuccess_AssociationByIP_Trigger</name>
+        <group>DataTransformTrigger</group>
+        <description>InsertAssociationByIPTrigger</description>
+        <job-name>CTS_Transform_Unsuccess_AssociationByIP_Job</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
+    
     <job>
       <name>CTS_Transform_Customer_Job</name>
       <group>DataTransformJob</group>

@@ -6,15 +6,13 @@ namespace Fanex.NAP.CTS.Services.Interface
 {
     public interface IDataCenterService
     {
-        List<int> TransformDCSAccount(List<RawAccountModel> accountList);
+        void TransformDCSAccount(List<RawAccountModel> accountList);
 
         List<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList);
 
         void InsertAssociation(List<AssociationModel> associationList);
 
         List<AssociationModel> TransformAssociationByDevice(List<RawAssociationModel> rawAssociation);
-
-        void TransformAccountCompleted(List<int> insertedAccount);
 
         void TransformAssociationCompleted(List<AssociationModel> associationList);
 
