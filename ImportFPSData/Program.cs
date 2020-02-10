@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace ImportFPSData
 {
-   static class Program
+    static class Program
     {
         private static string sshScript = "sh /etc/init.d/ImportMigrateFPSData.sh {0} {1}";
 
@@ -39,52 +39,56 @@ namespace ImportFPSData
             {
                 var di = new DirectoryInfo(ConfigurationManager.AppSettings["csv-destination-root-path"]);
                 subfolders = di.EnumerateDirectories()
-                                  .OrderBy(d => d.CreationTime)
-                                  .ToList();                               
+                                  .OrderBy(d => d.Name)
+                                  .ToList();
 
                 if (subfolders != null && subfolders.Any())
                 {
                     subfolders.ForEach(x =>
                     {
-                        var files = Directory.GetFiles(x.FullName).ToList();
-
-                        files.ForEach(f =>
+                        if (!x.FullName.Contains("DONE"))
                         {
-                            var directoryInfo = Directory.GetParent(f);
-                            var fileName = Path.GetFileName(f);
+                            var files = Directory.GetFiles(x.FullName).ToList();
 
-                            try
+                            files.ForEach(f =>
                             {
-                                var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
+                                var directoryInfo = Directory.GetParent(f);
+                                var fileName = Path.GetFileName(f);
 
-                                if (result)
+                                try
                                 {
-                                    Console.WriteLine("-" + f + " ==> DONE.");
-
-                                    if (File.Exists(f))
+                                    if (!fileName.Contains("Error"))
                                     {
-                                        File.Delete(f);
+                                        var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
+
+                                        if (result)
+                                        {
+                                            Console.WriteLine("-" + f + " ==> DONE.");
+
+                                            if (File.Exists(f))
+                                            {
+                                                File.Delete(f);
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                            File.Move(f, f.Replace(".", "-Error."));
+
+                                            LogService.Error($"Import csv file ERROR({f})");
+                                        }
                                     }
                                 }
-                                else
+                                catch (Exception ex)
                                 {
-                                    var fullPath = Path.GetFullPath(f);
-                                    var fileNameWithoutEx = Path.GetFileNameWithoutExtension(f);
+                                    LogService.Error(ex.Message + $". CVS file({f})");
 
-                                    File.Move(f, fullPath + fileNameWithoutEx + "-Error.csv");
-
-                                    LogService.Error($"Import csv file ERROR({f})");
+                                    throw;
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                LogService.Error(ex.Message + $". CVS file({f})");
 
-                                throw;
-                            }
-
-                            Thread.Sleep(60000);
-                        });
+                                Thread.Sleep(30000);
+                            });
+                        }
                     });
 
                     subfolders.Clear();
