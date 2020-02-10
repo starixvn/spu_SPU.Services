@@ -6,7 +6,7 @@
 
     public class RawTransactionByIpModel
     {
-        private DateTime _transTime;
+        private DateTime _transTime;               
 
         [JsonIgnore]
         public int BatchId { get; set; }
@@ -19,7 +19,7 @@
 
         public string Ip { get; set; }
 
-        public string IpId { get; set; }
+        public decimal IpId { get; set; }
 
         public string TransTime
         {
