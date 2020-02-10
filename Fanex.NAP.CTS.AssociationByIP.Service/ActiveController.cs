@@ -29,8 +29,6 @@
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
-                LogService.Error(jsonContent);
-
                 var result = JsonConvert.DeserializeObject<List<RawTransactionByIpModel>>(jsonContent);
 
                 return Process(result);
