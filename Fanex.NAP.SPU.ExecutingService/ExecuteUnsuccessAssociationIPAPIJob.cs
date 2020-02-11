@@ -12,6 +12,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Threading.Tasks;
 
     [PersistJobDataAfterExecution]
@@ -64,6 +65,16 @@
 
                     if (listOfTransactionByIP.Any())
                     {
+                        var resultBuilder = new StringBuilder();
+
+                        listOfTransactionByIP.ForEach(x => {
+                            resultBuilder.Append(x.TransTime);
+                            resultBuilder.Append("\n\t");
+                            resultBuilder.Append(x.TransId);
+                        });
+
+                        LogService.Info(resultBuilder.ToString());
+
                         var groupTrans = listOfTransactionByIP.GroupBy(x => x.BatchId);
                         var tasks = new List<Task>();
                         var index = 0;
