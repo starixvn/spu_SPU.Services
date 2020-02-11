@@ -25,11 +25,14 @@
         public bool Post()
         {
             var requestContent = Request.Content;
-            var jsonContent = requestContent.ReadAsStringAsync().Result;
+            var jsonContent = requestContent.ReadAsStringAsync().Result;                       
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
                 var result = JsonConvert.DeserializeObject<List<RawTransactionByIpModel>>(jsonContent);
+
+                
+                    LogService.Error(JsonConvert.SerializeObject(result));
 
                 return Process(result);
             }
