@@ -3,7 +3,7 @@ using Fanex.Data.Repository;
 
 namespace Fanex.NAP.DCS.Criteria
 {
-    public class GetRawUnsucessTransactionIPListCriteria : CriteriaBase
+    public class GetRawUnsuccessTransactionIPListCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "ip_NoOfTransaction")]
         public int NumberOfTrans { get; set; }
@@ -13,7 +13,7 @@ namespace Fanex.NAP.DCS.Criteria
 
         public override string GetSettingKey()
         {
-            return "DCS_DC_TransformToCTS_TransactionIP_Unssucess_GetPackage";
+            return "DCS_DC_TransformToCTS_TransactionIP_Unsuccess_GetPackage";
         }
 
         public override bool IsValid()

@@ -9,9 +9,9 @@
         private DateTime _transTime;               
 
         [JsonIgnore]
-        public int BatchId { get; set; }
+        public sbyte BatchId { get; set; }
 
-        public Int64 TransId { get; set; }
+        public long TransId { get; set; }
 
         public int AccountId { get; set; }
 

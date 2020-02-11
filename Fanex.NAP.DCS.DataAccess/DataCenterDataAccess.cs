@@ -323,9 +323,9 @@
             }
         }
 
-        public List<RawTransactionByIpModel> GetUnseccessRawTransactionByIp(int quantityPerBatch, int numOfBatch) 
+        public List<RawTransactionByIpModel> GetUnsuccessRawTransactionByIp(int quantityPerBatch, int numOfBatch) 
         {
-            var criteria = new GetRawUnsucessTransactionIPListCriteria
+            var criteria = new GetRawUnsuccessTransactionIPListCriteria
             {
                 NumberOfTrans = quantityPerBatch,
                 NumberOfBatch = numOfBatch

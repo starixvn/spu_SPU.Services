@@ -78,7 +78,7 @@ namespace Fanex.NAP.DCS.Services.Implement
 
         public List<RawTransactionByIpModel> GetUnsuccessTransByIp(int numOfTrans, int numOfBatch)
         {
-            return dataCenter.GetUnseccessRawTransactionByIp(numOfTrans, numOfBatch);
+            return dataCenter.GetUnsuccessRawTransactionByIp(numOfTrans, numOfBatch);
         }
     }
 }
