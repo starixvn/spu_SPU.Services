@@ -31,10 +31,10 @@
             {
                 var result = JsonConvert.DeserializeObject<List<RawTransactionByIpModel>>(jsonContent);
 
-                
-                    LogService.Error(JsonConvert.SerializeObject(result));
 
-                return Process(result);
+                LogService.Error(JsonConvert.SerializeObject(result));
+
+                return Process(jsonContent);
             }
             else
             {
@@ -44,13 +44,13 @@
             return false;
         }
 
-        private bool Process(List<RawTransactionByIpModel> associationByIp)
+        private bool Process(string transactionByIpJson)
         {
             try
             {
-                if (associationByIp != null && associationByIp.Any())
+                if (!string.IsNullOrWhiteSpace(transactionByIpJson))
                 {
-                    dataCenterService.TransformDCSTransactionIPToCTSAssociationByIP(associationByIp);
+                    dataCenterService.TransformDCSTransactionIPToCTSAssociationByIP(transactionByIpJson);
 
                     return true;
                 }

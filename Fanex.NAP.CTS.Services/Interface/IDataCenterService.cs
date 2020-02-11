@@ -16,6 +16,6 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void TransformAssociationCompleted(List<AssociationModel> associationList);
 
-        void TransformDCSTransactionIPToCTSAssociationByIP(List<RawTransactionByIpModel> transactionByIpList);
+        void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIpJson);
     }
 }

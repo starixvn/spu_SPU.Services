@@ -11,7 +11,7 @@
         [JsonIgnore]
         public int BatchId { get; set; }
 
-        public int TransId { get; set; }
+        public Int64 TransId { get; set; }
 
         public int AccountId { get; set; }
 
