@@ -18,10 +18,56 @@ using System.Threading.Tasks;
 
 namespace ExportFPSData
 {
-   static class Program
+    static class Program
     {
+        public static System.Numerics.BigInteger Dot2LongIP(string ipv6)
+        {
+            System.Net.IPAddress address;
+            System.Numerics.BigInteger ipnum;
+
+            if (System.Net.IPAddress.TryParse(ipv6, out address))
+            {
+                byte[] addrBytes = address.GetAddressBytes();
+
+                if (System.BitConverter.IsLittleEndian)
+                {
+                    System.Collections.Generic.List<byte> byteList = new System.Collections.Generic.List<byte>(addrBytes);
+                    byteList.Reverse();
+                    addrBytes = byteList.ToArray();
+                }
+
+                if (addrBytes.Length > 8)
+                {
+                    //IPv6
+                    ipnum = System.BitConverter.ToUInt64(addrBytes, 8);
+                    ipnum <<= 64;
+                    ipnum += System.BitConverter.ToUInt64(addrBytes, 0);
+                }
+                else
+                {
+                    //IPv4
+                    ipnum = System.BitConverter.ToUInt32(addrBytes, 0);
+                }
+
+                return ipnum;
+            }
+
+            return 0;
+        }
+
         static void Main(string[] args)
         {
+            //var aa = Dot2LongIP("2a0d:5600:e::e27c:1d");
+            //Console.WriteLine(aa);
+            //var bb = Dot2LongIP("2a0d:5600:e:0:0:0:e27c:1d");
+            //Console.WriteLine(bb);
+            //var cc = Dot2LongIP("2a0d:5600:000e:0000:0000:0000:e27c:001d");
+            //Console.WriteLine(cc);
+            //var dd = "2a0d:5600:e::e27c:1d".Ip2Long().IpNumber;
+            //Console.WriteLine(dd);
+
+            //Console.ReadKey();
+
             DbSettingProviderManager
                 .StartNewSession()
                 .WithSqlServer()
@@ -50,49 +96,58 @@ namespace ExportFPSData
                     {
                         Console.WriteLine($"Export CSV file is begining({trans.Count} transaction).");
 
-                        var rawTrans = trans.Select(x => TransformRawTransaction(x));
-                        var counter = 0;
+                        var rawTrans = trans.Select(x => TransformRawTransaction(x)).OrderBy(a => a.FPSTransId);
 
-                        if (rawTrans != null && rawTrans.Any())
+                        var engine = new FileHelperEngine<RawTransactionModel>();
+
+                        var folderName = ConfigurationManager.AppSettings["csv-destination-root-path"] + DateTime.Now.ToString("yyyMMdd");
+                        var logFileName = ConfigurationManager.AppSettings["csv-destination-root-path"] + rawTrans.First().SubscriberName + ".log";
+
+                        if (!File.Exists(logFileName))
                         {
-                            var engine = new FileHelperEngine<RawTransactionModel>();
-                            var chunkTrans = rawTrans.Chunk(Convert.ToInt32(ConfigurationManager.AppSettings["chunkSize"]));
-                            var random = new Random();
-
-                            Parallel.ForEach(chunkTrans, new ParallelOptions { MaxDegreeOfParallelism = 5 }, x =>
-                            {
-                                try
-                                {
-                                    var folderName = ConfigurationManager.AppSettings["csv-destination-root-path"] + DateTime.Now.ToString("yyyMMdd");
-
-                                    if (!Directory.Exists(folderName))
-                                    {
-                                        Directory.CreateDirectory(folderName);
-                                    }
-
-                                    var fileName = string.Empty;
-
-                                    do
-                                    {
-                                        fileName = folderName + "//" + DateTime.Now.ToString("yyyyMMddhhmmss") + random.Next(10000) + ".csv";
-                                    }
-                                    while (File.Exists(fileName));
-
-                                    engine.WriteFile(fileName, x);
-
-                                    counter++;
-                                }
-                                catch (Exception ex)
-                                {
-                                    var fromTransId = x.Max(a => a.TransId);
-                                    var toTransId = x.Min(a => a.TransId);
-
-                                    LogService.Error($"There is something wrong in Export CSV process(trans:{fromTransId} - {toTransId}). Error msg: {ex.Message}");
-                                }
-                            });
+                            File.Create(logFileName).Dispose();
                         }
 
-                        Console.WriteLine($"Exported {counter} files ==> DONE.");
+                        if (!Directory.Exists(folderName))
+                        {
+                            Directory.CreateDirectory(folderName);
+                        }
+
+                        var chunkTrans = rawTrans.Chunk(Convert.ToInt32(ConfigurationManager.AppSettings["chunkSize"]));
+
+                        Console.WriteLine($"Total files:" + chunkTrans.Count());
+
+                        using (StreamWriter w = File.AppendText(logFileName))
+                        {
+                            w.WriteLine("Total files: " + chunkTrans.Count());
+
+                            w.WriteLine("Total items: " + trans.Count);
+                        }
+
+                        chunkTrans.ToList().ForEach(x =>
+                        {
+                            try
+                            {
+                                var fileName = folderName + "\\" + x.FirstOrDefault().SubscriberName + "-" + x.Min(a => a.FPSTransId) + "-" + x.Max(a => a.FPSTransId) + "-" + x.Count() + ".csv";
+
+                                engine.WriteFile(fileName, x);
+
+                                using (StreamWriter w = File.AppendText(logFileName))
+                                {
+                                    w.WriteLine(fileName);
+                                }
+
+                            }
+                            catch (Exception ex)
+                            {
+                                var fromTransId = x.Max(a => a.FPSTransId);
+                                var toTransId = x.Min(a => a.FPSTransId);
+
+                                LogService.Error($"There is something wrong in Export CSV process(trans:{fromTransId} - {toTransId}). Error msg: {ex.Message}");
+                            }
+                        });
+
+                        Console.WriteLine($"Exported {chunkTrans.Count()} files ==> DONE.");
 
                         Thread.Sleep(2);
                     }
@@ -172,7 +227,8 @@ namespace ExportFPSData
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(deviceInfo.UserAgent) : userAgent,
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = null,
-                TransId = source.TransId
+                TransId = source.TransId,
+                FPSTransId = source.SubTransId
             };
         }
 

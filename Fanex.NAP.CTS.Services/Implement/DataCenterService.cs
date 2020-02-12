@@ -53,9 +53,7 @@ namespace Fanex.NAP.CTS.Services
         }       
 
         public void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIpJson)
-        {
-            //var transactionByIpJson = JsonConvert.SerializeObject(transactionByIpList);
-
+        {           
             dataCenterDataAccess.TransformDCSTransactionIPToCTSAssociationByIP(transactionByIpJson);
         }
     }

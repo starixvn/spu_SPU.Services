@@ -23,7 +23,7 @@
         private readonly ICapturingDataService _capturingDataService;
         private readonly List<RawTransactionModel> _transactionList;
         private readonly System.Timers.Timer _timer;
-        private DateTime _lastInsertTrans;        
+        private DateTime _lastInsertTrans;
 
         public Runner()
         {
@@ -109,7 +109,7 @@
         {
             try
             {
-                _capturingDataService.InsertTransaction(_transactionList);                
+                _capturingDataService.InsertTransaction(_transactionList);
 
                 _lastInsertTrans = DateTime.Now;
                 _transactionList.Clear();
@@ -129,7 +129,7 @@
 
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
-            var invalidDevice = string.Empty;                       
+            var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
             var url = Utilities.GetURLFromDeviceCode(message.Device);
@@ -137,7 +137,7 @@
             var transBit = new BitArray(16);
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
-            {             
+            {
                 deviceInfo.DeviceNo = null;
                 transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);
             }
@@ -146,12 +146,12 @@
                 if (!Utilities.IsGuidDeviceId(deviceInfo.DeviceNo) || deviceInfo.InvalidDeviceId)
                 {
                     invalidDevice = deviceCode;
-                    deviceInfo.DeviceNo = null;                    
+                    deviceInfo.DeviceNo = null;
                     transBit.Set((int)TransStatus.InvalidDI, true);
                 }
             }
 
-            if(ContainsUnicodeCharacter(message.Account))
+            if (ContainsUnicodeCharacter(message.Account))
             {
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }

@@ -44,13 +44,16 @@ namespace Fanex.NAP.DCS.Model
 
         [FieldHidden]
         public int TransId { get; set; }
+
+        [FieldConverter(typeof(ConvertBigInteger))]
+        public BigInteger FPSTransId { get; set; }
     }
 
     public class ConvertBigInteger : ConverterBase
     {
         public override object StringToField(string from)
         {
-            return Convert.ToDecimal(from);
+            return from.ToString();
         }
     }
 }
