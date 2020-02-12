@@ -15,6 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Security.AccessControl;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -230,10 +231,10 @@ namespace ExportFPSData
                 IP = source.IP,
                 IPId = source.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(deviceInfo.HRef) : SubStringUrl(url),
+                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(source.Url)) : SubStringUrl(url),
                 Action = source.ActionName,
                 ActionResult = source.ActionResult,
-                UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(deviceInfo.UserAgent) : userAgent,
+                UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(source.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = null,
                 TransId = source.TransId,
@@ -267,20 +268,20 @@ namespace ExportFPSData
         {
             return new DeviceInfoModel
             {
-                AppVersion = null,
+                AppVersion = string.Empty,
                 CapturedDate = 0,
-                DeviceFPCode = null,
-                DeviceNo = null,
-                HRef = null,
-                NA = null,
+                DeviceFPCode = string.Empty,
+                DeviceNo = string.Empty,
+                HRef = string.Empty,
+                NA = string.Empty,
                 Screen = new ScreenInfoModel
                 {
                     ColorDepth = 0,
                     Height = 0,
                     Width = 0
                 },
-                TimeZone = null,
-                UserAgent = null,
+                TimeZone = string.Empty,
+                UserAgent = string.Empty,
                 InvalidDeviceId = true
             };
         }
@@ -315,7 +316,7 @@ namespace ExportFPSData
 
         private static string ConvertNA2Empty(string data)
         {
-            return data != "N/A" ? SubStringUrl(data) : null;
+            return data != "N/A" ? data : null;
         }
 
         private static bool ContainsUnicodeCharacter(string input)
@@ -323,6 +324,11 @@ namespace ExportFPSData
             const int MaxAnsiCode = 255;
 
             return input.Any(c => c > MaxAnsiCode);
+        }
+
+        private static String StripUnicodeCharactersFromString(string inputValue)
+        {
+            return Regex.Replace(inputValue, @"[^\u0000-\u007F]", String.Empty);
         }
     }
 }

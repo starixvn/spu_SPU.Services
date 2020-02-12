@@ -27,5 +27,9 @@ namespace ExportFPSData
         public DateTime CreatedDate { get; set; }
 
         public long SubTransId { get; set; }
+
+        public string Url { get; set; }
+
+        public string UserAgent { get; set; }
     }
 }
