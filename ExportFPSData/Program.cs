@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
+using System.Security.AccessControl;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -101,7 +103,7 @@ namespace ExportFPSData
                         var engine = new FileHelperEngine<RawTransactionModel>();
 
                         var folderName = ConfigurationManager.AppSettings["csv-destination-root-path"] + DateTime.Now.ToString("yyyMMdd");
-                        var logFileName = ConfigurationManager.AppSettings["csv-destination-root-path"] + rawTrans.First().SubscriberName + ".log";
+                        var logFileName = ConfigurationManager.AppSettings["logs-path"] + rawTrans.First().SubscriberName + ".log";
 
                         if (!File.Exists(logFileName))
                         {
@@ -110,7 +112,10 @@ namespace ExportFPSData
 
                         if (!Directory.Exists(folderName))
                         {
-                            Directory.CreateDirectory(folderName);
+                            DirectorySecurity securityRules = new DirectorySecurity();
+                            securityRules.AddAccessRule(new FileSystemAccessRule(@"Everyone", FileSystemRights.FullControl, AccessControlType.Allow));
+
+                            Directory.CreateDirectory(folderName, securityRules);
                         }
 
                         var chunkTrans = rawTrans.Chunk(Convert.ToInt32(ConfigurationManager.AppSettings["chunkSize"]));
@@ -124,28 +129,32 @@ namespace ExportFPSData
                             w.WriteLine("Total items: " + trans.Count);
                         }
 
-                        chunkTrans.ToList().ForEach(x =>
-                        {
-                            try
+                        var resultLog = new StringBuilder();
+
+                        Parallel.ForEach(chunkTrans, new ParallelOptions { MaxDegreeOfParallelism = 5 }, x =>
                             {
-                                var fileName = folderName + "\\" + x.FirstOrDefault().SubscriberName + "-" + x.Min(a => a.FPSTransId) + "-" + x.Max(a => a.FPSTransId) + "-" + x.Count() + ".csv";
-
-                                engine.WriteFile(fileName, x);
-
-                                using (StreamWriter w = File.AppendText(logFileName))
+                                try
                                 {
-                                    w.WriteLine(fileName);
+                                    var fileName = folderName + "\\" + x.FirstOrDefault().SubscriberName + "-" + x.Min(a => a.FPSTransId) + "-" + x.Max(a => a.FPSTransId) + "-" + x.Count() + ".csv";
+
+                                    engine.WriteFile(fileName, x);
+
+                                    resultLog.Append(logFileName);
+                                    resultLog.Append("\r\n");
                                 }
+                                catch (Exception ex)
+                                {
+                                    var fromTransId = x.Max(a => a.FPSTransId);
+                                    var toTransId = x.Min(a => a.FPSTransId);
 
-                            }
-                            catch (Exception ex)
-                            {
-                                var fromTransId = x.Max(a => a.FPSTransId);
-                                var toTransId = x.Min(a => a.FPSTransId);
+                                    LogService.Error($"There is something wrong in Export CSV process(trans:{fromTransId} - {toTransId}). Error msg: {ex.Message}");
+                                }
+                            });
 
-                                LogService.Error($"There is something wrong in Export CSV process(trans:{fromTransId} - {toTransId}). Error msg: {ex.Message}");
-                            }
-                        });
+                        using (StreamWriter w = File.AppendText(logFileName))
+                        {
+                            w.WriteLine(resultLog.ToString());
+                        }
 
                         Console.WriteLine($"Exported {chunkTrans.Count()} files ==> DONE.");
 
@@ -258,20 +267,20 @@ namespace ExportFPSData
         {
             return new DeviceInfoModel
             {
-                AppVersion = string.Empty,
+                AppVersion = null,
                 CapturedDate = 0,
-                DeviceFPCode = string.Empty,
-                DeviceNo = string.Empty,
-                HRef = string.Empty,
-                NA = string.Empty,
+                DeviceFPCode = null,
+                DeviceNo = null,
+                HRef = null,
+                NA = null,
                 Screen = new ScreenInfoModel
                 {
                     ColorDepth = 0,
                     Height = 0,
                     Width = 0
                 },
-                TimeZone = string.Empty,
-                UserAgent = string.Empty,
+                TimeZone = null,
+                UserAgent = null,
                 InvalidDeviceId = true
             };
         }

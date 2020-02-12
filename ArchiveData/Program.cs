@@ -52,8 +52,10 @@ namespace ArchiveData
         private static void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
             try
-            {
+            {                
                 Run(noOfTickets);
+
+                Console.WriteLine("Archive data is done.");
             }
             catch (Exception ex)
             {
