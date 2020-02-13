@@ -48,7 +48,9 @@ namespace ImportFPSData
                     {
                         if (!x.FullName.Contains("DONE"))
                         {
-                            var files = Directory.GetFiles(x.FullName).ToList();
+                            DirectoryInfo info = new DirectoryInfo(x.FullName);
+
+                            var files = info.GetFiles().OrderBy(p => p.CreationTime).Select(z => z.FullName).ToList();                                                       
 
                             files.ForEach(f =>
                             {
@@ -86,14 +88,12 @@ namespace ImportFPSData
                                     throw;
                                 }
 
-                                Thread.Sleep(30000);
+                                Thread.Sleep(15000);
                             });
                         }
                     });
 
                     subfolders.Clear();
-
-                    Thread.Sleep(2);
                 }
                 else
                 {
