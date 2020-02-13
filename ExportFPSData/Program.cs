@@ -60,6 +60,9 @@ namespace ExportFPSData
 
         static void Main(string[] args)
         {
+
+            //Console.WriteLine(DateTime.Parse("2020-02-12 07:14:27.9300"));
+
             //var aa = Dot2LongIP("2a0d:5600:e::e27c:1d");
             //Console.WriteLine(aa);
             //var bb = Dot2LongIP("2a0d:5600:e:0:0:0:e27c:1d");
@@ -167,12 +170,14 @@ namespace ExportFPSData
                     }
 
                     Console.WriteLine($"=======================================================");
+
+                    Thread.Sleep(2);
                 }
                 while (trans != null && trans.Any());
             }
             catch (Exception ex)
             {
-                LogService.Error(ex.Message);
+                LogService.Error(ex.Message + $"(trans:{trans.Min(a => a.SubTransId)} - {trans.Max(a => a.SubTransId)})");
             }
 
             Console.WriteLine("Export data is DONE. BYE.");
@@ -189,6 +194,49 @@ namespace ExportFPSData
             {
                 return db.Query<FPSDataModel>(criteria).ToList();
             }
+        }
+
+        private static List<FPSDataModel> ReadCSV(string path)
+        {
+            //var engine = new FileHelperEngine<FPSDataModel>();
+
+            //return engine.ReadFileAsList(path);
+
+            try
+            {
+                return File.ReadAllLines(path).Skip(1).Select(a =>
+                {
+                    var transTime = new DateTime();
+                    var createdDate = new DateTime();
+
+                    string[] values = a.Split('|');
+
+                    return new FPSDataModel
+                    {
+                        TransId = Convert.ToInt32(values[0]),
+                        SubTransId = Convert.ToInt32(values[1]),
+                        LoginName = values[2].ToString(),
+                        SubName = values[3].ToString(),
+                        //TransTime = !DateTime.TryParse(a[4].ToString(), out transTime) ? DateTime.Now : transTime,
+                        //CreatedDate = !DateTime.TryParse(a[5].ToString(), out createdDate) ? DateTime.Now : createdDate,
+                        TransTime = DateTime.Parse(values[4].ToString()),
+                        CreatedDate = DateTime.Parse(values[5].ToString()),
+                        DeviceCode = values[6].ToString(),
+                        IP = values[7].ToString(),
+                        ActionName = values[8].ToString(),
+                        ActionResult = values[9].ToString(),
+                        Url = values[10].ToString(),
+                        UserAgent = values[11].ToString()
+                    };
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                Console.WriteLine(ex);
+            }
+
+            return new List<FPSDataModel>();
         }
 
         private static RawTransactionModel TransformRawTransaction(FPSDataModel source)

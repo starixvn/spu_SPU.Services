@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FileHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +11,9 @@ namespace ExportFPSData
     {
         public int TransId { get; set; }
 
+        public long SubTransId { get; set; }
+
         public string LoginName { get; set; }
-
-        public string ActionName { get; set; }
-
-        public string ActionResult { get; set; }
-
-        public string DeviceCode { get; set; }
-
-        public string IP { get; set; }
 
         public string SubName { get; set; }
 
@@ -26,7 +21,13 @@ namespace ExportFPSData
 
         public DateTime CreatedDate { get; set; }
 
-        public long SubTransId { get; set; }
+        public string DeviceCode { get; set; }
+
+        public string IP { get; set; }
+
+        public string ActionName { get; set; }
+
+        public string ActionResult { get; set; }  
 
         public string Url { get; set; }
 

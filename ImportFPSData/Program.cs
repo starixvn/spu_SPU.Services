@@ -105,8 +105,6 @@ namespace ImportFPSData
             } while (subfolders != null && subfolders.Any());
 
             Console.WriteLine("Import CSV file is DONE. BYE.");
-
-            Console.ReadKey();
         }
 
         private static bool ImportCSV(ConnectionInfo connectionInfo, string csvFolder, string csvFileName)
