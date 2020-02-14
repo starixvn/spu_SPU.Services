@@ -105,9 +105,10 @@ namespace ExportFPSData
                         var rawTrans = trans.Select(x => TransformRawTransaction(x)).OrderBy(a => a.FPSTransId);
 
                         var engine = new FileHelperEngine<RawTransactionModel>();
+                        var subcriberName = rawTrans.First().SubscriberName;
 
                         var folderName = ConfigurationManager.AppSettings["csv-destination-root-path"] + DateTime.Now.ToString("yyyMMdd");
-                        var logFileName = ConfigurationManager.AppSettings["logs-path"] + rawTrans.First().SubscriberName + ".log";
+                        var logFileName = ConfigurationManager.AppSettings["logs-path"] + subcriberName + ".log";
 
                         if (!File.Exists(logFileName))
                         {
@@ -124,7 +125,7 @@ namespace ExportFPSData
 
                         var chunkTrans = rawTrans.Chunk(Convert.ToInt32(ConfigurationManager.AppSettings["chunkSize"]));
 
-                        Console.WriteLine($"Total files:" + chunkTrans.Count());
+                        Console.WriteLine($"Total files({subcriberName}):" + chunkTrans.Count());
 
                         using (StreamWriter w = File.AppendText(logFileName))
                         {
@@ -143,7 +144,7 @@ namespace ExportFPSData
 
                                     engine.WriteFile(fileName, x);
 
-                                    resultLog.Append(logFileName);
+                                    resultLog.Append(fileName);
                                     resultLog.Append("\r\n");
                                 }
                                 catch (Exception ex)
