@@ -713,6 +713,50 @@
         <repeat-interval>10000</repeat-interval>
       </simple>
     </trigger>
+    
+    <job>
+      <name>CTSCustomer_Update_Username2_Job</name>
+      <group>DataTransformJob</group>
+      <description>UpdateUsername2FromMainDbJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteUpdateUsername2ApiJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>500</value>
+        </entry>
+        <entry>
+          <key>Action</key>
+          <value>api/active/UpdateUsername2</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>http://10.23.10.8:9000/customer</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>http://10.23.10.8:9000/customer</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTSCustomer_Update_Username2_Trigger</name>
+        <group>DataTransformTrigger</group>
+        <description>UpdateUsername2FromMainDbTrigger</description>
+        <job-name>CTSCustomer_Update_Username2_Job</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>30000</repeat-interval>
+      </simple>
+    </trigger>
   </schedule>
 
 </job-scheduling-data>

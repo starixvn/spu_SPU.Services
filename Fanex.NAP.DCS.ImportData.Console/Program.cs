@@ -27,7 +27,14 @@ namespace Fanex.NAP.DCS.ImportData.Console
                     .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
                     .Bind();
 
-            ReadDataFromConfig();
+            System.Console.Write("Input data path:");
+            var localPath = System.Console.ReadLine();
+
+            ReadDataFromConfig(localPath);
+
+            System.Console.WriteLine("Import data is DONE.");
+
+            System.Console.ReadKey();
         }
 
         static List<string> loadCsvFile(string filePath)
@@ -45,9 +52,9 @@ namespace Fanex.NAP.DCS.ImportData.Console
             return searchList;
         }
 
-        static void ReadDataFromConfig()
-        {
-            var localPath = @"D:\Projects\FPS 4.0\SubscriberTickets";
+        static void ReadDataFromConfig(string localPath)
+        {            
+            //var localPath = @"D:\Projects\FPS 4.0\SubscriberTickets";
 
             var files = Directory.GetFiles(localPath);
 
