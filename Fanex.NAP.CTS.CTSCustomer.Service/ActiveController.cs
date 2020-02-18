@@ -21,6 +21,11 @@
             dataCenterService = new DataCenterService();
         }
 
+        public string Index()
+        {
+            return "ahihi";
+        }
+
         public bool Post()
         {
             var requestContent = Request.Content;
