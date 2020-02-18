@@ -2,8 +2,12 @@
 
 <Functions>
   <Function Name="Data Center">
+    <!-- CTS_DataCenter -->
     <Setting Key="CTS_DC_TransformDCSAccountToCTSCustomer" SpName="CTS_DC_TransformDCSAccountToCTSCustomer" DbName="MySQL.CTS_DataCenter"/>
     <Setting Key="CTS_DC_InsertCTSCustomer" SpName="CTS_DC_InsertCTSCustomer" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_UpdateUsername2" SpName="CTS_DC_UpdateUsername2" DbName="MySQL.CTS_DataCenter"/>
+
+    <!-- DCS_DataCenter -->
     <Setting Key="DCS_DC_TransformToCTS_Account_Completed" SpName="DCS_DC_TransformToCTS_Account_Completed" DbName="MySQL.DCS_DataCenter"/>
   </Function>
 </Functions>

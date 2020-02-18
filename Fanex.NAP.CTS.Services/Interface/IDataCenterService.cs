@@ -17,5 +17,11 @@ namespace Fanex.NAP.CTS.Services.Interface
         void TransformAssociationCompleted(List<AssociationModel> associationList);
 
         void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIpJson);
+
+        List<CTSCustomer> GetCustomerForUpdateUsername2(int rowSize, bool isUpdateCustSub, int maxCTSCustId);
+
+        int UpdateUsername2(List<CustomerMainDbModel> customerList);
+
+        List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub);
     }
 }

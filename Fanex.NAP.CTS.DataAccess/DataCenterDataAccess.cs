@@ -4,6 +4,7 @@
     using Fanex.Data.Repository;
     using Fanex.NAP.CTS.Criteria;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.SPU.Model;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -81,6 +82,47 @@
             };
 
             repository.Execute(criteria);
+        }
+
+        public List<CTSCustomer> GetCustomersForUpdateUsername2(int rowSize, bool isUpdateCustSub, int maxCTSCustId)
+        {
+            var criteria = new GetCustomersForUpdateUsername2Criteria
+            {
+                Size = rowSize,
+                MaxCTSCustId = maxCTSCustId,
+                IsUpdateCustSub = isUpdateCustSub
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CTSCustomer>(criteria).ToList();
+            }
+        }
+
+        public List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
+        {
+            var criteria = new GetUsername2FromMainDb
+            {
+                CustIds = custIds,
+                IsGetCustSub = isCustSub
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerMainDbModel>(criteria).ToList();
+            }
+        }
+
+        public int UpdateUsername2(string customerJson)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateUsername2Criteria
+            {
+                CustomerJson = customerJson
+            };
+
+            return repository.Execute(criteria);
         }
     }
 }

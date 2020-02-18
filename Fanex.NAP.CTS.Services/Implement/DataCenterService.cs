@@ -38,6 +38,23 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.TransformCustomerFromMainDB(customerJson);
         }
 
+        public List<CTSCustomer> GetCustomerForUpdateUsername2(int rowSize, bool isUpdateCustSub, int maxCTSCustId)
+        {
+            return dataCenterDataAccess.GetCustomersForUpdateUsername2(rowSize, isUpdateCustSub, maxCTSCustId);
+        }
+
+        public List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
+        {
+            return dataCenterDataAccess.GetUsername2FromMainDb(custIds,isCustSub);
+        }
+
+        public int UpdateUsername2(List<CustomerMainDbModel> customerList)
+        {
+            var customerJson = JsonConvert.SerializeObject(customerList);
+
+            return dataCenterDataAccess.UpdateUsername2(customerJson);
+        }
+
         public void InsertAssociation(List<AssociationModel> associationList)
         {
             var associationJson = JsonConvert.SerializeObject(associationList);

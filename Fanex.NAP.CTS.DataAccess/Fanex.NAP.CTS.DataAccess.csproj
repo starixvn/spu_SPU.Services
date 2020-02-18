@@ -56,6 +56,10 @@
       <Project>{AA3E4730-2EE7-43AC-A9F3-992C4EF5DAB6}</Project>
       <Name>Fanex.NAP.CTS.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
+      <Project>{67fecd9e-043a-4100-bf62-52c1a016b85d}</Project>
+      <Name>Fanex.NAP.SPU.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fanex.Data">

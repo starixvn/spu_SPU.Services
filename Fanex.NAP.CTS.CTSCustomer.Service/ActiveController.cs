@@ -40,6 +40,37 @@
             return false;
         }
 
+        [HttpPost]
+        public bool UpdateUsername2()
+        {
+            var requestContent = Request.Content;
+            var jsonContent = requestContent.ReadAsStringAsync().Result;
+
+            if (!string.IsNullOrWhiteSpace(jsonContent))
+            {
+                var customers = JsonConvert.DeserializeObject<List<CustomerMainDbModel>>(jsonContent);
+                try
+                {
+                    if (customers != null && customers.Any())
+                    {
+                        dataCenterService.UpdateUsername2(customers);
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                          .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                          .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
+                          .ToString();
+
+                    LogService.Error(logMessage);
+                }
+            }
+
+            return false;
+        }
+
         private bool Process(List<CustomerMainDbModel> customers)
         {
             try
