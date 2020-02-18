@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="VirtualSetting">
-    <Setting Key="NAP_Report_CustMngt_GetProPunters" SpName="NAP_Report_CustMngt_GetProPunters" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
-    <Setting Key="NAP_Report_CustMngt_GetProPunters_Soccer" SpName="NAP_Report_CustMngt_GetProPunters_Soccer" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
-    <Setting Key="Acc_CustomerUpdVirtualMultiplier_Multiple" SpName="Acc_CustomerUpdVirtualMultiplier_Multiple" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
-    <Setting Key="NAP_UserLog_UpdateVirtualRateSettings" SpName="NAP_UserLog_UpdateVirtualRateSettings" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" TimeOut="300" />
-    <Setting Key="NAP_Report_CustMngt_GetCustomersVirtualRate" SpName="NAP_Report_CustMngt_GetCustomersVirtualRate" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
-    <Setting Key="NAP_Report_CustMngt_GetCustomerMarginHistory" SpName="NAP_Report_CustMngt_GetCustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
-    <Setting Key="NAP_UserLog_InsertCustomerMarginHistory" SpName="NAP_UserLog_InsertCustomerMarginHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" TimeOut="300" />
-    <Setting Key="Acc_CustomerVirtualRateSelectBA" SpName="Acc_CustomerVirtualRateSelectBA" DbName="DBLIC.bodb_Licensee.bodbAdminNet" TimeOut="300" />
+    <Setting Key="NAP_Report_CustMngt_GetProPunters" SpName="NAP_Report_CustMngt_GetProPunters" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="600" />
+    <Setting Key="NAP_Report_CustMngt_GetProPunters_Soccer" SpName="NAP_Report_CustMngt_GetProPunters_Soccer" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="600" />
+    <Setting Key="Acc_CustomerUpdVirtualMultiplier_Multiple" SpName="Acc_CustomerUpdVirtualMultiplier_Multiple" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="NAP_UserLog_UpdateVirtualRateSettings" SpName="NAP_UserLog_UpdateVirtualRateSettings" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" TimeOut="600" />
+    <Setting Key="NAP_Report_CustMngt_GetCustomersVirtualRate" SpName="NAP_Report_CustMngt_GetCustomersVirtualRate" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="600" />
+    <Setting Key="NAP_Report_CustMngt_GetCustomerMarginHistory" SpName="NAP_Report_CustMngt_GetCustomerMarginHistory" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="600" />
+    <Setting Key="NAP_UserLog_InsertCustomerMarginHistory" SpName="NAP_UserLog_InsertCustomerMarginHistory" DbName="DBLOG.bodb_CustomerLog.bodbAdminNet" TimeOut="600" />
+    <Setting Key="Acc_CustomerVirtualRateSelectBA" SpName="Acc_CustomerVirtualRateSelectBA" DbName="DBLIC.bodb_Licensee.bodbAdminNet" TimeOut="600" />
   </Function>
 </Functions>
