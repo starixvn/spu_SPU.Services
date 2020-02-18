@@ -43,10 +43,13 @@
         private bool Process(List<RawAssociationModel> associations)
         {
             try
-            {
+            {              
+
                 if (associations != null && associations.Any())
                 {
                     var associationByDevice = dataCenterService.TransformAssociationByDevice(associations);
+
+                    LogService.Info($"Association count: {JsonConvert.SerializeObject(associations)}");
 
                     if (associationByDevice != null && associationByDevice.Any())
                     {
