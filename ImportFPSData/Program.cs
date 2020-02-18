@@ -25,7 +25,7 @@ namespace ImportFPSData
                    {
                          new SentryLogging(new SentryEngineOptions
                          {
-                             Dsn = new Dsn("http://5db4409de047476aacba9ee1f3c70e26@10.99.99.37:801/63")
+                             Dsn = new Dsn("http://5db4409de047476aacba9ee1f3c70e26@10.99.99.51:801/63")
                          })
                    });
 
