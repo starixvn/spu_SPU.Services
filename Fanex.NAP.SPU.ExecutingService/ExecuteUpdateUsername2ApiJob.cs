@@ -67,7 +67,7 @@
                         var custids = string.Join(",", customers.Select(c => c.CustId.ToString()));
                         var mainDBCusts = dataCenterService.GetUsername2FromMainDb(custids, false);
 
-                        if (customers.Any())
+                        if (!customers.Any())
                         {
                             maxCTSCustId = 0;
                             while (true)

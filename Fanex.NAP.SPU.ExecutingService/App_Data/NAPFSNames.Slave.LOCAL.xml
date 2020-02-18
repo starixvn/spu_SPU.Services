@@ -16,9 +16,9 @@
 
   <Function Name="CTS">
     <Setting Key="CTS_DC_GetMaxCustIdCTSCustomer" SpName="CTS_DC_GetMaxCustIdCTSCustomer" DbName="MySQL.CTS_DataCenter.fps"/>
-    <Setting Key="CTS_GetCustomerInfo" SpName="CTS_GetCustomerInfo" DbName="DBTP.bodb02.bodbSPUNet"/>
-    <Setting Key="CTS_GetCustSubInfo" SpName="CTS_GetCustSubInfo" DbName="DBTP.bodb02.bodbSPUNet"/>
-    <Setting Key="CTS_GetMainDbCustomerForUpdateUsername2" SpName="CTS_GetMainDbCustomerForUpdateUsername2" DbName="DBTP.bodb02.bodbSPUNet"/>
+    <Setting Key="CTS_GetCustomerInfo" SpName="CTS_GetCustomerInfo" DbName="DBCTS.bodb02.bodbSPUNet"/>
+    <Setting Key="CTS_GetCustSubInfo" SpName="CTS_GetCustSubInfo" DbName="DBCTS.bodb02.bodbSPUNet"/>
+    <Setting Key="CTS_GetMainDbCustomerForUpdateUsername2" SpName="CTS_GetMainDbCustomerForUpdateUsername2" DbName="DBCTS.bodb02.bodbSPUNet"/>
     <Setting Key="CTS_DC_GetCustomerForUpdateUsername2" SpName="CTS_DC_GetCustomerForUpdateUsername2" DbName="MySQL.CTS_DataCenter"/>
   </Function>
   
