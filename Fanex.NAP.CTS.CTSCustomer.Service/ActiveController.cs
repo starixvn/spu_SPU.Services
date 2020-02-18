@@ -26,7 +26,8 @@
             return "ahihi";
         }
 
-        public bool Post()
+        [HttpPost]
+        public bool InsertCustomer()
         {
             var requestContent = Request.Content;
             var jsonContent = requestContent.ReadAsStringAsync().Result;
