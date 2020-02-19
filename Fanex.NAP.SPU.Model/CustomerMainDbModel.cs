@@ -22,6 +22,8 @@ namespace Fanex.NAP.SPU.Model
 
         public string Site { get; set; }
 
+        public int SiteId { get; set; }
+
         public int RoleId { get; set; }
 
         public int CurrencyId { get; set; }
