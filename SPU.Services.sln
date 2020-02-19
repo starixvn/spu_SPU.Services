@@ -139,6 +139,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchiveData", "ArchiveData\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MigrateCorrectCSVFile", "MigrateCorrectCSVFile\MigrateCorrectCSVFile.csproj", "{4D223A32-25E6-4CC9-AE90-3B668FB2DE40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.AffectedEvidence.Console", "Fanex.NAP.CTS.AffectedEvidence.Console\Fanex.NAP.CTS.AffectedEvidence.Console.csproj", "{935790C3-0267-4F11-A1F4-01355266DB78}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -369,6 +371,10 @@ Global
 		{4D223A32-25E6-4CC9-AE90-3B668FB2DE40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D223A32-25E6-4CC9-AE90-3B668FB2DE40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D223A32-25E6-4CC9-AE90-3B668FB2DE40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{935790C3-0267-4F11-A1F4-01355266DB78}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{935790C3-0267-4F11-A1F4-01355266DB78}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{935790C3-0267-4F11-A1F4-01355266DB78}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{935790C3-0267-4F11-A1F4-01355266DB78}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -426,9 +432,10 @@ Global
 		{30294F9A-CC9C-4AE2-B144-0E741680E596} = {1B797639-82BA-47AD-82B1-67C084A78BD0}
 		{B5A15F56-DAE9-4220-8804-D76808F5649A} = {1B797639-82BA-47AD-82B1-67C084A78BD0}
 		{4D223A32-25E6-4CC9-AE90-3B668FB2DE40} = {1B797639-82BA-47AD-82B1-67C084A78BD0}
+		{935790C3-0267-4F11-A1F4-01355266DB78} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal

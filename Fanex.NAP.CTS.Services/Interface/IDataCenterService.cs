@@ -23,5 +23,7 @@ namespace Fanex.NAP.CTS.Services.Interface
         int UpdateUsername2(List<CustomerMainDbModel> customerList);
 
         List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub);
+
+        void TransformAssociationAffectedEvidence(int batchSize);
     }
 }

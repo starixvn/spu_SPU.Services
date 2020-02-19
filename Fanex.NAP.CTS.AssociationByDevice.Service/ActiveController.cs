@@ -49,8 +49,6 @@
                 {
                     var associationByDevice = dataCenterService.TransformAssociationByDevice(associations);
 
-                    LogService.Info($"Association count: {JsonConvert.SerializeObject(associations)}");
-
                     if (associationByDevice != null && associationByDevice.Any())
                     {
                         dataCenterService.TransformAssociationCompleted(associationByDevice);

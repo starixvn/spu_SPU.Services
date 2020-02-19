@@ -124,5 +124,17 @@
 
             return repository.Execute(criteria);
         }
+
+        public void TransformAssociationAffectedEvidence(int batchSize)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new TransformAssociationAffectedEvidenceCriteria
+            {
+                BatchSize = batchSize
+            };
+
+            repository.Execute(criteria);
+        }
     }
 }

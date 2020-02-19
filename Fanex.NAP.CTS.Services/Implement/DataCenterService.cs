@@ -73,5 +73,10 @@ namespace Fanex.NAP.CTS.Services
         {           
             dataCenterDataAccess.TransformDCSTransactionIPToCTSAssociationByIP(transactionByIpJson);
         }
+
+        public void TransformAssociationAffectedEvidence(int batchSize)
+        {
+            dataCenterDataAccess.TransformAssociationAffectedEvidence(batchSize);
+        }
     }
 }
