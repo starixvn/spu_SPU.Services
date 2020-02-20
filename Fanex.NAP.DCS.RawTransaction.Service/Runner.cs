@@ -11,6 +11,7 @@
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.ServiceProcess;
     using System.Text.RegularExpressions;
@@ -87,10 +88,13 @@
 
         private void ConsumerTransactions()
         {
-            _rabbitMQ.AdvanceBus.Consume(_rabbitMQ.Queue, x => x.Add<MessageQueue>((message, info) =>
+            if(ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
-                ProcessMessage(message.Body);
-            }));
+                _rabbitMQ.AdvanceBus.Consume(_rabbitMQ.Queue, x => x.Add<MessageQueue>((message, info) =>
+                {
+                    ProcessMessage(message.Body);
+                }));
+            }            
         }
 
         private void ProcessMessage(MessageQueue message)
