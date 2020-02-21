@@ -99,6 +99,7 @@
                 index++;
             }
 
+            LogService.Info("SendRequest has been done ! - listCust: " + listCust.Count);
             await Task.WhenAll(tasks.ToArray());
         }
 
