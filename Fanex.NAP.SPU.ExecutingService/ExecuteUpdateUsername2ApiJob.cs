@@ -86,9 +86,11 @@
                                 await SendRequest(mainDBCusts, apiUrls, jobDataMap);
                             }
                         }
-
-                        maxCTSCustId = customers.Max(c => c.CTSCustId);
-                        await SendRequest(mainDBCusts, apiUrls, jobDataMap);
+                        else
+                        {
+                            maxCTSCustId = customers.Max(c => c.CTSCustId);
+                            await SendRequest(mainDBCusts, apiUrls, jobDataMap);
+                        }
                     }
                 }
             }

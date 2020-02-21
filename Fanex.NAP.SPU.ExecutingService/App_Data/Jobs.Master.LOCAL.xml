@@ -775,7 +775,7 @@
         </entry>
         <entry>
           <key>Action</key>
-          <value>api/active</value>
+          <value>api/active/InsertCustomer</value>
         </entry>
         <entry>
           <key>Master</key>
