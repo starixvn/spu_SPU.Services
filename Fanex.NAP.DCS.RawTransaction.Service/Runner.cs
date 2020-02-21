@@ -107,31 +107,24 @@
             {
                 InsertTransaction();
             }
-        }
-
-        private List<string> GetIgnoreSubs()
-        {
-            var subs = ConfigurationManager.AppSettings["Ignore-Subs"].Split(';').ToList();
-
-            return subs;
-        }
+        }       
 
         private void InsertTransaction()
         {
             try
             {
-                var ignoreSubs = GetIgnoreSubs();
+                var ignoreSub = ConfigurationManager.AppSettings["Is-Ignore-Subs"];
 
-                if(ignoreSubs.Any())
+                if(ignoreSub == "1")
                 {
-                    var transByIgnoreSubs = _transactionList.Where(x => ignoreSubs.Contains(x.SubscriberName));
+                    var transByIgnoreSubs = _transactionList.Where(x => x.SubscriberName.ToLower() == "alpha789y");
 
                     if(transByIgnoreSubs != null && transByIgnoreSubs.Any())
                     {
                         _capturingDataService.InsertTransaction2(transByIgnoreSubs.ToList());
                     }  
                     
-                    var normalTrans = _transactionList.Where(x => !ignoreSubs.Contains(x.SubscriberName));
+                    var normalTrans = _transactionList.Where(x => x.SubscriberName.ToLower() != "alpha789y");
 
                     if (normalTrans != null && normalTrans.Any())
                     {
