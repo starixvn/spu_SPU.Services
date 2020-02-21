@@ -109,11 +109,39 @@
             }
         }
 
+        private List<string> GetIgnoreSubs()
+        {
+            var subs = ConfigurationManager.AppSettings["Ignore-Subs"].Split(';').ToList();
+
+            return subs;
+        }
+
         private void InsertTransaction()
         {
             try
             {
-                _capturingDataService.InsertTransaction(_transactionList);
+                var ignoreSubs = GetIgnoreSubs();
+
+                if(ignoreSubs.Any())
+                {
+                    var transByIgnoreSubs = _transactionList.Where(x => ignoreSubs.Contains(x.SubscriberName));
+
+                    if(transByIgnoreSubs != null && transByIgnoreSubs.Any())
+                    {
+                        _capturingDataService.InsertTransaction2(transByIgnoreSubs.ToList());
+                    }  
+                    
+                    var normalTrans = _transactionList.Where(x => !ignoreSubs.Contains(x.SubscriberName));
+
+                    if (normalTrans != null && normalTrans.Any())
+                    {
+                        _capturingDataService.InsertTransaction(normalTrans.ToList());
+                    }
+                }
+                else
+                {
+                    _capturingDataService.InsertTransaction(_transactionList);
+                }                
 
                 _lastInsertTrans = DateTime.Now;
                 _transactionList.Clear();

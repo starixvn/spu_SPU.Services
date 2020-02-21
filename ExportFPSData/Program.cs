@@ -70,6 +70,7 @@ namespace ExportFPSData
             //var cc = Dot2LongIP("2a0d:5600:000e:0000:0000:0000:e27c:001d");
             //Console.WriteLine(cc);
             //var dd = "2a0d:5600:e::e27c:1d".Ip2Long().IpNumber;
+            //var dd = ContainsUnicodeCharacter(" abc ");
             //Console.WriteLine(dd);
 
             //Console.ReadKey();
@@ -99,12 +100,13 @@ namespace ExportFPSData
                     trans = GetData(Convert.ToInt32(ConfigurationManager.AppSettings["packageSize"]));
 
                     if (trans != null && trans.Any())
-                    {
+                    {                       
+
                         Console.WriteLine($"Export CSV file is begining({trans.Count} transaction).");
 
                         var rawTrans = trans.Select(x => TransformRawTransaction(x)).OrderBy(a => a.FPSTransId);
 
-                        var engine = new FileHelperEngine<RawTransactionModel>();
+                        var engine = new FileHelperEngine<RawTransactionModel>(Encoding.UTF8);
                         var subcriberName = rawTrans.First().SubscriberName;
 
                         var folderName = ConfigurationManager.AppSettings["csv-destination-root-path"] + DateTime.Now.ToString("yyyMMdd");
@@ -182,6 +184,8 @@ namespace ExportFPSData
             }
 
             Console.WriteLine("Export data is DONE. BYE.");
+
+            Console.ReadKey();
         }
 
         private static List<FPSDataModel> GetData(int pageSize)
@@ -267,6 +271,8 @@ namespace ExportFPSData
             {
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
+
+
 
             return new RawTransactionModel
             {

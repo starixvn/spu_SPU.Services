@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CapturingTransactionCriteria2.cs" />
     <Compile Include="GetCustSubFromMainDbCriteria.cs" />
     <Compile Include="GetMaxCustIdCriteria.cs" />
     <Compile Include="GetRawUnsucessTransactionIPListCriteria.cs" />

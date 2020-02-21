@@ -22,6 +22,18 @@ namespace Fanex.NAP.DCS.DataAccess
             };
 
            return repository.Execute(criteria);
-        }  
+        }
+
+        public int InsertTransaction2(string jsonTrans)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new CapturingTransactionCriteria2
+            {
+                RawTrans = jsonTrans
+            };
+
+            return repository.Execute(criteria);
+        }
     }
 }

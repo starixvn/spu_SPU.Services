@@ -2,7 +2,9 @@
 
 <Functions>
   <Function Name="CapturingTransaction">
-    <Setting Key="RT_RawTrans_InsertByXML" SpName="RT_RawTrans_InsertByXML" DbName="MySQL.FPS_RawTrans">
+    <Setting Key="DCS_RT_RawTrans_Insert" SpName="DCS_RT_RawTrans_Insert" DbName="MySQL.DCS_RawTransaction" Timeout="600">
+    </Setting>
+    <Setting Key="DCS_RT_RawTrans_Insert2" SpName="DCS_RT_RawTrans_Insert2" DbName="MySQL.DCS_RawTransaction" Timeout="600">
     </Setting>
   </Function>
 </Functions>

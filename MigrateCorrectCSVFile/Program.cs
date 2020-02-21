@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MigrateCorrectCSVFile
@@ -23,51 +24,40 @@ namespace MigrateCorrectCSVFile
 
             subfolders.ForEach(x =>
             {
-                var files = Directory.GetFiles(x.FullName).ToList();
-                files.ForEach(f =>
+                if (x.FullName.Contains("20200215") || x.FullName.Contains("20200216") || x.FullName.Contains("20200217"))
                 {
-                    Console.WriteLine(f);
+                    var files = Directory.GetFiles(x.FullName).ToList();
 
-                    var lines = File.ReadAllLines(f);
-
-                    using (StreamWriter writer = new StreamWriter(f))
+                    files.ForEach(f =>
                     {
+                        var lines = File.ReadAllLines(f);
+
+                        var result = new List<string>();
+
                         lines.ToList().ForEach(l =>
                         {
                             var libSubs = l.Split('|');
                             var sub = libSubs[1];
 
-                            if(Subs.ContainsKey(sub))
+                            if (!sub.Contains("XTD3") && !sub.Contains("IBO") && !sub.Contains("Alpha789y") && !sub.Contains("MAXBET789y"))
                             {
-                                Subs[sub] +=1;
+                                result.Add(l);
                             }
-                            else
-                            {
-                                Subs[sub] = 1;
-                            }
+                        });
 
-                            if (ContainsUnicodeCharacter(l))
-                            {
-                                writer.WriteLine(StripUnicodeCharactersFromString(l));
-                            }
-                            else
-                            {
-                                writer.WriteLine(l);
-                            }
-                        });                        
-                    }
-
-                    if(f.Contains("-Error"))
-                    {
-                        File.Move(f, f.Replace("-Error", string.Empty));
-                    }                    
-                });
+                        if (result.Count > 0)
+                        {
+                            File.WriteAllLines(f, result);
+                            Console.WriteLine("Re-Writed file => " + f);
+                        }
+                        else
+                        {
+                            File.Delete(f);
+                            Console.WriteLine("DELETED file => " + f);
+                        }
+                    });
+                }
             });
-
-            foreach (KeyValuePair<string, int> entry in Subs)
-            {
-                Console.WriteLine(entry.Key + " -> " + entry.Value);
-            }
 
             Console.ReadKey();
         }
