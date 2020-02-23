@@ -55,7 +55,7 @@
 
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
-                int maxCTSCustId = 0;
+                int maxCTSCustId = 300000;
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {

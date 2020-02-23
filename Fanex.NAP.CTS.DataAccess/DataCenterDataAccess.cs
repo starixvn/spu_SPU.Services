@@ -89,7 +89,7 @@
             var criteria = new GetCustomersForUpdateUsername2Criteria
             {
                 Size = rowSize,
-                MaxCTSCustId = maxCTSCustId,
+                MaxCustId = maxCTSCustId,
                 IsUpdateCustSub = isUpdateCustSub
             };
 

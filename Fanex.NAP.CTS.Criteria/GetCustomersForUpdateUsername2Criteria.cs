@@ -14,8 +14,8 @@ namespace Fanex.NAP.CTS.Criteria
         [SpParam(SqlParamName = "ip_Size")]
         public int Size { get; set; }
 
-        [SpParam(SqlParamName = "ip_CTSCustID")]
-        public int MaxCTSCustId { get; set; }
+        [SpParam(SqlParamName = "ip_CustID")]
+        public int MaxCustId { get; set; }
 
         [SpParam(SqlParamName = "ip_IsUpdateCustsub")]
         public bool IsUpdateCustSub { get; set; }
