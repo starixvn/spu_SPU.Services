@@ -88,43 +88,47 @@
 
         private void ConsumerTransactions()
         {
-            if(ConfigurationManager.AppSettings["Queue-Consume"] == "1")
+            if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
+                var trans = new List<RawTransactionModel>();
+
                 _rabbitMQ.AdvanceBus.Consume(_rabbitMQ.Queue, x => x.Add<MessageQueue>((message, info) =>
                 {
-                    ProcessMessage(message.Body);
+                    var tran = TransformRawTransaction(message.Body);
+
+                    trans.Add(tran);
+
+                    if (trans.Count >= AppSettings.TransBatch)
+                    {
+                        InsertTransaction(trans);
+
+                        trans.Clear();
+                        _transactionList.Clear();
+                    }
+                    else
+                    {
+                        _transactionList.Add(tran);
+                    }
                 }));
-            }            
-        }
-
-        private void ProcessMessage(MessageQueue message)
-        {
-            var trans = TransformRawTransaction(message);
-
-            _transactionList.Add(trans);
-
-            if (_transactionList.Count >= AppSettings.TransBatch)
-            {
-                InsertTransaction();
             }
-        }       
+        }        
 
-        private void InsertTransaction()
+        private void InsertTransaction(List<RawTransactionModel> trans)
         {
             try
             {
                 var ignoreSub = ConfigurationManager.AppSettings["Is-Ignore-Subs"];
 
-                if(ignoreSub == "1")
+                if (ignoreSub == "1")
                 {
-                    var transByIgnoreSubs = _transactionList.Where(x => x.SubscriberName.ToLower() == "alpha789y");
+                    var transByIgnoreSubs = trans.Where(x => x.SubscriberName.ToLower() == "alpha789y");
 
-                    if(transByIgnoreSubs != null && transByIgnoreSubs.Any())
+                    if (transByIgnoreSubs != null && transByIgnoreSubs.Any())
                     {
                         _capturingDataService.InsertTransaction2(transByIgnoreSubs.ToList());
-                    }  
-                    
-                    var normalTrans = _transactionList.Where(x => x.SubscriberName.ToLower() != "alpha789y");
+                    }
+
+                    var normalTrans = trans.Where(x => x.SubscriberName.ToLower() != "alpha789y");
 
                     if (normalTrans != null && normalTrans.Any())
                     {
@@ -133,11 +137,10 @@
                 }
                 else
                 {
-                    _capturingDataService.InsertTransaction(_transactionList);
-                }                
+                    _capturingDataService.InsertTransaction(trans);
+                }
 
                 _lastInsertTrans = DateTime.Now;
-                _transactionList.Clear();
             }
             catch (Exception ex)
             {
@@ -148,7 +151,6 @@
                 LogService.Error(logMessage);
 
                 _lastInsertTrans = DateTime.Now;
-                _transactionList.Clear();
             }
         }
 
@@ -205,7 +207,9 @@
         {
             if ((DateTime.Now - _lastInsertTrans).Minutes >= 1 && _transactionList.Count != 0)
             {
-                InsertTransaction();
+                InsertTransaction(_transactionList);
+
+                _transactionList.Clear();
             }
         }
 
