@@ -94,20 +94,30 @@
 
                 _rabbitMQ.AdvanceBus.Consume(_rabbitMQ.Queue, x => x.Add<MessageQueue>((message, info) =>
                 {
-                    var tran = TransformRawTransaction(message.Body);
-
-                    trans.Add(tran);
-
-                    if (trans.Count >= AppSettings.TransBatch)
+                    try
                     {
-                        InsertTransaction(trans);
+                        var tran = TransformRawTransaction(message.Body);
 
-                        trans.Clear();
-                        _transactionList.Clear();
+                        trans.Add(tran);
+
+                        if (trans.Count >= AppSettings.TransBatch)
+                        {
+                            InsertTransaction(trans);
+
+                            trans.Clear();
+                            _transactionList.Clear();
+                        }
+                        else
+                        {
+                            _transactionList.Add(tran);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        _transactionList.Add(tran);
+                        var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                        LogService.Error(logMessage);
                     }
                 }));
             }
