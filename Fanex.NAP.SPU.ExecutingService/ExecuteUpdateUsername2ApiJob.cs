@@ -48,14 +48,17 @@
         {
             var jobDataMap = context.JobDetail.JobDataMap;
             bool updateUsername2Done = false;
+            List<CTSCustomer> customers;
+            string custids;
+            List<CustomerMainDbModel> mainDBCusts;
 
-            if(jobDataMap != null)
+            if (jobDataMap != null)
             {
                 var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
 
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
-                int maxCTSCustId = 0;
+                int maxCustId = 0;
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
@@ -63,16 +66,16 @@
 
                     while (!updateUsername2Done)
                     {
-                        var customers = dataCenterService.GetCustomerForUpdateUsername2(packageSize, false, maxCTSCustId);
-                        var custids = string.Join(",", customers.Select(c => c.CustId.ToString()));
-                        var mainDBCusts = dataCenterService.GetUsername2FromMainDb(custids, false);
+                        customers = dataCenterService.GetCustomerForUpdateUsername2(packageSize, false, maxCustId);
+                        custids = string.Join(",", customers.Select(c => c.CustId.ToString()));
+                        mainDBCusts = dataCenterService.GetUsername2FromMainDb(custids, false);
 
                         if (!customers.Any())
                         {
-                            maxCTSCustId = 0;
+                            maxCustId = 0;
                             while (true)
                             {
-                                customers = dataCenterService.GetCustomerForUpdateUsername2(packageSize, true, maxCTSCustId);
+                                customers = dataCenterService.GetCustomerForUpdateUsername2(packageSize, true, maxCustId);
                                 custids = string.Join(",", customers.Select(c => c.CustSubId.ToString()));
                                 mainDBCusts = dataCenterService.GetUsername2FromMainDb(custids, true);
 
@@ -82,13 +85,13 @@
                                     break;
                                 }
 
-                                maxCTSCustId = customers.Max(c => c.CTSCustId);
+                                maxCustId = customers.Max(c => c.CustSubId);
                                 await SendRequest(mainDBCusts, apiUrls, jobDataMap);
                             }
                         }
                         else
                         {
-                            maxCTSCustId = customers.Max(c => c.CTSCustId);
+                            maxCustId = customers.Max(c => c.CustId);
                             await SendRequest(mainDBCusts, apiUrls, jobDataMap);
                         }
                     }
