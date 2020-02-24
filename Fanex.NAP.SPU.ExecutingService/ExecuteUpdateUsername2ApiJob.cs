@@ -55,7 +55,7 @@
 
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
-                int maxCTSCustId = 300000;
+                int maxCTSCustId = 0;
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
@@ -97,7 +97,7 @@
             else
             {
                 LogService.Error("Job Data cannot be null");
-            }           
+            }
         }
 
         private async Task SendRequest(List<CustomerMainDbModel> listCust, string[] urlList, JobDataMap mappingData)
