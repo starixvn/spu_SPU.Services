@@ -863,11 +863,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\WWW\SPU\DCS\Fanex.NAP.CTS.AffectedEvidence.Console</value>
+          <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.AffectedEvidence.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\WWW\SPU\DCS\Fanex.NAP.CTS.AffectedEvidence.Console</value>
+          <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.AffectedEvidence.Console</value>
         </entry>
       </job-data-map>
     </job>
