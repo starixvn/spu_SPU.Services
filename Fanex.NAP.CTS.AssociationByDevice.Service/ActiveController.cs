@@ -28,6 +28,8 @@
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
+                LogService.Info(jsonContent);
+
                 var result = JsonConvert.DeserializeObject<List<RawAssociationModel>>(jsonContent);
 
                 return Process(result);
@@ -47,7 +49,7 @@
 
                 if (associations != null && associations.Any())
                 {
-                    var associationByDevice = dataCenterService.TransformAssociationByDevice(associations);
+                    var associationByDevice = dataCenterService.TransformAssociationByDevice(associations);                    
 
                     if (associationByDevice != null && associationByDevice.Any())
                     {
