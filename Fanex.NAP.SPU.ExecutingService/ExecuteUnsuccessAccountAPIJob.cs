@@ -94,7 +94,7 @@
         }
 
         private static async Task<IRestResponse> Executing(List<RawAccountModel> accounts, string apiUrl, string actionPath)
-        {
+        {           
             var client = new RestClient(new Uri(apiUrl));
             var request = new RestRequest(actionPath, Method.POST);
 
