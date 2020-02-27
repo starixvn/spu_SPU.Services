@@ -10,6 +10,8 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         List<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList);
 
+        List<int> FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList);
+
         void InsertAssociation(List<AssociationModel> associationList);
 
         List<AssociationModel> TransformAssociationByDevice(List<RawAssociationModel> rawAssociation);

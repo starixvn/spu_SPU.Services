@@ -33,7 +33,20 @@
             {
                 return db.Query<int>(criteria).ToList();
             }
-        }       
+        }
+
+        public List<int> FillUpCustomerFromMainDB(string customerJson)
+        {
+            var criteria = new TransformCustomerFromMainDbCriteria
+            {
+                CustomerJson = customerJson
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<int>(criteria).ToList();
+            }
+        }
 
         public List<AssociationModel> TransformAssociationByDevice(string associationJson)
         {

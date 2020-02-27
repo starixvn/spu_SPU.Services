@@ -47,6 +47,42 @@
         }
 
         [HttpPost]
+        public bool InsertMissingCustomer()
+        {
+            var requestContent = Request.Content;
+            var jsonContent = requestContent.ReadAsStringAsync().Result;
+
+            if (!string.IsNullOrWhiteSpace(jsonContent))
+            {
+                try
+                {
+                    var customers = JsonConvert.DeserializeObject<List<CustomerMainDbModel>>(jsonContent);
+
+                    if (customers != null && customers.Any())
+                    {
+                        dataCenterService.FillUpCustomerFromMainDB(customers);
+                        return true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                      .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                      .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
+                      .ToString();
+
+                    LogService.Error(logMessage);
+                }
+            }
+            else
+            {
+                LogService.Error("Request content is empty.");
+            }
+
+            return false;
+        }
+
+        [HttpPost]
         public bool UpdateUsername2()
         {
             var requestContent = Request.Content;
