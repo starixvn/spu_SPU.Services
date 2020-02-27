@@ -759,6 +759,50 @@
     </trigger>
 
     <job>
+      <name>CTS_Healing_Customer_Job</name>
+      <group>DataTransformJob</group>
+      <description>MonitorAndHealingCustomerJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteMonitorAndHealCTSCustomer, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>PackageSize</key>
+          <value>10000</value>
+        </entry>
+        <entry>
+          <key>Action</key>
+          <value>api/active/InsertCustomer</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>http://10.18.200.120:9000/customer</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>http://10.18.200.120:9000/customer</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_Healing_Customer_Trigger</name>
+        <group>DataTransformTrigger</group>
+        <description>MonitorAndHealingCustomerTrigger</description>
+        <job-name>CTS_Healing_Customer_Job</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>3600000</repeat-interval>
+      </simple>
+    </trigger>
+
+    <job>
       <name>CTS_Transform_Association_AffectedEvidence_Job</name>
       <group>DataTransformJob</group>
       <description>AffectedEvidenceJob</description>

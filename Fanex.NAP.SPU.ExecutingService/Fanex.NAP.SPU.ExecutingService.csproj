@@ -76,6 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExecuteUnsuccessAssociationIPAPIJob.cs" />
+    <Compile Include="ExecuteMonitorAndHealCTSCustomer.cs" />
     <Compile Include="ExecuteUpdateUsername2ApiJob.cs" />
     <Compile Include="ExecuteUnsuccessAccountAPIJob.cs" />
     <Compile Include="ExecuteCustomerApiJob.cs" />
