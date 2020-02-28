@@ -8,9 +8,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace ImportFPSData
 {
@@ -50,46 +48,50 @@ namespace ImportFPSData
                         {
                             DirectoryInfo info = new DirectoryInfo(x.FullName);
 
-                            var files = info.GetFiles().OrderBy(p => p.CreationTime).Select(z => z.FullName).ToList();                                                       
+                            var subNames = ConfigurationManager.AppSettings["subscriber"].Split(',');
 
-                            files.ForEach(f =>
+                            foreach (var subName in subNames)
                             {
-                                var directoryInfo = Directory.GetParent(f);
-                                var fileName = Path.GetFileName(f);
+                                var files = info.GetFiles().OrderBy(p => p.CreationTime).Select(z => z.FullName).Where(a => a.Contains(subName)).ToList();
 
-                                try
+                                files.ForEach(f =>
                                 {
-                                    if (!fileName.Contains("Error"))
+                                    var directoryInfo = Directory.GetParent(f);
+                                    var fileName = Path.GetFileName(f);
+
+                                    try
                                     {
-                                        var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
-
-                                        if (result)
+                                        if (!fileName.Contains("Error"))
                                         {
-                                            Console.WriteLine("-" + f + " ==> DONE.");
+                                            var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
 
-                                            if (File.Exists(f))
+                                            if (result)
                                             {
-                                                File.Delete(f);
+                                                Console.WriteLine("-" + f + " ==> DONE.");
+
+                                                if (File.Exists(f))
+                                                {
+                                                    File.Delete(f);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                File.Move(f, f.Replace(".", "-Error."));
+
+                                                LogService.Error($"Import csv file ERROR({f})");
                                             }
                                         }
-                                        else
-                                        {
-
-                                            File.Move(f, f.Replace(".", "-Error."));
-
-                                            LogService.Error($"Import csv file ERROR({f})");
-                                        }
                                     }
-                                }
-                                catch (Exception ex)
-                                {
-                                    LogService.Error(ex.Message + $". CVS file({f})");
+                                    catch (Exception ex)
+                                    {
+                                        LogService.Error(ex.Message + $". CVS file({f})");
 
-                                    throw;
-                                }
+                                        throw;
+                                    }
 
-                                Thread.Sleep(15000);
-                            });
+                                    Thread.Sleep(20000);
+                                });
+                            }
                         }
                     });
 

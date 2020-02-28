@@ -8,57 +8,66 @@ using System.Text.RegularExpressions;
 namespace MigrateCorrectCSVFile
 {
     class Program
-    {
-        static Dictionary<string, int> Subs;
+    {        
         static void Main(string[] args)
         {
             Console.Write("Input path: ");
-
             var path = Console.ReadLine();
 
-            var di = new DirectoryInfo(path);
-            var subfolders = di.EnumerateDirectories()
-                              .OrderBy(d => d.Name)
-                              .ToList();
-            Subs = new Dictionary<string, int>();
+            Console.Write("Input Log path: ");
+            var logPath = Console.ReadLine();
 
-            subfolders.ForEach(x =>
-            {
-                if (x.FullName.Contains("20200215") || x.FullName.Contains("20200216") || x.FullName.Contains("20200217"))
-                {
-                    var files = Directory.GetFiles(x.FullName).ToList();
+            var files = Directory.GetFiles(path).ToList();
+            var  Subs = new List<string>();
 
-                    files.ForEach(f =>
-                    {
-                        var lines = File.ReadAllLines(f);
+            files.ForEach(f =>
+               {
+                   if (!Subs.Contains(f))
+                   {
+                       Console.WriteLine("Sub " + f + " is added.");
 
-                        var result = new List<string>();
+                       Subs.Add(f);
+                   }
+               });
 
-                        lines.ToList().ForEach(l =>
-                        {
-                            var libSubs = l.Split('|');
-                            var sub = libSubs[1];
+            //var di = new DirectoryInfo(path);
+            //var subfolders = di.EnumerateDirectories()
+            //                  .OrderBy(d => d.Name)
+            //                  .ToList();
+            //Subs = new List<string>();
 
-                            if (!sub.Contains("XTD3") && !sub.Contains("IBO") && !sub.Contains("Alpha789y") && !sub.Contains("MAXBET789y"))
-                            {
-                                result.Add(l);
-                            }
-                        });
+            //subfolders.ForEach(x =>
+            //{
+            //    var files = Directory.GetFiles(x.FullName).ToList();
 
-                        if (result.Count > 0)
-                        {
-                            File.WriteAllLines(f, result);
-                            Console.WriteLine("Re-Writed file => " + f);
-                        }
-                        else
-                        {
-                            File.Delete(f);
-                            Console.WriteLine("DELETED file => " + f);
-                        }
-                    });
-                }
-            });
+            //    files.ForEach(f =>
+            //    {
+            //        if (!Subs.Contains(f))
+            //        {
+            //            Console.WriteLine("Sub " + f + " is added.");
 
+            //            Subs.Add(f);
+            //        }
+
+            //        //var lines = File.ReadAllLines(f);                                        
+
+            //        //lines.ToList().ForEach(l =>
+            //        //{
+            //        //    var libSubs = l.Split('|');
+            //        //    var sub = libSubs[1];
+
+            //        //    if(!Subs.Contains(sub))
+            //        //    {
+            //        //        Console.WriteLine("Sub " + sub + " is added.");
+
+            //        //        Subs.Add(sub);
+            //        //    }
+            //        //});                    
+            //    });
+            //});
+
+            File.WriteAllLines(logPath + "//subs.log", Subs);
+            Console.WriteLine("DONE");
             Console.ReadKey();
         }
         public static bool ContainsUnicodeCharacter(string input)

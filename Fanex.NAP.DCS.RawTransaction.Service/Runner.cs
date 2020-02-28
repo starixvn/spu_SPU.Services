@@ -14,6 +14,7 @@
     using System.Configuration;
     using System.Linq;
     using System.ServiceProcess;
+    using System.Text;
     using System.Text.RegularExpressions;
     using System.Timers;
     using Utilities = Core.Utilities;
@@ -91,8 +92,8 @@
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
                 var trans = new List<RawTransactionModel>();
-
-                _rabbitMQ.AdvanceBus.Consume(_rabbitMQ.Queue, x => x.Add<MessageQueue>((message, info) =>
+                                
+                _rabbitMQ.AdvanceBus.Consume<MessageQueue>(_rabbitMQ.Queue, (message, info) =>
                 {
                     try
                     {
@@ -115,13 +116,13 @@
                     catch (Exception ex)
                     {
                         var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                            .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                         LogService.Error(logMessage);
                     }
-                }));
+                });
             }
-        }        
+        }
 
         private void InsertTransaction(List<RawTransactionModel> trans)
         {

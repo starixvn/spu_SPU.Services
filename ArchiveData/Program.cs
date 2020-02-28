@@ -37,9 +37,13 @@ namespace ArchiveData
             
             Console.Write("Number of tickets: ");
             noOfTickets = Convert.ToInt32(Console.ReadLine());
+
+            Console.Write("Interval(ms): ");
+            var interval = Convert.ToInt32(Console.ReadLine());
+
             Console.WriteLine("Archive process is starting.");
 
-            var timer = new Timer(60000);
+            var timer = new Timer(interval);
 
             timer.Elapsed += OnTimedEvent;
             timer.AutoReset = true;
@@ -55,7 +59,7 @@ namespace ArchiveData
             {                
                 Run(noOfTickets);
 
-                Console.WriteLine("Archive data is done.");
+                Console.WriteLine("- Archive data is done at " + DateTime.Now);
             }
             catch (Exception ex)
             {
