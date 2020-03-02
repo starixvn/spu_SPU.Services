@@ -77,7 +77,7 @@
                                 return Executing(trans.ToList(), apiUrl, jobDataMap.GetString("Action"));
                             });
 
-                            await Task.Delay(10);
+                            await Task.Delay(30);
 
                             tasks.Add(task);
 
