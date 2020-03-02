@@ -57,10 +57,10 @@
             {
                 ConsumerTransactions();
 
-                if (!_timer.Enabled)
-                {
-                    _timer.Start();
-                }
+                //if (!_timer.Enabled)
+                //{
+                //    _timer.Start();
+                //}
 
                 LogService.Info($"Raw trans service is STARTED at {DateTime.Now}");
             }
@@ -106,12 +106,12 @@
                             InsertTransaction(trans);
 
                             trans.Clear();
-                            _transactionList.Clear();
+                           // _transactionList.Clear();
                         }
-                        else
-                        {
-                            _transactionList.Add(tran);
-                        }
+                        //else
+                        //{
+                        //    _transactionList.Add(tran);
+                        //}
                     }
                     catch (Exception ex)
                     {
