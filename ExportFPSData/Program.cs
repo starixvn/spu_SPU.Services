@@ -282,7 +282,7 @@ namespace ExportFPSData
                 LoginName = source.LoginName.Trim(),
                 SubscriberName = source.SubName,
                 TransTime = Convert.ToDateTime(source.TransTime.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
-                CreatedDate = Convert.ToDateTime(source.CreatedDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
+                CreatedDate = Convert.ToDateTime(source.TransTime.ToString("yyyy-MM-dd")),
                 IP = source.IP,
                 IPId = source.IP.Ip2Long().IpNumber,
                 PluginID = 0,
