@@ -49,9 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.CTS.AffectedEvidence.Console.exe.LOCAL.config">
+	  <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.CTS.AffectedEvidence.Console.exe.PRO.config">
+	  <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
