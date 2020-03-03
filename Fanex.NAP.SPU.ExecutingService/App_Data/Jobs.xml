@@ -864,11 +864,11 @@
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\WWW\SPU\DCS\Fanex.NAP.CTS.AffectedEvidence.Console</value>
+          <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.AffectedEvidence.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\WWW\SPU\DCS\Fanex.NAP.CTS.AffectedEvidence.Console</value>
+          <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.AffectedEvidence.Console</value>
         </entry>
       </job-data-map>
     </job>
@@ -879,6 +879,47 @@
         <group>DataTransformTrigger</group>
         <description>AffectedEvidenceTrigger</description>
         <job-name>CTS_Transform_Association_AffectedEvidence_Job</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
+
+
+    <job>
+      <name>CTS_Update_Last_Login_Time_Job</name>
+      <group>DataTransformJob</group>
+      <description>UpdateLastLoginTimeJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.CTS.UpdateLastLoginTime.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.UpdateLastLoginTime.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.UpdateLastLoginTime.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_Update_Last_Login_Time_Trigger</name>
+        <group>DataTransformTrigger</group>
+        <description>UpdateLastLoginTimeTrigger</description>
+        <job-name>CTS_Update_Last_Login_Time_Job</job-name>
         <job-group>DataTransformJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <repeat-count>-1</repeat-count>
