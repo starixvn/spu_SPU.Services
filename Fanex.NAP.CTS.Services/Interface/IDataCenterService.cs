@@ -27,5 +27,7 @@ namespace Fanex.NAP.CTS.Services.Interface
         List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub);
 
         void TransformAssociationAffectedEvidence(int batchSize);
+
+        void UpdateLastLoginTime(int batchSize);
     }
 }

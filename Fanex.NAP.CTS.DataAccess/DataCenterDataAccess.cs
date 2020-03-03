@@ -149,5 +149,17 @@
 
             repository.Execute(criteria);
         }
+
+        public void TransformUpdatingLastLoginTime(int batchSize)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new TransformUpdatingLastLoginTimeCriteria
+            {
+                BatchSize = batchSize
+            };
+
+            repository.Execute(criteria);
+        }
     }
 }

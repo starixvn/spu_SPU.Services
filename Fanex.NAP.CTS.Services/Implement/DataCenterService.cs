@@ -85,5 +85,10 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.TransformAssociationAffectedEvidence(batchSize);
         }
+
+        public void UpdateLastLoginTime(int batchSize)
+        {
+            dataCenterDataAccess.TransformUpdatingLastLoginTime(batchSize);
+        }
     }
 }

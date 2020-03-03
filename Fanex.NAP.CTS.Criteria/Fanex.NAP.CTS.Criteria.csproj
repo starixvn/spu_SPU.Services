@@ -47,6 +47,7 @@
     <Compile Include="GetUsername2FromMainDb.cs" />
     <Compile Include="TransformAssociationAffectedEvidenceCriteria.cs" />
     <Compile Include="FillUpCustomerFromMainDbCriteria.cs" />
+    <Compile Include="TransformUpdatingLastLoginTimeCriteria.cs" />
     <Compile Include="UpdateUsername2Criteria.cs" />
     <Compile Include="GetCustomersForUpdateUsername2Criteria.cs" />
     <Compile Include="TransformAssociationByDeviceCriteria.cs" />
