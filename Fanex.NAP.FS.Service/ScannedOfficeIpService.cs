@@ -13,7 +13,7 @@ namespace Fanex.NAP.FS.Service
         {
             var criteria = new OfficeIPPreconditionCriteria();
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<Match>(criteria);
             }

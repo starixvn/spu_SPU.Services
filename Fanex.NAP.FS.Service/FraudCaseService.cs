@@ -12,7 +12,7 @@
         {
             var criteria = new FraudCaseGetCriteria(isInternal, isActive, environment);
             
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {                
                 return db.Query<FraudCase>(criteria);
             }
@@ -22,7 +22,7 @@
         {
             var criteria = new FraudCaseGetCriteria(isInternal, isActive, environment);
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<T>(criteria);
             }
@@ -36,7 +36,7 @@
                 Environment = environment
             };
 
-            using (var db = new ObjectDb(criteria.GetSettingKey()))
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {                
                 return db.QueryEntity<FraudCase>(criteria);
             }

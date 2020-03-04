@@ -1,5 +1,6 @@
 ﻿using Fanex.Logging;
 using Fanex.Logging.Sentry;
+using Fanex.NAP.DCS.Core;
 using Fanex.NAP.FS.Model;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
@@ -8,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
 using System.Timers;
 
 namespace Fanex.NAP.SPU.Console.Testing
@@ -20,23 +22,45 @@ namespace Fanex.NAP.SPU.Console.Testing
 
         static void Main(string[] args)
         {
-            LogManager.SetDefaultLogCategory("Testing")
-                    .Use(new List<ILogEngine>
-                    {
-                         new SentryLogging(new SentryEngineOptions
-                         {
-                             Dsn = new Dsn("http://5db4409de047476aacba9ee1f3c70e26@10.40.40.47:801/63")
-                         })
-                    });
+            var ipv6Number = "2001:0db8:0000:0042:0000:8a2e:0370:7334".Ip2Long().IpNumber;
 
-            maintenanceService = new UMControlAdapter();            
+            System.Console.WriteLine("IpV6->" + ipv6Number);
 
-            timer = new System.Timers.Timer();
-            timer.Interval = 60000;
+            IPAddress.TryParse("2001:0db8:0000:0042:0000:8a2e:0370:7334", out IPAddress ipAd);
 
-            timer.Elapsed += OnTimedEvent;
-            timer.AutoReset = true;
-            timer.Enabled = true;
+            var ipV4FromV6 = ipAd.MapToIPv4().ToString();
+
+            System.Console.WriteLine(ipV4FromV6);
+
+            //var ipV6 = Utilities.Long2DotIP(ipv6Number.ToString());
+
+            //System.Console.WriteLine(ipV6);
+
+            var ipv4Number = ipV4FromV6.Ip2Long().IpNumber;
+
+            System.Console.WriteLine("IpV4->" + ipv4Number);
+
+            var ipV4 = Utilities.Long2DotIP(ipv4Number);
+
+            System.Console.WriteLine(ipV4);
+
+            //LogManager.SetDefaultLogCategory("Testing")
+            //        .Use(new List<ILogEngine>
+            //        {
+            //             new SentryLogging(new SentryEngineOptions
+            //             {
+            //                 Dsn = new Dsn("http://5db4409de047476aacba9ee1f3c70e26@10.40.40.47:801/63")
+            //             })
+            //        });
+
+            //maintenanceService = new UMControlAdapter();            
+
+            //timer = new System.Timers.Timer();
+            //timer.Interval = 60000;
+
+            //timer.Elapsed += OnTimedEvent;
+            //timer.AutoReset = true;
+            //timer.Enabled = true;
 
             System.Console.ReadKey();
         }

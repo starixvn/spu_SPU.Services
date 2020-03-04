@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+    <Setting Key="DCS_DC_TransformData_UserAgent_GetNullBrowserOSList" SpName="DCS_DC_TransformData_UserAgent_GetNullBrowserOSList" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformData_UserAgent_UpdateOSBrowser" SpName="DCS_DC_TransformData_UserAgent_UpdateOSBrowser" DbName="MySQL.DCS_DataCenter"/>   
+  </Function> 
+</Functions>

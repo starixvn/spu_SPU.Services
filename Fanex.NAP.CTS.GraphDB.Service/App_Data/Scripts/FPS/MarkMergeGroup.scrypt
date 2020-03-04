@@ -1,0 +1,4 @@
+﻿MATCH (g:Group)
+MATCH (g1:Group {GroupId: $CustGroupId})
+WHERE g.GroupId IN $DevGroupIds AND g <> g1 AND NOT EXISTS((g)<-[:MERGING]-(g1))
+MERGE (g)-[:MERGING]->(g1)

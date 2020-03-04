@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+    <Setting Key="FPS_DC_TransformData_Account_GetForUpdateCustInfo" SpName="FPSB_DC_TransformData_Account_GetForUpdateCustInfo" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_TransformData_Account_UpdateCustomerInfo" SpName="FPSB_DC_TransformData_Account_UpdateCustomerInfo" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_GetAssociationForGraphDB" SpName="FPS_DC_GetAssociationForGraphDB" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_GetCustomerInfo40" SpName="FPS_GetCustomerInfo40" DbName="SQL.FPS_bodb02"/>
+    
+    <Setting Key="GetAllIP2Location" SpName="GetAllIP2Location" DbName="SQL.IPDB"/>
+    <Setting Key="GetAllIPv62Location" SpName="GetAllIPv62Location" DbName="SQL.IPDB" TimeOut="3600"/>
+    <Setting Key="GetIPDBVersion" SpName="GetIPDBVersion" DbName="SQL.IPDB"/>
+
+    <Setting Key="FPS_DC_UpdateIPTableLog" SpName="FPSB_DC_UpdateIPTableLog" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_GetLatestUpdatedDate_IPRange" SpName="FPS_DC_GetLatestUpdatedDate_IPRange" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_UpdateIPRangeLocation" SpName="FPS_DC_UpdateIPRangeLocation" DbName="MySQL.FPS_DataCenter" TimeOut="3600"/>
+
+    <Setting Key="FPS_DC_UpdateIsSyncGraphDBByAssociationID" SpName="FPSB_DC_UpdateIsSyncGraphDBByAssociationID" DbName="MySQL.FPS_DataCenter" Timeout="600"/>
+
+    <Setting Key="FPS_DC_TransformData_UserAgent_GetNullBrowserOSList" SpName="FPSB_DC_TransformData_UserAgent_GetNullBrowserOSList" DbName="MySQL.FPS_DataCenter"/>   
+    <Setting Key="FPS_DC_TransformData_UserAgent_UpdateOSBrowser" SpName="FPSB_DC_TransformData_UserAgent_UpdateOSBrowser" DbName="MySQL.FPS_DataCenter"/>
+
+    <Setting Key="FPS_DC_TransformData_Transaction_GetNullAccountIDTransList" SpName="FPSB_DC_TransformData_Transaction_GetNullAccountIDTransList" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_TransformData_Transaction_UpdateAccountID" SpName="FPSB_DC_TransformData_Transaction_UpdateAccountID" DbName="MySQL.FPS_DataCenter"/>
+
+    <Setting Key="FPS_DC_TransformData_Transaction_GetNullDeviceIDTransList" SpName="FPSB_DC_TransformData_Transaction_GetNullDeviceIDTransList" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="FPS_DC_TransformData_Transaction_UpdateDeviceID" SpName="FPSB_DC_TransformData_Transaction_UpdateDeviceID" DbName="MySQL.FPS_DataCenter"/>
+  </Function>
+  <Function Name="CapturingTransaction">
+    <Setting Key="FPS_RT_TransformData_GetPackage" SpName="FPSB_RT_TransformData_GetPackage_New" DbName="MySQL.FPS_RawTransaction">
+    </Setting>
+  </Function>
+</Functions>

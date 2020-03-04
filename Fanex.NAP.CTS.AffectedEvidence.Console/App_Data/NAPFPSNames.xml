@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+    <Setting Key="CTS_DC_TransformAssociation_AffectedEvidence" SpName="CTS_DC_TransformAssociation_AffectedEvidence" DbName="MySQL.CTS_DataCenter"/>    
+  </Function> 
+</Functions>

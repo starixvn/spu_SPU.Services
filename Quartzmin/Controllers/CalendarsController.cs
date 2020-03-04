@@ -19,7 +19,7 @@ using IActionResult = System.Web.Http.IHttpActionResult;
 
 namespace Quartzmin.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class CalendarsController : PageControllerBase
     {
         [HttpGet]

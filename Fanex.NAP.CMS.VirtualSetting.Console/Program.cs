@@ -16,12 +16,12 @@
             try
             {
                 LogManager
-                    .SetDefaultLogCategory(AppSetting.FanexLogCategory)
+                    .SetDefaultLogCategory(AppSettings.FanexLogCategory)
                     .Use(new List<ILogEngine>
                     {
                         new SentryLogging(new SentryEngineOptions
                         {
-                            Dsn = new Dsn(AppSetting.SentryLogging),
+                            Dsn = new Dsn(AppSettings.SentryLogging),
                             WriteLogTimeoutSeconds = 30
                         })
                     });
@@ -35,12 +35,12 @@
                         .ExecuteForSoccer()
                         .ExecuteForSportbooks()
                         .CountAffectedMembers()
-                        .SendMailExternal(AppSetting.MailingListId);
+                        .SendMailExternal(AppSettings.MailingListId);
                 }
                 else
                 {
                     service
-                        .SendMailInternal(AppSetting.MailingIdToSPU);
+                        .SendMailInternal(AppSettings.MailingIdToSPU);
                 }
             }
             catch (Exception ex)

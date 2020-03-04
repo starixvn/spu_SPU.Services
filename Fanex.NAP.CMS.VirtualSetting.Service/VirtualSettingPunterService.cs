@@ -177,9 +177,9 @@
 
         public IEnumerable<Punter> UpdateVirtualSetting(IEnumerable<Punter> punters, double newVirtualRate)
         {
-            var userId = AppSetting.DummyUser;
-            var ip = AppSetting.IP;
-            var chunkSize = AppSetting.PunterChunkSize;
+            var userId = AppSettings.DummyUser;
+            var ip = AppSettings.IP;
+            var chunkSize = AppSettings.PunterChunkSize;
             var chunkPunters = punters.Partition(chunkSize);
 
             foreach (var selectedPunters in chunkPunters)
@@ -283,7 +283,7 @@
         {
             try
             {
-                var numOfMonth = AppSetting.NumOfMonth;
+                var numOfMonth = AppSettings.NumOfMonth;
 
                 var result = _dataAccess.InsertCustomerMarginHistory(punters, _model.SportGroupID, numOfMonth, _model.ServiceName, _model.AdjustDate);
 

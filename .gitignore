@@ -326,3 +326,5 @@ ASALocalRun/
 *.binlog
 
 node_modules/
+*/obj/*
+*/obj/Debug/*

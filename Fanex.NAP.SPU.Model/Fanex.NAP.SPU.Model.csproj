@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,12 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CTSCustomer.cs" />
+    <Compile Include="CustomerMainDbModel.cs" />
+    <Compile Include="DataResult.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="ExecutePath.cs" />
+    <Compile Include="IsSynAssociationModel.cs" />
     <Compile Include="JobData.cs" />
     <Compile Include="JobDataSevices.cs" />
     <Compile Include="JobDataRoot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RawAccountModel.cs" />
+    <Compile Include="RawAssociationModel.cs" />
+    <Compile Include="RawTransactionByIpModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

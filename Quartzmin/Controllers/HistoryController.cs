@@ -17,7 +17,7 @@ using IActionResult = System.Web.Http.IHttpActionResult;
 
 namespace Quartzmin.Controllers
 {
-    [Authorize]
+   // [Authorize]
     public class HistoryController : PageControllerBase
     {
         [HttpGet]
@@ -35,7 +35,7 @@ namespace Quartzmin.Controllers
             var list = new List<object>();
             var counter = 0;
 
-            foreach (var h in history.OrderByDescending(x => x.ActualFireTimeUtc))
+            foreach (var h in history.OrderByDescending(x => x.ActualFireTimeUtc).Where(x => !x.Job.Contains("XMLSchedulingDataProcessorPlugin")))
             {
                 counter++;
                 string state = "Finished", icon = "check";
@@ -76,7 +76,7 @@ namespace Quartzmin.Controllers
                     Duration = (endTime - h.ActualFireTimeUtc)?.ToString("hh\\:mm\\:ss"),
                     State = state,
                     StateIcon = icon,
-                    Counter=counter
+                    Counter = counter
                 });
             }
 

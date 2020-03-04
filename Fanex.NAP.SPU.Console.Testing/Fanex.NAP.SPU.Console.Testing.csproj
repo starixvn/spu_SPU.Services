@@ -36,6 +36,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
@@ -53,6 +54,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Core\Fanex.NAP.DCS.Core.csproj">
+      <Project>{91543A37-F0A0-4A4F-8C1D-DBB0BCC75699}</Project>
+      <Name>Fanex.NAP.DCS.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Model\Fanex.NAP.DCS.Model.csproj">
+      <Project>{07F5D4E0-8C77-48A8-BA21-B7F7E0439A64}</Project>
+      <Name>Fanex.NAP.DCS.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.FS.Model\Fanex.NAP.FS.Model.csproj">
       <Project>{5CE0BA40-0A37-4C89-A33B-D61C7944BE08}</Project>
       <Name>Fanex.NAP.FS.Model</Name>
@@ -70,6 +79,9 @@
     </PackageReference>
     <PackageReference Include="ONEbook.UM">
       <Version>2.0.2.9</Version>
+    </PackageReference>
+    <PackageReference Include="RestSharp">
+      <Version>105.2.3</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

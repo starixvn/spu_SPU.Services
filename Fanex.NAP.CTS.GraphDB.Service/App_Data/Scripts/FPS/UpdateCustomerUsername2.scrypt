@@ -1,0 +1,2 @@
+﻿MATCH (cus:Customer {CustId:$CustId})
+SET cus.Username2=$Username2
