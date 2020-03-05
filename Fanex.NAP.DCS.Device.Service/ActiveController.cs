@@ -9,6 +9,7 @@
     using Fanex.NAP.DCS.Model;
     using Newtonsoft.Json;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
 
@@ -27,12 +28,8 @@
             var jsonContent = requestContent.ReadAsStringAsync().Result;
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
-            {
-                LogService.Info(jsonContent);
-
-                var result = JsonConvert.DeserializeObject<TransformDevicePackageModel>(jsonContent);               
-
-                return Process(result);
+            {                        
+                return Process(jsonContent);
             }
             else
             {
@@ -42,13 +39,13 @@
             return false;
         }
 
-        private bool Process(TransformDevicePackageModel data)
+        private bool Process(string jsonData)
         {
             try
             {
-                if (data.Devices != null && data.Devices.Any())
+                if (!string.IsNullOrWhiteSpace(jsonData))
                 {                                 
-                    dataCenterService.InsertDevice(data.Devices);                                        
+                    dataCenterService.InsertDevice(jsonData);                                        
 
                     return true;
                 }

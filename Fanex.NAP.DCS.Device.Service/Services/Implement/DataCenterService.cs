@@ -16,10 +16,8 @@
             dataCenter = new DataCenterDataAccess();
         }
 
-        public DataResult InsertDevice(List<DevicePackage> transId)
-        {
-            var transJson = JsonConvert.SerializeObject(transId);
-
+        public DataResult InsertDevice(string transJson)
+        {            
             return dataCenter.InsertDevice(transJson);
         }
     }

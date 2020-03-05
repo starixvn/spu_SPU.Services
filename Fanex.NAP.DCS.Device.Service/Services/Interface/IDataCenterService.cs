@@ -6,6 +6,6 @@ namespace Fanex.NAP.DCS.Device.Service.Services.Interface
 {
     public interface IDataCenterService
     {      
-        DataResult InsertDevice(List<DevicePackage> transId);
+        DataResult InsertDevice(string transJson);
     }
 }

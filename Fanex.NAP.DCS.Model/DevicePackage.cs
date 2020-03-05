@@ -4,6 +4,9 @@ namespace Fanex.NAP.DCS.Model
 {
     public class DevicePackage
     {
+        private DateTime _transTime;
+        private DateTime _createdDate;
+
         public long TransId { get; set; }
 
         public long AccountId { get; set; }
@@ -18,9 +21,28 @@ namespace Fanex.NAP.DCS.Model
 
         public string FingerprintMoreInfo { get; set; }
 
-        public DateTime TransTime { get; set; }
+        public DateTime TransTime
+        {
+            get
+            {
+                return Convert.ToDateTime(_transTime.ToString("yyyy-MM-dd HH:mm:ss.ffff"));
+            }
+            set
+            {
+                _transTime = value;
+            }
+        }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate {
+            get
+            {
+                return Convert.ToDateTime(_createdDate.ToString("yyyy-MM-dd HH:mm:ss.ffff"));
+            }
+            set
+            {
+                _createdDate = value;
+            }
+        }
 
         public int BatchId { get; set; }
     }
