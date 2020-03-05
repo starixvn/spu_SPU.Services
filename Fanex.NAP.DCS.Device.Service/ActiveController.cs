@@ -28,9 +28,7 @@
             var jsonContent = requestContent.ReadAsStringAsync().Result;
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
-            {
-                LogService.Info(jsonContent);
-
+            {                
                 return Process(jsonContent);
             }
             else

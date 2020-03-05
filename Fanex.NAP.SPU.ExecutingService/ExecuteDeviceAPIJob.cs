@@ -7,10 +7,15 @@
     using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Service;
+    using Newtonsoft.Json;
     using Quartz;
     using RestSharp;
+    using RestSharp.Deserializers;
+    using RestSharp.Serializers;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -101,10 +106,11 @@
             var client = new RestClient(new Uri(apiUrl));
             var request = new RestRequest(actionPath, Method.POST);
 
-            request.AddHeader("Content-type", "application/json");
+            request.JsonSerializer = NewtonsoftJsonSerializer.Default;
+            request.RequestFormat = DataFormat.Json;            
             request.AddJsonBody(devicePackages);
-
+            
             return await client.ExecuteTaskAsync(request);
         }
-    }
+    }    
 }
