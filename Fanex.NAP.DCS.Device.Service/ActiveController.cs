@@ -3,14 +3,9 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.DCS.Core;
     using Fanex.NAP.DCS.Device.Service.Services.Implement;
     using Fanex.NAP.DCS.Device.Service.Services.Interface;
-    using Fanex.NAP.DCS.Model;
-    using Newtonsoft.Json;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using System.Web.Http;
 
     public class ActiveController : ApiController

@@ -28,8 +28,6 @@
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
-                LogService.Info(jsonContent);
-
                 var result = JsonConvert.DeserializeObject<List<RawAssociationModel>>(jsonContent);
 
                 return Process(result);
