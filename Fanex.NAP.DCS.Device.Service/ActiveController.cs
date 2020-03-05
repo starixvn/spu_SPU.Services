@@ -28,7 +28,9 @@
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
-                var result = JsonConvert.DeserializeObject<TransformDevicePackageModel>(jsonContent);
+                LogService.Info(jsonContent);
+
+                var result = JsonConvert.DeserializeObject<TransformDevicePackageModel>(jsonContent);               
 
                 return Process(result);
             }
