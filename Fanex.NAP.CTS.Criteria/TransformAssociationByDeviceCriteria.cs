@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Criteria
 {
-    public class TransformAssociationByDeviceCriteria : CriteriaBase
+    public class TransformAssociationByDeviceCriteria : NonQueryCommand
     {
         [SpParam(SqlParamName = "ip_AssociationList")]
         public string AssociationList { get; set; }

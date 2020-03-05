@@ -14,9 +14,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void InsertAssociation(List<AssociationModel> associationList);
 
-        List<AssociationModel> TransformAssociationByDevice(List<RawAssociationModel> rawAssociation);
-
-        void TransformAssociationCompleted(List<AssociationModel> associationList);
+        void TransformAssociationByDevice(List<RawAssociationModel> rawAssociation);
 
         void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIpJson);
 

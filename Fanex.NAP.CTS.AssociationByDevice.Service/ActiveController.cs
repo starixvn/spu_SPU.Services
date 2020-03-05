@@ -45,16 +45,11 @@
         private bool Process(List<RawAssociationModel> associations)
         {
             try
-            {              
+            {
 
                 if (associations != null && associations.Any())
                 {
-                    var associationByDevice = dataCenterService.TransformAssociationByDevice(associations);                    
-
-                    if (associationByDevice != null && associationByDevice.Any())
-                    {
-                        dataCenterService.TransformAssociationCompleted(associationByDevice);
-                    }
+                    dataCenterService.TransformAssociationByDevice(associations);
 
                     return true;
                 }
@@ -70,6 +65,6 @@
             }
 
             return false;
-        }        
+        }
     }
 }

@@ -26,6 +26,8 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch);
 
+        List<RawAssociationModel> GetRawUnsuccessAssociation(int numOfAssociation, int numOfBatch);
+
         List<RawTransactionByIpModel> GetRawTransByIp(int numOfTrans, int numOfBatch);
 
         List<RawTransactionByIpModel> GetUnsuccessTransByIp(int numOfTrans, int numOfBatch);

@@ -309,6 +309,20 @@
             }
         }
 
+        public List<RawAssociationModel> GetRawUnsuccessAssociation(int quantityPerBatch, int numOfBatch)
+        {
+            var criteria = new GetRawUnsucessAssociationListCriteria
+            {
+                NumberOfAssociation = quantityPerBatch,
+                NumberOfBatch = numOfBatch
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<RawAssociationModel>(criteria).ToList();
+            }
+        }
+
         public List<RawTransactionByIpModel> GetRawTransactionByIp(int quantityPerBatch, int numOfBatch)
         {
             var criteria = new GetRawTransactionByIpCriteria

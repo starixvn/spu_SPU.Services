@@ -17,11 +17,11 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess = new DataCenterDataAccess();
         }
 
-        public List<AssociationModel> TransformAssociationByDevice(List<RawAssociationModel> rawAssociation)
+        public void TransformAssociationByDevice(List<RawAssociationModel> rawAssociation)
         {
             var associationJson = JsonConvert.SerializeObject(rawAssociation);
 
-            return dataCenterDataAccess.TransformAssociationByDevice(associationJson);
+            dataCenterDataAccess.TransformAssociationByDevice(associationJson);
         }
 
         public void TransformDCSAccount(List<RawAccountModel> accountList)
@@ -67,14 +67,7 @@ namespace Fanex.NAP.CTS.Services
             var associationJson = JsonConvert.SerializeObject(associationList);
 
             dataCenterDataAccess.InsertAssociation(associationJson);
-        }
-
-        public void TransformAssociationCompleted(List<AssociationModel> associationList)
-        {
-            var associationJson = JsonConvert.SerializeObject(associationList);
-
-            dataCenterDataAccess.TransformAssociationCompleted(associationJson);
-        }       
+        }    
 
         public void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIpJson)
         {           

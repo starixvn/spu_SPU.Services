@@ -48,7 +48,7 @@
             }
         }
 
-        public List<AssociationModel> TransformAssociationByDevice(string associationJson)
+        public void TransformAssociationByDevice(string associationJson)
         {
             var criteria = new TransformAssociationByDeviceCriteria
             {
@@ -57,7 +57,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<AssociationModel>(criteria).ToList();
+                db.ExecuteNonQuery(criteria);
             }
         }
 
@@ -71,19 +71,7 @@
             };
 
             return repository.Execute(criteria);
-        }
-
-        public void TransformAssociationCompleted(string associationJson)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new TransformAssociationCompletedCriteria
-            {
-                AssociationJson = associationJson
-            };
-
-            repository.Execute(criteria);
-        }
+        }        
 
         public void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIPJson)
         {

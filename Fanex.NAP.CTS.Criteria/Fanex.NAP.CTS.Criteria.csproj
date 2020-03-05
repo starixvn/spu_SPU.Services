@@ -56,7 +56,6 @@
     <Compile Include="TransformDCSAccountToCTSCustomerCriteria.cs" />
     <Compile Include="InsertAssociationCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TransformAssociationCompletedCriteria.cs" />
     <Compile Include="TransformDCSTransactionIPToCTSAssociationByIPCriteria.cs" />
   </ItemGroup>
   <ItemGroup>

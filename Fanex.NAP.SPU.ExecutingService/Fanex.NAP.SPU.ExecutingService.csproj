@@ -75,6 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExecuteUnsuccessAssociationDeviceAPIJob.cs" />
     <Compile Include="ExecuteUnsuccessAssociationIPAPIJob.cs" />
     <Compile Include="ExecuteMonitorAndHealCTSCustomer.cs" />
     <Compile Include="ExecuteUpdateUsername2ApiJob.cs" />

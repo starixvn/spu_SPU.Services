@@ -45,7 +45,7 @@
 
         public void SendMailInternal()
         {
-            var environment = AppSetting.EnvironmentName;
+            var environment = AppSettings.EnvironmentName;
 
             using (var client = new Fanex.MailDeliver.MailClient.API.MailDeliver())
             {
