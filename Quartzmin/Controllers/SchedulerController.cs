@@ -70,7 +70,7 @@ namespace Quartzmin.Controllers
                 JobsCount = jobKeys.Count,
                 TriggerCount = triggerKeys.Count,
                 ExecutingJobs = currentlyExecutingJobs.Count,
-                ExecutedJobs = executedJobs,
+                ExecutedJobs = Utility.FormatNumber(executedJobs),
                 FailedJobs = failedJobs?.ToString(CultureInfo.InvariantCulture) ?? "N/A",
                 JobGroups = pausedJobGroups,
                 TriggerGroups = pausedTriggerGroups,
