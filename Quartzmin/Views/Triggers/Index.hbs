@@ -21,6 +21,11 @@
         {{/each}}
     </div>
 </div>
+{{#each ViewBag.Groups}}
+<div class="ui small icon button">{{.}}</div>
+{{/each}}
+
+
 <a class="ui right floated primary button" href="{{ActionUrl 'New'}}">
     <i class="plus icon"></i>New
 </a>

@@ -21,7 +21,7 @@ using IActionResult = System.Web.Http.IHttpActionResult;
 
 namespace Quartzmin.Controllers
 {
-   // [Authorize]
+    // [Authorize]
     public class TriggersController : PageControllerBase
     {
         [HttpGet]
@@ -55,7 +55,7 @@ namespace Quartzmin.Controllers
                 });
             }
 
-            ViewBag.Groups = (await Scheduler.GetTriggerGroupNames()).GroupArray();
+            ViewBag.Groups = (await Scheduler.GetTriggerGroupNames()).Where(x => !x.Contains("XMLSchedulingDataProcessorPlugin")).GroupArray();
 
             list = list.OrderBy(x => x.JobKey).ToList();
             string prevKey = null;
@@ -148,7 +148,7 @@ namespace Quartzmin.Controllers
         {
             var triggerModel = model.Trigger;
             var jobDataMap = (await Request.GetJobDataMapForm()).GetModel(Services);
-            
+
             var result = new ValidationResult();
 
             model.Validate(result.Errors);
@@ -295,7 +295,7 @@ namespace Quartzmin.Controllers
             var list = new List<object>();
             foreach (var key in keys)
             {
-                list.Add(new 
+                list.Add(new
                 {
                     TriggerName = key.Name,
                     TriggerGroup = key.Group,
@@ -306,7 +306,7 @@ namespace Quartzmin.Controllers
             return View(list);
         }
 
-        
+
         [HttpGet]
         public Task<IActionResult> Duplicate(string name, string group)
         {
