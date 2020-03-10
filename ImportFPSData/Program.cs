@@ -89,7 +89,7 @@ namespace ImportFPSData
                                         throw;
                                     }
 
-                                    Thread.Sleep(20000);
+                                    Thread.Sleep(900000);
                                 });
                             }
                         }
