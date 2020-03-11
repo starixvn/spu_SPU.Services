@@ -55,12 +55,7 @@
         {
             try
             {
-                ConsumerTransactions();
-
-                //if (!_timer.Enabled)
-                //{
-                //    _timer.Start();
-                //}
+                ConsumerTransactions();                                
 
                 LogService.Info($"Raw trans service is STARTED at {DateTime.Now}");
             }
@@ -106,12 +101,8 @@
                             InsertTransaction(trans);
 
                             trans.Clear();
-                           // _transactionList.Clear();
-                        }
-                        //else
-                        //{
-                        //    _transactionList.Add(tran);
-                        //}
+                           
+                        }                        
                     }
                     catch (Exception ex)
                     {
@@ -207,6 +198,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
+                Flagged = 0,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
