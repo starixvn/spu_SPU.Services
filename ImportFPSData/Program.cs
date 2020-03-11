@@ -50,48 +50,22 @@ namespace ImportFPSData
 
                             var subNames = ConfigurationManager.AppSettings["subscriber"].Split(',');
 
-                            foreach (var subName in subNames)
+                            if(subNames.Any())
                             {
-                                var files = info.GetFiles().OrderBy(p => p.CreationTime).Select(z => z.FullName).Where(a => a.Contains(subName)).ToList();
-
-                                files.ForEach(f =>
+                                foreach (var subName in subNames)
                                 {
-                                    var directoryInfo = Directory.GetParent(f);
-                                    var fileName = Path.GetFileName(f);
+                                    var files = info.GetFiles().OrderBy(p => p.CreationTime).Select(z => z.FullName).Where(a => a.Contains(subName)).ToList();
 
-                                    try
-                                    {
-                                        if (!fileName.Contains("Error"))
-                                        {
-                                            var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
-
-                                            if (result)
-                                            {
-                                                Console.WriteLine("-" + f + " ==> DONE.");
-
-                                                if (File.Exists(f))
-                                                {
-                                                    File.Delete(f);
-                                                }
-                                            }
-                                            else
-                                            {
-                                                File.Move(f, f.Replace(".", "-Error."));
-
-                                                LogService.Error($"Import csv file ERROR({f})");
-                                            }
-                                        }
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        LogService.Error(ex.Message + $". CVS file({f})");
-
-                                        throw;
-                                    }
-
-                                    Thread.Sleep(60000);
-                                });
+                                    ProcessFile(connectionInfo, files);
+                                }
                             }
+                            else
+                            {
+                                var files = info.GetFiles().OrderBy(p => p.CreationTime).Select(z => z.FullName).ToList();
+
+                                ProcessFile(connectionInfo, files);
+                            }
+                            
                         }
                     });
 
@@ -107,6 +81,47 @@ namespace ImportFPSData
             } while (subfolders != null && subfolders.Any());
 
             Console.WriteLine("Import CSV file is DONE. BYE.");
+        }
+
+        private static void ProcessFile(ConnectionInfo connectionInfo, List<string> files)
+        {
+            files.ForEach(f =>
+            {
+                var directoryInfo = Directory.GetParent(f);
+                var fileName = Path.GetFileName(f);
+
+                try
+                {
+                    if (!fileName.Contains("Error"))
+                    {
+                        var result = ImportCSV(connectionInfo, directoryInfo.Name, fileName);
+
+                        if (result)
+                        {
+                            Console.WriteLine("-" + f + " ==> DONE.");
+
+                            if (File.Exists(f))
+                            {
+                                File.Delete(f);
+                            }
+                        }
+                        else
+                        {
+                            File.Move(f, f.Replace(".", "-Error."));
+
+                            LogService.Error($"Import csv file ERROR({f})");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    LogService.Error(ex.Message + $". CVS file({f})");
+
+                    throw;
+                }
+
+                Thread.Sleep(60000);
+            });
         }
 
         private static bool ImportCSV(ConnectionInfo connectionInfo, string csvFolder, string csvFileName)

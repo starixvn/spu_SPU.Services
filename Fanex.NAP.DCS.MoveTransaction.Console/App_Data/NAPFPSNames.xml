@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+    <Setting Key="GetAllIP2Location" SpName="GetAllIP2Location" DbName="SQL.IPDB"/>     
+  </Function>
+ 
+</Functions>
