@@ -328,3 +328,5 @@ ASALocalRun/
 node_modules/
 */obj/*
 */obj/Debug/*
+Fanex.NAP.FS.Core/obj/Debug/Fanex.NAP.FS.Core.csprojAssemblyReference.cache
+SPU.Services.sln

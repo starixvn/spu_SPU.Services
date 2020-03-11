@@ -8,6 +8,7 @@
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
+    using FPS.Browserless.Detection;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -198,7 +199,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = 0,
+                Flagged = (int)BrowserlessDetection.DetectBrowserlessTransaction(message.Token, message.Device, message.TransDate),
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
