@@ -60,21 +60,6 @@ namespace ExportFPSData
 
         static void Main(string[] args)
         {
-
-            //Console.WriteLine(DateTime.Parse("2020-02-12 07:14:27.9300"));
-
-            //var aa = Dot2LongIP("2a0d:5600:e::e27c:1d");
-            //Console.WriteLine(aa);
-            //var bb = Dot2LongIP("2a0d:5600:e:0:0:0:e27c:1d");
-            //Console.WriteLine(bb);
-            //var cc = Dot2LongIP("2a0d:5600:000e:0000:0000:0000:e27c:001d");
-            //Console.WriteLine(cc);
-            //var dd = "2a0d:5600:e::e27c:1d".Ip2Long().IpNumber;
-            //var dd = ContainsUnicodeCharacter(" abc ");
-            //Console.WriteLine(dd);
-
-            //Console.ReadKey();
-
             DbSettingProviderManager
                 .StartNewSession()
                 .WithSqlServer()
@@ -185,7 +170,7 @@ namespace ExportFPSData
 
             Console.WriteLine("Export data is DONE. BYE.");
 
-            Console.ReadKey();
+            //Console.ReadKey();
         }
 
         private static List<FPSDataModel> GetData(int pageSize)

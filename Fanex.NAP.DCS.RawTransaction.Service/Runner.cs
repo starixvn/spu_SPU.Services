@@ -119,6 +119,8 @@
                             .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                         LogService.Error(logMessage);
+
+                        trans.Clear();
                     }
                 });
             }
