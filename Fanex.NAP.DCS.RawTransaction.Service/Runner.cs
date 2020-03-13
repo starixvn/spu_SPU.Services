@@ -199,7 +199,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = (int)BrowserlessDetection.DetectBrowserlessTransaction(message),
+                Flagged = (int)BrowserlessDetection.DetectBrowserlessTransaction(message, deviceInfo.DeviceNo),
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
