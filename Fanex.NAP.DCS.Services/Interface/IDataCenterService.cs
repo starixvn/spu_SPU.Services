@@ -31,5 +31,7 @@ namespace Fanex.NAP.DCS.Services.Interface
         List<RawTransactionByIpModel> GetRawTransByIp(int numOfTrans, int numOfBatch);
 
         List<RawTransactionByIpModel> GetUnsuccessTransByIp(int numOfTrans, int numOfBatch);
+
+        void ArchiveTransaction07(int size);
     }
 }

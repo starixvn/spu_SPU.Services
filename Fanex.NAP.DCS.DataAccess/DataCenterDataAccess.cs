@@ -350,5 +350,17 @@
                 return db.Query<RawTransactionByIpModel>(criteria).ToList();
             }
         }
+
+        public void ArchiveTransaction07(int tranSize)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new ArchiveTransaction07Criteria
+            {
+                TranSize = tranSize
+            };
+
+            repository.Execute(criteria);
+        }
     }
 }

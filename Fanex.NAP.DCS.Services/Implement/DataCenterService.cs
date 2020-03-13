@@ -85,5 +85,10 @@ namespace Fanex.NAP.DCS.Services.Implement
         {
             return dataCenter.GetRawUnsuccessAssociation(numOfAssociation, numOfBatch);
         }
+
+        public void ArchiveTransaction07(int size)
+        {
+            dataCenter.ArchiveTransaction07(size); 
+        }
     }
 }

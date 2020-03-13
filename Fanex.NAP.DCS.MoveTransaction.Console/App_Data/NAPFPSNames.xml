@@ -2,7 +2,7 @@
 
 <Functions>
   <Function Name="Data Center">
-    <Setting Key="GetAllIP2Location" SpName="GetAllIP2Location" DbName="SQL.IPDB"/>     
+    <Setting Key="DCS_DC_ArchiveData_FromTransaction07" SpName="DCS_DC_ArchiveData_FromTransaction07" DbName="SQL.IPDB"/>     
   </Function>
  
 </Functions>

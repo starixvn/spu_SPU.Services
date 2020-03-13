@@ -48,6 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Fanex.NAP.DCS.MoveTransaction.Console.exe.LOCAL.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.DCS.MoveTransaction.Console.exe.PRO.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fanex.Data">
@@ -81,6 +89,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Services\Fanex.NAP.DCS.Services.csproj">
+      <Project>{343073C5-6A1F-4E08-8C39-C8B6498BBADB}</Project>
+      <Name>Fanex.NAP.DCS.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>

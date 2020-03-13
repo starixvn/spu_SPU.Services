@@ -1016,6 +1016,45 @@
       </simple>
     </trigger>
 
+    <job>
+      <name>DCS_MoveTransaction_Job</name>
+      <group>DataCaptureJob</group>
+      <description>MoveTransactionJob</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.DCS.MoveTransaction.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.DCS.MoveTransaction.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.DCS.MoveTransaction.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <cron>
+        <name>DCS_MoveTransaction_Trigger</name>
+        <group>DataCaptureTrigger</group>
+        <description>MoveTransactionTrigger</description>
+        <job-name>DCS_MoveTransaction_Job</job-name>
+        <job-group>DataCaptureJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <cron-expression>0 15 0 * * ?</cron-expression>
+      </cron>
+    </trigger>
+    
   </schedule>
 
 </job-scheduling-data>

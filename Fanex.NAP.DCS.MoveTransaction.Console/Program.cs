@@ -1,18 +1,18 @@
-﻿using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Logging;
-using Fanex.Logging.Sentry;
-using Fanex.NAP.SPU.Core;
-using Sentry;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.DCS.MoveTransaction.Console
+﻿namespace Fanex.NAP.DCS.MoveTransaction.Console
 {
-   static class Program
+    using Fanex.Data;
+    using Fanex.Data.MySql;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry;
+    using Fanex.NAP.DCS.Services.Implement;
+    using Fanex.NAP.SPU.Core;
+    using Sentry;
+    using System;
+    using System.Collections.Generic;
+
+    static class Program
     {
         static void Main(string[] args)
         {
@@ -34,8 +34,20 @@ namespace Fanex.NAP.DCS.MoveTransaction.Console
                });
 
 
+            try
+            {
+                var dataCenterService = new DataCenterService();
 
+                dataCenterService.ArchiveTransaction07(AppSettings.SizeOfTransaction);                                
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
+                LogService.Error(logMessage);
+            }
         }
     }
 }
