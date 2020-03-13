@@ -164,6 +164,7 @@
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
+            var deviceNo = deviceInfo.DeviceNo;
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
@@ -199,7 +200,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = (int)BrowserlessDetection.DetectBrowserlessTransaction(message, deviceInfo.DeviceNo),
+                Flagged = (int)BrowserlessDetection.DetectBrowserlessTransaction(message, deviceNo),
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
