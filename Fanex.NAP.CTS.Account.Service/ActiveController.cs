@@ -26,6 +26,8 @@
             var requestContent = Request.Content;
             var jsonContent = requestContent.ReadAsStringAsync().Result;
 
+            LogService.Info(jsonContent);
+
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
                 var result = JsonConvert.DeserializeObject<List<RawAccountModel>>(jsonContent);
