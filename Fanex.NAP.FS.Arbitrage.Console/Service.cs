@@ -83,7 +83,7 @@
 
         private List<ArbitrageCustomer> GroupCustomer(List<int> custIds)
         {
-            var result = GroupCustomerForGraphDB(custIds).Result.ToList();
+            var result = GroupCustomerForGraphDB(custIds).Result;
 
             if (result != null && result.Any())
             {
@@ -95,14 +95,18 @@
 
                     missingCustId.Select(x => new { missingCustId = x, missingGroupId = ++maxGroupId })
                         .ToList()
-                        .ForEach(x => result.Add(new ArbitrageCustomer
+                        .ForEach(x => result.ToList().Add(new ArbitrageCustomer
                         {
                             CustId = x.missingCustId,
                             GroupId = x.missingGroupId
                         }));
                 }
 
-                return result;
+                return result.ToList();
+            }
+            else
+            {
+                LogService.Error("Group Customer for graphdb is null. CustIds:" + string.Join(",", custIds));
             }
 
             return custIds.Select((x, i) => new ArbitrageCustomer { CustId = x, GroupId = i }).ToList();
