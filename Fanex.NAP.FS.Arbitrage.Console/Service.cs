@@ -73,7 +73,7 @@
                     .Distinct()
                     .ToList();
 
-                var groupCustomer = GroupCustomer(custIds);
+                var groupCustomer = GroupCustomer(custIds, ticket.MatchId);
 
                 ExecuteGroupCustomer(ticket.MatchId, groupCustomer, ticket.ArbitrageTicketList);
 
@@ -81,7 +81,7 @@
             }
         }
 
-        private List<ArbitrageCustomer> GroupCustomer(List<int> custIds)
+        private List<ArbitrageCustomer> GroupCustomer(List<int> custIds, int matchId)
         {
             var result = GroupCustomerForGraphDB(custIds).Result;
 
@@ -106,7 +106,7 @@
             }
             else
             {
-                LogService.Error("Group Customer for graphdb is null. CustIds:" + string.Join(",", custIds));
+                LogService.Error("Group Customer for graphdb is null.MatchId=" + matchId + "- CustIds:" + string.Join(",", custIds));
             }
 
             return custIds.Select((x, i) => new ArbitrageCustomer { CustId = x, GroupId = i }).ToList();
@@ -116,7 +116,7 @@
         {
             try
             {
-                var result = await ApiHelper.Post<IEnumerable<ArbitrageCustomer>>(AppSetting.GroupCustomerOneLevelPath, custids);                               
+                var result = await ApiHelper.Post<IEnumerable<ArbitrageCustomer>>(AppSetting.GroupCustomerOneLevelPath, custids);
 
                 return result;
             }
