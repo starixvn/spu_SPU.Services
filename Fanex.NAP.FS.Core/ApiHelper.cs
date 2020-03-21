@@ -25,14 +25,14 @@ namespace Fanex.NAP.FS.Core
 
                 byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-                var response = await web.PostAsync(url, byteContent).ConfigureAwait(true);
+                var response = await web.PostAsync(url, byteContent);
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new Exception(await response.Content.ReadAsStringAsync().ConfigureAwait(false));
+                    throw new Exception(await response.Content.ReadAsStringAsync());
                 }
 
-                var result = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+                var result = await response.Content.ReadAsStringAsync();
 
                 return JsonConvert.DeserializeObject<TResult>(result);
             }
