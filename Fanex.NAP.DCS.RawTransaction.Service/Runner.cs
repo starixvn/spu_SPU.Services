@@ -189,6 +189,9 @@
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
 
+            var rawFlagged = BrowserlessDetection.DetectBrowserlessTransaction(message, deviceNo);
+            var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
+
             return new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
@@ -200,7 +203,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = (int)BrowserlessDetection.DetectBrowserlessTransaction(message, deviceNo),
+                Flagged = !flagged ? -1 : (int)rawFlagged,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
