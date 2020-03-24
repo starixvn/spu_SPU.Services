@@ -2,7 +2,7 @@
 
 <Functions>
   <Function Name="Data Center">
-    <Setting Key="DCS_DC_ArchiveData_FromTransaction07" SpName="DCS_DC_ArchiveData_FromTransaction07" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_ArchiveData_FromTransaction07" SpName="DCS_DC_ArchiveData_FromTransaction07" DbName="MySQL.DCS_DataCenter" Timeout="300"/>
   </Function>
 
 </Functions>
