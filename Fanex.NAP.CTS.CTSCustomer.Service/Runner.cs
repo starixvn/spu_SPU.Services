@@ -46,7 +46,7 @@ namespace Fanex.NAP.CTS.CTSCustomer.Service
                 _webApp.Dispose();
             }
 
-            LogService.Info($"Account Transform service is STOPED at {DateTime.Now}");
+            LogService.Info($"Customer Transform service is STOPED at {DateTime.Now}");
         }
     }
 }
