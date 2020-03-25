@@ -26,7 +26,7 @@
             var requestContent = Request.Content;
             var jsonContent = requestContent.ReadAsStringAsync().Result;
 
-            LogService.Info(jsonContent);
+            //LogService.Info(jsonContent);
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {

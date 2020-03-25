@@ -29,8 +29,6 @@
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
-                LogService.Info(jsonContent);
-
                 return Process(jsonContent);
             }
             else
