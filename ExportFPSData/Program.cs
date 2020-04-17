@@ -23,41 +23,6 @@ namespace ExportFPSData
 {
     static class Program
     {
-        public static System.Numerics.BigInteger Dot2LongIP(string ipv6)
-        {
-            System.Net.IPAddress address;
-            System.Numerics.BigInteger ipnum;
-
-            if (System.Net.IPAddress.TryParse(ipv6, out address))
-            {
-                byte[] addrBytes = address.GetAddressBytes();
-
-                if (System.BitConverter.IsLittleEndian)
-                {
-                    System.Collections.Generic.List<byte> byteList = new System.Collections.Generic.List<byte>(addrBytes);
-                    byteList.Reverse();
-                    addrBytes = byteList.ToArray();
-                }
-
-                if (addrBytes.Length > 8)
-                {
-                    //IPv6
-                    ipnum = System.BitConverter.ToUInt64(addrBytes, 8);
-                    ipnum <<= 64;
-                    ipnum += System.BitConverter.ToUInt64(addrBytes, 0);
-                }
-                else
-                {
-                    //IPv4
-                    ipnum = System.BitConverter.ToUInt32(addrBytes, 0);
-                }
-
-                return ipnum;
-            }
-
-            return 0;
-        }
-
         static void Main(string[] args)
         {
             DbSettingProviderManager
@@ -81,11 +46,11 @@ namespace ExportFPSData
             try
             {
                 do
-                {
-                    trans = GetData(Convert.ToInt32(ConfigurationManager.AppSettings["packageSize"]));
+                {                    
+                    trans = GetData(Convert.ToInt32(ConfigurationManager.AppSettings["packageSize"])).ToList();                                      
 
                     if (trans != null && trans.Any())
-                    {                       
+                    {
 
                         Console.WriteLine($"Export CSV file is begining({trans.Count} transaction).");
 
@@ -173,7 +138,7 @@ namespace ExportFPSData
             //Console.ReadKey();
         }
 
-        private static List<FPSDataModel> GetData(int pageSize)
+        private static IEnumerable<FPSDataModel> GetData(int pageSize)
         {
             var criteria = new GetDataCriteria
             {
@@ -182,7 +147,7 @@ namespace ExportFPSData
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<FPSDataModel>(criteria).ToList();
+                return db.Query<FPSDataModel>(criteria);
             }
         }
 
@@ -231,6 +196,8 @@ namespace ExportFPSData
 
         private static RawTransactionModel TransformRawTransaction(FPSDataModel source)
         {
+            source.DeviceCode = string.Empty;
+
             var invalidDevice = string.Empty;
             var deviceInfo = GetDeviceInfo(source.DeviceCode);
             var url = Fanex.NAP.DCS.Core.Utilities.GetURLFromDeviceCode(source.DeviceCode);

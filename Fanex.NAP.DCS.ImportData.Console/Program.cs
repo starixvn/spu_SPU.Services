@@ -61,23 +61,19 @@ namespace Fanex.NAP.DCS.ImportData.Console
             foreach (var file in files)
             {
                 var fileName = Path.GetFileName(file);
+
                 var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(file);
 
-                if (fileName == "CN88.txt" || fileName == "Alpha789Y.txt" || fileName == "12BET.txt")
+                var dataLog = File.ReadAllLines(file);
+
+                if (dataLog.Length > 0)
                 {
-                    SPU.Core.Utilities.DeleteLog(fileName);
+                    var usernames = loadCsvFile(localPath + "\\" + fileNameWithoutExtension + ".csv");
 
-                    var dataLog = File.ReadAllLines(file);
-
-                    if (dataLog.Length > 0)
-                    {
-                        var usernames = loadCsvFile(localPath + "\\" + fileNameWithoutExtension + ".csv");
-
-                        Executing(fileName, dataLog, usernames);
-                    }
-
-                    System.Console.WriteLine(Path.GetFileName(file));
+                    Executing(fileName, dataLog, usernames);
                 }
+
+                System.Console.WriteLine(Path.GetFileName(file));
             }
         }
 
