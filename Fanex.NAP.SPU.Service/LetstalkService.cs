@@ -4,17 +4,32 @@
     using Fanex.LetstalkService.Core.Models;
     using Fanex.LetstalkService.Core.Services;
     using Fanex.NAP.SPU.Core;
+    using System.Linq;
     using System.Collections.Generic;
+    using System.IO;
 
     public class LetstalkService
     {
-        private LetstalkClientService letstalkService;
+        private LetstalkClientService letstalkService;        
+        private LetstalkModel letstalkModel;
 
         public LetstalkService()
         {
             ApplicationSettingServiceImp letstalkApi = new ApplicationSettingServiceImp();
             WebApiClientServiceImp webAPIClientService = new WebApiClientServiceImp(letstalkApi);
             letstalkService = new LetstalkClientServiceImp(webAPIClientService);
+        }
+
+        public LetstalkService(string targetName, string group, string pathAttachment)
+        {
+            var letstalkApi = new ApplicationSettingServiceImp();
+            var webAPIClientService = new WebApiClientServiceImp(letstalkApi);
+            letstalkService = new LetstalkClientServiceImp(webAPIClientService);
+
+            letstalkModel = new LetstalkModel();
+            letstalkModel.LetstalkAttachments = GetAttachmentList(pathAttachment);
+            letstalkModel.TargetName = targetName;
+            letstalkModel.Group = group;
         }
 
         public void Info(string message)
@@ -45,6 +60,22 @@
 
         }
 
+        public bool SendFileMessage(string subject, string content)
+        {
+            var enviroment = AppSettings.Environment;
+            var enviromentText = enviroment == 3 ? "PRO" : (enviroment == 2 ? "UAT": "LOCAL");
+
+            if (letstalkModel != null)
+            {
+                letstalkModel.Subject = subject;
+                letstalkModel.Content = content;
+
+                return letstalkService.SendMessage(letstalkModel);
+            }
+
+            return false;
+        }
+
         private void SendMessage(string subject, string content)
         {
             var env = string.Empty;
@@ -72,6 +103,24 @@
             };
 
             letstalkService.SendMessage(messsage);
+        }
+
+        private List<LetstalkAttachment> GetAttachmentList(string pathAttachment)
+        {
+            var attatchment = new List<LetstalkAttachment>();            
+
+            var filePaths = Directory.GetFiles(pathAttachment).ToList();
+
+            filePaths.ForEach(fileName =>
+            {
+                attatchment.Add(new LetstalkAttachment
+                {
+                    FileName = fileName,
+                    Bytes = FileBinaryService.ConvertFileToBinary(fileName)
+                });
+            });
+
+            return attatchment;
         }
     }
 }
