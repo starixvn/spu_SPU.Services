@@ -1030,16 +1030,12 @@
           <value>Fanex.NAP.TGRS.AutoTrading.Console.exe</value>
         </entry>
         <entry>
-          <!--<key>Master</key>
-          <value>D:\WWW\SPU\TGRS\Fanex.NAP.TGRS.AutoTrading.Console</value>-->
           <key>Master</key>
-          <value>D:\Projects\spu.services\Fanex.NAP.TGRS.AutoTrading.Console\bin\Debug</value>
+          <value>D:\WWW\SPU\TGRS\Fanex.NAP.TGRS.AutoTrading.Console</value>         
         </entry>
         <entry>
-          <!--<key>Slave</key>
-          <value>D:\WWW\SPU\TGRS\Fanex.NAP.TGRS.AutoTrading.Console</value>-->
           <key>Slave</key>
-          <value>D:\Projects\spu.services\Fanex.NAP.TGRS.AutoTrading.Console\bin\Debug</value>
+          <value>D:\WWW\SPU\TGRS\Fanex.NAP.TGRS.AutoTrading.Console</value>        
         </entry>
       </job-data-map>
     </job>
@@ -1052,7 +1048,8 @@
         <job-name>TGRS_AutoTrading_Job</job-name>
         <job-group>AutoTradingJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
-        <cron-expression>0 */3 * ? * *</cron-expression>
+        <!--<cron-expression>0 30 8 ? * * *</cron-expression>-->
+        <cron-expression>0 */30 * ? * *</cron-expression>
       </cron>
     </trigger>
     

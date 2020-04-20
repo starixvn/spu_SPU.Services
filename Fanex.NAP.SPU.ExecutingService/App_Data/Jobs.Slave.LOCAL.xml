@@ -965,7 +965,46 @@
         <cron-expression>0 15 0 * * ?</cron-expression>
       </cron>
     </trigger>
-    
+
+    <job>
+      <name>TGRS_AutoTrading_Job</name>
+      <group>AutoTradingJob</group>
+      <description>Auto Trading Report</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.TGRS.AutoTrading.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>D:\WWW\SPU\TGRS\Fanex.NAP.TGRS.AutoTrading.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>D:\WWW\SPU\TGRS\Fanex.NAP.TGRS.AutoTrading.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <cron>
+        <name>TGRS_AutoTrading_Trigger</name>
+        <group>AutoTradingTrigger</group>
+        <description>Auto Trading Report</description>
+        <job-name>TGRS_AutoTrading_Job</job-name>
+        <job-group>AutoTradingJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <!--<cron-expression>0 30 8 ? * * *</cron-expression>-->
+        <cron-expression>0 */30 * ? * *</cron-expression>
+      </cron>
+    </trigger>
     
   </schedule>
 

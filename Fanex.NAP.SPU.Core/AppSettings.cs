@@ -293,5 +293,14 @@ namespace Fanex.NAP.SPU.Core
         public static int SSHPort => Convert.ToInt32(ConfigurationManager.AppSettings["ssh-Port"]);
 
         public static string SSHDestinationPath => ConfigurationManager.AppSettings["ssh-DestinationPath"];
+
+        public static string TGRSAutoTradingLetstalkTarget => ConfigurationManager.AppSettings["TGRS-AutoTrading-Letstalk-Target"];
+
+        public static string TGRSAutoTradingLetstalkGroup => ConfigurationManager.AppSettings["TGRS-AutoTrading-Letstalk-Group"];        
+
+        public static string TGRSAutoTradingExecutedDayOfWeek => ConfigurationManager.AppSettings["TGRS-AutoTrading-ExecutedDayOfWeek"];
+
+        public static string TGRSAutoTradingAPIBaseAddress => ConfigurationManager.AppSettings["TGRS-AutoTrading-API-BaseAddress"];
+
     }
 }
