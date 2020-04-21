@@ -37,18 +37,20 @@ namespace Fanex.NAP.TGRS.AutoTrading.Console
                 service.MoveFileToArcFolder();
                
                 var tasks = new List<Task>();
-
-                tasks.Add(Task.Run(() => service.GenereateAutoTradingToFile(Consts.Endpoint_TAMonthly, Consts.FileName_AutoTrading_TAMonthly)));
                 tasks.Add(Task.Run(() => service.GenereateAutoTradingToFile(Consts.Endpoint_TAndAfterVRAdjustment, Consts.FileName_AutoTrading_PTAndAfterVRAdjustment)));
+                tasks.Add(Task.Run(() => service.GenereateAutoTradingToFile(Consts.Endpoint_TAMonthly, Consts.FileName_AutoTrading_TAMonthly)));
                 tasks.Add(Task.Run(() => service.GenereateAutoTradingToFile(Consts.Endpoint_RT3AndTAComparition, Consts.FileName_AutoTrading_RT3AndTAComparition)));
 
                 Task.WhenAll(tasks.ToArray()).Wait();
 
-                if (service.SendFileMessageViaLestalk())
+                if (service.IsSuccessAPIResponse)
                 {
-                    var toDate = DateTime.Today.ToString("dd/MM/yyyy hh:mm:ss");
+                    if (service.SendFileMessageViaLestalk())
+                    {
+                        var toDate = DateTime.Today.ToString("dd/MM/yyyy hh:mm:ss");
 
-                    LogService.Info($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) - sucessfully - {toDate}");
+                        LogService.Info($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) - sucessfully - {toDate}");
+                    }
                 }
             }            
         }

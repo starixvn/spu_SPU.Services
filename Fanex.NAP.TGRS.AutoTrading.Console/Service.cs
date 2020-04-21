@@ -7,19 +7,24 @@
     using System.Drawing;
     using System.IO;
     using System.Linq;
+    using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
 
     public class Service
-    {      
+    {
+        #region attributes
         private string _directorySaveImage;
         private LetstalkService _letstalkService;
         private string _urlTGRSAPI;
+        public bool IsSuccessAPIResponse { get; set; }
+        #endregion
 
         public Service(string directorySaveImage)
         {
             _directorySaveImage = directorySaveImage;
             _urlTGRSAPI = AppSettings.TGRSAutoTradingAPIBaseAddress;
+            IsSuccessAPIResponse = true;
         }
 
         public bool IsExecutedDate()
@@ -61,7 +66,7 @@
             }
             catch(Exception ex)
             {
-                LogService.Warn($"MoveFileToArcFolder ({AppSettings.EnvironmentName}) - { ex.Message }");
+                LogService.Warn($"MoveFileToArcFolder fail ({AppSettings.EnvironmentName}) - { ex.ToString() }");
             }
         }
 
@@ -79,20 +84,31 @@
 
                     var response = client.GetAsync(requestUri).Result;
 
-                    using (HttpContent content = response.Content)
+                    using (var content = response.Content)
                     {
-                        var byteImages = content.ReadAsByteArrayAsync().Result;
-
-                        if (byteImages != null)
+                        if (response.StatusCode == HttpStatusCode.OK)
                         {
-                            SaveImage(byteImages, savePath);
+                            var byteImages = content.ReadAsByteArrayAsync().Result;
+
+                            if (byteImages != null)
+                            {
+                                SaveImage(byteImages, savePath);
+                            }
+                        }
+                        else
+                        {
+                            IsSuccessAPIResponse = false;
+
+                            LogService.Warn($"GenereateAutoTradingToFile response fail ({AppSettings.EnvironmentName}) - endpoint: { endpoint } : { content.ReadAsStringAsync().Result }");
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                LogService.Warn($"GenereateAutoTradingToFile ({AppSettings.EnvironmentName}) - { ex.Message }");
+                IsSuccessAPIResponse = false;
+
+                LogService.Warn($"GenereateAutoTradingToFile fail ({AppSettings.EnvironmentName}) - endpoint: { endpoint } : { ex.ToString() }");
             }            
         }
 
@@ -112,7 +128,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Warn($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) - { ex.Message }");
+                LogService.Warn($"SendFileMessageViaLestalk fail ({AppSettings.EnvironmentName}) - { ex.ToString() }");
 
                 return false;             
             }            
@@ -130,7 +146,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Warn($"SaveImage ({AppSettings.EnvironmentName}) - ({savePath}) - { ex.Message }");
+                LogService.Warn($"SaveImage fail ({AppSettings.EnvironmentName}) - save path: ({savePath}) : { ex.ToString() }");
             }            
         }      
     }
