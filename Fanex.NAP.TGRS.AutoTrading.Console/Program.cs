@@ -32,7 +32,7 @@ namespace Fanex.NAP.TGRS.AutoTrading.Console
 
             var service = new Service(directorySaveImage);
 
-            if (service.IsExecutedDate())
+            if (service.IsDateExecute())
             {
                 service.MoveFileToArcFolder();
                

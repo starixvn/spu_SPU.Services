@@ -1091,7 +1091,7 @@
         <job-name>TGRS_AutoTrading_Job</job-name>
         <job-group>AutoTradingJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
-        <cron-expression>0 30 8 ? * * *</cron-expression>
+        <cron-expression>0 30 8 ? * TUE *</cron-expression>
       </cron>
     </trigger>
     

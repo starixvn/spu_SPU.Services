@@ -27,11 +27,21 @@
             IsSuccessAPIResponse = true;
         }
 
-        public bool IsExecutedDate()
+        public bool IsDateExecute()
         {
-            var currentDayOfWeek = DateTime.Today.DayOfWeek.ToString();
+            var toDate = DateTime.Today.ToString("MM/dd/yyyy");
+            var strSpecialDate = AppSettings.TGRSAutoTradingSpecicalDateExecute;
 
-            //return AppSettings.TGRSAutoTradingExecutedDayOfWeek.Equals(currentDayOfWeek);
+            if (!string.IsNullOrEmpty(strSpecialDate))
+            {
+                var specialDate = DateTime.Parse(strSpecialDate);
+                if (toDate.Equals(specialDate.ToString("MM/dd/yyyy")))
+                {
+                    return true;
+                }
+
+                return false;
+            }
 
             return true;
         }

@@ -298,7 +298,7 @@ namespace Fanex.NAP.SPU.Core
 
         public static string TGRSAutoTradingLetstalkGroup => ConfigurationManager.AppSettings["TGRS-AutoTrading-Letstalk-Group"];        
 
-        public static string TGRSAutoTradingExecutedDayOfWeek => ConfigurationManager.AppSettings["TGRS-AutoTrading-ExecutedDayOfWeek"];
+        public static string TGRSAutoTradingSpecicalDateExecute => ConfigurationManager.AppSettings["TGRS-AutoTrading-SpecicalDateExecute"];
 
         public static string TGRSAutoTradingAPIBaseAddress => ConfigurationManager.AppSettings["TGRS-AutoTrading-API-BaseAddress"];
 
