@@ -46,12 +46,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Fanex.NAP.TGRS.AutoTrading.Console.exe.LOCAL.config|AnyCPU'">
-    <OutputPath>bin\Fanex.NAP.TGRS.AutoTrading.Console.exe.LOCAL.config\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Fanex.NAP.TGRS.AutoTrading.Console.exe.PRO.config|AnyCPU'">
-    <OutputPath>bin\Debug\</OutputPath>
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -71,12 +65,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="App.Fanex.NAP.TGRS.AutoTrading.Console.exe.LOCAL.config.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
-    <None Include="App.Fanex.NAP.TGRS.AutoTrading.Console.exe.PRO.config.config">
-      <DependentUpon>App.config</DependentUpon>
-    </None>
+    <Content Include="Fanex.NAP.TGRS.AutoTrading.Console.exe.LOCAL.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.TGRS.AutoTrading.Console.exe.PRO.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
