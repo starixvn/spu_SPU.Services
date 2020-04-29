@@ -56,7 +56,7 @@
         {
             try
             {
-                ConsumerTransactions();                                
+                ConsumerTransactions();
 
                 LogService.Info($"Raw trans service is STARTED at {DateTime.Now}");
             }
@@ -88,22 +88,36 @@
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
                 var trans = new List<RawTransactionModel>();
-                                
+
                 _rabbitMQ.AdvanceBus.Consume<MessageQueue>(_rabbitMQ.Queue, (message, info) =>
                 {
                     try
                     {
-                        var tran = TransformRawTransaction(message.Body);
+                        var messageBody = message.Body;
 
-                        trans.Add(tran);
+                        var ignoreSubs = ConfigurationManager.AppSettings["Ignore-Subs"];
 
-                        if (trans.Count >= AppSettings.TransBatch)
+                        if (!string.IsNullOrWhiteSpace(ignoreSubs))
                         {
-                            InsertTransaction(trans);
+                            var ignoreSubList = ignoreSubs.Split(';');
 
-                            trans.Clear();
-                           
-                        }                        
+                            if (!ignoreSubList.Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase)))
+                            {
+                                var tran = TransformRawTransaction(messageBody);
+
+                                trans.Add(tran);
+
+                                if (trans.Count >= AppSettings.TransBatch)
+                                {
+                                    InsertTransaction(trans);
+
+                                    trans.Clear();
+
+                                }
+                            }
+
+                        }
+                        
                     }
                     catch (Exception ex)
                     {
@@ -122,28 +136,7 @@
         {
             try
             {
-                var ignoreSub = ConfigurationManager.AppSettings["Is-Ignore-Subs"];
-
-                if (ignoreSub == "1")
-                {
-                    var transByIgnoreSubs = trans.Where(x => x.SubscriberName.ToLower() == "alpha789y");
-
-                    if (transByIgnoreSubs != null && transByIgnoreSubs.Any())
-                    {
-                        _capturingDataService.InsertTransaction2(transByIgnoreSubs.ToList());
-                    }
-
-                    var normalTrans = trans.Where(x => x.SubscriberName.ToLower() != "alpha789y");
-
-                    if (normalTrans != null && normalTrans.Any())
-                    {
-                        _capturingDataService.InsertTransaction(normalTrans.ToList());
-                    }
-                }
-                else
-                {
-                    _capturingDataService.InsertTransaction(trans);
-                }
+                _capturingDataService.InsertTransaction(trans);
 
                 _lastInsertTrans = DateTime.Now;
             }
