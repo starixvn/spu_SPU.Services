@@ -8,14 +8,10 @@
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Service;
-    using Newtonsoft.Json;
     using Quartz;
     using RestSharp;
-    using RestSharp.Deserializers;
-    using RestSharp.Serializers;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -101,16 +97,16 @@
             }
         }
 
-        private static async Task<IRestResponse> Executing(List<DevicePackage> devicePackages, string apiUrl, string actionPath)
-        {
-            var client = new RestClient(new Uri(apiUrl));
-            var request = new RestRequest(actionPath, Method.POST);
+        //private static async Task<IRestResponse> Executing(List<DevicePackage> devicePackages, string apiUrl, string actionPath)
+        //{
+        //    var client = new RestClient(new Uri(apiUrl));
+        //    var request = new RestRequest(actionPath, Method.POST);
 
-            request.JsonSerializer = NewtonsoftJsonSerializer.Default;
-            request.RequestFormat = DataFormat.Json;            
-            request.AddJsonBody(devicePackages);
+        //    request.JsonSerializer = NewtonsoftJsonSerializer.Default;
+        //    request.RequestFormat = DataFormat.Json;            
+        //    request.AddJsonBody(devicePackages);
             
-            return await client.ExecuteTaskAsync(request);
-        }
+        //    return await client.ExecuteTaskAsync(request);
+        //}
     }    
 }

@@ -93,15 +93,15 @@
             }           
         }
 
-        private static async Task<IRestResponse> Executing(List<RawAccountModel> accounts, string apiUrl, string actionPath)
-        {
-            var client = new RestClient(new Uri(apiUrl));
-            var request = new RestRequest(actionPath, Method.POST);
+        //private static async Task<IRestResponse> Executing(List<RawAccountModel> accounts, string apiUrl, string actionPath)
+        //{
+        //    var client = new RestClient(new Uri(apiUrl));
+        //    var request = new RestRequest(actionPath, Method.POST);
 
-            request.AddHeader("Content-type", "application/json");
-            request.AddJsonBody(accounts);
+        //    request.AddHeader("Content-type", "application/json");
+        //    request.AddJsonBody(accounts);
 
-            return await client.ExecuteTaskAsync(request);
-        }
+        //    return await client.ExecuteTaskAsync(request);
+        //}
     }
 }

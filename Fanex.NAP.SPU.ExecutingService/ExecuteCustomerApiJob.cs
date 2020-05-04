@@ -102,15 +102,15 @@
             await Task.WhenAll(tasks.ToArray());
         }
 
-        private static async Task<IRestResponse> Executing(List<CustomerMainDbModel> customers, string apiUrl, string actionPath)
-        {
-            var client = new RestClient(new Uri(apiUrl));
-            var request = new RestRequest(actionPath, Method.POST);
+        //private static async Task<IRestResponse> Executing(List<CustomerMainDbModel> customers, string apiUrl, string actionPath)
+        //{
+        //    var client = new RestClient(new Uri(apiUrl));
+        //    var request = new RestRequest(actionPath, Method.POST);
 
-            request.AddHeader("Content-type", "application/json");
-            request.AddJsonBody(customers);
+        //    request.AddHeader("Content-type", "application/json");
+        //    request.AddJsonBody(customers);
 
-            return await client.ExecuteTaskAsync(request);
-        }
+        //    return await client.ExecuteTaskAsync(request);
+        //}
     }
 }

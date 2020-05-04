@@ -95,15 +95,15 @@
             }           
         }
 
-        private static async Task<IRestResponse> Executing(List<RawTransactionByIpModel> transByIP, string apiUrl, string actionPath)
-        {
-            var client = new RestClient(new Uri(apiUrl));
-            var request = new RestRequest(actionPath, Method.POST);
+        //private static async Task<IRestResponse> Executing(List<RawTransactionByIpModel> transByIP, string apiUrl, string actionPath)
+        //{
+        //    var client = new RestClient(new Uri(apiUrl));
+        //    var request = new RestRequest(actionPath, Method.POST);
 
-            request.AddHeader("Content-type", "application/json");
-            request.AddJsonBody(transByIP);
+        //    request.AddHeader("Content-type", "application/json");
+        //    request.AddJsonBody(transByIP);
 
-            return await client.ExecuteTaskAsync(request);
-        }
+        //    return await client.ExecuteTaskAsync(request);
+        //}
     }
 }
