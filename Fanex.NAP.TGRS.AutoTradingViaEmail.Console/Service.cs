@@ -17,17 +17,17 @@
         #region attributes
         private string _directorySaveFile;
         private string _urlTGRSAPI;
-        public bool IsSuccessAPIResponse { get; set; }
+        private bool _isSuccessAPIResponse;
         #endregion
 
         public Service(string directorySaveFile)
         {
             _directorySaveFile = directorySaveFile;
             _urlTGRSAPI = AppSettings.TGRSAutoTradingAPIBaseAddress;
-            IsSuccessAPIResponse = true;
+            _isSuccessAPIResponse = true;
         }
 
-        public void MoveFileToArcFolder()
+        public Service MoveFileToArcFolder()
         {
             var sourceFolder = _directorySaveFile;
             var desArcFolder = AppDomain.CurrentDomain.BaseDirectory + @"Arc_Folder\";
@@ -57,11 +57,13 @@
             }
             catch (Exception ex)
             {
-                LogService.Warn($"MoveFileToArcFolder fail ({AppSettings.EnvironmentName}) - { ex.ToString() }");
+                LogService.Warn($"TGRS - Auto Trading: MoveFileToArcFolder ({AppSettings.EnvironmentName}) failed - { ex.ToString() }");
             }
+
+            return this;
         }
 
-        public void GenereateAutoTradingToFile(string endpoint, string saveFileName)
+        public Service GenerateAutoTradingToFile(string endpoint, string saveFileName)
         {
             var savePath = Path.Combine(_directorySaveFile + saveFileName);
 
@@ -94,37 +96,64 @@
                         }
                         else
                         {
-                            IsSuccessAPIResponse = false;
+                            _isSuccessAPIResponse = false;
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                IsSuccessAPIResponse = false;
+                _isSuccessAPIResponse = false;
 
-                LogService.Warn($"GenereateAutoTradingToFile fail ({AppSettings.EnvironmentName}) - endpoint: { endpoint } : { ex.ToString() }");
+                LogService.Warn($"TGRS - Auto Trading: GenereateAutoTradingToFile ({AppSettings.EnvironmentName}) failed - endpoint: { endpoint } : { ex.ToString() }");
             }
+
+            return this;
         }
 
-        public void SendMailInternal(int mailingListId, string saveFileName)
+        public Service SendMailNotification(string saveFileName)
         {
-            var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @"MailTemplate\MailInformTemplate.cshtml";
-
-            var body = Utilities.ReadTextFile(mailTemplatePath);
-
-            body = string.Format(body, saveFileName);            
-
-            var newMail = new Mail
+            if (_isSuccessAPIResponse)
             {
-                Subject = "TGRS Auto Trading report service" + " (" + AppSettings.EnvironmentName + ")",
-                Title = "TGRS Auto Trading report service",
-                Body = body,
-                MailingListId = mailingListId,
-                Attachments = GetMailAttachments(_directorySaveFile)
-            };
+                try
+                {
+                    var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @"MailTemplate\MailInformTemplate.cshtml";
+                    var body = Utilities.ReadTextFile(mailTemplatePath);
+                    body = string.Format(body, saveFileName);
 
-            SendMail(newMail);
+                    var newMail = new Mail
+                    {
+                        Subject = "TGRS Auto Trading report service" + " (" + AppSettings.EnvironmentName + ")",
+                        Title = "TGRS Auto Trading report service",
+                        Body = body,
+                        Attachments = GetMailAttachments(_directorySaveFile)
+                    };
+
+                    if (AppSettings.TGRSMailingListId != -1)
+                    {
+                        newMail.MailingListId = AppSettings.TGRSMailingListId;
+
+                        SendMail(newMail);
+                    }
+
+                    if (AppSettings.TGRSMailingListIdToSPU != -1)
+                    {
+                        newMail.MailingListId = AppSettings.TGRSMailingListIdToSPU;
+
+                        SendMail(newMail);
+                    }
+
+                    var toDate = DateTime.Today.ToString("dd/MM/yyyy hh:mm:ss");
+
+                    LogService.Info($"TGRS - Auto Trading: SendMailNotification ({AppSettings.EnvironmentName}) sucessfully - {toDate}");
+                }
+                catch (Exception ex)
+                {
+                    LogService.Warn($"TGRS - Auto Trading: SendMailNotification ({AppSettings.EnvironmentName}) failed - { ex.ToString() }");
+                }                
+            }
+
+            return this;
         }
 
         private List<MailAttachment> GetMailAttachments(string pathAttachment)

@@ -313,7 +313,7 @@ namespace Fanex.NAP.SPU.Core
                     return Convert.ToInt32(mailingListId);
                 }
 
-                return 80;
+                return -1;
             }
         }
 
@@ -328,9 +328,8 @@ namespace Fanex.NAP.SPU.Core
                     return Convert.ToInt32(mailingListId);
                 }
 
-                return 80;
+                return -1;
             }
         }
-
     }
 }
