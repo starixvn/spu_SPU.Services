@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+    <Setting Key="CustomerClassification_GetNewClassification" SpName="CustomerClassification_GetNewClassification" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>    
+  </Function> 
+</Functions>

@@ -27,5 +27,7 @@ namespace Fanex.NAP.CTS.Services.Interface
         void TransformAssociationAffectedEvidence(int batchSize);
 
         void UpdateLastLoginTime(int batchSize);
+
+        List<CustomerClassificationModel> GetNewClassification();
     }
 }

@@ -83,5 +83,10 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.TransformUpdatingLastLoginTime(batchSize);
         }
+
+        public List<CustomerClassificationModel> GetNewClassification()
+        {
+            return dataCenterDataAccess.GetNewClassification();
+        }
     }
 }

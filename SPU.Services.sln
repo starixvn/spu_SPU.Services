@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27703.2026
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FraudSensor", "FraudSensor", "{BD64796B-C186-4369-AA2E-A7E5AAD80637}"
 EndProject
@@ -150,6 +150,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{70A00573-E8CB-4BD7-BD77-100D131E38A8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTrading.Console", "Fanex.NAP.TGRS.AutoTrading.Console\Fanex.NAP.TGRS.AutoTrading.Console.csproj", "{6E323AA8-BB54-4C2F-8B11-25135B80E26B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.CustomerClassification.AutoTag", "Fanex.NAP.CTS.CustomerClassification.AutoTag\Fanex.NAP.CTS.CustomerClassification.AutoTag.csproj", "{C2D305B4-3C68-4770-9E67-AE85B247891D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -397,6 +399,10 @@ Global
 		{6E323AA8-BB54-4C2F-8B11-25135B80E26B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6E323AA8-BB54-4C2F-8B11-25135B80E26B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E323AA8-BB54-4C2F-8B11-25135B80E26B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2D305B4-3C68-4770-9E67-AE85B247891D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2D305B4-3C68-4770-9E67-AE85B247891D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2D305B4-3C68-4770-9E67-AE85B247891D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2D305B4-3C68-4770-9E67-AE85B247891D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -459,9 +465,10 @@ Global
 		{0751FEE7-3810-4ACD-AE0B-76ADBC9488D2} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 		{70A00573-E8CB-4BD7-BD77-100D131E38A8} = {D9D7909D-C541-4CB8-B86C-F0FB9D329AB6}
 		{6E323AA8-BB54-4C2F-8B11-25135B80E26B} = {70A00573-E8CB-4BD7-BD77-100D131E38A8}
+		{C2D305B4-3C68-4770-9E67-AE85B247891D} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

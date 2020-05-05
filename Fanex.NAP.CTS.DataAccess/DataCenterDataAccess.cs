@@ -149,5 +149,15 @@
 
             repository.Execute(criteria);
         }
+
+        public List<CustomerClassificationModel> GetNewClassification()
+        {
+            var criteria = new CustomerClassificationGetNewClassificationCriteria();
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerClassificationModel>(criteria).ToList();
+            }
+        }
     }
 }
