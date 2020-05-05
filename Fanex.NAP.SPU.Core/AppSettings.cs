@@ -302,35 +302,6 @@ namespace Fanex.NAP.SPU.Core
 
         public static string TGRSAutoTradingAPIBaseAddress => ConfigurationManager.AppSettings["TGRS-AutoTrading-API-BaseAddress"];
 
-        public static int TGRSMailingListId
-        {
-            get
-            {
-                string mailingListId = ConfigurationManager.AppSettings["TGRS-MailingListId"];
-
-                if (!string.IsNullOrEmpty(mailingListId))
-                {
-                    return Convert.ToInt32(mailingListId);
-                }
-
-                return 80;
-            }
-        }
-
-        public static int TGRSMailingListIdToSPU
-        {
-            get
-            {
-                string mailingListId = ConfigurationManager.AppSettings["TGRS-MailingListIdToSPU"];
-
-                if (!string.IsNullOrEmpty(mailingListId))
-                {
-                    return Convert.ToInt32(mailingListId);
-                }
-
-                return 80;
-            }
-        }
-
+        public static string TGRSMailingArrListId => ConfigurationManager.AppSettings["TGRS-MailingArrListId"];
     }
 }

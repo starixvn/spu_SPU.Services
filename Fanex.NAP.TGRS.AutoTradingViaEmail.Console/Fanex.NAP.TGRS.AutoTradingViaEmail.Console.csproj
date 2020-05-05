@@ -47,9 +47,15 @@
     <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-    <None Include="Fanex.NAP.TGRS.AutoTradingViaEmail.Console.exe.LOCAL.config" />
-    <None Include="Fanex.NAP.TGRS.AutoTradingViaEmail.Console.exe.PRO.config" />
+    <Content Include="App.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.TGRS.AutoTradingViaEmail.Console.exe.LOCAL.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.TGRS.AutoTradingViaEmail.Console.exe.PRO.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="MailTemplate\MailInformTemplate.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
