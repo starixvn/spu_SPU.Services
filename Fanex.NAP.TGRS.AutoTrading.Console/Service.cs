@@ -14,8 +14,7 @@
     public class Service
     {
         #region attributes
-        private string _directorySaveImage;
-        private LetstalkService _letstalkService;
+        private string _directorySaveImage;        
         private string _urlTGRSAPI;
         public bool IsSuccessAPIResponse { get; set; }
         #endregion
@@ -80,7 +79,7 @@
             }
         }
 
-        public void GenereateAutoTradingToFile(string endpoint, string saveImageName)
+        public void GenerateAutoTradingToFile(string endpoint, string saveImageName)
         {                        
             var savePath = _directorySaveImage + saveImageName;
 
@@ -109,7 +108,7 @@
                         {
                             IsSuccessAPIResponse = false;
 
-                            LogService.Warn($"GenereateAutoTradingToFile response fail ({AppSettings.EnvironmentName}) - endpoint: { endpoint } : { content.ReadAsStringAsync().Result }");
+                            LogService.Warn($"GenereateAutoTradingToFile ({AppSettings.EnvironmentName}) response failed - endpoint: { endpoint } : { content.ReadAsStringAsync().Result }");
                         }
                     }
                 }
@@ -118,30 +117,44 @@
             {
                 IsSuccessAPIResponse = false;
 
-                LogService.Warn($"GenereateAutoTradingToFile fail ({AppSettings.EnvironmentName}) - endpoint: { endpoint } : { ex.ToString() }");
+                LogService.Warn($"GenereateAutoTradingToFile ({AppSettings.EnvironmentName}) failed - endpoint: { endpoint } : { ex.ToString() }");
             }            
         }
 
         public bool SendFileMessageViaLestalk()
         {
-            _letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget
-                , AppSettings.TGRSAutoTradingLetstalkGroup
-                , _directorySaveImage);
-
-            var sundayOfLastWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
-            var subject = "Automation Trading Report";
-            var content = "Good day Sir, TA report update till " + sundayOfLastWeek.ToString("dd/MM/yyyy");
-
             try
             {
-                return _letstalkService.SendFileMessage(subject, content);
+                var isSendSuccess = true;
+                var sundayOfLastWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
+                var subject = "Automation Trading Report";
+                var content = "Good day Sir, TA report update till " + sundayOfLastWeek.ToString("dd/MM/yyyy");
+
+                if (!string.IsNullOrEmpty(AppSettings.TGRSAutoTradingLetstalkGroup))
+                {
+                    var arrGroupName = AppSettings.TGRSAutoTradingLetstalkGroup.Split(';');
+
+                    foreach (var groupName in arrGroupName)
+                    {
+                        var letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget, groupName, _directorySaveImage);
+
+                        if (!letstalkService.SendFileMessage(subject, content))
+                        {
+                            isSendSuccess = false;
+
+                            LogService.Warn($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) to {groupName} failed");
+                        }
+                    }
+                }
+                                
+                return isSendSuccess;
             }
             catch (Exception ex)
             {
-                LogService.Warn($"SendFileMessageViaLestalk fail ({AppSettings.EnvironmentName}) - { ex.ToString() }");
+                LogService.Warn($"SendFileMessageViaLestalk failed ({AppSettings.EnvironmentName}) - { ex.ToString() }");
 
-                return false;             
-            }            
+                return false;
+            }
         }
 
         private void SaveImage(byte[] byteImages, string savePath)

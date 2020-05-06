@@ -29,30 +29,41 @@ namespace Fanex.NAP.TGRS.AutoTrading.Console
             {
                 Directory.CreateDirectory(directorySaveImage);
             }
-
+            var retryTimes = 3;
             var service = new Service(directorySaveImage);
 
             if (service.IsDateExecute())
             {
-                service.MoveFileToArcFolder();
-               
-                var tasks = new List<Task>();
-                tasks.Add(Task.Run(() => service.GenereateAutoTradingToFile(Consts.Endpoint_TAndAfterVRAdjustment, Consts.FileName_AutoTrading_PTAndAfterVRAdjustment)));
-                tasks.Add(Task.Run(() => service.GenereateAutoTradingToFile(Consts.Endpoint_TAMonthly, Consts.FileName_AutoTrading_TAMonthly)));
-                tasks.Add(Task.Run(() => service.GenereateAutoTradingToFile(Consts.Endpoint_RT3AndTAComparition, Consts.FileName_AutoTrading_RT3AndTAComparition)));
-
-                Task.WhenAll(tasks.ToArray()).Wait();
-
-                if (service.IsSuccessAPIResponse)
+                do
                 {
-                    if (service.SendFileMessageViaLestalk())
-                    {
-                        var toDate = DateTime.Today.ToString("dd/MM/yyyy hh:mm:ss");
+                    Run(service);
 
-                        LogService.Info($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) - sucessfully - {toDate}");
-                    }
+                    retryTimes--;
+
+                } while (!service.IsSuccessAPIResponse && retryTimes > 0);
+            }
+        }
+
+        static void Run(Service service)
+        {
+            service.MoveFileToArcFolder();
+
+            var tasks = new List<Task>();
+            tasks.Add(Task.Run(() => service.GenerateAutoTradingToFile(Consts.Endpoint_TAndAfterVRAdjustment, Consts.FileName_AutoTrading_PTAndAfterVRAdjustment)));
+            tasks.Add(Task.Run(() => service.GenerateAutoTradingToFile(Consts.Endpoint_TAMonthly, Consts.FileName_AutoTrading_TAMonthly)));
+            tasks.Add(Task.Run(() => service.GenerateAutoTradingToFile(Consts.Endpoint_RT3AndTAComparition, Consts.FileName_AutoTrading_RT3AndTAComparition)));
+
+            Task.WhenAll(tasks.ToArray()).Wait();
+
+            if (service.IsSuccessAPIResponse)
+            {
+                if (service.SendFileMessageViaLestalk())
+                {
+                    var toDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
+
+                    LogService.Info($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) - sucessfully - {toDate}");
                 }
-            }            
+            }
         }
     }
 }
