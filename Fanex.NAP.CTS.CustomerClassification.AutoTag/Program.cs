@@ -1,4 +1,5 @@
 ﻿using Fanex.Data;
+using Fanex.Data.MySql;
 using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
@@ -23,6 +24,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
+                 .WithMySql()
                  .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
                  .UseDefaultConnectionStringProvider()
                  .Run();
@@ -44,7 +46,9 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                 if(newClassification != null && newClassification.Any())
                 {
-                    string output = JsonConvert.SerializeObject(newClassification);
+                    string jsonData = JsonConvert.SerializeObject(newClassification);
+
+                    dataCenterService.AutoTagClassification(jsonData);
                 }
             }
             catch (Exception ex)

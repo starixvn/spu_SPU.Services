@@ -3,5 +3,6 @@
 <Functions>
   <Function Name="Data Center">
     <Setting Key="CustomerClassification_GetNewClassification" SpName="CustomerClassification_GetNewClassification" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
   </Function>
 </Functions>

@@ -159,5 +159,17 @@
                 return db.Query<CustomerClassificationModel>(criteria).ToList();
             }
         }
+
+        public void AutoTagCustomerClassification(string newClassification)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new AutoTagCustomerClassificationCriteria
+            {
+                NewClassification = newClassification
+            };
+
+            repository.Execute(criteria);
+        }
     }
 }

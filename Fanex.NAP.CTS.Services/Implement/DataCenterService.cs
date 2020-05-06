@@ -88,5 +88,10 @@ namespace Fanex.NAP.CTS.Services
         {
             return dataCenterDataAccess.GetNewClassification();
         }
+
+        public void AutoTagClassification(string newClassification)
+        {
+            dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
+        }
     }
 }
