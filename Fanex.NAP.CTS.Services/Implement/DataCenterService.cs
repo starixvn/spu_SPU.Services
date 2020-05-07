@@ -93,5 +93,10 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
+
+        public void ArchiveTransaction(int numberOfTickets)
+        {
+            dataCenterDataAccess.ArchiveTransaction(numberOfTickets);
+        }
     }
 }

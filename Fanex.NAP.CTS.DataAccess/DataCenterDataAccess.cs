@@ -171,5 +171,18 @@
 
             repository.Execute(criteria);
         }
+
+        public void ArchiveTransaction(int numOfTickets)
+        {
+            var criteria = new ArchiveTransactionAfterTransformingCriteria
+            {
+                NoOfTickets = numOfTickets
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
+        }
     }
 }
