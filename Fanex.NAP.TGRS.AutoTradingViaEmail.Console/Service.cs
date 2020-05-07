@@ -126,8 +126,7 @@
                         Subject = "TGRS Auto Trading report service" + " (" + AppSettings.EnvironmentName + ")",
                         Title = "TGRS Auto Trading report service",
                         Body = body,
-                        //Attachments = GetMailAttachments(_directorySaveFile)
-                        Attachments = new List<MailAttachment>()
+                        Attachments = GetMailAttachments(_directorySaveFile)
                     };
 
                     if (!string.IsNullOrEmpty(AppSettings.TGRSMailingArrListId))
