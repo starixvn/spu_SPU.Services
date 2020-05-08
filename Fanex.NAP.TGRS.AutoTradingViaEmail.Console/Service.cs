@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.AutoTradingViaEmail.Console
+﻿namespace Fanex.NAP.TGRS.AutoTradingViaEmail.Service
 {
     using Fanex.Logging;
     using Fanex.MailDelivery.Client;
@@ -109,56 +109,30 @@
             }
             
             return this;
-        }
+        }        
 
-        public Service SendMailNotification(string saveFileName)
+        public Mail GenerateMail(string saveFileName)
         {
             if (IsSuccessAPIResponse)
             {
-                try
+                var fromDate = "07/Nov/2019";
+                var toDate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).ToString("dd/MMM/yyyy");
+                var subject = "Automail Report - Model TA Performance Event Details - " + fromDate + " to " + toDate;
+                var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @"MailTemplate\MailInformTemplate.cshtml";
+
+                var body = Utilities.ReadTextFile(mailTemplatePath);
+                body = string.Format(body, saveFileName);
+
+                return new Mail
                 {
-                    var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @"MailTemplate\MailInformTemplate.cshtml";
-                    var body = Utilities.ReadTextFile(mailTemplatePath);
-                    body = string.Format(body, saveFileName);
-
-                    var newMail = new Mail
-                    {
-                        Subject = "TGRS Auto Trading report service" + " (" + AppSettings.EnvironmentName + ")",
-                        Title = "TGRS Auto Trading report service",
-                        Body = body,
-                        Attachments = GetMailAttachments(_directorySaveFile)
-                    };
-
-                    if (!string.IsNullOrEmpty(AppSettings.TGRSMailingArrListId))
-                    {
-                        var arrListId = AppSettings.TGRSMailingArrListId.Split(';');
-
-                        foreach (var listId in arrListId)
-                        {
-                            var mailingListId = 0;
-
-                            int.TryParse(listId, out mailingListId);
-
-                            if (mailingListId != 0)
-                            {
-                                newMail.MailingListId = mailingListId;
-
-                                SendMail(newMail);
-                            }
-                        }                        
-                    }
-
-                    var toDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
-
-                    LogService.Info($"TGRS - Auto Trading: SendMailNotification ({AppSettings.EnvironmentName}) sucessfully - {toDate}");
-                }
-                catch (Exception ex)
-                {
-                    LogService.Warn($"TGRS - Auto Trading: SendMailNotification ({AppSettings.EnvironmentName}) failed - { ex.ToString() }");
-                }                
+                    Subject = subject,
+                    Title = subject,
+                    Body = body,
+                    Attachments = GetMailAttachments(_directorySaveFile)
+                };
             }
 
-            return this;
+            return new Mail();
         }
 
         private List<MailAttachment> GetMailAttachments(string pathAttachment)
@@ -173,16 +147,6 @@
             });
 
             return attatchments;
-        }
-
-        private void SendMail(Mail mail)
-        {
-            MailClientHandler.Start();
-
-            MailClientHandler.SendFunctionMail(mail);
-
-            MailClientHandler.Stop();
-        }
-
+        }      
     }
 }

@@ -151,7 +151,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{70
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTrading.Console", "Fanex.NAP.TGRS.AutoTrading.Console\Fanex.NAP.TGRS.AutoTrading.Console.csproj", "{6E323AA8-BB54-4C2F-8B11-25135B80E26B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTradingViaEmail.Console", "Fanex.NAP.TGRS.AutoTradingViaEmail.Console\Fanex.NAP.TGRS.AutoTradingViaEmail.Console.csproj", "{66518FF3-2C21-4A02-88EE-229952A8351B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTradingViaEmail.Service", "Fanex.NAP.TGRS.AutoTradingViaEmail.Console\Fanex.NAP.TGRS.AutoTradingViaEmail.Service.csproj", "{66518FF3-2C21-4A02-88EE-229952A8351B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -468,7 +468,7 @@ Global
 		{66518FF3-2C21-4A02-88EE-229952A8351B} = {70A00573-E8CB-4BD7-BD77-100D131E38A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal

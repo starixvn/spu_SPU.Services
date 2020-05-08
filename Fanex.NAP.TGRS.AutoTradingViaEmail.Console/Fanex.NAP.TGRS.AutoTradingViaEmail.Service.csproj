@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{66518FF3-2C21-4A02-88EE-229952A8351B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fanex.NAP.TGRS.AutoTradingViaEmail.Console</RootNamespace>
-    <AssemblyName>Fanex.NAP.TGRS.AutoTradingViaEmail.Console</AssemblyName>
+    <RootNamespace>Fanex.NAP.TGRS.AutoTradingViaEmail.Service</RootNamespace>
+    <AssemblyName>Fanex.NAP.TGRS.AutoTradingViaEmail.Service</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,16 +45,23 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Runner.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Runner.Designer.cs">
+      <DependentUpon>Runner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SendMailJob.cs" />
     <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.TGRS.AutoTradingViaEmail.Console.exe.LOCAL.config">
+    <Content Include="Fanex.NAP.TGRS.AutoTradingViaEmail.Service.exe.LOCAL.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Fanex.NAP.TGRS.AutoTradingViaEmail.Console.exe.PRO.config">
+    <Content Include="Fanex.NAP.TGRS.AutoTradingViaEmail.Service.exe.PRO.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="MailTemplate\MailInformTemplate.cshtml">

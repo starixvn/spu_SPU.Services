@@ -1,4 +1,4 @@
-namespace Fanex.NAP.TGRS.AutoTradingViaEmail.Console
+namespace Fanex.NAP.TGRS.AutoTradingViaEmail.Service
 {    
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
@@ -6,7 +6,8 @@ namespace Fanex.NAP.TGRS.AutoTradingViaEmail.Console
     using SharpRaven;
     using System;
     using System.Collections.Generic;
-    using System.IO;
+    using System.Reflection;
+    using System.ServiceProcess;
 
     static class Program
     {
@@ -23,36 +24,36 @@ namespace Fanex.NAP.TGRS.AutoTradingViaEmail.Console
                         })
                     });
 
-            var directorySaveFile = AppDomain.CurrentDomain.BaseDirectory + @"Attachment\";
-                 
-            if (!Directory.Exists(directorySaveFile))
+            ServiceBase[] ServicesToRun;
+            ServicesToRun = new ServiceBase[]
             {
-                Directory.CreateDirectory(directorySaveFile);
+                new Runner()
+            };
+
+            if (System.Environment.UserInteractive)
+            {
+                // run console
+                var type = typeof(ServiceBase);
+                const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                var method = type.GetMethod("OnStart", Flags);
+
+                foreach (var service in ServicesToRun)
+                {
+                    method.Invoke(service, new object[] { args });
+                }
+
+                Console.WriteLine("Press any key to exit!");
+                Console.ReadLine();
+
+                foreach (var service in ServicesToRun)
+                {
+                    service.Stop();
+                }
             }
-
-            var retryTimes = 3;
-
-            var service = new Service(directorySaveFile);
-
-            do
+            else
             {
-                Run(service);
-
-                retryTimes--;
-
-            } while (!service.IsSuccessAPIResponse && retryTimes > 0);
-        }
-
-        static void Run(Service service)
-        {
-            var endpoint = "AutoTrading/GetAutoTradingEventLeaguesExcel";
-            var fromDate = "07-Nov-2019";
-            var toDate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).ToString("dd-MMM-yyyy");
-            var saveFileName = "Model TA Performance Event Details - " + fromDate + " to " + toDate + ".xls";
-
-            service.MoveFileToArcFolder()
-                   .GenerateAutoTradingToFile(endpoint, saveFileName)
-                   .SendMailNotification(saveFileName);
+                ServiceBase.Run(ServicesToRun);
+            }
         }
     }
 }
