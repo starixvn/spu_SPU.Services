@@ -71,9 +71,9 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.GetRawTransactionByIp(numOfTrans, numOfBatch);
         }
 
-        public List<RawAccountModel> GetRawUnsuccessAccount(int numOfAccount, int numOfBatch)
+        public List<RawAccountModel> GetRawUnsuccessAccount(int numOfAccount)
         {
-            return dataCenter.GetRawUnsuccessAccount(numOfAccount, numOfBatch);
+            return dataCenter.GetRawUnsuccessAccount(numOfAccount);
         }
 
         public List<RawTransactionByIpModel> GetUnsuccessTransByIp(int numOfTrans, int numOfBatch)
@@ -81,9 +81,9 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.GetUnsuccessRawTransactionByIp(numOfTrans, numOfBatch);
         }
 
-        public List<RawAssociationModel> GetRawUnsuccessAssociation(int numOfAssociation, int numOfBatch)
+        public List<RawAssociationModel> GetRawUnsuccessAssociation(int numOfAssociation)
         {
-            return dataCenter.GetRawUnsuccessAssociation(numOfAssociation, numOfBatch);
+            return dataCenter.GetRawUnsuccessAssociation(numOfAssociation);
         }
 
         public void ArchiveTransaction07(int size)

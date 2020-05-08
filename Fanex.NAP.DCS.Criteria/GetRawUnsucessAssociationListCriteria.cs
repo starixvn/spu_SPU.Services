@@ -13,9 +13,6 @@ namespace Fanex.NAP.DCS.Criteria
         [SpParam(SqlParamName = "ip_NoOfAssociation")]
         public int NumberOfAssociation { get; set; }
 
-        [SpParam(SqlParamName = "ip_NoOfBatch")]
-        public int NumberOfBatch { get; set; }
-
         public override string GetSettingKey()
         {
             return "DCS_DC_TransformToCTS_Association_Unsuccess_GetPackage";

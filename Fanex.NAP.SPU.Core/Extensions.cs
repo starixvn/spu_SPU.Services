@@ -11,5 +11,13 @@
                         .GroupBy(x => x.inx / partitionSize)
                         .Select(g => g.Select(x => x.item));
         }
+
+        public static T PopAt<T>(this List<T> list, int index)
+        {
+            T r = list[index];
+            list.RemoveAt(index);
+
+            return r;
+        }
     }
 }

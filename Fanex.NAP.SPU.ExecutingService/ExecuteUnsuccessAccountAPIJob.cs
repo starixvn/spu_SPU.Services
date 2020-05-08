@@ -6,9 +6,8 @@
     using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
-    using Fanex.NAP.SPU.Model;
+    using Fanex.NAP.SPU.Core;
     using Quartz;
-    using RestSharp;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -57,21 +56,25 @@
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
-                    var apiUrls = rootPath.Split(';');
-
-                    var listOfAccount = dataCenterService.GetRawUnsuccessAccount(packageSize, apiUrls.Count());
+                    var apiUrls = rootPath.Split(';').ToList();
+                    var listOfAccount = dataCenterService.GetRawUnsuccessAccount(packageSize);
+                    var listUrl = new List<string>();
 
                     if (listOfAccount.Any())
                     {
                         var groupTrans = listOfAccount.GroupBy(x => x.BatchId);
                         var tasks = new List<Task>();
-                        var index = 0;
-
+                        
                         foreach (var trans in groupTrans)
                         {
+                            if(!listUrl.Any())
+                            {
+                                listUrl.AddRange(apiUrls);
+                            }
+
                             var task = Task.Run(() =>
                             {
-                                var apiUrl = apiUrls[index >= apiUrls.Length ? 0 : index];
+                                var apiUrl = listUrl.PopAt(0);
 
                                 return Executing(trans.ToList(), apiUrl, jobDataMap.GetString("Action"));
                             });
@@ -79,8 +82,6 @@
                             await Task.Delay(10);
 
                             tasks.Add(task);
-
-                            index++;
                         }
 
                         await Task.WhenAll(tasks.ToArray());
@@ -92,16 +93,5 @@
                 LogService.Error("Job Data cannot be null");
             }           
         }
-
-        //private static async Task<IRestResponse> Executing(List<RawAccountModel> accounts, string apiUrl, string actionPath)
-        //{           
-        //    var client = new RestClient(new Uri(apiUrl));
-        //    var request = new RestRequest(actionPath, Method.POST);
-
-        //    request.AddHeader("Content-type", "application/json");
-        //    request.AddJsonBody(accounts);
-
-        //    return await client.ExecuteTaskAsync(request);
-        //}
     }
 }

@@ -6,6 +6,7 @@
     using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using Quartz;
     using RestSharp;
@@ -58,21 +59,25 @@
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
                     var apiUrls = rootPath.Split(';');
-                    var numOfBatch = apiUrls.Count();
+                    var listUrl = new List<string>();
 
-                    var listOfAssociation = dataCenterService.GetRawUnsuccessAssociation(packageSize, numOfBatch);
+                    var listOfAssociation = dataCenterService.GetRawUnsuccessAssociation(packageSize);
 
                     if (listOfAssociation.Any())
                     {
                         var groupTrans = listOfAssociation.GroupBy(x => x.BatchId);
                         var tasks = new List<Task>();
-                        var index = 0;
-
+                        
                         foreach (var trans in groupTrans)
                         {
+                            if (!listUrl.Any())
+                            {
+                                listUrl.AddRange(apiUrls);
+                            }
+
                             var task = Task.Run(() =>
                             {
-                                var apiUrl = apiUrls[index >= apiUrls.Length ? 0 : index];
+                                var apiUrl = listUrl.PopAt(0);
 
                                 return Executing(trans.ToList(), apiUrl, jobDataMap.GetString("Action"));
                             });
@@ -80,8 +85,6 @@
                             await Task.Delay(10);
 
                             tasks.Add(task);
-
-                            index++;
                         }
 
                         await Task.WhenAll(tasks.ToArray());
@@ -93,16 +96,5 @@
                 LogService.Error("Job Data cannot be null");
             }           
         }
-
-        //private static async Task<IRestResponse> Executing(List<RawAssociationModel> accounts, string apiUrl, string actionPath)
-        //{
-        //    var client = new RestClient(new Uri(apiUrl));
-        //    var request = new RestRequest(actionPath, Method.POST);
-
-        //    request.AddHeader("Content-type", "application/json");
-        //    request.AddJsonBody(accounts);
-
-        //    return await client.ExecuteTaskAsync(request);
-        //}
     }
 }
