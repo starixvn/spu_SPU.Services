@@ -7,9 +7,7 @@
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
-    using Fanex.NAP.SPU.Model;
     using Quartz;
-    using RestSharp;
     using System;
     using System.Collections.Generic;
     using System.Linq;
