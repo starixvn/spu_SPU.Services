@@ -1,9 +1,9 @@
 ﻿namespace Fanex.NAP.TGRS.AutoTradingViaEmail.Service
 {
-    using Fanex.Logging;
-    using Fanex.MailDelivery.Client;
+    using Fanex.Logging;    
     using Fanex.MailDelivery.Core.Models;
     using Fanex.NAP.SPU.Core;
+    using OfficeOpenXml;
     using System;
     using System.Collections.Generic;
     using System.IO;
@@ -17,14 +17,14 @@
         #region attributes
         private string _directorySaveFile;
         private string _urlTGRSAPI;
-        public bool IsSuccessAPIResponse;
+        public bool IsSuccessAPIResponse;        
         #endregion
 
         public Service(string directorySaveFile)
         {
             _directorySaveFile = directorySaveFile;
             _urlTGRSAPI = AppSettings.TGRSAutoTradingAPIBaseAddress;
-            IsSuccessAPIResponse = true;
+            IsSuccessAPIResponse = true;            
         }
 
         public Service MoveFileToArcFolder()
@@ -87,10 +87,9 @@
                             {
                                 using (var memoryStream = new MemoryStream(fileBytes))
                                 {
-                                    using(var fileStream = new FileStream(savePath, FileMode.Create, FileAccess.Write))
-                                    {
-                                        memoryStream.WriteTo(fileStream);
-                                    }
+                                    var excelPackage = new ExcelPackage(memoryStream);
+
+                                    excelPackage.SaveAs(new FileInfo(savePath), AppSettings.TGRSAutoTradingFilePassword);
                                 }
                             }
                         }

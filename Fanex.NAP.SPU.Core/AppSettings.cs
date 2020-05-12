@@ -303,5 +303,7 @@ namespace Fanex.NAP.SPU.Core
         public static string TGRSAutoTradingAPIBaseAddress => ConfigurationManager.AppSettings["TGRS-AutoTrading-API-BaseAddress"];
 
         public static string TGRSMailingArrListId => ConfigurationManager.AppSettings["TGRS-MailingArrListId"];
+
+        public static string TGRSAutoTradingFilePassword => ConfigurationManager.AppSettings["TGRS-AutoTrading-File-Password"];
     }
 }
