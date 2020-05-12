@@ -47,6 +47,7 @@
     <Compile Include="ArchiveTransactionAfterTransformingCriteria.cs" />
     <Compile Include="AutoTagCustomerClassificationCriteria.cs" />
     <Compile Include="CustomerClassificationGetNewClassificationCriteria.cs" />
+    <Compile Include="CustomerClassificationUpdateNewClassificationCriteria.cs" />
     <Compile Include="GetUsername2FromMainDb.cs" />
     <Compile Include="TransformAssociationAffectedEvidenceCriteria.cs" />
     <Compile Include="FillUpCustomerFromMainDbCriteria.cs" />

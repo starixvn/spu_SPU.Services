@@ -49,6 +49,8 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     string jsonData = JsonConvert.SerializeObject(newClassification);
 
                     dataCenterService.AutoTagClassification(jsonData);
+
+                    dataCenterService.UpdateNewClassification();
                 }
             }
             catch (Exception ex)

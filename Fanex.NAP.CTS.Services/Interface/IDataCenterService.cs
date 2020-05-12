@@ -30,6 +30,8 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         List<CustomerClassificationModel> GetNewClassification();
 
+        void UpdateNewClassification();
+
         void AutoTagClassification(string newClassification);
 
         void ArchiveTransaction(int numberOfTickets);

@@ -98,5 +98,10 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.ArchiveTransaction(numberOfTickets);
         }
+
+        public void UpdateNewClassification()
+        {
+            dataCenterDataAccess.UpdateNewClassification();
+        }
     }
 }
