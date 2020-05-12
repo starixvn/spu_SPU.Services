@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArchiveTransactionAfterTransformingCriteria.cs" />
-    <Compile Include="CustomerClassificationGetNewClassificationCriteria.cs" />
     <Compile Include="AutoTagCustomerClassificationCriteria.cs" />
     <Compile Include="CustomerClassificationGetNewClassificationCriteria.cs" />
     <Compile Include="GetUsername2FromMainDb.cs" />
