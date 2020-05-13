@@ -28,9 +28,9 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void UpdateLastLoginTime(int batchSize);
 
-        List<CustomerClassificationModel> GetNewClassification();
+        List<CustomerClassificationModel> GetNewClassification(int batchSize);
 
-        void UpdateNewClassification();
+        void UpdateNewClassification(long maxCustId);
 
         void AutoTagClassification(string newClassification);
 

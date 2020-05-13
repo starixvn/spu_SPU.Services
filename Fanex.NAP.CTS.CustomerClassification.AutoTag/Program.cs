@@ -11,6 +11,7 @@ using Newtonsoft.Json;
 using SharpRaven;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -42,15 +43,18 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             try
             {
                 var dataCenterService = new DataCenterService();
-                var newClassification = dataCenterService.GetNewClassification();
+                var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["batchSize"]);
+                var newClassification = dataCenterService.GetNewClassification(batchSize);
 
-                if(newClassification != null && newClassification.Any())
+                if (newClassification != null && newClassification.Any())
                 {
                     string jsonData = JsonConvert.SerializeObject(newClassification);
 
                     dataCenterService.AutoTagClassification(jsonData);
 
-                    dataCenterService.UpdateNewClassification();
+                    var maxCustId = newClassification.Max(x => x.CustId);
+
+                    dataCenterService.UpdateNewClassification(maxCustId);
                 }
             }
             catch (Exception ex)

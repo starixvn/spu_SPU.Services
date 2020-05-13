@@ -9,6 +9,8 @@ namespace Fanex.NAP.CTS.Criteria
 {
     public class CustomerClassificationUpdateNewClassificationCriteria : NonQueryCommand
     {
+        public long MaxCustId { get; set; }
+
         public override string GetSettingKey()
         {
             return "CustomerClassification_UpdateNewClassification";

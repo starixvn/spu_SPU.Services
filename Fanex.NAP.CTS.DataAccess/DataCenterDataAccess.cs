@@ -52,7 +52,7 @@
         {
             var criteria = new TransformAssociationByDeviceCriteria
             {
-               AssociationList = associationJson
+                AssociationList = associationJson
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -71,7 +71,7 @@
             };
 
             return repository.Execute(criteria);
-        }        
+        }
 
         public void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIPJson)
         {
@@ -150,9 +150,12 @@
             repository.Execute(criteria);
         }
 
-        public List<CustomerClassificationModel> GetNewClassification()
+        public List<CustomerClassificationModel> GetNewClassification(int batchSize)
         {
-            var criteria = new CustomerClassificationGetNewClassificationCriteria();
+            var criteria = new CustomerClassificationGetNewClassificationCriteria
+            {
+                BatchSize = batchSize
+            };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
@@ -160,11 +163,14 @@
             }
         }
 
-        public void UpdateNewClassification()
+        public void UpdateNewClassification(long maxCustId)
         {
             var repository = new DynamicRepository();
 
-            var criteria = new CustomerClassificationUpdateNewClassificationCriteria();
+            var criteria = new CustomerClassificationUpdateNewClassificationCriteria
+            {
+                MaxCustId = maxCustId
+            };
 
             repository.Execute(criteria);
         }
