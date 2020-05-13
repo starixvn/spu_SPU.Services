@@ -43,8 +43,8 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             try
             {
                 var dataCenterService = new DataCenterService();
-                var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["batchSize"]);
-                var newClassification = dataCenterService.GetNewClassification(batchSize);
+                
+                var newClassification = dataCenterService.GetNewClassification();
 
                 if (newClassification != null && newClassification.Any())
                 {

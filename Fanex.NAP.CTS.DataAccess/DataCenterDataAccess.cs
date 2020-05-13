@@ -150,12 +150,9 @@
             repository.Execute(criteria);
         }
 
-        public List<CustomerClassificationModel> GetNewClassification(int batchSize)
+        public List<CustomerClassificationModel> GetNewClassification()
         {
-            var criteria = new CustomerClassificationGetNewClassificationCriteria
-            {
-                BatchSize = batchSize
-            };
+            var criteria = new CustomerClassificationGetNewClassificationCriteria();
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
