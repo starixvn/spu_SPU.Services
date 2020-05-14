@@ -5,6 +5,7 @@ using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.Sentry.RavenClient;
+using Fanex.NAP.CTS.Model;
 using Fanex.NAP.CTS.Services;
 using Fanex.NAP.SPU.Core;
 using Newtonsoft.Json;
@@ -43,19 +44,24 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             try
             {
                 var dataCenterService = new DataCenterService();
-                
-                var newClassification = dataCenterService.GetNewClassification();
+                var newClassification = new List<CustomerClassificationModel>();
 
-                if (newClassification != null && newClassification.Any())
+                do
                 {
-                    string jsonData = JsonConvert.SerializeObject(newClassification);
+                    newClassification = dataCenterService.GetNewClassification();
 
-                    dataCenterService.AutoTagClassification(jsonData);
+                    if (newClassification != null && newClassification.Any())
+                    {
+                        string jsonData = JsonConvert.SerializeObject(newClassification);
 
-                    var maxCustId = newClassification.Max(x => x.CustId);
+                        dataCenterService.AutoTagClassification(jsonData);
 
-                    dataCenterService.UpdateNewClassification(maxCustId);
+                        var maxCustId = newClassification.Max(x => x.CustId);
+
+                        dataCenterService.UpdateNewClassification(maxCustId);
+                    }
                 }
+                while (newClassification != null && newClassification.Any());
             }
             catch (Exception ex)
             {
