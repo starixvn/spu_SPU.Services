@@ -1172,6 +1172,47 @@
         <repeat-interval>10000</repeat-interval>
       </simple>
     </trigger>
+
+
+    <job>
+      <name>CTS_Archive_Transaction_Job</name>
+      <group>DataTransformJob</group>
+      <description>CTS_Archive_Transaction_Job</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.CTS.ArchiveTransaction.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.ArchiveTransaction.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.ArchiveTransaction.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_Archive_Transaction_Trigger</name>
+        <group>DataTransformTrigger</group>
+        <description>CTS_Archive_Transaction_Trigger</description>
+        <job-name>CTS_Archive_Transaction_Job</job-name>
+        <job-group>DataTransformJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+      </simple>
+    </trigger>
     
   </schedule>
 
