@@ -27,5 +27,13 @@ namespace Fanex.NAP.CTS.Services.Interface
         void TransformAssociationAffectedEvidence(int batchSize);
 
         void UpdateLastLoginTime(int batchSize);
+
+        List<CustomerClassificationModel> GetNewClassification();
+
+        void UpdateNewClassification(long maxCustId);
+
+        void AutoTagClassification(string newClassification);
+
+        void ArchiveTransaction(int numberOfTickets);
     }
 }

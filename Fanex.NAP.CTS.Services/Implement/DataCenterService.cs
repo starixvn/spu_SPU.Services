@@ -83,5 +83,25 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.TransformUpdatingLastLoginTime(batchSize);
         }
+
+        public List<CustomerClassificationModel> GetNewClassification()
+        {
+            return dataCenterDataAccess.GetNewClassification();
+        }
+
+        public void AutoTagClassification(string newClassification)
+        {
+            dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
+        }
+
+        public void ArchiveTransaction(int numberOfTickets)
+        {
+            dataCenterDataAccess.ArchiveTransaction(numberOfTickets);
+        }
+
+        public void UpdateNewClassification(long maxCustId)
+        {
+            dataCenterDataAccess.UpdateNewClassification(maxCustId);
+        }
     }
 }

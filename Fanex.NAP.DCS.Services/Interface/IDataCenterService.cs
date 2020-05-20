@@ -16,7 +16,7 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         List<RawAccountModel> GetRawAccount(int numOfAccount, int numOfBatch);
 
-        List<RawAccountModel> GetRawUnsuccessAccount(int numOfAccount, int numOfBatch);
+        List<RawAccountModel> GetRawUnsuccessAccount(int numOfAccount);
 
         List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, int numOfBatch, int maxCustId);
 
@@ -26,7 +26,7 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         List<RawAssociationModel> GetRawAssociation(int numOfAssociation, int numOfBatch);
 
-        List<RawAssociationModel> GetRawUnsuccessAssociation(int numOfAssociation, int numOfBatch);
+        List<RawAssociationModel> GetRawUnsuccessAssociation(int numOfAssociation);
 
         List<RawTransactionByIpModel> GetRawTransByIp(int numOfTrans, int numOfBatch);
 

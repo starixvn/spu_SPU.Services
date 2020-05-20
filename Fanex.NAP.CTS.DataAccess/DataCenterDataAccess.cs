@@ -52,7 +52,7 @@
         {
             var criteria = new TransformAssociationByDeviceCriteria
             {
-               AssociationList = associationJson
+                AssociationList = associationJson
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -71,7 +71,7 @@
             };
 
             return repository.Execute(criteria);
-        }        
+        }
 
         public void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIPJson)
         {
@@ -148,6 +148,53 @@
             };
 
             repository.Execute(criteria);
+        }
+
+        public List<CustomerClassificationModel> GetNewClassification()
+        {
+            var criteria = new CustomerClassificationGetNewClassificationCriteria();
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerClassificationModel>(criteria).ToList();
+            }
+        }
+
+        public void UpdateNewClassification(long maxCustId)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new CustomerClassificationUpdateNewClassificationCriteria
+            {
+                MaxCustId = maxCustId
+            };
+
+            repository.Execute(criteria);
+        }
+
+        public void AutoTagCustomerClassification(string newClassification)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new AutoTagCustomerClassificationCriteria
+            {
+                NewClassification = newClassification
+            };
+
+            repository.Execute(criteria);
+        }
+
+        public void ArchiveTransaction(int numOfTickets)
+        {
+            var criteria = new ArchiveTransactionAfterTransformingCriteria
+            {
+                NoOfTickets = numOfTickets
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
         }
     }
 }

@@ -240,12 +240,11 @@
             }
         }
 
-        public List<RawAccountModel> GetRawUnsuccessAccount(int quantityPerBatch, int numOfBatch)
+        public List<RawAccountModel> GetRawUnsuccessAccount(int quantityPerBatch)
         {
             var criteria = new GetRawUnsucessAccountListCriteria
             {
-                NumberOfAccount = quantityPerBatch,
-                NumberOfBatch = numOfBatch
+                NumberOfAccount = quantityPerBatch                
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -309,12 +308,11 @@
             }
         }
 
-        public List<RawAssociationModel> GetRawUnsuccessAssociation(int quantityPerBatch, int numOfBatch)
+        public List<RawAssociationModel> GetRawUnsuccessAssociation(int quantityPerBatch)
         {
             var criteria = new GetRawUnsucessAssociationListCriteria
             {
-                NumberOfAssociation = quantityPerBatch,
-                NumberOfBatch = numOfBatch
+                NumberOfAssociation = quantityPerBatch
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
