@@ -67,6 +67,8 @@
     <Compile Include="FlaggedAccountRuleCommand.cs" />
     <Compile Include="FlaggedAccountService.cs" />
     <Compile Include="FraudCaseService.cs" />
+    <Compile Include="GrouptBettingService.cs" />
+    <Compile Include="HedgingService.cs" />
     <Compile Include="MicroService.cs" />
     <Compile Include="OfficeIPRuleCommand.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

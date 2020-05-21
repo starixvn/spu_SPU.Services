@@ -57,7 +57,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ArbitragePreconditionCriteria.cs" />
-    <Compile Include="ArbitrageRuleCriteria.cs" />
     <Compile Include="BetsNearGoalPreconditionCriteria.cs" />
     <Compile Include="BetsNearGoalRuleCriteria.cs" />
     <Compile Include="BigStakeNearGoalPreconditionCriteria.cs" />
@@ -69,6 +68,10 @@
     <Compile Include="FlaggedAccountRuleCriteria.cs" />
     <Compile Include="FraudCaseGetByIdCriteria.cs" />
     <Compile Include="FraudCaseGetCriteria.cs" />
+    <Compile Include="GroupBettingPreConditionCriteria.cs" />
+    <Compile Include="GroupBettingRuleCriteria.cs" />
+    <Compile Include="HedgingPreConditionCriteria.cs" />
+    <Compile Include="HedgingRuleCriteria.cs" />
     <Compile Include="OfficeIPPreconditionCriteria.cs" />
     <Compile Include="OfficeIPRuleCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

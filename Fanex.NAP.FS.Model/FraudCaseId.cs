@@ -9,6 +9,8 @@
         DailyDataCapture = 4,
         CheckBet = 3,
         Arbitrage = 10,
-        BetsNearGoal = 11
+        BetsNearGoal = 11,
+        GroupBetting = 13,
+        Hedging = 14
     }
 }
