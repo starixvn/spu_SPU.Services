@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Problem Account Monitor">
+    <Setting Key="CTS_DC_GetCustEvidenceByEvidenceID" SpName="CTS_DC_GetCustEvidenceByEvidenceID" DbName="MySQL.CTS_DataCenter" TimeOut="600"/>
+  </Function>
+</Functions>

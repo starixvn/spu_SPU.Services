@@ -26,5 +26,17 @@
 
             repository.Execute(criteria);
         }
+
+        public IEnumerable<T> GetGroupBettingCustomer<T>(int evidenceId)
+        {
+            var repository = new DynamicRepository();
+            var criteria = new GetCustEvidenceByEviIDCriteria()
+            {
+                EvidenceId = evidenceId}
+            ;
+
+            return repository.Fetch<T>(criteria);
+        }
+
     }
 }

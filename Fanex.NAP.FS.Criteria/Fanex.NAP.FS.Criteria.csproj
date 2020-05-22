@@ -68,6 +68,7 @@
     <Compile Include="FlaggedAccountRuleCriteria.cs" />
     <Compile Include="FraudCaseGetByIdCriteria.cs" />
     <Compile Include="FraudCaseGetCriteria.cs" />
+    <Compile Include="GetCustEvidenceByEviIDCriteria.cs" />
     <Compile Include="GroupBettingPreConditionCriteria.cs" />
     <Compile Include="GroupBettingRuleCriteria.cs" />
     <Compile Include="HedgingPreConditionCriteria.cs" />

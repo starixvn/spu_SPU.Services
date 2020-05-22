@@ -17,7 +17,7 @@
     public class Service : BaseService
     {
         private IEnumerable<Match> matches;
-        private IEnumerable<FlaggedCustomer> groupBettingCustomers;
+        private IEnumerable<CustomerCategory> groupBettingCustomers;
         protected readonly GrouptBettingService groupBettingService;
         private const int ChunkSize = 100;
         private const int SleepSize = 2;
@@ -25,19 +25,9 @@
         public Service() : base(Model.FraudCaseId.GroupBetting)
         {
             matches = new List<Match>();
-            groupBettingCustomers = new List<FlaggedCustomer>();
+            groupBettingCustomers = new List<CustomerCategory>();
 
             groupBettingService = new GrouptBettingService();
-        }
-        private IEnumerable<FlaggedCustomer> GetFlaggedCustomer()
-        {
-            var param = new CustomerEvidenceList
-            {
-                CustIdList = string.Empty,
-                EvidenceCodeList = string.Empty
-            };
-
-            return ApiHelper.Post<IEnumerable<FlaggedCustomer>>(AppSetting.CustomerEvidenceApi, param).Result;
         }
 
         public override BaseService CleanResult()
@@ -61,7 +51,8 @@
 
         public override BaseService Rule()
         {
-            groupBettingCustomers = GetFlaggedCustomer();
+            var evidenceId = Convert.ToInt32(EvidenceId.GroupBetting);
+            groupBettingCustomers = groupBettingService.GetGroupBettingCustomer<CustomerCategory>(evidenceId);
 
             ExecuteBySeparatedThreads();
 

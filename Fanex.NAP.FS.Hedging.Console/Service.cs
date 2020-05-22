@@ -17,29 +17,18 @@
     public class Service : BaseService
     {
         private IEnumerable<Match> matches;
-        private IEnumerable<FlaggedCustomer> hedgingCustomers;
+        private IEnumerable<CustomerCategory> hedgingCustomers;
         protected readonly HedgingService hedgingService;
         private const int ChunkSize = 100;
         private const int SleepSize = 2;
 
-        public Service() : base(Model.FraudCaseId.GroupBetting)
+        public Service() : base(Model.FraudCaseId.Hedging)
         {
             matches = new List<Match>();
 
-            hedgingCustomers = new List<FlaggedCustomer>();
+            hedgingCustomers = new List<CustomerCategory>();
 
             hedgingService = new HedgingService();
-        }
-
-        private IEnumerable<FlaggedCustomer> GetFlaggedCustomer()
-        {
-            var param = new CustomerEvidenceList
-            {
-                CustIdList = string.Empty,
-                EvidenceCodeList = string.Empty
-            };
-
-            return ApiHelper.Post<IEnumerable<FlaggedCustomer>>(AppSetting.CustomerEvidenceApi, param).Result;
         }
 
         public override BaseService CleanResult()
@@ -63,7 +52,8 @@
 
         public override BaseService Rule()
         {
-            hedgingCustomers = GetFlaggedCustomer();
+            var evidenceId = Convert.ToInt32(EvidenceId.Hedging);
+            hedgingCustomers = hedgingService.GetHedgingCustomer<CustomerCategory>(evidenceId);
 
             ExecuteBySeparatedThreads();
 

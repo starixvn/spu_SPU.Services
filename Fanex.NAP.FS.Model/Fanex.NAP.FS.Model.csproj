@@ -48,11 +48,13 @@
     <Compile Include="ArbitrageCustomer.cs" />
     <Compile Include="ArbitrageGroup.cs" />
     <Compile Include="ArbitrageTicket.cs" />
+    <Compile Include="CustomerCategory.cs" />
     <Compile Include="CustomerEvidenceList.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="FlaggedCustomer.cs" />
     <Compile Include="FraudCase.cs" />
     <Compile Include="FraudCaseHealth.cs" />
+    <Compile Include="EvidenceId.cs" />
     <Compile Include="FraudCaseId.cs" />
     <Compile Include="FraudCaseMessage.cs" />
     <Compile Include="Match.cs" />

@@ -2,6 +2,7 @@
 {
     using Fanex.Data;
     using Fanex.Data.SqlServer;
+    using Fanex.Data.MySql;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.FS.Model;
     using System;
@@ -15,6 +16,7 @@
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
+                 .WithMySql()
                  .UseDefaultDbSettingProvider(AppSetting.AppData)
                  .UseDefaultConnectionStringProvider()
                  .Run();
