@@ -152,6 +152,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTrading.Console", "Fanex.NAP.TGRS.AutoTrading.Console\Fanex.NAP.TGRS.AutoTrading.Console.csproj", "{6E323AA8-BB54-4C2F-8B11-25135B80E26B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTradingViaEmail.Service", "Fanex.NAP.TGRS.AutoTradingViaEmail.Console\Fanex.NAP.TGRS.AutoTradingViaEmail.Service.csproj", "{66518FF3-2C21-4A02-88EE-229952A8351B}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.CustomerClassification.AutoTag", "Fanex.NAP.CTS.CustomerClassification.AutoTag\Fanex.NAP.CTS.CustomerClassification.AutoTag.csproj", "{C2D305B4-3C68-4770-9E67-AE85B247891D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.ArchiveTransaction.Console", "Fanex.NAP.CTS.ArchiveTransaction.Console\Fanex.NAP.CTS.ArchiveTransaction.Console.csproj", "{49E70647-608B-4BF4-98F9-B78AA12CE9CD}"
