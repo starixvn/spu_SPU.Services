@@ -1132,7 +1132,87 @@
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <cron-expression>0 30 21 ? * MON *</cron-expression>
       </cron>
-    </trigger>   
+    </trigger>
+
+    <job>
+      <name>FS_GroupBetting_Job</name>
+      <group>FraudSensorJob</group>
+      <description>GroupBetting service</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.FS.GroupBetting.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.GroupBetting.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.GroupBetting.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>FS_GroupBetting_Trigger</name>
+        <group>FraudSensorTrigger</group>
+        <description>FlaggedAccountTrigger</description>
+        <job-name>FS_GroupBetting_Job</job-name>
+        <job-group>FraudSensorJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>60000</repeat-interval>
+      </simple>
+    </trigger>
+
+    <job>
+      <name>FS_Hedging_Job</name>
+      <group>FraudSensorJob</group>
+      <description>Hedging service</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.FS.Hedging.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.Hedging.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.FS.Hedging.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>FS_Hedging_Trigger</name>
+        <group>FraudSensorTrigger</group>
+        <description>FlaggedAccountTrigger</description>
+        <job-name>FS_Hedging_Job</job-name>
+        <job-group>FraudSensorJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>60000</repeat-interval>
+      </simple>
+    </trigger>
     
   </schedule>
 
