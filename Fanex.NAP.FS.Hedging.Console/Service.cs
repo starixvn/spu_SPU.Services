@@ -45,6 +45,7 @@
 
         public override BaseService Precondition()
         {
+
             matches = hedgingService.PreCondition<Match>();
 
             return base.Precondition();

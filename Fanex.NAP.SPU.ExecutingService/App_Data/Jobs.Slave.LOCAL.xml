@@ -1002,6 +1002,7 @@
         <job-group>AutoTradingJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <cron-expression>0 30 21 ? * MON *</cron-expression>
+      </cron>
     </trigger>
 
     <job>
