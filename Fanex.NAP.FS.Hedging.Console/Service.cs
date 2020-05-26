@@ -53,7 +53,7 @@
 
         public override BaseService Rule()
         {
-            var evidenceId = Convert.ToInt32(EvidenceId.Hedging);
+            var evidenceId = "46,56,79"; // Hard code for GroupBetting EvidenceId
             hedgingCustomers = hedgingService.GetHedgingCustomer<CustomerCategory>(evidenceId);
 
             ExecuteBySeparatedThreads();

@@ -27,12 +27,12 @@ namespace Fanex.NAP.FS.Service
             repository.Execute(criteria);
         }
 
-        public IEnumerable<T> GetHedgingCustomer<T>(int evidenceId)
+        public IEnumerable<T> GetHedgingCustomer<T>(string evidenceIdList)
         {
             var repository = new DynamicRepository();
             var criteria = new GetCustEvidenceByEviIDCriteria()
             {
-                EvidenceId = evidenceId
+                EvidenceId = evidenceIdList
             }
             ;
 

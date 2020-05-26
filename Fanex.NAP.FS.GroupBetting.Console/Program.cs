@@ -28,18 +28,14 @@ namespace Fanex.NAP.FS.GroupBetting.Console
                             WriteLogTimeoutSeconds = 30
                         })
                     });
-                LogService.Info("GroupBettingService is called");
                 var _service = new Service();
 
                 if (_service.CheckFraudCaseIsActive())
                 {
-                    LogService.Info("GroupBettingService is running");
                     _service
                        .CleanResult()
                        .Precondition()
                        .Rule();
-
-                    LogService.Info("GroupBettingService run completely!");
                 }
                 else
                 {

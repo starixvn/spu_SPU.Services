@@ -51,7 +51,7 @@
 
         public override BaseService Rule()
         {
-            var evidenceId = Convert.ToInt32(EvidenceId.GroupBetting);
+            var evidenceId = "43,44,54"; // Hard code for GroupBetting EvidenceId
             groupBettingCustomers = groupBettingService.GetGroupBettingCustomer<CustomerCategory>(evidenceId);
 
             ExecuteBySeparatedThreads();

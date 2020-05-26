@@ -11,9 +11,9 @@
     public class GetCustEvidenceByEviIDCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "ip_EvidenceID")]
-        public int EvidenceId { get; set; }
+        public string EvidenceId { get; set; }
         public override string GetSettingKey() => "CTS_DC_GetCustEvidenceByEvidenceID";
 
-        public override bool IsValid() => EvidenceId > 0 ? true : false;
+        public override bool IsValid() => !string.IsNullOrEmpty(EvidenceId);
     }
 }
