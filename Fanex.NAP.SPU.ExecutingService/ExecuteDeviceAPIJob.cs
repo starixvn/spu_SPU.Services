@@ -80,7 +80,7 @@
                                 action);
                             });
 
-                            await Task.Delay(1000);
+                            await Task.Delay(10);
 
                             tasks.Add(task);
 
