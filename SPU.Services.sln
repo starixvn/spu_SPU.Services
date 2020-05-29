@@ -161,6 +161,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FS.GroupBetting.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.FS.Hedging.Console", "Fanex.NAP.FS.Hedging.Console\Fanex.NAP.FS.Hedging.Console.csproj", "{2A0B6E3C-0D07-4285-8F3D-63D20AE38BF6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Monitoring", "Monitoring", "{E5F8E055-E930-4F57-A4B1-1583325BC230}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.MonitoringService", "Fanex.NAP.SPU.MonitoringService\Fanex.NAP.SPU.MonitoringService.csproj", "{7AF29296-6CFA-4FB1-BE69-095BB36CFEF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -426,6 +430,10 @@ Global
 		{2A0B6E3C-0D07-4285-8F3D-63D20AE38BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2A0B6E3C-0D07-4285-8F3D-63D20AE38BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2A0B6E3C-0D07-4285-8F3D-63D20AE38BF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AF29296-6CFA-4FB1-BE69-095BB36CFEF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AF29296-6CFA-4FB1-BE69-095BB36CFEF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AF29296-6CFA-4FB1-BE69-095BB36CFEF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AF29296-6CFA-4FB1-BE69-095BB36CFEF4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -493,9 +501,10 @@ Global
 		{49E70647-608B-4BF4-98F9-B78AA12CE9CD} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{D32EBAD1-4C19-45D7-99B0-069137650505} = {00D1CD4E-059C-4366-B3B0-36532801F6B4}
 		{2A0B6E3C-0D07-4285-8F3D-63D20AE38BF6} = {00D1CD4E-059C-4366-B3B0-36532801F6B4}
+		{7AF29296-6CFA-4FB1-BE69-095BB36CFEF4} = {E5F8E055-E930-4F57-A4B1-1583325BC230}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal
