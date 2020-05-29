@@ -45,8 +45,11 @@
     <Reference Include="Fanex.Data.SqlServer, Version=4.2.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fanex.Data.SqlServer.4.2.2\lib\net461\Fanex.Data.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Fanex.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Fanex.Logging.1.0.0.0\lib\net40\Fanex.Logging.dll</HintPath>
+    <Reference Include="Fanex.Logging, Version=2.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.2.0.1\lib\net461\Fanex.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.Logging.Sentry.RavenClient, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Logging.Sentry.RavenClient.1.0.1\lib\net461\Fanex.Logging.Sentry.RavenClient.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=5.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Common.5.0.414.0\lib\net40\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -63,15 +66,24 @@
     <Reference Include="Microsoft.Practices.Unity.Interception, Version=2.0.414.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\EnterpriseLibrary.Unity.5.0.414.0\lib\net40\Microsoft.Practices.Unity.Interception.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="ONEbook.UM, Version=2.0.2.9, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\ONEbook.UM.2.0.2.9\lib\net40\ONEbook.UM.dll</HintPath>
     </Reference>
     <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\RestSharp.105.2.3\lib\net46\RestSharp.dll</HintPath>
     </Reference>
+    <Reference Include="SharpRaven, Version=2.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpRaven.2.4.0\lib\net45\SharpRaven.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Security" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -101,21 +113,25 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Fanex.NAP.SPU.MonitoringService.exe.LOCAL.config">
-	  <DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Fanex.NAP.SPU.MonitoringService.exe.PRO.config">
-	  <DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Fanex.NAP.SPU.MonitoringService.exe.UAT.config">
-	  <DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.FS.Core\Fanex.NAP.FS.Core.csproj">
+      <Project>{f95ab8f2-f7dc-4c12-89e0-090fb0ec6414}</Project>
+      <Name>Fanex.NAP.FS.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Service\Fanex.NAP.SPU.Service.csproj">
       <Project>{fd4a2e92-1eb2-43a8-a93a-a1e0a7632097}</Project>
       <Name>Fanex.NAP.SPU.Service</Name>
@@ -123,15 +139,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SPNames.LOCAL.xml">
-	  <DependentUpon>SPNames.xml</DependentUpon>
+      <DependentUpon>SPNames.xml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\SPNames.PRO.xml">
-	  <DependentUpon>SPNames.xml</DependentUpon>
+      <DependentUpon>SPNames.xml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\SPNames.UAT.xml">
-	  <DependentUpon>SPNames.xml</DependentUpon>
+      <DependentUpon>SPNames.xml</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\SPNames.xml">

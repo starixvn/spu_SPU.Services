@@ -1,4 +1,5 @@
-﻿using Fanex.NAP.SPU.MonitoringService.Services;
+﻿using Fanex.Logging;
+using Fanex.NAP.SPU.MonitoringService.Services;
 using Fanex.NAP.SPU.Service;
 using ONEbook.UM.Services;
 using ONEbook.UM.Services.Impl;
@@ -26,6 +27,7 @@ namespace Fanex.NAP.SPU.MonitoringService
 
         protected override void OnStart(string[] args)
         {
+            LogService.Info("CTS Monitoring Service is start!");
             _thread = new Thread(RunOnStart);
             _thread.Start();
         }
@@ -40,8 +42,19 @@ namespace Fanex.NAP.SPU.MonitoringService
             {
                 if (!CheckUM())
                 {
-                    CheckServices();
-                    Thread.Sleep(new TimeSpan(0, 30, 0));
+                    try
+                    {
+                        CheckServices();
+                    }
+                    catch (Exception ex)
+                    {
+                        var msg = $"CTS Monitor Service has an error: {ex.Message}";
+                        LogService.Error(msg);
+                    }
+                    finally
+                    {
+                        Thread.Sleep(new TimeSpan(0, 30, 0));
+                    }
                 }
             } while (true);
         }

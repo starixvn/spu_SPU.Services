@@ -2,6 +2,10 @@
 {
     using Fanex.Data;
     using Fanex.Data.SqlServer;
+    using Fanex.Logging;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.FS.Core;
+    using SharpRaven;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -24,15 +28,15 @@
                  .UseDefaultConnectionStringProvider()
                  .Run();
 
-            //LogManager.SetDefaultLogCategory(AppSetting.FanexLogCategory)
-            //        .Use(new List<ILogEngine>
-            //        {
-            //             new SentryLogging(new SentryEngineOptions
-            //             {
-            //                 Dsn = new Dsn(AppSetting.SentryLogging),
-            //                WriteLogTimeoutSeconds = 30
-            //             })
-            //        });
+            LogManager.SetDefaultLogCategory(AppSetting.FanexLogCategory)
+                .Use(new List<ILogEngine>
+                {
+                        new SentryLogging(new SentryEngineOptions
+                        {
+                            Dsn = new Dsn(AppSetting.SentryLogging),
+                        WriteLogTimeoutSeconds = 30
+                        })
+                });
 
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
