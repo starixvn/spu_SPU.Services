@@ -1,4 +1,5 @@
 ﻿using Fanex.Logging;
+using Fanex.NAP.FS.Core;
 using Fanex.NAP.SPU.MonitoringService.Services;
 using Fanex.NAP.SPU.Service;
 using ONEbook.UM.Services;
@@ -69,7 +70,7 @@ namespace Fanex.NAP.SPU.MonitoringService
             {
                 var halfAHour = new TimeSpan(0, 30, 0);
                 var intervalInTicks = trigger.RepeatInterval * TimeSpan.TicksPerMillisecond;
-                var interval = trigger.RepeatInterval > halfAHour.Milliseconds ? intervalInTicks : intervalInTicks * 3;
+                var interval = trigger.RepeatInterval > halfAHour.TotalMilliseconds ? intervalInTicks : halfAHour.Ticks;
                 TimeSpan t = TimeSpan.FromMilliseconds(trigger.RepeatInterval);
                 string displayRepeatInterval = string.Format("{0:D2}h {1:D2}m {2:D2}s {3:D3}ms",
                                                             t.Hours,
@@ -79,16 +80,14 @@ namespace Fanex.NAP.SPU.MonitoringService
 
                 if (trigger.PrevFireTime + interval < DateTime.UtcNow.Ticks)
                 {
-                    Console.WriteLine(trigger.TriggerName + " - Notify here...!");
-                    var msg = $"{trigger.JobName} is FAILED to start. " +
+                    var msg = $"{trigger.TriggerName} is FAILED to start. " +
                         $"\n    Last fire time:      {trigger.DisplayLastFireTime} (UTC)" +
                         $"\n    Repeat interval:   {displayRepeatInterval}";
 
-                    //if (AppSetting.Environment == 3)
-                    //{
-                    //    new LetstalkService().Error("CTS Monitoring system", msg);
-                    //}
-                    new LetstalkService().Error("CTS Monitoring system", msg);
+                    if (AppSetting.Environment == 3)
+                    {
+                        new LetstalkService().Error("CTS Monitoring system", msg);
+                    }
                 }
             }
         }
