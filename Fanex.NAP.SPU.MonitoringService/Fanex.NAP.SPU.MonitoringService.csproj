@@ -115,6 +115,7 @@
     <None Include="Fanex.NAP.SPU.MonitoringService.exe.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Fanex.NAP.SPU.MonitoringService.exe.PRO.config">
       <DependentUpon>App.config</DependentUpon>

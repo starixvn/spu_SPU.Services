@@ -44,7 +44,7 @@
                 new Runner()
             };
 
-            if (Environment.UserInteractive)
+            if (System.Environment.UserInteractive)
             {
                 // run console
                 var type = typeof(ServiceBase);
