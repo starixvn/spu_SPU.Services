@@ -4,8 +4,8 @@
     <Setting Key="CTS_DC_GetCustEvidenceByEvidenceID" SpName="CTS_DC_GetCustEvidenceByEvidenceID" DbName="MySQL.CTS_DataCenter" TimeOut="600"/>
   </Function>
   <Function Name="FraudSensor">
-    <Setting Key="FS_FraudCase_GetById" SpName="FS_FraudCase_GetById" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
-    <Setting Key="FS_FraudCase_Hedging_PreCondition" SpName="FS_FraudCase_Hedging_PreCondition" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
-    <Setting Key="FS_FraudCase_Hedging_Rule" SpName="FS_FraudCase_Hedging_Rule" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
+    <Setting Key="FS_FraudCase_GetById" SpName="FS_FraudCase_GetById_xtest" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
+    <Setting Key="FS_FraudCase_Hedging_PreCondition" SpName="FS_FraudCase_Hedging_PreCondition_xtest" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
+    <Setting Key="FS_FraudCase_Hedging_Rule" SpName="FS_FraudCase_Hedging_Rule_xtest" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
   </Function>
 </Functions>
