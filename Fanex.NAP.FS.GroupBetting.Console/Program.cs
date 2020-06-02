@@ -30,12 +30,15 @@ namespace Fanex.NAP.FS.GroupBetting.Console
                     });
                 var _service = new Service();
 
+                LogService.Info("Group Betting service START");
                 if (_service.CheckFraudCaseIsActive())
                 {
+                    LogService.Info("Group Betting service is running");
                     _service
                        .CleanResult()
                        .Precondition()
                        .Rule();
+                    LogService.Info("Group Betting run completely");
                 }
                 else
                 {
