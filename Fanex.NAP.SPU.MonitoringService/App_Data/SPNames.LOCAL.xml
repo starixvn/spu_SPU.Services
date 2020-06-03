@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="CTS Monitor">
+    <Setting Key="CTS_GetSimpleTrigger" SpName="CTS_GetSimpleTrigger" DbName="DBQuartz" TimeOut="600"/>
+  </Function>
+</Functions>
