@@ -6,7 +6,7 @@
     {
         public long CustId { get; set; }
 
-        public int SportId { get; set; }
+        public int SportGroupId { get; set; }
 
         public int CategoryId { get; set; }
 
