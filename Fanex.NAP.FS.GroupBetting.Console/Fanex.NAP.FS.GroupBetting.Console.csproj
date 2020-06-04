@@ -77,19 +77,17 @@
     <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.PRO.config">
-      <DependentUpon>App.config</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="App.UAT.config">
-      <DependentUpon>App.config</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="App.LOCAL.config">
-      <DependentUpon>App.config</DependentUpon>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Fanex.NAP.FS.GroupBetting.Console.exe.LOCAL.config">
+      <DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Fanex.NAP.FS.GroupBetting.Console.exe.PRO.config">
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

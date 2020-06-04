@@ -28,6 +28,7 @@ namespace Fanex.NAP.FS.GroupBetting.Console
                             WriteLogTimeoutSeconds = 30
                         })
                     });
+
                 var _service = new Service();
 
                 if (_service.CheckFraudCaseIsActive())
