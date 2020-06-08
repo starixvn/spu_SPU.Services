@@ -103,5 +103,25 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.UpdateNewClassification(maxCustId);
         }
+
+        public IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily()
+        {
+            return dataCenterDataAccess.GetCustomerForDailyScanning();
+        }
+
+        public IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime()
+        {
+            return dataCenterDataAccess.GetCustomerForRealtimeScanning();
+        }
+
+        public IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily (IEnumerable<CustomerClassificationModel> customers)
+        {
+            return dataCenterDataAccess.ClassifyCustomerDaily(customers);
+        }
+
+        public IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
+        {
+            return dataCenterDataAccess.ClassifyCustomerRealtime(customers);
+        }
     }
 }

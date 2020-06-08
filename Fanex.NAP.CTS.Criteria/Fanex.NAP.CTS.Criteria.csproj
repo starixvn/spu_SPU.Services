@@ -48,6 +48,10 @@
     <Compile Include="AutoTagCustomerClassificationCriteria.cs" />
     <Compile Include="CustomerClassificationGetNewClassificationCriteria.cs" />
     <Compile Include="CustomerClassificationUpdateNewClassificationCriteria.cs" />
+    <Compile Include="CustomerClassification\CategorizeCustomerDailyCriteria.cs" />
+    <Compile Include="CustomerClassification\CategorizeCustomerRealtimeCriteria.cs" />
+    <Compile Include="CustomerClassification\GetCustomerClassificationByCategoryCriteria.cs" />
+    <Compile Include="CustomerClassification\GetCustomerClassificationForScanningCriteria.cs" />
     <Compile Include="GetUsername2FromMainDb.cs" />
     <Compile Include="TransformAssociationAffectedEvidenceCriteria.cs" />
     <Compile Include="FillUpCustomerFromMainDbCriteria.cs" />

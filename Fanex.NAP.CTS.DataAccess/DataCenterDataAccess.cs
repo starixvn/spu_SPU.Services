@@ -3,8 +3,10 @@
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.NAP.CTS.Criteria;
+    using Fanex.NAP.CTS.Criteria.CustomerClassification;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.SPU.Model;
+    using Fanex.NAP.FS.XML;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -195,6 +197,51 @@
             {
                 db.ExecuteNonQuery(criteria);
             }
+        }
+
+        public IEnumerable<CustomerClassificationModel> GetCustomerForDailyScanning()
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetCustomerClassificationForScanningCriteria();
+
+            return repository.Fetch<CustomerClassificationModel>(criteria);
+        }
+
+        public IEnumerable<CustomerClassificationModel> GetCustomerForRealtimeScanning()
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetCustomerClassificationByCategoryCriteria
+            {
+                CategoryIdList = "5" // Hard code for VIP Category
+            };
+
+            return repository.Fetch<CustomerClassificationModel>(criteria);
+        }
+
+        public IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new CategorizeCustomerDailyCriteria
+            {
+                CustIdList = string.Join(",", customers.Select(c => c.CustId))
+            };
+
+            return repository.Fetch<CustomerClassificationModel>(criteria);
+        }
+
+        public IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new CategorizeCustomerRealtimeCriteria
+            {
+                VIPCustomersXML = customers.ToXmlString()
+            };
+
+            return repository.Fetch<CustomerClassificationModel>(criteria);
         }
     }
 }

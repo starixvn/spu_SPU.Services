@@ -165,6 +165,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Monitoring", "Monitoring", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.MonitoringService", "Fanex.NAP.SPU.MonitoringService\Fanex.NAP.SPU.MonitoringService.csproj", "{3962AAED-006B-4E37-A217-C43500292431}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.ClassifyCustomer.Daily.Console", "Fanex.NAP.CTS.ClassifyCustomer.Daily\Fanex.NAP.CTS.ClassifyCustomer.Daily.Console.csproj", "{076336CF-6878-4751-811D-389318BBE691}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console", "Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console\Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console.csproj", "{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -434,6 +438,14 @@ Global
 		{3962AAED-006B-4E37-A217-C43500292431}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3962AAED-006B-4E37-A217-C43500292431}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3962AAED-006B-4E37-A217-C43500292431}.Release|Any CPU.Build.0 = Release|Any CPU
+		{076336CF-6878-4751-811D-389318BBE691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{076336CF-6878-4751-811D-389318BBE691}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{076336CF-6878-4751-811D-389318BBE691}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{076336CF-6878-4751-811D-389318BBE691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -502,9 +514,11 @@ Global
 		{D32EBAD1-4C19-45D7-99B0-069137650505} = {00D1CD4E-059C-4366-B3B0-36532801F6B4}
 		{2A0B6E3C-0D07-4285-8F3D-63D20AE38BF6} = {00D1CD4E-059C-4366-B3B0-36532801F6B4}
 		{3962AAED-006B-4E37-A217-C43500292431} = {E5F8E055-E930-4F57-A4B1-1583325BC230}
+		{076336CF-6878-4751-811D-389318BBE691} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
+		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal

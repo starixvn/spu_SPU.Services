@@ -35,5 +35,13 @@ namespace Fanex.NAP.CTS.Services.Interface
         void AutoTagClassification(string newClassification);
 
         void ArchiveTransaction(int numberOfTickets);
+
+        IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily();
+
+        IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime();
+
+        IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
+
+        IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers);
     }
 }
