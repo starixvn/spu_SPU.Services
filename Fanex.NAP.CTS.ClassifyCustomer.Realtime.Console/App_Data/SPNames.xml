@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Classify Customer">
+    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CustomerClassification_CategorizeCustomer_RealTime" SpName="CustomerClassification_CategorizeCustomer_RealTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+  </Function> 
+</Functions>
