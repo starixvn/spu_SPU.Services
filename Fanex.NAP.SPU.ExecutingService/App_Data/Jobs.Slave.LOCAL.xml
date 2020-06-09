@@ -1124,6 +1124,86 @@
         <repeat-interval>10000</repeat-interval>
       </simple>
     </trigger>
+
+    <job>
+      <name>CTS_Customer_Classification_Daily</name>
+      <group>CustomerClassification</group>
+      <description>Customer Classification</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.CTS.ClassifyCustomer.Daily.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>D:\WWW\SPU\Fanex.NAP.CTS.ClassifyCustomer.Daily.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>D:\WWW\SPU\Fanex.NAP.CTS.ClassifyCustomer.Daily.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_Customer_Classification_Daily_Trigger</name>
+        <group>CustomerClassification</group>
+        <description>CustomerClassification</description>
+        <job-name>CTS_Customer_Classification_Daily</job-name>
+        <job-group>CustomerClassification</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>300000</repeat-interval>
+      </simple>
+    </trigger>
+
+    <job>
+      <name>CTS_Customer_Classification_Realtime</name>
+      <group>CustomerClassification</group>
+      <description>Customer Classification</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>false</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>D:\WWW\SPU\Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>D:\WWW\SPU\Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_Customer_Classification_Realtime_Trigger</name>
+        <group>CustomerClassification</group>
+        <description>CustomerClassification</description>
+        <job-name>CTS_Customer_Classification_Realtime</job-name>
+        <job-group>CustomerClassification</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>60000</repeat-interval>
+      </simple>
+    </trigger>
   </schedule>
 
 </job-scheduling-data>
