@@ -43,6 +43,7 @@
 
             try
             {
+                LogService.Info("Job Realtime is running");
                 var customers = dataService.GetCustomerForRunRealtime();
                 if (customers.Any())
                 {
@@ -51,6 +52,8 @@
 
                     dataService.AutoTagClassification(jsonData);
                 }
+
+                LogService.Info("Job Realtime run completely!");
             }
             catch (Exception ex)
             {
