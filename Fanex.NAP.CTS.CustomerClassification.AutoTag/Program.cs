@@ -23,6 +23,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
     {
         static void Main(string[] args)
         {
+            LogService.Info("Start CustomerClassification.AutoTag");
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
@@ -48,18 +49,21 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                 do
                 {
+                    LogService.Info("CustomerClassification.AutoTag get data");
                     newClassification = dataCenterService.GetNewClassification();
-
+                    LogService.Info("newClassification: " + newClassification.Count);
                     if (newClassification != null && newClassification.Any())
                     {
                         string jsonData = JsonConvert.SerializeObject(newClassification);
-
+                        LogService.Info("jsonData: " + jsonData);
                         dataCenterService.AutoTagClassification(jsonData);
 
                         var maxCustId = newClassification.Max(x => x.CustId);
 
                         dataCenterService.UpdateNewClassification(maxCustId);
+                        LogService.Info("maxCustId: " + maxCustId);
                     }
+                    LogService.Info("CustomerClassification.AutoTag done!");
                 }
                 while (newClassification != null && newClassification.Any());
             }
