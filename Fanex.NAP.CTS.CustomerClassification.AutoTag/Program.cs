@@ -23,7 +23,6 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
     {
         static void Main(string[] args)
         {
-            LogService.Info("Start CustomerClassification.AutoTag");
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
@@ -41,6 +40,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                         Dsn = new Dsn(AppSettings.SentryLogging)
                     })
                });
+            LogService.Info("Start CustomerClassification.AutoTag");
 
             try
             {
