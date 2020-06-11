@@ -45,12 +45,15 @@
             {
                 LogService.Info("Job Realtime is running");
                 var customers = dataService.GetCustomerForRunRealtime();
+                LogService.Info("Customers: " + customers.Count());
                 if (customers.Any())
                 {
                     var newListCustCategory = dataService.ClassifyCustomerRealtime(customers);
+                    LogService.Info("ClassifyCustomerRealtime: newListCustCategory" + newListCustCategory.Count());
                     string jsonData = JsonConvert.SerializeObject(newListCustCategory);
-
+                    LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
                     dataService.AutoTagClassification(jsonData);
+                    LogService.Info("ClassifyCustomerRealtime: AutoTagClassification done");
                 }
 
                 LogService.Info("Job Realtime run completely!");
