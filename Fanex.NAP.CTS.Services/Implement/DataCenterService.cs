@@ -109,9 +109,14 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetCustomerForDailyScanning();
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime()
+        public IEnumerable<CustomerClassificationModel> GetCustomerHasChangeForRunRealtime()
         {
-            return dataCenterDataAccess.GetCustomerForRealtimeScanning();
+            return dataCenterDataAccess.GetCustomerHasChangeForRunRealtime();
+        }
+
+        public IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList)
+        {
+            return dataCenterDataAccess.GetCustomerForRealtimeScanning(custIdList);
         }
 
         public IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily (IEnumerable<CustomerClassificationModel> customers)

@@ -110,6 +110,7 @@
     <None Include="Fanex.NAP.CTS.ClassifyCustomer.Daily.exe.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </None>
     <None Include="Fanex.NAP.CTS.ClassifyCustomer.Daily.exe.PRO.config">
       <DependentUpon>App.config</DependentUpon>
@@ -123,6 +124,7 @@
     </Content>
     <Content Include="App_Data\SPNames.PRO.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\SPNames.UAT.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -139,6 +141,10 @@
     <ProjectReference Include="..\Fanex.NAP.CTS.Services\Fanex.NAP.CTS.Services.csproj">
       <Project>{16a8ac87-aee3-4a10-b6c6-5e27226cddd1}</Project>
       <Name>Fanex.NAP.CTS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FS.Core\Fanex.NAP.FS.Core.csproj">
+      <Project>{f95ab8f2-f7dc-4c12-89e0-090fb0ec6414}</Project>
+      <Name>Fanex.NAP.FS.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>

@@ -17,6 +17,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Fanex.NAP.FS.Core;
 
     class Program
     {
@@ -43,20 +44,31 @@
 
             try
             {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
                 LogService.Info("Job Realtime is running");
-                var customers = dataService.GetCustomerForRunRealtime();
+                var customerHasChanges = dataService.GetCustomerHasChangeForRunRealtime();
+                var custIDHasChanges = string.Join(",", customerHasChanges.Select(c => c.CustId));
+
+                var customers = dataService.GetCustomerForRunRealtime(custIDHasChanges);
                 LogService.Info("Customers: " + customers.Count());
+
                 if (customers.Any())
                 {
-                    var newListCustCategory = dataService.ClassifyCustomerRealtime(customers);
-                    LogService.Info("ClassifyCustomerRealtime: newListCustCategory" + newListCustCategory.Count());
-                    string jsonData = JsonConvert.SerializeObject(newListCustCategory);
-                    LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
-                    dataService.AutoTagClassification(jsonData);
-                    LogService.Info("ClassifyCustomerRealtime: AutoTagClassification done");
+                    var custChunks = customers.Chunk(1000);
+                    foreach (var custs in custChunks)
+                    {
+                        LogService.Info("Start to Classify Realtime");
+                        var newListCustCategory = dataService.ClassifyCustomerRealtime(custs);
+                        LogService.Info("ClassifyCustomerRealtime: newListCustCategory" + newListCustCategory.Count());
+                        string jsonData = JsonConvert.SerializeObject(newListCustCategory);
+                        LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
+                        dataService.AutoTagClassification(jsonData);
+                        LogService.Info("ClassifyCustomerRealtime: AutoTagClassification done");
+                    }
                 }
 
-                LogService.Info("Job Realtime run completely!");
+                watch.Stop();
+                LogService.Info("Job Realtime run completely! Elapsed time: " + watch.ElapsedMilliseconds + "(ms)");
             }
             catch (Exception ex)
             {

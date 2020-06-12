@@ -112,11 +112,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console.exe.LOCAL.config">
-	  <DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console.exe.PRO.config">
-	  <DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
@@ -129,6 +129,10 @@
     <ProjectReference Include="..\Fanex.NAP.CTS.Services\Fanex.NAP.CTS.Services.csproj">
       <Project>{16a8ac87-aee3-4a10-b6c6-5e27226cddd1}</Project>
       <Name>Fanex.NAP.CTS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FS.Core\Fanex.NAP.FS.Core.csproj">
+      <Project>{f95ab8f2-f7dc-4c12-89e0-090fb0ec6414}</Project>
+      <Name>Fanex.NAP.FS.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>

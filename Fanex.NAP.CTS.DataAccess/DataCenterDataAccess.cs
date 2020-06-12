@@ -207,14 +207,24 @@
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
+        
+        public IEnumerable<CustomerClassificationModel> GetCustomerHasChangeForRunRealtime()
+        {
+            var repository = new DynamicRepository();
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerForRealtimeScanning()
+            var criteria = new GetCustomerHasChangeForRunRealtimeCriteria();
+
+            return repository.Fetch<CustomerClassificationModel>(criteria);
+        }
+
+        public IEnumerable<CustomerClassificationModel> GetCustomerForRealtimeScanning(string custIdList)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetCustomerClassificationByCategoryCriteria
             {
-                CategoryIdList = "5" // Hard code for VIP Category
+                CategoryIdList = "5", // Hard code for VIP Category
+                CustIdList = custIdList
             };
 
             return repository.Fetch<CustomerClassificationModel>(criteria);

@@ -16,6 +16,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+    using Fanex.NAP.FS.Core;
 
     class Program
     {
@@ -45,10 +46,17 @@
                 var customers = dataService.GetCustomerForRunDaily();
                 if (customers.Any())
                 {
-                    var newListCustCategory = dataService.ClassifyCustomerDaily(customers);
-                    string jsonData = JsonConvert.SerializeObject(newListCustCategory);
+                    var custChunks = customers.Chunk(1000);
+                    foreach (var cust in custChunks)
+                    {
+                        LogService.Info("Start to Classify Realtime");
+                        var newListCustCategory = dataService.ClassifyCustomerDaily(customers);
+                        LogService.Info("ClassifyCustomerRealtime: newListCustCategory" + newListCustCategory.Count());
+                        string jsonData = JsonConvert.SerializeObject(newListCustCategory);
 
-                    dataService.AutoTagClassification(jsonData);
+                        dataService.AutoTagClassification(jsonData);
+                    }
+                    
                 }
             }
             catch (Exception ex)

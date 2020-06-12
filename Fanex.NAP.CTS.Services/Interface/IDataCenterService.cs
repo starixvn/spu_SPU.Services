@@ -38,7 +38,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily();
 
-        IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime();
+        IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);
 
         IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
 

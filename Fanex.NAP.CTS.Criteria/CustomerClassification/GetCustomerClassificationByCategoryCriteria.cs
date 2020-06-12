@@ -13,6 +13,9 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
         [SpParam(SqlParamName = "ip_CategoryIDList")]
         public string CategoryIdList { get; set; }
 
+        [SpParam(SqlParamName = "ip_CustIDList")]
+        public string CustIdList { get; set; }
+
         public override string GetSettingKey()
         {
             return "CTS_DC_GetCustomerClassificationByCategory";
