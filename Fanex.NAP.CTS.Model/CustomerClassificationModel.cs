@@ -5,12 +5,14 @@
 
     public class CustomerClassificationModel
     {
+        [XmlIgnore]
         public int BatchID { get; set; }
 
         public long CustId { get; set; }
 
         public int SportGroupId { get; set; }
 
+        [XmlIgnore]
         public int CategoryId { get; set; }
 
         [XmlIgnore]
