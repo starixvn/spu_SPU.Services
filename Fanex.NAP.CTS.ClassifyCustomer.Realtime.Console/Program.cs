@@ -46,19 +46,19 @@
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
                 LogService.Info("Job Realtime is running");
-                var customerHasChanges = dataService.GetCustomerHasChangeForRunRealtime();
-                var custIDHasChanges = string.Join(",", customerHasChanges.Select(c => c.CustId));
+                var customerHasChanges = dataService.GetCustomerHasChangeForRunRealtime();               
 
-                var customers = dataService.GetCustomerForRunRealtime(custIDHasChanges);
-                LogService.Info("Customers: " + customers.Count());
-
-                if (customers.Any())
+                if (customerHasChanges.Any())
                 {
-                    var custChunks = customers.Chunk(1000);
+                    var custChunks = customerHasChanges.Chunk(1000);
                     foreach (var custs in custChunks)
                     {
+                        var custIDHasChanges = string.Join(",", custs.Select(c => c.CustId));
+
+                        var customers = dataService.GetCustomerForRunRealtime(custIDHasChanges);
+                        LogService.Info("Customers: " + customers.Count());
                         LogService.Info("Start to Classify Realtime");
-                        var newListCustCategory = dataService.ClassifyCustomerRealtime(custs);
+                        var newListCustCategory = dataService.ClassifyCustomerRealtime(customers);
                         LogService.Info("ClassifyCustomerRealtime: newListCustCategory" + newListCustCategory.Count());
                         string jsonData = JsonConvert.SerializeObject(newListCustCategory);
                         LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
