@@ -45,8 +45,10 @@
             {
                 LogService.Info("Start to Classify Daily");
                 var customers = dataService.GetCustomerForRunDaily(3,1000);
+                LogService.Info("GetCustomerForRunDaily: " + customers.Count() + " cust");
                 if (customers.Any())
                 {
+                    LogService.Info("Start group by batch");
                     var custGroupByBatch = customers.GroupBy(c => c.BatchID);
                     foreach (var custGroup in custGroupByBatch)
                     {
