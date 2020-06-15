@@ -36,7 +36,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void ArchiveTransaction(int numberOfTickets);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily();
+        IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch);
 
         IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);
 

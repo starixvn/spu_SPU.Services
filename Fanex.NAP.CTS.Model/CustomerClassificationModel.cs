@@ -5,6 +5,8 @@
 
     public class CustomerClassificationModel
     {
+        public int BatchID { get; set; }
+
         public long CustId { get; set; }
 
         public int SportGroupId { get; set; }

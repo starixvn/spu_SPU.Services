@@ -43,20 +43,27 @@
 
             try
             {
-                var customers = dataService.GetCustomerForRunDaily();
+                LogService.Info("Start to Classify Daily");
+                var customers = dataService.GetCustomerForRunDaily(3,1000);
                 if (customers.Any())
                 {
-                    var custChunks = customers.Chunk(1000);
-                    foreach (var cust in custChunks)
+                    var custGroupByBatch = customers.GroupBy(c => c.BatchID);
+                    foreach (var custGroup in custGroupByBatch)
                     {
-                        LogService.Info("Start to Classify Realtime");
-                        var newListCustCategory = dataService.ClassifyCustomerDaily(customers);
-                        LogService.Info("ClassifyCustomerRealtime: newListCustCategory" + newListCustCategory.Count());
-                        string jsonData = JsonConvert.SerializeObject(newListCustCategory);
+                        var task = Task.Run(() =>
+                        {                            
+                            var newListCustCategory = dataService.ClassifyCustomerDaily(customers);
+                            LogService.Info("ClassifyCustomerDaily: newListCustCategory" + newListCustCategory.Count());
+                            string jsonData = JsonConvert.SerializeObject(newListCustCategory);
 
-                        dataService.AutoTagClassification(jsonData);
+                            dataService.AutoTagClassification(jsonData);
+                        });
+
+                        Task.Delay(10);
                     }
-                    
+
+                    Task.WaitAll();
+                    LogService.Info("ClassifyCustomerDaily done");
                 }
             }
             catch (Exception ex)
