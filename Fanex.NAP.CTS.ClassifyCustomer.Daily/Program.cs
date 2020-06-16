@@ -7,6 +7,7 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
@@ -14,15 +15,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading.Tasks;
-    using Fanex.NAP.FS.Core;
 
     class Program
     {
         static void Main(string[] args)
         {
             var dataService = new DataCenterService();
+            IEnumerable<CustomerClassificationModel> customers;
+
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
@@ -44,29 +45,42 @@
             try
             {
                 LogService.Info("Start to Classify Daily");
-                var customers = dataService.GetCustomerForRunDaily(2,200);
-                LogService.Info("GetCustomerForRunDaily: " + customers.Count() + " cust");
-                if (customers.Any())
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                do
                 {
-                    LogService.Info("Start group by batch");
-                    var custGroupByBatch = customers.GroupBy(c => c.BatchID);
-                    foreach (var custGroup in custGroupByBatch)
+                    customers = dataService.GetCustomerForRunDaily(2, 200);
+                    LogService.Info("GetCustomerForRunDaily: " + customers.Count() + " cust");
+
+                    if (customers.Any())
                     {
-                        var task = Task.Run(() =>
-                        {                            
-                            var newListCustCategory = dataService.ClassifyCustomerDaily(customers);
-                            LogService.Info("ClassifyCustomerDaily: newListCustCategory" + newListCustCategory.Count());
-                            string jsonData = JsonConvert.SerializeObject(newListCustCategory);
+                        List<Task> tasks = new List<Task>();
+                        LogService.Info("Start group by batch");
+                        var custGroupByBatch = customers.GroupBy(c => c.BatchID);
+                        foreach (var custGroup in custGroupByBatch)
+                        {
+                            var task = Task.Run(() =>
+                            {
+                                var newListCustCategory = dataService.ClassifyCustomerDaily(custGroup);
+                                LogService.Info("ClassifyCustomerDaily: newListCustCategory" + newListCustCategory.Count());
+                                string jsonData = JsonConvert.SerializeObject(newListCustCategory);
+                                dataService.AutoTagClassification(jsonData);
+                                LogService.Info("ClassifyCustomerDaily: AutoTagClassification done");
+                            });
 
-                            dataService.AutoTagClassification(jsonData);
-                        });
+                            tasks.Add(task);
+                            Task.Delay(10);
+                        }
 
-                        Task.Delay(10);
+                        Task.WaitAll(tasks.ToArray());
                     }
 
-                    Task.WaitAll();
                     LogService.Info("ClassifyCustomerDaily done");
-                }
+
+                } while (customers.Any());
+
+                watch.Stop();
+                LogService.Info("Job Daily run completely! Elapsed time: " + watch.ElapsedMilliseconds + "(ms)");
+
             }
             catch (Exception ex)
             {
