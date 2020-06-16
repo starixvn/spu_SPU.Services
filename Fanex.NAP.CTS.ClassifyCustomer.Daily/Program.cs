@@ -53,25 +53,16 @@
 
                     if (customers.Any())
                     {
-                        List<Task> tasks = new List<Task>();
                         LogService.Info("Start group by batch");
                         var custGroupByBatch = customers.GroupBy(c => c.BatchID);
                         foreach (var custGroup in custGroupByBatch)
                         {
-                            var task = Task.Run(() =>
-                            {
-                                var newListCustCategory = dataService.ClassifyCustomerDaily(custGroup);
-                                LogService.Info("ClassifyCustomerDaily: newListCustCategory" + newListCustCategory.Count());
-                                string jsonData = JsonConvert.SerializeObject(newListCustCategory);
-                                dataService.AutoTagClassification(jsonData);
-                                LogService.Info("ClassifyCustomerDaily: AutoTagClassification done");
-                            });
-
-                            tasks.Add(task);
-                            Task.Delay(10);
+                            var newListCustCategory = dataService.ClassifyCustomerDaily(custGroup);
+                            LogService.Info("ClassifyCustomerDaily: newListCustCategory" + newListCustCategory.Count());
+                            string jsonData = JsonConvert.SerializeObject(newListCustCategory);
+                            dataService.AutoTagClassification(jsonData);
+                            LogService.Info("ClassifyCustomerDaily: AutoTagClassification done");
                         }
-
-                        Task.WaitAll(tasks.ToArray());
                     }
 
                     LogService.Info("ClassifyCustomerDaily done");

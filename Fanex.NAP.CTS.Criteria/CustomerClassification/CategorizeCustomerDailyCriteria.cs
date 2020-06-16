@@ -9,6 +9,8 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
     public class CategorizeCustomerDailyCriteria : CriteriaBase
     {
+        public string CustomersXML { get; set; }
+
         public string CustIdList { get; set; }
 
         public override string GetSettingKey()

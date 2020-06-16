@@ -240,7 +240,8 @@
 
             var criteria = new CategorizeCustomerDailyCriteria
             {
-                CustIdList = string.Join(",", customers.Select(c => c.CustId))
+                CustIdList = string.Join(",", customers.Select(c => c.CustId).Distinct()),
+                CustomersXML = customers.ToXmlString()
             };
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
