@@ -59,11 +59,15 @@
                         LogService.Info("Customers: " + customers.Count());
                         LogService.Info("Start to Classify Realtime");
                         var newListCustCategory = dataService.ClassifyCustomerRealtime(customers);
-                        LogService.Info("ClassifyCustomerRealtime: newListCustCategory" + newListCustCategory.Count());
-                        string jsonData = JsonConvert.SerializeObject(newListCustCategory);
-                        LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
-                        dataService.AutoTagClassification(jsonData);
-                        LogService.Info("ClassifyCustomerRealtime: AutoTagClassification done");
+                        var newListCustCategoryChunks = newListCustCategory.Chunk(5000);
+                        foreach (var listCustCategoryChunksItem in newListCustCategoryChunks)
+                        {
+                            LogService.Info("ClassifyCustomerRealtime: newListCustCategory " + listCustCategoryChunksItem.Count());
+                            string jsonData = JsonConvert.SerializeObject(listCustCategoryChunksItem);
+                            LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
+                            dataService.AutoTagClassification(jsonData);
+                            LogService.Info("ClassifyCustomerRealtime: AutoTagClassification done");
+                        }                        
                     }
                 }
 
