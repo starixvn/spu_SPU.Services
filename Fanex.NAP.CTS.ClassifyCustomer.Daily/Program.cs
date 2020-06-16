@@ -44,7 +44,7 @@
             try
             {
                 LogService.Info("Start to Classify Daily");
-                var customers = dataService.GetCustomerForRunDaily(3,1000);
+                var customers = dataService.GetCustomerForRunDaily(2,500);
                 LogService.Info("GetCustomerForRunDaily: " + customers.Count() + " cust");
                 if (customers.Any())
                 {
