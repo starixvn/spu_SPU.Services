@@ -44,34 +44,22 @@
 
             try
             {
-                LogService.Info("Start to Classify Daily");
-                var watch = System.Diagnostics.Stopwatch.StartNew();
                 do
                 {
                     customers = dataService.GetCustomerForRunDaily(2, 200);
-                    LogService.Info("GetCustomerForRunDaily: " + customers.Count() + " cust");
 
                     if (customers.Any())
                     {
-                        LogService.Info("Start group by batch");
                         var custGroupByBatch = customers.GroupBy(c => c.BatchID);
                         foreach (var custGroup in custGroupByBatch)
                         {
                             var newListCustCategory = dataService.ClassifyCustomerDaily(custGroup);
-                            LogService.Info("ClassifyCustomerDaily: newListCustCategory" + newListCustCategory.Count());
                             string jsonData = JsonConvert.SerializeObject(newListCustCategory);
                             dataService.AutoTagClassification(jsonData);
-                            LogService.Info("ClassifyCustomerDaily: AutoTagClassification done");
                         }
                     }
 
-                    LogService.Info("ClassifyCustomerDaily done");
-
                 } while (customers.Any());
-
-                watch.Stop();
-                LogService.Info("Job Daily run completely! Elapsed time: " + watch.ElapsedMilliseconds + "(ms)");
-
             }
             catch (Exception ex)
             {
