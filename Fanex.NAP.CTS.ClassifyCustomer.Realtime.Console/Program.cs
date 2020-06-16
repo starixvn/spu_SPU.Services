@@ -44,8 +44,6 @@
 
             try
             {
-                var watch = System.Diagnostics.Stopwatch.StartNew();
-                LogService.Info("Job Realtime is running");
                 var customerHasChanges = dataService.GetCustomerHasChangeForRunRealtime();               
 
                 if (customerHasChanges.Any())
@@ -56,23 +54,15 @@
                         var custIDHasChanges = string.Join(",", custs.Select(c => c.CustId));
 
                         var customers = dataService.GetCustomerForRunRealtime(custIDHasChanges);
-                        LogService.Info("Customers: " + customers.Count());
-                        LogService.Info("Start to Classify Realtime");
                         var newListCustCategory = dataService.ClassifyCustomerRealtime(customers);
                         var newListCustCategoryChunks = newListCustCategory.Chunk(5000);
                         foreach (var listCustCategoryChunksItem in newListCustCategoryChunks)
                         {
-                            LogService.Info("ClassifyCustomerRealtime: newListCustCategory " + listCustCategoryChunksItem.Count());
                             string jsonData = JsonConvert.SerializeObject(listCustCategoryChunksItem);
-                            LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
                             dataService.AutoTagClassification(jsonData);
-                            LogService.Info("ClassifyCustomerRealtime: AutoTagClassification done");
                         }                        
                     }
                 }
-
-                watch.Stop();
-                LogService.Info("Job Realtime run completely! Elapsed time: " + watch.ElapsedMilliseconds + "(ms)");
             }
             catch (Exception ex)
             {
