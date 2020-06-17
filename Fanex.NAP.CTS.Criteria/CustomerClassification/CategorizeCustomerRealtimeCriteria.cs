@@ -9,7 +9,9 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
     public class CategorizeCustomerRealtimeCriteria : CriteriaBase
     {
-        public string VIPCustomersXML { get; set; }
+        public string CustomersXML { get; set; }
+
+        public bool IsInSameBatch { get; set; }
 
         public override string GetSettingKey()
         {
@@ -18,7 +20,7 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 
         public override bool IsValid()
         {
-            return !string.IsNullOrEmpty(VIPCustomersXML);
+            return !string.IsNullOrEmpty(CustomersXML);
         }
     }
 }

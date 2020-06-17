@@ -13,8 +13,8 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
         [SpParam(SqlParamName = "ip_CategoryIDList")]
         public string CategoryIdList { get; set; }
 
-        [SpParam(SqlParamName = "ip_CustIDList")]
-        public string CustIdList { get; set; }
+        [SpParam(SqlParamName = "ip_CustSport")]
+        public string CustSportsJson { get; set; }
 
         public override string GetSettingKey()
         {

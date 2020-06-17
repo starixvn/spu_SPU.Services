@@ -12,7 +12,6 @@
 
         public int SportGroupId { get; set; }
 
-        [XmlIgnore]
         public int CategoryId { get; set; }
 
         [XmlIgnore]

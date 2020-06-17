@@ -221,14 +221,14 @@
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerForRealtimeScanning(string custIdList)
+        public IEnumerable<CustomerClassificationModel> GetCustomerForRealtimeScanning(string custSportJson)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetCustomerClassificationByCategoryCriteria
             {
-                CategoryIdList = "5", // Hard code for VIP Category
-                CustIdList = custIdList
+                CategoryIdList = "2,5", // Hard code for New Cust & VIP Category
+                CustSportsJson = custSportJson
             };
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
@@ -240,20 +240,20 @@
 
             var criteria = new CategorizeCustomerDailyCriteria
             {
-                CustIdList = string.Join(",", customers.Select(c => c.CustId).Distinct()),
                 CustomersXML = customers.ToXmlString()
             };
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
+        public IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers, bool isSameBatch)
         {
             var repository = new DynamicRepository();
 
             var criteria = new CategorizeCustomerRealtimeCriteria
             {
-                VIPCustomersXML = customers.ToXmlString()
+                CustomersXML = customers.ToXmlString(),
+                IsInSameBatch = isSameBatch
             };
 
             return repository.Fetch<CustomerClassificationModel>(criteria);

@@ -48,19 +48,20 @@
 
                 if (customerHasChanges.Any())
                 {
-                    var custChunks = customerHasChanges.Chunk(1000);
-                    foreach (var custs in custChunks)
+                    var custChunks = customerHasChanges.Chunk(1000).ToList();
+                    for (int i = 0; i < custChunks.Count; i++)
                     {
-                        var custIDHasChanges = string.Join(",", custs.Select(c => c.CustId));
+                        var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
 
-                        var customers = dataService.GetCustomerForRunRealtime(custIDHasChanges);
-                        var newListCustCategory = dataService.ClassifyCustomerRealtime(customers);
-                        var newListCustCategoryChunks = newListCustCategory.Chunk(5000);
+                        var customers = dataService.GetCustomerForRunRealtime(custSportJson);
+                        bool isSameBatch = i == custChunks.Count - 1 ? false : true;
+                        var newListCustCategory = dataService.ClassifyCustomerRealtime(customers, isSameBatch);
+                        var newListCustCategoryChunks = newListCustCategory.Chunk(200);
                         foreach (var listCustCategoryChunksItem in newListCustCategoryChunks)
                         {
                             string jsonData = JsonConvert.SerializeObject(listCustCategoryChunksItem);
                             dataService.AutoTagClassification(jsonData);
-                        }                        
+                        }
                     }
                 }
             }

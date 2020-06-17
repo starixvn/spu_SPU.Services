@@ -39,9 +39,10 @@ namespace Fanex.NAP.CTS.Services.Interface
         IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch);
 
         IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);
+        
 
         IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
 
-        IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers);
+        IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers, bool isSameBatch);
     }
 }

@@ -124,9 +124,9 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.ClassifyCustomerDaily(customers);
         }
 
-        public IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
+        public IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers, bool isSameBatch)
         {
-            return dataCenterDataAccess.ClassifyCustomerRealtime(customers);
+            return dataCenterDataAccess.ClassifyCustomerRealtime(customers, isSameBatch);
         }
     }
 }
