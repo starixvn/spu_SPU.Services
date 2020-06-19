@@ -45,9 +45,9 @@
             try
             {
                 var watch = System.Diagnostics.Stopwatch.StartNew();
-                LogService.Info("Job Realtime is running");
+                //LogService.Info("Job Realtime is running");
                 var customerHasChanges = dataService.GetCustomerHasChangeForRunRealtime();
-                LogService.Info("customerHasChanges: " + customerHasChanges.Count());
+                //LogService.Info("customerHasChanges: " + customerHasChanges.Count());
 
                 if (customerHasChanges.Any())
                 {
@@ -57,18 +57,18 @@
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
 
                         var customers = dataService.GetCustomerForRunRealtime(custSportJson);
-                        LogService.Info("Customers: " + customers.Count());
-                        LogService.Info("Start to Classify Realtime");
+                        //LogService.Info("Customers: " + customers.Count());
+                        //LogService.Info("Start to Classify Realtime");
                         bool isSameBatch = i == custChunks.Count - 1 ? false : true;
                         var newListCustCategory = dataService.ClassifyCustomerRealtime(customers, isSameBatch);
-                        LogService.Info("ClassifyCustomerRealtime: newListCustCategory " + newListCustCategory.Count());
+                        //LogService.Info("ClassifyCustomerRealtime: newListCustCategory " + newListCustCategory.Count());
                         var newListCustCategoryChunks = newListCustCategory.Chunk(200);
                         foreach (var listCustCategoryChunksItem in newListCustCategoryChunks)
                         {
                             string jsonData = JsonConvert.SerializeObject(listCustCategoryChunksItem);
-                            LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
+                            //LogService.Info("ClassifyCustomerRealtime: jsonData" + jsonData);
                             dataService.AutoTagClassification(jsonData);
-                            LogService.Info("ClassifyCustomerRealtime: AutoTagClassification done");
+                            //LogService.Info("ClassifyCustomerRealtime: AutoTagClassification done");
                         }
                     }
                 }
