@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
-    public class CategorizeCustomerRealtimeCriteria : CriteriaBase
+    public class CategorizeCustomerRealtimeCriteria : NonQueryCommand
     {
         public string CustomersXML { get; set; }
-
-        public bool IsInSameBatch { get; set; }
 
         public override string GetSettingKey()
         {

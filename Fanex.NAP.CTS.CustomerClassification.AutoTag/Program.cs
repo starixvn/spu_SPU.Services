@@ -40,32 +40,32 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                         Dsn = new Dsn(AppSettings.SentryLogging)
                     })
                });
-            LogService.Info("Start CustomerClassification.AutoTag");
 
             try
             {
+                Console.WriteLine("Start getting data");
                 var dataCenterService = new DataCenterService();
-                var newClassification = new List<CustomerClassificationModel>();
+                var newClassification = new List<CustomerClassificationModelMoreInfo>();
+                int insertedRows = 0;
+                long maxCustId = 0;
 
                 do
                 {
-                    LogService.Info("CustomerClassification.AutoTag get data");
                     newClassification = dataCenterService.GetNewClassification();
-                    LogService.Info("newClassification: " + newClassification.Count);
                     if (newClassification != null && newClassification.Any())
                     {
                         string jsonData = JsonConvert.SerializeObject(newClassification);
-                        LogService.Info("jsonData: " + jsonData);
                         dataCenterService.AutoTagClassification(jsonData);
 
-                        var maxCustId = newClassification.Max(x => x.CustId);
+                        maxCustId = newClassification.Max(x => x.CustId);
 
                         dataCenterService.UpdateNewClassification(maxCustId);
-                        LogService.Info("maxCustId: " + maxCustId);
                     }
-                    LogService.Info("CustomerClassification.AutoTag done!");
-                }
-                while (newClassification != null && newClassification.Any());
+                } while (newClassification != null && newClassification.Any());
+
+                insertedRows += newClassification.Count;
+                Console.WriteLine("Init classification: " + insertedRows + "\t maxCustId: " + maxCustId);
+                
             }
             catch (Exception ex)
             {
@@ -74,6 +74,13 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
+
+                Console.WriteLine(logMessage);
+            }
+            finally
+            {
+                Console.WriteLine("Init done");
+                Console.ReadLine();
             }
         }
     }

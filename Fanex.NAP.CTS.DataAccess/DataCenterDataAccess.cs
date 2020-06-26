@@ -152,13 +152,13 @@
             repository.Execute(criteria);
         }
 
-        public List<CustomerClassificationModel> GetNewClassification()
+        public List<CustomerClassificationModelMoreInfo> GetNewClassification()
         {
             var criteria = new CustomerClassificationGetNewClassificationCriteria();
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<CustomerClassificationModel>(criteria).ToList();
+                return db.Query<CustomerClassificationModelMoreInfo>(criteria).ToList();
             }
         }
 
@@ -234,7 +234,7 @@
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers)
+        public void ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers)
         {
             var repository = new DynamicRepository();
 
@@ -243,20 +243,31 @@
                 CustomersXML = customers.ToXmlString()
             };
 
-            return repository.Fetch<CustomerClassificationModel>(criteria);
+            repository.Execute(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers, bool isSameBatch)
+        public void ClassifyCustomerDailyDone(string custSportJson)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetCustomerClassificationForScanningCompleteCriteria
+            {
+                CustSportJson = custSportJson
+            };
+
+            repository.Execute(criteria);
+        }
+
+        public void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
         {
             var repository = new DynamicRepository();
 
             var criteria = new CategorizeCustomerRealtimeCriteria
             {
-                CustomersXML = customers.ToXmlString(),
-                IsInSameBatch = isSameBatch
+                CustomersXML = customers.ToXmlString()
             };
 
-            return repository.Fetch<CustomerClassificationModel>(criteria);
+            repository.Execute(criteria);
         }
     }
 }

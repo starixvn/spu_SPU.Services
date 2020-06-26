@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssociationModel.cs" />
+    <Compile Include="CustomerClassificationModelMoreInfo.cs" />
     <Compile Include="CustomerClassificationModel.cs" />
     <Compile Include="GraphDB\AssociationModelForGraph.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

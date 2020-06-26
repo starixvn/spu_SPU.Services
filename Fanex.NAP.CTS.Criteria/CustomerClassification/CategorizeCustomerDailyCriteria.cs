@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
-    public class CategorizeCustomerDailyCriteria : CriteriaBase
+    public class CategorizeCustomerDailyCriteria : NonQueryCommand
     {
         public string CustomersXML { get; set; }
 

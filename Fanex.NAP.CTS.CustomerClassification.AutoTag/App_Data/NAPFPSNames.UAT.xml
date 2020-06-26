@@ -3,7 +3,7 @@
 <Functions>
   <Function Name="Data Center">
     <Setting Key="CustomerClassification_GetNewClassification" SpName="CustomerClassification_GetNewClassification" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
-    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification_xtest" DbName="MySQL.CTS_DataCenter" Timeout="600"/>
     <Setting Key="CustomerClassification_UpdateNewClassification" SpName="CustomerClassification_UpdateNewClassification" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
   </Function>
 </Functions>

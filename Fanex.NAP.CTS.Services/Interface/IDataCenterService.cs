@@ -28,7 +28,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void UpdateLastLoginTime(int batchSize);
 
-        List<CustomerClassificationModel> GetNewClassification();
+        List<CustomerClassificationModelMoreInfo> GetNewClassification();
 
         void UpdateNewClassification(long maxCustId);
 
@@ -41,8 +41,10 @@ namespace Fanex.NAP.CTS.Services.Interface
         IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);
         
 
-        IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
+        void ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
 
-        IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers, bool isSameBatch);
+        void ClassifyCustomerDailyDone(string custSportJson);
+
+        void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers);
     }
 }

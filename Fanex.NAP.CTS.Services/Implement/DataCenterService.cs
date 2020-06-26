@@ -84,7 +84,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.TransformUpdatingLastLoginTime(batchSize);
         }
 
-        public List<CustomerClassificationModel> GetNewClassification()
+        public List<CustomerClassificationModelMoreInfo> GetNewClassification()
         {
             return dataCenterDataAccess.GetNewClassification();
         }
@@ -119,14 +119,19 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetCustomerForRealtimeScanning(custIdList);
         }
 
-        public IEnumerable<CustomerClassificationModel> ClassifyCustomerDaily (IEnumerable<CustomerClassificationModel> customers)
+        public void ClassifyCustomerDaily (IEnumerable<CustomerClassificationModel> customers)
         {
-            return dataCenterDataAccess.ClassifyCustomerDaily(customers);
+            dataCenterDataAccess.ClassifyCustomerDaily(customers);
         }
 
-        public IEnumerable<CustomerClassificationModel> ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers, bool isSameBatch)
+        public void ClassifyCustomerDailyDone(string custSportJson)
         {
-            return dataCenterDataAccess.ClassifyCustomerRealtime(customers, isSameBatch);
+            dataCenterDataAccess.ClassifyCustomerDailyDone(custSportJson);
+        }
+
+        public void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
+        {
+            dataCenterDataAccess.ClassifyCustomerRealtime(customers);
         }
     }
 }

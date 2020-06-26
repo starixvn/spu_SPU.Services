@@ -41,5 +41,13 @@ namespace Fanex.NAP.SPU.Model
             get { return Convert.ToDateTime(createdDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")); }
             set { createdDate = value; }
         }
+
+        public int CustStatusID { get; set; }
+
+        public int Danger1 { get; set; }
+
+        public int Danger2 { get; set; }
+
+        public int Danger3 { get; set; }
     }
 }

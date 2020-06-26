@@ -53,9 +53,9 @@
                         var custGroupByBatch = customers.GroupBy(c => c.BatchID);
                         foreach (var custGroup in custGroupByBatch)
                         {
-                            var newListCustCategory = dataService.ClassifyCustomerDaily(custGroup);
-                            string jsonData = JsonConvert.SerializeObject(newListCustCategory);
-                            dataService.AutoTagClassification(jsonData);
+                            dataService.ClassifyCustomerDaily(custGroup);
+                            string jsonData = JsonConvert.SerializeObject(custGroup.Select(a => new {a.CustId, a.SportGroupId }));
+                            dataService.ClassifyCustomerDailyDone(jsonData);
                         }
                     }
 
