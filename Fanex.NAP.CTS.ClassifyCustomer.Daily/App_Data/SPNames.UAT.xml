@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Functions>
-  <Function Name="Data Center">
-    <Setting Key="CustomerClassification_GetNewClassification" SpName="CustomerClassification_GetNewClassification" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
-    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification" DbName="MySQL.CTS_DataCenter"/>
-    <Setting Key="CustomerClassification_UpdateNewClassification" SpName="CustomerClassification_UpdateNewClassification" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+  <Function Name="Classify Customer">
+    <Setting Key="CTS_DC_GetCustomerClassificationForScanning" SpName="CTS_DC_GetCustomerClassificationIntervalScan_xtest" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_GetCustomerClassificationIntervalScan_Complete" SpName="CTS_DC_GetCustomerClassificationIntervalScan_Complete_xtest" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CustomerClassification_CategorizeCustomer_Daily" SpName="CustomerClassification_CategorizeCustomer_Daily" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification_xtest" DbName="MySQL.CTS_DataCenter"/>
   </Function>
 </Functions>

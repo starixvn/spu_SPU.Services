@@ -52,7 +52,6 @@
                     for (int i = 0; i < custChunks.Count; i++)
                     {
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
-
                         var customers = dataService.GetCustomerForRunRealtime(custSportJson);
                         dataService.ClassifyCustomerRealtime(customers);
                     }
@@ -65,6 +64,7 @@
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
+                Console.WriteLine(logMessage);
             }
         }
     }

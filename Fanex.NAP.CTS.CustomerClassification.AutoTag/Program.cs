@@ -7,6 +7,7 @@ using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.Sentry.RavenClient;
 using Fanex.NAP.CTS.Model;
 using Fanex.NAP.CTS.Services;
+using Fanex.NAP.FS.Core;
 using Fanex.NAP.SPU.Core;
 using Newtonsoft.Json;
 using SharpRaven;
@@ -43,7 +44,6 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
             try
             {
-                Console.WriteLine("Start getting data");
                 var dataCenterService = new DataCenterService();
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
                 int insertedRows = 0;
@@ -54,17 +54,36 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     newClassification = dataCenterService.GetNewClassification();
                     if (newClassification != null && newClassification.Any())
                     {
-                        string jsonData = JsonConvert.SerializeObject(newClassification);
-                        dataCenterService.AutoTagClassification(jsonData);
+                        var tasks = new List<Task>();
+                        var newClassificationChunk = newClassification.Chunk(100).ToList();
 
-                        maxCustId = newClassification.Max(x => x.CustId);
+                        for (int i = 0; i < newClassificationChunk.Count; i++)
+                        {
+                            string jsonData = JsonConvert.SerializeObject(newClassification);
+                            dataCenterService.AutoTagClassification(jsonData);
 
-                        dataCenterService.UpdateNewClassification(maxCustId);
+                            maxCustId = newClassification.Max(x => x.CustId);
+
+                            dataCenterService.UpdateNewClassification(maxCustId);
+
+                            //var task = Task.Run(() =>
+                            //{
+                            //    string jsonData = JsonConvert.SerializeObject(newClassification);
+                            //    dataCenterService.AutoTagClassification(jsonData);
+
+                            //    maxCustId = newClassification.Max(x => x.CustId);
+
+                            //    dataCenterService.UpdateNewClassification(maxCustId);
+                            //});
+
+                            //tasks.Add(task);
+                        }
+
+                        //Task.WhenAll(tasks.ToArray());
                     }
                 } while (newClassification != null && newClassification.Any());
 
                 insertedRows += newClassification.Count;
-                Console.WriteLine("Init classification: " + insertedRows + "\t maxCustId: " + maxCustId);
                 
             }
             catch (Exception ex)
@@ -74,13 +93,6 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
-
-                Console.WriteLine(logMessage);
-            }
-            finally
-            {
-                Console.WriteLine("Init done");
-                Console.ReadLine();
             }
         }
     }

@@ -53,11 +53,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.CTS.CustomerClassification.AutoTag.exe.PRO.config">
-	 <DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.CTS.CustomerClassification.AutoTag.exe.LOCAL.config">
-	 <DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -97,6 +97,10 @@
     <ProjectReference Include="..\Fanex.NAP.CTS.Services\Fanex.NAP.CTS.Services.csproj">
       <Project>{16A8AC87-AEE3-4A10-B6C6-5E27226CDDD1}</Project>
       <Name>Fanex.NAP.CTS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FS.Core\Fanex.NAP.FS.Core.csproj">
+      <Project>{f95ab8f2-f7dc-4c12-89e0-090fb0ec6414}</Project>
+      <Name>Fanex.NAP.FS.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
