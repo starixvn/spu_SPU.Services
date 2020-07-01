@@ -10,7 +10,7 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
     public class GetCustomerClassificationForScanningCompleteCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_CustSport ")]
+        [SpParam(SqlParamName = "ip_CustSport")]
         public string CustSportJson { get; set; }
 
         public override string GetSettingKey()
