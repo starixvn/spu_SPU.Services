@@ -47,7 +47,6 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                 var dataCenterService = new DataCenterService();
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
                 int insertedRows = 0;
-                long maxCustId = 0;
 
                 do
                 {
@@ -59,27 +58,12 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                         for (int i = 0; i < newClassificationChunk.Count; i++)
                         {
-                            string jsonData = JsonConvert.SerializeObject(newClassification);
+                            string jsonData = JsonConvert.SerializeObject(newClassificationChunk[i]);
                             dataCenterService.AutoTagClassification(jsonData);
 
-                            maxCustId = newClassification.Max(x => x.CustId);
-
-                            dataCenterService.UpdateNewClassification(maxCustId);
-
-                            //var task = Task.Run(() =>
-                            //{
-                            //    string jsonData = JsonConvert.SerializeObject(newClassification);
-                            //    dataCenterService.AutoTagClassification(jsonData);
-
-                            //    maxCustId = newClassification.Max(x => x.CustId);
-
-                            //    dataCenterService.UpdateNewClassification(maxCustId);
-                            //});
-
-                            //tasks.Add(task);
+                            var custIdList = string.Join(",", newClassificationChunk[i].Select(c => c.CustId).Distinct());
+                            dataCenterService.UpdateNewClassification(custIdList);
                         }
-
-                        //Task.WhenAll(tasks.ToArray());
                     }
                 } while (newClassification != null && newClassification.Any());
 

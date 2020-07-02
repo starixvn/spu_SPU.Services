@@ -99,9 +99,9 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.ArchiveTransaction(numberOfTickets);
         }
 
-        public void UpdateNewClassification(long maxCustId)
+        public void UpdateNewClassification(string custIdList)
         {
-            dataCenterDataAccess.UpdateNewClassification(maxCustId);
+            dataCenterDataAccess.UpdateNewClassification(custIdList);
         }
 
         public IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch)

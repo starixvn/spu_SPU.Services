@@ -162,13 +162,13 @@
             }
         }
 
-        public void UpdateNewClassification(long maxCustId)
+        public void UpdateNewClassification(string custIdList)
         {
             var repository = new DynamicRepository();
 
             var criteria = new CustomerClassificationUpdateNewClassificationCriteria
             {
-                MaxCustId = maxCustId
+                ListCustIds = custIdList
             };
 
             repository.Execute(criteria);

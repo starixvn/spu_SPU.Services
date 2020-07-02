@@ -30,7 +30,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         List<CustomerClassificationModelMoreInfo> GetNewClassification();
 
-        void UpdateNewClassification(long maxCustId);
+        void UpdateNewClassification(string custIdList);
 
         void AutoTagClassification(string newClassification);
 
