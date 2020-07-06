@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.Criteria
 {
-    public class TransformCustomerFromMainDbCriteria : NonQueryCommand
+    public class InsertNewCustomerCategoryCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_CustomerList")]
-        public string CustomerJson { get; set; }
+        [SpParam(SqlParamName = "ip_CustIds")]
+        public string CustIds { get; set; }
 
         public override string GetSettingKey()
         {
-            return "CTS_DC_InsertCTSCustomer";
+            return "CTS_DC_InsertNewCustomerCategory";
         }
 
         public override bool IsValid()
         {
-            return true;
+            return !string.IsNullOrEmpty(CustIds);
         }
     }
 }

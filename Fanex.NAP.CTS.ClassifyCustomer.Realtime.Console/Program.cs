@@ -55,6 +55,8 @@
                         var customers = dataService.GetCustomerForRunRealtime(custSportJson);
                         dataService.ClassifyCustomerRealtime(customers);
                     }
+
+                    dataService.RealtimeUpdateLastScanTime();
                 }
             }
             catch (Exception ex)

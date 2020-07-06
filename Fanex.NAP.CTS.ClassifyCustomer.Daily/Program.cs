@@ -23,6 +23,7 @@
         {
             var dataService = new DataCenterService();
             IEnumerable<CustomerClassificationModel> customers;
+            int countTotalCusts = 0;
 
             DbSettingProviderManager
                  .StartNewSession()
@@ -42,33 +43,36 @@
                     })
                });
 
-            try
+            do
             {
-                do
+                customers = dataService.GetCustomerForRunDaily(2, 200);
+                customers = new List<CustomerClassificationModel>();
+                try
                 {
-                    customers = dataService.GetCustomerForRunDaily(2, 200);
-
                     if (customers.Any())
                     {
                         var custGroupByBatch = customers.GroupBy(c => c.BatchID);
                         foreach (var custGroup in custGroupByBatch)
                         {
                             dataService.ClassifyCustomerDaily(custGroup);
-                            string jsonData = JsonConvert.SerializeObject(custGroup.Select(a => new {a.CustId, a.SportGroupId }));
+                            string jsonData = JsonConvert.SerializeObject(custGroup.Select(a => new { a.CustId, a.SportGroupId }));
                             dataService.ClassifyCustomerDailyDone(jsonData);
+                            countTotalCusts += custGroup.Count();
                         }
                     }
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                        .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                        .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                } while (customers.Any());
-            }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                    LogService.Error(logMessage);
+                }
 
-                LogService.Error(logMessage);
-            }
+            } while (customers == null || customers.Any());
+
+            LogService.Info("Total record in this running: " + countTotalCusts);
         }
     }
 }

@@ -38,6 +38,12 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.TransformCustomerFromMainDB(customerJson);
         }
 
+        public List<int> InsertCategoryForNewCustomer(string customerList)
+        {
+            return dataCenterDataAccess.InsertCategoryForNewCustomer(customerList);
+        }
+        
+
         public List<int> FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList)
         {
             var customerJson = JsonConvert.SerializeObject(customerList);
@@ -132,6 +138,11 @@ namespace Fanex.NAP.CTS.Services
         public void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
         {
             dataCenterDataAccess.ClassifyCustomerRealtime(customers);
+        }
+
+        public void RealtimeUpdateLastScanTime()
+        {
+            dataCenterDataAccess.RealtimeUpdateLastScanTime();
         }
     }
 }

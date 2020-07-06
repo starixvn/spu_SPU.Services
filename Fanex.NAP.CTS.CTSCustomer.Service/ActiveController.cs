@@ -36,7 +36,7 @@
             {
                 var result = JsonConvert.DeserializeObject<List<CustomerMainDbModel>>(jsonContent);
 
-                return Process(result);
+                return InsertNewCustomer(result);
             }
             else
             {
@@ -113,13 +113,15 @@
             return false;
         }
 
-        private bool Process(List<CustomerMainDbModel> customers)
+        private bool InsertNewCustomer(List<CustomerMainDbModel> customers)
         {
             try
             {
                 if (customers != null && customers.Any())
                 {
                     dataCenterService.TransformCustomerFromMainDB(customers);
+                    var custIdList = string.Join(",", customers.Select(c => c.CustId).Distinct());
+                    dataCenterService.InsertCategoryForNewCustomer(custIdList);
                     return true;
                 }
             }

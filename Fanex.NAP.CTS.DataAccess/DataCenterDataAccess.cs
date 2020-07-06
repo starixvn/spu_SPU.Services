@@ -37,6 +37,19 @@
             }
         }
 
+        public List<int> InsertCategoryForNewCustomer(string custIds)
+        {
+            var criteria = new InsertNewCustomerCategoryCriteria
+            {
+                CustIds = custIds
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<int>(criteria).ToList();
+            }
+        }
+
         public List<int> FillUpCustomerFromMainDB(string customerJson)
         {
             var criteria = new TransformCustomerFromMainDbCriteria
@@ -269,5 +282,14 @@
 
             repository.Execute(criteria);
         }
+
+        public void RealtimeUpdateLastScanTime()
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new RealtimeUpdateLastScanTimeCriteria();
+
+            repository.Execute(criteria);
+        }        
     }
 }

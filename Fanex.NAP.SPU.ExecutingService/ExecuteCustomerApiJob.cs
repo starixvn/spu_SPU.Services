@@ -79,17 +79,17 @@
 
         private async Task SendRequest(List<CustomerMainDbModel> listCust, string[] urlList, JobDataMap mappingData)
         {
-            var groupTrans = listCust.GroupBy(x => x.BatchId);
+            var groupCusts = listCust.GroupBy(x => x.BatchId);
             var tasks = new List<Task>();
             var index = 0;
 
-            foreach (var trans in groupTrans)
+            foreach (var custs in groupCusts)
             {
                 var task = Task.Run(() =>
                 {
                     var apiUrl = urlList[index >= urlList.Length ? 0 : index];
 
-                    return Executing(trans.ToList(), apiUrl, mappingData.GetString("Action"));
+                    return Executing(custs.ToList(), apiUrl, mappingData.GetString("Action"));
                 });
 
                 await Task.Delay(10);
@@ -101,16 +101,5 @@
 
             await Task.WhenAll(tasks.ToArray());
         }
-
-        //private static async Task<IRestResponse> Executing(List<CustomerMainDbModel> customers, string apiUrl, string actionPath)
-        //{
-        //    var client = new RestClient(new Uri(apiUrl));
-        //    var request = new RestRequest(actionPath, Method.POST);
-
-        //    request.AddHeader("Content-type", "application/json");
-        //    request.AddJsonBody(customers);
-
-        //    return await client.ExecuteTaskAsync(request);
-        //}
     }
 }

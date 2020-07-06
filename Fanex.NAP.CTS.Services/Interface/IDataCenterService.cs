@@ -46,5 +46,9 @@ namespace Fanex.NAP.CTS.Services.Interface
         void ClassifyCustomerDailyDone(string custSportJson);
 
         void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers);
+
+        List<int> InsertCategoryForNewCustomer(string customerList);
+
+        void RealtimeUpdateLastScanTime();
     }
 }
