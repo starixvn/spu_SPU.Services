@@ -22,7 +22,7 @@
         static void Main(string[] args)
         {
             var dataService = new DataCenterService();
-            IEnumerable<CustomerClassificationModel> customers;
+            IEnumerable<CustomerClassificationModel> customers = null;
             int countTotalCusts = 0;
 
             DbSettingProviderManager
@@ -45,10 +45,10 @@
 
             do
             {
-                customers = dataService.GetCustomerForRunDaily(2, 200);
-                customers = new List<CustomerClassificationModel>();
                 try
                 {
+                    customers = dataService.GetCustomerForRunDaily(1, 500);
+
                     if (customers.Any())
                     {
                         var custGroupByBatch = customers.GroupBy(c => c.BatchID);
