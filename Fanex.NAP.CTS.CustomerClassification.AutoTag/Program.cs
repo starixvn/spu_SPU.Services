@@ -42,6 +42,8 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     })
                });
 
+            var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
+
             try
             {
                 var dataCenterService = new DataCenterService();
@@ -54,7 +56,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     if (newClassification != null && newClassification.Any())
                     {
                         var tasks = new List<Task>();
-                        var newClassificationChunk = newClassification.Chunk(100).ToList();
+                        var newClassificationChunk = newClassification.Chunk(batchSize).ToList();
 
                         for (int i = 0; i < newClassificationChunk.Count; i++)
                         {

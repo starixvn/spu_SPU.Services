@@ -18,6 +18,7 @@
     using System.Text;
     using System.Threading.Tasks;
     using Fanex.NAP.FS.Core;
+    using System.Configuration;
 
     class Program
     {
@@ -42,13 +43,15 @@
                     })
                });
 
+            var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
+
             try
             {
                 var customerHasChanges = dataService.GetCustomerHasChangeForRunRealtime();
 
                 if (customerHasChanges.Any())
                 {
-                    var custChunks = customerHasChanges.Chunk(1000).ToList();
+                    var custChunks = customerHasChanges.Chunk(batchSize).ToList();
                     for (int i = 0; i < custChunks.Count; i++)
                     {
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);

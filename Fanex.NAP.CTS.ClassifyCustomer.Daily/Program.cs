@@ -14,6 +14,7 @@
     using SharpRaven;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -43,11 +44,13 @@
                     })
                });
 
+            var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
+
             do
             {
                 try
                 {
-                    customers = dataService.GetCustomerForRunDaily(1, 500);
+                    customers = dataService.GetCustomerForRunDaily(1, batchSize);
 
                     if (customers.Any())
                     {
