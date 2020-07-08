@@ -120,7 +120,7 @@
                 if (customers != null && customers.Any())
                 {
                     dataCenterService.TransformCustomerFromMainDB(customers);
-                    var custIdList = string.Join(",", customers.Select(c => c.CustId).Distinct());
+                    var custIdList = string.Join(",", customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct());
                     dataCenterService.InsertCategoryForNewCustomer(custIdList);
                     return true;
                 }

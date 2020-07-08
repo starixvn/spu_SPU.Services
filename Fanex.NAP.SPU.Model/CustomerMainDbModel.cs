@@ -36,6 +36,8 @@ namespace Fanex.NAP.SPU.Model
 
         public int Recommend { get; set; }
 
+        public bool IsDangerous { get; set; }
+
         public DateTime CreatedDate
         {
             get { return Convert.ToDateTime(createdDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")); }

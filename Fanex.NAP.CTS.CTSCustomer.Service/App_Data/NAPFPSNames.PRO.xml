@@ -7,5 +7,6 @@
     <Setting Key="CTS_DC_HealingCTSCustomer" SpName="CTS_DC_HealingCTSCustomer" DbName="MySQL.CTS_DataCenter"/>
     <Setting Key="DCS_DC_TransformToCTS_Account_Completed" SpName="DCS_DC_TransformToCTS_Account_Completed" DbName="MySQL.DCS_DataCenter"/>
     <Setting Key="CTS_DC_UpdateUsername2" SpName="CTS_DC_UpdateUsername2" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_InsertNewCustomerCategory" SpName="CTS_DC_InsertNewCustomerCategory" DbName="MySQL.CTS_DataCenter"/>
   </Function>
 </Functions>
