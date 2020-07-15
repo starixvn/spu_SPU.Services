@@ -29,6 +29,7 @@
         {
             try
             {
+                LogService.Info("Start Healing Customer job");
                 if (!this.CheckUM())
                 {
                     await ExecuteAPI(context);
@@ -64,7 +65,7 @@
 
                     while (!healingDone)
                     {
-                        mainDBCusts = dataCenterService.GetCustomerFromMainDB(10000, apiUrls.Count(), maxCustId);
+                        mainDBCusts = dataCenterService.GetCustomerFromMainDB(packageSize, apiUrls.Count(), maxCustId);
 
                         if (!mainDBCusts.Any())
                         {
@@ -128,9 +129,9 @@
             var request = new RestRequest(actionPath, Method.POST);
 
             request.AddHeader("Content-type", "application/json");
-            request.AddJsonBody(customers);           
-            
+            request.AddJsonBody(customers);
 
+            LogService.Info("Send request to: " + apiUrl);
             return await client.ExecuteTaskAsync(request);
         }
     }
