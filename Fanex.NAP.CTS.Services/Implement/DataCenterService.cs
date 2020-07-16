@@ -100,9 +100,14 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
-        public void ArchiveTransaction(int numberOfTickets)
+        public void DCSMoveTransToTransaction07(string transIdList)
         {
-            dataCenterDataAccess.ArchiveTransaction(numberOfTickets);
+            dataCenterDataAccess.DCSMoveTransToTransaction07(transIdList);
+        }
+
+        public IEnumerable<TransactionModel> DCSMoveTransToTransaction07GetPackage(int batchSize, int NoOfBatch)
+        {
+            return dataCenterDataAccess.DCSMoveTransToTransaction07GetPackage(batchSize, NoOfBatch);
         }
 
         public void UpdateNewClassification(string custIdList)

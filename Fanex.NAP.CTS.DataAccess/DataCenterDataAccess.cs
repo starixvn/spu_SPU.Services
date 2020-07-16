@@ -199,17 +199,29 @@
             repository.Execute(criteria);
         }
 
-        public void ArchiveTransaction(int numOfTickets)
+        public void DCSMoveTransToTransaction07(string transIdList)
         {
-            var criteria = new ArchiveTransactionAfterTransformingCriteria
+            var criteria = new MoveToTransaction07Criteria
             {
-                NoOfTickets = numOfTickets
+                TransIdList = transIdList
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria);
             }
+        }
+
+        public IEnumerable<TransactionModel> DCSMoveTransToTransaction07GetPackage(int batchSize, int NoOfBatch)
+        {
+            var repository = new DynamicRepository();
+            var criteria = new MoveToTransaction07GetPackageCriteria
+            {
+                BatchSize = batchSize,
+                NumberOfBatch = NoOfBatch
+            };
+
+            return repository.Fetch<TransactionModel>(criteria);
         }
 
         public IEnumerable<CustomerClassificationModel> GetCustomerForDailyScanning(int batchQuantity, int rowQuantityPerBatch)

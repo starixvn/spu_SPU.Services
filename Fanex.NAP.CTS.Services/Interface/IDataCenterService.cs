@@ -34,7 +34,9 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void AutoTagClassification(string newClassification);
 
-        void ArchiveTransaction(int numberOfTickets);
+        IEnumerable<TransactionModel> DCSMoveTransToTransaction07GetPackage(int batchSize, int NoOfBatch);
+
+        void DCSMoveTransToTransaction07(string transIdList);
 
         IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch);
 

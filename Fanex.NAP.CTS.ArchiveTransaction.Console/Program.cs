@@ -6,22 +6,25 @@ using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.Sentry.RavenClient;
 using Fanex.NAP.CTS.Services;
 using Fanex.NAP.SPU.Core;
+using Fanex.NAP.SPU.Model;
 using SharpRaven;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.ArchiveTransaction.Console
 {
     class Program
     {
+        static DataCenterService dataCenterService = new DataCenterService();
+
         static void Main(string[] args)
         {
 
             DbSettingProviderManager
-                 .StartNewSession()                
+                 .StartNewSession()
                  .WithMySql()
                  .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
                  .UseDefaultConnectionStringProvider()
@@ -39,10 +42,14 @@ namespace Fanex.NAP.CTS.ArchiveTransaction.Console
 
             try
             {
-                var dataCenterService = new DataCenterService();
-                var numberOfTrans = System.Configuration.ConfigurationManager.AppSettings["NumOfTrans"];
-
-                dataCenterService.ArchiveTransaction(Convert.ToInt32(numberOfTrans));
+                int batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["BatchSize"]);
+                int noOfBatch = Convert.ToInt32(ConfigurationManager.AppSettings["NoOfBatch"]);
+                int delayTime = Convert.ToInt32(ConfigurationManager.AppSettings["DelayTime"]);
+                var trans = dataCenterService.DCSMoveTransToTransaction07GetPackage(batchSize, noOfBatch);
+                if (trans.Any())
+                {
+                    ExecuteAsync(trans, delayTime).Wait();
+                }
             }
             catch (Exception ex)
             {
@@ -52,6 +59,26 @@ namespace Fanex.NAP.CTS.ArchiveTransaction.Console
 
                 LogService.Error(logMessage);
             }
+        }
+
+        static async Task ExecuteAsync(IEnumerable<TransactionModel> trans, int delayTime)
+        {
+            var transByBatch = trans.GroupBy(t => t.BatchId);
+            var tasks = new List<Task>();
+
+            foreach (var tranGroup in transByBatch)
+            {
+                var task = Task.Run(() =>
+                {
+                    var transIdList = string.Join(",", tranGroup.Select(t => t.TransId));
+                    dataCenterService.DCSMoveTransToTransaction07(transIdList);
+                });
+
+                await Task.Delay(delayTime);
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks.ToArray());
         }
     }
 }

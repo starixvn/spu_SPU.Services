@@ -52,11 +52,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.CTS.ArchiveTransaction.Console.exe.PRO.config">
-	  <DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.CTS.ArchiveTransaction.Console.exe.LOCAL.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -83,6 +83,10 @@
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
+      <Project>{67FECD9E-043A-4100-BF62-52C1A016B85D}</Project>
+      <Name>Fanex.NAP.SPU.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

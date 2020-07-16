@@ -44,7 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiveTransactionAfterTransformingCriteria.cs" />
+    <Compile Include="MoveToTransaction07GetPackageCriteria.cs" />
+    <Compile Include="MoveToTransaction07Criteria.cs" />
     <Compile Include="AutoTagCustomerClassificationCriteria.cs" />
     <Compile Include="CustomerClassificationGetNewClassificationCriteria.cs" />
     <Compile Include="CustomerClassificationUpdateNewClassificationCriteria.cs" />
