@@ -34,9 +34,11 @@
                          new SentryLogging(new SentryEngineOptions
                          {
                              Dsn = new Dsn(AppSetting.SentryLogging),
-                            WriteLogTimeoutSeconds = 30
+                             WriteLogTimeoutSeconds = 30
                          })
                     });
+
+
 
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
