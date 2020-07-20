@@ -131,7 +131,6 @@
             request.AddHeader("Content-type", "application/json");
             request.AddJsonBody(customers);
 
-            LogService.Info("Send request to: " + apiUrl);
             return await client.ExecuteTaskAsync(request);
         }
     }

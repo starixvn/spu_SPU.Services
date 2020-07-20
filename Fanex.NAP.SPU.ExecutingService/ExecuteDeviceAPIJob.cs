@@ -96,17 +96,5 @@
                 LogService.Error("Job Data cannot be null");
             }
         }
-
-        //private static async Task<IRestResponse> Executing(List<DevicePackage> devicePackages, string apiUrl, string actionPath)
-        //{
-        //    var client = new RestClient(new Uri(apiUrl));
-        //    var request = new RestRequest(actionPath, Method.POST);
-
-        //    request.JsonSerializer = NewtonsoftJsonSerializer.Default;
-        //    request.RequestFormat = DataFormat.Json;            
-        //    request.AddJsonBody(devicePackages);
-            
-        //    return await client.ExecuteTaskAsync(request);
-        //}
     }    
 }
