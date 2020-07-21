@@ -3,6 +3,9 @@
 <Functions>
   <Function Name="Data Center">
     <Setting Key="DCS_DC_ArchiveData_FromTransaction07" SpName="DCS_DC_ArchiveData_FromTransaction07" DbName="MySQL.DCS_DataCenter" Timeout="300"/>
+    <Setting Key="DCS_DC_ArchiveData_Transaction07_Schedule" SpName="DCS_DC_ArchiveData_Transaction07_Schedule" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_ArchiveData_Transaction07_Move" SpName="DCS_DC_ArchiveData_Transaction07_Move" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_ArchiveData_Transaction07_Delete" SpName="DCS_DC_ArchiveData_Transaction07_Delete" DbName="MySQL.DCS_DataCenter"/>
   </Function>
 
 </Functions>

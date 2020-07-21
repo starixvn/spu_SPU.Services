@@ -49,11 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
     <Content Include="Fanex.NAP.DCS.MoveTransaction.Console.exe.LOCAL.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.DCS.MoveTransaction.Console.exe.PRO.config">
-	<DependentUpon>App.config</DependentUpon>
+      <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -89,6 +89,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Model\Fanex.NAP.DCS.Model.csproj">
+      <Project>{07F5D4E0-8C77-48A8-BA21-B7F7E0439A64}</Project>
+      <Name>Fanex.NAP.DCS.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.DCS.Services\Fanex.NAP.DCS.Services.csproj">
       <Project>{343073C5-6A1F-4E08-8C39-C8B6498BBADB}</Project>
       <Name>Fanex.NAP.DCS.Services</Name>

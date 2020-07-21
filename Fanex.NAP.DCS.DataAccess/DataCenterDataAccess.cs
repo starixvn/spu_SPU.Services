@@ -5,6 +5,7 @@
     using Fanex.NAP.DCS.Criteria;
     using Fanex.NAP.DCS.Model;
     using Fanex.NAP.SPU.Model;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -359,6 +360,43 @@
             };
 
             repository.Execute(criteria);
+        }
+
+        public IEnumerable<DateTime> GetArchiveTransaction07Schedule()
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetScheduleForArchiveTransaction07Criteria();
+
+            return repository.Fetch<DateTime>(criteria);
+        }
+
+        public void MoveDataArchiveTransaction07(DateTime runningDate, int batchSize, ref bool isComplete)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new MoveDataForArchiveTransaction07Criteria
+            {
+                ArchivedDate = runningDate,
+                BatchSize = batchSize
+            };
+
+            repository.Execute(criteria);
+            isComplete = criteria.IsCompleted;
+        }
+
+        public void DeleteDataArchiveTransaction07(DateTime runningDate, int batchSize, ref bool isComplete)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new DeleteDataForArchiveTransaction07Criteria
+            {
+                ArchivedDate = runningDate,
+                BatchSize = batchSize
+            };
+
+            repository.Execute(criteria);
+            isComplete = criteria.IsCompleted;
         }
     }
 }

@@ -11,6 +11,7 @@
     using Sentry;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     static class Program
     {
@@ -32,13 +33,31 @@
                         Dsn = new Dsn(AppSettings.SentryLogging)
                     })
                });
-
+            var batchSize = AppSettings.SizeOfTransaction;
+            var isCompleted = false;
 
             try
             {
                 var dataCenterService = new DataCenterService();
+                var dateForArchived = dataCenterService.GetScheduleForRunArchiveTrans07().Take(2);
+                foreach (var runningDate in dateForArchived)
+                {
+                    isCompleted = false;
+                    LogService.Info("Start archive Transaction07 - move data: " + runningDate);
+                    while (!isCompleted)
+                    {
+                        dataCenterService.MoveDataArchiveTransaction07(runningDate, batchSize, ref isCompleted);
+                    }
 
-                dataCenterService.ArchiveTransaction07(AppSettings.SizeOfTransaction);                                
+                    isCompleted = false;
+                    LogService.Info("Start archive Transaction07 - delete data: " + runningDate);
+                    while (!isCompleted)
+                    {
+                        dataCenterService.DeleteDataArchiveTransaction07(runningDate, batchSize, ref isCompleted);
+                    }
+                }
+
+                LogService.Info("Start archive Transaction07 - delete data: ");
             }
             catch (Exception ex)
             {

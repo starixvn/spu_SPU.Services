@@ -4,6 +4,7 @@ using Fanex.NAP.DCS.Model;
 using Fanex.NAP.DCS.Services.Interface;
 using Fanex.NAP.SPU.Model;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -89,6 +90,21 @@ namespace Fanex.NAP.DCS.Services.Implement
         public void ArchiveTransaction07(int size)
         {
             dataCenter.ArchiveTransaction07(size); 
+        }
+
+        public IEnumerable<DateTime> GetScheduleForRunArchiveTrans07()
+        {
+            return dataCenter.GetArchiveTransaction07Schedule();
+        }
+
+        public void MoveDataArchiveTransaction07(DateTime runningDate, int batchSize, ref bool isCompleted)
+        {
+            dataCenter.MoveDataArchiveTransaction07(runningDate, batchSize, ref isCompleted);
+        }
+
+        public void DeleteDataArchiveTransaction07(DateTime runningDate, int batchSize, ref bool isCompleted)
+        {
+            dataCenter.DeleteDataArchiveTransaction07(runningDate, batchSize, ref isCompleted);
         }
     }
 }
