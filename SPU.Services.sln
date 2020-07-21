@@ -169,6 +169,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.ClassifyCusto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console", "Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console\Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console.csproj", "{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.AutoTagProblemAccount.Console", "Fanex.NAP.CTS. AutoTagProblemAccount.Console\Fanex.NAP.CTS.AutoTagProblemAccount.Console.csproj", "{3C3298C6-515F-451B-A20D-21497D9D2D99}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -446,6 +448,10 @@ Global
 		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C3298C6-515F-451B-A20D-21497D9D2D99}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C3298C6-515F-451B-A20D-21497D9D2D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C3298C6-515F-451B-A20D-21497D9D2D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C3298C6-515F-451B-A20D-21497D9D2D99}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -516,6 +522,7 @@ Global
 		{3962AAED-006B-4E37-A217-C43500292431} = {E5F8E055-E930-4F57-A4B1-1583325BC230}
 		{076336CF-6878-4751-811D-389318BBE691} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{A6A95893-4069-49A2-87C7-DD7A0E97D1F6} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
+		{3C3298C6-515F-451B-A20D-21497D9D2D99} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45

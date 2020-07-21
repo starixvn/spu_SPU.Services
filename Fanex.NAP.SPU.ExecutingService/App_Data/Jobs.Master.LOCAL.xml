@@ -1373,6 +1373,47 @@
         <repeat-interval>60000</repeat-interval>
       </simple>
     </trigger>
+
+    <job>
+      <name>CTS_AutoTag_ProblemAccount</name>
+      <group>ProblemAccount</group>
+      <description>Auto Tag Problem Account</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>D:\WWW\SPU\Fanex.NAP.CTS.AutoTagProblemAccount.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>D:\WWW\SPU\Fanex.NAP.CTS.AutoTagProblemAccount.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_AutoTag_ProblemAccount_Trigger</name>
+        <group>ProblemAccount</group>
+        <description>Auto Tag Problem Account</description>
+        <job-name>CTS_AutoTag_ProblemAccount</job-name>
+        <job-group>ProblemAccount</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>300000</repeat-interval>
+      </simple>
+    </trigger>
+
     
   </schedule>
 

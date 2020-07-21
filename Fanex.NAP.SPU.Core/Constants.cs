@@ -21,5 +21,13 @@
         public const string VSSoccer = "Soccer";
 
         public const string VSSportbook = "Sport book";
+
+        public const string CONVERT_TO_SQL_DATETIME = "yyyy-MM-dd HH:mm:ss.fff";
+
+        public const string SAVED_PREVIOUS_TIMING_EXECUTION = "PreviousTimingExecution";
+
+        public const string GET_ALL_INITIAL_DATA = "0";
+
+        public const string GET_CHANGED_DATA_FROM_DATETIME = "";
     }
 }

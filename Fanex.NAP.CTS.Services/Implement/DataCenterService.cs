@@ -3,6 +3,7 @@ using Fanex.NAP.CTS.Model;
 using Fanex.NAP.CTS.Services.Interface;
 using Fanex.NAP.SPU.Model;
 using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -143,6 +144,16 @@ namespace Fanex.NAP.CTS.Services
         public void RealtimeUpdateLastScanTime()
         {
             dataCenterDataAccess.RealtimeUpdateLastScanTime();
+        }
+
+        public IEnumerable<ProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)
+        {
+            return dataCenterDataAccess.GetProblemAccounts(custIDs, dateTime);
+        }
+
+        public void InsertProblemAccounts(string jsonData)
+        {
+            dataCenterDataAccess.InsertProblemAccount(jsonData);
         }
     }
 }
