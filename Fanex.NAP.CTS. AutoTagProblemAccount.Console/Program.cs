@@ -46,18 +46,17 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
             try
             {
-                var str = ReadSetting(Constants.SAVED_PREVIOUS_TIMING_EXECUTION);
-                System.Console.WriteLine(str);
+                var previousTimingExecution = ReadSetting(Constants.SAVED_PREVIOUS_TIMING_EXECUTION);
 
                 var problemAccounts = new List<ProblemAccountsModel>();
 
-                if (string.IsNullOrEmpty(str))
+                if (string.IsNullOrEmpty(previousTimingExecution))
                 {
                     problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, DateTime.Now).ToList();
                 }
                 else
                 {
-                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(str)).ToList();
+                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution)).ToList();
                 }
 
                 AddUpdateAppSettings(Constants.SAVED_PREVIOUS_TIMING_EXECUTION, DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME));
@@ -85,7 +84,6 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
-                System.Console.WriteLine(logMessage);
             }
         }
 

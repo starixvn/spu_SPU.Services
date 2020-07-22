@@ -115,6 +115,8 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe.LOCAL.config.Config" />
+    <None Include="Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe.PRO.config.Config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -138,6 +140,7 @@
   <ItemGroup>
     <Content Include="App_Data\SPNames.LOCAL.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="App_Data\SPNames.PRO.xml">
       <SubType>Designer</SubType>
