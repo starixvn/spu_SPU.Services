@@ -102,9 +102,9 @@ namespace Fanex.NAP.DCS.Services.Implement
             dataCenter.MoveDataArchiveTransaction07(runningDate, batchSize, ref isCompleted);
         }
 
-        public void DeleteDataArchiveTransaction07(DateTime runningDate, int batchSize, ref bool isCompleted)
+        public void DeleteDataArchiveTransaction07(DateTime runningDate, ref bool isCompleted)
         {
-            dataCenter.DeleteDataArchiveTransaction07(runningDate, batchSize, ref isCompleted);
+            dataCenter.DeleteDataArchiveTransaction07(runningDate, ref isCompleted);
         }
     }
 }

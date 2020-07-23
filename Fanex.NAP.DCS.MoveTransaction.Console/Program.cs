@@ -39,7 +39,7 @@
             try
             {
                 var dataCenterService = new DataCenterService();
-                var dateForArchived = dataCenterService.GetScheduleForRunArchiveTrans07().Take(2);
+                var dateForArchived = dataCenterService.GetScheduleForRunArchiveTrans07();
                 foreach (var runningDate in dateForArchived)
                 {
                     isCompleted = false;
@@ -53,11 +53,11 @@
                     LogService.Info("Start archive Transaction07 - delete data: " + runningDate);
                     while (!isCompleted)
                     {
-                        dataCenterService.DeleteDataArchiveTransaction07(runningDate, batchSize, ref isCompleted);
+                        dataCenterService.DeleteDataArchiveTransaction07(runningDate, ref isCompleted);
                     }
                 }
 
-                LogService.Info("Start archive Transaction07 - delete data: ");
+                LogService.Info("Archive Transaction07 completely! ");
             }
             catch (Exception ex)
             {

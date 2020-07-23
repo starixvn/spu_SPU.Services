@@ -385,14 +385,13 @@
             isComplete = criteria.IsCompleted;
         }
 
-        public void DeleteDataArchiveTransaction07(DateTime runningDate, int batchSize, ref bool isComplete)
+        public void DeleteDataArchiveTransaction07(DateTime runningDate, ref bool isComplete)
         {
             var repository = new DynamicRepository();
 
             var criteria = new DeleteDataForArchiveTransaction07Criteria
             {
                 ArchivedDate = runningDate,
-                BatchSize = batchSize
             };
 
             repository.Execute(criteria);

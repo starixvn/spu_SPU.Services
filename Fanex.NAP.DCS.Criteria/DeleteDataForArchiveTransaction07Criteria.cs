@@ -9,9 +9,6 @@
         [SpParam(SqlParamName = "ip_ArchivedDate")]
         public DateTime ArchivedDate { get; set; }
 
-        [SpParam(SqlParamName = "ip_NoOfRecord")]
-        public int BatchSize { get; set; }
-
         [SpParam(SqlParamName = "ip_Completed")]
         public bool IsCompleted { get; set; }
 
