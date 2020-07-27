@@ -3,6 +3,6 @@
 <Functions>
   <Function Name="Auto Mark Problem Account">
     <Setting Key="TicketVoiding_CTS_ProblemAccountSelect" SpName="TicketVoiding_CTS_ProblemAccountSelect" DbName="SQLCTS.bodb02.bodbSPUNet"/>
-    <Setting Key="CTS_DC_InsertCategorizedProblemAccounts" SpName="CTS_DC_InsertCategorizedProblemAccounts" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_InsertCategorizedProblemAccounts" SpName="CTS_DC_InsertCategorizedProblemAccounts" DbName="MySQL.CTS_DataCenter" TimeOut="1200" />
   </Function>
 </Functions>

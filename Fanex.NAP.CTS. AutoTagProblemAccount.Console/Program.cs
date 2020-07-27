@@ -1,22 +1,19 @@
-﻿using System;
-using Fanex.Data;
+﻿using Fanex.Data;
 using Fanex.Data.MySql;
 using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.Sentry;
+using Fanex.NAP.CTS.Model;
 using Fanex.NAP.CTS.Services;
 using Fanex.NAP.SPU.Core;
+using Newtonsoft.Json;
 using Sentry;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.NAP.FS.Core;
-using Newtonsoft.Json;
-using Fanex.NAP.CTS.Model;
 
 namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 {
@@ -25,7 +22,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
         static void Main(string[] args)
         {
             var dataService = new DataCenterService();
-            
+
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
@@ -65,18 +62,13 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                 System.Console.WriteLine("GetProblemAccounts done");
                 AddUpdateAppSettings(Constants.SAVED_PREVIOUS_TIMING_EXECUTION, DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME));
 
-                var result = new List<InsertProblemAccountsModel>();
-
                 if (problemAccounts.Any())
                 {
-                    for (int i = 0; i < problemAccounts.Count; i++)
+                    var result = problemAccounts.Select(a => new InsertProblemAccountsModel
                     {
-                        result.Add(new InsertProblemAccountsModel
-                        {
-                            CustId = problemAccounts[i].CustID,
-                            CategoryId = problemAccounts[i].ReasonID
-                        });
-                    }
+                        CustId = a.CustID,
+                        CategoryId = a.ReasonID
+                    });
 
                     var jsonData = JsonConvert.SerializeObject(result);
 
@@ -93,11 +85,13 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
+                System.Console.WriteLine("Bi loi cmnr");
             }
         }
 
         private static string ReadSetting(string key)
         {
+            System.Console.WriteLine("ReadSetting is running");
             var appSettings = ConfigurationManager.AppSettings;
             return appSettings[key] ?? "";
         }

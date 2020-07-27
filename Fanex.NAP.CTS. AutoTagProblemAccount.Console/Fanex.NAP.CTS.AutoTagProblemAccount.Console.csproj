@@ -116,10 +116,10 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe.LOCAL.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe.PRO.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
