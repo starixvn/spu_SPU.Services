@@ -24,6 +24,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
     {
         static void Main(string[] args)
         {
+            LogService.Info("Start AutoTag Problem Account - Main");
             var dataService = new DataCenterService();
             
             DbSettingProviderManager
@@ -46,6 +47,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
             try
             {
+                LogService.Info("Start AutoTag Problem Account");
                 var previousTimingExecution = ReadSetting(Constants.SAVED_PREVIOUS_TIMING_EXECUTION);
 
                 var problemAccounts = new List<ProblemAccountsModel>();
@@ -59,6 +61,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution)).ToList();
                 }
 
+                LogService.Info("GetProblemAccounts done");
                 AddUpdateAppSettings(Constants.SAVED_PREVIOUS_TIMING_EXECUTION, DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME));
 
                 var result = new List<InsertProblemAccountsModel>();
@@ -67,15 +70,19 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                 {
                     for (int i = 0; i < problemAccounts.Count; i++)
                     {
-                        result.Add(new InsertProblemAccountsModel {
+                        result.Add(new InsertProblemAccountsModel
+                        {
                             CustId = problemAccounts[i].CustID,
-                            CategoryId = problemAccounts[i].ReasonID });
+                            CategoryId = problemAccounts[i].ReasonID
+                        });
                     }
 
                     var jsonData = JsonConvert.SerializeObject(result);
 
                     dataService.InsertProblemAccounts(jsonData);
                 }
+
+                LogService.Info("InsertProblemAccounts done");
             }
             catch (Exception ex)
             {
