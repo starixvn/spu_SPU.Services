@@ -43,8 +43,6 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
             try
             {
-                LogService.Info("Start AutoTag Problem Account");
-                System.Console.WriteLine("Start AutoTag Problem Account");
                 var previousTimingExecution = ReadSetting(Constants.SAVED_PREVIOUS_TIMING_EXECUTION);
 
                 var problemAccounts = new List<ProblemAccountsModel>();
@@ -58,8 +56,6 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution)).ToList();
                 }
 
-                LogService.Info("GetProblemAccounts done");
-                System.Console.WriteLine("GetProblemAccounts done");
                 AddUpdateAppSettings(Constants.SAVED_PREVIOUS_TIMING_EXECUTION, DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME));
 
                 if (problemAccounts.Any())
@@ -74,9 +70,6 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
                     dataService.InsertProblemAccounts(jsonData);
                 }
-
-                LogService.Info("InsertProblemAccounts done");
-                System.Console.WriteLine("InsertProblemAccounts done");
             }
             catch (Exception ex)
             {
@@ -85,13 +78,11 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
-                System.Console.WriteLine("Bi loi cmnr");
             }
         }
 
         private static string ReadSetting(string key)
         {
-            System.Console.WriteLine("ReadSetting is running");
             var appSettings = ConfigurationManager.AppSettings;
             return appSettings[key] ?? "";
         }
