@@ -24,7 +24,6 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
     {
         static void Main(string[] args)
         {
-            LogService.Info("Start AutoTag Problem Account - Main");
             var dataService = new DataCenterService();
             
             DbSettingProviderManager
@@ -48,6 +47,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
             try
             {
                 LogService.Info("Start AutoTag Problem Account");
+                System.Console.WriteLine("Start AutoTag Problem Account");
                 var previousTimingExecution = ReadSetting(Constants.SAVED_PREVIOUS_TIMING_EXECUTION);
 
                 var problemAccounts = new List<ProblemAccountsModel>();
@@ -62,6 +62,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                 }
 
                 LogService.Info("GetProblemAccounts done");
+                System.Console.WriteLine("GetProblemAccounts done");
                 AddUpdateAppSettings(Constants.SAVED_PREVIOUS_TIMING_EXECUTION, DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME));
 
                 var result = new List<InsertProblemAccountsModel>();
@@ -83,6 +84,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                 }
 
                 LogService.Info("InsertProblemAccounts done");
+                System.Console.WriteLine("InsertProblemAccounts done");
             }
             catch (Exception ex)
             {
