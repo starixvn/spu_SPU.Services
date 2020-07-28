@@ -155,5 +155,15 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.InsertProblemAccount(jsonData);
         }
+
+        public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution()
+        {
+            return dataCenterDataAccess.GetPreviousTimingExecution();
+        }
+
+        public void UpdateTimingExecution (string newDataTime)
+        {
+            dataCenterDataAccess.UpdateTimingExecution(newDataTime);
+        }
     }
 }

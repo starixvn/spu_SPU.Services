@@ -225,7 +225,7 @@
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
-        
+
         public IEnumerable<CustomerClassificationModel> GetCustomerHasChangeForRunRealtime()
         {
             var repository = new DynamicRepository();
@@ -291,8 +291,8 @@
             var criteria = new RealtimeUpdateLastScanTimeCriteria();
 
             repository.Execute(criteria);
-        }  
-        
+        }
+
         public IEnumerable<ProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)
         {
             var criteria = new GetProblemAccountsCriteria
@@ -319,5 +319,32 @@
                 db.ExecuteNonQuery(criteria);
             }
         }
+
+        public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution()
+        {
+            var criteria = new GetPreviousTimingExecutionCriteria
+            {
+                ParamID = 2
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<SystemParemeterModel>(criteria).ToList();
+            }
+        }
+
+        public void UpdateTimingExecution(string newDataTime)
+        {
+            var criteria = new UpdateTimingExecutionCriteria
+            {
+                ParamID = 2,
+                ParamValue = newDataTime
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
+        } 
     }
 }

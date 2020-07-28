@@ -140,6 +140,10 @@
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
+      <Project>{67FECD9E-043A-4100-BF62-52C1A016B85D}</Project>
+      <Name>Fanex.NAP.SPU.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SPNames.LOCAL.xml">

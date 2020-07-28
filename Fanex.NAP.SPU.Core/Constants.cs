@@ -22,7 +22,7 @@
 
         public const string VSSportbook = "Sport book";
 
-        public const string CONVERT_TO_SQL_DATETIME = "yyyy-MM-dd HH:mm:ss.fff";
+        public const string CONVERT_TO_SQL_DATETIME = "yyyy-MM-dd HH:mm:ss";
 
         public const string SAVED_PREVIOUS_TIMING_EXECUTION = "PreviousTimingExecution";
 

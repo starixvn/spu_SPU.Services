@@ -43,20 +43,21 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
             try
             {
-                var previousTimingExecution = ReadSetting(Constants.SAVED_PREVIOUS_TIMING_EXECUTION);
+                var previousTimingExecution = dataService.GetPreviousTimingExecution()?.SingleOrDefault();
 
                 var problemAccounts = new List<ProblemAccountsModel>();
+                var savedDataTime = DateTime.Now;
 
-                if (string.IsNullOrEmpty(previousTimingExecution))
+                if (string.IsNullOrEmpty(previousTimingExecution.ParameterValue))
                 {
-                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, DateTime.Now).ToList();
+                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue).AddMinutes(-30)).ToList();
                 }
                 else
                 {
-                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution)).ToList();
+                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
                 }
 
-                AddUpdateAppSettings(Constants.SAVED_PREVIOUS_TIMING_EXECUTION, DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME));
+                dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME));
 
                 if (problemAccounts.Any())
                 {
@@ -79,28 +80,6 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
                 LogService.Error(logMessage);
             }
-        }
-
-        private static string ReadSetting(string key)
-        {
-            var appSettings = ConfigurationManager.AppSettings;
-            return appSettings[key] ?? "";
-        }
-
-        private static void AddUpdateAppSettings(string key, string value)
-        {
-            var configFile = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            var settings = configFile.AppSettings.Settings;
-            if (settings[key] == null)
-            {
-                settings.Add(key, value);
-            }
-            else
-            {
-                settings[key].Value = value;
-            }
-            configFile.Save(ConfigurationSaveMode.Modified);
-            ConfigurationManager.RefreshSection(configFile.AppSettings.SectionInformation.Name);
         }
     }
 }

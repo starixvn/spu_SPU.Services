@@ -55,6 +55,7 @@
     <Compile Include="CustomerClassification\GetCustomerClassificationForScanningCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerHasChangeForRunRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\RealtimeUpdateLastScanTimeCriteria.cs" />
+    <Compile Include="GetPreviousTimingExecutionCriteria.cs" />
     <Compile Include="GetProblemAccountsCriteria.cs" />
     <Compile Include="GetUsername2FromMainDb.cs" />
     <Compile Include="InsertProblemAccountCriteria.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="FillUpCustomerFromMainDbCriteria.cs" />
     <Compile Include="InsertNewCustomerCategoryCriteria.cs" />
     <Compile Include="TransformUpdatingLastLoginTimeCriteria.cs" />
+    <Compile Include="UpdateTimingExecutionCriteria.cs" />
     <Compile Include="UpdateUsername2Criteria.cs" />
     <Compile Include="GetCustomersForUpdateUsername2Criteria.cs" />
     <Compile Include="TransformAssociationByDeviceCriteria.cs" />

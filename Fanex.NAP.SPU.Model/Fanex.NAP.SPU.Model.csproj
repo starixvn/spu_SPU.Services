@@ -57,6 +57,7 @@
     <Compile Include="RawAccountModel.cs" />
     <Compile Include="RawAssociationModel.cs" />
     <Compile Include="RawTransactionByIpModel.cs" />
+    <Compile Include="SystemParemeterModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
