@@ -45,6 +45,8 @@
     <Compile Include="CustomerClassificationModelMoreInfo.cs" />
     <Compile Include="CustomerClassificationModel.cs" />
     <Compile Include="GraphDB\AssociationModelForGraph.cs" />
+    <Compile Include="ProblemAccountsModel.cs" />
+    <Compile Include="InsertProblemAccountsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
