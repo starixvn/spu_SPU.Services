@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.CMS.BasketballVR.Console
 {
     using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
     using Fanex.MailDelivery.Client;
     using Fanex.NAP.CMS.VirtualSetting.Service;
     using Fanex.NAP.SPU.Core;
@@ -24,11 +26,31 @@
             return this;
         }
 
-        public override BaseService ExecuteForSoccer()
+        public override BaseService ExecuteForBasketball()
         {
             VirtualSettingBasketballService service = new VirtualSettingBasketballService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
+            var countRetry = 0;
+            while (countRetry < AppSettings.RetryTime)
+            {
+                try
+                {
+                    service.AutoAdjustVirtualSettingsForPunters();
+                    countRetry = AppSettings.RetryTime + 1;
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-            service.AutoAdjustVirtualSettingsForPunters();
+                    LogService.Error($"Basketball - VirtualSetting service - Start Exception {logMessage}");
+                    countRetry += 1;
+                    if (countRetry == AppSettings.RetryTime)
+                    {
+                        throw ex;
+                    }
+                }
+            }
 
             TotalAffectedMembers = service.PuntersUpdated;
 
