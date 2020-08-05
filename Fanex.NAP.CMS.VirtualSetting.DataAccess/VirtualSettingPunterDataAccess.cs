@@ -215,12 +215,7 @@
 
         public IEnumerable<int> GetBasketballVRCustomers()
         {
-            var criteria = new GetBasketballVRCustomerCriteria
-            {
-
-            };
-
-            return null;
+            return _repository.Fetch<int>(new GetBasketballVRCustomerCriteria());
         }
 
         public ICommandResult UpdateBasketballVR(IEnumerable<int> punters)
@@ -230,7 +225,16 @@
 
             };
 
-            return null;
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+
+                return new CommandResult
+                {
+                    Code = criteria.ErrCode,
+                    Message = criteria.ErrMsg
+                };
+            }
         }
     }
 }

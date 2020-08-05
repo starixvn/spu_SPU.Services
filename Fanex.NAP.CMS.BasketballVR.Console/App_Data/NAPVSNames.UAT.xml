@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="VirtualSetting">
+    <Setting Key="NAP_Report_CustMngt_GetProPunters" SpName="NAP_Report_CustMngt_GetProPunters_xtest" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
+    <Setting Key="Acc_CustomerUpdVirtualMultiplier_Multiple" SpName="Acc_CustomerUpdVirtualMultiplier_Multiple_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+  </Function>
+</Functions>

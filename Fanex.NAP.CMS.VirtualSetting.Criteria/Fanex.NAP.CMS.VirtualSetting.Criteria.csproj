@@ -44,8 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetBasketballVRCustomerCriteria.cs" />
     <Compile Include="GetBAAccountsCriteria.cs" />
+    <Compile Include="GetBasketballVRCustomerCriteria.cs" />
     <Compile Include="GetCurrentCustomerVirtualRate.cs" />
     <Compile Include="GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="GetLosingPrunterCriteria.cs" />

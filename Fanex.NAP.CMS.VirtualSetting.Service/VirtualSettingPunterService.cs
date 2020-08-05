@@ -156,7 +156,6 @@
                 return this;
             }
 
-
             _dataAccess.UpdateBasketballVR(CustIds);
 
             return this;
