@@ -149,14 +149,19 @@
             return _dataAccess.GetBasketballVRCustomers();
         }
 
-        public IPunterService AdjustBasketballVR(IEnumerable<int> CustIds)
+        public IEnumerable<int> GetBasketballVRCustomers(string customerList)
         {
-            if (CustIds.Any())
+            return _dataAccess.VerifyBasketballVRCustomers(customerList);
+        }
+
+        public IPunterService AdjustBasketballVR(string customerList)
+        {
+            if (string.IsNullOrEmpty(customerList))
             {
                 return this;
             }
 
-            _dataAccess.UpdateBasketballVR(CustIds);
+            _dataAccess.UpdateBasketballVR(customerList);
 
             return this;
         }

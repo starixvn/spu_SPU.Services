@@ -6,7 +6,8 @@ namespace Fanex.NAP.CMS.VirtualSetting.Criteria
 
     public class InsertBasketballVRCustomerCriteria : CriteriaBase
     {
-        public string customerList { get; set; }
+        public string CustIDList { get; set; }
+        public int Sporttype { get; set; }
 
         public int ErrCode { get; set; }
 
@@ -19,7 +20,7 @@ namespace Fanex.NAP.CMS.VirtualSetting.Criteria
 
         public override bool IsValid()
         {
-            return !string.IsNullOrEmpty(customerList);
+            return !string.IsNullOrEmpty(CustIDList);
         }
     }
 }

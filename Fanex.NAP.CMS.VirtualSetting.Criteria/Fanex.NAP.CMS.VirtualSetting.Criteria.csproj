@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetBAAccountsCriteria.cs" />
+    <Compile Include="VerifyBasketballVRCustomerCriteria.cs" />
     <Compile Include="GetBasketballVRCustomerCriteria.cs" />
     <Compile Include="GetCurrentCustomerVirtualRate.cs" />
     <Compile Include="GetCustomerMarginHistoryCriteria.cs" />

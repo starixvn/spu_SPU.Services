@@ -25,6 +25,8 @@
 
         IEnumerable<int> GetBasketballVRCustomers();
 
-        ICommandResult UpdateBasketballVR(IEnumerable<int> punters);
+        IEnumerable<int> VerifyBasketballVRCustomers(string customerList);
+
+        ICommandResult UpdateBasketballVR(string customerList);
     }
 }

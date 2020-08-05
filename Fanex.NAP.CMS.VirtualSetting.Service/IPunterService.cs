@@ -16,7 +16,9 @@ namespace Fanex.NAP.CMS.VirtualSetting.Service
 
         IEnumerable<int> GetBasketballVRCustomers();
 
-        IPunterService AdjustBasketballVR(IEnumerable<int> CustIds);
+        IEnumerable<int> VerifyBasketballVRCustomers(string customerList);
+
+        IPunterService AdjustBasketballVR(string customerList);
 
         int CountAffected();
     }

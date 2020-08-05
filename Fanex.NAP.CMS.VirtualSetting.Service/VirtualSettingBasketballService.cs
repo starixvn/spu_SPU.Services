@@ -32,14 +32,16 @@
 
         public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
         {
-            var CustomerList = _punterService.GetBasketballVRCustomers();
+            var customerList = _punterService.GetBasketballVRCustomers().ToList();
 
-            var CustomerChunk = Utilities.ChunkList(CustomerList, AppSettings.PunterChunkSize).ToList();
+            var verifiedCustomers = _punterService.VerifyBasketballVRCustomers(string.Join(",", customerList));
 
-            for(int i = 0; i < CustomerChunk.Count(); i ++)
+            var customerChunks = Utilities.ChunkList(verifiedCustomers, AppSettings.PunterChunkSize).ToList();
+
+            for(int i = 0; i < customerChunks.Count(); i ++)
             {
-                _punterService.AdjustBasketballVR(CustomerChunk[i]);
-                PuntersUpdated += CustomerChunk[i].Count();
+                _punterService.AdjustBasketballVR(string.Join(",", customerChunks[i]));
+                PuntersUpdated += customerChunks[i].Count();
             }
 
             return this;

@@ -215,14 +215,30 @@
 
         public IEnumerable<int> GetBasketballVRCustomers()
         {
-            return _repository.Fetch<int>(new GetBasketballVRCustomerCriteria());
+            var criteria = new GetBasketballVRCustomerCriteria
+            {
+                Sporttype = 2
+            };
+
+            return _repository.Fetch<int>(criteria);
         }
 
-        public ICommandResult UpdateBasketballVR(IEnumerable<int> punters)
+        public IEnumerable<int> VerifyBasketballVRCustomers(string customerList)
+        {
+            var criteria = new VerifyBasketballVRCustomerCriteria
+            {
+                ListCustID = customerList
+            };
+
+            return _repository.Fetch<int>(criteria);
+        }
+
+        public ICommandResult UpdateBasketballVR(string customerList)
         {
             var criteria = new InsertBasketballVRCustomerCriteria
             {
-
+                CustIDList = customerList,
+                Sporttype = 2
             };
 
             using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

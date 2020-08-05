@@ -30,6 +30,7 @@
         {
             VirtualSettingBasketballService service = new VirtualSettingBasketballService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
             var countRetry = 0;
+
             while (countRetry < AppSettings.RetryTime)
             {
                 try
