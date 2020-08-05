@@ -212,5 +212,25 @@
         //        Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
         //    };
         //}
+
+        public IEnumerable<int> GetBasketballVRCustomers()
+        {
+            var criteria = new GetBasketballVRCustomerCriteria
+            {
+
+            };
+
+            return null;
+        }
+
+        public ICommandResult UpdateBasketballVR(IEnumerable<int> punters)
+        {
+            var criteria = new InsertBasketballVRCustomerCriteria
+            {
+
+            };
+
+            return null;
+        }
     }
 }

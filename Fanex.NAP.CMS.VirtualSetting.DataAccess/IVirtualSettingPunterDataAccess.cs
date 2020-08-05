@@ -22,5 +22,9 @@
         ICommandResult InsertCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupID, int numOfMonth, string serviceName, DateTime adjustDate);
 
         IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupId, int numOfMonth);
+
+        IEnumerable<int> GetBasketballVRCustomers();
+
+        ICommandResult UpdateBasketballVR(IEnumerable<int> punters);
     }
 }

@@ -29,6 +29,8 @@
 
         public virtual BaseService ExecuteForSoccer() { return this; }
 
+        public virtual BaseService ExecuteForBasketball() { return this; }
+
         public virtual BaseService ExecuteForSportbooks() { return this; }
 
         public virtual BaseService CountAffectedMembers() { return this; }

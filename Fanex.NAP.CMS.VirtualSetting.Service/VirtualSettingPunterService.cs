@@ -143,6 +143,25 @@
             return 0;
         }
 
+
+        public IEnumerable<int> GetBasketballVRCustomers()
+        {
+            return _dataAccess.GetBasketballVRCustomers();
+        }
+
+        public IPunterService AdjustBasketballVR(IEnumerable<int> CustIds)
+        {
+            if (CustIds.Any())
+            {
+                return this;
+            }
+
+
+            _dataAccess.UpdateBasketballVR(CustIds);
+
+            return this;
+        }
+
         #region Private Methods
 
         private IEnumerable<CustomerVirtualRate> GetCurrentCustomerVirtualRate(string custIds)

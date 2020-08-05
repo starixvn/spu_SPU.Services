@@ -44,12 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetBasketballVRCustomerCriteria.cs" />
     <Compile Include="GetBAAccountsCriteria.cs" />
     <Compile Include="GetCurrentCustomerVirtualRate.cs" />
     <Compile Include="GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="GetLosingPrunterCriteria.cs" />
     <Compile Include="GetProPrunterCriteria.cs" />
     <Compile Include="GetProPrunterSoccerCriteria.cs" />
+    <Compile Include="InsertBasketballVRCustomerCriteria.cs" />
     <Compile Include="InsertCustomerMarginHistoryCriteria.cs" />
     <Compile Include="LogVirtualSettingCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

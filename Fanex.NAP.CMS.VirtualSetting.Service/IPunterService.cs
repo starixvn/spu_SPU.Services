@@ -1,4 +1,6 @@
-﻿namespace Fanex.NAP.CMS.VirtualSetting.Service
+﻿using System.Collections.Generic;
+
+namespace Fanex.NAP.CMS.VirtualSetting.Service
 {
     public interface IPunterService
     {
@@ -11,6 +13,10 @@
         IPunterService AdjustVirtualSettingForSuperProPunter(double virtualMultiplier);
 
         IPunterService AdjustVirtualSettingForNormal(double virtualMultiplier);
+
+        IEnumerable<int> GetBasketballVRCustomers();
+
+        IPunterService AdjustBasketballVR(IEnumerable<int> CustIds);
 
         int CountAffected();
     }
