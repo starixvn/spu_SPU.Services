@@ -27,6 +27,6 @@
 
         IEnumerable<int> VerifyBasketballVRCustomers(string customerList);
 
-        ICommandResult UpdateBasketballVR(string customerList);
+        void UpdateBasketballVR(string customerList);
     }
 }

@@ -9,13 +9,9 @@ namespace Fanex.NAP.CMS.VirtualSetting.Criteria
         public string CustIDList { get; set; }
         public int Sporttype { get; set; }
 
-        public int ErrCode { get; set; }
-
-        public string ErrMsg { get; set; }
-
         public override string GetSettingKey()
         {
-            return "";
+            return "Acc_VR_CustomerUpdFollowParent";
         }
 
         public override bool IsValid()

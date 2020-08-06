@@ -233,7 +233,7 @@
             return _repository.Fetch<int>(criteria);
         }
 
-        public ICommandResult UpdateBasketballVR(string customerList)
+        public void UpdateBasketballVR(string customerList)
         {
             var criteria = new InsertBasketballVRCustomerCriteria
             {
@@ -244,12 +244,6 @@
             using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 objectDb.ExecuteNonQuery(criteria);
-
-                return new CommandResult
-                {
-                    Code = criteria.ErrCode,
-                    Message = criteria.ErrMsg
-                };
             }
         }
     }

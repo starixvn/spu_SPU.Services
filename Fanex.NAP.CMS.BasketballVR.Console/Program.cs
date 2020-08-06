@@ -29,8 +29,7 @@
 
                 service
                     .StartTime()
-                    .ExecuteForBasketball()
-                    .SendMailExternal(AppSettings.MailingListId);
+                    .ExecuteForBasketball();
             }
             catch (Exception ex)
             {
