@@ -149,7 +149,7 @@
             return _dataAccess.GetBasketballVRCustomers();
         }
 
-        public IEnumerable<int> GetBasketballVRCustomers(string customerList)
+        public IEnumerable<int> VerifyBasketballVRCustomers(string customerList)
         {
             return _dataAccess.VerifyBasketballVRCustomers(customerList);
         }

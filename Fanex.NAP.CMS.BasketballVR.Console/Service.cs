@@ -17,6 +17,7 @@
         public Service StartTime()
         {
             _startTime = DateTime.Now;
+            LogService.Info("Start service!");
 
             if (AppSettings.Environment == 3)
             {
@@ -28,6 +29,7 @@
 
         public override BaseService ExecuteForBasketball()
         {
+            LogService.Info("Start executing for basketball!");
             VirtualSettingBasketballService service = new VirtualSettingBasketballService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
             var countRetry = 0;
 
@@ -37,6 +39,7 @@
                 {
                     service.AutoAdjustVirtualSettingsForPunters();
                     countRetry = AppSettings.RetryTime + 1;
+                    LogService.Info("Executing successfully!");
                 }
                 catch (Exception ex)
                 {
