@@ -17,7 +17,7 @@
         public Service StartTime()
         {
             _startTime = DateTime.Now;
-            LogService.Info("Start service!");
+            LogService.Info("Start executing for VR-Basketball.");
 
             if (AppSettings.Environment == 3)
             {
@@ -29,7 +29,6 @@
 
         public override BaseService ExecuteForBasketball()
         {
-            LogService.Info("Start executing for basketball!");
             VirtualSettingBasketballService service = new VirtualSettingBasketballService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
             var countRetry = 0;
 
@@ -39,7 +38,6 @@
                 {
                     service.AutoAdjustVirtualSettingsForPunters();
                     countRetry = AppSettings.RetryTime + 1;
-                    LogService.Info("Executing successfully!");
                 }
                 catch (Exception ex)
                 {
@@ -58,32 +56,16 @@
 
             TotalAffectedMembers = service.PuntersUpdated;
 
-            LogService.Info("Execute For Basketball is called.");
+            LogService.Info("Execute For Basketball is called successfully.");
 
             _stopTime = DateTime.Now;
 
             return this;
         }
 
-        public override BaseService SendMailExternal(int mailingListId)
+        public override BaseService NotifyMessage()
         {
             var environment = AppSettings.EnvironmentName;
-
-            var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + Constants.VSMailInformTemplate;
-
-            var body = Utilities.ReadTextFile(mailTemplatePath);
-
-            body = string.Format(body, _startTime.ToString("MM/dd/yyyy hh:mm:ss"), _stopTime.ToString("MM/dd/yyyy hh:mm:ss"), TotalAffectedMembers);
-
-            var newMail = new Fanex.MailDelivery.Core.Models.Mail
-            {
-                Subject = "Basketball - VR Auto Adjustment finished" + " (" + environment + ")",
-                Title = "Basketball - VR Auto Mail Service",
-                Body = body,
-                MailingListId = mailingListId
-            };
-
-            SendMail(newMail);
 
             LogService.Info($"Basketball - Virtual Setting service ({ environment }) - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
@@ -93,15 +75,6 @@
             }
 
             return this;
-        }
-
-        private void SendMail(Fanex.MailDelivery.Core.Models.Mail mail)
-        {
-            MailClientHandler.Start();
-
-            MailClientHandler.SendFunctionMail(mail);
-
-            MailClientHandler.Stop();
-        }               
+        }             
     }
 }

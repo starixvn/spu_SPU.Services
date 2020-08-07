@@ -29,7 +29,8 @@
 
                 service
                     .StartTime()
-                    .ExecuteForBasketball();
+                    .ExecuteForBasketball()
+                    .NotifyMessage();
             }
             catch (Exception ex)
             {
