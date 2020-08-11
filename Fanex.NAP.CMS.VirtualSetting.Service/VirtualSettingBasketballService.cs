@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CMS.VirtualSetting.Service
 {
+    using Fanex.Logging;
     using Fanex.NAP.CMS.VirtualSetting.DataAccess;
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.SPU.Core;
@@ -33,8 +34,12 @@
         public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
         {
             var customerList = _punterService.GetBasketballVRCustomers().ToList();
+            var customerListString = string.Join(",", customerList);
+            LogService.Info("Basketball - VR Settings - Raw customer list: " + customerListString);
 
-            var verifiedCustomers = _punterService.VerifyBasketballVRCustomers(string.Join(",", customerList));
+            var verifiedCustomers = _punterService.VerifyBasketballVRCustomers(customerListString);
+            var verifiedCustomersString  = string.Join(",", verifiedCustomers);
+            LogService.Info("Basketball - VR Settings - Verified customer list: " + verifiedCustomersString);
 
             var customerChunks = Utilities.ChunkList(verifiedCustomers, AppSettings.PunterChunkSize).ToList();
 
