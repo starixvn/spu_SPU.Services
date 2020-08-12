@@ -80,5 +80,7 @@
 
         public static string ClusterKey => ConfigurationManager.AppSettings["cluster-key"];
 
+        public static int MaxCustIdForHealing => Convert.ToInt32(ConfigurationManager.AppSettings["MaxCustIdForHealing"]);
+
     }
 }

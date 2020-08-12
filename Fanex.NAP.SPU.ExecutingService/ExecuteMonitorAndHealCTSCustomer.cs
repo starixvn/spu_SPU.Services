@@ -57,7 +57,7 @@
 
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
-                int maxCustId = 0;
+                int maxCustId = AppSetting.MaxCustIdForHealing;
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
