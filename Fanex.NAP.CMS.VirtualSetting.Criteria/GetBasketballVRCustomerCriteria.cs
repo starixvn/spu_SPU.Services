@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
 
-    public class GetBasketballVRCustomerCriteria : CriteriaBase
+    public class GetVRAdjustmentCustomerCriteria : CriteriaBase
     {
         public int Sporttype { get; set; }
 

@@ -23,10 +23,12 @@
 
         IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupId, int numOfMonth);
 
-        IEnumerable<int> GetBasketballVRCustomers();
+        IEnumerable<int> GetVRAdjustmentCustomers();
 
-        IEnumerable<int> VerifyBasketballVRCustomers(string customerList);
+        VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList);
 
-        void UpdateBasketballVR(string customerList);
+        void UpdateVRFollowUpline(string customerList);
+
+        void UpdateVRAutoAdjustmentStatus(string customerList);
     }
 }

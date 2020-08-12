@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
-
-namespace Fanex.NAP.CMS.VirtualSetting.Service
+﻿namespace Fanex.NAP.CMS.VirtualSetting.Service
 {
+    using Fanex.NAP.CMS.VirtualSetting.Model;
+    using System.Collections.Generic;
+
     public interface IPunterService
     {
         IPunterService GetWinningPunterSoccerList();
@@ -14,11 +15,13 @@ namespace Fanex.NAP.CMS.VirtualSetting.Service
 
         IPunterService AdjustVirtualSettingForNormal(double virtualMultiplier);
 
-        IEnumerable<int> GetBasketballVRCustomers();
+        IEnumerable<int> GetVRAdjustmentCustomers();
 
-        IEnumerable<int> VerifyBasketballVRCustomers(string customerList);
+        VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList);
 
-        IPunterService AdjustBasketballVR(string customerList);
+        IPunterService UpdateVRFollowUpline(string customerList);
+
+        IPunterService UpdateVRAutoAdjustmentStatus(string customerList);
 
         int CountAffected();
     }

@@ -144,24 +144,37 @@
         }
 
 
-        public IEnumerable<int> GetBasketballVRCustomers()
+        public IEnumerable<int> GetVRAdjustmentCustomers()
         {
-            return _dataAccess.GetBasketballVRCustomers();
+            return _dataAccess.GetVRAdjustmentCustomers();
         }
 
-        public IEnumerable<int> VerifyBasketballVRCustomers(string customerList)
+        public VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList)
         {
-            return _dataAccess.VerifyBasketballVRCustomers(customerList);
+            return _dataAccess.VerifyVRAdjustmentCustomers(customerList);
         }
 
-        public IPunterService AdjustBasketballVR(string customerList)
+        public IPunterService UpdateVRFollowUpline(string customerList)
         {
             if (string.IsNullOrEmpty(customerList))
             {
                 return this;
             }
 
-            _dataAccess.UpdateBasketballVR(customerList);
+            _dataAccess.UpdateVRFollowUpline(customerList);
+
+            return this;
+        }
+
+
+        public IPunterService UpdateVRAutoAdjustmentStatus(string customerList)
+        {
+            if (string.IsNullOrEmpty(customerList))
+            {
+                return this;
+            }
+
+            _dataAccess.UpdateVRAutoAdjustmentStatus(customerList);
 
             return this;
         }

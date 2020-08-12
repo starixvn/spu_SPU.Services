@@ -45,14 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetBAAccountsCriteria.cs" />
-    <Compile Include="VerifyBasketballVRCustomerCriteria.cs" />
+    <Compile Include="UpdateVRAutoAdjustmentStatusCriteria.cs" />
+    <Compile Include="VerifyVRCustomerCriteria.cs" />
     <Compile Include="GetBasketballVRCustomerCriteria.cs" />
     <Compile Include="GetCurrentCustomerVirtualRate.cs" />
     <Compile Include="GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="GetLosingPrunterCriteria.cs" />
     <Compile Include="GetProPrunterCriteria.cs" />
     <Compile Include="GetProPrunterSoccerCriteria.cs" />
-    <Compile Include="InsertBasketballVRCustomerCriteria.cs" />
+    <Compile Include="UpdateVRFollowUplineCriteria.cs" />
     <Compile Include="InsertCustomerMarginHistoryCriteria.cs" />
     <Compile Include="LogVirtualSettingCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

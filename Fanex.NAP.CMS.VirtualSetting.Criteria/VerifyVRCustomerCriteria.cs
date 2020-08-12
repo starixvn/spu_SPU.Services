@@ -2,7 +2,7 @@
 {
     using Fanex.Data.Repository;
 
-    public class VerifyBasketballVRCustomerCriteria : CriteriaBase
+    public class VerifyVRCustomerCriteria : CriteriaBase
     {
         public string ListCustID { get; set; }
 

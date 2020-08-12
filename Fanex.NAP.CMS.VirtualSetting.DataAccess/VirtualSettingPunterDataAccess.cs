@@ -7,7 +7,6 @@
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.SPU.Core;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -213,32 +212,47 @@
         //    };
         //}
 
-        public IEnumerable<int> GetBasketballVRCustomers()
+        public IEnumerable<int> GetVRAdjustmentCustomers()
         {
-            var criteria = new GetBasketballVRCustomerCriteria
+            var criteria = new GetVRAdjustmentCustomerCriteria
             {
-                Sporttype = 2
+                Sporttype = 99
             };
 
             return _repository.Fetch<int>(criteria);
         }
 
-        public IEnumerable<int> VerifyBasketballVRCustomers(string customerList)
+        public VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList)
         {
-            var criteria = new VerifyBasketballVRCustomerCriteria
+            var criteria = new VerifyVRCustomerCriteria
             {
                 ListCustID = customerList
             };
 
-            return _repository.Fetch<int>(criteria);
+            var (firstResultSet, secondResultSet) = _repository.FetchMultiple<int, int>(criteria);
+            return new VerifiedVRCustomers(firstResultSet, secondResultSet);
         }
 
-        public void UpdateBasketballVR(string customerList)
+        public void UpdateVRFollowUpline(string customerList)
         {
-            var criteria = new InsertBasketballVRCustomerCriteria
+            var criteria = new UpdateVRFollowUplineCriteria
             {
                 CustIDList = customerList,
-                Sporttype = 2
+                Sporttype = 99
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+
+        public void UpdateVRAutoAdjustmentStatus(string customerList)
+        {
+            var criteria = new UpdateVRAutoAdjustmentStatusCriteria
+            {
+                CustIDList = customerList,
+                Sporttype = 99
             };
 
             using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
