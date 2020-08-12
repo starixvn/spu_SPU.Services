@@ -8,7 +8,7 @@
 
         public override string GetSettingKey()
         {
-            return "Acc_Rpt_ProcessDataForBasketballVRSetting";
+            return "Acc_Rpt_ProcessDataForOtherSportsVRSetting";
         }
 
         public override bool IsValid()
