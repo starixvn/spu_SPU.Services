@@ -30,7 +30,6 @@ namespace Fanex.NAP.CTS.UserPermission.Console
                  .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
                  .UseDefaultConnectionStringProvider()
                  .Run();
-
             LogManager
                .SetDefaultLogCategory(AppSettings.FanexLogCategory)
                .Use(new List<ILogEngine>
@@ -40,18 +39,26 @@ namespace Fanex.NAP.CTS.UserPermission.Console
                         Dsn = new Dsn(AppSettings.SentryLogging)
                     })
                });
-
+            LogService.Info("User has permission logmanager success");
             try
             {
+                LogService.Info("User permission Service Start");
                 var userIds = GetPermissionUserIDs();
+                LogService.Info("User has permission: ", userIds);
                 var x = AppDomain.CurrentDomain.BaseDirectory;
+
+                LogService.Info("User permission is being read from xmlfile");
                 var preUserData = Helper.ReadXML(AppSettings.IntermediateUserFileName);
+                LogService.Info("User permission read completely from xmlfile");
 
                 if (!CheckDataMatching(preUserData, userIds))
                 {
                     dataService.InsertUserPermission(userIds, FSFunctionKeys.AssociatedAccountMonitor);
+                    LogService.Info("User permission is being saved to xmlfile");
                     Helper.WriteXML(AppSettings.IntermediateUserFileName, userIds);
+                    LogService.Info("User permission saved to xmlfile");
                 }
+                LogService.Info("User permission Service End");
             }
             catch (Exception ex)
             {
