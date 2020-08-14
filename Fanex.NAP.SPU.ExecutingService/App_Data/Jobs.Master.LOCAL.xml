@@ -1467,15 +1467,15 @@
         </entry>
         <entry>
           <key>FileName</key>
-          <value>Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe</value>
+          <value>Fanex.NAP.CTS.UserPermission.Console.exe</value>
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\WWW\SPU\Fanex.NAP.CTS.AutoTagProblemAccount.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.CTS.UserPermission.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\WWW\SPU\Fanex.NAP.CTS.AutoTagProblemAccount.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.CTS.UserPermission.Console</value>
         </entry>
       </job-data-map>
     </job>
