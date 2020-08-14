@@ -262,6 +262,10 @@ namespace Fanex.NAP.SPU.Core
 
         public static string AppDataSetting => ConfigurationManager.AppSettings["AppData-Path"];
 
+        public static string IntermediateUserFileName => ConfigurationManager.AppSettings["User-Intermediate-File-Name"];
+
+        public static string SiteId => ConfigurationManager.AppSettings["SiteId"];
+
         public static int Interval => Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
 
         public static int TransBatch => Convert.ToInt32(ConfigurationManager.AppSettings["Trans-Batch"]);
@@ -306,6 +310,6 @@ namespace Fanex.NAP.SPU.Core
 
         public static string TGRSMailingArrListId => ConfigurationManager.AppSettings["TGRS-MailingArrListId"];
 
-        public static string TGRSAutoTradingFilePassword => ConfigurationManager.AppSettings["TGRS-AutoTrading-File-Password"];            
+        public static string TGRSAutoTradingFilePassword => ConfigurationManager.AppSettings["TGRS-AutoTrading-File-Password"];
     }
 }

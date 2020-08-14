@@ -170,5 +170,10 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.UpdateTimingExecution(newDataTime);
         }
+
+        public void InsertUserPermission (string userIds, string permissionFuncName)
+        {
+            dataCenterDataAccess.InsertProblemAccount(userIds, permissionFuncName);
+        }
     }
 }

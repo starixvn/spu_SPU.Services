@@ -29,5 +29,7 @@
         public const string GET_ALL_INITIAL_DATA = "0";
 
         public const string GET_CHANGED_DATA_FROM_DATETIME = "";
+
+        public const string AAM_USER_PERMISSION = FSFunctionKeys.AssociatedAccountMonitor + "UserPermission";
     }
 }

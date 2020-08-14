@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="InsertUserPermissionCriteria.cs" />
     <Compile Include="MoveToTransaction07GetPackageCriteria.cs" />
     <Compile Include="MoveToTransaction07Criteria.cs" />
     <Compile Include="AutoTagCustomerClassificationCriteria.cs" />

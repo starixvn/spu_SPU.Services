@@ -357,6 +357,20 @@
             {
                 db.ExecuteNonQuery(criteria);
             }
-        } 
+        }
+
+        public void InsertProblemAccount(string userIds, string permissionFuncName)
+        {
+            var criteria = new InsertUserPermissionCriteria
+            {
+                UserIds = userIds,
+                PermissionFuncName = permissionFuncName
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
+        }
     }
 }
