@@ -39,26 +39,17 @@ namespace Fanex.NAP.CTS.UserPermission.Console
                         Dsn = new Dsn(AppSettings.SentryLogging)
                     })
                });
-            LogService.Info("User has permission logmanager success");
             try
             {
-                LogService.Info("User permission Service Start");
                 var userIds = GetPermissionUserIDs();
-                LogService.Info("User has permission: ", userIds);
-                var x = AppDomain.CurrentDomain.BaseDirectory;
 
-                LogService.Info("User permission is being read from xmlfile");
                 var preUserData = Helper.ReadXML(AppSettings.IntermediateUserFileName);
-                LogService.Info("User permission read completely from xmlfile");
 
                 if (!CheckDataMatching(preUserData, userIds))
                 {
                     dataService.InsertUserPermission(userIds, FSFunctionKeys.AssociatedAccountMonitor);
-                    LogService.Info("User permission is being saved to xmlfile");
                     Helper.WriteXML(AppSettings.IntermediateUserFileName, userIds);
-                    LogService.Info("User permission saved to xmlfile");
                 }
-                LogService.Info("User permission Service End");
             }
             catch (Exception ex)
             {
@@ -95,7 +86,10 @@ namespace Fanex.NAP.CTS.UserPermission.Console
             if(permissionUsers != null && permissionUsers.Count > 0)
             {
                 var userIDs = new StringBuilder();
+
+                permissionUsers.Sort((a, b) => (a.User.Id.CompareTo(b.User.Id)));
                 permissionUsers.ForEach(c => userIDs.Append(c.User.Id).Append(","));
+
                 userIDs.Length--;
 
                 return userIDs.ToString();
