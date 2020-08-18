@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VerifiedVRCustomers.cs" />
     <Compile Include="CustomerMargin.cs" />
     <Compile Include="CustomerVirtualRate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

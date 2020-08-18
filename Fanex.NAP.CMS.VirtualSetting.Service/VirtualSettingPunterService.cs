@@ -143,6 +143,42 @@
             return 0;
         }
 
+
+        public IEnumerable<int> GetVRAdjustmentCustomers()
+        {
+            return _dataAccess.GetVRAdjustmentCustomers();
+        }
+
+        public VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList)
+        {
+            return _dataAccess.VerifyVRAdjustmentCustomers(customerList);
+        }
+
+        public IPunterService UpdateVRFollowUpline(string customerList)
+        {
+            if (string.IsNullOrEmpty(customerList))
+            {
+                return this;
+            }
+
+            _dataAccess.UpdateVRFollowUpline(customerList);
+
+            return this;
+        }
+
+
+        public IPunterService UpdateVRAutoAdjustmentStatus(string customerList)
+        {
+            if (string.IsNullOrEmpty(customerList))
+            {
+                return this;
+            }
+
+            _dataAccess.UpdateVRAutoAdjustmentStatus(customerList);
+
+            return this;
+        }
+
         #region Private Methods
 
         private IEnumerable<CustomerVirtualRate> GetCurrentCustomerVirtualRate(string custIds)

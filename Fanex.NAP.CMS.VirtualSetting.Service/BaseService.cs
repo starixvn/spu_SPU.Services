@@ -29,11 +29,15 @@
 
         public virtual BaseService ExecuteForSoccer() { return this; }
 
+        public virtual BaseService ExecuteForBasketball() { return this; }
+
         public virtual BaseService ExecuteForSportbooks() { return this; }
 
         public virtual BaseService CountAffectedMembers() { return this; }
 
         public virtual BaseService SendMailExternal(int mailingListId) { return this; }
+
+        public virtual BaseService NotifyMessage() { return this; }
 
         public virtual BaseService SendMailInternal(int mailingListId) { return this; }
     }

@@ -102,6 +102,8 @@ namespace Fanex.NAP.SPU.Core
 
         public static string SuperIds => ConfigurationManager.AppSettings["SuperIds"];
 
+        public static int RetryTime => Convert.ToInt32(ConfigurationManager.AppSettings["RetryTime"].ToString());
+
         public static int DummyUser
         {
             get

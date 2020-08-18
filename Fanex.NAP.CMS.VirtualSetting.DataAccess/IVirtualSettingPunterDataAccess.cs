@@ -22,5 +22,13 @@
         ICommandResult InsertCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupID, int numOfMonth, string serviceName, DateTime adjustDate);
 
         IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupId, int numOfMonth);
+
+        IEnumerable<int> GetVRAdjustmentCustomers();
+
+        VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList);
+
+        void UpdateVRFollowUpline(string customerList);
+
+        void UpdateVRAutoAdjustmentStatus(string customerList);
     }
 }

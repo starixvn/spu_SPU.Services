@@ -7,7 +7,6 @@
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.SPU.Core;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -212,5 +211,54 @@
         //        Message = (errMsg is DBNull) ? string.Empty : Convert.ToString(errMsg)
         //    };
         //}
+
+        public IEnumerable<int> GetVRAdjustmentCustomers()
+        {
+            var criteria = new GetVRAdjustmentCustomerCriteria
+            {
+                Sporttype = 99
+            };
+
+            return _repository.Fetch<int>(criteria);
+        }
+
+        public VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList)
+        {
+            var criteria = new VerifyVRCustomerCriteria
+            {
+                ListCustID = customerList
+            };
+
+            var (firstResultSet, secondResultSet) = _repository.FetchMultiple<int, int>(criteria);
+            return new VerifiedVRCustomers(firstResultSet, secondResultSet);
+        }
+
+        public void UpdateVRFollowUpline(string customerList)
+        {
+            var criteria = new UpdateVRFollowUplineCriteria
+            {
+                CustIDList = customerList,
+                Sporttype = 99
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+
+        public void UpdateVRAutoAdjustmentStatus(string customerList)
+        {
+            var criteria = new UpdateVRAutoAdjustmentStatusCriteria
+            {
+                CustIDList = customerList,
+                Sporttype = 99
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
     }
 }
