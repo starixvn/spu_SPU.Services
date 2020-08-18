@@ -1324,46 +1324,6 @@
         <repeat-interval>300000</repeat-interval>
       </simple>
     </trigger>
-
-    <job>
-      <name>CTS_User_Permission</name>
-      <group>UserPermission</group>
-      <description>User Permission</description>
-      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
-      <durable>true</durable>
-      <recover>false</recover>
-      <job-data-map>
-        <entry>
-          <key>Active</key>
-          <value>false</value>
-        </entry>
-        <entry>
-          <key>FileName</key>
-          <value>Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe</value>
-        </entry>
-        <entry>
-          <key>Master</key>
-          <value>D:\WWW\SPU\Fanex.NAP.CTS.AutoTagProblemAccount.Console</value>
-        </entry>
-        <entry>
-          <key>Slave</key>
-          <value>D:\WWW\SPU\Fanex.NAP.CTS.AutoTagProblemAccount.Console</value>
-        </entry>
-      </job-data-map>
-    </job>
-
-    <trigger>
-      <simple>
-        <name>CTS_User_Permission_Trigger</name>
-        <group>UserPermission</group>
-        <description>User Permission</description>
-        <job-name>CTS_User_Permission</job-name>
-        <job-group>UserPermission</job-group>
-        <misfire-instruction>SmartPolicy</misfire-instruction>
-        <repeat-count>-1</repeat-count>
-        <repeat-interval>300000</repeat-interval>
-      </simple>
-    </trigger>
   </schedule>
 
 </job-scheduling-data>
