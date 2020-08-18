@@ -8,7 +8,7 @@ namespace Fanex.NAP.CTS.Criteria
         [SpParam(SqlParamName = "ip_UserIds")]
         public string UserIds { get; set; }
 
-        [SpParam(SqlParamName = "ip_Type")]
+        [SpParam(SqlParamName = "ip_FunctionName")]
         public string PermissionFuncName { get; set; }
 
         public override string GetSettingKey()

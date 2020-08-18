@@ -47,6 +47,11 @@ namespace Fanex.NAP.CTS.UserPermission.Console
 
                 if (!CheckDataMatching(preUserData, userIds))
                 {
+                    if(string.IsNullOrEmpty(userIds))
+                    {
+                        return;
+                    }
+
                     dataService.InsertUserPermission(userIds, FSFunctionKeys.AssociatedAccountMonitor);
                     Helper.WriteXML(AppSettings.IntermediateUserFileName, userIds);
                 }
