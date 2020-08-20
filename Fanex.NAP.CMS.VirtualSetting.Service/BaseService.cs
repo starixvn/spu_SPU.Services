@@ -27,11 +27,13 @@
             _letstalkService = new LetstalkService();
         }
 
-        public virtual BaseService ExecuteForSoccer() { return this; }
+        public virtual BaseService UpdateVRForSoccer() { return this; }
 
-        public virtual BaseService ExecuteForBasketball() { return this; }
+        public virtual BaseService UpdateVRForBasketball() { return this; }
 
-        public virtual BaseService ExecuteForSportbooks() { return this; }
+        public virtual BaseService UpdateForSportbooks() { return this; }
+
+        public virtual BaseService UpdateBetLimit() { return this; }
 
         public virtual BaseService CountAffectedMembers() { return this; }
 

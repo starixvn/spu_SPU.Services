@@ -31,11 +31,11 @@
             return this;
         }
 
-        public override BaseService ExecuteForSoccer()
+        public override BaseService UpdateVRForSoccer()
         {
-            VirtualSettingSoccerService service = new VirtualSettingSoccerService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
+            VRSoccerService service = new VRSoccerService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
 
-            service.AutoAdjustVirtualSettingsForPunters();
+            service.AutoAdjustVirtualSettings();
 
             PuntersUpdatedSoccer = service.PuntersUpdated;
 
@@ -46,11 +46,11 @@
             return this;
         }
 
-        public override BaseService ExecuteForSportbooks()
+        public override BaseService UpdateForSportbooks()
         {
-            VirtualSettingSportsbookService service = new VirtualSettingSportsbookService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
+            VRSportsbookService service = new VRSportsbookService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
 
-            service.AutoAdjustVirtualSettingsForPunters();
+            service.AutoAdjustVirtualSettings();
 
             PuntersUpdatedSportbooks = service.PuntersUpdated;
 

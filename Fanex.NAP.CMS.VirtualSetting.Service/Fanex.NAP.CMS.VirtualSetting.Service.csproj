@@ -46,13 +46,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseService.cs" />
+    <Compile Include="BetLimitService.cs" />
     <Compile Include="IPunterService.cs" />
-    <Compile Include="VirtualSettingPunterService.cs" />
+    <Compile Include="PunterService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IVirtualSettingService.cs" />
-    <Compile Include="VirtualSettingBasketballService.cs" />
-    <Compile Include="VirtualSettingSoccerService.cs" />
-    <Compile Include="VirtualSettingSportsbookService.cs" />
+    <Compile Include="ICustomerSettingsService.cs" />
+    <Compile Include="VROthersportsService.cs" />
+    <Compile Include="VRSoccerService.cs" />
+    <Compile Include="VRSportsbookService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.CMS.VirtualSetting.DataAccess\Fanex.NAP.CMS.VirtualSetting.DataAccess.csproj">

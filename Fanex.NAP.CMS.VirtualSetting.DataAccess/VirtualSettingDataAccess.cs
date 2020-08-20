@@ -10,11 +10,11 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class VirtualSettingPunterDataAccess : IVirtualSettingPunterDataAccess
+    public class VirtualSettingDataAccess : IVirtualSettingDataAccess
     {
         private readonly IDynamicRepository _repository;
 
-        public VirtualSettingPunterDataAccess()
+        public VirtualSettingDataAccess()
         {
             _repository = new DynamicRepository();
         }
@@ -212,6 +212,7 @@
         //    };
         //}
 
+        #region Othersports VR
         public IEnumerable<int> GetVRAdjustmentCustomers()
         {
             var criteria = new GetVRAdjustmentCustomerCriteria
@@ -222,15 +223,14 @@
             return _repository.Fetch<int>(criteria);
         }
 
-        public VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList)
+        public (IEnumerable<int>, IEnumerable<int>) VerifyVRAdjustmentCustomers(string customerList)
         {
             var criteria = new VerifyVRCustomerCriteria
             {
                 ListCustID = customerList
             };
 
-            var (firstResultSet, secondResultSet) = _repository.FetchMultiple<int, int>(criteria);
-            return new VerifiedVRCustomers(firstResultSet, secondResultSet);
+            return _repository.FetchMultiple<int, int>(criteria);
         }
 
         public void UpdateVRFollowUpline(string customerList)
@@ -260,5 +260,49 @@
                 objectDb.ExecuteNonQuery(criteria);
             }
         }
+        #endregion
+
+        #region Bet Limit
+        public IEnumerable<int> GetBetLimitCustomers()
+        {
+            return _repository.Fetch<int>(new GetBetLimitCustomerCriteria());
+        }
+
+        public (IEnumerable<int>, IEnumerable<int>) VerifyBetLimitCustomers(string customerList)
+        {
+            var criteria = new VerifyBetLimitCustomerCriteria
+            {
+                ListCustID = customerList
+            };
+
+            return _repository.FetchMultiple<int, int>(criteria);
+        }
+
+        public void UpdateBetLimit(string customerList)
+        {
+            var criteria = new UpdateBetLimitCriteria
+            {
+                CustIDList = customerList
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+
+        public void RemoveBetLimit(string customerList)
+        {
+            var criteria = new RemoveBetLimitCriteria
+            {
+                CustIDList = customerList
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+        #endregion
     }
 }

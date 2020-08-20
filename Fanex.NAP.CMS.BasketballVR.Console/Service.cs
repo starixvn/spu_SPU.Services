@@ -27,16 +27,16 @@
             return this;
         }
 
-        public override BaseService ExecuteForBasketball()
+        public override BaseService UpdateVRForBasketball()
         {
-            VirtualSettingBasketballService service = new VirtualSettingBasketballService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
+            VROthersportsService service = new VROthersportsService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
             var countRetry = 0;
 
             while (countRetry < AppSettings.RetryTime)
             {
                 try
                 {
-                    service.AutoAdjustVirtualSettingsForPunters();
+                    service.AutoAdjustVirtualSettings();
                     countRetry = AppSettings.RetryTime + 1;
                 }
                 catch (Exception ex)

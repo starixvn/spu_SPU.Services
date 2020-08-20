@@ -8,17 +8,17 @@
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.SPU.Core;
 
-    public class VirtualSettingPunterService : IPunterService
+    public class PunterService : IPunterService
     {
         private bool _soccer;
-        private IVirtualSettingPunterDataAccess _dataAccess;
+        private IVirtualSettingDataAccess _dataAccess;
         private VirtualSetting _model;
         private IEnumerable<Punter> _punters { get; set; }
         private Dictionary<int, Punter> _puntersDict;
         private IEnumerable<Punter> _proPuntersUpdated;
         private IEnumerable<Punter> _normalPuntersUpdated;
 
-        public VirtualSettingPunterService(VirtualSetting model, IVirtualSettingPunterDataAccess dataAccess, bool soccer = false)
+        public PunterService(VirtualSetting model, IVirtualSettingDataAccess dataAccess, bool soccer = false)
         {
             _model = model;
             _dataAccess = dataAccess;
@@ -143,13 +143,13 @@
             return 0;
         }
 
-
+        #region Othersports VR
         public IEnumerable<int> GetVRAdjustmentCustomers()
         {
             return _dataAccess.GetVRAdjustmentCustomers();
         }
 
-        public VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList)
+        public (IEnumerable<int>, IEnumerable<int>) VerifyVRAdjustmentCustomers(string customerList)
         {
             return _dataAccess.VerifyVRAdjustmentCustomers(customerList);
         }
@@ -178,6 +178,44 @@
 
             return this;
         }
+        #endregion
+
+        #region Bet Limit
+        public IEnumerable<int> GetBetLimitCustomers()
+        {
+            return _dataAccess.GetBetLimitCustomers();
+        }
+
+        public (IEnumerable<int>, IEnumerable<int>) VerifyBetLimitCustomers(string customerList)
+        {
+            return _dataAccess.VerifyBetLimitCustomers(customerList);
+        }
+
+        public IPunterService UpdateBetLimit(string customerList)
+        {
+            if (string.IsNullOrEmpty(customerList))
+            {
+                return this;
+            }
+
+            _dataAccess.UpdateBetLimit(customerList);
+
+            return this;
+        }
+
+
+        public IPunterService RemoveBetLimit(string customerList)
+        {
+            if (string.IsNullOrEmpty(customerList))
+            {
+                return this;
+            }
+
+            _dataAccess.RemoveBetLimit(customerList);
+
+            return this;
+        }
+        #endregion
 
         #region Private Methods
 

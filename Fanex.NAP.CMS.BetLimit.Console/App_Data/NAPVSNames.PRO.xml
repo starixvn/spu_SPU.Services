@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="BetLimit">
+    <Setting Key="Task_BetLimit_CheckCustPerformance" SpName="Task_BetLimit_CheckCustPerformance" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
+
+    <Setting Key="NAP_BLControl_GetPerformanceCheckList" SpName="NAP_BLControl_GetPerformanceCheckList" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+    <Setting Key="NAP_BLControl_PerformanceChecking_ReduceBetLimit" SpName="NAP_BLControl_PerformanceChecking_ReduceBetLimit" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+    <Setting Key="NAP_BLControl_PerformanceChecking_RemoveBetLimit" SpName="NAP_BLControl_PerformanceChecking_RemoveBetLimit" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+  </Function>
+</Functions>

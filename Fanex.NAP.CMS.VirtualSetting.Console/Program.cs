@@ -32,8 +32,8 @@
                 {
                     service
                         .StartTime()
-                        .ExecuteForSoccer()
-                        .ExecuteForSportbooks()
+                        .UpdateVRForSoccer()
+                        .UpdateForSportbooks()
                         .CountAffectedMembers()
                         .SendMailExternal(AppSettings.MailingListId);
                 }
