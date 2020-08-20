@@ -52,8 +52,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.CMS.BasketballVR.Console.exe.LOCAL.config" />
-    <None Include="Fanex.NAP.CMS.BasketballVR.Console.exe.PRO.config" />
+    <None Include="Fanex.NAP.CMS.BetLimit.Console.exe.LOCAL.config" />
+    <None Include="Fanex.NAP.CMS.BetLimit.Console.exe.PRO.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.CMS.VirtualSetting.Model\Fanex.NAP.CMS.VirtualSetting.Model.csproj">
@@ -94,10 +94,18 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\NAPVSNames.LOCAL.xml" />
-    <Content Include="App_Data\NAPVSNames.PRO.xml" />
-    <Content Include="App_Data\NAPVSNames.UAT.xml" />
-    <Content Include="App_Data\NAPVSNames.xml" />
+    <Content Include="App_Data\NAPVSNames.LOCAL.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\NAPVSNames.PRO.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\NAPVSNames.UAT.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\NAPVSNames.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

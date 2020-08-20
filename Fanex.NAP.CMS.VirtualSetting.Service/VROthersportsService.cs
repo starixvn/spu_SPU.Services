@@ -37,10 +37,10 @@
             var customerListString = string.Join(",", customerList);
             LogService.Info("OtherSports - VR Settings - Raw Customer list: " + customerListString);
 
-            var verifiedCustomers = _punterService.VerifyVRAdjustmentCustomers(customerListString);
+            var (passedPerfCheckCustomers, unpassedPerfCheckCustomers) = _punterService.VerifyVRAdjustmentCustomers(customerListString);
 
-            AdjustVRPassedCustomers(verifiedCustomers.PassedPerfCheckCustomers);
-            UpdateStatusUnpassedCustomers(verifiedCustomers.UnpassedPerfCheckCustomers);
+            AdjustVRPassedCustomers(passedPerfCheckCustomers);
+            UpdateStatusUnpassedCustomers(unpassedPerfCheckCustomers);
 
             return this;
         }   
