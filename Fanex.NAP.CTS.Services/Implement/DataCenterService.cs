@@ -81,9 +81,14 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.TransformDCSTransactionIPToCTSAssociationByIP(transactionByIpJson);
         }
 
-        public void TransformAssociationAffectedEvidence(int batchSize)
+        public IEnumerable<int> TransformAssociationAffectedEvidence(int batchSize)
         {
-            dataCenterDataAccess.TransformAssociationAffectedEvidence(batchSize);
+            return dataCenterDataAccess.TransformAssociationAffectedEvidence(batchSize);
+        }
+
+        public void UpdateBetLimitByEvidenceRemoving(IEnumerable<int> custIds)
+        {
+            dataCenterDataAccess.UpdateBetLimitByEvidenceRemoving(custIds);
         }
 
         public void UpdateLastLoginTime(int batchSize)
