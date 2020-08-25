@@ -36,7 +36,7 @@
             {
                 try
                 {
-                    service.AutoAdjustBetLimit();
+                    //service.AutoAdjustBetLimit();
                     countRetry = AppSettings.RetryTime + 1;
                 }
                 catch (Exception ex)

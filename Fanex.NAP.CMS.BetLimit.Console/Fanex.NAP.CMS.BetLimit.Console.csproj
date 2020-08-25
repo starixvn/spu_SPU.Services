@@ -52,8 +52,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.CMS.BetLimit.Console.exe.LOCAL.config" />
-    <None Include="Fanex.NAP.CMS.BetLimit.Console.exe.PRO.config" />
+    <None Include="Fanex.NAP.CMS.BetLimit.Console.exe.LOCAL.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Fanex.NAP.CMS.BetLimit.Console.exe.PRO.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.CMS.VirtualSetting.Model\Fanex.NAP.CMS.VirtualSetting.Model.csproj">
