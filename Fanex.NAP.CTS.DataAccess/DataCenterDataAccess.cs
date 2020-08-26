@@ -10,6 +10,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System;
+    using Fanex.NAP.CTS.Criteria.MainDB;
 
     public class DataCenterDataAccess
     {
@@ -142,7 +143,7 @@
             return repository.Execute(criteria);
         }
 
-        public void TransformAssociationAffectedEvidence(int batchSize)
+        public IEnumerable<int> TransformAssociationAffectedEvidence(int batchSize)
         {
             var repository = new DynamicRepository();
 
@@ -151,8 +152,21 @@
                 BatchSize = batchSize
             };
 
+            return repository.Fetch<int>(criteria);
+        }
+
+        public void UpdateBetLimitByEvidenceRemoving(IEnumerable<int> custIds)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateBetLimitByEvidenceRemovingCriteria
+            {
+                CustIDList = string.Join(",", custIds)
+            };
+
             repository.Execute(criteria);
         }
+        
 
         public void TransformUpdatingLastLoginTime(int batchSize)
         {

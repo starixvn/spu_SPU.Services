@@ -6,13 +6,13 @@
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.SPU.Core;
 
-    public class VirtualSettingSportsbookService : IVirtualSettingService
+    public class VRSportsbookService : ICustomerSettingsService
     {
         private IPunterService _punterService;
 
         public int PuntersUpdated { get; set; }
 
-        public VirtualSettingSportsbookService(string siteIds, string superIds, DateTime adjustDate)
+        public VRSportsbookService(string siteIds, string superIds, DateTime adjustDate)
         {
             var model = new VirtualSetting
             {
@@ -25,12 +25,12 @@
                 FailedUpdatePunterList = new List<Punter>(),
             };
 
-            var dataAccess = new VirtualSettingPunterDataAccess();
+            var dataAccess = new VirtualSettingDataAccess();
 
-            _punterService = new VirtualSettingPunterService(model, dataAccess);
+            _punterService = new PunterService(model, dataAccess);
         }
 
-        public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
+        public ICustomerSettingsService AutoAdjustVirtualSettings()
         {
             _punterService.GetWinningPunterList()
                 .FilterPunterBaseOnCurrentVirtualRate(0, true)
@@ -38,6 +38,11 @@
 
             PuntersUpdated = _punterService.CountAffected();
 
+            return this;
+        }
+
+        public ICustomerSettingsService AutoAdjustBetLimit()
+        {
             return this;
         }
     }

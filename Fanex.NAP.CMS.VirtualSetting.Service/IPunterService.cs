@@ -17,11 +17,19 @@
 
         IEnumerable<int> GetVRAdjustmentCustomers();
 
-        VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList);
+        (IEnumerable<int>, IEnumerable<int>) VerifyVRAdjustmentCustomers(string customerList);
 
         IPunterService UpdateVRFollowUpline(string customerList);
 
         IPunterService UpdateVRAutoAdjustmentStatus(string customerList);
+
+        IEnumerable<int> GetBetLimitCustomers();
+
+        (IEnumerable<int>, IEnumerable<int>) VerifyBetLimitCustomers(string customerList);
+
+        IPunterService UpdateBetLimit(string customerList);
+
+        IPunterService RemoveBetLimit(string customerList);
 
         int CountAffected();
     }

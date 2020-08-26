@@ -5,7 +5,7 @@
     using System;
     using System.Collections.Generic;
 
-    public interface IVirtualSettingPunterDataAccess
+    public interface IVirtualSettingDataAccess
     {
         IEnumerable<CustomerVirtualRate> GetCurrentCustomerVirtualRate(string custIds);
 
@@ -23,12 +23,24 @@
 
         IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupId, int numOfMonth);
 
+        #region OtherSports VR
         IEnumerable<int> GetVRAdjustmentCustomers();
 
-        VerifiedVRCustomers VerifyVRAdjustmentCustomers(string customerList);
+        (IEnumerable<int>, IEnumerable<int>) VerifyVRAdjustmentCustomers(string customerList);
 
         void UpdateVRFollowUpline(string customerList);
 
         void UpdateVRAutoAdjustmentStatus(string customerList);
+        #endregion
+
+        #region Bet Limit
+        IEnumerable<int> GetBetLimitCustomers();
+
+        (IEnumerable<int>, IEnumerable<int>) VerifyBetLimitCustomers(string customerList);
+
+        void UpdateBetLimit(string customerList);
+
+        void RemoveBetLimit(string customerList);
+        #endregion
     }
 }

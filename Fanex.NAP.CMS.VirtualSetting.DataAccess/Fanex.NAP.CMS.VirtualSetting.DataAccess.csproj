@@ -42,8 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IVirtualSettingPunterDataAccess.cs" />
-    <Compile Include="VirtualSettingPunterDataAccess.cs" />
+    <Compile Include="IVirtualSettingDataAccess.cs" />
+    <Compile Include="VirtualSettingDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -44,20 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GetBAAccountsCriteria.cs" />
-    <Compile Include="UpdateVRAutoAdjustmentStatusCriteria.cs" />
-    <Compile Include="VerifyVRCustomerCriteria.cs" />
-    <Compile Include="GetBasketballVRCustomerCriteria.cs" />
-    <Compile Include="GetCurrentCustomerVirtualRate.cs" />
-    <Compile Include="GetCustomerMarginHistoryCriteria.cs" />
-    <Compile Include="GetLosingPrunterCriteria.cs" />
-    <Compile Include="GetProPrunterCriteria.cs" />
-    <Compile Include="GetProPrunterSoccerCriteria.cs" />
-    <Compile Include="UpdateVRFollowUplineCriteria.cs" />
-    <Compile Include="InsertCustomerMarginHistoryCriteria.cs" />
-    <Compile Include="LogVirtualSettingCriteria.cs" />
+    <Compile Include="BetLimit\GetBetLimitCustomerCriteria.cs" />
+    <Compile Include="BetLimit\RemoveBetLimitCriteria.cs" />
+    <Compile Include="BetLimit\UpdateBetLimitCriteria.cs" />
+    <Compile Include="BetLimit\VerifyBetLimitCustomerCriteria.cs" />
+    <Compile Include="VR_Soccer\GetBAAccountsCriteria.cs" />
+    <Compile Include="VR_Othersports\UpdateVRAutoAdjustmentStatusCriteria.cs" />
+    <Compile Include="VR_Othersports\VerifyVRCustomerCriteria.cs" />
+    <Compile Include="VR_Othersports\GetBasketballVRCustomerCriteria.cs" />
+    <Compile Include="VR_Soccer\GetCurrentCustomerVirtualRate.cs" />
+    <Compile Include="VR_Soccer\GetCustomerMarginHistoryCriteria.cs" />
+    <Compile Include="VR_Soccer\GetLosingPrunterCriteria.cs" />
+    <Compile Include="VR_Soccer\GetProPrunterCriteria.cs" />
+    <Compile Include="VR_Soccer\GetProPrunterSoccerCriteria.cs" />
+    <Compile Include="VR_Othersports\UpdateVRFollowUplineCriteria.cs" />
+    <Compile Include="VR_Soccer\InsertCustomerMarginHistoryCriteria.cs" />
+    <Compile Include="VR_Soccer\LogVirtualSettingCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UpdateVirtualSettingCriteria.cs" />
+    <Compile Include="VR_Soccer\UpdateVirtualSettingCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Dapper">

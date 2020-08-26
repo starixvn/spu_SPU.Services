@@ -1,17 +1,19 @@
-﻿using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.CTS.Services;
-using Fanex.NAP.SPU.Core;
-using SharpRaven;
-using System;
-using System.Collections.Generic;
-
-namespace Fanex.NAP.CTS.AffectedEvidence.Console
+﻿namespace Fanex.NAP.CTS.AffectedEvidence.Console
 {
+    using Fanex.Data;
+    using Fanex.Data.MySql;
+    using Fanex.Data.SqlServer;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.SPU.Core;
+    using SharpRaven;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+
     public static class Program
     {
         static void Main(string[] args)
@@ -19,6 +21,7 @@ namespace Fanex.NAP.CTS.AffectedEvidence.Console
             DbSettingProviderManager
                  .StartNewSession()
                  .WithMySql()
+                 .WithSqlServer()
                  .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
                  .UseDefaultConnectionStringProvider()
                  .Run();
@@ -36,9 +39,13 @@ namespace Fanex.NAP.CTS.AffectedEvidence.Console
             try
             {
                 var dataCenterService = new DataCenterService();
-                var batchSize = System.Configuration.ConfigurationManager.AppSettings["Batch-Size"];
+                var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
 
-                dataCenterService.TransformAssociationAffectedEvidence(Convert.ToInt32(batchSize));
+                var custIds = dataCenterService.TransformAssociationAffectedEvidence(batchSize);
+
+                // Set BetLimit
+                LogService.Info("Transform Affected Evidence: custIds: " + string.Join(",", custIds));
+                dataCenterService.UpdateBetLimitByEvidenceRemoving(custIds);
             }
             catch (Exception ex)
             {

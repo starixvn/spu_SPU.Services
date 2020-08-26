@@ -8,13 +8,13 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class VirtualSettingBasketballService : IVirtualSettingService
+    public class VROthersportsService : ICustomerSettingsService
     {
         private IPunterService _punterService;
 
         public int PuntersUpdated { get; set; }
 
-        public VirtualSettingBasketballService(string siteIds, string superIds, DateTime adjustDate)
+        public VROthersportsService(string siteIds, string superIds, DateTime adjustDate)
         {
             var model = new VirtualSetting
             {
@@ -26,26 +26,31 @@
                 FailedUpdatePunterList = new List<Punter>()
             };
 
-            var dataAccess = new VirtualSettingPunterDataAccess();
+            var dataAccess = new VirtualSettingDataAccess();
 
-            _punterService = new VirtualSettingPunterService(model, dataAccess, true);
+            _punterService = new PunterService(model, dataAccess, true);
         }        
 
-        public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
+        public ICustomerSettingsService AutoAdjustVirtualSettings()
         {
             var customerList = _punterService.GetVRAdjustmentCustomers().ToList();
             var customerListString = string.Join(",", customerList);
             LogService.Info("OtherSports - VR Settings - Raw Customer list: " + customerListString);
 
-            var verifiedCustomers = _punterService.VerifyVRAdjustmentCustomers(customerListString);
+            var (passedPerfCheckCustomers, unpassedPerfCheckCustomers) = _punterService.VerifyVRAdjustmentCustomers(customerListString);
 
-            AdjustPassedPerformanceCustomersVR(verifiedCustomers.PassedPerfCheckCustomers);
-            UpdateUnpassedPerformanceCustomersVRStatus(verifiedCustomers.UnpassedPerfCheckCustomers);
+            AdjustVRPassedCustomers(passedPerfCheckCustomers);
+            UpdateStatusUnpassedCustomers(unpassedPerfCheckCustomers);
 
             return this;
-        }        
+        }   
+        
+        public ICustomerSettingsService AutoAdjustBetLimit()
+        {
+            return this;
+        }
 
-        private void AdjustPassedPerformanceCustomersVR(IEnumerable<int> customerList)
+        private void AdjustVRPassedCustomers(IEnumerable<int> customerList)
         {
             var customerListString = string.Join(",", customerList);
             LogService.Info("OtherSports - VR Settings - Customers have passed Performance Check: " + customerListString);
@@ -59,7 +64,7 @@
             }
         }
 
-        private void UpdateUnpassedPerformanceCustomersVRStatus(IEnumerable<int> customerList)
+        private void UpdateStatusUnpassedCustomers(IEnumerable<int> customerList)
         {
             var customerListString = string.Join(",", customerList);
             LogService.Info("OtherSports - VR Settings - Customers have NOT passed Performance Check: " + customerListString);

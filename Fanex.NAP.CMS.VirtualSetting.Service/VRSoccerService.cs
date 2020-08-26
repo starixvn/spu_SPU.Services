@@ -6,13 +6,13 @@
     using System;
     using System.Collections.Generic;
 
-    public class VirtualSettingSoccerService : IVirtualSettingService
+    public class VRSoccerService : ICustomerSettingsService
     {
         private IPunterService _punterService;
 
         public int PuntersUpdated { get; set; }
 
-        public VirtualSettingSoccerService(string siteIds, string superIds, DateTime adjustDate)
+        public VRSoccerService(string siteIds, string superIds, DateTime adjustDate)
         {
             var model = new VirtualSetting
             {
@@ -25,12 +25,12 @@
                 FailedUpdatePunterList = new List<Punter>()
             };
 
-            var dataAccess = new VirtualSettingPunterDataAccess();
+            var dataAccess = new VirtualSettingDataAccess();
 
-            _punterService = new VirtualSettingPunterService(model, dataAccess, true);
+            _punterService = new PunterService(model, dataAccess, true);
         }        
 
-        public IVirtualSettingService AutoAdjustVirtualSettingsForPunters()
+        public ICustomerSettingsService AutoAdjustVirtualSettings()
         {
             _punterService.GetWinningPunterSoccerList()
                     .FilterPunterBaseOnCurrentVirtualRate(1, false)
@@ -41,6 +41,10 @@
 
             return this;
         }
-        
+
+        public ICustomerSettingsService AutoAdjustBetLimit()
+        {
+            return this;
+        }
     }
 }

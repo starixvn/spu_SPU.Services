@@ -1284,7 +1284,6 @@
       </cron>
     </trigger>
     
-
     <job>
       <name>CTS_User_Permission</name>
       <group>UserPermission</group>
@@ -1323,6 +1322,45 @@
         <repeat-count>-1</repeat-count>
         <repeat-interval>300000</repeat-interval>
       </simple>
+    </trigger>
+    
+    <job>
+      <name>Fanex_NAP_CMS_BetLimit_Console</name>
+      <group>CMSJob</group>
+      <description>Fanex.NAP.CMS.BetLimit.Console</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.CMS.BetLimit.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>D:\Work\FPS\NewGenFPS\spu.services\Fanex.NAP.CMS.BetLimit.Console\bin\Debug</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>D:\Work\FPS\NewGenFPS\spu.services\Fanex.NAP.CMS.BetLimit.Console\bin\Debug</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <cron>
+        <name>Fanex_NAP_CMS_BetLimit_Console_Trigger</name>
+        <group>VirtualSettingTrigger</group>
+        <description>Fanex.NAP.CMS.BetLimit.Console</description>
+        <job-name>Fanex_NAP_CMS_BetLimit_Console</job-name>
+        <job-group>CMSJob</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <cron-expression>0 15 0 * * ?</cron-expression>
+      </cron>
     </trigger>
   </schedule>
 

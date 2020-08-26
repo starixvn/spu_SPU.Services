@@ -28,12 +28,12 @@
 
                 var service = new Service();
 
-                if (service.IsExecutedDate())
+                if (!service.IsExecutedDate())
                 {
                     service
                         .StartTime()
-                        .ExecuteForSoccer()
-                        .ExecuteForSportbooks()
+                        .UpdateVRForSoccer()
+                        .UpdateForSportbooks()
                         .CountAffectedMembers()
                         .SendMailExternal(AppSettings.MailingListId);
                 }
