@@ -19,6 +19,7 @@
     using System.Threading.Tasks;
     using Fanex.NAP.FS.Core;
     using System.Configuration;
+    using System.Threading;
 
     class Program
     {
@@ -57,6 +58,7 @@
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
                         var customers = dataService.GetCustomerForRunRealtime(custSportJson);
                         dataService.ClassifyCustomerRealtime(customers);
+                        Thread.Sleep(30000);
                     }
 
                     dataService.RealtimeUpdateLastScanTime();
