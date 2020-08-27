@@ -104,6 +104,8 @@ namespace Fanex.NAP.SPU.Core
 
         public static int RetryTime => Convert.ToInt32(ConfigurationManager.AppSettings["RetryTime"].ToString());
 
+        public static bool IsFirstTimeForCN88 => Convert.ToBoolean(ConfigurationManager.AppSettings["IsFirstTimeForCN88"].ToString());
+
         public static int DummyUser
         {
             get
