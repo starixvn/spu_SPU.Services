@@ -67,7 +67,7 @@
         {
             var environment = AppSettings.EnvironmentName;
 
-            LogService.Info($"Auto Update Bet Limit service ({ environment }) - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
+            LogService.Info($"Auto Update Bet Limit service ({ environment }) - TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
 
             if (AppSettings.Environment == 3)
             {
