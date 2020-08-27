@@ -48,7 +48,7 @@
                 {
                     // Set BetLimit
                     LogService.Info("Transform Affected Evidence: custIds: " + string.Join(",", custIds));
-                    //dataCenterService.UpdateBetLimitByEvidenceRemoving(custIds);
+                    dataCenterService.UpdateBetLimitByEvidenceRemoving(custIds);
                 }
             }
             catch (Exception ex)
