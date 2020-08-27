@@ -55,13 +55,14 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                 }
                 else
                 {
-                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
+                    if (AppSettings.IsFirstTimeRunForIBC)
+                        problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
+                    else
+                        problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
 
-                    //Will be removed after initializing for CN88
-                    if (AppSettings.IsFirstTimeForCN88)
-                    {
+
+                    if (AppSettings.IsFirstTimeRunForCN88)
                         problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
-                    }
                     else
                         problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
                 }
