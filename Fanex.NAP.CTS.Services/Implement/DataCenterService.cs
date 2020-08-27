@@ -196,6 +196,11 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetProblemAccounts(custIDs, dateTime);
         }
 
+        public IEnumerable<ProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime dateTime)
+        {
+            return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
+        }
+
         public void InsertProblemAccounts(string jsonData)
         {
             dataCenterDataAccess.InsertProblemAccount(jsonData);

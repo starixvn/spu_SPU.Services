@@ -1,8 +1,8 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-
-namespace Fanex.NAP.CTS.Criteria
+﻿namespace Fanex.NAP.CTS.Criteria
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+
     public class GetPreviousTimingExecutionCriteria : NonQueryCommand
     {
         [SpParam(SqlParamName = "ip_ParamID")]

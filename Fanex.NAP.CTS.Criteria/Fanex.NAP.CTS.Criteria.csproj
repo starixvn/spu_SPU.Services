@@ -50,6 +50,7 @@
     <Compile Include="GetAllSpecialCustomerClassCriteria.cs" />
     <Compile Include="InsertCustomerGeneralCategoryToMainDBCriteria.cs" />
     <Compile Include="InsertMainCustomerClassificationCriteria.cs" />
+    <Compile Include="GetProblemAccountsCN88Criteria.cs" />
     <Compile Include="InsertUserPermissionCriteria.cs" />
     <Compile Include="MainDB\UpdateBetLimitByEvidenceRemovingCriteria.cs" />
     <Compile Include="MoveToTransaction07GetPackageCriteria.cs" />

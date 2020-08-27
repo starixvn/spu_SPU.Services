@@ -50,11 +50,13 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
                 if (string.IsNullOrEmpty(previousTimingExecution.ParameterValue))
                 {
-                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue).AddMinutes(-30)).ToList();
+                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
+                    problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
                 }
                 else
                 {
                     problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
+                    problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
                 }
 
                 LogService.Info("AutoTag Problem Account - problemAccounts: " + problemAccounts.Count);

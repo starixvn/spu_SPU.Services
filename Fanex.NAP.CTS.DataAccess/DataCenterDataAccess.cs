@@ -421,6 +421,20 @@
             }
         }
 
+        public IEnumerable<ProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime dateTime)
+        {
+            var criteria = new GetProblemAccountsCN88Criteria
+            {
+                CustIds = custIDs,
+                Datetime = dateTime
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<ProblemAccountsModel>(criteria).ToList();
+            }
+        }
+
         public void InsertProblemAccount(string problemAccountJson)
         {
             var criteria = new InsertProblemAccountCriteria

@@ -1,9 +1,9 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using System;
-
-namespace Fanex.NAP.CTS.Criteria
+﻿namespace Fanex.NAP.CTS.Criteria
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+    using System;
+
     public class GetProblemAccountsCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "CustIds")]
