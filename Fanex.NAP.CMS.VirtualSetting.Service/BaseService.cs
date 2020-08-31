@@ -35,6 +35,8 @@
 
         public virtual BaseService UpdateBetLimit() { return this; }
 
+        public virtual BaseService UpdateVRAgent() { return this; }
+
         public virtual BaseService CountAffectedMembers() { return this; }
 
         public virtual BaseService SendMailExternal(int mailingListId) { return this; }

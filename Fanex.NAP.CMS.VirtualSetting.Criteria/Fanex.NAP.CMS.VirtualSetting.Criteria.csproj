@@ -44,7 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VR_Agent\UpdateUnflagAbnormalAgentCriteria..cs" />
+    <Compile Include="VR_Agent\UpdateFlagAbnormalAgentCriteria.cs" />
+    <Compile Include="VR_Agent\VerifySportsAgentPerformanceCriteria.cs" />
     <Compile Include="BetLimit\GetBetLimitCustomerCriteria.cs" />
+    <Compile Include="VR_Agent\InsertNewVRAgentCriteria.cs" />
     <Compile Include="BetLimit\RemoveBetLimitCriteria.cs" />
     <Compile Include="BetLimit\UpdateBetLimitCriteria.cs" />
     <Compile Include="BetLimit\VerifyBetLimitCustomerCriteria.cs" />

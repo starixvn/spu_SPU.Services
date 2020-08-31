@@ -217,6 +217,46 @@
         }
         #endregion
 
+        #region VR-Agent
+        public IPunterService InsertNewVRAgent()
+        {
+            _dataAccess.InsertNewVRAgent();
+
+            return this;
+        }
+
+        public (IEnumerable<int>, IEnumerable<int>) VerifySportsAgentPerformance()
+        {
+            return _dataAccess.VerifySportsAgentPerformance();            
+        }
+
+        public IPunterService UpdateFlagAbnormalAgent(string customerList, int type)
+        {
+            if (string.IsNullOrEmpty(customerList))
+            {
+                return this;
+            }
+
+            _dataAccess.UpdateFlagAbnormalAgent(customerList, type);
+
+            return this;
+        }
+
+        public IPunterService UpdateUnflagAbnormalAgent(string customerList, int type)
+        {
+            if (string.IsNullOrEmpty(customerList))
+            {
+                return this;
+            }
+
+            _dataAccess.UpdateUnflagAbnormalAgent(customerList, type);
+
+            return this;
+        }
+
+
+        #endregion
+
         #region Private Methods
 
         private IEnumerable<CustomerVirtualRate> GetCurrentCustomerVirtualRate(string custIds)

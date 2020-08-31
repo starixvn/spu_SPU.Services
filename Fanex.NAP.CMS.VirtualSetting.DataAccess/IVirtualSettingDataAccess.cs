@@ -42,5 +42,16 @@
 
         void RemoveBetLimit(string customerList);
         #endregion
+
+
+        #region VR-Agent
+        void InsertNewVRAgent();
+
+        (IEnumerable<int>, IEnumerable<int>) VerifySportsAgentPerformance();
+
+        void UpdateFlagAbnormalAgent(string customerList, int type);
+
+        void UpdateUnflagAbnormalAgent(string customerList, int type);
+        #endregion
     }
 }

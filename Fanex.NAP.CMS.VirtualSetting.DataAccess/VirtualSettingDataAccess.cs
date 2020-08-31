@@ -3,6 +3,7 @@
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.NAP.CMS.VirtualSetting.Criteria;
+    using Fanex.NAP.CMS.VirtualSetting.Criteria.VR_Agent;
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.SPU.Core;
@@ -296,6 +297,53 @@
             var criteria = new RemoveBetLimitCriteria
             {
                 CustIDList = customerList
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+        #endregion
+
+        #region VR-Agent
+        public void InsertNewVRAgent()
+        {
+            var criteria = new InsertNewVRAgentCriteria();
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+
+        public (IEnumerable<int>, IEnumerable<int>) VerifySportsAgentPerformance()
+        {
+            var criteria = new VerifySportsAgentPerformanceCriteria();
+
+            return _repository.FetchMultiple<int, int>(criteria);
+        }
+
+        public void UpdateFlagAbnormalAgent(string customerList, int type)
+        {
+            var criteria = new UpdateFlagAbnormalAgentCriteria
+            {
+                CustIDList = customerList,
+                Type = type
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+
+        public void UpdateUnflagAbnormalAgent(string customerList, int type)
+        {
+            var criteria = new UpdateUnflagAbnormalAgentCriteria
+            {
+                CustIDList = customerList,
+                Type = type
             };
 
             using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
