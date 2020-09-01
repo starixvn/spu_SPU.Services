@@ -29,20 +29,30 @@
         public override BaseService UpdateVRAgent()
         {
             var service = new VRAgentService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
+            var countRetry = 0;
 
-            try
+            while (countRetry < AppSettings.RetryTime)
             {
-                service.AutoVRAgentAdjustment();
-            }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                try
+                {
+                    service.AutoVRAgentAdjustment();
+                    countRetry = AppSettings.RetryTime + 1;
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error($"VR - Auto Agent Adjustment service - Start Exception {logMessage}");
+                    LogService.Error($"VR - Auto Agent Adjustment service - Start Exception {logMessage}");
+                    countRetry += 1;
+                    if (countRetry == AppSettings.RetryTime)
+                    {
+                        throw ex;
+                    }
+                }
             }
-            
+
             TotalAffectedMembers = service.PuntersUpdated;
 
             LogService.Info("Executed for VR - Auto Agent Adjustment successfully!");
