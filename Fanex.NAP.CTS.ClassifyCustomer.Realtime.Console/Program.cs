@@ -61,7 +61,7 @@
                         Thread.Sleep(30000);
                     }
 
-                    dataService.RealtimeUpdateLastScanTime();
+                    dataService.RealtimeUpdateLastScanTime(false);
                 }
             }
             catch (Exception ex)

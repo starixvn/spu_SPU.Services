@@ -49,7 +49,7 @@
             try
             {
                 int batchSize = jobDataMap.GetInt("BatchSize");
-                var customerHasChanges = dataService.GetCustomerHasChangeForRunRealtime();
+                var customerHasChanges = dataService.GetCustomerGeneralCategoryHasChangeForRunRealtime();
 
                 if (customerHasChanges.Any())
                 {
@@ -57,12 +57,12 @@
                     for (int i = 0; i < custChunks.Count; i++)
                     {
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
-                        var customers = dataService.GetCustomerForRunRealtime(custSportJson);
-                        dataService.ClassifyCustomerRealtime(customers);
+                        var customers = dataService.GetCustomerGeneralCategoryForRunRealtime(custSportJson);
+                        dataService.ClassifyCustomerGeneralCategoryRealtime(customers);
                         Thread.Sleep(3000);
                     }
 
-                    dataService.RealtimeUpdateLastScanTime();
+                    dataService.RealtimeUpdateLastScanTime(true);
                 }
             }
             catch (Exception ex)

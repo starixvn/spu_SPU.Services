@@ -1,13 +1,8 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.Criteria.CustomerClassification
+﻿namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+
     public class GetCustomerClassificationByCategoryCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "ip_CategoryIDList")]

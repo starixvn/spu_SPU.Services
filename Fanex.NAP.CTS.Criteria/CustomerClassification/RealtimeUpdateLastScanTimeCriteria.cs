@@ -1,17 +1,16 @@
-﻿using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.Criteria.CustomerClassification
+﻿namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+
     public class RealtimeUpdateLastScanTimeCriteria : NonQueryCommand
     {
+        [SpParam(SqlParamName = "@IsGeneralCategory")]
+        public string IsGeneralCategory { get; set; }
+
         public override string GetSettingKey()
         {
-            return "CustomerClassification_UpdateLastScanTime";
+            return "CTS_NormalAccountsClassification_UpdateLastScanTime";
         }
 
         public override bool IsValid()

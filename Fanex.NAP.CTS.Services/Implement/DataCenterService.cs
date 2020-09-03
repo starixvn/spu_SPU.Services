@@ -146,9 +146,19 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetCustomerHasChangeForRunRealtime();
         }
 
+        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryHasChangeForRunRealtime()
+        {
+            return dataCenterDataAccess.GetCustomerGeneralCategoryHasChangeForRunRealtime();
+        }
+
         public IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList)
         {
             return dataCenterDataAccess.GetCustomerForRealtimeScanning(custIdList);
+        }
+
+        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList)
+        {
+            return dataCenterDataAccess.GetCustomerGeneralCategoryForRunRealtime(custIdList);
         }
 
         public void ClassifyCustomerDaily (IEnumerable<CustomerClassificationModel> customers)
@@ -171,9 +181,14 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.ClassifyCustomerRealtime(customers);
         }
 
-        public void RealtimeUpdateLastScanTime()
+        public void ClassifyCustomerGeneralCategoryRealtime(IEnumerable<CustomerClassificationModel> customers)
         {
-            dataCenterDataAccess.RealtimeUpdateLastScanTime();
+            dataCenterDataAccess.ClassifyCustomerGeneralCategoryRealtime(customers);
+        }
+
+        public void RealtimeUpdateLastScanTime(bool isGeneralCategory)
+        {
+            dataCenterDataAccess.RealtimeUpdateLastScanTime(isGeneralCategory);
         }
 
         public IEnumerable<ProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)

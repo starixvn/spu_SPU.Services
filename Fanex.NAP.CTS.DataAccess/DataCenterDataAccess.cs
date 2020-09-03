@@ -299,6 +299,15 @@
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
+        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryHasChangeForRunRealtime()
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetCustomerGeneralCategoryHasChangeForRunRealtimeCriteria();
+
+            return repository.Fetch<CustomerClassificationModel>(criteria);
+        }
+
         public IEnumerable<CustomerClassificationModel> GetCustomerForRealtimeScanning(string custSportJson)
         {
             var repository = new DynamicRepository();
@@ -306,6 +315,19 @@
             var criteria = new GetCustomerClassificationByCategoryCriteria
             {
                 CategoryIdList = "2,5", // Hard code for New Cust & VIP Category
+                CustSportsJson = custSportJson
+            };
+
+            return repository.Fetch<CustomerClassificationModel>(criteria);
+        }
+
+        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custSportJson)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetCustomerClassificationByCategoryCriteria
+            {
+                CategoryIdList = "202,205", // Hard code for 'Main Normal Account' & 'Main VIP'
                 CustSportsJson = custSportJson
             };
 
@@ -361,7 +383,19 @@
             repository.Execute(criteria);
         }
 
-        public void RealtimeUpdateLastScanTime()
+        public void ClassifyCustomerGeneralCategoryRealtime(IEnumerable<CustomerClassificationModel> customers)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new CategorizeCustomerGeneralCategoryRealtimeCriteria
+            {
+                CustomersXML = customers.ToXmlString()
+            };
+
+            repository.Execute(criteria);
+        }
+
+        public void RealtimeUpdateLastScanTime(bool isGeneralCategory)
         {
             var repository = new DynamicRepository();
 

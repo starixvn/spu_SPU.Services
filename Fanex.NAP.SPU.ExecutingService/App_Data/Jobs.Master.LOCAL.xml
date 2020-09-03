@@ -1532,6 +1532,63 @@
         <cron-expression>0 15 0 * * ?</cron-expression>
       </cron>
     </trigger>
+
+    <job>
+      <name>CTS_CustomerGeneral_Classification_Job</name>
+      <group>CustomerClassification</group>
+      <description>CTS_CustomerGeneral_Classification_Job</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.GeneralCategoryClassifyCustomerJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+
+    <trigger>
+      <simple>
+        <name>CTS_CustomerGeneral_Classification_DailyTrigger</name>
+        <group>CustomerClassification</group>
+        <description>CustomerClassification</description>
+        <job-name>CTS_CustomerGeneral_Classification_Job</job-name>
+        <job-group>CustomerClassification</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+        <job-data-map>
+          <entry>
+            <key>Frequency</key>
+            <value>2</value>
+          </entry>
+          <entry>
+            <key>BatchSize</key>
+            <value>1</value>
+          </entry>
+          <entry>
+            <key>ParentCategoryID</key>
+            <value>200</value>
+          </entry>
+        </job-data-map>
+      </simple>
+      <simple>
+        <name>CTS_CustomerGeneral_Classification_RealtimeTrigger</name>
+        <group>CustomerClassification</group>
+        <description>CustomerClassification</description>
+        <job-name>CTS_CustomerGeneral_Classification_Job</job-name>
+        <job-group>CustomerClassification</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>10000</repeat-interval>
+        <job-data-map>
+          <entry>
+            <key>Frequency</key>
+            <value>1</value>
+          </entry>
+          <entry>
+            <key>BatchSize</key>
+            <value>1</value>
+          </entry>
+        </job-data-map>
+      </simple>
+    </trigger>
+    
   </schedule>
 
 </job-scheduling-data>
