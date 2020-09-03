@@ -93,7 +93,7 @@
                         var custGroupByBatch = customers.GroupBy(c => c.BatchID);
                         foreach (var custGroup in custGroupByBatch)
                         {
-                            dataService.ClassifyCustomerDaily(custGroup);
+                            dataService.ClassifyCustomerGeneralCategoryDaily(custGroup);
                             string jsonData = JsonConvert.SerializeObject(custGroup.Select(a => new { a.CustId, a.SportGroupId }));
                             dataService.ClassifyCustomerDailyDone(jsonData, parentCateID);
                             countTotalCusts += custGroup.Count();

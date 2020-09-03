@@ -312,6 +312,18 @@
             repository.Execute(criteria);
         }
 
+        public void ClassifyCustomerGeneralCategoryDaily(IEnumerable<CustomerClassificationModel> customers)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new NormalAccountsClassificationGeneralCategorizeDailyCriteria
+            {
+                ListCustIds = string.Join(",", customers.Select(c => c.CustId))
+            };
+
+            repository.Execute(criteria);
+        }
+
         public void ClassifyCustomerDailyDone(string custSportJson, int parentCateId)
         {
             var repository = new DynamicRepository();

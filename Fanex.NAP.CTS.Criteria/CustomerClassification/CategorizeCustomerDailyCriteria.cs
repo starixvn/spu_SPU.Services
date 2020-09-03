@@ -11,8 +11,6 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
     {
         public string CustomersXML { get; set; }
 
-        public string CustIdList { get; set; }
-
         public override string GetSettingKey()
         {
             return "CustomerClassification_CategorizeCustomer_Daily";

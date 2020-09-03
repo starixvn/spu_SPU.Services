@@ -151,6 +151,11 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.ClassifyCustomerDaily(customers);
         }
 
+        public void ClassifyCustomerGeneralCategoryDaily(IEnumerable<CustomerClassificationModel> customers)
+        {
+            dataCenterDataAccess.ClassifyCustomerGeneralCategoryDaily(customers);
+        }
+
         public void ClassifyCustomerDailyDone(string custSportJson, int parentCateId)
         {
             dataCenterDataAccess.ClassifyCustomerDailyDone(custSportJson, parentCateId);
