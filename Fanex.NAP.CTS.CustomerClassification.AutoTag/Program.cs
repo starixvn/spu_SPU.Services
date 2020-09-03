@@ -53,18 +53,48 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                 do
                 {
                     newClassification = dataCenterService.GetNewClassification();
-                    if (newClassification != null && newClassification.Any())
+
+                    var internalClassification = newClassification?.Where(c => !c.IsGeneralCategory);
+                    var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
+
+                    if (internalClassification != null && internalClassification.Any())
                     {
                         var tasks = new List<Task>();
-                        var newClassificationChunk = newClassification.Chunk(batchSize).ToList();
+                        var newInternalClassificationChunk = internalClassification.Chunk(batchSize).ToList();
 
-                        for (int i = 0; i < newClassificationChunk.Count; i++)
+                        for (int i = 0; i < newInternalClassificationChunk.Count; i++)
                         {
-                            string jsonData = JsonConvert.SerializeObject(newClassificationChunk[i]);
+                            string jsonData = JsonConvert.SerializeObject(newInternalClassificationChunk[i]);
                             dataCenterService.AutoTagClassification(jsonData);
 
-                            var custIdList = string.Join(",", newClassificationChunk[i].Select(c => c.CustId).Distinct());
-                            dataCenterService.UpdateNewClassification(custIdList);
+                            var custIdList = string.Join(",", newInternalClassificationChunk[i].Select(c => c.CustId).Distinct());
+                            dataCenterService.UpdateAppliedStatusClassification(custIdList, false);
+                        }
+                    }
+
+                    if (generalClassification != null && generalClassification.Any())
+                    {
+                        var tasks = new List<Task>();
+                        var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
+                        var newGeneralClassificationChunk = generalClassification.Chunk(batchSize).ToList();
+
+                        for (int i = 0; i < newGeneralClassificationChunk.Count; i++)
+                        {
+                            string jsonData = JsonConvert.SerializeObject(newGeneralClassificationChunk[i]);
+                            var custForMainDB = dataCenterService.InsertMainCustomerClassification(jsonData);
+
+                            if(custForMainDB != null && custForMainDB.Any())
+                            {
+                                custGeneralCategoryForMainDB.AddRange(custForMainDB);
+                            }
+
+                            var custIdList = string.Join(",", newGeneralClassificationChunk[i].Select(c => c.CustId).Distinct());
+                            dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
+                        }
+
+                        if (custGeneralCategoryForMainDB != null && custGeneralCategoryForMainDB.Any())
+                        {
+                            dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryForMainDB);
                         }
                     }
                 } while (newClassification != null && newClassification.Any());

@@ -45,12 +45,19 @@
     <Compile Include="CustomerClassificationModelMoreInfo.cs" />
     <Compile Include="CustomerClassificationModel.cs" />
     <Compile Include="GraphDB\AssociationModelForGraph.cs" />
+    <Compile Include="CustomerGeneralClassificationModel.cs" />
     <Compile Include="ProblemAccountsModel.cs" />
     <Compile Include="InsertProblemAccountsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MainDB\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.FS.XML\Fanex.NAP.FS.XML.csproj">
+      <Project>{0122573A-EB7D-4A8B-84EF-8B5DA635752E}</Project>
+      <Name>Fanex.NAP.FS.XML</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

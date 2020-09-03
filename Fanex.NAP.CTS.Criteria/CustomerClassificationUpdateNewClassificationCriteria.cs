@@ -11,9 +11,11 @@ namespace Fanex.NAP.CTS.Criteria
     {
         public string ListCustIds { get; set; }
 
+        public bool IsGeneralCategory { get; set; }
+
         public override string GetSettingKey()
         {
-            return "CustomerClassification_UpdateNewClassification";
+            return "CTS_NormalAccountsClassification_UpdateAppliedStatus";
         }
 
         public override bool IsValid()

@@ -6,7 +6,7 @@ namespace Fanex.NAP.CTS.Criteria
     {
         public override string GetSettingKey()
         {
-            return "CustomerClassification_GetNewClassification";
+            return "CTS_NormalAccountsClassification_GetNewClassification";
         }
 
         public override bool IsValid()

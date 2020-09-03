@@ -106,6 +106,11 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
+        public IEnumerable<CustomerGeneralClassificationModel> InsertMainCustomerClassification(string newClassification)
+        {
+           return dataCenterDataAccess.InsertMainCustomerClassification(newClassification);
+        }
+
         public void DCSMoveTransToTransaction07(string transIdList)
         {
             dataCenterDataAccess.DCSMoveTransToTransaction07(transIdList);
@@ -116,9 +121,14 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.DCSMoveTransToTransaction07GetPackage(batchSize, NoOfBatch);
         }
 
-        public void UpdateNewClassification(string custIdList)
+        public void UpdateAppliedStatusClassification(string custIdList, bool isGeneralCategory)
         {
-            dataCenterDataAccess.UpdateNewClassification(custIdList);
+            dataCenterDataAccess.UpdateAppliedStatusClassification(custIdList, isGeneralCategory);
+        }
+
+        public void UpdateCustomerGeneralClassificationtoMainDB(List<CustomerGeneralClassificationModel> custIdList)
+        {
+            dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList);
         }
 
         public IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch)
