@@ -18,12 +18,16 @@
     [DisallowConcurrentExecution]
     public class GeneralCategoryClassifyCustomerJob : ExecuteJobBase, IJob
     {
-        readonly DataCenterService dataService = new DataCenterService();
+        readonly DataCenterService dataService;
+
+        public GeneralCategoryClassifyCustomerJob()
+        {
+            dataService = new DataCenterService();
+        }
 
         public Task Execute(IJobExecutionContext context)
         {
             return Task.Run(() => StartJob(context));
-
         }
 
         private void StartJob(IJobExecutionContext context)
