@@ -30,9 +30,13 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         List<CustomerClassificationModelMoreInfo> GetNewClassification();
 
-        void UpdateNewClassification(string custIdList);
+        void UpdateAppliedStatusClassification(string custIdList, bool isGeneralCategory);
 
         void AutoTagClassification(string newClassification);
+
+        IEnumerable<CustomerGeneralClassificationModel> InsertMainCustomerClassification(string newClassification);
+
+        void UpdateCustomerGeneralClassificationtoMainDB(List<CustomerGeneralClassificationModel> custIdList);
 
         IEnumerable<TransactionModel> DCSMoveTransToTransaction07GetPackage(int batchSize, int NoOfBatch);
 

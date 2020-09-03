@@ -190,13 +190,26 @@
             }
         }
 
-        public void UpdateNewClassification(string custIdList)
+        public void UpdateAppliedStatusClassification(string custIdList, bool isGeneralCategory)
         {
             var repository = new DynamicRepository();
 
             var criteria = new CustomerClassificationUpdateNewClassificationCriteria
             {
-                ListCustIds = custIdList
+                ListCustIds = custIdList,
+                IsGeneralCategory = isGeneralCategory
+            };
+
+            repository.Execute(criteria);
+        }
+
+        public void UpdateCustomerGeneralClassificationtoMainDB(List<CustomerGeneralClassificationModel> custIdList)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertCustomerGeneralCategoryToMainDBCriteria
+            {
+                custList = custIdList.ToXmlString()
             };
 
             repository.Execute(criteria);
@@ -212,6 +225,18 @@
             };
 
             repository.Execute(criteria);
+        }
+
+        public IEnumerable<CustomerGeneralClassificationModel> InsertMainCustomerClassification(string newClassification)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertMainCustomerClassificationCriteria
+            {
+                NewClassification = newClassification
+            };
+
+            return repository.Fetch<CustomerGeneralClassificationModel>(criteria);
         }
 
         public void DCSMoveTransToTransaction07(string transIdList)
