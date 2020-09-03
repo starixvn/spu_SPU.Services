@@ -135,10 +135,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.CMS.VRAgent.Console.exe.LOCAL.config.config">
+    <None Include="Fanex.NAP.CMS.VRAgent.Console.exe.LOCAL.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Fanex.NAP.CMS.VRAgent.Console.exe.PRO.config.config">
+    <None Include="Fanex.NAP.CMS.VRAgent.Console.exe.PRO.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
