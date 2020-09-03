@@ -38,14 +38,14 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void DCSMoveTransToTransaction07(string transIdList);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch);
+        IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch, int parentCateId);
 
         IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);
         
 
         void ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
 
-        void ClassifyCustomerDailyDone(string custSportJson);
+        void ClassifyCustomerDailyDone(string custSportJson, int parentCateId);
 
         void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers);
 

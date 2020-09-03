@@ -121,9 +121,9 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateNewClassification(custIdList);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch)
+        public IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch, int parentCateId)
         {
-            return dataCenterDataAccess.GetCustomerForDailyScanning(batchQuantity, rowQuantityPerBatch);
+            return dataCenterDataAccess.GetCustomerForDailyScanning(batchQuantity, rowQuantityPerBatch, parentCateId);
         }
 
         public IEnumerable<CustomerClassificationModel> GetCustomerHasChangeForRunRealtime()
@@ -141,9 +141,9 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.ClassifyCustomerDaily(customers);
         }
 
-        public void ClassifyCustomerDailyDone(string custSportJson)
+        public void ClassifyCustomerDailyDone(string custSportJson, int parentCateId)
         {
-            dataCenterDataAccess.ClassifyCustomerDailyDone(custSportJson);
+            dataCenterDataAccess.ClassifyCustomerDailyDone(custSportJson, parentCateId);
         }
 
         public void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)

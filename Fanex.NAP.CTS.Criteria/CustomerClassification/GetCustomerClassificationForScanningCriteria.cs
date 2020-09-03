@@ -15,6 +15,9 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 
         [SpParam(SqlParamName = "ip_Batch")]
         public int BatchQuantity { get; set; }
+        
+        [SpParam(SqlParamName = "ip_ParentCategoryID")]
+        public int ParentCategoryId { get; set; }
 
         public override string GetSettingKey()
         {

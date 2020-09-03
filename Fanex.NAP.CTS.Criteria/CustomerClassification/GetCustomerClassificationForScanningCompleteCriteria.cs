@@ -13,6 +13,9 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
         [SpParam(SqlParamName = "ip_CustSport")]
         public string CustSportJson { get; set; }
 
+        [SpParam(SqlParamName = "ip_ParentCategoryID")]
+        public int ParentCategoryId { get; set; }
+
         public override string GetSettingKey()
         {
             return "CTS_DC_GetCustomerClassificationIntervalScan_Complete";

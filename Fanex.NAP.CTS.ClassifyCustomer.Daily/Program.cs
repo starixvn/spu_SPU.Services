@@ -45,12 +45,13 @@
                });
 
             var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
+            var parentCateID = Convert.ToInt32(ConfigurationManager.AppSettings["Parent-CategoryID"]);
 
             do
             {
                 try
                 {
-                    customers = dataService.GetCustomerForRunDaily(1, batchSize);
+                    customers = dataService.GetCustomerForRunDaily(1, batchSize, parentCateID);
 
                     if (customers.Any())
                     {
@@ -59,7 +60,7 @@
                         {
                             dataService.ClassifyCustomerDaily(custGroup);
                             string jsonData = JsonConvert.SerializeObject(custGroup.Select(a => new { a.CustId, a.SportGroupId }));
-                            dataService.ClassifyCustomerDailyDone(jsonData);
+                            dataService.ClassifyCustomerDailyDone(jsonData, parentCateID);
                             countTotalCusts += custGroup.Count();
                         }
                     }
@@ -75,7 +76,7 @@
 
             } while (customers == null || customers.Any());
 
-            LogService.Info("Total record in this running: " + countTotalCusts);
+            LogService.Info("Classify Normal customer daily: " + countTotalCusts + " Date: " + DateTime.Now.ToString());
         }
     }
 }

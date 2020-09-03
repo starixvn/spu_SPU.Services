@@ -239,14 +239,15 @@
             return repository.Fetch<TransactionModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerForDailyScanning(int batchQuantity, int rowQuantityPerBatch)
+        public IEnumerable<CustomerClassificationModel> GetCustomerForDailyScanning(int batchQuantity, int rowQuantityPerBatch, int parentCateId)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetCustomerClassificationForScanningCriteria()
             {
                 BatchQuantity = batchQuantity,
-                RecordQuantityPerBatch = rowQuantityPerBatch
+                RecordQuantityPerBatch = rowQuantityPerBatch,
+                ParentCategoryId = parentCateId
             };
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
@@ -286,13 +287,14 @@
             repository.Execute(criteria);
         }
 
-        public void ClassifyCustomerDailyDone(string custSportJson)
+        public void ClassifyCustomerDailyDone(string custSportJson, int parentCateId)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetCustomerClassificationForScanningCompleteCriteria
             {
-                CustSportJson = custSportJson
+                CustSportJson = custSportJson,
+                ParentCategoryId = parentCateId
             };
 
             repository.Execute(criteria);
