@@ -33,6 +33,9 @@
                     case 56:
                     case 156:
                         return 11;
+                    case 57:
+                    case 157:
+                        return 13;
                     default:
                         return ReasonID;
                 }
