@@ -25,4 +25,22 @@
     <Setting Key="CTS_GetCustSubInfo" SpName="CTS_GetCustSubInfo" DbName="DBCTS.bodb02.bodbSPUNet"/>
     <Setting Key="CTS_GetMainDbCustomerForUpdateUsername2" SpName="CTS_GetMainDbCustomerForUpdateUsername2" DbName="DBCTS.bodb02.bodbSPUNet"/>
   </Function>
+
+  <Function Name="CustomerClassification">
+    <Setting Key="CTS_DC_GetCustomerClassificationForScanning" SpName="CTS_DC_GetCustomerClassificationIntervalScan" DbName="MySQL.CTS_DataCenter.fps"/>
+    <Setting Key="CTS_DC_GetCustomerClassificationIntervalScan_Complete"
+             SpName="CTS_DC_GetCustomerClassificationIntervalScan_Complete" DbName="MySQL.CTS_DataCenter.fps"/>
+    <Setting Key="CustomerClassification_CategorizeCustomer_Daily"
+             SpName="CTS_NormalAccountsClassification_GeneralCategorize_Daily" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+    <Setting Key="CTS_DC_AutoTagCustomerClassification"
+             SpName="CTS_DC_AutoTagCustomerClassification" DbName="MySQL.CTS_DataCenter.fps"/>
+    
+    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter.fps"/>
+    <Setting Key="CustomerClassification_CategorizeCustomer_RealTime"
+             SpName="CustomerClassification_CategorizeCustomer_RealTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+    <Setting Key="CustomerClassification_UpdateLastScanTime" SpName="CustomerClassification_UpdateLastScanTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification" DbName="MySQL.CTS_DataCenter.fps"/>
+    <Setting Key="CTS_CustomerClassification_CategorizeCustomer_RealTime_CheckChanges"
+             SpName="CustomerClassification_CategorizeCustomer_RealTime_CheckChanges" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+  </Function>
 </Functions>
