@@ -59,6 +59,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                     if (internalClassification != null && internalClassification.Any())
                     {
+                        Logger.Log.Info("Start internal classification");
                         var tasks = new List<Task>();
                         var newInternalClassificationChunk = internalClassification.Chunk(batchSize).ToList();
 
@@ -70,10 +71,13 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                             var custIdList = string.Join(",", newInternalClassificationChunk[i].Select(c => c.CustId).Distinct());
                             dataCenterService.UpdateAppliedStatusClassification(custIdList, false);
                         }
+
+                        Logger.Log.Info("End internal classification successfully");
                     }
 
                     if (generalClassification != null && generalClassification.Any())
                     {
+                        Logger.Log.Info("Start general classification");
                         var tasks = new List<Task>();
                         var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
                         var newGeneralClassificationChunk = generalClassification.Chunk(batchSize).ToList();
@@ -96,6 +100,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                         {
                             dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryForMainDB);
                         }
+                        Logger.Log.Info("End  general classification successfully");
                     }
                 } while (newClassification != null && newClassification.Any());
 
