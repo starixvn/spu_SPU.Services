@@ -215,6 +215,18 @@
             repository.Execute(criteria);
         }
 
+        public void InsertProblemAccountCategoryToMainDB(List<ProblemAccountsModel> custIdList)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertCustomerGeneralCategoryToMainDBCriteria
+            {
+                custList = custIdList.ToXmlString()
+            };
+
+            repository.Execute(criteria);
+        }
+
         public void AutoTagCustomerClassification(string newClassification)
         {
             var repository = new DynamicRepository();

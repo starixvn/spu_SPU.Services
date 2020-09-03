@@ -131,6 +131,11 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList);
         }
 
+        public void InsertProblemAccountClassificationToMainDB(List<ProblemAccountsModel> custIdList)
+        {
+            dataCenterDataAccess.InsertProblemAccountCategoryToMainDB(custIdList);
+        }
+
         public IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch, int parentCateId)
         {
             return dataCenterDataAccess.GetCustomerForDailyScanning(batchQuantity, rowQuantityPerBatch, parentCateId);

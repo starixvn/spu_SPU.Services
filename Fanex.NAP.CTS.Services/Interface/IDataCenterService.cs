@@ -38,6 +38,8 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void UpdateCustomerGeneralClassificationtoMainDB(List<CustomerGeneralClassificationModel> custIdList);
 
+        void InsertProblemAccountClassificationToMainDB(List<ProblemAccountsModel> custIdList);
+
         IEnumerable<TransactionModel> DCSMoveTransToTransaction07GetPackage(int batchSize, int NoOfBatch);
 
         void DCSMoveTransToTransaction07(string transIdList);

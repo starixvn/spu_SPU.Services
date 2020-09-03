@@ -67,9 +67,16 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                         CategoryId = a.ReasonID
                     });
 
+                    var problemAccount4MainDB = problemAccounts.Select(a => new ProblemAccountsModel
+                    {
+                        CustID = a.CustID,
+                        ReasonID = a.ReasonID
+                    }).ToList();
+
                     var jsonData = JsonConvert.SerializeObject(result);
 
                     dataService.InsertProblemAccounts(jsonData);
+                    dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
                 }
             }
             catch (Exception ex)
