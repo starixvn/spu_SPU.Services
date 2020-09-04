@@ -46,6 +46,8 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
             try
             {
+                LogService.Info("Start CustomerClassification");
+                Console.WriteLine("Start CustomerClassification");
                 var dataCenterService = new DataCenterService();
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
                 int insertedRows = 0;
@@ -53,13 +55,15 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                 do
                 {
                     newClassification = dataCenterService.GetNewClassification();
-
+                    LogService.Info("GetNewClassification done");
+                    Console.WriteLine("GetNewClassification done");
                     var internalClassification = newClassification?.Where(c => !c.IsGeneralCategory);
                     var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
 
                     if (internalClassification != null && internalClassification.Any())
                     {
                         Logger.Log.Info("Start internal classification");
+                        Console.WriteLine("Start internal classification");
                         var tasks = new List<Task>();
                         var newInternalClassificationChunk = internalClassification.Chunk(batchSize).ToList();
 
@@ -73,11 +77,15 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                         }
 
                         Logger.Log.Info("End internal classification successfully");
+                        Console.WriteLine("End internal classification successfully");
+
                     }
 
                     if (generalClassification != null && generalClassification.Any())
                     {
                         Logger.Log.Info("Start general classification");
+                        Console.WriteLine("Start general classification");
+
                         var tasks = new List<Task>();
                         var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
                         var newGeneralClassificationChunk = generalClassification.Chunk(batchSize).ToList();
@@ -127,6 +135,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                         //}
 
                         Logger.Log.Info("End general classification successfully");
+                        Console.WriteLine("End general classification successfully");
                     }
                 } while (newClassification != null && newClassification.Any());
 
@@ -140,6 +149,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
+                Console.WriteLine(logMessage);
             }
         }
     }
