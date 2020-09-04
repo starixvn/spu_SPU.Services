@@ -39,7 +39,7 @@
                     case 157:
                         return 13;
                     default:
-                        return ReasonID;
+                        return -1;
                 }
             }
         }

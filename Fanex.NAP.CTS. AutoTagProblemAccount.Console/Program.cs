@@ -71,12 +71,19 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     {
                         CustID = a.CustID,
                         ReasonID = a.ReasonID
-                    }).ToList();
+                    }).Where(c=>c.CategoryIdMapping != -1).ToList();
+
 
                     var jsonData = JsonConvert.SerializeObject(result);
 
                     dataService.InsertProblemAccounts(jsonData);
-                    dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
+
+                    if (problemAccount4MainDB != null && problemAccount4MainDB.Any())
+                    {
+                        Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB started with " + problemAccount4MainDB.Count());
+                        dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
+                        Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB finished");
+                    }
                 }
             }
             catch (Exception ex)

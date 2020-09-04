@@ -98,9 +98,17 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                         if (custGeneralCategoryForMainDB != null && custGeneralCategoryForMainDB.Any())
                         {
-                            dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryForMainDB);
+                            var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB.Where(c => c.CategoryIdMapping != -1).ToList();
+
+                            if (custGeneralCategoryInRuleForMainDB != null && custGeneralCategoryInRuleForMainDB.Any())
+                            {
+                                Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB started with " + custGeneralCategoryInRuleForMainDB.Count());
+                                dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
+                                Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB finished");
+                            }
                         }
-                        Logger.Log.Info("End  general classification successfully");
+
+                        Logger.Log.Info("End general classification successfully");
                     }
                 } while (newClassification != null && newClassification.Any());
 
