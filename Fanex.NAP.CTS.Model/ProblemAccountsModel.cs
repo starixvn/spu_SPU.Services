@@ -19,26 +19,26 @@
             {
                 switch (ReasonID)
                 {
-                    case 52:
-                    case 152:
+                    case 28:
+                    case 102:
                         return 8;
-                    case 54:
-                    case 154:
-                    case 58:
-                    case 158:
+                    case 30:
+                    case 104:
+                    case 37:
+                    case 108:
                         return 9;
-                    case 53:
-                    case 153:
-                    case 55:
-                    case 155:
-                    case 59:
-                    case 159:
+                    case 29:
+                    case 103:
+                    case 31:
+                    case 105:
+                    case 38:
+                    case 109:
                         return 10;
-                    case 56:
-                    case 156:
+                    case 32:
+                    case 106:
                         return 11;
-                    case 57:
-                    case 157:
+                    case 36:
+                    case 107:
                         return 13;
                     default:
                         return -1;
