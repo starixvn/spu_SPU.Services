@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Model
 {
     using Fanex.NAP.FS.XML;
+    using System.Xml.Serialization;
 
     [XName("r")]
     public class ProblemAccountsModel
@@ -8,6 +9,7 @@
         [XName("id")]
         public int CustID { get; set; }
 
+        [XmlIgnore]
         public int ReasonID { get; set; }
 
         [XName("c")]

@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Model
 {
     using Fanex.NAP.FS.XML;
+    using System.Xml.Serialization;
 
     [XName("r")]
     public class CustomerGeneralClassificationModel
@@ -8,6 +9,8 @@
         [XName("id")]
         public int CustId { get; set; }
 
+
+        [XmlIgnore]
         public int CategoryId { get; set; }
 
         [XName("c")]
