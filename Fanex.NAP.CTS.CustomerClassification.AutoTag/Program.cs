@@ -45,7 +45,6 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
             try
             {
-                LogService.Info("Start AutoTag Customer Classification ");
                 var dataCenterService = new DataCenterService();
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
                 int insertedRows = 0;
@@ -53,95 +52,76 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                 do
                 {
                     newClassification = dataCenterService.GetNewClassification();
-                LogService.Info("GetNewClassification for AutoTag Cus Classsification done with" + newClassification.Count());
 
-                var internalClassification = newClassification?.Where(c => !c.IsGeneralCategory);
-                var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
+                    var internalClassification = newClassification?.Where(c => !c.IsGeneralCategory);
+                    var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
 
-                if (internalClassification != null && internalClassification.Any())
-                {
-                    Logger.Log.Info("Start internal classification");
-                    var tasks = new List<Task>();
-                    var newInternalClassificationChunk = internalClassification.Chunk(batchSize).ToList();
-
-                    for (int i = 0; i < newInternalClassificationChunk.Count; i++)
+                    if (internalClassification != null && internalClassification.Any())
                     {
-                        string jsonData = JsonConvert.SerializeObject(newInternalClassificationChunk[i]);
-                        dataCenterService.AutoTagClassification(jsonData);
+                        var tasks = new List<Task>();
+                        var newInternalClassificationChunk = internalClassification.Chunk(batchSize).ToList();
 
-                        var custIdList = string.Join(",", newInternalClassificationChunk[i].Select(c => c.CustId).Distinct());
-                        dataCenterService.UpdateAppliedStatusClassification(custIdList, false);
+                        for (int i = 0; i < newInternalClassificationChunk.Count; i++)
+                        {
+                            string jsonData = JsonConvert.SerializeObject(newInternalClassificationChunk[i]);
+                            dataCenterService.AutoTagClassification(jsonData);
+
+                            var custIdList = string.Join(",", newInternalClassificationChunk[i].Select(c => c.CustId).Distinct());
+                            dataCenterService.UpdateAppliedStatusClassification(custIdList, false);
+                        }
                     }
 
-                    Logger.Log.Info("End internal classification successfully");
-                }
-
-                if (generalClassification != null && generalClassification.Any())
-                {
-                    Logger.Log.Info("Start general classification");
-
-                    var tasks = new List<Task>();
-                    var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
-                    var newGeneralClassificationChunk = generalClassification.Chunk(batchSize).ToList();
-
-                    for (int i = 0; i < newGeneralClassificationChunk.Count; i++)
+                    if (generalClassification != null && generalClassification.Any())
                     {
-                        string jsonData = JsonConvert.SerializeObject(newGeneralClassificationChunk[i]);
-                        var custForMainDB = dataCenterService.InsertMainCustomerClassification(jsonData);
+                        var tasks = new List<Task>();
+                        var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
+                        var newGeneralClassificationChunk = generalClassification.Chunk(batchSize).ToList();
 
-                        if (custForMainDB != null && custForMainDB.Any())
+                        for (int i = 0; i < newGeneralClassificationChunk.Count; i++)
                         {
-                            custGeneralCategoryForMainDB.AddRange(custForMainDB);
+                            string jsonData = JsonConvert.SerializeObject(newGeneralClassificationChunk[i]);
+                            var custForMainDB = dataCenterService.InsertMainCustomerClassification(jsonData);
+
+                            if (custForMainDB != null && custForMainDB.Any())
+                            {
+                                custGeneralCategoryForMainDB.AddRange(custForMainDB);
+                            }
+
+                            var custIdList = string.Join(",", newGeneralClassificationChunk[i].Select(c => c.CustId).Distinct());
+                            dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
                         }
 
-                        var custIdList = string.Join(",", newGeneralClassificationChunk[i].Select(c => c.CustId).Distinct());
-                        dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
-                    }
-
-                    if (custGeneralCategoryForMainDB != null && custGeneralCategoryForMainDB.Any())
-                    {
-                        var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB.Where(c => c.CategoryIdMapping != -1).ToList();
-
-                        if (custGeneralCategoryInRuleForMainDB != null && custGeneralCategoryInRuleForMainDB.Any())
+                        if (custGeneralCategoryForMainDB != null && custGeneralCategoryForMainDB.Any())
                         {
-                            var countRetry = 0;
+                            var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB.Where(c => c.CategoryIdMapping != -1).ToList();
 
-                            while (countRetry < AppSettings.RetryTime)
+                            if (custGeneralCategoryInRuleForMainDB != null && custGeneralCategoryInRuleForMainDB.Any())
                             {
-                                try
+                                var countRetry = 0;
+
+                                while (countRetry < AppSettings.RetryTime)
                                 {
-                                    Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB started with " + custGeneralCategoryInRuleForMainDB.Count());
-                                    var cusList = custGeneralCategoryInRuleForMainDB.Take(20).Select(c => new { c.CustId, c.CategoryIdMapping});
-                                    var messLog = string.Empty;
-                                    foreach (var item in cusList)
+                                    try
                                     {
-                                        messLog += "Cust: " + item.CustId + " CateId: "+ item.CategoryIdMapping + ";";
+                                        dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
+                                        countRetry = AppSettings.RetryTime + 1;
                                     }
+                                    catch (Exception ex)
+                                    {
+                                        var logMessage = new LogMessage(ex.Message)
+                                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                                    LogService.Info(messLog);
-
-                                    dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
-                                    countRetry = AppSettings.RetryTime + 1;
-                                    Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB finished");
-                                }
-                                catch (Exception ex)
-                                {
-                                    var logMessage = new LogMessage(ex.Message)
-                                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                                    LogService.Error($"AutoTag Customer Classification - Update Customer General Classification to MainDB service - Start Exception {logMessage}");
-                                    countRetry += 1;
+                                        LogService.Error($"AutoTag Customer Classification - Update Customer General Classification to MainDB service - Start Exception {logMessage}");
+                                        countRetry += 1;
+                                    }
                                 }
                             }
                         }
                     }
+                } while (newClassification != null && newClassification.Any());
 
-                    Logger.Log.Info("End general classification successfully");
-                }
-            } while (newClassification != null && newClassification.Any()) ;
-
-            insertedRows += newClassification.Count;
+                insertedRows += newClassification.Count;
 
             }
             catch (Exception ex)

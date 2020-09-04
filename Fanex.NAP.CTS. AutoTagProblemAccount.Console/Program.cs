@@ -57,6 +57,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
                 }
 
+                LogService.Info("AutoTag Problem Account - problemAccounts: " + problemAccounts.Count);
                 dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME));
 
                 if (problemAccounts.Any())
@@ -72,7 +73,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                         CustID = a.CustID,
                         ReasonID = a.ReasonID
                     }).Where(c => c.CategoryIdMapping != -1).ToList();
-
+                    LogService.Info("AutoTag Problem Account - problemAccount4MainDB: " + problemAccount4MainDB.Count);
 
                     var jsonData = JsonConvert.SerializeObject(result);
 
