@@ -102,9 +102,27 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                             if (custGeneralCategoryInRuleForMainDB != null && custGeneralCategoryInRuleForMainDB.Any())
                             {
-                                Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB started with " + custGeneralCategoryInRuleForMainDB.Count());
-                                dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
-                                Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB finished");
+                                var countRetry = 0;
+
+                                while (countRetry < AppSettings.RetryTime)
+                                {
+                                    try
+                                    {
+                                        Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB started with " + custGeneralCategoryInRuleForMainDB.Count());
+                                        dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
+                                        countRetry = AppSettings.RetryTime + 1;
+                                        Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB finished");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        var logMessage = new LogMessage(ex.Message)
+                                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                                        LogService.Error($"AutoTag Customer Classification - Update Customer General Classification to MainDB service - Start Exception {logMessage}");
+                                        countRetry += 1;
+                                    }
+                                }
                             }
                         }
 
