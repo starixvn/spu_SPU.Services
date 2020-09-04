@@ -78,30 +78,30 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
                     dataService.InsertProblemAccounts(jsonData);
 
-                    if (problemAccount4MainDB != null && problemAccount4MainDB.Any())
-                    {
-                        var countRetry = 0;
+                    //if (problemAccount4MainDB != null && problemAccount4MainDB.Any())
+                    //{
+                    //    var countRetry = 0;
 
-                        while (countRetry < AppSettings.RetryTime)
-                        {
-                            try
-                            {
-                                Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB started with " + problemAccount4MainDB.Count());
-                                dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
-                                countRetry = AppSettings.RetryTime + 1;
-                                Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB finished");
-                            }
-                            catch (Exception ex)
-                            {
-                                var logMessage = new LogMessage(ex.Message)
-                                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                    //    while (countRetry < AppSettings.RetryTime)
+                    //    {
+                    //        try
+                    //        {
+                    //            Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB started with " + problemAccount4MainDB.Count());
+                    //            dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
+                    //            countRetry = AppSettings.RetryTime + 1;
+                    //            Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB finished");
+                    //        }
+                    //        catch (Exception ex)
+                    //        {
+                    //            var logMessage = new LogMessage(ex.Message)
+                    //             .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                    //             .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                                LogService.Error($"AutoTag Problem Account - Insert ProblemAccount Classification To MainDB service - Start Exception {logMessage}");
-                                countRetry += 1;
-                            }
-                        }
-                    }
+                    //            LogService.Error($"AutoTag Problem Account - Insert ProblemAccount Classification To MainDB service - Start Exception {logMessage}");
+                    //            countRetry += 1;
+                    //        }
+                    //    }
+                    //}
                 }
             }
             catch (Exception ex)
