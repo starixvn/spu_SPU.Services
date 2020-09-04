@@ -99,35 +99,35 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                             dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
                         }
 
-                        //if (custGeneralCategoryForMainDB != null && custGeneralCategoryForMainDB.Any())
-                        //{
-                        //    var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB.Where(c => c.CategoryIdMapping != -1).ToList();
+                        if (custGeneralCategoryForMainDB != null && custGeneralCategoryForMainDB.Any())
+                        {
+                            var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB.Where(c => c.CategoryIdMapping != -1).ToList();
 
-                        //    if (custGeneralCategoryInRuleForMainDB != null && custGeneralCategoryInRuleForMainDB.Any())
-                        //    {
-                        //        var countRetry = 0;
+                            if (custGeneralCategoryInRuleForMainDB != null && custGeneralCategoryInRuleForMainDB.Any())
+                            {
+                                var countRetry = 0;
 
-                        //        while (countRetry < AppSettings.RetryTime)
-                        //        {
-                        //            try
-                        //            {
-                        //                Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB started with " + custGeneralCategoryInRuleForMainDB.Count());
-                        //                dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
-                        //                countRetry = AppSettings.RetryTime + 1;
-                        //                Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB finished");
-                        //            }
-                        //            catch (Exception ex)
-                        //            {
-                        //                var logMessage = new LogMessage(ex.Message)
-                        //                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                        //                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                                while (countRetry < AppSettings.RetryTime)
+                                {
+                                    try
+                                    {
+                                        Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB started with " + custGeneralCategoryInRuleForMainDB.Count());
+                                        dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
+                                        countRetry = AppSettings.RetryTime + 1;
+                                        Logger.Log.Info("AutoTag Customer Classification - Update Customer General Classification to MainDB finished");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        var logMessage = new LogMessage(ex.Message)
+                                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                        //                LogService.Error($"AutoTag Customer Classification - Update Customer General Classification to MainDB service - Start Exception {logMessage}");
-                        //                countRetry += 1;
-                        //            }
-                        //        }
-                        //    }
-                        //}
+                                        LogService.Error($"AutoTag Customer Classification - Update Customer General Classification to MainDB service - Start Exception {logMessage}");
+                                        countRetry += 1;
+                                    }
+                                }
+                            }
+                        }
 
                         Logger.Log.Info("End general classification successfully");
                     }
