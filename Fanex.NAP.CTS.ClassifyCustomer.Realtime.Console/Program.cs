@@ -58,7 +58,7 @@
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
                         var customers = dataService.GetCustomerForRunRealtime(custSportJson);
                         dataService.ClassifyCustomerRealtime(customers);
-                        Thread.Sleep(30000);
+                        Thread.Sleep(10000);
                     }
 
                     dataService.RealtimeUpdateLastScanTime(false);
