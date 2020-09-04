@@ -24,6 +24,8 @@
                         return 8;
                     case 54:
                     case 154:
+                    case 58:
+                    case 158:
                         return 9;
                     case 53:
                     case 153:
