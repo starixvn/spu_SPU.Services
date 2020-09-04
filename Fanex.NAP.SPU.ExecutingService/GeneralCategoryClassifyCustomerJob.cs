@@ -32,19 +32,22 @@
 
         private void StartJob(IJobExecutionContext context)
         {
-            var jobDataMap = context.Trigger.JobDataMap;
-            var frequency = jobDataMap.GetInt("Frequency");
-            switch (frequency)
+            if (!this.CheckUM())
             {
-                case (int)FrequencyExecution.Realtime:
-                    RealtimeClassify(jobDataMap);
-                    break;
-                case (int)FrequencyExecution.Daily:
-                    DailyClassify(jobDataMap);
-                    break;
-                default:
-                    LogService.Error("Frequency Data is not correct!");
-                    break;
+                var jobDataMap = context.Trigger.JobDataMap;
+                var frequency = jobDataMap.GetInt("Frequency");
+                switch (frequency)
+                {
+                    case (int)FrequencyExecution.Realtime:
+                        RealtimeClassify(jobDataMap);
+                        break;
+                    case (int)FrequencyExecution.Daily:
+                        DailyClassify(jobDataMap);
+                        break;
+                    default:
+                        LogService.Error("Frequency Data is not correct!");
+                        break;
+                }
             }
         }
 
