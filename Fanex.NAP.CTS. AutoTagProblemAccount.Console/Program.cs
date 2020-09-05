@@ -79,6 +79,9 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
                     dataService.InsertProblemAccounts(jsonData);
 
+                    var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
+                    problemAccount4MainDB.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
+
                     if (problemAccount4MainDB != null && problemAccount4MainDB.Any())
                     {
                         var countRetry = 0;

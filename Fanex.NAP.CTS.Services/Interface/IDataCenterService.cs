@@ -60,5 +60,7 @@ namespace Fanex.NAP.CTS.Services.Interface
         IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList);
 
         List<int> InsertCategoryForNewCustomer(string customerList);
+
+        IEnumerable<int> GetAllSpecialCustomerClass();
     }
 }

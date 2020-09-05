@@ -215,5 +215,9 @@ namespace Fanex.NAP.CTS.Services
         {
             dataCenterDataAccess.InsertProblemAccount(userIds, permissionFuncName);
         }
+        public IEnumerable<int> GetAllSpecialCustomerClass()
+        {
+            return dataCenterDataAccess.GetAllSpecialCustomerClass();
+        }
     }
 }

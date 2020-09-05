@@ -7,6 +7,7 @@
 
     <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification" DbName="MySQL.CTS_DataCenter" Timeout="600"/>
     <Setting Key="CTS_DC_InsertMainCustomerClassification" SpName="CTS_DC_InsertMainCustomerClassification" DbName="MySQL.CTS_DataCenter" Timeout="600"/>
+    <Setting Key="CTS_DC_GetAllSpecialCustomerClass" SpName="CTS_DC_GetAllSpecialCustomerClass" DbName="MySQL.CTS_DataCenter"/>
 
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
   

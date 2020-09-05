@@ -6,6 +6,7 @@
     <Setting Key="CTS_DC_InsertCategorizedProblemAccounts" SpName="CTS_DC_InsertCategorizedProblemAccounts" DbName="MySQL.CTS_DataCenter"/>
     <Setting Key="CTS_DC_GetSystemParameterById" SpName="CTS_DC_GetSystemParameterById" DbName="MySQL.CTS_DataCenter"/>
     <Setting Key="CTS_DC_UpdateSystemParameterById" SpName="CTS_DC_UpdateSystemParameterById" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_GetAllSpecialCustomerClass" SpName="CTS_DC_GetAllSpecialCustomerClass" DbName="MySQL.CTS_DataCenter"/>
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
   </Function> 
 </Functions>

@@ -471,5 +471,17 @@
                 db.ExecuteNonQuery(criteria);
             }
         }
+
+        public IEnumerable<int> GetAllSpecialCustomerClass()
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetAllSpecialCustomerClassCriteria
+            {
+                IsGetAllInfo = false
+            };
+
+            return repository.Fetch<int>(criteria);
+        }
     }
 }

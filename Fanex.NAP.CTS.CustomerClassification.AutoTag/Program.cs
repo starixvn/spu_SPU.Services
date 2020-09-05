@@ -91,6 +91,9 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                             dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
                         }
 
+                        var specialCustomerClass = dataCenterService.GetAllSpecialCustomerClass();
+                        custGeneralCategoryForMainDB.RemoveAll(item => specialCustomerClass.Contains(item.CustId));
+
                         if (custGeneralCategoryForMainDB != null && custGeneralCategoryForMainDB.Any())
                         {
                             var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB.Where(c => c.CategoryIdMapping != -1).ToList();

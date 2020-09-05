@@ -47,6 +47,7 @@
     <Compile Include="CustomerClassification\CategorizeCustomerGeneralCategoryRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerGeneralCategoryHasChangeForRunRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\NormalAccountsClassificationGeneralCategorizeDailyCriteria.cs" />
+    <Compile Include="GetAllSpecialCustomerClassCriteria.cs" />
     <Compile Include="InsertCustomerGeneralCategoryToMainDBCriteria.cs" />
     <Compile Include="InsertMainCustomerClassificationCriteria.cs" />
     <Compile Include="InsertUserPermissionCriteria.cs" />
