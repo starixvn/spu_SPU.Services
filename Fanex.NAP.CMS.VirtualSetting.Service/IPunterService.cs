@@ -32,5 +32,13 @@
         IPunterService RemoveBetLimit(string customerList);
 
         int CountAffected();
+
+        IPunterService InsertNewVRAgent();
+
+        (IEnumerable<int>, IEnumerable<int>) VerifySportsAgentPerformance();
+
+        IPunterService UpdateFlagAbnormalAgent(string customerList, int type);
+
+        IPunterService UpdateUnflagAbnormalAgent(string customerList, int type);
     }
 }
