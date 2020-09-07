@@ -60,9 +60,9 @@
                         dataService.ClassifyCustomerRealtime(customers);
                         Thread.Sleep(10000);
                     }
-
-                    dataService.RealtimeUpdateLastScanTime(false);
                 }
+
+                dataService.RealtimeUpdateLastScanTime(false);
             }
             catch (Exception ex)
             {

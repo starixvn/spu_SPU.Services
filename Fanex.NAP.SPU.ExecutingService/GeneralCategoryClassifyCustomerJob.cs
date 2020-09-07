@@ -68,9 +68,9 @@
                         dataService.ClassifyCustomerGeneralCategoryRealtime(customers);
                         Thread.Sleep(3000);
                     }
-
-                    dataService.RealtimeUpdateLastScanTime(true);
                 }
+
+                dataService.RealtimeUpdateLastScanTime(true);
             }
             catch (Exception ex)
             {
