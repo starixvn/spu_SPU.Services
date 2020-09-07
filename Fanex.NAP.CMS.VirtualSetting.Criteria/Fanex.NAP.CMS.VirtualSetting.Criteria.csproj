@@ -55,7 +55,7 @@
     <Compile Include="VR_Soccer\GetBAAccountsCriteria.cs" />
     <Compile Include="VR_Othersports\UpdateVRAutoAdjustmentStatusCriteria.cs" />
     <Compile Include="VR_Othersports\VerifyVRCustomerCriteria.cs" />
-    <Compile Include="VR_Othersports\GetBasketballVRCustomerCriteria.cs" />
+    <Compile Include="VR_Othersports\GetSpecialSportBookVRCustomerCriteria.cs" />
     <Compile Include="VR_Soccer\GetCurrentCustomerVirtualRate.cs" />
     <Compile Include="VR_Soccer\GetCustomerMarginHistoryCriteria.cs" />
     <Compile Include="VR_Soccer\GetLosingPrunterCriteria.cs" />

@@ -171,7 +171,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.ClassifyCusto
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.AutoTagProblemAccount.Console", "Fanex.NAP.CTS. AutoTagProblemAccount.Console\Fanex.NAP.CTS.AutoTagProblemAccount.Console.csproj", "{3C3298C6-515F-451B-A20D-21497D9D2D99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.BasketballVR.Console", "Fanex.NAP.CMS.BasketballVR.Console\Fanex.NAP.CMS.BasketballVR.Console.csproj", "{936472A8-D659-4239-9058-B4ECD0C8B15D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.SpecialLicenseeVR.Console", "Fanex.NAP.CMS.BasketballVR.Console\Fanex.NAP.CMS.SpecialLicenseeVR.Console.csproj", "{936472A8-D659-4239-9058-B4ECD0C8B15D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.BetLimit.Console", "Fanex.NAP.CMS.BetLimit.Console\Fanex.NAP.CMS.BetLimit.Console.csproj", "{C860063B-8252-4337-BFE0-0A512158A206}"
 EndProject
@@ -553,7 +553,7 @@ Global
 		{C6857643-B880-44C1-ABBB-661CF5E53A03} = {B9E4F045-5DCA-4951-A90C-B6F182F3DA6A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

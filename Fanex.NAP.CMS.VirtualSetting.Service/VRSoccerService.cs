@@ -46,5 +46,10 @@
         {
             return this;
         }
+
+        public ICustomerSettingsService AutoAdjustVRForSpecialSportBook()
+        {
+            return this;
+        }
     }
 }

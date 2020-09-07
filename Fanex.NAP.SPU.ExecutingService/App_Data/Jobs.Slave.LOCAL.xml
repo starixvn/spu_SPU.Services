@@ -1246,9 +1246,9 @@
     </trigger>
 
     <job>
-      <name>Fanex_NAP_CMS_BasketballVR_Console</name>
+      <name>Fanex_NAP_CMS_SpecialLicenseeVR_Console</name>
       <group>CMSJob</group>
-      <description>Fanex.NAP.CMS.BasketballVR.Console</description>
+      <description>Fanex.NAP.CMS.SpecialLicenseeVR.Console</description>
       <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
       <durable>true</durable>
       <recover>false</recover>
@@ -1259,25 +1259,25 @@
         </entry>
         <entry>
           <key>FileName</key>
-          <value>Fanex.NAP.CMS.BasketballVR.Console.exe</value>
+          <value>Fanex.NAP.CMS.SpecialLicenseeVR.Console.exe</value>
         </entry>
         <entry>
           <key>Master</key>
-          <value>D:\WWW\SPU\Fanex.NAP.CMS.BasketballVR.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.CMS.SpecialLicenseeVR.Console</value>
         </entry>
         <entry>
           <key>Slave</key>
-          <value>D:\WWW\SPU\Fanex.NAP.CMS.BasketballVR.Console</value>
+          <value>D:\WWW\SPU\Fanex.NAP.CMS.SpecialLicenseeVR.Console</value>
         </entry>
       </job-data-map>
     </job>
 
     <trigger>
       <cron>
-        <name>Fanex_NAP_CMS_BasketballVR_Console_Trigger</name>
+        <name>Fanex_NAP_CMS_SpecialLicenseeVR_Console_Trigger</name>
         <group>VirtualSettingTrigger</group>
-        <description>Fanex.NAP.CMS.BasketballVR.Console</description>
-        <job-name>Fanex.NAP.CMS.BasketballVR.Console</job-name>
+        <description>Fanex.NAP.CMS.SpecialLicenseeVR.Console</description>
+        <job-name>Fanex.NAP.CMS.SpecialLicenseeVR.Console</job-name>
         <job-group>CMSJob</job-group>
         <misfire-instruction>SmartPolicy</misfire-instruction>
         <cron-expression>0 15 0 * * ?</cron-expression>

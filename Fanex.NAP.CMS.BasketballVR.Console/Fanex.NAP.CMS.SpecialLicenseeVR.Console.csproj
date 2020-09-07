@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{936472A8-D659-4239-9058-B4ECD0C8B15D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fanex.NAP.CMS.BasketballVR.Console</RootNamespace>
-    <AssemblyName>Fanex.NAP.CMS.BasketballVR.Console</AssemblyName>
+    <RootNamespace>Fanex.NAP.CMS.SpecialLicenseeVR.Console</RootNamespace>
+    <AssemblyName>Fanex.NAP.CMS.SpecialLicenseeVR.Console</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -145,10 +145,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.CMS.BasketballVR.Console.exe.LOCAL.config">
+    <None Include="Fanex.NAP.CMS.SpecialLicenseeVR.Console.exe.LOCAL.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Fanex.NAP.CMS.BasketballVR.Console.exe.PRO.config">
+    <None Include="Fanex.NAP.CMS.SpecialLicenseeVR.Console.exe.PRO.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="MailTemplate\MailInformTemplate.cshtml">

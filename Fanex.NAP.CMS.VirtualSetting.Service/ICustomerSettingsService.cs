@@ -5,5 +5,7 @@
         ICustomerSettingsService AutoAdjustVirtualSettings();
 
         ICustomerSettingsService AutoAdjustBetLimit();
+
+        ICustomerSettingsService AutoAdjustVRForSpecialSportBook();
     }
 }

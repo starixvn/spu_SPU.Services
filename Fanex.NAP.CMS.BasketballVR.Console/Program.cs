@@ -30,6 +30,7 @@
                 service
                     .StartTime()
                     .UpdateVRForBasketball()
+                    .UpdateVRForSpecialSportBooks()
                     .NotifyMessage();
             }
             catch (Exception ex)

@@ -214,11 +214,11 @@
         //}
 
         #region Othersports VR
-        public IEnumerable<int> GetVRAdjustmentCustomers()
+        public IEnumerable<int> GetSpecialSportBookVRAdjustmentCustomers(int sportType)
         {
-            var criteria = new GetVRAdjustmentCustomerCriteria
+            var criteria = new GetSpecialSportBookVRCustomerCriteria
             {
-                Sporttype = 99
+                Sporttype = sportType 
             };
 
             return _repository.Fetch<int>(criteria);
@@ -234,12 +234,12 @@
             return _repository.FetchMultiple<int, int>(criteria);
         }
 
-        public void UpdateVRFollowUpline(string customerList)
+        public void UpdateVRFollowUpline(string customerList, int sportType)
         {
             var criteria = new UpdateVRFollowUplineCriteria
             {
                 CustIDList = customerList,
-                Sporttype = 99
+                Sporttype = sportType
             };
 
             using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -248,12 +248,12 @@
             }
         }
 
-        public void UpdateVRAutoAdjustmentStatus(string customerList)
+        public void UpdateVRAutoAdjustmentStatus(string customerList, int sportType)
         {
             var criteria = new UpdateVRAutoAdjustmentStatusCriteria
             {
                 CustIDList = customerList,
-                Sporttype = 99
+                Sporttype = sportType
             };
 
             using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

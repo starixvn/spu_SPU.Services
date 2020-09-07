@@ -24,13 +24,13 @@
         IEnumerable<CustomerMargin> GetCustomerMarginHistory(IEnumerable<Punter> punters, byte sportGroupId, int numOfMonth);
 
         #region OtherSports VR
-        IEnumerable<int> GetVRAdjustmentCustomers();
+        IEnumerable<int> GetSpecialSportBookVRAdjustmentCustomers(int sportType);
 
         (IEnumerable<int>, IEnumerable<int>) VerifyVRAdjustmentCustomers(string customerList);
 
-        void UpdateVRFollowUpline(string customerList);
+        void UpdateVRFollowUpline(string customerList, int sportType);
 
-        void UpdateVRAutoAdjustmentStatus(string customerList);
+        void UpdateVRAutoAdjustmentStatus(string customerList, int sportType);
         #endregion
 
         #region Bet Limit
