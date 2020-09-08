@@ -26,9 +26,9 @@
                         return 2;
                     case 206:
                         return 5;
-                    case 204:
-                        return 6;
                     case 203:
+                        return 6;
+                    case 204:
                         return 7;
                     default:
                         return -99;
