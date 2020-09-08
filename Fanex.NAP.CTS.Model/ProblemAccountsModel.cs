@@ -41,7 +41,7 @@
                     case 107:
                         return 13;
                     default:
-                        return -1;
+                        return -99;
                 }
             }
         }

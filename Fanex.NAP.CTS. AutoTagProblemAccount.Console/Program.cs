@@ -43,79 +43,12 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 
             try
             {
-                var previousTimingExecution = dataService.GetPreviousTimingExecution()?.SingleOrDefault();
+                var problemAccounts = GetProblemAccounts(dataService);
 
-                var problemAccounts = new List<ProblemAccountsModel>();
-                var savedDataTime = DateTime.Now;
-
-                if (string.IsNullOrEmpty(previousTimingExecution.ParameterValue))
+                if (problemAccounts != null && problemAccounts.Any())
                 {
-                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
-                    problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
-                }
-                else
-                {
-                    if (AppSettings.IsFirstTimeRunForIBC)
-                        problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
-                    else
-                        problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
-
-
-                    if (AppSettings.IsFirstTimeRunForCN88)
-                        problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
-                    else
-                        problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
-                }
-
-                LogService.Info("AutoTag Problem Account - problemAccounts: " + problemAccounts.Count);
-                dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME));
-
-                if (problemAccounts.Any())
-                {
-                    var result = problemAccounts.Select(a => new InsertProblemAccountsModel
-                    {
-                        CustId = a.CustID,
-                        CategoryId = a.ReasonID
-                    });
-
-                    var problemAccount4MainDB = problemAccounts.Select(a => new ProblemAccountsModel
-                    {
-                        CustID = a.CustID,
-                        ReasonID = a.ReasonID
-                    }).Where(c => c.CategoryIdMapping != -1).ToList();
-                    LogService.Info("AutoTag Problem Account - problemAccount4MainDB: " + problemAccount4MainDB.Count);
-
-                    var jsonData = JsonConvert.SerializeObject(result);
-
-                    dataService.InsertProblemAccounts(jsonData);
-
-                    var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
-                    problemAccount4MainDB.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
-
-                    if (problemAccount4MainDB != null && problemAccount4MainDB.Any())
-                    {
-                        var countRetry = 0;
-
-                        while (countRetry < AppSettings.RetryTime)
-                        {
-                            try
-                            {
-                                Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB started with " + problemAccount4MainDB.Count());
-                                dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
-                                countRetry = AppSettings.RetryTime + 1;
-                                Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB finished");
-                            }
-                            catch (Exception ex)
-                            {
-                                var logMessage = new LogMessage(ex.Message)
-                                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                                LogService.Error($"AutoTag Problem Account - Insert ProblemAccount Classification To MainDB service - Start Exception {logMessage}");
-                                countRetry += 1;
-                            }
-                        }
-                    }
+                    InsertProblemAccountToCTS(problemAccounts, dataService);
+                    InsertProblemAccountToMainDB(problemAccounts, dataService);
                 }
             }
             catch (Exception ex)
@@ -125,6 +58,92 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
+            }
+        }
+
+        static List<ProblemAccountsModel> GetProblemAccounts(DataCenterService dataService)
+        {
+            var previousTimingExecution = dataService.GetPreviousTimingExecution()?.SingleOrDefault();
+
+            var problemAccounts = new List<ProblemAccountsModel>();
+            var savedDataTime = DateTime.Now;
+
+            if (string.IsNullOrEmpty(previousTimingExecution.ParameterValue))
+            {
+                problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
+                problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
+            }
+            else
+            {
+                if (AppSettings.IsFirstTimeRunForIBC)
+                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
+                else
+                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
+
+
+                if (AppSettings.IsFirstTimeRunForCN88)
+                    problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
+                else
+                    problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
+            }
+
+            LogService.Info("AutoTag Problem Account - problemAccounts: " + problemAccounts.Count);
+            dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME));
+
+            return problemAccounts;
+        }
+
+        static void InsertProblemAccountToCTS(List<ProblemAccountsModel> problemAccounts, DataCenterService dataService)
+        {
+            var result = problemAccounts.Select(a => new InsertProblemAccountsModel
+            {
+                CustId = a.CustID,
+                CategoryId = a.ReasonID
+            });
+
+            var jsonData = JsonConvert.SerializeObject(result);
+
+            dataService.InsertProblemAccounts(jsonData);
+        }
+
+        static void InsertProblemAccountToMainDB(List<ProblemAccountsModel> problemAccounts, DataCenterService dataService)
+        {
+            var problemAccount4MainDB = problemAccounts.Select(a => new ProblemAccountsModel
+            {
+                CustID = a.CustID,
+                ReasonID = a.ReasonID
+            }).Where(c => c.CategoryIdMapping != -99).ToList();
+
+            LogService.Info("AutoTag Problem Account - problemAccount4MainDB: " + problemAccount4MainDB.Count);
+
+            var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
+            problemAccount4MainDB.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
+
+            if (problemAccount4MainDB != null && problemAccount4MainDB.Any())
+            {
+                var countRetry = 0;
+
+                while (countRetry < AppSettings.RetryTime)
+                {
+                    try
+                    {
+                        Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB started with " + problemAccount4MainDB.Count());
+
+                        dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
+                        countRetry = AppSettings.RetryTime + 1;
+
+                        Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB finished");
+                    }
+                    catch (Exception ex)
+                    {
+                        var logMessage = new LogMessage(ex.Message)
+                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                        LogService.Error($"AutoTag Problem Account - Insert ProblemAccount Classification To MainDB service - Start Exception {logMessage}");
+                        countRetry += 1;
+                    }
+                }
             }
         }
     }

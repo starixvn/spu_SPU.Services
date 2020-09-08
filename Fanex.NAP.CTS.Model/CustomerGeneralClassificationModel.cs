@@ -31,7 +31,7 @@
                     case 203:
                         return 7;
                     default:
-                        return -1;
+                        return -99;
                 }
             }
         }

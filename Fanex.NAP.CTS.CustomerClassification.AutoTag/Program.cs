@@ -96,7 +96,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                         if (custGeneralCategoryForMainDB != null && custGeneralCategoryForMainDB.Any())
                         {
-                            var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB.Where(c => c.CategoryIdMapping != -1).ToList();
+                            var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB.Where(c => c.CategoryIdMapping != -99).ToList();
 
                             if (custGeneralCategoryInRuleForMainDB != null && custGeneralCategoryInRuleForMainDB.Any())
                             {
