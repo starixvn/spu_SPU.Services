@@ -1,22 +1,22 @@
-﻿using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Data.SqlServer;
-using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry;
-using Fanex.NAP.CTS.Model;
-using Fanex.NAP.CTS.Services;
-using Fanex.NAP.SPU.Core;
-using Newtonsoft.Json;
-using Sentry;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-
-namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
+﻿namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
 {
+    using Fanex.Data;
+    using Fanex.Data.MySql;
+    using Fanex.Data.SqlServer;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry;
+    using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
+    using Sentry;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+
     class Program
     {
         static void Main(string[] args)
@@ -87,7 +87,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                     problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
             }
 
-            LogService.Info("AutoTag Problem Account - problemAccounts: " + problemAccounts.Count);
+            LogService.Info("AutoTag Problem Account - Problem Accounts: " + problemAccounts.Count);
             dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME));
 
             return problemAccounts;
@@ -113,9 +113,7 @@ namespace Fanex.NAP.CTS.AutoTagProblemAccount.Console
                 CustID = a.CustID,
                 ReasonID = a.ReasonID
             }).Where(c => c.CategoryIdMapping != -99).ToList();
-
-            LogService.Info("AutoTag Problem Account - problemAccount4MainDB: " + problemAccount4MainDB.Count);
-
+            
             var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
             problemAccount4MainDB.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
 
