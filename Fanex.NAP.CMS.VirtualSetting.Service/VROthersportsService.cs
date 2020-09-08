@@ -35,7 +35,8 @@
         {
             var customerList = _punterService.GetSpecialSportBookVRAdjustmentCustomers(99).ToList();
             var customerListString = string.Join(",", customerList);
-            LogService.Info("OtherSports - VR Settings - Raw Customer list: " + customerListString);
+
+            LogService.Info("VR Setting - OtherSports - Raw Customer list: " + customerListString);
 
             var (passedPerfCheckCustomers, unpassedPerfCheckCustomers) = _punterService.VerifyVRAdjustmentCustomers(customerListString);
 
@@ -45,11 +46,12 @@
             return this;
         }   
 
-        public ICustomerSettingsService AutoAdjustVRForSpecialSportBook()
+        public ICustomerSettingsService AutoAdjustVRForSpecialSportsbook()
         {
             var customerList = _punterService.GetSpecialSportBookVRAdjustmentCustomers(100).ToList();
             var customerListString = string.Join(",", customerList);
-            LogService.Info("Special SportBook - VR Settings - Customer list: " + customerListString);
+
+            LogService.Info("VR Setting - Special Licensee - Special SportBook - Raw Customer list: " + customerListString);
 
             var (passedPerfCheckCustomers, unpassedPerfCheckCustomers) = _punterService.VerifyVRAdjustmentCustomers(customerListString);
 
@@ -64,9 +66,9 @@
             var customerListString = string.Join(",", customerList);
 
             if (sportType == 99)
-                LogService.Info("OtherSports - VR Settings - Customers have passed Performance Check: " + customerListString);
+                LogService.Info("VR Setting - Special Licensee - OtherSports - Customers have passed Performance Check: " + customerListString);
             else
-                LogService.Info("Special SportBook - VR Settings - Customers have passed Performance Check: " + customerListString);
+                LogService.Info("VR Setting - Special Licensee - Special SportBook - Customers have passed Performance Check: " + customerListString);
 
             var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
 
@@ -82,9 +84,9 @@
             var customerListString = string.Join(",", customerList);
 
             if (sportType == 99)
-                LogService.Info("OtherSports - VR Settings - Customers have NOT passed Performance Check: " + customerListString);
+                LogService.Info("VR Setting - Special Licensee - OtherSports - Customers have NOT passed Performance Check: " + customerListString);
             else
-                LogService.Info("Special SportBook - VR Settings - Customers have NOT passed Performance Check: " + customerListString);
+                LogService.Info("VR Setting - Special Licensee - Special SportBook - Customers have NOT passed Performance Check: " + customerListString);
 
             var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
 

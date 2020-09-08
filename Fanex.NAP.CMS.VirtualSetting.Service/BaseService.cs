@@ -33,7 +33,7 @@
 
         public virtual BaseService UpdateVRForBasketball() { return this; }
 
-        public virtual BaseService UpdateVRForSpecialSportBooks() { return this; }
+        public virtual BaseService UpdateVRForSpecialSportsbook() { return this; }
 
         public virtual BaseService UpdateForSportbooks() { return this; }
 

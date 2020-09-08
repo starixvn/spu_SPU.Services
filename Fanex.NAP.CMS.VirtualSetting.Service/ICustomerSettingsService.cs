@@ -6,6 +6,6 @@
 
         ICustomerSettingsService AutoAdjustBetLimit();
 
-        ICustomerSettingsService AutoAdjustVRForSpecialSportBook();
+        ICustomerSettingsService AutoAdjustVRForSpecialSportsbook();
     }
 }

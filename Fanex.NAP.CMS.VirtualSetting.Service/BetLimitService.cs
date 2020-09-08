@@ -77,7 +77,7 @@
             }
         }
 
-        public ICustomerSettingsService AutoAdjustVRForSpecialSportBook()
+        public ICustomerSettingsService AutoAdjustVRForSpecialSportsbook()
         {
             return this;
         }

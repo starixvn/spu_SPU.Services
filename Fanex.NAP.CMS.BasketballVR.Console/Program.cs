@@ -30,7 +30,7 @@
                 service
                     .StartTime()
                     .UpdateVRForBasketball()
-                    .UpdateVRForSpecialSportBooks()
+                    .UpdateVRForSpecialSportsbook()
                     .NotifyMessage();
             }
             catch (Exception ex)
@@ -39,7 +39,7 @@
                      .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                      .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error($"Basketball - VirtualSetting service - Start Exception {logMessage}");
+                LogService.Error($"VR Setting - Special Licensee service - Start Exception {logMessage}");
             }
         }
     }
