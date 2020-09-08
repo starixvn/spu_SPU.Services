@@ -399,7 +399,10 @@
         {
             var repository = new DynamicRepository();
 
-            var criteria = new RealtimeUpdateLastScanTimeCriteria();
+            var criteria = new RealtimeUpdateLastScanTimeCriteria()
+            {
+                IsGeneralCategory = isGeneralCategory
+            };
 
             repository.Execute(criteria);
         }

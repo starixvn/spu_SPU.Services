@@ -5,8 +5,7 @@
 
     public class RealtimeUpdateLastScanTimeCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "@IsGeneralCategory")]
-        public string IsGeneralCategory { get; set; }
+        public bool IsGeneralCategory { get; set; }
 
         public override string GetSettingKey()
         {
