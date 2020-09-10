@@ -8,7 +8,7 @@
 
         public override string GetSettingKey()
         {
-            return "Acc_Rpt_ProcessDataForOtherSportsVRSetting";
+            return "Task_VRSetting_CheckAllSportsCustPerformance";
         }
 
         public override bool IsValid()

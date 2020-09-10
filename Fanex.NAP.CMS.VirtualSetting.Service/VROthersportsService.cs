@@ -33,48 +33,72 @@
 
         public ICustomerSettingsService AutoAdjustVirtualSettings()
         {
-            var customerList = _punterService.GetVRAdjustmentCustomers().ToList();
+            var customerList = _punterService.GetSpecialSportBookVRAdjustmentCustomers(99).ToList();
             var customerListString = string.Join(",", customerList);
-            LogService.Info("OtherSports - VR Settings - Raw Customer list: " + customerListString);
+
+            LogService.Info("VR Setting - OtherSports - Raw Customer list: " + customerListString);
 
             var (passedPerfCheckCustomers, unpassedPerfCheckCustomers) = _punterService.VerifyVRAdjustmentCustomers(customerListString);
 
-            AdjustVRPassedCustomers(passedPerfCheckCustomers);
-            UpdateStatusUnpassedCustomers(unpassedPerfCheckCustomers);
+            AdjustVRPassedCustomers(passedPerfCheckCustomers, 99);
+            UpdateStatusUnpassedCustomers(unpassedPerfCheckCustomers, 99);
 
             return this;
         }   
-        
-        public ICustomerSettingsService AutoAdjustBetLimit()
+
+        public ICustomerSettingsService AutoAdjustVRForSpecialSportsbook()
         {
+            var customerList = _punterService.GetSpecialSportBookVRAdjustmentCustomers(100).ToList();
+            var customerListString = string.Join(",", customerList);
+
+            LogService.Info("VR Setting - Special Licensee - Special SportBook - Raw Customer list: " + customerListString);
+
+            var (passedPerfCheckCustomers, unpassedPerfCheckCustomers) = _punterService.VerifyVRAdjustmentCustomers(customerListString);
+
+            AdjustVRPassedCustomers(passedPerfCheckCustomers, 100);
+            UpdateStatusUnpassedCustomers(unpassedPerfCheckCustomers, 100);
+
             return this;
         }
 
-        private void AdjustVRPassedCustomers(IEnumerable<int> customerList)
+        private void AdjustVRPassedCustomers(IEnumerable<int> customerList, int sportType)
         {
             var customerListString = string.Join(",", customerList);
-            LogService.Info("OtherSports - VR Settings - Customers have passed Performance Check: " + customerListString);
+
+            if (sportType == 99)
+                LogService.Info("VR Setting - Special Licensee - OtherSports - Customers have passed Performance Check: " + customerListString);
+            else
+                LogService.Info("VR Setting - Special Licensee - Special SportBook - Customers have passed Performance Check: " + customerListString);
 
             var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
 
             for (int i = 0; i < customerChunks.Count(); i++)
             {
-                _punterService.UpdateVRFollowUpline(string.Join(",", customerChunks[i]));
+                _punterService.UpdateVRFollowUpline(string.Join(",", customerChunks[i]), sportType);
                 PuntersUpdated += customerChunks[i].Count();
             }
         }
 
-        private void UpdateStatusUnpassedCustomers(IEnumerable<int> customerList)
+        private void UpdateStatusUnpassedCustomers(IEnumerable<int> customerList, int sportType)
         {
             var customerListString = string.Join(",", customerList);
-            LogService.Info("OtherSports - VR Settings - Customers have NOT passed Performance Check: " + customerListString);
+
+            if (sportType == 99)
+                LogService.Info("VR Setting - Special Licensee - OtherSports - Customers have NOT passed Performance Check: " + customerListString);
+            else
+                LogService.Info("VR Setting - Special Licensee - Special SportBook - Customers have NOT passed Performance Check: " + customerListString);
 
             var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
 
             for (int i = 0; i < customerChunks.Count(); i++)
             {
-                _punterService.UpdateVRAutoAdjustmentStatus(string.Join(",", customerChunks[i]));
+                _punterService.UpdateVRAutoAdjustmentStatus(string.Join(",", customerChunks[i]), sportType);
             }
+        }
+
+        public ICustomerSettingsService AutoAdjustBetLimit()
+        {
+            return this;
         }
     }
 }

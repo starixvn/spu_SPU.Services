@@ -144,37 +144,37 @@
         }
 
         #region Othersports VR
-        public IEnumerable<int> GetVRAdjustmentCustomers()
+        public IEnumerable<int> GetSpecialSportBookVRAdjustmentCustomers(int sportType)
         {
-            return _dataAccess.GetVRAdjustmentCustomers();
+            return _dataAccess.GetSpecialSportBookVRAdjustmentCustomers(sportType);
         }
-
+        
         public (IEnumerable<int>, IEnumerable<int>) VerifyVRAdjustmentCustomers(string customerList)
         {
             return _dataAccess.VerifyVRAdjustmentCustomers(customerList);
         }
 
-        public IPunterService UpdateVRFollowUpline(string customerList)
+        public IPunterService UpdateVRFollowUpline(string customerList, int sportType)
         {
             if (string.IsNullOrEmpty(customerList))
             {
                 return this;
             }
 
-            _dataAccess.UpdateVRFollowUpline(customerList);
+            _dataAccess.UpdateVRFollowUpline(customerList, sportType);
 
             return this;
         }
 
 
-        public IPunterService UpdateVRAutoAdjustmentStatus(string customerList)
+        public IPunterService UpdateVRAutoAdjustmentStatus(string customerList, int sportType)
         {
             if (string.IsNullOrEmpty(customerList))
             {
                 return this;
             }
 
-            _dataAccess.UpdateVRAutoAdjustmentStatus(customerList);
+            _dataAccess.UpdateVRAutoAdjustmentStatus(customerList, sportType);
 
             return this;
         }
@@ -430,7 +430,7 @@
                 LogService.Error(error);
             }
         }
-
+        
         #endregion
     }
 }

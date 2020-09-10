@@ -76,5 +76,10 @@
                 _punterService.RemoveBetLimit(string.Join(",", customerChunks[i]));
             }
         }
+
+        public ICustomerSettingsService AutoAdjustVRForSpecialSportsbook()
+        {
+            return this;
+        }
     }
 }

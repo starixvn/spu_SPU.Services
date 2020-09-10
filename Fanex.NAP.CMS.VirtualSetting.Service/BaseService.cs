@@ -13,6 +13,8 @@
 
         protected int TotalAffectedMembers { get; set; }
 
+        protected int TotalAffectedForSpecicalSport { get; set; }
+
         protected LetstalkService _letstalkService;
 
         public BaseService()
@@ -30,6 +32,8 @@
         public virtual BaseService UpdateVRForSoccer() { return this; }
 
         public virtual BaseService UpdateVRForBasketball() { return this; }
+
+        public virtual BaseService UpdateVRForSpecialSportsbook() { return this; }
 
         public virtual BaseService UpdateForSportbooks() { return this; }
 

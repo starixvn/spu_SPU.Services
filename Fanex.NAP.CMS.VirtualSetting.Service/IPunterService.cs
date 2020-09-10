@@ -15,13 +15,13 @@
 
         IPunterService AdjustVirtualSettingForNormal(double virtualMultiplier);
 
-        IEnumerable<int> GetVRAdjustmentCustomers();
+        IEnumerable<int> GetSpecialSportBookVRAdjustmentCustomers(int sportType);
 
         (IEnumerable<int>, IEnumerable<int>) VerifyVRAdjustmentCustomers(string customerList);
 
-        IPunterService UpdateVRFollowUpline(string customerList);
+        IPunterService UpdateVRFollowUpline(string customerList, int sportType);
 
-        IPunterService UpdateVRAutoAdjustmentStatus(string customerList);
+        IPunterService UpdateVRAutoAdjustmentStatus(string customerList, int sportType);
 
         IEnumerable<int> GetBetLimitCustomers();
 

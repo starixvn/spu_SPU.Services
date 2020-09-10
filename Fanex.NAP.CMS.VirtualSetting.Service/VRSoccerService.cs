@@ -46,5 +46,10 @@
         {
             return this;
         }
+
+        public ICustomerSettingsService AutoAdjustVRForSpecialSportsbook()
+        {
+            return this;
+        }
     }
 }
