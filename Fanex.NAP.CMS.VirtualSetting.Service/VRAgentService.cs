@@ -12,7 +12,7 @@
     {
         private IPunterService _punterService;
 
-        public int PuntersUpdated { get; set; }
+        public int PuntersUpdated { get; set; }        
 
         public VRAgentService(string siteIds, string superIds, DateTime adjustDate)
         {
@@ -24,7 +24,7 @@
                 SiteIds = siteIds,
                 SuperIds = superIds,
                 FailedUpdatePunterList = new List<Punter>()
-            };
+            };        
 
             var dataAccess = new VirtualSettingDataAccess();
 
@@ -45,7 +45,7 @@
         private void UpdateFlagAbnormalAgent(IEnumerable<int> customerList, int type)
         {
             var customerListString = string.Join(",", customerList);
-            LogService.Info("VR - Auto Agent Adjustment - check Abnormal Agents List is " + customerListString);
+            //LogService.Info("VR - Auto Agent Adjustment - check Abnormal Agents List is " + customerListString);
 
             var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
 
@@ -59,7 +59,7 @@
         private void UpdateUnflagAbnormalAgent(IEnumerable<int> customerList, int type)
         {
             var customerListString = string.Join(",", customerList);
-            LogService.Info("VR - Auto Agent Adjustment - uncheck Abnormal Agents List is " + customerListString);
+            //LogService.Info("VR - Auto Agent Adjustment - uncheck Abnormal Agents List is " + customerListString);
 
             var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
 
@@ -68,6 +68,11 @@
                 _punterService.UpdateUnflagAbnormalAgent(string.Join(",", customerChunks[i]), type);
                 PuntersUpdated += customerChunks[i].Count();
             }
+        }
+
+        public (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated(DateTime adjustDate)
+        {
+           return _punterService.GetVRAgentUpdated(adjustDate);
         }
     }
 }

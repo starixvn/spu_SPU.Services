@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CMS.VirtualSetting.Service
 {
     using Fanex.NAP.CMS.VirtualSetting.Model;
+    using System;
     using System.Collections.Generic;
 
     public interface IPunterService
@@ -40,5 +41,7 @@
         IPunterService UpdateFlagAbnormalAgent(string customerList, int type);
 
         IPunterService UpdateUnflagAbnormalAgent(string customerList, int type);
+
+        (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated(DateTime processDate);
     }
 }

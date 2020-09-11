@@ -351,6 +351,17 @@
                 objectDb.ExecuteNonQuery(criteria);
             }
         }
+
+        public (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated(DateTime processDate)
+        {
+            var criteria = new GetVRAgentUpdatedCriteria
+            {
+                ProcessDate = processDate
+            };
+
+            return _repository.FetchMultiple<VRAgentUpdatedToZeroModel, VRAgentUpdatedToFollowSuperModel>(criteria);
+        }
+
         #endregion
     }
 }

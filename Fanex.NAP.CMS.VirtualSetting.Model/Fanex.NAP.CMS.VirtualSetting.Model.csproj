@@ -47,6 +47,8 @@
     <Compile Include="Punter.cs" />
     <Compile Include="PunterEqualityComparer.cs" />
     <Compile Include="VirtualSetting.cs" />
+    <Compile Include="VRAgentUpdatedToFollowSuperModel.cs" />
+    <Compile Include="VRAgentUpdatedToZeroModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

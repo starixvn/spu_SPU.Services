@@ -31,6 +31,7 @@
                 service
                     .StartTime()
                     .UpdateVRAgent()
+                    .SendMailExternal(AppSettings.MailingListId)
                     .NotifyMessage();
             }
             catch (Exception ex)
@@ -39,7 +40,7 @@
                      .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                      .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error($"VR - Agent Adjustment service - Start Exception {logMessage}");
+                //LogService.Error($"VR - Agent Adjustment service - Start Exception {logMessage}");
             }
         }
     }
