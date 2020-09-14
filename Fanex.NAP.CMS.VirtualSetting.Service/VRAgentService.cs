@@ -67,9 +67,9 @@
             }
         }
 
-        public (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated(DateTime adjustDate)
+        public (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated()
         {
-           return _punterService.GetVRAgentUpdated(adjustDate);
+           return _punterService.GetVRAgentUpdated();
         }
     }
 }

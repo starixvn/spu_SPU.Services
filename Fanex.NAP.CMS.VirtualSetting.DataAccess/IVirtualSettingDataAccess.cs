@@ -53,7 +53,7 @@
 
         void UpdateUnflagAbnormalAgent(string customerList, int type);
 
-        (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated(DateTime processDate);
+        (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated();
 
         #endregion
     }

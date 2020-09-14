@@ -69,9 +69,9 @@
 
             TotalAffectedMembers = service.PuntersUpdated;
 
-            LogService.Info("VR - Auto Agent Adjustment service - UpdateVRAgent successfully!");
+            LogService.Info("VR - Auto Agent Adjustment service - UpdateVRAgent successfully.");
 
-            (_updatedToZeroList, _updatedToFollowSupperList) = service.GetVRAgentUpdated(_startTime);
+            (_updatedToZeroList, _updatedToFollowSupperList) = service.GetVRAgentUpdated();
 
             _stopTime = DateTime.Now;
 
@@ -111,16 +111,19 @@
 
             try
             {
-                var mail = new Mail
+                if (!string.IsNullOrEmpty(body))
                 {
-                    Subject = subject,
-                    Title = subject,
-                    Body = body,
-                    MailingListId = mailingListId,
-                    Attachments = new List<MailAttachment>()
-                };
+                    var mail = new Mail
+                    {
+                        Subject = subject,
+                        Title = subject,
+                        Body = body,
+                        MailingListId = mailingListId,
+                        Attachments = new List<MailAttachment>()
+                    };
 
-                SendMail(mail);
+                    SendMail(mail);
+                }
             }
             catch (Exception ex)
             {

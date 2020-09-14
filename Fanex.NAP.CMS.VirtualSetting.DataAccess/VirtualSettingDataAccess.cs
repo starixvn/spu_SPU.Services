@@ -352,12 +352,9 @@
             }
         }
 
-        public (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated(DateTime processDate)
+        public (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated()
         {
-            var criteria = new GetVRAgentUpdatedCriteria
-            {
-                ProcessDate = processDate
-            };
+            var criteria = new GetVRAgentUpdatedCriteria();           
 
             return _repository.FetchMultiple<VRAgentUpdatedToZeroModel, VRAgentUpdatedToFollowSuperModel>(criteria);
         }
