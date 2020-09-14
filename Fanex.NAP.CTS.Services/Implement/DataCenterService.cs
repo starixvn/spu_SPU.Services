@@ -131,6 +131,11 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList);
         }
 
+        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerClassModel> custClassList)
+        {
+            dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custClassList);
+        }
+
         public void InsertProblemAccountClassificationToMainDB(List<ProblemAccountsModel> custIdList)
         {
             dataCenterDataAccess.InsertProblemAccountCategoryToMainDB(custIdList);
@@ -206,14 +211,14 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.InsertProblemAccount(jsonData);
         }
 
-        public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution()
+        public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId)
         {
-            return dataCenterDataAccess.GetPreviousTimingExecution();
+            return dataCenterDataAccess.GetPreviousTimingExecution(paramId);
         }
 
-        public void UpdateTimingExecution (string newDataTime)
+        public void UpdateTimingExecution (string newDataTime, int paramId)
         {
-            dataCenterDataAccess.UpdateTimingExecution(newDataTime);
+            dataCenterDataAccess.UpdateTimingExecution(newDataTime, paramId);
         }
 
         public void InsertUserPermission (string userIds, string permissionFuncName)
@@ -224,5 +229,16 @@ namespace Fanex.NAP.CTS.Services
         {
             return dataCenterDataAccess.GetAllSpecialCustomerClass();
         }
+
+        public IEnumerable<RobotUser> GetRobotUser(DateTime fromDate, string creditSiteList)
+        {
+            return dataCenterDataAccess.GetRobotUsers(fromDate, creditSiteList);
+        }
+
+        public IEnumerable<CustomerClassModel> InsertRobotUsers(string custIds)
+        {
+            return dataCenterDataAccess.InsertRobotUsers(custIds);
+        }
+        
     }
 }

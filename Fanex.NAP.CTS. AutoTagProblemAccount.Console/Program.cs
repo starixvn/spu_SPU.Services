@@ -63,7 +63,8 @@
 
         static List<ProblemAccountsModel> GetProblemAccounts(DataCenterService dataService)
         {
-            var previousTimingExecution = dataService.GetPreviousTimingExecution()?.SingleOrDefault();
+            var paramId = 2;
+            var previousTimingExecution = dataService.GetPreviousTimingExecution(paramId)?.SingleOrDefault();
 
             var problemAccounts = new List<ProblemAccountsModel>();
             var savedDataTime = DateTime.Now;
@@ -88,7 +89,7 @@
             }
 
             LogService.Info("AutoTag Problem Account - Problem Accounts: " + problemAccounts.Count);
-            dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME));
+            dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME), paramId);
 
             return problemAccounts;
         }

@@ -44,12 +44,14 @@
     <Compile Include="AssociationModel.cs" />
     <Compile Include="CustomerClassificationModelMoreInfo.cs" />
     <Compile Include="CustomerClassificationModel.cs" />
+    <Compile Include="CustomerClassModel.cs" />
     <Compile Include="FrequencyExecution.cs" />
     <Compile Include="GraphDB\AssociationModelForGraph.cs" />
     <Compile Include="CustomerGeneralClassificationModel.cs" />
     <Compile Include="ProblemAccountsModel.cs" />
     <Compile Include="InsertProblemAccountsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RobotUser.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MainDB\" />

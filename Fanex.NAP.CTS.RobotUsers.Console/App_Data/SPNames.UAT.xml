@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="RobotUsers">
+    <Setting Key="CTS_DC_GetSystemParameterById" SpName="CTS_DC_GetSystemParameterById" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_UpdateSystemParameterById" SpName="CTS_DC_UpdateSystemParameterById" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_SpecialCustClass_InsertRobotUsers" SpName="CTS_DC_SpecialCustClass_InsertRobotUsers" DbName="MySQL.CTS_DataCenter"/>
+
+
+    <Setting Key="CTS_Customer_RobotListSel" SpName="CTS_Customer_RobotListSel" DbName="DBONUSER.ON_USER.bodbSPUNet"/>
+  </Function>
+</Functions>

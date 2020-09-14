@@ -4,13 +4,13 @@
     using Fanex.Data.Repository;
     using Fanex.NAP.CTS.Criteria;
     using Fanex.NAP.CTS.Criteria.CustomerClassification;
+    using Fanex.NAP.CTS.Criteria.MainDB;
     using Fanex.NAP.CTS.Model;
-    using Fanex.NAP.SPU.Model;
     using Fanex.NAP.FS.XML;
+    using Fanex.NAP.SPU.Model;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System;
-    using Fanex.NAP.CTS.Criteria.MainDB;
 
     public class DataCenterDataAccess
     {
@@ -166,7 +166,7 @@
 
             repository.Execute(criteria);
         }
-        
+
 
         public void TransformUpdatingLastLoginTime(int batchSize)
         {
@@ -213,6 +213,18 @@
             };
 
             repository.Execute(criteria);
+        }
+
+        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerClassModel> custClassList)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertCustomerGeneralCategoryToMainDBCriteria
+            {
+                custList = custClassList.ToXmlString()
+            };
+
+            //repository.Execute(criteria);
         }
 
         public void InsertProblemAccountCategoryToMainDB(List<ProblemAccountsModel> custIdList)
@@ -448,11 +460,11 @@
             }
         }
 
-        public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution()
+        public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId)
         {
             var criteria = new GetPreviousTimingExecutionCriteria
             {
-                ParamID = 2
+                ParamID = paramId
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -461,11 +473,11 @@
             }
         }
 
-        public void UpdateTimingExecution(string newDataTime)
+        public void UpdateTimingExecution(string newDataTime, int paramId)
         {
             var criteria = new UpdateTimingExecutionCriteria
             {
-                ParamID = 2,
+                ParamID = paramId,
                 ParamValue = newDataTime
             };
 
@@ -499,6 +511,31 @@
             };
 
             return repository.Fetch<int>(criteria);
+        }
+
+        public IEnumerable<RobotUser> GetRobotUsers(DateTime fromDate, string creditSiteList)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetRobotUserCriteria
+            {
+                FromDate = fromDate,
+                CreditSite = creditSiteList
+            };
+
+            return repository.Fetch<RobotUser>(criteria);
+        }
+
+        public IEnumerable<CustomerClassModel> InsertRobotUsers(string custIds)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertRobotUsersIntoSpecialCustClassCriteria
+            {
+                CustIds = custIds
+            };
+
+            return repository.Fetch<CustomerClassModel>(criteria);
         }
     }
 }
