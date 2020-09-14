@@ -224,7 +224,7 @@
                 custList = custClassList.ToXmlString()
             };
 
-            //repository.Execute(criteria);
+            repository.Execute(criteria);
         }
 
         public void InsertProblemAccountCategoryToMainDB(List<ProblemAccountsModel> custIdList)
