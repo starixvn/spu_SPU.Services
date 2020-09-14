@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="VR_Agent\GetVRAgentUpdatedCriteria.cs" />
     <Compile Include="VR_Agent\UpdateUnflagAbnormalAgentCriteria..cs" />
     <Compile Include="VR_Agent\UpdateFlagAbnormalAgentCriteria.cs" />
     <Compile Include="VR_Agent\VerifySportsAgentPerformanceCriteria.cs" />

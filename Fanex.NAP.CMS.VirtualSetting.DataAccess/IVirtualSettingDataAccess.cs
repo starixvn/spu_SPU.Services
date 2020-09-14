@@ -52,6 +52,9 @@
         void UpdateFlagAbnormalAgent(string customerList, int type);
 
         void UpdateUnflagAbnormalAgent(string customerList, int type);
+
+        (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated();
+
         #endregion
     }
 }

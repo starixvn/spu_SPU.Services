@@ -254,6 +254,10 @@
             return this;
         }
 
+        public (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated()
+        {
+            return _dataAccess.GetVRAgentUpdated();
+        }
 
         #endregion
 
