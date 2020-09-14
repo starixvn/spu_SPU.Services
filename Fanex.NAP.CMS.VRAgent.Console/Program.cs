@@ -40,7 +40,7 @@
                      .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                      .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                //LogService.Error($"VR - Agent Adjustment service - Start Exception {logMessage}");
+                LogService.Error($"VR - Auto Agent Adjustment service - Main Exception {logMessage}");
             }
         }
     }

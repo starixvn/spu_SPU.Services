@@ -30,7 +30,7 @@
         public Service StartTime()
         {
             _startTime = DateTime.Now;
-            //LogService.Info("Start executing for VR - Auto Agent Adjustment service.");
+            LogService.Info($"VR - Auto Agent Adjustment service - StartTime: {_startTime}.");
 
             if (AppSettings.Environment == 3)
             {
@@ -58,7 +58,7 @@
                      .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                      .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                    LogService.Error($"VR - Auto Agent Adjustment service - Start Exception {logMessage}");
+                    LogService.Error($"VR - Auto Agent Adjustment service - UpdateVRAgent exception with countRetry: {countRetry} message:  {logMessage}");
                     countRetry += 1;
                     if (countRetry == AppSettings.RetryTime)
                     {
@@ -67,11 +67,11 @@
                 }
             }
 
-            (_updatedToZeroList, _updatedToFollowSupperList) = service.GetVRAgentUpdated(_startTime);
-
             TotalAffectedMembers = service.PuntersUpdated;
 
-            //LogService.Info("Executed for VR - Auto Agent Adjustment successfully!");
+            LogService.Info("VR - Auto Agent Adjustment service - UpdateVRAgent successfully!");
+
+            (_updatedToZeroList, _updatedToFollowSupperList) = service.GetVRAgentUpdated(_startTime);
 
             _stopTime = DateTime.Now;
 
@@ -81,12 +81,24 @@
         public override BaseService NotifyMessage()
         {
             var environment = AppSettings.EnvironmentName;
+            
+            var message = $"VR - Auto Agent Adjustment service run complete ({ environment }). TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }.";
 
-            //LogService.Info($"VR - Auto Agent Adjustment service ({ environment }) - TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
+            if (_updatedToZeroList != null)
+            {
+                message += $" Total Agents updated to 0: {_updatedToZeroList.Count() }.";
+            }
+
+            if (_updatedToFollowSupperList != null)
+            {
+                message += $" Total Agents updated to follow Super: {_updatedToFollowSupperList.Count() }.";
+            }
+
+            LogService.Info(message);
 
             if (AppSettings.Environment == 3)
             {
-                _letstalkService.Info($"VR - Auto Agent Adjustment service run complete ({ environment }). TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
+                _letstalkService.Info(message);
             }
 
             return this;
@@ -97,48 +109,64 @@
             var subject = "List of new agents got VR updated by Agent profiling job";
             var body = GenerateMailBody();
 
-            var mail = new Mail
+            try
             {
-                Subject = subject,
-                Title = subject,
-                Body = body,
-                MailingListId = mailingListId,
-                Attachments = new List<MailAttachment>()
-            };
+                var mail = new Mail
+                {
+                    Subject = subject,
+                    Title = subject,
+                    Body = body,
+                    MailingListId = mailingListId,
+                    Attachments = new List<MailAttachment>()
+                };
 
-            SendMail(mail);
+                SendMail(mail);
+            }
+            catch (Exception ex)
+            {
+                var message = $"VR - Auto Agent Adjustment service - SendMailExternal exception: { ex.Message } with body content: { body }";
+
+                LogService.Error(message, ex);
+            }
 
             return this;
         }
 
         private string GenerateMailBody()
         {
-            //var isExistAgent = _updatedToZeroList != null && _updatedToZeroList.Any()
-            //    || _updatedToFollowSupperList != null && _updatedToFollowSupperList.Any();
+            var body = string.Empty;
 
-            var isExistAgent = true;
+            try
+            {
+                var isExistAgent = _updatedToZeroList != null && _updatedToZeroList.Any()
+               || _updatedToFollowSupperList != null && _updatedToFollowSupperList.Any();
 
-            var mailTemplatePath = isExistAgent
-                ? AppDomain.CurrentDomain.BaseDirectory + VSMailInformTemplate
-                : AppDomain.CurrentDomain.BaseDirectory + VSMailInformNoAgentAffectTemplate;
+                var mailTemplatePath = isExistAgent
+                    ? AppDomain.CurrentDomain.BaseDirectory + VSMailInformTemplate
+                    : AppDomain.CurrentDomain.BaseDirectory + VSMailInformNoAgentAffectTemplate;
 
-            var body = Utilities.ReadTextFile(mailTemplatePath);
-            
-            var html = string.Empty;
-            
-            html += GenerateTableUpdateToZero();
-            html += GenerateTableUpdateToFollowSupper();
+                body = Utilities.ReadTextFile(mailTemplatePath);
 
-            body = string.Format(body, html);
+                var html = string.Empty;
 
+                html += GenerateTableUpdateToZero();
+                html += GenerateTableUpdateToFollowSupper();
+
+                body = string.Format(body, html);
+            }
+            catch (Exception ex)
+            {
+                var message = $"VR - Auto Agent Adjustment service - GenerateMailBody exception: { ex.Message }";
+
+                LogService.Error(message, ex);
+            }
+           
             return body;
         }
 
         private string GenerateTableUpdateToZero()
         {
             var table = "</br>Table: agents whose VR got updated to 0 </br></br>";
-
-            _updatedToZeroList = GenerateDataForTest();
 
             if (_updatedToZeroList != null && _updatedToZeroList.Any())
             {
@@ -170,8 +198,6 @@
         private string GenerateTableUpdateToFollowSupper()
         {
             var table = "</br>Table: agents whose VR got updated to follow Super </br></br>";
-
-            _updatedToFollowSupperList = GenerateDataForTest2();
 
             if (_updatedToFollowSupperList != null && _updatedToFollowSupperList.Any())
             {
@@ -232,40 +258,7 @@
             MailClientHandler.SendFunctionMail(mail);
 
             MailClientHandler.Stop();
-        }
-
-        private IEnumerable<VRAgentUpdatedToZeroModel> GenerateDataForTest()
-        {
-            var list = new List<VRAgentUpdatedToZeroModel>();
-
-            for (int i = 0; i < 40; i++)
-            {
-                list.Add(new VRAgentUpdatedToZeroModel
-                {
-                    Agent = "acbde1" + i.ToString(),
-                    Site = "755555" + i.ToString()
-                });
-            }
-
-            return list;
-        }
-
-        private IEnumerable<VRAgentUpdatedToFollowSuperModel> GenerateDataForTest2()
-        {
-            var list = new List<VRAgentUpdatedToFollowSuperModel>();
-
-            for (int i = 1; i < 40; i++)
-            {
-                list.Add(new VRAgentUpdatedToFollowSuperModel
-                {
-                    Agent = "acbde1" + i.ToString(),
-                    Site = "755555" + i.ToString(),
-                    MemberWinloss = new decimal(1.26 + i)
-                });
-            }
-          
-            return list;
-        }
+        }       
 
     }
 }

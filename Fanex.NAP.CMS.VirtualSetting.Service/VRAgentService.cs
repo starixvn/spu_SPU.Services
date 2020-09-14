@@ -1,6 +1,5 @@
 ﻿namespace Fanex.NAP.CMS.VirtualSetting.Service
 {
-    using Fanex.Logging;
     using Fanex.NAP.CMS.VirtualSetting.DataAccess;
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.SPU.Core;
@@ -45,7 +44,6 @@
         private void UpdateFlagAbnormalAgent(IEnumerable<int> customerList, int type)
         {
             var customerListString = string.Join(",", customerList);
-            //LogService.Info("VR - Auto Agent Adjustment - check Abnormal Agents List is " + customerListString);
 
             var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
 
@@ -59,7 +57,6 @@
         private void UpdateUnflagAbnormalAgent(IEnumerable<int> customerList, int type)
         {
             var customerListString = string.Join(",", customerList);
-            //LogService.Info("VR - Auto Agent Adjustment - uncheck Abnormal Agents List is " + customerListString);
 
             var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
 
