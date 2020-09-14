@@ -28,11 +28,14 @@
 
                 var service = new Service();
 
-                service
-                    .StartTime()
-                    .UpdateVRAgent()
-                    .SendMailExternal(AppSettings.MailingListId)
-                    .NotifyMessage();
+                //service
+                //    .StartTime()
+                //    .UpdateVRAgent()
+                //    .SendMailExternal(AppSettings.MailingListId)
+                //    .NotifyMessage();
+
+                // Test Get Data for Send mail
+                service.TestGetDataSendMail();
             }
             catch (Exception ex)
             {

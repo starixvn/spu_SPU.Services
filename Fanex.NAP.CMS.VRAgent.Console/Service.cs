@@ -141,8 +141,8 @@
 
             try
             {
-                var isExistAgent = _updatedToZeroList != null && _updatedToZeroList.Any()
-               || _updatedToFollowSupperList != null && _updatedToFollowSupperList.Any();
+                var isExistAgent = (_updatedToZeroList != null && _updatedToZeroList.Any())
+                                || (_updatedToFollowSupperList != null && _updatedToFollowSupperList.Any());
 
                 var mailTemplatePath = isExistAgent
                     ? AppDomain.CurrentDomain.BaseDirectory + VSMailInformTemplate
@@ -263,5 +263,69 @@
             MailClientHandler.Stop();
         }       
 
+        public void TestGetDataSendMail()
+        {
+            TestGetData();
+
+            TestSendMail();
+        }
+
+        private void TestGetData()
+        {
+            try
+            {
+                var service = new VRAgentService(AppSettings.SiteIds, AppSettings.SuperIds, DateTime.Now);
+
+                var (updatedToZeroList, updatedToFollowSuper) = service.GetVRAgentUpdated();
+
+                var message = $"VR - Auto Agent Adjustment service TestGetData successfully - updatedToZeroList: {updatedToZeroList}. updatedToFollowSuper: {updatedToFollowSuper}";
+
+                LogService.Info(message);
+            }
+            catch (Exception ex)
+            {
+                var message = $"VR - Auto Agent Adjustment service - TestGetData exception: { ex.Message }";
+
+                LogService.Error(message, ex);
+            }
+        }
+
+        private void TestSendMail()
+        {
+            try
+            {
+                var mailingIdToSPU = AppSettings.Environment == 3 ? 82 : 80;
+
+                var updatedToZeroList = new List<VRAgentUpdatedToZeroModel>();
+                updatedToZeroList.Add(new VRAgentUpdatedToZeroModel
+                {
+                    Agent = "Agent 01",
+                    Site = "Site 01"
+                });
+
+                var updatedToFollowSupperList = new List<VRAgentUpdatedToFollowSuperModel>();
+                updatedToFollowSupperList.Add(new VRAgentUpdatedToFollowSuperModel
+                {
+                    Agent = "Agent 01",
+                    Site = "Site 01",
+                    MemberWinloss = new decimal(100.4)
+                });
+
+                _updatedToZeroList = updatedToZeroList;
+                _updatedToFollowSupperList = updatedToFollowSupperList;
+
+                SendMailExternal(mailingIdToSPU);
+
+                var message = $"VR - Auto Agent Adjustment service TestSendMail successfully";
+
+                LogService.Info(message);
+            }
+            catch (Exception ex)
+            {
+                var message = $"VR - Auto Agent Adjustment service - TestSendMail exception: { ex.Message }";
+
+                LogService.Error(message, ex);
+            }
+        }
     }
 }
