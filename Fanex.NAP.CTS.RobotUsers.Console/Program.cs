@@ -44,6 +44,7 @@
                     })
                });
 
+            LogService.Info("Robot User - Start running...");
             var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
             var creditSites = ConfigurationManager.AppSettings["Credit-Sites"].ToString();
             var executedTime = DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME);
@@ -52,21 +53,26 @@
             try
             {
                 var previousTimingExecution = dataService.GetPreviousTimingExecution(paramId)?.SingleOrDefault();
+                LogService.Info("Robot User - Last running: " + previousTimingExecution.ToString());
 
                 var fromDate = DateTime.Parse(previousTimingExecution.ParameterValue);
                 var robotUsers = dataService.GetRobotUser(fromDate, creditSites);
+                LogService.Info("Robot User - GetRobotUser: " + robotUsers.Count());
                 if (robotUsers.Any())
                 {
                     var robotUsersChunks = robotUsers.Chunk(batchSize).ToList();
                     foreach (var robotUserList in robotUsersChunks)
                     {
                         var custClasses = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
+                        LogService.Info("Robot User - InsertRobotUsers done: " + custClasses.Count());
                         dataService.UpdateCustomerGeneralClassificationtoMainDB(custClasses);
-                        Thread.Sleep(500);
+                        LogService.Info("Robot User - Update cust class on MainDB done!");
+                        Thread.Sleep(300);
                     }
                 }
 
                 dataService.UpdateTimingExecution(executedTime, paramId);
+                LogService.Info("Robot User - UpdateTimingExecution: " + executedTime.ToString());
             }
             catch (Exception ex)
             {

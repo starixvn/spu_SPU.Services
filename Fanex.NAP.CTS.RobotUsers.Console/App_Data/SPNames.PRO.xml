@@ -7,6 +7,6 @@
     <Setting Key="CTS_DC_SpecialCustClass_InsertRobotUsers" SpName="CTS_DC_SpecialCustClass_InsertRobotUsers" DbName="MySQL.CTS_DataCenter"/>
 
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
-    <Setting Key="CTS_Customer_RobotListSel" SpName="CTS_Customer_RobotListSel" DbName="DBONUSER.ON_USER.bodbSPUNet"/>
+    <Setting Key="CTS_Customer_RobotListSel" SpName="CTS_Customer_RobotListSel" DbName="DBONUSER.ON_USER.bodbSPUNet" TimeOut="300"/>
   </Function>
 </Functions>
