@@ -110,7 +110,7 @@
             var body = GenerateMailBody();
 
             try
-            {
+            {                
                 if (!string.IsNullOrEmpty(body))
                 {
                     var mail = new Mail
@@ -138,7 +138,7 @@
         private string GenerateMailBody()
         {
             var body = string.Empty;
-
+            
             try
             {
                 var isExistAgent = (_updatedToZeroList != null && _updatedToZeroList.Any())
@@ -169,7 +169,7 @@
 
         private string GenerateTableUpdateToZero()
         {
-            var table = "</br>Table: agents whose VR got updated to 0 </br></br>";
+            var table = "<br />Table: agents whose VR got updated to 0 <br /><br />";
 
             if (_updatedToZeroList != null && _updatedToZeroList.Any())
             {
@@ -200,7 +200,7 @@
 
         private string GenerateTableUpdateToFollowSupper()
         {
-            var table = "</br>Table: agents whose VR got updated to follow Super </br></br>";
+            var table = "<br />Table: agents whose VR got updated to follow Super <br /><br />";
 
             if (_updatedToFollowSupperList != null && _updatedToFollowSupperList.Any())
             {
@@ -214,7 +214,7 @@
                 var index = 1;
 
                 foreach (var item in _updatedToFollowSupperList)
-                {
+                {                    
                     table += "<tr>";
                     table += "<td style='" + CssStyleTd() + "'>" + index + "</td>";
                     table += "<td style='" + CssStyleTd() + "'>" + item.Site + "</td>";
@@ -261,6 +261,6 @@
             MailClientHandler.SendFunctionMail(mail);
 
             MailClientHandler.Stop();
-        }       
+        }              
     }
 }
