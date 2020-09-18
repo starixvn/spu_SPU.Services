@@ -34,24 +34,16 @@
         {
             _punterService.InsertNewVRAgent();
 
-            var (updateFlagAbnormalAgents, updateUnflagAbnormalAgents) = _punterService.VerifySportsAgentPerformance();
+            var updateUnflagAbnormalAgents = _punterService.VerifySportsAgentPerformance();
 
-            UpdateFlagAbnormalAgent(updateFlagAbnormalAgents, 1);
+            UpdateFlagAbnormalAgent(1);
 
             UpdateUnflagAbnormalAgent(updateUnflagAbnormalAgents, 1);
         }
 
-        private void UpdateFlagAbnormalAgent(IEnumerable<int> customerList, int type)
+        private void UpdateFlagAbnormalAgent(int type)
         {
-            var customerListString = string.Join(",", customerList);
-
-            var customerChunks = Utilities.ChunkList(customerList, AppSettings.PunterChunkSize).ToList();
-
-            for (int i = 0; i < customerChunks.Count(); i++)
-            {
-                _punterService.UpdateFlagAbnormalAgent(string.Join(",", customerChunks[i]), type);
-                PuntersUpdated += customerChunks[i].Count();
-            }
+           _punterService.UpdateFlagAbnormalAgent(type);
         }
 
         private void UpdateUnflagAbnormalAgent(IEnumerable<int> customerList, int type)

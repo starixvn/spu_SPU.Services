@@ -47,9 +47,9 @@
         #region VR-Agent
         void InsertNewVRAgent();
 
-        (IEnumerable<int>, IEnumerable<int>) VerifySportsAgentPerformance();
+        IEnumerable<int> VerifySportsAgentPerformance();
 
-        void UpdateFlagAbnormalAgent(string customerList, int type);
+        void UpdateFlagAbnormalAgent(int type);
 
         void UpdateUnflagAbnormalAgent(string customerList, int type);
 
