@@ -5,11 +5,8 @@ namespace Fanex.NAP.CTS.Criteria
 {
     public class InsertUserPermissionCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_UserIds")]
-        public string UserIds { get; set; }
-
-        [SpParam(SqlParamName = "ip_FunctionName")]
-        public string PermissionFuncName { get; set; }
+        [SpParam(SqlParamName = "ip_UserIDList")]
+        public string UserIDList { get; set; }
 
         public override string GetSettingKey()
         {

@@ -1,22 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Caching;
-using System.Text;
-using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Data.SqlServer;
-using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry;
-using Fanex.NAP.Core.Models.ValueObject;
-using Fanex.NAP.Core.Service.Impl;
-using Fanex.NAP.CTS.Services;
-using Fanex.NAP.SPU.Core;
-using Sentry;
-
-namespace Fanex.NAP.CTS.UserPermission.Console
+﻿namespace Fanex.NAP.CTS.UserPermission.Console
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Fanex.Data;
+    using Fanex.Data.MySql;
+    using Fanex.Data.SqlServer;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry;
+    using Fanex.NAP.Core.Models.ValueObject;
+    using Fanex.NAP.Core.Service.Impl;
+    using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
+    using Sentry;
+
     class Program
     {
         static void Main(string[] args)
@@ -41,19 +42,11 @@ namespace Fanex.NAP.CTS.UserPermission.Console
                });
             try
             {
-                var userIds = GetPermissionUserIDs();
+                var permissionUserIds = GetPermissionUserIDs();
 
-                var preUserData = Helper.ReadXML(AppSettings.IntermediateUserFileName);
-
-                if (!CheckDataMatching(preUserData, userIds))
+                if (permissionUserIds != null && permissionUserIds.Count > 0)
                 {
-                    if(string.IsNullOrEmpty(userIds))
-                    {
-                        return;
-                    }
-
-                    dataService.InsertUserPermission(userIds, FSFunctionKeys.AssociatedAccountMonitor);
-                    Helper.WriteXML(AppSettings.IntermediateUserFileName, userIds);
+                    dataService.InsertUserPermission(JsonConvert.SerializeObject(permissionUserIds));
                 }
             }
             catch (Exception ex)
@@ -66,42 +59,28 @@ namespace Fanex.NAP.CTS.UserPermission.Console
             }
         }
 
-        /// <summary>
-        /// Check whether there are any change of user AAM permission
-        /// </summary>
-        private static bool CheckDataMatching(string dataFromCache, string userIds)
+        private static List<UserPermissionModel> GetPermissionUserIDs()
         {
-            if (string.IsNullOrEmpty(userIds) 
-                || string.IsNullOrEmpty(dataFromCache)
-                || !string.Equals(dataFromCache, userIds))
-            {
-                return false;
-            }
+            var associatedPermissionUserIds = new UserService().GetUserPolicies(FSFunctionKeys.AssociatedAccountMonitor, Int32.Parse(AppSettings.SiteId)) as List<UserPolicy>;
+            var probationPermissionUserIds = new UserService().GetUserPolicies(FSFunctionKeys.ProbationManagement, Int32.Parse(AppSettings.SiteId)) as List<UserPolicy>;
 
-            return true;
+            var permissionUserIds = new List<UserPermissionModel>();
+            permissionUserIds.AddRange(PreparePermissionUserIds(associatedPermissionUserIds, 1));
+            permissionUserIds.AddRange(PreparePermissionUserIds(probationPermissionUserIds, 2));
+
+            return permissionUserIds;
         }
 
-        /// <summary>
-        /// Get users who have AAM permission
-        /// </summary>
-        private static string GetPermissionUserIDs()
+        private static List<UserPermissionModel> PreparePermissionUserIds(List<UserPolicy> permissionUserIds, int funcKey)
         {
-            var permissionUsers = new UserService().GetUserPolicies(FSFunctionKeys.AssociatedAccountMonitor, Int32.Parse(AppSettings.SiteId)) as List<UserPolicy>;
+            var output = new List<UserPermissionModel>();
 
-            if(permissionUsers != null && permissionUsers.Count > 0)
+            if (permissionUserIds != null && permissionUserIds.Count > 0)
             {
-                var userIDs = new StringBuilder();
-
-                permissionUsers.Sort((a, b) => (a.User.Id.CompareTo(b.User.Id)));
-                permissionUsers.ForEach(c => userIDs.Append(c.User.Id).Append(","));
-
-                userIDs.Length--;
-
-                return userIDs.ToString();
+                permissionUserIds.ForEach(c => output.Add(new UserPermissionModel() { UserID = c.User.Id, FuncID = funcKey}));
             }
 
-            return null;
+            return output;
         }
-
     }
 }

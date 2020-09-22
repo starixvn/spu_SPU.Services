@@ -221,10 +221,11 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateTimingExecution(newDataTime, paramId);
         }
 
-        public void InsertUserPermission (string userIds, string permissionFuncName)
+        public void InsertUserPermission (string permissionUserIdsJson)
         {
-            dataCenterDataAccess.InsertProblemAccount(userIds, permissionFuncName);
+            dataCenterDataAccess.InsertUserPermission(permissionUserIdsJson);
         }
+
         public IEnumerable<int> GetAllSpecialCustomerClass()
         {
             return dataCenterDataAccess.GetAllSpecialCustomerClass();

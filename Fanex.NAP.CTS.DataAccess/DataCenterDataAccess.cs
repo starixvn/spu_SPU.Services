@@ -487,12 +487,11 @@
             }
         }
 
-        public void InsertProblemAccount(string userIds, string permissionFuncName)
+        public void InsertUserPermission(string permissionUserIdsJson)
         {
             var criteria = new InsertUserPermissionCriteria
             {
-                UserIds = userIds,
-                PermissionFuncName = permissionFuncName
+                UserIDList = permissionUserIdsJson
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

@@ -52,6 +52,7 @@
     <Compile Include="InsertProblemAccountsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RobotUser.cs" />
+    <Compile Include="UserPermissionModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MainDB\" />

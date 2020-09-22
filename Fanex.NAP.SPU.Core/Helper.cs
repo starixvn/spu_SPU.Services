@@ -6,24 +6,24 @@
 
     public static class Helper
     {
-        public static void WriteXML(string fileName, string data)
+        public static void WriteXML<T>(string fileName, T data)
         {
-            var writer = new System.Xml.Serialization.XmlSerializer(typeof(string));
+            var writer = new System.Xml.Serialization.XmlSerializer(typeof(T));
             var path = AppDomain.CurrentDomain.BaseDirectory + fileName;
 
             if (!File.Exists(path) || !IsFileLocked(new FileInfo(path)))
             {
                 var file = new StreamWriter(path,false,Encoding.UTF8);
-                writer.Serialize(file, ValidateInputData(data));
+                writer.Serialize(file, data);
                 file.Close();
             }
         }
 
-        public static string ReadXML(string fileName)
+        public static T ReadXML<T>(string fileName)
         {
-            var reader = new System.Xml.Serialization.XmlSerializer(typeof(string));
+           var reader = new System.Xml.Serialization.XmlSerializer(typeof(T));
             var path = AppDomain.CurrentDomain.BaseDirectory + fileName;
-            string output = null;
+            var output = default(T);
             try
             {
                 if(!CheckFileExist(path))
@@ -32,7 +32,7 @@
                 }
 
                 var file = new StreamReader(path);
-                output = reader.Deserialize(file).ToString();
+                output = (T)reader.Deserialize(file);
                 file.Close();
 
                 return output;
@@ -71,16 +71,6 @@
             }
 
             return true;
-        }
-
-        private static string ValidateInputData(string input)
-        {
-            if(string.IsNullOrEmpty(input))
-            {
-                return "";
-            }
-
-            return input;
         }
     }
 }
