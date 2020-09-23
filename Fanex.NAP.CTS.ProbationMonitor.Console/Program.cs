@@ -15,8 +15,6 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     class Program
     {
@@ -49,7 +47,7 @@
             {
                 try
                 {
-                    customers = dataService.GetProbationCustForScanning(batchSize);
+                    customers = dataService.GetProbationCustForScanning(500);
                     UpdateMargin(customers.Where(c => !c.Is60Day));
                     ClassifyCustomer(customers.Where(c => c.Is60Day));
                     dataService.UpdateLastScanDateForProbationCust(customers);
@@ -59,7 +57,7 @@
                     var logMessage = new LogMessage(ex.Message)
                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
+                    
                     LogService.Error(logMessage);
                 }
             } while (customers == null || customers.Any());
@@ -68,13 +66,19 @@
         static void UpdateMargin(IEnumerable<ProbationModel> customers)
         {
             var losers = dataService.CheckLoserForProbationCust(customers.Where(c => !c.Is60Day));
-            dataService.InsertProbationNotification(customers, losers, 1);
+            if (losers.Any())
+            {
+                dataService.InsertProbationNotification(customers, losers, 1);
+            }
         }
 
         static void ClassifyCustomer(IEnumerable<ProbationModel> customers)
         {
             var failedCusts = dataService.FinalizeForProbationCust(customers.Where(c => c.Is60Day)).Where(cus => !cus.IsPassed);
-            dataService.InsertProbationNotification(customers, failedCusts, 2);
+            if (failedCusts.Any())
+            {
+                dataService.InsertProbationNotification(customers, failedCusts, 2);
+            }
         }
     }
 }

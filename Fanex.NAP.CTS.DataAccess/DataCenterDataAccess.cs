@@ -8,6 +8,7 @@
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.FS.XML;
     using Fanex.NAP.SPU.Model;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -555,7 +556,7 @@
 
             var criteria = new UpdateLastScanDateForProbationCustCriteria
             {
-                CustSportJson = custList.ToXmlString()
+                CustSportJson = JsonConvert.SerializeObject(custList)
             };
 
             repository.Execute(criteria);
