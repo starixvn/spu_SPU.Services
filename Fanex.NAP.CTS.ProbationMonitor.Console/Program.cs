@@ -7,6 +7,7 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.SPU.Core;
     using SharpRaven;
@@ -19,9 +20,11 @@
 
     class Program
     {
+        static DataCenterService dataService = new DataCenterService();
+
         static void Main(string[] args)
         {
-            var dataService = new DataCenterService();
+            IEnumerable<ProbationModel> customers = null;
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
@@ -42,18 +45,36 @@
 
             var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
 
-            try
+            do
             {
-                // probation
-            }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                try
+                {
+                    customers = dataService.GetProbationCustForScanning(batchSize);
+                    UpdateMargin(customers.Where(c => !c.Is60Day));
+                    ClassifyCustomer(customers.Where(c => c.Is60Day));
+                    dataService.UpdateLastScanDateForProbationCust(customers);
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                        .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                        .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error(logMessage);
-            }
+                    LogService.Error(logMessage);
+                }
+            } while (customers == null || customers.Any());
+        }
+
+        static void UpdateMargin(IEnumerable<ProbationModel> customers)
+        {
+            var losers = dataService.CheckLoserForProbationCust(customers.Where(c => !c.Is60Day));
+            dataService.InsertProbationNotification(customers, losers, 1);
+        }
+
+        static void ClassifyCustomer(IEnumerable<ProbationModel> customers)
+        {
+            var failedCusts = dataService.FinalizeForProbationCust(customers.Where(c => c.Is60Day)).Where(cus => !cus.IsPassed);
+            dataService.InsertProbationNotification(customers, failedCusts, 2);
         }
     }
 }

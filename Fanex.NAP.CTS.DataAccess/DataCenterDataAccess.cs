@@ -536,5 +536,68 @@
 
             return repository.Fetch<CustomerClassModel>(criteria);
         }
+
+        public IEnumerable<ProbationModel> GetProbationCustForScanning(int numberOfRecord)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetProbationCustForScanningCriteria
+            {
+                NumberOfRecord = numberOfRecord
+            };
+
+            return repository.Fetch<ProbationModel>(criteria);
+        }
+
+        public void UpdateLastScanDateForProbationCust(IEnumerable<ProbationModel> custList)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateLastScanDateForProbationCustCriteria
+            {
+                CustSportJson = custList.ToXmlString()
+            };
+
+            repository.Execute(criteria);
+        }
+        public IEnumerable<ProbationModel> CheckLoserForProbationCust(IEnumerable<ProbationModel> custList)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new CheckLoserForProbationCustCriteria
+            {
+                CustomersXML = custList.ToXmlString()
+            };
+
+            return repository.Fetch<ProbationModel>(criteria);
+        }        
+
+        public IEnumerable<ProbationModel> FinalizeForProbationCust(IEnumerable<ProbationModel> custList)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new FinalizeForProbationCustCriteria
+            {
+                CustomersXML = custList.ToXmlString()
+            };
+
+            return repository.Fetch<ProbationModel>(criteria);
+        }
+
+        public void InsertProbationNotification(IEnumerable<ProbationModel> scanList, IEnumerable<ProbationModel> resultList, int notificationType)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertProbationNotificationCriteria
+            {
+                NotificationType = notificationType,
+                TotalScanned = scanList.Count(),
+                TotalFailed = resultList.Count(),
+                TotalGeneralFailed = resultList.Where(c => c.SportGroupId > 200).Count()
+            };
+
+            repository.Execute(criteria);
+        }
+
     }
 }

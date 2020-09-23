@@ -240,6 +240,30 @@ namespace Fanex.NAP.CTS.Services
         {
             return dataCenterDataAccess.InsertRobotUsers(custIds);
         }
-        
+
+        public IEnumerable<ProbationModel> GetProbationCustForScanning(int numberOfRecords)
+        {
+            return dataCenterDataAccess.GetProbationCustForScanning(numberOfRecords);
+        }
+
+        public void UpdateLastScanDateForProbationCust(IEnumerable<ProbationModel> custList)
+        {
+            dataCenterDataAccess.UpdateLastScanDateForProbationCust(custList);
+        }
+
+        public IEnumerable<ProbationModel> CheckLoserForProbationCust(IEnumerable<ProbationModel> custList)
+        {
+            return dataCenterDataAccess.CheckLoserForProbationCust(custList);
+        }
+
+        public IEnumerable<ProbationModel> FinalizeForProbationCust(IEnumerable<ProbationModel> custList)
+        {
+            return dataCenterDataAccess.FinalizeForProbationCust(custList);
+        }
+
+        public void InsertProbationNotification(IEnumerable<ProbationModel> scanList, IEnumerable<ProbationModel> resultList, int notificationType)
+        {
+            dataCenterDataAccess.InsertProbationNotification(scanList, resultList, notificationType);
+        }
     }
 }

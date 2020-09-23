@@ -44,6 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerClassification\InsertProbationNotificationCriteria.cs" />
+    <Compile Include="CustomerClassification\FinalizeForProbationCustCriteria.cs" />
+    <Compile Include="CustomerClassification\GetProbationCustForScanningCriteria.cs" />
+    <Compile Include="CustomerClassification\CheckLoserForProbationCustCriteria.cs" />
+    <Compile Include="CustomerClassification\UpdateLastScanDateForProbationCustCriteria.cs" />
     <Compile Include="InsertRobotUsersIntoSpecialCustClassCriteria.cs" />
     <Compile Include="CustomerClassification\CategorizeCustomerGeneralCategoryRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerGeneralCategoryHasChangeForRunRealtimeCriteria.cs" />
