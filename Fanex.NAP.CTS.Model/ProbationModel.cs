@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.Model
+﻿namespace Fanex.NAP.CTS.Model
 {
     public class ProbationModel
     {
@@ -15,5 +9,7 @@ namespace Fanex.NAP.CTS.Model
         public int CategoryId { get; set; }
 
         public bool IsPassed { get; set; }
+
+        public bool Is60Day { get; set; }
     }
 }
