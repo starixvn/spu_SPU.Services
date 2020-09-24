@@ -12,9 +12,7 @@ namespace Fanex.NAP.CTS.Model
 
         public int SportGroupId { get; set; }
 
-        public int TargetCategoryId { get; set; }
-
-        public bool Is60Day { get; set; }
+        public int CategoryId { get; set; }
 
         public bool IsPassed { get; set; }
     }

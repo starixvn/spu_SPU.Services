@@ -48,8 +48,8 @@
                 try
                 {
                     customers = dataService.GetProbationCustForScanning(500);
-                    UpdateMargin(customers.Where(c => !c.Is60Day));
-                    ClassifyCustomer(customers.Where(c => c.Is60Day));
+                    UpdateMargin(customers);
+                    ClassifyCustomer(customers);
                     dataService.UpdateLastScanDateForProbationCust(customers);
                 }
                 catch (Exception ex)
@@ -65,7 +65,7 @@
 
         static void UpdateMargin(IEnumerable<ProbationModel> customers)
         {
-            var losers = dataService.CheckLoserForProbationCust(customers.Where(c => !c.Is60Day));
+            var losers = dataService.CheckLoserForProbationCust(customers);
             if (losers.Any())
             {
                 dataService.InsertProbationNotification(customers, losers, 1);
@@ -74,7 +74,7 @@
 
         static void ClassifyCustomer(IEnumerable<ProbationModel> customers)
         {
-            var failedCusts = dataService.FinalizeForProbationCust(customers.Where(c => c.Is60Day)).Where(cus => !cus.IsPassed);
+            var failedCusts = dataService.FinalizeForProbationCust(customers).Where(cus => !cus.IsPassed);
             if (failedCusts.Any())
             {
                 dataService.InsertProbationNotification(customers, failedCusts, 2);
