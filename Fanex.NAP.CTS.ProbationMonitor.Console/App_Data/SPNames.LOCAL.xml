@@ -2,10 +2,16 @@
 
 <Functions>
   <Function Name="Classify Customer">
-    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter"/>
-    <Setting Key="CustomerClassification_CategorizeCustomer_RealTime" SpName="CustomerClassification_CategorizeCustomer_RealTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
-    <Setting Key="CTS_NormalAccountsClassification_UpdateLastScanTime" SpName="CTS_NormalAccountsClassification_UpdateLastScanTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
-    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification" DbName="MySQL.CTS_DataCenter"/>
-    <Setting Key="CTS_CustomerClassification_CategorizeCustomer_RealTime_CheckChanges" SpName="CTS_CustomerClassification_CategorizeCustomer_RealTime_CheckChanges" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+    <Setting Key="CTS_DC_CustClassification_Probation_GetCustForScanning"
+             SpName="CTS_DC_CustClassification_Probation_GetCustForScanning" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="CTS_DC_Notification_InsertProbationNotification"
+             SpName="CTS_DC_Notification_InsertProbationNotification" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="CTS_DC_CustClassification_Probation_UpdateLastScanDate"
+             SpName="CTS_DC_CustClassification_Probation_UpdateLastScanDate" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="CTS_NormalAccountsClassification_Probation_CheckLoser"
+             SpName="CTS_NormalAccountsClassification_Probation_CheckLoser" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+    <Setting Key="CTS_NormalAccountsClassification_Probation_Finalize"
+             SpName="CTS_NormalAccountsClassification_Probation_Finalize" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+
   </Function>
 </Functions>

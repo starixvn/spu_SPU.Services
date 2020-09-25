@@ -47,9 +47,9 @@
             {
                 try
                 {
-                    customers = dataService.GetProbationCustForScanning(500);
-                    UpdateMargin(customers);
-                    ClassifyCustomer(customers);
+                    customers = dataService.GetProbationCustForScanning(batchSize);
+                    UpdateMargin(customers.Where(c => !c.Is60Day));
+                    ClassifyCustomer(customers.Where(c => c.Is60Day));
                     dataService.UpdateLastScanDateForProbationCust(customers);
                 }
                 catch (Exception ex)
