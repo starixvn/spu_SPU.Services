@@ -47,10 +47,14 @@
             {
                 try
                 {
+                    LogService.Info("Probation monitor is starting...");
                     customers = dataService.GetProbationCustForScanning(batchSize);
+                    LogService.Info("Probation monitor - Get custs: " + customers.Count());
                     UpdateMargin(customers.Where(c => !c.Is60Day));
                     ClassifyCustomer(customers.Where(c => c.Is60Day));
                     dataService.UpdateLastScanDateForProbationCust(customers);
+
+                    LogService.Info("Probation monitor - Done for 1 batch" + customers.Count());
                 }
                 catch (Exception ex)
                 {
@@ -65,6 +69,7 @@
 
         static void UpdateMargin(IEnumerable<ProbationModel> customers)
         {
+            LogService.Info("Probation monitor - UpdateMargin: " + customers.Count());
             var losers = dataService.CheckLoserForProbationCust(customers);
             if (losers.Any())
             {
@@ -74,6 +79,7 @@
 
         static void ClassifyCustomer(IEnumerable<ProbationModel> customers)
         {
+            LogService.Info("Probation monitor - ClassifyCustomer: " + customers.Count());
             var failedCusts = dataService.FinalizeForProbationCust(customers).Where(cus => !cus.IsPassed);
             if (failedCusts.Any())
             {
