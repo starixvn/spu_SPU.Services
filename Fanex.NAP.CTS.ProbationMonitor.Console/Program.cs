@@ -19,6 +19,7 @@
     class Program
     {
         static DataCenterService dataService = new DataCenterService();
+        static string messsageLog = string.Empty;
 
         static void Main(string[] args)
         {
@@ -45,45 +46,59 @@
 
             do
             {
+                
                 try
                 {
-                    LogService.Info("Probation monitor is starting...");
+                    messsageLog = "Probation monitor is starting...";
                     customers = dataService.GetProbationCustForScanning(batchSize);
-                    LogService.Info("Probation monitor - Get custs: " + customers.Count());
+                    messsageLog += "\nProbation monitor - Get custs: " + customers.Count();
                     UpdateMargin(customers.Where(c => !c.Is60Day));
                     ClassifyCustomer(customers.Where(c => c.Is60Day));
                     dataService.UpdateLastScanDateForProbationCust(customers);
-
-                    LogService.Info("Probation monitor - Done for 1 batch" + customers.Count());
+                    messsageLog += "\nProbation monitor - Update scan date done - custId: " + string.Join(",", customers.Take(10).Select(c => c.CustId));
+                    messsageLog += "\nProbation monitor - DONE FOR 1 BATCH - " + customers.Count();
                 }
                 catch (Exception ex)
                 {
                     var logMessage = new LogMessage(ex.Message)
                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-                    
+
                     LogService.Error(logMessage);
+                }
+                finally
+                {
+                    LogService.Info(messsageLog);
+                    messsageLog = string.Empty;
                 }
             } while (customers == null || customers.Any());
         }
 
         static void UpdateMargin(IEnumerable<ProbationModel> customers)
         {
-            LogService.Info("Probation monitor - UpdateMargin: " + customers.Count());
+            messsageLog += "\nProbation monitor - UpdateMargin: " + customers.Count();
             var losers = dataService.CheckLoserForProbationCust(customers);
+            messsageLog += "\nProbation monitor - UpdateMargin - CheckLoserForProbationCust: " + losers.Count();
             if (losers.Any())
             {
                 dataService.InsertProbationNotification(customers, losers, 1);
+                messsageLog += "\nProbation monitor - UpdateMargin - Notify done";
             }
         }
 
         static void ClassifyCustomer(IEnumerable<ProbationModel> customers)
         {
-            LogService.Info("Probation monitor - ClassifyCustomer: " + customers.Count());
-            var failedCusts = dataService.FinalizeForProbationCust(customers).Where(cus => !cus.IsPassed);
+            messsageLog += "\nProbation monitor - ClassifyCustomer: " + customers.Count();
+            var custs = dataService.FinalizeForProbationCust(customers);
+            var failedCusts = custs.Where(cus => !cus.IsPassed);
+            var passedCusts = custs.Where(cus => cus.IsPassed);
+            messsageLog += "\nProbation monitor - ClassifyCustomer - Finalize - Pass cust: " + string.Join(",", passedCusts.Take(10).Select(c => c.CustId));
+            messsageLog += "\nProbation monitor - ClassifyCustomer - Finalize - Failed cust: " + failedCusts.Count();
+
             if (failedCusts.Any())
             {
                 dataService.InsertProbationNotification(customers, failedCusts, 2);
+                messsageLog += "\nProbation monitor - Finalize - Notify done";
             }
         }
     }
