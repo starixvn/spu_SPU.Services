@@ -88,7 +88,6 @@
                     problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
             }
 
-            LogService.Info("AutoTag Problem Account - Problem Accounts: " + problemAccounts.Count);
             dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME), paramId);
 
             return problemAccounts;
@@ -126,12 +125,8 @@
                 {
                     try
                     {
-                        Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB started with " + problemAccount4MainDB.Count());
-
                         dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
                         countRetry = AppSettings.RetryTime + 1;
-
-                        Logger.Log.Info("AutoTag Problem Account - Insert ProblemAccount Classification To MainDB finished");
                     }
                     catch (Exception ex)
                     {
