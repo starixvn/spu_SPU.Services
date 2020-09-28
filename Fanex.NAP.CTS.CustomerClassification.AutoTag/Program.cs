@@ -56,9 +56,6 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     var internalClassification = newClassification?.Where(c => !c.IsGeneralCategory);
                     var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
 
-                    LogService.Info("AutoTag Customer Classification - Detail Classification Custs List: " + internalClassification.Count());
-                    LogService.Info("AutoTag Customer Classification - General Classification Custs List: " + generalClassification.Count());
-
                     InsertDetailClassificationCustsToCTS(internalClassification, dataCenterService, batchSize);
 
                     InsertGeneralClassificationCusts(generalClassification, dataCenterService, batchSize);
@@ -148,12 +145,8 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             {
                 try
                 {
-                    Logger.Log.Info("AutoTag Customer Classification - Insert Customer Classification To MainDB started with " + custGeneralCategoryInRuleForMainDB.Count());
-
                     dataService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
                     countRetry = AppSettings.RetryTime + 1;
-
-                    Logger.Log.Info("AutoTag Customer Classification - Insert Customer Classification To MainDB finished");
                 }
                 catch (Exception ex)
                 {
