@@ -5,8 +5,6 @@ namespace Fanex.NAP.CMS.VirtualSetting.Criteria
 
     public class UpdateFlagAbnormalAgentCriteria : CriteriaBase
     {
-        public string CustIDList { get; set; }
-
         public int Type { get; set; }
 
         public override string GetSettingKey()
@@ -16,7 +14,7 @@ namespace Fanex.NAP.CMS.VirtualSetting.Criteria
 
         public override bool IsValid()
         {
-            return !string.IsNullOrEmpty(CustIDList);
+            return true;
         }
     }
 }

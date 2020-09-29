@@ -36,9 +36,9 @@
 
         IPunterService InsertNewVRAgent();
 
-        (IEnumerable<int>, IEnumerable<int>) VerifySportsAgentPerformance();
+        IEnumerable<int> VerifySportsAgentPerformance();
 
-        IPunterService UpdateFlagAbnormalAgent(string customerList, int type);
+        IPunterService UpdateFlagAbnormalAgent(int type);
 
         IPunterService UpdateUnflagAbnormalAgent(string customerList, int type);
 

@@ -317,18 +317,17 @@
             }
         }
 
-        public (IEnumerable<int>, IEnumerable<int>) VerifySportsAgentPerformance()
+        public IEnumerable<int> VerifySportsAgentPerformance()
         {
             var criteria = new VerifySportsAgentPerformanceCriteria();
 
-            return _repository.FetchMultiple<int, int>(criteria);
+            return _repository.Fetch<int>(criteria);
         }
 
-        public void UpdateFlagAbnormalAgent(string customerList, int type)
+        public void UpdateFlagAbnormalAgent(int type)
         {
             var criteria = new UpdateFlagAbnormalAgentCriteria
             {
-                CustIDList = customerList,
                 Type = type
             };
 

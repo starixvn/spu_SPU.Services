@@ -225,19 +225,14 @@
             return this;
         }
 
-        public (IEnumerable<int>, IEnumerable<int>) VerifySportsAgentPerformance()
+        public IEnumerable<int> VerifySportsAgentPerformance()
         {
             return _dataAccess.VerifySportsAgentPerformance();            
         }
 
-        public IPunterService UpdateFlagAbnormalAgent(string customerList, int type)
+        public IPunterService UpdateFlagAbnormalAgent(int type)
         {
-            if (string.IsNullOrEmpty(customerList))
-            {
-                return this;
-            }
-
-            _dataAccess.UpdateFlagAbnormalAgent(customerList, type);
+            _dataAccess.UpdateFlagAbnormalAgent(type);
 
             return this;
         }

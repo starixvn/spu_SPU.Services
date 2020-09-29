@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="VR_Agent">
-    <Setting Key="Task_VRSetting_CheckAllSportsAgentPerformance" SpName="Task_VRSetting_CheckAllSportsAgentPerformance" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
+    <Setting Key="Task_VRSetting_CheckAllSportsAgentPerformance" SpName="Task_VRSetting_CheckAllSportsAgentPerformance_xtest" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
     <Setting Key="Acc_Rpt_Automail_AgentsGotVRUpdated" SpName="Acc_Rpt_Automail_AgentsGotVRUpdated_xtest" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
 
     <Setting Key="Acc_VR_AgentAutoAdjustment_Ins" SpName="Acc_VR_AgentAutoAdjustment_Ins_UAT1" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
-    <Setting Key="Acc_VR_AbnormalAgent_Flag" SpName="Acc_VR_AbnormalAgent_Flag_UAT1" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
-    <Setting Key="Acc_VR_AbnormalAgent_Unflag" SpName="Acc_VR_AbnormalAgent_Unflag_UAT1" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+    <Setting Key="Acc_VR_AbnormalAgent_Flag" SpName="Acc_VR_AbnormalAgent_Flag_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+    <Setting Key="Acc_VR_AbnormalAgent_Unflag" SpName="Acc_VR_AbnormalAgent_Unflag_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
   </Function>
 </Functions>
