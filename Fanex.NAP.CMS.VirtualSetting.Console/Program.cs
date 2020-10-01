@@ -28,7 +28,7 @@
 
                 var service = new Service();
 
-                if (!service.IsExecutedDate())
+                if (service.IsExecutedDate())
                 {
                     service
                         .StartTime()

@@ -266,7 +266,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Error($"VirtualSetting Service - GetCurrentCustomerVirtualRate Exception { ex.Message }");
+                LogService.Error($"VirtualSetting Service - GetCurrentCustomerVirtualRate Exception { ex.Message }", ex);
             }
 
             return null;
@@ -320,7 +320,7 @@
                 {
                     _model.FailedUpdatePunterList.AddRange(selectedPunters);
 
-                    LogService.Error($"VirtualSetting Service - UpdateVirtualSetting Exception { ex.Message }");
+                    LogService.Error($"VirtualSetting Service - UpdateVirtualSetting Exception { ex.Message }", ex);
                 }
             }
 
@@ -350,7 +350,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Error($"VirtualSetting Service - DetectBAAccounts Exception { ex.Message }");
+                LogService.Error($"VirtualSetting Service - DetectBAAccounts Exception { ex.Message }", ex);
             }
         }
 
@@ -362,6 +362,11 @@
             {
                 var result = _dataAccess.UpdatePunterVirtualSetting(puntersForAllSports, virtualMultiplier, userId, ip, 0);
 
+                if (!result.IsSuccessful)
+                {
+                    LogService.Error($"VirtualSetting Service - UpdatePunterVirtualSettingForAllSports fail { _model.ServiceName } message {result.Message}");
+                }
+                
                 return result.IsSuccessful;
             }
 
@@ -376,6 +381,11 @@
             {
                 var result = _dataAccess.UpdatePunterVirtualSetting(puntersForOtherSports, virtualMultiplier, userId, ip, 2);
 
+                if (!result.IsSuccessful)
+                {
+                    LogService.Error($"VirtualSetting Service - UpdatePunterVirtualSettingForOtherSports fail { _model.ServiceName } message {result.Message}");
+                }
+
                 return result.IsSuccessful;
             }
 
@@ -388,7 +398,7 @@
 
             if (!logResult.IsSuccessful)
             {
-                LogService.Error($"VirtualSetting Service - LoggingUpdateVirtualSetting error { _model.ServiceName }");
+                LogService.Error($"VirtualSetting Service - LoggingUpdateVirtualSetting fail { _model.ServiceName } message {logResult.Message}");
             }
         }
 
@@ -402,12 +412,12 @@
 
                 if (!result.IsSuccessful)
                 {
-                    LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory error { _model.ServiceName }");
+                    LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory fail { _model.ServiceName } message {result.Message}");
                 }
             }
             catch (Exception ex)
             {
-                LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory Exception { ex.Message }");
+                LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory Exception { ex.Message }", ex);
             }
         }        
 
