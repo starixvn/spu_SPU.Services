@@ -84,6 +84,15 @@
 
             var proPunters = _puntersDict.Values.Where(p => p.IsSuperProPunters);
 
+            // Start - add log for test ---------------------------
+            var sportType = _soccer ? Constants.VSSoccer : Constants.VSSportbook;
+
+            var info = $"List of { sportType } {Constants.VSProPunter} collected ({proPunters.Count()}): { string.Join(",", proPunters.Select(p => p.CustID))}";
+
+            LogService.Info(info);
+
+            // End - add log for test ---------------------------
+
             if (!proPunters.Any())
             {
                 return this;
@@ -91,11 +100,11 @@
 
             _model.FailedUpdatePunterList.Clear();
 
-            _proPuntersUpdated = UpdateVirtualSetting(proPunters, virtualMultiplier);
+            //_proPuntersUpdated = UpdateVirtualSetting(proPunters, virtualMultiplier);
 
-            _proPuntersUpdated = _proPuntersUpdated.Except(_model.FailedUpdatePunterList, _model.PunterEqualityComparer);
+            //_proPuntersUpdated = _proPuntersUpdated.Except(_model.FailedUpdatePunterList, _model.PunterEqualityComparer);
 
-            this.LogPunters(_proPuntersUpdated, Constants.VSProPunter);
+            //this.LogPunters(_proPuntersUpdated, Constants.VSProPunter);
 
             return this;
         }
@@ -109,6 +118,15 @@
 
             var normalPunters = _puntersDict.Values.Where(p => !p.IsSuperProPunters);
 
+            // Start - add log for test ---------------------------
+            var sportType = _soccer ? Constants.VSSoccer : Constants.VSSportbook;
+
+            var info = $"List of { sportType } {Constants.VSNormalPunter} collected ({normalPunters.Count()}): { string.Join(",", normalPunters.Select(p => p.CustID))}";
+
+            LogService.Info(info);
+
+            // End - add log for test ---------------------------
+
             if (!normalPunters.Any())
             {
                 return this;
@@ -116,11 +134,11 @@
 
             _model.FailedUpdatePunterList.Clear();
 
-            _normalPuntersUpdated = UpdateVirtualSetting(normalPunters, virtualMultiplier);
+            //_normalPuntersUpdated = UpdateVirtualSetting(normalPunters, virtualMultiplier);
 
-            _normalPuntersUpdated = _normalPuntersUpdated.Except(_model.FailedUpdatePunterList, _model.PunterEqualityComparer);
+            //_normalPuntersUpdated = _normalPuntersUpdated.Except(_model.FailedUpdatePunterList, _model.PunterEqualityComparer);
 
-            this.LogPunters(_normalPuntersUpdated, Constants.VSNormalPunter);
+            //this.LogPunters(_normalPuntersUpdated, Constants.VSNormalPunter);
 
             return this;
         }
