@@ -33,9 +33,9 @@
                     service
                         .StartTime()
                         .UpdateVRForSoccer()
-                        .UpdateForSportbooks();
-                        //.CountAffectedMembers()
-                        //.SendMailExternal(AppSettings.MailingListId);
+                        .UpdateForSportbooks()
+                        .CountAffectedMembers()
+                        .SendMailExternal(AppSettings.MailingListId);
                 }
                 else
                 {
