@@ -264,6 +264,20 @@
             return repository.Fetch<CustomerGeneralClassificationModel>(criteria);
         }
 
+
+        public IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIdList)
+        {
+            var criteria = new GetCustomerClassByCustIdCriteria
+            {
+                CustIds = custIdList
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerCategoryClassificationModel>(criteria);
+            }
+        }
+
         public void DCSMoveTransToTransaction07(string transIdList)
         {
             var criteria = new MoveToTransaction07Criteria

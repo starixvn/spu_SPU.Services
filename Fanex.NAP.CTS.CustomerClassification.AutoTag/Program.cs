@@ -55,10 +55,11 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                     var internalClassification = newClassification?.Where(c => !c.IsGeneralCategory);
                     var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
+                    var newMemberCategories = newClassification?.Where(c => !c.IsGeneralCategory && c.CategoryId == 2);
 
                     InsertDetailClassificationCustsToCTS(internalClassification, dataCenterService, batchSize);
-
                     InsertGeneralClassificationCusts(generalClassification, dataCenterService, batchSize);
+                    InsertNewMemberCategoriesToMainDB(newMemberCategories, dataCenterService);
 
                 } while (newClassification != null && newClassification.Any());
 
@@ -154,7 +155,49 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                    LogService.Error($"AutoTag Customer Classification - Update Customer General Classification to MainDB service - Start Exception {logMessage}");
+                    LogService.Error($"AutoTag Customer Classification - Update General Classification Customer to MainDB service - Start Exception {logMessage}");
+                    countRetry += 1;
+                }
+            }
+        }
+
+        static void InsertNewMemberCategoriesToMainDB(IEnumerable<CustomerClassificationModelMoreInfo> newMemberClassification, DataCenterService dataService)
+        {
+            if(newMemberClassification == null || !newMemberClassification.Any())
+            {
+                return;
+            }
+
+            var customerClass = dataService.GetCustomerClassByCustId(string.Join(",", newMemberClassification?.Select(c => c.CustId)));
+
+            var newMembers = customerClass?.Where(c => c.CustomerClass == null);
+
+            if (newMembers == null || !newMembers.Any())
+            {
+                return;
+            }
+
+            var countRetry = 0;
+
+            while (countRetry < AppSettings.RetryTime)
+            {
+                try
+                {
+                    dataService.UpdateCustomerGeneralClassificationtoMainDB(newMembers.Select(c=> new CustomerClassModel
+                    {
+                        CustID = c.CustID,
+                        CustomerClass = 3
+                    }).ToList());
+
+                    countRetry = AppSettings.RetryTime + 1;
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                        .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                        .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                    LogService.Error($"AutoTag Customer Classification - Update New Member Classification Customer to MainDB service - Start Exception {logMessage}");
                     countRetry += 1;
                 }
             }
