@@ -7,6 +7,7 @@
     using Fanex.NAP.CMS.VirtualSetting.DataAccess;
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
 
     public class PunterService : IPunterService
     {
@@ -307,7 +308,10 @@
                     {
                         _model.FailedUpdatePunterList.AddRange(selectedPunters);
 
-                        LogService.Error($"VirtualSetting Service - UpdateVirtualSetting error on  { _model.ServiceName }");                        
+                        LogService.Error($"VirtualSetting Service - UpdatePunterVirtualSetting fail { _model.ServiceName }");
+
+                        var jsonData = JsonConvert.SerializeObject(punters);
+                        LogService.Error($"VirtualSetting Service - UpdatePunterVirtualSetting fail { _model.ServiceName } userId {userId} newVirtualRate {newVirtualRate} ip {ip} punter(s) {jsonData}");
                     }
                     else
                     {
@@ -320,7 +324,7 @@
                 {
                     _model.FailedUpdatePunterList.AddRange(selectedPunters);
 
-                    LogService.Error($"VirtualSetting Service - UpdateVirtualSetting Exception { ex.Message }", ex);
+                    LogService.Error($"VirtualSetting Service - UpdateVirtualSetting exception { _model.ServiceName } { ex.Message }", ex);
                 }
             }
 
@@ -392,14 +396,27 @@
             return true;
         }
 
-        private void LoggingUpdateVirtualSetting(int userId, IEnumerable<Punter> selectedPunters)
+        private void LoggingUpdateVirtualSetting(int userId, IEnumerable<Punter> punters)
         {
-            var logResult = _dataAccess.LogPunterVirtualSetting(_model.ServiceName, selectedPunters, userId, _model.AdjustDate);
-
-            if (!logResult.IsSuccessful)
+            try
             {
-                LogService.Error($"VirtualSetting Service - LoggingUpdateVirtualSetting fail { _model.ServiceName } message {logResult.Message}");
+                var logResult = _dataAccess.LogPunterVirtualSetting(_model.ServiceName, punters, userId, _model.AdjustDate);
+
+                if (!logResult.IsSuccessful)
+                {
+                    LogService.Error($"VirtualSetting Service - LoggingUpdateVirtualSetting fail { _model.ServiceName } message {logResult.Message}");
+
+                    var jsonData = JsonConvert.SerializeObject(punters);
+                    LogService.Error($"VirtualSetting Service - LoggingUpdateVirtualSetting fail { _model.ServiceName } userId {userId} punter(s) {jsonData}");
+                }
             }
+            catch (Exception ex)
+            {
+                LogService.Error($"VirtualSetting Service - LoggingUpdateVirtualSetting exception { _model.ServiceName } message { ex.Message }", ex);
+
+                var jsonData = JsonConvert.SerializeObject(punters);
+                LogService.Error($"VirtualSetting Service - LoggingUpdateVirtualSetting exception { _model.ServiceName }  userId {userId} punter(s) {jsonData}");
+            }            
         }
 
         private void UpdateCustomerMarginHistory(IEnumerable<Punter> punters)
@@ -413,11 +430,17 @@
                 if (!result.IsSuccessful)
                 {
                     LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory fail { _model.ServiceName } message {result.Message}");
+
+                    var jsonData = JsonConvert.SerializeObject(punters);
+                    LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory fail { _model.ServiceName } punter(s) {jsonData}");
                 }
             }
             catch (Exception ex)
             {
-                LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory Exception { ex.Message }", ex);
+                LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory exception { _model.ServiceName } { ex.Message }", ex);
+
+                var jsonData = JsonConvert.SerializeObject(punters);
+                LogService.Error($"VirtualSetting Service - UpdateCustomerMarginHistory exception { _model.ServiceName } punter(s) {jsonData}");
             }
         }        
 
