@@ -59,8 +59,8 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     var newMemberCategories = newClassification?.Where(c => !c.IsGeneralCategory && c.CategoryId == 2);
 
                     InsertDetailClassificationCustsToCTS(detailedClassification, dataCenterService, batchSize);
-                    InsertGeneralClassificationCusts(generalClassification, dataCenterService, batchSize);
                     InsertNewMemberCategoriesToMainDB(newMemberCategories, dataCenterService);
+                    InsertGeneralClassificationCusts(generalClassification, dataCenterService, batchSize);                  
 
                 } while (newClassification != null && newClassification.Any());
 
