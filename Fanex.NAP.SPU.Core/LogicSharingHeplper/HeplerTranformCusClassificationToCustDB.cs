@@ -9,17 +9,12 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class HeplerTranformCusClassificationToCustDB
+    public static class HeplerTranformCusClassificationToCustDB
     {
-        private readonly DataCenterService ctsDataCenterService;
-
-        public HeplerTranformCusClassificationToCustDB()
+        public static void InsertNewMemberCategoryToMainDB(IEnumerable<CustomerCategoryClassificationModel> newMembers, bool IsCCAutoTag, int retryTime)
         {
-            ctsDataCenterService = new DataCenterService();
-        }
+            var ctsDataCenterService = new DataCenterService();
 
-        public void InsertNewMemberCategoryToMainDB(IEnumerable<CustomerCategoryClassificationModel> newMembers, bool IsCCAutoTag)
-        {
             if (newMembers == null || !newMembers.Any())
             {
                 return;
@@ -27,7 +22,7 @@
 
             var countRetry = 0;
 
-            while (countRetry < AppSettings.RetryTime)
+            while (countRetry < retryTime)
             {
                 try
                 {
@@ -37,7 +32,7 @@
                         CustomerClass = Constants.NEW_MEMBER_CATEGORY
                     }).ToList());
 
-                    countRetry = AppSettings.RetryTime + 1;
+                    countRetry = retryTime + 1;
                 }
                 catch (Exception ex)
                 {

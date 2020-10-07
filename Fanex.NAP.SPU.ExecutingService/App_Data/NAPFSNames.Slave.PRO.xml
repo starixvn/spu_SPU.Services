@@ -33,7 +33,8 @@
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_Daily"
              SpName="CTS_NormalAccountsClassification_GeneralCategorize_Daily" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
     <Setting Key="CTS_CustomerClass_GetByCustId" SpName="CTS_CustomerClass_GetByCustId" DbName="DBCTS.bodb02.bodbSPUNet" />
-
+    <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+    
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_RealTime_CheckChanges" SpName="CTS_NormalAccountsClassification_GeneralCategorize_RealTime_CheckChanges" DbName="DBCTS.bodbVR2Model.bodbSPUNet" TimeOut="600"/>
     <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter.fps"/>
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_RealTime"  SpName="CTS_NormalAccountsClassification_GeneralCategorize_RealTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>

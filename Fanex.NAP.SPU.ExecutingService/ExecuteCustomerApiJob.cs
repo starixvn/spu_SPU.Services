@@ -70,8 +70,7 @@
                         var customerClass = ctsDataCenterService.GetCustomerClassByCustId(string.Join(",", listOfCust?.Select(c => c.CustId)));
                         var newMembers = customerClass?.Where(c => c.CustomerClass == null);
 
-                        var tranformNewMemberHelper = new HeplerTranformCusClassificationToCustDB();
-                        tranformNewMemberHelper.InsertNewMemberCategoryToMainDB(newMembers, true);
+                        HeplerTranformCusClassificationToCustDB.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime);
                     }
 
                     if (!listOfCust.Any())
