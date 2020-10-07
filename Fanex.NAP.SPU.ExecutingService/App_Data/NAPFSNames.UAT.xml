@@ -3,5 +3,6 @@
   <Function Name="FraudCase">
     <Setting Key="FS_FraudCase_GetAll" SpName="FS_FraudCase_GetAll_xtest" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
     <Setting Key="FS_FraudCase_GetById" SpName="FS_FraudCase_GetById_xtest" DbName="DBFS.bodb_FraudSensor.bodbSPUNet" />
+    <Setting Key="CTS_CustomerClass_GetByCustId" SpName="CTS_CustomerClass_GetByCustId_xtest" DbName="DBCTS.bodb02.bodbSPUNet" />
   </Function>
 </Functions>

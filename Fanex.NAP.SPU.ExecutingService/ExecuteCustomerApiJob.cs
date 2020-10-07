@@ -6,6 +6,7 @@
     using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using Quartz;
     using RestSharp;
@@ -19,10 +20,12 @@
     public class ExecuteCustomerApiJob : ExecuteJobBase, IJob
     {
         private readonly IDataCenterService dataCenterService;
+        private readonly CTS.Services.DataCenterService ctsDataCenterService;
 
         public ExecuteCustomerApiJob()
         {
             dataCenterService = new DataCenterService();
+            ctsDataCenterService = new CTS.Services.DataCenterService();
         }
 
         public async Task Execute(IJobExecutionContext context)
@@ -61,6 +64,15 @@
 
                     var maxCustId = dataCenterService.GetCurrentMaxCustId(false);
                     var listOfCust = dataCenterService.GetCustomerFromMainDB(packageSize, apiUrls.Count(), maxCustId);
+
+                    if (listOfCust != null && listOfCust.Any())
+                    {
+                        var customerClass = ctsDataCenterService.GetCustomerClassByCustId(string.Join(",", listOfCust?.Select(c => c.CustId)));
+                        var newMembers = customerClass?.Where(c => c.CustomerClass == null);
+
+                        var tranformNewMemberHelper = new HeplerTranformCusClassificationToCustDB();
+                        tranformNewMemberHelper.InsertNewMemberCategoryToMainDB(newMembers, true);
+                    }
 
                     if (!listOfCust.Any())
                     {
