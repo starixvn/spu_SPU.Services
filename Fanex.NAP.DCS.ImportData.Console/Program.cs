@@ -4,6 +4,7 @@ using Fanex.NAP.SPU.Queue;
 using Fanex.Oneyed.Infrastructure.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -104,9 +105,9 @@ namespace Fanex.NAP.DCS.ImportData.Console
                         Device = splitingData[3],
                         IP = splitingData[4],
                         Subscriber = splitingData[5],
-                        SubscriberDate = Convert.ToDateTime(splitingData[6]),
+                        SubscriberDate = DateTime.Now,
                         Token = splitingData[7],
-                        TransDate = Convert.ToDateTime(splitingData[8]),
+                        TransDate = DateTime.Now,
                     };
 
                     var message = new Message<MessageQueue>(objectData, new MessageProperties { DeliveryMode = 2, Priority = 9 });
