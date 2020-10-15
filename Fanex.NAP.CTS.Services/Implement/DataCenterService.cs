@@ -136,7 +136,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custClassList);
         }
 
-        public void InsertProblemAccountClassificationToMainDB(List<ProblemAccountsModel> custIdList)
+        public void InsertProblemAccountClassificationToMainDB(List<ProblemAccountForMainDBModel> custIdList)
         {
             dataCenterDataAccess.InsertProblemAccountCategoryToMainDB(custIdList);
         }
@@ -201,12 +201,12 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.RealtimeUpdateLastScanTime(isGeneralCategory);
         }
 
-        public IEnumerable<ProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)
+        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)
         {
             return dataCenterDataAccess.GetProblemAccounts(custIDs, dateTime);
         }
 
-        public IEnumerable<ProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime dateTime)
+        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime dateTime)
         {
             return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
         }
@@ -269,6 +269,11 @@ namespace Fanex.NAP.CTS.Services
         public void InsertProbationNotification(IEnumerable<ProbationModel> scanList, IEnumerable<ProbationModel> resultList, int notificationType)
         {
             dataCenterDataAccess.InsertProbationNotification(scanList, resultList, notificationType);
+        }
+
+        public IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory)
+        {
+            return dataCenterDataAccess.GetLastestCategory(ctsCustID, isCustId, isExcludedDetailedCategory);
         }
     }
 }
