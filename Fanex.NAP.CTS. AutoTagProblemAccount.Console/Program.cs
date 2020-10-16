@@ -47,14 +47,17 @@
 
                 if (problemAccounts != null && problemAccounts.Any())
                 {
-                    InsertProblemAccountToCTS(problemAccounts, dataService);
+                    var lastestCustIds = InsertProblemAccountToCTS(problemAccounts, dataService);
 
-                    var lastestCategories = GetLatestCategoryForCusts(string.Join(",", problemAccounts.Select(c => c.CustID)), dataService);
-
-                    if (lastestCategories != null && lastestCategories.Any())
+                    if(lastestCustIds != null && lastestCustIds.Any())
                     {
-                        InsertProblemAccountToMainDB(lastestCategories.ToList(), dataService);
-                    }          
+                        var lastestCategories = GetLatestCategoryForCusts(string.Join(",", lastestCustIds.Select(c => c)), dataService);
+
+                        if (lastestCategories != null && lastestCategories.Any())
+                        {
+                            InsertProblemAccountToMainDB(lastestCategories.ToList(), dataService);
+                        }
+                    }    
                 }
             }
             catch (Exception ex)
@@ -99,7 +102,7 @@
             return problemAccounts;
         }
 
-        static void InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts, DataCenterService dataService)
+        static IEnumerable<string> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts, DataCenterService dataService)
         {
             var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
@@ -109,7 +112,7 @@
 
             var jsonData = JsonConvert.SerializeObject(result);
             
-            dataService.InsertProblemAccounts(jsonData);
+            return dataService.InsertProblemAccounts(jsonData);
         }
 
         static void InsertProblemAccountToMainDB(List<ProblemAccountForMainDBModel> problemAccounts, DataCenterService dataService)

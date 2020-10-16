@@ -462,8 +462,10 @@
             }
         }
 
-        public void InsertProblemAccount(string problemAccountJson)
+        public IEnumerable<string> InsertProblemAccount(string problemAccountJson)
         {
+            var repository = new DynamicRepository();
+
             var criteria = new InsertProblemAccountCriteria
             {
                 ProblemAccountJson = problemAccountJson
@@ -471,7 +473,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria);
+               return repository.Fetch<string>(criteria);
             }
         }
 

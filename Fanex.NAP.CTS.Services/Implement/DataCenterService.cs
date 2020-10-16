@@ -211,9 +211,9 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
         }
 
-        public void InsertProblemAccounts(string jsonData)
+        public IEnumerable<string> InsertProblemAccounts(string jsonData)
         {
-            dataCenterDataAccess.InsertProblemAccount(jsonData);
+            return dataCenterDataAccess.InsertProblemAccount(jsonData);
         }
 
         public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId)
