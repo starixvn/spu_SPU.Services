@@ -47,18 +47,20 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             {
                 var dataCenterService = new DataCenterService();
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
+
                 int insertedRows = 0;
 
                 do
                 {
                     newClassification = dataCenterService.GetNewClassification();
 
-                    var internalClassification = newClassification?.Where(c => !c.IsGeneralCategory);
+                    var detailedClassification = newClassification?.Where(c => !c.IsGeneralCategory);
                     var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
+                    var newMemberCategories = newClassification?.Where(c => !c.IsGeneralCategory && c.CategoryId == 2);
 
-                    InsertDetailClassificationCustsToCTS(internalClassification, dataCenterService, batchSize);
-
-                    InsertGeneralClassificationCusts(generalClassification, dataCenterService, batchSize);
+                    InsertDetailClassificationCustsToCTS(detailedClassification, dataCenterService, batchSize);
+                    InsertNewMemberCategoriesToMainDB(newMemberCategories, dataCenterService);
+                    InsertGeneralClassificationCusts(generalClassification, dataCenterService, batchSize);                  
 
                 } while (newClassification != null && newClassification.Any());
 
@@ -74,15 +76,15 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             }
         }
 
-        static void InsertDetailClassificationCustsToCTS(IEnumerable<CustomerClassificationModelMoreInfo> internalClassification, DataCenterService dataService, int batchSize)
+        static void InsertDetailClassificationCustsToCTS(IEnumerable<CustomerClassificationModelMoreInfo> detailedClassification, DataCenterService dataService, int batchSize)
         {
-            if (internalClassification == null || !internalClassification.Any())
+            if (detailedClassification == null || !detailedClassification.Any())
             {
                 return;
             }
 
             var tasks = new List<Task>();
-            var newInternalClassificationChunk = internalClassification.Chunk(batchSize).ToList();
+            var newInternalClassificationChunk = detailedClassification.Chunk(batchSize).ToList();
 
             for (int i = 0; i < newInternalClassificationChunk.Count; i++)
             {
@@ -154,10 +156,24 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                    LogService.Error($"AutoTag Customer Classification - Update Customer General Classification to MainDB service - Start Exception {logMessage}");
+                    LogService.Error($"AutoTag Customer Classification - Update General Classification Customer to MainDB service - Start Exception {logMessage}");
                     countRetry += 1;
                 }
             }
+        }
+
+        static void InsertNewMemberCategoriesToMainDB(IEnumerable<CustomerClassificationModelMoreInfo> newMemberClassification, DataCenterService dataService)
+        {
+            if(newMemberClassification == null || !newMemberClassification.Any())
+            {
+                return;
+            }
+
+            var customerClass = dataService.GetCustomerClassByCustId(string.Join(",", newMemberClassification?.Select(c => c.CustId)));
+
+            var newMembers = customerClass?.Where(c => c.CustomerClass == null);
+
+            HeplerTranformCusClassificationToCustDB.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime);
         }
     }
 }

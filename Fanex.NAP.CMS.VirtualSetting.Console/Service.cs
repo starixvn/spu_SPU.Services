@@ -74,23 +74,32 @@
         {
             var environment = AppSettings.EnvironmentName;
 
-            var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + Constants.VSMailInformTemplate;
-
-            var body = Utilities.ReadTextFile(mailTemplatePath);
-
-            body = string.Format(body, _startTime.ToString("MM/dd/yyyy hh:mm:ss"), _stopTime.ToString("MM/dd/yyyy hh:mm:ss"), TotalAffectedMembers);
-
-            var newMail = new Fanex.MailDelivery.Core.Models.Mail
+            try
             {
-                Subject = "VR Auto Adjustment finished" + " (" + environment + ")",
-                Title = "VR Auto Mail Service",
-                Body = body,
-                MailingListId = mailingListId
-            };
+                var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + Constants.VSMailInformTemplate;
 
-            SendMail(newMail);
+                var body = Utilities.ReadTextFile(mailTemplatePath);
 
-            LogService.Info($"Virtual Setting service ({ environment }) - SendMailExternal successful TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
+                body = string.Format(body, _startTime.ToString("MM/dd/yyyy hh:mm:ss"), _stopTime.ToString("MM/dd/yyyy hh:mm:ss"), TotalAffectedMembers);
+
+                var newMail = new Fanex.MailDelivery.Core.Models.Mail
+                {
+                    Subject = "VR Auto Adjustment finished" + " (" + environment + ")",
+                    Title = "VR Auto Mail Service",
+                    Body = body,
+                    MailingListId = mailingListId
+                };
+
+                LogService.Info($"Virtual Setting service ({ environment }) - SendMailExternal start TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }");
+
+                SendMail(newMail);
+
+                LogService.Info($"Virtual Setting service ({ environment }) - SendMailExternal end");               
+            }
+            catch (Exception ex)
+            {
+                LogService.Info($"Virtual Setting service ({ environment }) - SendMailExternal exception TotalAffectedMembers: {TotalAffectedMembers} at start time { _startTime }", ex);
+            }
 
             if (AppSettings.Environment == 3)
             {
@@ -104,17 +113,26 @@
         {
             var environment = AppSettings.EnvironmentName;
 
-            var newMail = new Fanex.MailDelivery.Core.Models.Mail
+            try
             {
-                Subject = "VR Auto Mail Service - Still alive" + " (" + environment + ")",
-                Title = "VR Auto Mail Service - Still alive",
-                Body = $"Is NOT the execution date for Updating Virtual Settings.",
-                MailingListId = mailingListId
-            };
+                var newMail = new Fanex.MailDelivery.Core.Models.Mail
+                {
+                    Subject = "VR Auto Mail Service - Still alive" + " (" + environment + ")",
+                    Title = "VR Auto Mail Service - Still alive",
+                    Body = $"Is NOT the execution date for Updating Virtual Settings.",
+                    MailingListId = mailingListId
+                };
 
-            SendMail(newMail);
+                LogService.Info($"Virtual Setting service ({ environment })- SendMailInternal start");
 
-            LogService.Info($"Virtual Setting service ({ environment })- SendMailInternal successful");
+                SendMail(newMail);
+
+                LogService.Info($"Virtual Setting service ({ environment })- SendMailInternal end");
+            }
+            catch (Exception ex)
+            {
+                LogService.Error($"Virtual Setting service ({ environment })- SendMailInternal Exception", ex);
+            }
 
             return this;
         }

@@ -31,5 +31,7 @@
         public const string GET_CHANGED_DATA_FROM_DATETIME = "";
 
         public const string AAM_USER_PERMISSION = FSFunctionKeys.AssociatedAccountMonitor + "UserPermission";
+
+        public const int NEW_MEMBER_CATEGORY = 3;
     }
 }
