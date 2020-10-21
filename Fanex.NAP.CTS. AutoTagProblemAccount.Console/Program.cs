@@ -47,8 +47,17 @@
 
                 if (problemAccounts != null && problemAccounts.Any())
                 {
-                    InsertProblemAccountToCTS(problemAccounts, dataService);
-                    InsertProblemAccountToMainDB(problemAccounts, dataService);
+                    var lastestCustIds = InsertProblemAccountToCTS(problemAccounts, dataService);
+
+                    if(lastestCustIds != null && lastestCustIds.Any())
+                    {
+                        var lastestCategories = GetLatestCategoryForCusts(string.Join(",", lastestCustIds.Select(c => c)), dataService);
+
+                        if (lastestCategories != null && lastestCategories.Any())
+                        {
+                            InsertProblemAccountToMainDB(lastestCategories.ToList(), dataService);
+                        }
+                    }    
                 }
             }
             catch (Exception ex)
@@ -61,12 +70,12 @@
             }
         }
 
-        static List<ProblemAccountsModel> GetProblemAccounts(DataCenterService dataService)
+        static List<MultipleProblemAccountsModel> GetProblemAccounts(DataCenterService dataService)
         {
             var paramId = 2;
             var previousTimingExecution = dataService.GetPreviousTimingExecution(paramId)?.SingleOrDefault();
 
-            var problemAccounts = new List<ProblemAccountsModel>();
+            var problemAccounts = new List<MultipleProblemAccountsModel>();
             var savedDataTime = DateTime.Now;
 
             if (string.IsNullOrEmpty(previousTimingExecution.ParameterValue))
@@ -93,7 +102,7 @@
             return problemAccounts;
         }
 
-        static void InsertProblemAccountToCTS(List<ProblemAccountsModel> problemAccounts, DataCenterService dataService)
+        static IEnumerable<string> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts, DataCenterService dataService)
         {
             var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
@@ -103,21 +112,15 @@
 
             var jsonData = JsonConvert.SerializeObject(result);
             
-            dataService.InsertProblemAccounts(jsonData);
+            return dataService.InsertProblemAccounts(jsonData);
         }
 
-        static void InsertProblemAccountToMainDB(List<ProblemAccountsModel> problemAccounts, DataCenterService dataService)
+        static void InsertProblemAccountToMainDB(List<ProblemAccountForMainDBModel> problemAccounts, DataCenterService dataService)
         {
-            var problemAccount4MainDB = problemAccounts.Select(a => new ProblemAccountsModel
-            {
-                CustID = a.CustID,
-                ReasonID = a.ReasonID
-            }).Where(c => c.CategoryIdMapping != -99).ToList();
-            
             var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
-            problemAccount4MainDB.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
+            problemAccounts.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
 
-            if (problemAccount4MainDB != null && problemAccount4MainDB.Any())
+            if (problemAccounts != null && problemAccounts.Any())
             {
                 var countRetry = 0;
 
@@ -125,7 +128,7 @@
                 {
                     try
                     {
-                        dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
+                        dataService.InsertProblemAccountClassificationToMainDB(problemAccounts);
                         countRetry = AppSettings.RetryTime + 1;
                     }
                     catch (Exception ex)
@@ -139,6 +142,13 @@
                     }
                 }
             }
+        }
+
+        static IEnumerable<ProblemAccountForMainDBModel> GetLatestCategoryForCusts(string custIds, DataCenterService dataService)
+        {
+            var lastestCategories = dataService.GetLastestCategory(custIds, true, false)?.Where(c => c.CategoryIdMapping != -99)?.Distinct();
+
+            return lastestCategories;
         }
     }
 }
