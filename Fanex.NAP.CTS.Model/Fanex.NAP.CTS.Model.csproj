@@ -49,6 +49,7 @@
     <Compile Include="FrequencyExecution.cs" />
     <Compile Include="GraphDB\AssociationModelForGraph.cs" />
     <Compile Include="CustomerGeneralClassificationModel.cs" />
+    <Compile Include="GetMultiProblemAccountsModel.cs" />
     <Compile Include="ProblemAccountForMainDBModel.cs" />
     <Compile Include="ProbationModel.cs" />
     <Compile Include="MultipleProblemAccountsModel.cs" />
