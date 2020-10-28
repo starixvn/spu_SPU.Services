@@ -275,5 +275,11 @@ namespace Fanex.NAP.CTS.Services
         {
             return dataCenterDataAccess.GetLastestCategory(ctsCustID, isCustId, isExcludedDetailedCategory);
         }
+        
+        public IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
+        {
+            return dataCenterDataAccess.FeedDataToToSoon88(custClasses);
+        }
+
     }
 }

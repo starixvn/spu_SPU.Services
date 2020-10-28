@@ -632,5 +632,16 @@
             }
         }
 
+        public IEnumerable<AssociationWithCategory> FeedDataToToSoon88(IEnumerable<CustomerClassModel> custClasses)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new GetAssociationWithCategoryCriteria()
+            {
+                CustIds = string.Join(",", custClasses.Select(c => c.CustID))
+            };
+
+            return repository.Fetch<AssociationWithCategory>(criteria);
+        }
     }
 }

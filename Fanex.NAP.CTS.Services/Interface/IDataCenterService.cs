@@ -66,5 +66,7 @@ namespace Fanex.NAP.CTS.Services.Interface
         IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIdList);
 
         IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory);
+
+        IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses);
     }
 }
