@@ -7,6 +7,7 @@ using Fanex.Logging.Extensions.Database;
 using Fanex.Logging.Sentry.RavenClient;
 using Fanex.NAP.CTS.Model;
 using Fanex.NAP.CTS.Services;
+using Fanex.NAP.CTS.Services.Helper;
 using Fanex.NAP.FS.Core;
 using Fanex.NAP.SPU.Core;
 using Newtonsoft.Json;

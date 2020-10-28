@@ -1,10 +1,10 @@
-﻿namespace Fanex.NAP.SPU.Core
+﻿namespace Fanex.NAP.CTS.Services.Helper
 {
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Model;
-    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.SPU.Core;
     using System;
     using System.Collections.Generic;
     using System.Linq;

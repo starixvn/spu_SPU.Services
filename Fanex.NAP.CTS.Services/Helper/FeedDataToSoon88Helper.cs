@@ -1,5 +1,5 @@
 ﻿
-namespace Fanex.NAP.SPU.Core.LogicSharingHeplper
+namespace Fanex.NAP.CTS.Services.Helper
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -7,7 +7,7 @@ namespace Fanex.NAP.SPU.Core.LogicSharingHeplper
     using Newtonsoft.Json;
     using System.Security.Cryptography;
     using Fanex.NAP.CTS.Model;
-    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.SPU.Core;
 
     public static class FeedDataToSoon88Helper
     {
@@ -31,8 +31,8 @@ namespace Fanex.NAP.SPU.Core.LogicSharingHeplper
 
             foreach (var groupAcc in dataGroupByAccount)
             {
-                var soon88Temp = StatisticAccountByCategoryInS88(groupAcc.Where(c => c.IsSoon88));
-                var othersTemp = StatisticAccountByCategoryNotInS88(groupAcc.Where(c => !c.IsSoon88));
+                var soon88 = StatisticAccountByCategoryInS88(groupAcc.Where(c => c.IsSoon88));
+                var others = StatisticAccountByCategoryNotInS88(groupAcc.Where(c => !c.IsSoon88));
 
                 var tempData = new PreparedDataToSoon88ViewModel()
                 {
@@ -41,8 +41,8 @@ namespace Fanex.NAP.SPU.Core.LogicSharingHeplper
                     Account = groupAcc.Key,
                     Association = new
                     {
-                        soon88Temp,
-                        othersTemp
+                        soon88,
+                        others
                     }
                 };
 
