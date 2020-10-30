@@ -34,7 +34,7 @@
         private static IEnumerable<AssociationWithCategory> GetAssociationWithCategory(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
         {
             var ctsDataCenterService = new DataCenterService();
-            var result = ctsDataCenterService.FeedDataToSoon88(custClasses);
+            var result = ctsDataCenterService.FeedDataToSoon88(custClasses, isDelete);
             return result;
         }
 

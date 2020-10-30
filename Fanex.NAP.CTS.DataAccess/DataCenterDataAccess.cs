@@ -632,13 +632,14 @@
             }
         }
 
-        public IEnumerable<AssociationWithCategory> FeedDataToToSoon88(IEnumerable<CustomerClassModel> custClasses)
+        public IEnumerable<AssociationWithCategory> FeedDataToToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetAssociationWithCategoryCriteria()
             {
-                CustIds = string.Join(",", custClasses.Select(c => c.CustID))
+                CustIds = string.Join(",", custClasses.Select(c => c.CustID)),
+                IsDelete = isDelete
             };
 
             return repository.Fetch<AssociationWithCategory>(criteria);

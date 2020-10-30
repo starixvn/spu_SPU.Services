@@ -293,9 +293,9 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetLastestCategory(ctsCustID, isCustId, isExcludedDetailedCategory);
         }
         
-        public IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
+        public IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
         {
-            return dataCenterDataAccess.FeedDataToToSoon88(custClasses);
+            return dataCenterDataAccess.FeedDataToToSoon88(custClasses, isDelete);
         }
 
     }
