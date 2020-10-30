@@ -47,12 +47,15 @@
     <Compile Include="CustomerClassificationModel.cs" />
     <Compile Include="CustomerCategoryClassificationModel.cs" />
     <Compile Include="CustomerClassModel.cs" />
-    <Compile Include="FeedDataToSoon88ViewModel.cs" />
+    <Compile Include="DeleteDataToSoon88ViewModel.cs" />
+    <Compile Include="PreparedDeleteDataToSoon88ViewModel.cs" />
+    <Compile Include="S88Result.cs" />
+    <Compile Include="UpdateDataToSoon88ViewModel.cs" />
     <Compile Include="FrequencyExecution.cs" />
     <Compile Include="GraphDB\AssociationModelForGraph.cs" />
     <Compile Include="CustomerGeneralClassificationModel.cs" />
     <Compile Include="GetMultiProblemAccountsModel.cs" />
-    <Compile Include="PreparedDataToSoon88ViewModel.cs" />
+    <Compile Include="PreparedUpdateDataToSoon88ViewModel.cs" />
     <Compile Include="ProblemAccountForMainDBModel.cs" />
     <Compile Include="ProbationModel.cs" />
     <Compile Include="MultipleProblemAccountsModel.cs" />

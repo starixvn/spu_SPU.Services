@@ -1,5 +1,4 @@
-﻿
-namespace Fanex.NAP.CTS.Services.Helper
+﻿namespace Fanex.NAP.CTS.Services.Helper
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -8,55 +7,93 @@ namespace Fanex.NAP.CTS.Services.Helper
     using System.Security.Cryptography;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.SPU.Core;
+    using System.Threading.Tasks;
 
     public static class FeedDataToSoon88Helper
     {
-  
+
         public static void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
         {
+            var url = "https://player.xoon88.com/fps/updateFPSstatus";
             var updateList = custClasses.Where(c => c.CustomerClass != -1);
             var deleteList = custClasses.Where(c => c.CustomerClass == -1);
 
-            var data = GetAssociationWithCategory(updateList);
+            if (updateList.Any())
+            {
+                UpdateDataToSoon88(updateList, url);
+            }
+
+            if (deleteList.Any())
+            {
+                DeleteDataInSoon88(deleteList, url);
+            }
 
         }
 
-        private static IEnumerable<AssociationWithCategory> GetAssociationWithCategory(IEnumerable<CustomerClassModel> custClasses)
+        private static IEnumerable<AssociationWithCategory> GetAssociationWithCategory(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
         {
             var ctsDataCenterService = new DataCenterService();
-
             var result = ctsDataCenterService.FeedDataToSoon88(custClasses);
+            return result;
+        }
+
+        private static void UpdateDataToSoon88(IEnumerable<CustomerClassModel> updateList, string url)
+        {
+            var result = GetAssociationWithCategory(updateList, false);
 
             var dataGroupByAccount = result.GroupBy(a => a.RegisterName);
-
             foreach (var groupAcc in dataGroupByAccount)
             {
                 var soon88 = StatisticAccountByCategoryInS88(groupAcc.Where(c => c.IsSoon88));
                 var others = StatisticAccountByCategoryNotInS88(groupAcc.Where(c => !c.IsSoon88));
 
-                var tempData = new PreparedDataToSoon88ViewModel()
+                var tempData = new PreparedUpdateDataToSoon88ViewModel()
                 {
-                    Action = "block",
-                    Reason = groupAcc.FirstOrDefault().CategoryName,
-                    Account = groupAcc.Key,
-                    Association = new
+                    reason = groupAcc.FirstOrDefault().CategoryName,
+                    account = groupAcc.Key,
+                    association = new
                     {
                         soon88,
                         others
                     }
                 };
 
-                var a = new FeedDataToSoon88ViewModel()
+                var finalData = new UpdateDataToSoon88ViewModel()
                 {
-                    action = "block",
                     reason = groupAcc.FirstOrDefault().CategoryName,
                     account = groupAcc.Key,
-                    association = tempData.Association,
-                    signature = CreateMD5Hash(JsonConvert.SerializeObject(tempData) + Constants.SALT)
+                    association = tempData.association,
+                    signature = CreateMD5Hash(JsonConvert.SerializeObject(tempData) + Consts.SALT)
                 };
-            }
 
-            return result;
+                var returnedData = ApiHelper.Post<S88Result>(url, finalData);
+                Task.WhenAll(returnedData);
+            }
+        }
+
+        private static void DeleteDataInSoon88(IEnumerable<CustomerClassModel> deleteList, string url)
+        {
+            var result = GetAssociationWithCategory(deleteList, true);
+
+            foreach (var item in result)
+            {
+                var tempData = new PreparedDeleteDataToSoon88ViewModel()
+                {
+                    reason = item.CategoryName,
+                    account = item.RegisterName
+                };
+
+                var finalData = new DeleteDataToSoon88ViewModel()
+                {
+                    reason = item.CategoryName,
+                    account = item.RegisterName,
+                    signature = CreateMD5Hash(JsonConvert.SerializeObject(tempData) + Consts.SALT)
+                };
+
+                var returnedData = ApiHelper.Post<S88Result>(url, finalData);
+                Task.WhenAll(returnedData);
+
+            }
         }
 
         private static Dictionary<string, int> StatisticAccountByCategoryNotInS88(IEnumerable<AssociationWithCategory> assList)
@@ -83,18 +120,21 @@ namespace Fanex.NAP.CTS.Services.Helper
 
         private static string CreateMD5Hash(string input)
         {
-            // Step 1, calculate MD5 hash from input
-            MD5 md5 = MD5.Create();
-            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-            byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-            // Step 2, convert byte array to hex string
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < hashBytes.Length; i++)
+            // Use input string to calculate MD5 hash
+            using (MD5 md5 = MD5.Create())
             {
-                sb.Append(hashBytes[i].ToString("X2"));
+                byte[] inputBytes = Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                // Convert the byte array to hexadecimal string
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("x2"));
+                }
+
+                return sb.ToString();
             }
-            return sb.ToString();
         }
 
     }

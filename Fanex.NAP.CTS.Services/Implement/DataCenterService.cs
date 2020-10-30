@@ -129,16 +129,33 @@ namespace Fanex.NAP.CTS.Services
         public void UpdateCustomerGeneralClassificationtoMainDB(List<CustomerGeneralClassificationModel> custIdList)
         {
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList);
+
+            var custClassList = custIdList.Where(c => c.CategoryIdMapping != -99).Select(c => new CustomerClassModel()
+            {
+                CustID = c.CustId,
+                CustomerClass = c.CategoryIdMapping
+            });
+
+            Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
         }
 
         public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerClassModel> custClassList)
         {
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custClassList);
+            Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
         }
 
         public void InsertProblemAccountClassificationToMainDB(List<ProblemAccountForMainDBModel> custIdList)
         {
             dataCenterDataAccess.InsertProblemAccountCategoryToMainDB(custIdList);
+
+            var custClassList = custIdList.Where(c => c.CategoryIdMapping != -99).Select(c => new CustomerClassModel()
+            {
+                CustID = c.CustID,
+                CustomerClass = c.CategoryIdMapping
+            });
+
+            Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
         }
 
         public IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIds)
