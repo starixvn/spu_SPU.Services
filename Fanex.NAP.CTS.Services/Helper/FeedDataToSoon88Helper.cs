@@ -1,15 +1,13 @@
 ﻿namespace Fanex.NAP.CTS.Services.Helper
 {
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using Newtonsoft.Json;
-    using System.Security.Cryptography;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
     using System.Threading.Tasks;
-    using Fanex.Logging;
-    using System;
 
     public static class FeedDataToSoon88Helper
     {
@@ -22,26 +20,13 @@
 
             if (updateList.Any())
             {
-                try
-                {
-                    UpdateDataToSoon88(updateList, url);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error($"FeedDataToSoon88Helper - UpdateDataToSoon88 - Start Exception {ex.Message + ex.StackTrace}");
-                }
+                UpdateDataToSoon88(updateList, url);
             }
 
             if (deleteList.Any())
             {
-                try
-                {
-                    DeleteDataInSoon88(deleteList, url);
-                }
-                catch (Exception ex)
-                {
-                    LogService.Error($"FeedDataToSoon88Helper - DeleteDataInSoon88 - Start Exception {ex.Message + ex.StackTrace}");
-                }
+
+                DeleteDataInSoon88(deleteList, url);
             }
 
         }
