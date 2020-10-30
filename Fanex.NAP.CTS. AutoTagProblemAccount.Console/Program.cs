@@ -88,6 +88,8 @@
 
                 LogService.Error(logMessage);
             }
+
+            Console.ReadLine();
         }
 
         static GetMultiProblemAccountsModel GetProblemAccounts(DataCenterService dataService)

@@ -8,5 +8,6 @@
 
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
     <Setting Key="CTS_Customer_RobotListSel" SpName="CTS_Customer_RobotListSel" DbName="DBONUSER.ON_USER.bodbSPUNet" TimeOut="300"/>
+    <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter" />
   </Function>
 </Functions>
