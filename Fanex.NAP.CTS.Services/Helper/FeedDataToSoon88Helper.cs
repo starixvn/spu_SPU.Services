@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Services.Helper
 {
+    using Fanex.Logging;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
@@ -69,6 +70,14 @@
 
                 var returnedData = ApiHelper.Post<S88Result>(url, finalData);
                 Task.WhenAll(returnedData);
+                if (returnedData.Result.result == "success")
+                {
+                    LogService.Info($"FeedDataToSoon88Helper - UpdateDataToSoon88 success");
+                }
+                else
+                {
+                    LogService.Info($"FeedDataToSoon88Helper - DeleteDataInSoon88 failed");
+                }
             }
         }
 
@@ -93,7 +102,14 @@
 
                 var returnedData = ApiHelper.Post<S88Result>(url, finalData);
                 Task.WhenAll(returnedData);
-
+                if (returnedData.Result.result == "success")
+                {
+                    LogService.Info($"FeedDataToSoon88Helper - DeleteDataInSoon88 success");
+                }
+                else
+                {
+                    LogService.Info($"FeedDataToSoon88Helper - DeleteDataInSoon88 failed");
+                }
             }
         }
 
