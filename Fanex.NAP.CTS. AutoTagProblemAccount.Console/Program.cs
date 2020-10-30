@@ -9,6 +9,7 @@
     using Fanex.Logging.Sentry;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using Sentry;
@@ -41,15 +42,40 @@
                     })
                });
 
+
+            var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
+            var backupData = new List<MultipleProblemAccountsModel>();
             try
             {
-                var problemAccounts = GetProblemAccounts(dataService);
+                var result = GetProblemAccounts(dataService);
 
-                if (problemAccounts != null && problemAccounts.Any())
+                if (result.ProblemAccounts != null && result.ProblemAccounts.Any())
                 {
-                    InsertProblemAccountToCTS(problemAccounts, dataService);
-                    InsertProblemAccountToMainDB(problemAccounts, dataService);
+                    backupData = result.ProblemAccounts;
+
+                    var lastestCustIds = InsertProblemAccountToCTS(result.ProblemAccounts, dataService);
+
+                    dataService.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);
+
+                    if (lastestCustIds != null && lastestCustIds.Any())
+                    {
+                        var lastestCustIdsChunk  = lastestCustIds.Chunk(batchSize).ToList();
+
+                        for (int i = 0; i < lastestCustIdsChunk.Count; i++)
+                        {
+                            var lastestCategories = GetLatestCategoryForCusts(string.Join(",", lastestCustIdsChunk[i].Select(c => c)), dataService);
+
+                            if (lastestCategories != null && lastestCategories.Any())
+                            {
+                                InsertProblemAccountToMainDB(lastestCategories.ToList(), dataService);
+                            }
+                        }
+                    }
+
+                    return;
                 }
+
+                dataService.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);             
             }
             catch (Exception ex)
             {
@@ -57,16 +83,18 @@
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
+                if(backupData != null && backupData.Any())
+                    logMessage += $"Full data input: {JsonConvert.SerializeObject(backupData)}"; 
+
                 LogService.Error(logMessage);
             }
         }
 
-        static List<ProblemAccountsModel> GetProblemAccounts(DataCenterService dataService)
+        static GetMultiProblemAccountsModel GetProblemAccounts(DataCenterService dataService)
         {
-            var paramId = 2;
-            var previousTimingExecution = dataService.GetPreviousTimingExecution(paramId)?.SingleOrDefault();
+            var previousTimingExecution = dataService.GetPreviousTimingExecution(Constants.PARAMETER_VALUE)?.SingleOrDefault();
 
-            var problemAccounts = new List<ProblemAccountsModel>();
+            var problemAccounts = new List<MultipleProblemAccountsModel>();
             var savedDataTime = DateTime.Now;
 
             if (string.IsNullOrEmpty(previousTimingExecution.ParameterValue))
@@ -88,12 +116,14 @@
                     problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
             }
 
-            dataService.UpdateTimingExecution(savedDataTime.ToString(Constants.CONVERT_TO_SQL_DATETIME), paramId);
-
-            return problemAccounts;
+            return new GetMultiProblemAccountsModel()
+            {
+                ProblemAccounts = problemAccounts,
+                BackupTimingExecution = savedDataTime
+            };
         }
 
-        static void InsertProblemAccountToCTS(List<ProblemAccountsModel> problemAccounts, DataCenterService dataService)
+        static IEnumerable<string> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts, DataCenterService dataService)
         {
             var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
@@ -103,21 +133,15 @@
 
             var jsonData = JsonConvert.SerializeObject(result);
             
-            dataService.InsertProblemAccounts(jsonData);
+            return dataService.InsertProblemAccounts(jsonData);
         }
 
-        static void InsertProblemAccountToMainDB(List<ProblemAccountsModel> problemAccounts, DataCenterService dataService)
+        static void InsertProblemAccountToMainDB(List<ProblemAccountForMainDBModel> problemAccounts, DataCenterService dataService)
         {
-            var problemAccount4MainDB = problemAccounts.Select(a => new ProblemAccountsModel
-            {
-                CustID = a.CustID,
-                ReasonID = a.ReasonID
-            }).Where(c => c.CategoryIdMapping != -99).ToList();
-            
             var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
-            problemAccount4MainDB.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
+            problemAccounts.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
 
-            if (problemAccount4MainDB != null && problemAccount4MainDB.Any())
+            if (problemAccounts != null && problemAccounts.Any())
             {
                 var countRetry = 0;
 
@@ -125,7 +149,7 @@
                 {
                     try
                     {
-                        dataService.InsertProblemAccountClassificationToMainDB(problemAccount4MainDB);
+                        dataService.InsertProblemAccountClassificationToMainDB(problemAccounts);
                         countRetry = AppSettings.RetryTime + 1;
                     }
                     catch (Exception ex)
@@ -139,6 +163,13 @@
                     }
                 }
             }
+        }
+
+        static IEnumerable<ProblemAccountForMainDBModel> GetLatestCategoryForCusts(string custIds, DataCenterService dataService)
+        {
+            var lastestCategories = dataService.GetLastestCategory(custIds, true, false)?.Where(c => c.CategoryIdMapping != -99)?.Distinct();
+
+            return lastestCategories;
         }
     }
 }

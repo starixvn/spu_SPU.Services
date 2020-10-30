@@ -38,7 +38,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void UpdateCustomerGeneralClassificationtoMainDB(List<CustomerGeneralClassificationModel> custIdList);
 
-        void InsertProblemAccountClassificationToMainDB(List<ProblemAccountsModel> custIdList);
+        void InsertProblemAccountClassificationToMainDB(List<ProblemAccountForMainDBModel> custIdList);
 
         IEnumerable<TransactionModel> DCSMoveTransToTransaction07GetPackage(int batchSize, int NoOfBatch);
 
@@ -64,5 +64,7 @@ namespace Fanex.NAP.CTS.Services.Interface
         IEnumerable<int> GetAllSpecialCustomerClass();
 
         IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIdList);
+
+        IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory);
     }
 }

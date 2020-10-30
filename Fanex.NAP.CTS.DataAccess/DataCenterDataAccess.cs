@@ -228,7 +228,7 @@
             repository.Execute(criteria);
         }
 
-        public void InsertProblemAccountCategoryToMainDB(List<ProblemAccountsModel> custIdList)
+        public void InsertProblemAccountCategoryToMainDB(List<ProblemAccountForMainDBModel> custIdList)
         {
             var repository = new DynamicRepository();
 
@@ -434,7 +434,7 @@
             repository.Execute(criteria);
         }
 
-        public IEnumerable<ProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)
+        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)
         {
             var criteria = new GetProblemAccountsCriteria
             {
@@ -444,11 +444,11 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<ProblemAccountsModel>(criteria).ToList();
+                return db.Query<MultipleProblemAccountsModel>(criteria).ToList();
             }
         }
 
-        public IEnumerable<ProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime dateTime)
+        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime dateTime)
         {
             var criteria = new GetProblemAccountsCN88Criteria
             {
@@ -458,12 +458,14 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<ProblemAccountsModel>(criteria).ToList();
+                return db.Query<MultipleProblemAccountsModel>(criteria).ToList();
             }
         }
 
-        public void InsertProblemAccount(string problemAccountJson)
+        public IEnumerable<string> InsertProblemAccount(string problemAccountJson)
         {
+            var repository = new DynamicRepository();
+
             var criteria = new InsertProblemAccountCriteria
             {
                 ProblemAccountJson = problemAccountJson
@@ -471,7 +473,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                db.ExecuteNonQuery(criteria);
+               return repository.Fetch<string>(criteria);
             }
         }
 
@@ -612,6 +614,22 @@
             };
 
             repository.Execute(criteria);
+        }
+
+        public IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory)
+        {
+            var criteria = new GetLastestCategoryCriteria()
+            {
+                CustIDList = ctsCustID,
+                IsUsingCustID = isCustId,
+                IsExcludedDetailedCategory = isExcludedDetailedCategory
+
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<ProblemAccountForMainDBModel>(criteria).ToList();
+            }
         }
 
     }
