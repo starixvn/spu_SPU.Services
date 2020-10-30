@@ -30,7 +30,7 @@ namespace ArchiveData
                     {
                          new SentryLogging(new SentryEngineOptions
                          {
-                             Dsn = new Dsn("http://5db4409de047476aacba9ee1f3c70e26@10.99.99.51:801/63")
+                             Dsn = new Dsn("https://0640ef4e164f4a1da89a5183e1600b78@sentry.starixplay.com/123")
                          })
                     });
 
