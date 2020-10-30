@@ -8,6 +8,8 @@
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.SPU.Core;
     using System.Threading.Tasks;
+    using Fanex.Logging;
+    using System;
 
     public static class FeedDataToSoon88Helper
     {
@@ -20,12 +22,26 @@
 
             if (updateList.Any())
             {
-                UpdateDataToSoon88(updateList, url);
+                try
+                {
+                    UpdateDataToSoon88(updateList, url);
+                }
+                catch (Exception ex)
+                {
+                    LogService.Error($"FeedDataToSoon88Helper - UpdateDataToSoon88 - Start Exception {ex.Message + ex.StackTrace}");
+                }
             }
 
             if (deleteList.Any())
             {
-                DeleteDataInSoon88(deleteList, url);
+                try
+                {
+                    DeleteDataInSoon88(deleteList, url);
+                }
+                catch (Exception ex)
+                {
+                    LogService.Error($"FeedDataToSoon88Helper - DeleteDataInSoon88 - Start Exception {ex.Message + ex.StackTrace}");
+                }
             }
 
         }
