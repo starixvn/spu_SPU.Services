@@ -68,8 +68,8 @@
                 }
                 finally
                 {
-                    LogService.Info(messsageLog);
-                    messsageLog = string.Empty;
+                    //LogService.Info(messsageLog);
+                    //messsageLog = string.Empty;
                 }
             } while (customers == null || customers.Any());
         }
