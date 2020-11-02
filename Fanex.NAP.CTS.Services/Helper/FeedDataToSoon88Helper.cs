@@ -16,7 +16,7 @@
 
         public static void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
         {
-            //var url = "https://player.xoon88.com/fps/updateFPSstatus";
+            LogService.Info("FeedDataToSoon88 is starting...");
             var url = ConfigurationManager.AppSettings["Soon88FeedDataAPI"];
             var updateList = custClasses.Where(c => c.CustomerClass != -1);
             var deleteList = custClasses.Where(c => c.CustomerClass == -1);
@@ -28,7 +28,6 @@
 
             if (deleteList.Any())
             {
-
                 DeleteDataInSoon88(deleteList, url);
             }
 
