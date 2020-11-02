@@ -5,6 +5,7 @@
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Security.Cryptography;
     using System.Text;
@@ -15,7 +16,8 @@
 
         public static void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
         {
-            var url = "https://player.xoon88.com/fps/updateFPSstatus";
+            //var url = "https://player.xoon88.com/fps/updateFPSstatus";
+            var url = ConfigurationManager.AppSettings["Soon88FeedDataAPI"];
             var updateList = custClasses.Where(c => c.CustomerClass != -1);
             var deleteList = custClasses.Where(c => c.CustomerClass == -1);
 
