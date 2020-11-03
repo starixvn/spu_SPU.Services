@@ -2,7 +2,7 @@
 
 <Functions>
   <Function Name="ArchiveRawTrans">
-    <Setting Key="DCS_DC_TransformData_MoveTransaction" SpName="DCS_DC_TransformData_MoveTransaction" DbName="MySQL.DCS_DataCenter" Timeout="600">
+    <Setting Key="DCS_DC_TransformData_MoveTransaction" SpName="DCS_DC_TransformData_MoveTransaction" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" Timeout="600">
     </Setting>
   </Function>
 </Functions>

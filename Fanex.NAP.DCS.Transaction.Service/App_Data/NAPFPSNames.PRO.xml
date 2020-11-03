@@ -3,8 +3,8 @@
 <Functions>
 
   <Function Name="DataCenter">
-    <Setting Key="DCS_DC_TransformData_UserAgent_Insert" SpName="DCS_DC_TransformData_UserAgent_Insert" DbName="MySQL.DCS_DataCenter" Timeout="600" />
-    <Setting Key="DCS_DC_TransformData_Transaction_Insert" SpName="DCS_DC_TransformData_Transaction_Insert" DbName="MySQL.DCS_DataCenter" />
-    <Setting Key="DCS_DC_TransformData_UnhandleSubscriberAction" SpName="DCS_DC_TransformData_UnhandleSubscriberAction" DbName="MySQL.DCS_DataCenter" Timeout="600" />
+    <Setting Key="DCS_DC_TransformData_UserAgent_Insert" SpName="DCS_DC_TransformData_UserAgent_Insert" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" Timeout="600" />
+    <Setting Key="DCS_DC_TransformData_Transaction_Insert" SpName="DCS_DC_TransformData_Transaction_Insert" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" />
+    <Setting Key="DCS_DC_TransformData_UnhandleSubscriberAction" SpName="DCS_DC_TransformData_UnhandleSubscriberAction" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" Timeout="600" />
   </Function>
 </Functions>

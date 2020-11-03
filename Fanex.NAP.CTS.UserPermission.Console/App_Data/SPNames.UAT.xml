@@ -2,6 +2,6 @@
 
 <Functions>
   <Function Name="Auto Mark Problem Account">
-    <Setting Key="CTS_DC_InsertUserPermission" SpName="CTS_DC_InsertUserPermission_xtest" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_InsertUserPermission" SpName="CTS_DC_InsertUserPermission_xtest" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
   </Function>
 </Functions>

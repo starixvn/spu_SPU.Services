@@ -2,10 +2,10 @@
 
 <Functions>
   <Function Name="Classify Customer">
-    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory_xtest" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory_xtest" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CustomerClassification_CategorizeCustomer_RealTime" SpName="CustomerClassification_CategorizeCustomer_RealTime_xtest" DbName="DBCTS.bodbVR2Model.bodbSPUNet" TimeOut="1200"/>
     <Setting Key="CTS_NormalAccountsClassification_UpdateLastScanTime" SpName="CTS_NormalAccountsClassification_UpdateLastScanTime_xtest" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
-    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification_xtest" DbName="MySQL.CTS_DataCenter"/>
+    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification_xtest" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_CustomerClassification_CategorizeCustomer_RealTime_CheckChanges" SpName="CustomerClassification_CategorizeCustomer_RealTime_CheckChanges_xtest" DbName="DBCTS.bodbVR2Model.bodbSPUNet" TimeOut="1200"/>
   </Function>
 </Functions>
