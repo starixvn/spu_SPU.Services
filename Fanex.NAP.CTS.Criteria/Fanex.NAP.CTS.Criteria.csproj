@@ -80,7 +80,6 @@
     <Compile Include="GetUsername2FromMainDb.cs" />
     <Compile Include="InsertProblemAccountCriteria.cs" />
     <Compile Include="TransformAssociationAffectedEvidenceCriteria.cs" />
-    <Compile Include="FillUpCustomerFromMainDbCriteria.cs" />
     <Compile Include="InsertNewCustomerCategoryCriteria.cs" />
     <Compile Include="TransformUpdatingLastLoginTimeCriteria.cs" />
     <Compile Include="UpdateTimingExecutionCriteria.cs" />

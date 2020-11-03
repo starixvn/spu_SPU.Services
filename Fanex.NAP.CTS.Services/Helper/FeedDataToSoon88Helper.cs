@@ -4,6 +4,7 @@
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
+    using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
@@ -23,12 +24,16 @@
 
             if (updateList.Any())
             {
+                LogService.Info("FeedDataToSoon88 - UpdateDataToSoon88 is starting.");
                 UpdateDataToSoon88(updateList, url);
+                LogService.Info("FeedDataToSoon88 - UpdateDataToSoon88 has done.");
             }
 
             if (deleteList.Any())
             {
+                LogService.Info("FeedDataToSoon88 - DeleteDataInSoon88 is starting.");
                 DeleteDataInSoon88(deleteList, url);
+                LogService.Info("FeedDataToSoon88 - DeleteDataInSoon88 has done.");
             }
 
         }
@@ -43,6 +48,9 @@
         private static void UpdateDataToSoon88(IEnumerable<CustomerClassModel> updateList, string url)
         {
             var result = GetAssociationWithCategory(updateList, false);
+            var custids = string.Join(",", updateList.Select(c => c.CustID));
+            LogService.Info("FeedDataToSoon88 - UpdateDataToSoon88 - custids param: " + custids);
+            LogService.Info("FeedDataToSoon88 - UpdateDataToSoon88 - GetAssociationWithCategory result: " + result.Count());
 
             var dataGroupByAccount = result.GroupBy(a => a.RegisterName);
             foreach (var groupAcc in dataGroupByAccount)

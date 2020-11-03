@@ -75,6 +75,9 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
                 LogService.Error(logMessage);
             }
+
+            Console.WriteLine("CustomerClassification.AutoTag done");
+            Console.ReadLine();
         }
 
         static void InsertDetailClassificationCustsToCTS(IEnumerable<CustomerClassificationModelMoreInfo> detailedClassification, DataCenterService dataService, int batchSize)
