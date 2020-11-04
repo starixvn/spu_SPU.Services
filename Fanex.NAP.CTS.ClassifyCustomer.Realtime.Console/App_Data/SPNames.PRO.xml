@@ -2,7 +2,7 @@
 
 <Functions>
   <Function Name="Classify Customer">
-    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter.ctsService"/>
     <Setting Key="CustomerClassification_CategorizeCustomer_RealTime" 
              SpName="CustomerClassification_CategorizeCustomer_RealTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet" TimeOut="1800"/>
     <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
