@@ -61,7 +61,6 @@
                     if (customers != null && customers.Any())
                     {
                         dataCenterService.FillUpCustomerFromMainDB(customers);
-                        LogService.Info("InsertMissingCustomer: " + jsonContent);
                         return true;
                     }
                 }
