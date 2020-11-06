@@ -2,7 +2,7 @@
 
 <Functions>
   <Function Name="Data Center">
-    <Setting Key="CTS_DC_TransformAssociationByDevice" SpName="CTS_DC_TransformAssociationByDevice" DbName="MySQL.CTS_DataCenter"/>
-    <Setting Key="CTS_DC_InsertAssociation" SpName="CTS_DC_InsertAssociation" DbName="MySQL.CTS_DataCenter"/>    
+    <Setting Key="CTS_DC_TransformAssociationByDevice" SpName="CTS_DC_TransformAssociationByDevice" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="CTS_DC_InsertAssociation" SpName="CTS_DC_InsertAssociation" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>    
   </Function>
 </Functions>

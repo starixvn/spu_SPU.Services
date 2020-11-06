@@ -6,19 +6,19 @@
   </Function>
 
   <Function Name="DCS">
-    <Setting Key="DCS_DC_TransformData_Device_Transaction_GetPackage" SpName="DCS_DC_TransformData_Device_Transaction_GetPackage" DbName="MySQL.DCS_DataCenter.dcsService"/>
-    <Setting Key="DCS_DC_TransformToCTS_Account_GetPackage" SpName="DCS_DC_TransformToCTS_Account_GetPackage" DbName="MySQL.DCS_DataCenter"/>
-    <Setting Key="DCS_DC_TransformToCTS_Account_Unsuccess_GetPackage" SpName="DCS_DC_TransformToCTS_Account_Unsuccess_GetPackage" DbName="MySQL.DCS_DataCenter"/>
-    <Setting Key="DCS_ST_TransformData_GetPackage" SpName="DCS_ST_TransformData_GetPackage" DbName="MySQL.DCS_RawTransaction"/>
-    <Setting Key="DCS_DC_TransformToCTS_Association_GetPackage" SpName="DCS_DC_TransformToCTS_Association_GetPackage" DbName="MySQL.DCS_DataCenter"/>
-    <Setting Key="DCS_DC_TransformToCTS_Association_Unsuccess_GetPackage" SpName="DCS_DC_TransformToCTS_Association_Unsuccess_GetPackage" DbName="MySQL.DCS_DataCenter"/>
-    <Setting Key="DCS_DC_TransformToCTS_TransactionIP_GetPackage" SpName="DCS_DC_TransformToCTS_TransactionIP_GetPackage" DbName="MySQL.DCS_DataCenter"/>
-    <Setting Key="DCS_DC_TransformToCTS_TransactionIP_Unsuccess_GetPackage" SpName="DCS_DC_TransformToCTS_TransactionIP_Unsuccess_GetPackage" DbName="MySQL.DCS_DataCenter"/>
+    <Setting Key="DCS_DC_TransformData_Device_Transaction_GetPackage" SpName="DCS_DC_TransformData_Device_Transaction_GetPackage" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="DCS_DC_TransformToCTS_Account_GetPackage" SpName="DCS_DC_TransformToCTS_Account_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="DCS_DC_TransformToCTS_Account_Unsuccess_GetPackage" SpName="DCS_DC_TransformToCTS_Account_Unsuccess_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="DCS_ST_TransformData_GetPackage" SpName="DCS_ST_TransformData_GetPackage" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="DCS_DC_TransformToCTS_Association_GetPackage" SpName="DCS_DC_TransformToCTS_Association_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="DCS_DC_TransformToCTS_Association_Unsuccess_GetPackage" SpName="DCS_DC_TransformToCTS_Association_Unsuccess_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="DCS_DC_TransformToCTS_TransactionIP_GetPackage" SpName="DCS_DC_TransformToCTS_TransactionIP_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="DCS_DC_TransformToCTS_TransactionIP_Unsuccess_GetPackage" SpName="DCS_DC_TransformToCTS_TransactionIP_Unsuccess_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
   </Function>
   
   <Function Name="CTS">
-    <Setting Key="CTS_DC_GetMaxCustIdCTSCustomer" SpName="CTS_DC_GetMaxCustIdCTSCustomer" DbName="MySQL.CTS_DataCenter.fps"/>
-    <Setting Key="CTS_DC_GetCustomerForUpdateUsername2" SpName="CTS_DC_GetCustomerForUpdateUsername2" DbName="MySQL.CTS_DataCenter.fps"/>
+    <Setting Key="CTS_DC_GetMaxCustIdCTSCustomer" SpName="CTS_DC_GetMaxCustIdCTSCustomer" DbName="MySQL.CTS_DataCenter.ctsService"/>
+    <Setting Key="CTS_DC_GetCustomerForUpdateUsername2" SpName="CTS_DC_GetCustomerForUpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsService"/>
     
     <!--  SQL Server -->
     <Setting Key="CTS_GetCustomerInfo" SpName="CTS_GetCustomerInfo" DbName="DBCTS.bodb02.bodbSPUNet"/>
@@ -27,16 +27,16 @@
   </Function>
 
   <Function Name="CustomerClassification">
-    <Setting Key="CTS_DC_GetCustomerClassificationForScanning" SpName="CTS_DC_GetCustomerClassificationIntervalScan" DbName="MySQL.CTS_DataCenter.fps"/>
+    <Setting Key="CTS_DC_GetCustomerClassificationForScanning" SpName="CTS_DC_GetCustomerClassificationIntervalScan" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_GetCustomerClassificationIntervalScan_Complete"
-             SpName="CTS_DC_GetCustomerClassificationIntervalScan_Complete" DbName="MySQL.CTS_DataCenter.fps"/>
+             SpName="CTS_DC_GetCustomerClassificationIntervalScan_Complete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_Daily"
              SpName="CTS_NormalAccountsClassification_GeneralCategorize_Daily" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
     <Setting Key="CTS_CustomerClass_GetByCustId" SpName="CTS_CustomerClass_GetByCustId" DbName="DBCTS.bodb02.bodbSPUNet" />
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
 
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_RealTime_CheckChanges" SpName="CTS_NormalAccountsClassification_GeneralCategorize_RealTime_CheckChanges" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
-    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter.fps"/>
+    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter.ctsService"/>
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_RealTime"  SpName="CTS_NormalAccountsClassification_GeneralCategorize_RealTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
   </Function>
 

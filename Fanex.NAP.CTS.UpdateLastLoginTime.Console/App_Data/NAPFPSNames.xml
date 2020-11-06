@@ -2,6 +2,6 @@
 
 <Functions>
   <Function Name="Data Center">
-    <Setting Key="CTS_DC_TransformUpdateLastLoginTime" SpName="CTS_DC_TransformUpdateLastLoginTime" DbName="MySQL.CTS_DataCenter"/>    
+    <Setting Key="CTS_DC_TransformUpdateLastLoginTime" SpName="CTS_DC_TransformUpdateLastLoginTime" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>    
   </Function> 
 </Functions>

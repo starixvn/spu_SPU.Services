@@ -2,6 +2,6 @@
 
 <Functions>
   <Function Name="Data Center">          
-    <Setting Key="CTS_DC_TransformDCSTransactionIPToCTSAssociationByIP" SpName="CTS_DC_TransformDCSTransactionIPToCTSAssociationByIP" DbName="MySQL.CTS_DataCenter"/>  
+    <Setting Key="CTS_DC_TransformDCSTransactionIPToCTSAssociationByIP" SpName="CTS_DC_TransformDCSTransactionIPToCTSAssociationByIP" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>  
   </Function>  
 </Functions>
