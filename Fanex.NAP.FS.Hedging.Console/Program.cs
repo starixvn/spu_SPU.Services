@@ -1,17 +1,14 @@
-﻿using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.FS.Core;
-using SharpRaven;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.FS.Hedging.Console
+﻿namespace Fanex.NAP.FS.Hedging.Console
 {
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.FS.Core;
+    using SharpRaven;
+    using System;
+    using System.Collections.Generic;
+
     class Program
     {
         static void Main(string[] args)
@@ -40,7 +37,7 @@ namespace Fanex.NAP.FS.Hedging.Console
                 }
                 else
                 {
-                    LogService.Info("Flagged Account service - is not active in database.");
+                    LogService.Info("Hedging service - is not active in database.");
                 }
             }
             catch (Exception ex)
@@ -49,7 +46,7 @@ namespace Fanex.NAP.FS.Hedging.Console
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error($"Flagged Account service - Start Exception {logMessage}");
+                LogService.Error($"Hedging service - Start Exception {logMessage}");
             }
         }
     }
