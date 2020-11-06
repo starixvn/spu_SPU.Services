@@ -638,7 +638,7 @@
 
             var criteria = new GetAssociationWithCategoryCriteria()
             {
-                CustIds = string.Join(",", custClasses.Select(c => c.CustID)),
+                CustIds = string.Join(",", custClasses.Select(c => c.CustID).Distinct()),
                 IsDelete = isDelete
             };
 
