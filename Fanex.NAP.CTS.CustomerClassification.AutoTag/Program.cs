@@ -59,9 +59,9 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
                     var newMemberCategories = newClassification?.Where(c => !c.IsGeneralCategory && c.CategoryId == 2);
 
-                    InsertDetailClassificationCustsToCTS(detailedClassification, dataCenterService, batchSize);
+                    InsertDetailClassificationCustsToCTS(detailedClassification, dataCenterService);
                     InsertNewMemberCategoriesToMainDB(newMemberCategories, dataCenterService);
-                    InsertGeneralClassificationCusts(generalClassification, dataCenterService, batchSize);                  
+                    InsertGeneralClassificationCusts(generalClassification, dataCenterService);                  
 
                 } while (newClassification != null && newClassification.Any());
 
@@ -80,7 +80,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             Console.ReadLine();
         }
 
-        static void InsertDetailClassificationCustsToCTS(IEnumerable<CustomerClassificationModelMoreInfo> detailedClassification, DataCenterService dataService, int batchSize)
+        static void InsertDetailClassificationCustsToCTS(IEnumerable<CustomerClassificationModelMoreInfo> detailedClassification, DataCenterService dataService)
         {
             if (detailedClassification == null || !detailedClassification.Any())
             {
@@ -88,7 +88,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             }
 
             var tasks = new List<Task>();
-            var newInternalClassificationChunk = detailedClassification.Chunk(batchSize).ToList();
+            var newInternalClassificationChunk = detailedClassification.Chunk(AppSettings.BatchSize).ToList();
 
             for (int i = 0; i < newInternalClassificationChunk.Count; i++)
             {
@@ -100,7 +100,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             }
         }
 
-        static void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification, DataCenterService dataService, int batchSize)
+        static void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification, DataCenterService dataService)
         {
             if (generalClassification == null || !generalClassification.Any())
             {
@@ -109,7 +109,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
             var tasks = new List<Task>();
             var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
-            var newGeneralClassificationChunk = generalClassification.Chunk(batchSize).ToList();
+            var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
 
             for (int i = 0; i < newGeneralClassificationChunk.Count; i++)
             {
@@ -151,7 +151,13 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             {
                 try
                 {
-                    dataService.UpdateCustomerGeneralClassificationtoMainDB(custGeneralCategoryInRuleForMainDB);
+                    var listCustClassChunk = custGeneralCategoryInRuleForMainDB.Chunk(AppSettings.BatchSize).ToList();
+
+                    foreach (var listCust in listCustClassChunk)
+                    {
+                        dataService.UpdateCustomerGeneralClassificationtoMainDB(listCust);
+                    }
+
                     countRetry = AppSettings.RetryTime + 1;
                 }
                 catch (Exception ex)
@@ -177,7 +183,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
             var newMembers = customerClass?.Where(c => c.CustomerClass == null);
 
-            HeplerTranformCusClassificationToCustDB.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime);
+            HeplerTranformCusClassificationToCustDB.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime, AppSettings.BatchSize);
         }
     }
 }

@@ -13,6 +13,7 @@
     using RestSharp;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -71,7 +72,7 @@
                         var customerClass = ctsDataCenterService.GetCustomerClassByCustId(string.Join(",", listOfCust?.Select(c => c.CustId)));
                         var newMembers = customerClass?.Where(c => c.CustomerClass == null);
 
-                        HeplerTranformCusClassificationToCustDB.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime);
+                        HeplerTranformCusClassificationToCustDB.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime, AppSettings.BatchSize);
                     }
 
                     if (!listOfCust.Any())

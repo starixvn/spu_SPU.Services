@@ -126,9 +126,9 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateAppliedStatusClassification(custIdList, isGeneralCategory);
         }
 
-        public void UpdateCustomerGeneralClassificationtoMainDB(List<CustomerGeneralClassificationModel> custIdList)
+        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerGeneralClassificationModel> custIdList)
         {
-            dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList);
+            dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList.ToList());
 
             var custClassList = custIdList.Where(c => c.CategoryIdMapping != -99).Select(c => new CustomerClassModel()
             {

@@ -9,6 +9,6 @@
     <Setting Key="CTS_DC_GetAllSpecialCustomerClass" SpName="CTS_DC_GetAllSpecialCustomerClass" DbName="MySQL.CTS_DataCenter.ctsService"/>
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
     <Setting Key="CTS_CustomerClass_GetByCustId" SpName="CTS_CustomerClass_GetByCustId_xtest" DbName="DBCTS.bodb02.bodbSPUNet" />
-    <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter" />
+    <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter.ctsService" />
   </Function>
 </Functions>

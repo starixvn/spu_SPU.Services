@@ -4,6 +4,7 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
     using System;
     using System.Collections.Generic;
@@ -11,7 +12,7 @@
 
     public static class HeplerTranformCusClassificationToCustDB
     {
-        public static void InsertNewMemberCategoryToMainDB(IEnumerable<CustomerCategoryClassificationModel> newMembers, bool IsCCAutoTag, int retryTime)
+        public static void InsertNewMemberCategoryToMainDB(IEnumerable<CustomerCategoryClassificationModel> newMembers, bool IsCCAutoTag, int retryTime, int batchSize)
         {
             var ctsDataCenterService = new DataCenterService();
 
@@ -26,11 +27,16 @@
             {
                 try
                 {
-                    ctsDataCenterService.UpdateCustomerGeneralClassificationtoMainDB(newMembers.Select(c => new CustomerClassModel
+                    var listCustClassChunk = newMembers.Chunk(batchSize).ToList();
+
+                    foreach (var listCust in listCustClassChunk)
                     {
-                        CustID = c.CustID,
-                        CustomerClass = Constants.NEW_MEMBER_CATEGORY
-                    }).ToList());
+                        ctsDataCenterService.UpdateCustomerGeneralClassificationtoMainDB(listCust.Select(c => new CustomerClassModel
+                        {
+                            CustID = c.CustID,
+                            CustomerClass = Constants.NEW_MEMBER_CATEGORY
+                        }).ToList());
+                    }
 
                     countRetry = retryTime + 1;
                 }

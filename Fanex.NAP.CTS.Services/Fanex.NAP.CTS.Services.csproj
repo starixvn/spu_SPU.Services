@@ -77,6 +77,10 @@
       <Project>{AA3E4730-2EE7-43AC-A9F3-992C4EF5DAB6}</Project>
       <Name>Fanex.NAP.CTS.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FS.Core\Fanex.NAP.FS.Core.csproj">
+      <Project>{F95AB8F2-F7DC-4C12-89E0-090FB0EC6414}</Project>
+      <Name>Fanex.NAP.FS.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>

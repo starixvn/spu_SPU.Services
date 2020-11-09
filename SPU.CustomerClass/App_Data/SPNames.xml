@@ -3,6 +3,6 @@
 <Functions>
   <Function Name="CustomerClass">
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
-    <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter" />
+    <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter.ctsService" />
   </Function> 
 </Functions>
