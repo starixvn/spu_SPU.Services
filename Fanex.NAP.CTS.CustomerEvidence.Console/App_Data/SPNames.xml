@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="CustomerEvidence">
+    <Setting Key="CTS_DC_CustEvidenceRaw_Get" SpName="CTS_DC_CustEvidenceRaw_Get" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
+    <Setting Key="CTS_DC_CustEvidence_InsertMultiple" SpName="CTS_DC_CustEvidence_InsertMultiple" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />    
+  </Function> 
+</Functions>

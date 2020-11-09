@@ -628,5 +628,15 @@
 
             return repository.Fetch<AssociationWithCategory>(criteria);
         }
+
+        public IEnumerable<GetCustomerEvidenceRawModel> GetCustomerEvidenceRaw()
+        {
+            var criteria = new GetCustomerEvidenceRawCriteria();
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<GetCustomerEvidenceRawModel>(criteria).ToList();
+            }
+        }
     }
 }
