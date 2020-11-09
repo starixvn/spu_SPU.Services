@@ -37,20 +37,27 @@
                 Directory.CreateDirectory(desArcFolder);
             }
 
-            var filePathList = Directory.GetFiles(sourceFolder).ToList();
+            var fileAtsourceFolders = Directory.GetFiles(sourceFolder).ToList();
+            var fileAtDesArcFolders = Directory.GetFiles(desArcFolder).ToList();
 
             try
             {
-                filePathList.ForEach(filePath =>
+                fileAtDesArcFolders.ForEach(filePath =>
+                {
+                    if (File.Exists(filePath))
+                    {
+                        File.Delete(filePath);
+                    }
+                });
+
+                fileAtsourceFolders.ForEach(filePath =>
                 {
                     if (File.Exists(filePath))
                     {
                         var fileName = Path.GetFileName(filePath);
                         if (!string.IsNullOrEmpty(fileName))
                         {
-                            var desFilePath = desArcFolder + fileName;
-                            File.Delete(desFilePath);
-                            File.Move(filePath, desFilePath);
+                            File.Move(filePath, desArcFolder + fileName);
                         }
                     }
                 });
