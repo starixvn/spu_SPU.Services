@@ -2,30 +2,27 @@
 {
     using Fanex.Logging;
     using Fanex.NAP.CTS.Model;
-    using Fanex.NAP.CTS.Services;
-    using Fanex.NAP.CTS.Services.Interface;
+    using Fanex.NAP.CTS.Services;    
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using System;
-    using System.Collections.Generic;
-    using System.Configuration;
+    using System.Collections.Generic;    
     using System.Linq;
 
     public class Service
     {
-        private IDataCenterService dataService;
+        private ICustomerEvidenceService custEvidenceService;
 
         public Service()
         {
-            dataService = new DataCenterService();
+            custEvidenceService = new CustomerEvidenceService();
         }
 
         public void ProcessCustEvidenceFromFile()
         {
             try
             {
-                
-                var custEvidenceFromFiles = dataService.GetCustomerEvidenceFromFile();
+                var custEvidenceFromFiles = custEvidenceService.GetCustomerEvidenceFromFile();
 
                 if (custEvidenceFromFiles != null && custEvidenceFromFiles.Any())
                 {
@@ -95,7 +92,7 @@
         {
             var sessionId = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
 
-            var dbResult = dataService.RemoveCustomerEvidenceByCTSCustIds(jsonData, sessionId, false, false);
+            var dbResult = custEvidenceService.RemoveCustomerEvidenceByCTSCustIds(jsonData, sessionId, false, false);
 
             return dbResult.ErrorCode == 0;
         }
@@ -104,14 +101,14 @@
         {
             var starixITId = 10278938;
             
-            var dbResult = dataService.InsertCustomerEvidenceMuitiple(jsonData, starixITId, isOverwrite);
+            var dbResult = custEvidenceService.InsertCustomerEvidenceMuitiple(jsonData, starixITId, isOverwrite);
 
             return dbResult.ErrorCode == 0;
         }
 
         private bool SyncCustomerClassToMainDb(string ctsCustIds)
         {
-            var dbResult = dataService.SyncCustomerClassToMainDb(ctsCustIds);
+            var dbResult = custEvidenceService.SyncCustomerClassToMainDb(ctsCustIds);
 
             return dbResult.ErrorCode == 0;
         }
@@ -120,14 +117,14 @@
         {
             var starixITId = 10278938;
 
-            var dbResult = dataService.UpdateProcessCustEvidence(custEvidenceIds, starixITId);
+            var dbResult = custEvidenceService.UpdateProcessCustEvidence(custEvidenceIds, starixITId);
 
             return dbResult.ErrorCode == 0;
         }
 
         private bool UpdateBetLimitOfFlaggedCustomer(string custIds)
         {
-            var dbResult = dataService.UpdateBetLimitOfFlaggedCustomer(custIds);
+            var dbResult = custEvidenceService.UpdateBetLimitOfFlaggedCustomer(custIds);
 
             return dbResult.ErrorCode == 0;
         }

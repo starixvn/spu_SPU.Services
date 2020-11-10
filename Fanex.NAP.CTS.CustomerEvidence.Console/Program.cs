@@ -2,14 +2,12 @@
 {
     using Fanex.Data;
     using Fanex.Data.MySql;
+    using Fanex.Data.SqlServer;
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
     using Fanex.NAP.SPU.Core;
-    using SharpRaven;
-    using System;
+    using SharpRaven;    
     using System.Collections.Generic;
-    using System.IO;
-    using System.Threading.Tasks;
 
     class Program
     {
@@ -17,7 +15,8 @@
         {
             DbSettingProviderManager
                 .StartNewSession()
-                .WithMySql()
+                .WithSqlServer()
+                .WithMySql()                
                 .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
                 .UseDefaultConnectionStringProvider()
                 .Run();
