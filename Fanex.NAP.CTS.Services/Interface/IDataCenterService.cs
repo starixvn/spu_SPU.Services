@@ -69,6 +69,6 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete);
 
-        IEnumerable<GetCustomerEvidenceRawModel> GetCustomerEvidenceRaw();
+        IEnumerable<CustomerEvidenceFromFileModel> GetCustomerEvidenceFromFile();
     }
 }

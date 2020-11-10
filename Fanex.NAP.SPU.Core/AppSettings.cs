@@ -317,5 +317,20 @@ namespace Fanex.NAP.SPU.Core
         public static string TGRSMailingArrListId => ConfigurationManager.AppSettings["TGRS-MailingArrListId"];
 
         public static string TGRSAutoTradingFilePassword => ConfigurationManager.AppSettings["TGRS-AutoTrading-File-Password"];
+
+        public static int CustEvidenceFromFileChunkSize
+        {
+            get
+            {
+                string count = ConfigurationManager.AppSettings["InsertCustEvidenceChunkSize"];
+
+                if (!string.IsNullOrWhiteSpace(count))
+                {
+                    return Convert.ToInt32(count);
+                }
+
+                return 20;
+            }
+        }
     }
 }

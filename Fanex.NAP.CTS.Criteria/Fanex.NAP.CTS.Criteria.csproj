@@ -49,7 +49,7 @@
     <Compile Include="CustomerClassification\GetProbationCustForScanningCriteria.cs" />
     <Compile Include="CustomerClassification\ClassifyCategoryForProbationCustCriteria.cs" />
     <Compile Include="CustomerClassification\UpdateLastScanDateForProbationCustCriteria.cs" />
-    <Compile Include="CustomerEvidence\GetCustomerEvidenceRawCriteria.cs" />
+    <Compile Include="CustomerEvidence\GetCustomerEvidenceFromFileCriteria.cs" />
     <Compile Include="GetAssociationWithCategoryCriteria.cs" />
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
     <Compile Include="InsertRobotUsersIntoSpecialCustClassCriteria.cs" />

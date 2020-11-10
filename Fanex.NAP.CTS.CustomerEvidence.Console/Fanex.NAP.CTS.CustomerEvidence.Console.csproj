@@ -53,12 +53,23 @@
     <None Include="Fanex.NAP.CTS.CustomerEvidence.Console.exe.PRO.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SPNames.LOCAL.xml" />
-    <Content Include="App_Data\SPNames.PRO.xml" />
-    <Content Include="App_Data\SPNames.UAT.xml" />
-    <Content Include="App_Data\SPNames.xml" />
+    <Content Include="App_Data\SPNames.LOCAL.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\SPNames.PRO.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\SPNames.UAT.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\SPNames.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Fanex.Data.MySql">
+      <Version>4.2.2</Version>
+    </PackageReference>
     <PackageReference Include="Fanex.Logging.Extensions.Database">
       <Version>1.0.8</Version>
     </PackageReference>
@@ -88,6 +99,10 @@
     <ProjectReference Include="..\Fanex.NAP.CTS.Services\Fanex.NAP.CTS.Services.csproj">
       <Project>{16a8ac87-aee3-4a10-b6c6-5e27226cddd1}</Project>
       <Name>Fanex.NAP.CTS.Services</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
+      <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>
+      <Name>Fanex.NAP.SPU.Core</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

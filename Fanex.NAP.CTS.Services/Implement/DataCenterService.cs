@@ -294,9 +294,9 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.FeedDataToToSoon88(custClasses, isDelete);
         }
 
-        public IEnumerable<GetCustomerEvidenceRawModel> GetCustomerEvidenceRaw()
+        public IEnumerable<CustomerEvidenceFromFileModel> GetCustomerEvidenceFromFile()
         {
-            return dataCenterDataAccess.GetCustomerEvidenceRaw();
+            return dataCenterDataAccess.GetCustomerEvidenceFromFile();
         }
     }
 }

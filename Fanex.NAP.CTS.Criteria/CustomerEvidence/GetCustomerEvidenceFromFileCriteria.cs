@@ -2,10 +2,10 @@
 {
     using Fanex.Data.Repository;
 
-    public class GetCustomerEvidenceRawCriteria : NonQueryCommand
+    public class GetCustomerEvidenceFromFileCriteria : NonQueryCommand
     {
         public override string GetSettingKey()
-            => "CTS_DC_CustEvidenceRaw_Get";
+            => "CTS_DC_CustEvidenceFromFile_Get";
 
         public override bool IsValid()
             => true;
