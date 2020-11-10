@@ -5,5 +5,6 @@
     <Setting Key="CTS_DC_CustEvidenceFromFile_Get" SpName="CTS_DC_CustEvidenceFromFile_Get_xtest" DbName="MySQL.CTS_DataCenter.ctsService" />
     <Setting Key="CTS_DC_CustEvidence_RemoveOldEvidenceForInsertMultiple" SpName="CTS_DC_CustEvidence_RemoveOldEvidenceForInsertMultiple_xtest" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
     <Setting Key="CTS_DC_CustEvidence_InsertMultiple" SpName="CTS_DC_CustEvidence_InsertMultiple_xtest" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
+    <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
   </Function>
 </Functions>

@@ -20,7 +20,7 @@
             return r;
         }
 
-        public static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunksize)
+        public static IEnumerable<IEnumerable<T>> ChunkSize<T>(this IEnumerable<T> source, int chunksize)
         {
             var q = new Queue<T>();
 

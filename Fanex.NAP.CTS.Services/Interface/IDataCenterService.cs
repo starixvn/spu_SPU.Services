@@ -70,5 +70,15 @@ namespace Fanex.NAP.CTS.Services.Interface
         IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete);
 
         IEnumerable<CustomerEvidenceFromFileModel> GetCustomerEvidenceFromFile();
+
+        DBResult RemoveCustomerEvidenceByCTSCustIds(string jsonData, long sessionId, bool isRollBack, bool isClearLog);
+
+        DBResult InsertCustomerEvidenceMuitiple(string jsonData, int userId, bool isOverwrite);
+
+        DBResult SyncCustomerClassToMainDb(string ctsCustIds);
+
+        DBResult UpdateProcessCustEvidence(string custEvidenceIds, int userId);
+
+        DBResult UpdateBetLimitOfFlaggedCustomer(string custIds);
     }
 }

@@ -5,6 +5,7 @@
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -32,6 +33,7 @@
                      * 1 Insert Cust Evidence
                      *  1.1 Group for file
                      *  1.2 Split batch and insert
+                     *  1.3 Update IsProcessd = 1
                      * 2 Update Bet Limit
                      */
 
@@ -48,45 +50,86 @@
             }
             catch (Exception ex)
             {
-                //LogService.Info($"ProcessCustEvidenceFromFile ({AppSettings.EnvironmentName}) - exception: {ex.Message}", ex);
+                //LogService.Info($"CustomerEvidence Service ProcessCustEvidenceFromFile exception: {ex.Message}", ex);
             }
         }
 
         private void InsertCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceFromFiles, bool isOverwrite)
         {
-            var loopCustEvidenceList = custEvidenceFromFiles.Chunk(AppSettings.CustEvidenceFromFileChunkSize);
+            var loopCustEvidenceList = custEvidenceFromFiles.ChunkSize(AppSettings.CustEvidenceFromFileChunkSize);
 
             foreach (var custEvidences in loopCustEvidenceList)
             {
                 try
                 {
-                    var isCanInsert = true;
+                    var isSuccess = true;
+                    var custEvidenceIds = string.Join(",", custEvidenceFromFiles.Select(x => new { x.ID }));
+                    var ctsCustIdList = custEvidenceFromFiles.Select(x => new { x.CTSCustID }).Distinct();
+                    var ctsCustIds = string.Join(",", ctsCustIdList.Distinct().ToList());
+                    var jsonData = JsonConvert.SerializeObject(ctsCustIdList);
 
                     if (isOverwrite)
                     {
-                        isCanInsert = RemoveOldEvidence(custEvidences);
+                        isSuccess = RemoveOldEvidence(jsonData);
                     }
 
-                    if (isCanInsert)
+                    if (isSuccess)
                     {
-                        InsertNewCustEvidence(custEvidences);
+                        isSuccess = InsertNewCustEvidence(jsonData, isOverwrite);
+                    }
+
+                    if (isSuccess)
+                    {
+                        UpdateProcessCustEvidence(custEvidenceIds);
+                        SyncCustomerClassToMainDb(ctsCustIds);
                     }
                 }
                 catch (Exception ex)
                 {
-                    //LogService.Info($"InsertCustEvidence ({AppSettings.EnvironmentName}) - exception: {ex.Message}", ex);
+                    //LogService.Info($"CustomerEvidence Service InsertCustEvidence exception: {ex.Message}", ex);
                 }
             }
         }
 
-        private bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceFromFiles)
+        private bool RemoveOldEvidence(string jsonData)
         {
-            return true;
+            var sessionId = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
+
+            var dbResult = dataService.RemoveCustomerEvidenceByCTSCustIds(jsonData, sessionId, false, false);
+
+            return dbResult.ErrorCode == 0;
         }
 
-        private void InsertNewCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceFromFiles)
+        private bool InsertNewCustEvidence(string jsonData, bool isOverwrite)
         {
+            var starixITId = 10278938;
+            
+            var dbResult = dataService.InsertCustomerEvidenceMuitiple(jsonData, starixITId, isOverwrite);
 
+            return dbResult.ErrorCode == 0;
+        }
+
+        private bool SyncCustomerClassToMainDb(string ctsCustIds)
+        {
+            var dbResult = dataService.SyncCustomerClassToMainDb(ctsCustIds);
+
+            return dbResult.ErrorCode == 0;
+        }
+
+        private bool UpdateProcessCustEvidence(string custEvidenceIds)
+        {
+            var starixITId = 10278938;
+
+            var dbResult = dataService.UpdateProcessCustEvidence(custEvidenceIds, starixITId);
+
+            return dbResult.ErrorCode == 0;
+        }
+
+        private bool UpdateBetLimitOfFlaggedCustomer(string custIds)
+        {
+            var dbResult = dataService.UpdateBetLimitOfFlaggedCustomer(custIds);
+
+            return dbResult.ErrorCode == 0;
         }
     }
 }

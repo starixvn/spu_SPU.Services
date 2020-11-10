@@ -639,48 +639,104 @@
             }
         }
 
-        public DBResult RemoveCustomerEvidenceByCTSCustIds(string ctsCustIds, long sessionId, bool isRollBack, bool isClearLog)
+        public DBResult RemoveCustomerEvidenceByCTSCustIds(string jsonData, long sessionId, bool isRollBack, bool isClearLog)
         {
-            try
+            var criteria = new RemoveCustEvidencesByCTSCustIdsCriteria
             {
-                var jsonData = JsonConvert.SerializeObject(ctsCustIds);
+                NewAccountEvidences = jsonData,
+                SessionId = sessionId,
+                IsRollBack = isRollBack,
+                IsClearLog = isClearLog
+            };
 
-                var criteria = new RemoveCustEvidencesByCTSCustIdsCriteria
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                if (string.IsNullOrEmpty(criteria.ErrorMessage))
                 {
-                    NewAccountEvidences = jsonData,
-                    SessionId = sessionId,
-                    IsRollBack = isRollBack,
-                    IsClearLog = isClearLog
-                };
-
-                using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-                {
-                    db.ExecuteNonQuery(criteria);
-
-                    if (string.IsNullOrEmpty(criteria.ErrorMessage))
-                    {
-                        return new DBResult
-                        {
-                            ErrorCode = 0,
-                            ErrorMsg = criteria.ErrorMessage
-                        };
-                    }
+                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
                 }
-
-                return new DBResult
-                {
-                    ErrorCode = -1,
-                    ErrorMsg = criteria.ErrorMessage
-                };
             }
-            catch (Exception ex)
+
+            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+        }
+
+        public DBResult InsertCustomerEvidenceMuitiple(string jsonData, int userId, bool isOverwrite)
+        {
+            var criteria = new InsertCustEvidencesCriteria
             {
-                return new DBResult
+                NewAccountEvidences = jsonData,
+                UserId = userId,
+                IsOverride = isOverwrite
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                if (string.IsNullOrEmpty(criteria.ErrorMessage))
                 {
-                    ErrorCode = -1,
-                    ErrorMsg = ex.Message
-                };
-            }            
+                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
+                }
+            }
+
+            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+        }
+
+        public DBResult SyncCustomerClassToMainDb(string custClassToXml)
+        {
+            var repository = new DynamicRepository();
+            
+            var criteria = new SyncCustomerClassToMainDbCriteria
+            {
+                custList = custClassToXml
+            };
+
+            repository.Execute(criteria);
+
+            return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
+        }
+
+        public DBResult UpdateProcessCustEvidence(string custEvidenceIds, int userId)
+        {
+            var criteria = new UpdateProcessCustEvidenceCriteria
+            {
+                IdList = custEvidenceIds,
+                UserId = userId
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                if (string.IsNullOrEmpty(criteria.ErrorMessage))
+                {
+                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
+                }
+            }
+
+            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+        }
+
+        public DBResult UpdateBetLimitOfFlaggedCustomer(string custIds)
+        {
+            var criteria = new UpdateBetLimitByEvidenceAddingCriteria
+            {
+
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                if (string.IsNullOrEmpty(criteria.ErrorMessage))
+                {
+                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
+                }
+            }
+
+            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
         }
     }
 }
