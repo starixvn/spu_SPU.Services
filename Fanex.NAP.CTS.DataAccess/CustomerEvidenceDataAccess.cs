@@ -15,7 +15,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<CustomerEvidenceFromFileModel>(criteria).ToList();
+                return db.Query<CustomerEvidenceFromFileModel>(criteria);
             }
         }
 
@@ -78,11 +78,11 @@
             return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
         }
 
-        public DBResult UpdateProcessCustEvidence(string custEvidenceIds, int userId)
+        public DBResult UpdateProcessedCustEvidence(string jsonData, int userId)
         {
-            var criteria = new UpdateProcessCustEvidenceCriteria
+            var criteria = new UpdateProcessedCustEvidenceCriteria
             {
-                IdList = custEvidenceIds,
+                IdList = jsonData,
                 UserId = userId
             };
 
@@ -99,11 +99,24 @@
             return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
         }
 
+        public IEnumerable<int> GetAssociatedAccountByCTSCustIds(string ctsCustIds)
+        {
+            var criteria = new GetAssociatedAccountByCTSCustIdsCriteria
+            {
+                CTSCustIdList = ctsCustIds
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<int>(criteria);
+            }
+        }
+
         public DBResult UpdateBetLimitOfFlaggedCustomer(string custIds)
         {
             var criteria = new UpdateBetLimitByEvidenceAddingCriteria
             {
-
+                CustIDList = custIds
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

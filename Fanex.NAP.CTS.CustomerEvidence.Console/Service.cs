@@ -11,37 +11,32 @@
 
     public class Service
     {
-        private ICustomerEvidenceService custEvidenceService;
-
+        private ICustomerEvidenceService _custEvidenceService;
+        private IProcessingService _processingService;
+        
         public Service()
         {
-            custEvidenceService = new CustomerEvidenceService();
+            _custEvidenceService = new CustomerEvidenceService();
+            _processingService = new ProcessingService();            
         }
 
         public void ProcessCustEvidenceFromFile()
         {
             try
             {
-                var custEvidenceFromFiles = custEvidenceService.GetCustomerEvidenceFromFile();
+                var custEvidenceFromFiles = _custEvidenceService.GetCustomerEvidenceFromFile();
 
                 if (custEvidenceFromFiles != null && custEvidenceFromFiles.Any())
                 {
-                    /* 
-                     * 1 Insert Cust Evidence
-                     *  1.1 Group for file
-                     *  1.2 Split batch and insert
-                     *  1.3 Update IsProcessd = 1
-                     * 2 Update Bet Limit
-                     */
-
                     var groups = custEvidenceFromFiles.GroupBy(x => x.FileKey);
 
                     foreach (var custEviList in groups)
                     {
                         var isOverwrite = custEviList.ToList()[0].IsOverwrite;
 
-                        InsertCustEvidence(custEviList, isOverwrite);
+                        _processingService.ResetOverwrite(isOverwrite);
 
+                        InsertCustEvidence(custEviList);
                     }
                 }
             }
@@ -51,35 +46,24 @@
             }
         }
 
-        private void InsertCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceFromFiles, bool isOverwrite)
+        private void InsertCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceInFiles)
         {
-            var loopCustEvidenceList = custEvidenceFromFiles.ChunkSize(AppSettings.CustEvidenceFromFileChunkSize);
+            custEvidenceInFiles = custEvidenceInFiles.OrderBy(x => x.CTSCustID);
+
+            var loopCustEvidenceList = ChunkSize(custEvidenceInFiles.ToList());
 
             foreach (var custEvidences in loopCustEvidenceList)
             {
                 try
                 {
-                    var isSuccess = true;
-                    var custEvidenceIds = string.Join(",", custEvidenceFromFiles.Select(x => new { x.ID }));
-                    var ctsCustIdList = custEvidenceFromFiles.Select(x => new { x.CTSCustID }).Distinct();
-                    var ctsCustIds = string.Join(",", ctsCustIdList.Distinct().ToList());
-                    var jsonData = JsonConvert.SerializeObject(ctsCustIdList);
+                    _processingService.ResetPrevious();
 
-                    if (isOverwrite)
-                    {
-                        isSuccess = RemoveOldEvidence(jsonData);
-                    }
-
-                    if (isSuccess)
-                    {
-                        isSuccess = InsertNewCustEvidence(jsonData, isOverwrite);
-                    }
-
-                    if (isSuccess)
-                    {
-                        UpdateProcessCustEvidence(custEvidenceIds);
-                        SyncCustomerClassToMainDb(ctsCustIds);
-                    }
+                    _processingService
+                        .RemoveOldEvidence(custEvidences)
+                        .InsertNewCustEvidence(custEvidences)
+                        .SyncCustomerClassToMainDb(custEvidences)
+                        .UpdateBetLimitOfFlaggedCustomer(custEvidences)
+                        .UpdateProcessedCustEvidence(custEvidences);
                 }
                 catch (Exception ex)
                 {
@@ -87,46 +71,38 @@
                 }
             }
         }
-
-        private bool RemoveOldEvidence(string jsonData)
+        
+        private IEnumerable<IEnumerable<CustomerEvidenceFromFileModel>> ChunkSize(List<CustomerEvidenceFromFileModel> custEvidenceInFiles)
         {
-            var sessionId = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
+            var size = AppSettings.CustEvidenceFromFileChunkSize;
 
-            var dbResult = custEvidenceService.RemoveCustomerEvidenceByCTSCustIds(jsonData, sessionId, false, false);
+            var queue = new Queue<CustomerEvidenceFromFileModel>();
+            var totalItem = custEvidenceInFiles.Count();
 
-            return dbResult.ErrorCode == 0;
+            for (int index = 0; index < totalItem; index++)
+            {
+                if (queue.Count >= size)
+                {
+                    var prevIndex = index - 1;
+
+                    if (custEvidenceInFiles[index].CTSCustID == custEvidenceInFiles[prevIndex].CTSCustID)
+                    {
+                        queue.Enqueue(custEvidenceInFiles[index]);
+
+                        continue;
+                    }
+
+                    var ret = queue;
+                    queue = new Queue<CustomerEvidenceFromFileModel>();
+
+                    yield return ret;
+                }
+
+                queue.Enqueue(custEvidenceInFiles[index]);
+            }
+
+            yield return queue;           
         }
-
-        private bool InsertNewCustEvidence(string jsonData, bool isOverwrite)
-        {
-            var starixITId = 10278938;
-            
-            var dbResult = custEvidenceService.InsertCustomerEvidenceMuitiple(jsonData, starixITId, isOverwrite);
-
-            return dbResult.ErrorCode == 0;
-        }
-
-        private bool SyncCustomerClassToMainDb(string ctsCustIds)
-        {
-            var dbResult = custEvidenceService.SyncCustomerClassToMainDb(ctsCustIds);
-
-            return dbResult.ErrorCode == 0;
-        }
-
-        private bool UpdateProcessCustEvidence(string custEvidenceIds)
-        {
-            var starixITId = 10278938;
-
-            var dbResult = custEvidenceService.UpdateProcessCustEvidence(custEvidenceIds, starixITId);
-
-            return dbResult.ErrorCode == 0;
-        }
-
-        private bool UpdateBetLimitOfFlaggedCustomer(string custIds)
-        {
-            var dbResult = custEvidenceService.UpdateBetLimitOfFlaggedCustomer(custIds);
-
-            return dbResult.ErrorCode == 0;
-        }
+        
     }
 }

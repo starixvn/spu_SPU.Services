@@ -49,12 +49,13 @@
     <Compile Include="CustomerClassification\GetProbationCustForScanningCriteria.cs" />
     <Compile Include="CustomerClassification\ClassifyCategoryForProbationCustCriteria.cs" />
     <Compile Include="CustomerClassification\UpdateLastScanDateForProbationCustCriteria.cs" />
+    <Compile Include="CustomerEvidence\GetAssociatedAccountByCTSCustIdsCriteria.cs" />
     <Compile Include="CustomerEvidence\GetCustomerEvidenceFromFileCriteria.cs" />
     <Compile Include="CustomerEvidence\InsertCustEvidencesCriteria.cs" />
     <Compile Include="CustomerEvidence\RemoveCustEvidencesByCTSCustIdsCriteria.cs" />
     <Compile Include="CustomerEvidence\SyncCustomerClassToMainDbCriteria.cs" />
     <Compile Include="CustomerEvidence\UpdateBetLimitByEvidenceAddingCriteria.cs" />
-    <Compile Include="CustomerEvidence\UpdateProcessCustEvidenceCriteria.cs" />
+    <Compile Include="CustomerEvidence\UpdateProcessedCustEvidenceCriteria.cs" />
     <Compile Include="GetAssociationWithCategoryCriteria.cs" />
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
     <Compile Include="InsertRobotUsersIntoSpecialCustClassCriteria.cs" />

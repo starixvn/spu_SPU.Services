@@ -4,7 +4,10 @@
   <Function Name="CustomerEvidence">
     <Setting Key="CTS_DC_CustEvidenceFromFile_Get" SpName="CTS_DC_CustEvidenceFromFile_Get" DbName="MySQL.CTS_DataCenter.adam.vn" />
     <Setting Key="CTS_DC_CustEvidence_RemoveOldEvidenceForInsertMultiple" SpName="CTS_DC_CustEvidence_RemoveOldEvidenceForInsertMultiple" DbName="MySQL.CTS_DataCenter.adam.vn" />
+    <Setting Key="CTS_DC_Association_GetByCustList" SpName="CTS_DC_Association_GetByCustList" DbName="MySQL.CTS_DataCenter.ctsService" />
     <Setting Key="CTS_DC_CustEvidence_InsertMultiple" SpName="CTS_DC_CustEvidence_InsertMultiple" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
+    <Setting Key="CTS_DC_CustEvidenceFromFile_UpdateProcessed" SpName="CTS_DC_CustEvidenceFromFile_UpdateProcessed" DbName="MySQL.CTS_DataCenter.adam.vn" />
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+    <Setting Key="NAP_BLControl_EvidenceFlagged" SpName="NAP_BLControl_EvidenceFlagged" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>
 </Functions>

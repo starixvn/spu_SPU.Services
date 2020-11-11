@@ -28,7 +28,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Info($"DataCenterService RemoveCustomerEvidenceByCTSCustIds exception: {ex.Message}", ex);
+                //LogService.Info($"CustomerEvidenceService RemoveCustomerEvidenceByCTSCustIds exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
@@ -42,7 +42,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Info($"DataCenterService InsertCustomerEvidenceMuitiple exception: {ex.Message}", ex);
+                //LogService.Info($"CustomerEvidenceService InsertCustomerEvidenceMuitiple exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
@@ -52,30 +52,43 @@
         {
             try
             {
-
                 var custClassToXml = "";
 
                 return dataAccess.SyncCustomerClassToMainDb(custClassToXml);
             }
             catch (Exception ex)
             {
-                LogService.Info($"DataCenterService SyncCustomerClassToMainDb exception: {ex.Message}", ex);
+                //LogService.Info($"CustomerEvidenceService SyncCustomerClassToMainDb exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
         }
 
-        public DBResult UpdateProcessCustEvidence(string custEvidenceIds, int userId)
+        public DBResult UpdateProcessedCustEvidence(string jsonData, int userId)
         {
             try
             {
-                return dataAccess.UpdateProcessCustEvidence(custEvidenceIds, userId);
+                return dataAccess.UpdateProcessedCustEvidence(jsonData, userId);
             }
             catch (Exception ex)
             {
-                LogService.Info($"DataCenterService UpdateCustEvidenceToProcess exception: {ex.Message}", ex);
+                //LogService.Info($"CustomerEvidenceService UpdateCustEvidenceToProcess exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
+            }
+        }
+
+        public IEnumerable<int> GetAssociatedAccountByCTSCustIds(string ctsCustIds)
+        {
+            try
+            {
+                return dataAccess.GetAssociatedAccountByCTSCustIds(ctsCustIds);
+            }
+            catch (Exception ex)
+            {
+                //LogService.Info($"CustomerEvidenceService GetAssociatedAccountByCTSCustIds exception: {ex.Message}", ex);
+
+                return new List<int>();
             }
         }
 
@@ -87,7 +100,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Info($"DataCenterService UpdateBetLimitOfFlaggedCustomer exception: {ex.Message}", ex);
+                //LogService.Info($"CustomerEvidenceService UpdateBetLimitOfFlaggedCustomer exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }

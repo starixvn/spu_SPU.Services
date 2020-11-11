@@ -13,7 +13,9 @@
 
         DBResult SyncCustomerClassToMainDb(string ctsCustIds);
 
-        DBResult UpdateProcessCustEvidence(string custEvidenceIds, int userId);
+        DBResult UpdateProcessedCustEvidence(string jsonData, int userId);
+
+        IEnumerable<int> GetAssociatedAccountByCTSCustIds(string ctsCustIds);
 
         DBResult UpdateBetLimitOfFlaggedCustomer(string custIds);
     }
