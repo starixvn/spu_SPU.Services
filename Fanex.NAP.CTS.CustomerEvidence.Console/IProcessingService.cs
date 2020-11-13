@@ -5,13 +5,11 @@
 
     public interface IProcessingService
     {
-        void ResetOverwrite(bool isOverwrite);
+        bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
 
-        void ResetPrevious();
+        bool InsertNewCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, bool isOverwrite, bool isPrevSuccess);
 
-        IProcessingService RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
-
-        IProcessingService InsertNewCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
+        bool SyncCustomerEvidenceToCTSCategory(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, int actionType, bool isPrevSuccess);
 
         IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
 

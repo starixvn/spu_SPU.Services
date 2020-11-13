@@ -11,6 +11,8 @@
 
         DBResult InsertCustomerEvidenceMuitiple(string jsonData, int userId, bool isOverwrite);
 
+        DBResult SyncCustomerEvidenceToCategory(string jsonData);
+
         DBResult SyncCustomerClassToMainDb(string ctsCustIds);
 
         DBResult UpdateProcessedCustEvidence(string jsonData, int userId);

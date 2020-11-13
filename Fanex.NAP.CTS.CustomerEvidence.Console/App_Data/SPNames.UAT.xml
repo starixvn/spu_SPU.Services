@@ -7,6 +7,7 @@
     <Setting Key="CTS_DC_Association_GetByCustList" SpName="CTS_DC_Association_GetByCustList_xtest" DbName="MySQL.CTS_DataCenter.ctsService" />
     <Setting Key="CTS_DC_CustEvidence_InsertMultiple" SpName="CTS_DC_CustEvidence_InsertMultiple_xtest" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
     <Setting Key="CTS_DC_CustEvidenceFromFile_UpdateProcessed" SpName="CTS_DC_CustEvidenceFromFile_UpdateProcessed_xtest" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
+    <Setting Key="CTS_DC_CustEvidence_SyncToCategory" SpName="CTS_DC_CustEvidence_SyncToCategory_xtest" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />    
     <Setting Key="NAP_BLControl_EvidenceFlagged" SpName="NAP_BLControl_EvidenceFlagged" DbName="DBCust.CustDB.bodbAdminNet" />
   </Function>

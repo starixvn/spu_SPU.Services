@@ -54,6 +54,7 @@
     <Compile Include="CustomerEvidence\InsertCustEvidencesCriteria.cs" />
     <Compile Include="CustomerEvidence\RemoveCustEvidencesByCTSCustIdsCriteria.cs" />
     <Compile Include="CustomerEvidence\SyncCustomerClassToMainDbCriteria.cs" />
+    <Compile Include="CustomerEvidence\SyncCustEvidenceToCTSCategoryCriteria.cs" />
     <Compile Include="CustomerEvidence\UpdateBetLimitByEvidenceAddingCriteria.cs" />
     <Compile Include="CustomerEvidence\UpdateProcessedCustEvidenceCriteria.cs" />
     <Compile Include="GetAssociationWithCategoryCriteria.cs" />

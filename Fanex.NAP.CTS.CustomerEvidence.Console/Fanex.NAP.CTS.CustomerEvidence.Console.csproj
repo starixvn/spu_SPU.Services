@@ -53,6 +53,9 @@
     <None Include="App.config" />
     <None Include="Fanex.NAP.CTS.CustomerEvidence.Console.exe.LOCAL.config" />
     <None Include="Fanex.NAP.CTS.CustomerEvidence.Console.exe.PRO.config" />
+    <None Include="MailTemplate\MailInformTemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SPNames.LOCAL.xml">

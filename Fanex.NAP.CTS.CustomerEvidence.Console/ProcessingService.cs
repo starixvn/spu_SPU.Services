@@ -10,45 +10,28 @@
     public class ProcessingService : IProcessingService
     {
         private ICustomerEvidenceService _custEvidenceService;
-        public bool IsPrevSuccess;
-        public bool IsOverwrite;
 
         public ProcessingService()
         {
             _custEvidenceService = new CustomerEvidenceService();
         }
 
-        public void ResetOverwrite(bool isOverwrite)
+        public bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
         {
-            this.IsOverwrite = isOverwrite;
+            var ctsCustIdList = custEvidences.Select(x => new { x.CTSCustID }).Distinct();
+
+            var jsonData = JsonConvert.SerializeObject(ctsCustIdList);
+
+            var sessionId = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
+
+            var dbResult = _custEvidenceService.RemoveCustomerEvidenceByCTSCustIds(jsonData, sessionId, false, false);
+
+            return dbResult.ErrorCode == 0;
         }
 
-        public void ResetPrevious()
+        public bool InsertNewCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, bool isOverwrite, bool isPrevSuccess)
         {
-            this.IsPrevSuccess = true;           
-        }
-
-        public IProcessingService RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
-        {
-            if (this.IsPrevSuccess && this.IsOverwrite)
-            {
-                var ctsCustIdList = custEvidences.Select(x => new { x.CTSCustID }).Distinct();
-
-                var jsonData = JsonConvert.SerializeObject(ctsCustIdList);
-
-                var sessionId = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
-
-                var dbResult = _custEvidenceService.RemoveCustomerEvidenceByCTSCustIds(jsonData, sessionId, false, false);
-
-                this.IsPrevSuccess = dbResult.ErrorCode == 0;
-            }
-
-            return this;
-        }
-
-        public IProcessingService InsertNewCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
-        {
-            if (this.IsPrevSuccess)
+            if (isPrevSuccess)
             {
                 var objects = custEvidences.Select(x => new
                 {
@@ -61,46 +44,65 @@
 
                 var starixITId = 10278938;
 
-                var dbResult = _custEvidenceService.InsertCustomerEvidenceMuitiple(jsonData, starixITId, this.IsOverwrite);
+                var dbResult = _custEvidenceService.InsertCustomerEvidenceMuitiple(jsonData, starixITId, isOverwrite);
 
-                this.IsPrevSuccess = dbResult.ErrorCode == 0;
+                return dbResult.ErrorCode == 0;
             }
 
-            return this;
+            return isPrevSuccess;
+        }
+
+        /// <summary>
+        /// Sync To CTS Category
+        /// </summary>
+        /// <param name="custEvidences"></param>
+        /// <param name="actionType">0: Insert, 2: Remove</param>
+        /// <returns></returns>
+        public bool SyncCustomerEvidenceToCTSCategory(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, int actionType, bool isPrevSuccess)
+        {
+            if (isPrevSuccess)
+            {
+                var objects = custEvidences.Select(x => new
+                {
+                    x.CustID,
+                    x.CTSCustID,
+                    x.SubscriberID,
+                    x.EvidenceID,
+                    ActionType = actionType
+                });
+
+                var jsonData = JsonConvert.SerializeObject(objects);
+
+                var dbResult = _custEvidenceService.SyncCustomerEvidenceToCategory(jsonData);
+
+                return dbResult.ErrorCode == 0;
+            }
+
+            return isPrevSuccess;
         }
 
         public IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
         {
-            if (this.IsPrevSuccess)
-            {
-                var ctsCustIdList = custEvidences.Select(x => new { x.CTSCustID }).Distinct();
+            var ctsCustIdList = custEvidences.Select(x => new { x.CTSCustID }).Distinct();
 
-                var ctsCustIds = string.Join(",", ctsCustIdList.Distinct().ToList());
+            var ctsCustIds = string.Join(",", ctsCustIdList.Distinct().ToList());
 
-                var dbResult = _custEvidenceService.SyncCustomerClassToMainDb(ctsCustIds);
-
-                this.IsPrevSuccess = dbResult.ErrorCode == 0;
-            }
+            var dbResult = _custEvidenceService.SyncCustomerClassToMainDb(ctsCustIds);            
 
             return this;
         }
 
         public IProcessingService UpdateBetLimitOfFlaggedCustomer(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
         {
-            if (this.IsPrevSuccess)
+            var ctsCustIds = string.Join(",", custEvidences.Select(x => x.CTSCustID).Distinct());
+
+            var associatedList = _custEvidenceService.GetAssociatedAccountByCTSCustIds(ctsCustIds);
+
+            if (associatedList.Any())
             {
-                var ctsCustIds = string.Join(",", custEvidences.Select(x => x.CTSCustID).Distinct());
+                var custIds = string.Join(",", associatedList.Distinct());
 
-                var associatedList = _custEvidenceService.GetAssociatedAccountByCTSCustIds(ctsCustIds);
-
-                if (associatedList.Any())
-                {
-                    var custIds = string.Join(",", associatedList.Distinct());
-
-                    var dbResult = _custEvidenceService.UpdateBetLimitOfFlaggedCustomer(custIds);
-
-                    this.IsPrevSuccess = dbResult.ErrorCode == 0;
-                }
+                var dbResult = _custEvidenceService.UpdateBetLimitOfFlaggedCustomer(custIds);                
             }
 
             return this;
@@ -108,18 +110,13 @@
 
         public IProcessingService UpdateProcessedCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
         {
-            if (this.IsPrevSuccess)
-            {
-                var objects = custEvidences.Select(x => new { x.ID });
+            var objects = custEvidences.Select(x => new { x.ID });
 
-                var jsonData = JsonConvert.SerializeObject(objects);
+            var jsonData = JsonConvert.SerializeObject(objects);
 
-                var starixITId = 10278938;
+            var starixITId = 10278938;
 
-                var dbResult = _custEvidenceService.UpdateProcessedCustEvidence(jsonData, starixITId);
-
-                this.IsPrevSuccess = dbResult.ErrorCode == 0;
-            }
+            var dbResult = _custEvidenceService.UpdateProcessedCustEvidence(jsonData, starixITId);
 
             return this;
         }

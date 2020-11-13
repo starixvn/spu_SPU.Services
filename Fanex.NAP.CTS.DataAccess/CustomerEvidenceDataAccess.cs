@@ -64,6 +64,26 @@
             return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
         }
 
+        public DBResult SyncCustomerEvidenceToCategory(string jsonData)
+        {
+            var criteria = new SyncCustEvidenceToCTSCategoryCriteria
+            {
+                CustEvidences = jsonData
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                if (string.IsNullOrEmpty(criteria.ErrorMessage))
+                {
+                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
+                }
+            }
+
+            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+        }
+
         public DBResult SyncCustomerClassToMainDb(string custClassToXml)
         {
             var repository = new DynamicRepository();

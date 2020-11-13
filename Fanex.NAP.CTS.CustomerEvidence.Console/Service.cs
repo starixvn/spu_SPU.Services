@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.CTS.CustomerEvidence.Console
 {
     using Fanex.Logging;
+    using Fanex.MailDelivery.Client;
+    using Fanex.MailDelivery.Core.Models;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;    
     using Fanex.NAP.SPU.Core;
@@ -13,11 +15,12 @@
     {
         private ICustomerEvidenceService _custEvidenceService;
         private IProcessingService _processingService;
-        
+        private const string MailInformTemplate = @"MailTemplate\MailInformTemplate.cshtml";
+
         public Service()
         {
             _custEvidenceService = new CustomerEvidenceService();
-            _processingService = new ProcessingService();            
+            _processingService = new ProcessingService();
         }
 
         public void ProcessCustEvidenceFromFile()
@@ -34,41 +37,67 @@
                     {
                         var isOverwrite = custEviList.ToList()[0].IsOverwrite;
 
-                        _processingService.ResetOverwrite(isOverwrite);
-
-                        InsertCustEvidence(custEviList);
+                        try
+                        {
+                            InsertCustEvidence(custEviList, isOverwrite);
+                        }
+                        catch (Exception ex)
+                        {
+                            LogService.Error($"CustomerEvidence Service InsertCustEvidence exception: { ex.Message }", ex);
+                        }
                     }
+
+                    // test
+                    SendMailInternal(10278938, "test");
                 }
             }
             catch (Exception ex)
             {
-                //LogService.Info($"CustomerEvidence Service ProcessCustEvidenceFromFile exception: {ex.Message}", ex);
+                //LogService.Error($"CustomerEvidence Service ProcessCustEvidenceFromFile exception: { ex.Message }", ex);
             }
         }
 
-        private void InsertCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceInFiles)
+        private void InsertCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceInFiles, bool isOverwrite)
         {
+            var custEvidenceProcesseds = new List<CustomerEvidenceFromFileModel>();
+
             custEvidenceInFiles = custEvidenceInFiles.OrderBy(x => x.CTSCustID);
 
-            var loopCustEvidenceList = ChunkSize(custEvidenceInFiles.ToList());
+            var loopCustEvidences = ChunkSize(custEvidenceInFiles.ToList());
 
-            foreach (var custEvidences in loopCustEvidenceList)
+            foreach (var custEvidences in loopCustEvidences)
             {
+                bool isSuccess = true;
+
                 try
                 {
-                    _processingService.ResetPrevious();
+                    if (isOverwrite)
+                    {
+                        isSuccess = _processingService.RemoveOldEvidence(custEvidences);
+                        isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 2, isSuccess);
+                    }
 
-                    _processingService
-                        .RemoveOldEvidence(custEvidences)
-                        .InsertNewCustEvidence(custEvidences)
-                        .SyncCustomerClassToMainDb(custEvidences)
-                        .UpdateBetLimitOfFlaggedCustomer(custEvidences)
-                        .UpdateProcessedCustEvidence(custEvidences);
+                    isSuccess = _processingService.InsertNewCustEvidence(custEvidences, isOverwrite, isSuccess);
+                    isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 0, isSuccess);
+
+                    if (isSuccess)
+                    {
+                        custEvidenceProcesseds.AddRange(custEvidences);
+
+                        _processingService.UpdateProcessedCustEvidence(custEvidences);
+                    }
                 }
                 catch (Exception ex)
                 {
-                    //LogService.Info($"CustomerEvidence Service InsertCustEvidence exception: {ex.Message}", ex);
+                    //LogService.Error($"CustomerEvidence Service InsertCustEvidence exception: {ex.Message}", ex);
                 }
+            }
+
+            if (custEvidenceProcesseds.Any())
+            {
+                _processingService
+                    .SyncCustomerClassToMainDb(custEvidenceProcesseds)
+                    .UpdateBetLimitOfFlaggedCustomer(custEvidenceProcesseds);
             }
         }
         
@@ -103,6 +132,61 @@
 
             yield return queue;           
         }
-        
+
+        private void SendMailInternal(int usertId, string errContent)
+        {
+            var subject = $"CTS service Customer-Evidence failed to process ({ AppSettings.EnvironmentName }), UserId={ usertId } at { DateTime.Now }";
+            var body = GenerateMailBody(errContent);
+
+            try
+            {
+                var mail = new Mail
+                {
+                    Subject = subject,
+                    Title = subject,
+                    Body = body,
+                    MailingListId = AppSettings.MailingIdToSPU,
+                    Attachments = new List<MailAttachment>()
+                };
+
+                SendMail(mail);
+            }
+            catch (Exception ex)
+            {
+                var message = $"CustomerEvidence Service InsertCustEvidence exception: { ex.Message }";
+
+                //LogService.Error(message, ex);
+            }
+        }
+
+        private string GenerateMailBody(string errContent)
+        {
+            try
+            {
+                var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + MailInformTemplate;
+
+                var body = Utilities.ReadTextFile(mailTemplatePath);
+
+                return string.Format(body, errContent);
+            }
+            catch (Exception ex)
+            {
+                var message = $"CustomerEvidence Service GenerateMailBody exception: { ex.Message }";
+
+                LogService.Error(message, ex);
+            }
+
+            return string.Empty;
+        }
+
+        private void SendMail(Mail mail)
+        {
+            MailClientHandler.Start();
+
+            MailClientHandler.SendFunctionMail(mail);
+
+            MailClientHandler.Stop();
+        }
+
     }
 }
