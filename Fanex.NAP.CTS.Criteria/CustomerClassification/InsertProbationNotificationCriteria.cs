@@ -10,9 +10,6 @@
 
     public class InsertProbationNotificationCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_NotificationType")]
-        public int NotificationType { get; set; }
-
         [SpParam(SqlParamName = "ip_TotalScanned")]
         public int TotalScanned { get; set; }
 

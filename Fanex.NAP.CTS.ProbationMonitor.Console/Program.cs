@@ -52,8 +52,7 @@
                     messsageLog = "Probation monitor is starting...";
                     customers = dataService.GetProbationCustForScanning(batchSize);
                     messsageLog += "\nProbation monitor - Get custs: " + customers.Count();
-                    UpdateMargin(customers.Where(c => !c.Is60Day));
-                    ClassifyCustomer(customers.Where(c => c.Is60Day));
+                    ClassifyCustomer(customers);
                     dataService.UpdateLastScanDateForProbationCust(customers);
                     messsageLog += "\nProbation monitor - Update scan date done - custId: " + string.Join(",", customers.Take(10).Select(c => c.CustId));
                     messsageLog += "\nProbation monitor - DONE FOR 1 BATCH - " + customers.Count();
@@ -74,31 +73,19 @@
             } while (customers == null || customers.Any());
         }
 
-        static void UpdateMargin(IEnumerable<ProbationModel> customers)
-        {
-            messsageLog += "\nProbation monitor - UpdateMargin: " + customers.Count();
-            var losers = dataService.CheckLoserForProbationCust(customers);
-            messsageLog += "\nProbation monitor - UpdateMargin - CheckLoserForProbationCust: " + losers.Count();
-            if (losers.Any())
-            {
-                dataService.InsertProbationNotification(customers, losers, 1);
-                messsageLog += "\nProbation monitor - UpdateMargin - Notify done";
-            }
-        }
-
         static void ClassifyCustomer(IEnumerable<ProbationModel> customers)
         {
             messsageLog += "\nProbation monitor - ClassifyCustomer: " + customers.Count();
-            var custs = dataService.FinalizeForProbationCust(customers);
+            var custs = dataService.ClassifyCategoryForProbationCust(customers);
             var failedCusts = custs.Where(cus => !cus.IsPassed);
             var passedCusts = custs.Where(cus => cus.IsPassed);
-            messsageLog += "\nProbation monitor - ClassifyCustomer - Finalize - Pass cust: " + string.Join(",", passedCusts.Take(10).Select(c => c.CustId));
-            messsageLog += "\nProbation monitor - ClassifyCustomer - Finalize - Failed cust: " + failedCusts.Count();
+            messsageLog += "\nProbation monitor - ClassifyCustomer - Pass cust: " + string.Join(",", passedCusts.Take(10).Select(c => c.CustId));
+            messsageLog += "\nProbation monitor - ClassifyCustomer - Failed cust: " + failedCusts.Count();
 
             if (failedCusts.Any())
             {
-                dataService.InsertProbationNotification(customers, failedCusts, 2);
-                messsageLog += "\nProbation monitor - Finalize - Notify done";
+                dataService.InsertProbationNotification(customers, failedCusts);
+                messsageLog += "\nProbation monitor - done";
             }
         }
     }

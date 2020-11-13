@@ -273,19 +273,14 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateLastScanDateForProbationCust(custList);
         }
 
-        public IEnumerable<ProbationModel> CheckLoserForProbationCust(IEnumerable<ProbationModel> custList)
+        public IEnumerable<ProbationModel> ClassifyCategoryForProbationCust(IEnumerable<ProbationModel> custList)
         {
-            return dataCenterDataAccess.CheckLoserForProbationCust(custList);
+            return dataCenterDataAccess.ClassifyCategoryForProbationCust(custList);
         }
 
-        public IEnumerable<ProbationModel> FinalizeForProbationCust(IEnumerable<ProbationModel> custList)
+        public void InsertProbationNotification(IEnumerable<ProbationModel> scanList, IEnumerable<ProbationModel> resultList)
         {
-            return dataCenterDataAccess.FinalizeForProbationCust(custList);
-        }
-
-        public void InsertProbationNotification(IEnumerable<ProbationModel> scanList, IEnumerable<ProbationModel> resultList, int notificationType)
-        {
-            dataCenterDataAccess.InsertProbationNotification(scanList, resultList, notificationType);
+            dataCenterDataAccess.InsertProbationNotification(scanList, resultList);
         }
 
         public IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory)
