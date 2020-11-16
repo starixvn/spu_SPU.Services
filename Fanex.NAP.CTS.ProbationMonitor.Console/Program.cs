@@ -10,6 +10,7 @@
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
     using SharpRaven;
     using System;
     using System.Collections.Generic;
@@ -54,7 +55,7 @@
                     messsageLog += "\nProbation monitor - Get custs: " + customers.Count();
                     ClassifyCustomer(customers);
                     //dataService.UpdateLastScanDateForProbationCust(customers);
-                    messsageLog += "\nProbation monitor done - custId: " + string.Join(",", customers.Take(10).Select(c => c.CustId));
+                    messsageLog += "\nProbation monitor done - custId: " + JsonConvert.SerializeObject(customers);
                     messsageLog += "\nProbation monitor - DONE FOR 1 BATCH - " + customers.Count();
                 }
                 catch (Exception ex)
@@ -79,7 +80,7 @@
             var custs = dataService.ClassifyCategoryForProbationCust(customers);
             var failedCusts = custs.Where(cus => !cus.IsPassed);
             var passedCusts = custs.Where(cus => cus.IsPassed);
-            messsageLog += "\nProbation monitor - ClassifyCustomer - Pass cust: " + string.Join(",", passedCusts.Take(10).Select(c => c.CustId));
+            messsageLog += "\nProbation monitor - ClassifyCustomer - Pass cust: " + JsonConvert.SerializeObject(passedCusts);
             messsageLog += "\nProbation monitor - ClassifyCustomer - Failed cust: " + failedCusts.Count();
 
             if (failedCusts.Any())
