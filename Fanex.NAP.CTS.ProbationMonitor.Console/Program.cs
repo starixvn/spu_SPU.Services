@@ -63,11 +63,11 @@
 
                 LogService.Error(logMessage);
             }
-            finally
-            {
-                LogService.Info(messsageLog);
-                messsageLog = string.Empty;
-            }
+            //finally
+            //{
+            //    LogService.Info(messsageLog);
+            //    messsageLog = string.Empty;
+            //}
         }
 
         static void ClassifyCustomer(IEnumerable<ProbationModel> customers)
