@@ -28,7 +28,7 @@
             }
             catch (Exception ex)
             {
-                //LogService.Error($"CustomerEvidenceService RemoveCustomerEvidenceByCTSCustIds exception: {ex.Message}", ex);
+                LogService.Error($"CustomerEvidenceService RemoveCustomerEvidenceByCTSCustIds exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
@@ -42,7 +42,7 @@
             }
             catch (Exception ex)
             {
-                //LogService.Error($"CustomerEvidenceService InsertCustomerEvidenceMuitiple exception: {ex.Message}", ex);
+                LogService.Error($"CustomerEvidenceService InsertCustomerEvidenceMuitiple exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
@@ -56,7 +56,7 @@
             }
             catch (Exception ex)
             {
-                //LogService.Error($"CustomerEvidenceService SyncCustomerEvidenceToCategory exception: {ex.Message}", ex);
+                LogService.Error($"CustomerEvidenceService SyncCustomerEvidenceToCategory exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
@@ -72,7 +72,7 @@
             }
             catch (Exception ex)
             {
-                //LogService.Error($"CustomerEvidenceService SyncCustomerClassToMainDb exception: {ex.Message}", ex);
+                LogService.Error($"CustomerEvidenceService SyncCustomerClassToMainDb exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
@@ -86,7 +86,7 @@
             }
             catch (Exception ex)
             {
-                //LogService.Error($"CustomerEvidenceService UpdateCustEvidenceToProcess exception: {ex.Message}", ex);
+                LogService.Error($"CustomerEvidenceService UpdateCustEvidenceToProcess exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }
@@ -100,7 +100,7 @@
             }
             catch (Exception ex)
             {
-                //LogService.Error($"CustomerEvidenceService GetAssociatedAccountByCTSCustIds exception: {ex.Message}", ex);
+                LogService.Error($"CustomerEvidenceService GetAssociatedAccountByCTSCustIds exception: {ex.Message}", ex);
 
                 return new List<int>();
             }
@@ -114,7 +114,7 @@
             }
             catch (Exception ex)
             {
-                //LogService.Error($"CustomerEvidenceService UpdateBetLimitOfFlaggedCustomer exception: {ex.Message}", ex);
+                LogService.Error($"CustomerEvidenceService UpdateBetLimitOfFlaggedCustomer exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
             }

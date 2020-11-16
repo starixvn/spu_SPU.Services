@@ -16,6 +16,8 @@
         IProcessingService UpdateProcessedCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
 
         IProcessingService UpdateBetLimitOfFlaggedCustomer(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
-       
+
+        List<CustomerEvidenceFailedToProcessModel> GetLogError();
+
     }
 }

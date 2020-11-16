@@ -47,13 +47,12 @@
                         }
                     }
 
-                    // test
-                    //SendMailInternal(10278938, "test");
+                    HandleLogError();
                 }
             }
             catch (Exception ex)
             {
-                //LogService.Error($"CustomerEvidence Service ProcessCustEvidenceFromFile exception: { ex.Message }", ex);
+                LogService.Error($"CustomerEvidence Service ProcessCustEvidenceFromFile exception: { ex.Message }", ex);
             }
         }
 
@@ -74,11 +73,11 @@
                     if (isOverwrite)
                     {
                         isSuccess = _processingService.RemoveOldEvidence(custEvidences);
-                        //isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 2, isSuccess);
+                        isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 2, isSuccess);
                     }
 
                     isSuccess = _processingService.InsertNewCustomerEvidence(custEvidences, isOverwrite, isSuccess);
-                    //isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 0, isSuccess);
+                    isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 0, isSuccess);
 
                     if (isSuccess)
                     {
@@ -89,7 +88,7 @@
                 }
                 catch (Exception ex)
                 {
-                    //LogService.Error($"CustomerEvidence Service InsertCustomerEvidence exception: {ex.Message}", ex);
+                    LogService.Error($"CustomerEvidence Service InsertCustomerEvidence exception: {ex.Message}", ex);
                 }
             }
 
@@ -98,7 +97,7 @@
                 _processingService
                     .SyncCustomerClassToMainDb(custEvidenceProcesseds)
                     .UpdateBetLimitOfFlaggedCustomer(custEvidenceProcesseds);
-            }
+            }            
         }
         
         private IEnumerable<IEnumerable<CustomerEvidenceFromFileModel>> ChunkSize(List<CustomerEvidenceFromFileModel> custEvidenceInFiles)
@@ -133,30 +132,66 @@
             yield return queue;           
         }
 
-        private void SendMailInternal(int usertId, string errContent)
+        private void HandleLogError()
         {
-            var subject = $"CTS service Customer-Evidence failed to process ({ AppSettings.EnvironmentName }), UserId={ usertId } at { DateTime.Now }";
-            var body = GenerateMailBody(errContent);
+            var processErrorList = _processingService.GetLogError();
 
-            try
+            if (processErrorList.Any())
             {
-                var mail = new Mail
+                var table = "";
+                table += "<table style='" + CssStyleTable(400) + "'>";
+                table += "<tr>";
+                table += "<td style='" + CssStyleTh() + "'>Key</td>";
+                table += "<td style='" + CssStyleTh() + "'>CTSCustID</td>";
+                table += "<td style='" + CssStyleTh() + "'>EvidenceID</td>";
+                table += "<td style='" + CssStyleTh() + "'>ErrorContent</td>";
+                table += "</tr>";
+                var index = 1;
+
+                foreach (var item in processErrorList)
                 {
-                    Subject = subject,
-                    Title = subject,
-                    Body = body,
-                    MailingListId = AppSettings.MailingIdToSPU,
-                    Attachments = new List<MailAttachment>()
-                };
+                    table += "<tr>";                    
+                    table += "<td style='" + CssStyleTd() + "'>" + item.FileKey + "</td>";
+                    table += "<td style='" + CssStyleTd() + "'>" + item.CTSCustID + "</td>";
+                    table += "<td style='" + CssStyleTd() + "'>" + item.EvidenceID + "</td>";
+                    table += "<td style='" + CssStyleTd() + "'>" + item.ErrorContent + "</td>";
+                    table += "</tr>";
 
-                SendMail(mail);
-            }
-            catch (Exception ex)
-            {
-                var message = $"CustomerEvidence Service InsertCustEvidence exception: { ex.Message }";
+                    index++;
 
-                //LogService.Error(message, ex);
+                    if (index == 100)
+                        break;
+                }
+
+                table += "</table>";
+
+                var body = GenerateMailBody(table);
+
+                SendMailInternal(10278938, body);
             }
+        }
+
+        private string CssStyleTable(int width)
+        {
+            var css = "border-collapse: collapse;";
+            css += "width: " + width + "px";
+
+            return css;
+        }
+
+        private string CssStyleTh()
+        {
+            var css = "border: 1px solid black;";
+            css += "font-weight:bold;";
+
+            return css;
+        }
+
+        private string CssStyleTd()
+        {
+            var css = "border: 1px solid black";
+
+            return css;
         }
 
         private string GenerateMailBody(string errContent)
@@ -177,6 +212,31 @@
             }
 
             return string.Empty;
+        }
+
+        private void SendMailInternal(int usertId, string body)
+        {
+            var subject = $"CTS service Customer-Evidence failed to process ({ AppSettings.EnvironmentName }), UserId={ usertId } at { DateTime.Now }";
+
+            try
+            {
+                var mail = new Mail
+                {
+                    Subject = subject,
+                    Title = subject,
+                    Body = body,
+                    MailingListId = AppSettings.MailingIdToSPU,
+                    Attachments = new List<MailAttachment>()
+                };
+
+                SendMail(mail);
+            }
+            catch (Exception ex)
+            {
+                var message = $"CustomerEvidence Service InsertCustEvidence exception: { ex.Message }";
+
+                //LogService.Error(message, ex);
+            }
         }
 
         private void SendMail(Mail mail)

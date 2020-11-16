@@ -2,7 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;    
+    using System.Linq;
+    using System.Threading;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Newtonsoft.Json;
@@ -10,10 +11,12 @@
     public class ProcessingService : IProcessingService
     {
         private ICustomerEvidenceService _custEvidenceService;
+        private List<CustomerEvidenceFailedToProcessModel> _failedToProcessList;
 
         public ProcessingService()
         {
             _custEvidenceService = new CustomerEvidenceService();
+            _failedToProcessList = new List<CustomerEvidenceFailedToProcessModel>();
         }
 
         public bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
@@ -28,7 +31,7 @@
 
             if (dbResult.ErrorCode != 0)
             {
-                WriteError("RemoveOldEvidence", dbResult.ErrorMsg);
+                WriteLogError("RemoveOldEvidence", dbResult.ErrorMsg, custEvidences);
 
                 return false;
             }
@@ -40,6 +43,12 @@
         {
             if (isPrevSuccess)
             {
+                var starixITId = 10278938;
+                var count = 0;
+                var isSuccess = true;
+                var isDeadlock = false;
+                var errorMsg = string.Empty;
+
                 var objects = custEvidences.Select(x => new
                 {
                     x.CTSCustID,
@@ -48,24 +57,23 @@
                 });
 
                 var jsonData = JsonConvert.SerializeObject(objects);
-
-                var starixITId = 10278938;
-                var count = 0;
-                var isSuccess = true;
-                var errorMsg = string.Empty;
+                
                 do
                 {
                     var dbResult = _custEvidenceService.InsertCustomerEvidenceMuitiple(jsonData, starixITId, isOverwrite);
 
                     isSuccess = dbResult.ErrorCode == 0;
                     errorMsg = dbResult.ErrorMsg;
+                    isDeadlock = errorMsg != null && errorMsg.ToLower().Contains("deadlock");
 
+                    if (isDeadlock)
+                        Thread.Sleep(2000);
                     count++;
-                } while (count < 3 && !errorMsg.ToLower().Contains("deadlock"));
+                } while (count < 3 && isDeadlock);
 
                 if (!isSuccess)
                 {
-                    WriteError("InsertNewCustEvidence", errorMsg);
+                    WriteLogError("InsertNewCustEvidence", errorMsg, custEvidences);
 
                     return false;
                 }
@@ -101,7 +109,7 @@
 
                 if(dbResult.ErrorCode != 0)
                 {
-                    WriteError("InsertNewCustEvidence", dbResult.ErrorMsg);
+                    WriteLogError("InsertNewCustEvidence", dbResult.ErrorMsg, custEvidences);
 
                     return false;
                 }
@@ -121,7 +129,7 @@
 
             if (dbResult.ErrorCode != 0)
             {
-                WriteError("SyncCustomerClassToMainDb", dbResult.ErrorMsg);
+                WriteLogError("SyncCustomerClassToMainDb", dbResult.ErrorMsg, custEvidences);
             }
 
             return this;
@@ -141,7 +149,7 @@
 
                 if (dbResult.ErrorCode != 0)
                 {
-                    WriteError("UpdateBetLimitOfFlaggedCustomer", dbResult.ErrorMsg);
+                    WriteLogError("UpdateBetLimitOfFlaggedCustomer", dbResult.ErrorMsg, custEvidences);
                 }
             }
 
@@ -160,16 +168,30 @@
 
             if (dbResult.ErrorCode != 0)
             {
-                WriteError("UpdateProcessedCustEvidence", dbResult.ErrorMsg);
+                WriteLogError("UpdateProcessedCustEvidence", dbResult.ErrorMsg, custEvidences);
             }
 
             return this;
         }
 
-        private void WriteError(string step, string errorMessage)
+        public List<CustomerEvidenceFailedToProcessModel> GetLogError()
         {
-
+            return _failedToProcessList;
         }
 
+        private void WriteLogError(string method, string errorMessage, IEnumerable<CustomerEvidenceFromFileModel> errorCustEvidences)
+        {
+            _failedToProcessList.AddRange(
+                errorCustEvidences.Select(x => new CustomerEvidenceFailedToProcessModel
+                {
+                    FileKey = x.FileKey,
+                    SubscriberID = x.SubscriberID,
+                    CTSCustID = x.CTSCustID,
+                    EvidenceID = x.EvidenceID,
+                    ErrorContent = method + " " + errorMessage
+                })
+            );
+        }
+       
     }
 }

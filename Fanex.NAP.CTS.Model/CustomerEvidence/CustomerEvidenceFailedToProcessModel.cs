@@ -2,7 +2,7 @@
 {
     public class CustomerEvidenceFailedToProcessModel
     {
-        public long ID { get; set; }
+        public string FileKey { get; set; }
 
         public int CTSCustID { get; set; }
        
