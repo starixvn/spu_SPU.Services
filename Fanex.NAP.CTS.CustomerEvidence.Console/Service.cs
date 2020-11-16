@@ -39,16 +39,16 @@
 
                         try
                         {
-                            InsertCustEvidence(custEviList, isOverwrite);
+                            InsertCustomerEvidence(custEviList, isOverwrite);
                         }
                         catch (Exception ex)
                         {
-                            LogService.Error($"CustomerEvidence Service InsertCustEvidence exception: { ex.Message }", ex);
+                            LogService.Error($"CustomerEvidence Service InsertCustomerEvidence exception: { ex.Message }", ex);
                         }
                     }
 
                     // test
-                    SendMailInternal(10278938, "test");
+                    //SendMailInternal(10278938, "test");
                 }
             }
             catch (Exception ex)
@@ -57,7 +57,7 @@
             }
         }
 
-        private void InsertCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceInFiles, bool isOverwrite)
+        private void InsertCustomerEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidenceInFiles, bool isOverwrite)
         {
             var custEvidenceProcesseds = new List<CustomerEvidenceFromFileModel>();
 
@@ -74,11 +74,11 @@
                     if (isOverwrite)
                     {
                         isSuccess = _processingService.RemoveOldEvidence(custEvidences);
-                        isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 2, isSuccess);
+                        //isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 2, isSuccess);
                     }
 
-                    isSuccess = _processingService.InsertNewCustEvidence(custEvidences, isOverwrite, isSuccess);
-                    isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 0, isSuccess);
+                    isSuccess = _processingService.InsertNewCustomerEvidence(custEvidences, isOverwrite, isSuccess);
+                    //isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 0, isSuccess);
 
                     if (isSuccess)
                     {
@@ -89,7 +89,7 @@
                 }
                 catch (Exception ex)
                 {
-                    //LogService.Error($"CustomerEvidence Service InsertCustEvidence exception: {ex.Message}", ex);
+                    //LogService.Error($"CustomerEvidence Service InsertCustomerEvidence exception: {ex.Message}", ex);
                 }
             }
 

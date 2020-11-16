@@ -7,7 +7,7 @@
     {
         bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
 
-        bool InsertNewCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, bool isOverwrite, bool isPrevSuccess);
+        bool InsertNewCustomerEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, bool isOverwrite, bool isPrevSuccess);
 
         bool SyncCustomerEvidenceToCTSCategory(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, int actionType, bool isPrevSuccess);
 
