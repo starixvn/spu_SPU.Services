@@ -598,7 +598,7 @@
             {
                 TotalScanned = scanList.Count(),
                 TotalFailed = resultList.Count(),
-                TotalGeneralFailed = resultList.Where(c => c.SportGroupId > 200).Count()
+                TotalGeneralFailed = resultList.Where(c => c.SportGroupId == 200).Count()
             };
 
             repository.Execute(criteria);
