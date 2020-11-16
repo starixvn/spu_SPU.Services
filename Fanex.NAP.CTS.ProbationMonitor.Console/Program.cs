@@ -44,30 +44,39 @@
                });
 
             var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
-              
-            try
-            {
-                messsageLog = "Probation monitor is starting...";
-                customers = dataService.GetProbationCustForScanning(batchSize);
-                messsageLog += "\nProbation monitor - Get custs: " + customers.Count();
-                ClassifyCustomer(customers);
-                //dataService.UpdateLastScanDateForProbationCust(customers);
-                messsageLog += "\nProbation monitor done - custId: " + JsonConvert.SerializeObject(customers);
-                messsageLog += "\nProbation monitor - DONE FOR 1 BATCH - " + customers.Count();
-            }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error(logMessage);
-            }
-            //finally
-            //{
-            //    LogService.Info(messsageLog);
-            //    messsageLog = string.Empty;
-            //}
+            do
+            {
+                try
+                {
+                    messsageLog = "Probation monitor is starting...";
+                    customers = dataService.GetProbationCustForScanning(batchSize);
+
+                    if(customers == null || !customers.Any())
+                    {
+                        return;
+                    }
+
+                    messsageLog += "\nProbation monitor - Get custs: " + customers.Count();
+                    ClassifyCustomer(customers);
+                    dataService.UpdateLastScanDateForProbationCust(customers);
+                    messsageLog += "\nProbation monitor - Update scan date done - custId: " + JsonConvert.SerializeObject(customers);
+                    messsageLog += "\nProbation monitor - DONE FOR 1 BATCH - " + customers.Count();
+                }
+                catch (Exception ex)
+                {
+                    var logMessage = new LogMessage(ex.Message)
+                        .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                        .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                    LogService.Error(logMessage);
+                }
+                //finally
+                //{
+                //    LogService.Info(messsageLog);
+                //    messsageLog = string.Empty;
+                //}
+            } while (customers == null || customers.Any());
         }
 
         static void ClassifyCustomer(IEnumerable<ProbationModel> customers)
