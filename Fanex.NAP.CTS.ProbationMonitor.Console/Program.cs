@@ -53,8 +53,8 @@
                     customers = dataService.GetProbationCustForScanning(batchSize);
                     messsageLog += "\nProbation monitor - Get custs: " + customers.Count();
                     ClassifyCustomer(customers);
-                    dataService.UpdateLastScanDateForProbationCust(customers);
-                    messsageLog += "\nProbation monitor - Update scan date done - custId: " + string.Join(",", customers.Take(10).Select(c => c.CustId));
+                    //dataService.UpdateLastScanDateForProbationCust(customers);
+                    messsageLog += "\nProbation monitor done - custId: " + string.Join(",", customers.Take(10).Select(c => c.CustId));
                     messsageLog += "\nProbation monitor - DONE FOR 1 BATCH - " + customers.Count();
                 }
                 catch (Exception ex)
@@ -67,8 +67,8 @@
                 }
                 finally
                 {
-                    //LogService.Info(messsageLog);
-                    //messsageLog = string.Empty;
+                    LogService.Info(messsageLog);
+                    messsageLog = string.Empty;
                 }
             } while (customers == null || customers.Any());
         }
