@@ -25,10 +25,11 @@
         public static async Task<IRestResponse> Executing<T>(List<T> listObject, string apiUrl, string actionPath)
         {
             var client = new RestClient(new Uri(apiUrl));
-            var request = new RestRequest(actionPath, Method.POST);
-
-            request.JsonSerializer = NewtonsoftJsonSerializer.Default;
-            request.RequestFormat = DataFormat.Json;
+            var request = new RestRequest(actionPath, Method.POST)
+            {
+                JsonSerializer = NewtonsoftJsonSerializer.Default,
+                RequestFormat = DataFormat.Json
+            };
             request.AddJsonBody(listObject);
 
             return await client.ExecuteTaskAsync(request);

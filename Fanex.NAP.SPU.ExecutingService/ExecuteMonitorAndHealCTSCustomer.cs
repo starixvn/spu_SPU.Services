@@ -29,7 +29,7 @@
         {
             try
             {
-                LogService.Info("Start Healing Customer job");
+                LogService.Info("ExecuteMonitorAndHealCTSCustomer start");
                 if (!this.CheckUM())
                 {
                     await ExecuteAPI(context);
@@ -58,6 +58,7 @@
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
                 int maxCustId = AppSetting.MaxCustIdForHealing;
+                LogService.Info("ExecuteMonitorAndHealCTSCustomer - maxCustId: " + maxCustId.ToString());
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
