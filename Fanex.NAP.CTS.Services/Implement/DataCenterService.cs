@@ -49,9 +49,7 @@ namespace Fanex.NAP.CTS.Services
         public int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList)
         {
             var customerJson = JsonConvert.SerializeObject(customerList);
-            LogService.Info("ExecuteMonitorAndHealCTSCustomer - FillUpCustomerFromMainDB - customerJson: " + customerJson);
             var result = dataCenterDataAccess.FillUpCustomerFromMainDB(customerJson);
-            LogService.Info("ExecuteMonitorAndHealCTSCustomer - FillUpCustomerFromMainDB done - result: " + result);
             return result;
         }
 
