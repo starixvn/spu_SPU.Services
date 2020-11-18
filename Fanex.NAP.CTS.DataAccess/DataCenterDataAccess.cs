@@ -15,10 +15,15 @@
 
     public class DataCenterDataAccess
     {
+        readonly IDynamicRepository repository;
+
+        public DataCenterDataAccess()
+        {
+            repository = new DynamicRepository();
+        }
+
         public void TransformDCSAccount(string accountJson)
         {
-            var repository = new DynamicRepository();
-
             var criteria = new TransformDCSAccountToCTSCustomerCriteria
             {
                 AccountJson = accountJson
@@ -53,17 +58,14 @@
             }
         }
 
-        public List<int> FillUpCustomerFromMainDB(string customerJson)
+        public int FillUpCustomerFromMainDB(string customerJson)
         {
             var criteria = new TransformCustomerFromMainDbCriteria
             {
                 CustomerJson = customerJson
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<int>(criteria).ToList();
-            }
+            return repository.Execute(criteria);
         }
 
         public void TransformAssociationByDevice(string associationJson)
@@ -146,8 +148,6 @@
 
         public IEnumerable<int> TransformAssociationAffectedEvidence(int batchSize)
         {
-            var repository = new DynamicRepository();
-
             var criteria = new TransformAssociationAffectedEvidenceCriteria
             {
                 BatchSize = batchSize
@@ -158,8 +158,6 @@
 
         public void UpdateBetLimitByEvidenceRemoving(IEnumerable<int> custIds)
         {
-            var repository = new DynamicRepository();
-
             var criteria = new UpdateBetLimitByEvidenceRemovingCriteria
             {
                 CustIDList = string.Join(",", custIds)
@@ -171,8 +169,6 @@
 
         public void TransformUpdatingLastLoginTime(int batchSize)
         {
-            var repository = new DynamicRepository();
-
             var criteria = new TransformUpdatingLastLoginTimeCriteria
             {
                 BatchSize = batchSize

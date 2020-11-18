@@ -1,4 +1,5 @@
-﻿using Fanex.NAP.CTS.DataAccess;
+﻿using Fanex.Logging;
+using Fanex.NAP.CTS.DataAccess;
 using Fanex.NAP.CTS.Model;
 using Fanex.NAP.CTS.Services.Interface;
 using Fanex.NAP.SPU.Model;
@@ -45,11 +46,11 @@ namespace Fanex.NAP.CTS.Services
         }
         
 
-        public List<int> FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList)
+        public int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList)
         {
             var customerJson = JsonConvert.SerializeObject(customerList);
-
-            return dataCenterDataAccess.FillUpCustomerFromMainDB(customerJson);
+            var result = dataCenterDataAccess.FillUpCustomerFromMainDB(customerJson);
+            return result;
         }
 
         public List<CTSCustomer> GetCustomerForUpdateUsername2(int rowSize, bool isUpdateCustSub, int maxCTSCustId)

@@ -29,7 +29,7 @@
         {
             try
             {
-                LogService.Info("Start Healing Customer job");
+                LogService.Info("ExecuteMonitorAndHealCTSCustomer start");
                 if (!this.CheckUM())
                 {
                     await ExecuteAPI(context);
@@ -58,6 +58,7 @@
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
                 int maxCustId = AppSetting.MaxCustIdForHealing;
+                LogService.Info("ExecuteMonitorAndHealCTSCustomer - maxCustId: " + maxCustId.ToString());
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
@@ -121,17 +122,6 @@
             }
 
             await Task.WhenAll(tasks.ToArray());
-        }
-
-        private static async Task<IRestResponse> Executing(List<CustomerMainDbModel> customers, string apiUrl, string actionPath)
-        {
-            var client = new RestClient(new Uri(apiUrl));
-            var request = new RestRequest(actionPath, Method.POST);
-
-            request.AddHeader("Content-type", "application/json");
-            request.AddJsonBody(customers);
-
-            return await client.ExecuteTaskAsync(request);
         }
     }
 }
