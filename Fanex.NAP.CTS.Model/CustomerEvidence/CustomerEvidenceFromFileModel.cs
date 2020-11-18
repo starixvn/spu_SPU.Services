@@ -6,7 +6,7 @@
     {
         public long ID { get; set; }
 
-        public int CTSCustID { get; set; }
+        public long CTSCustID { get; set; }
 
         public int SubscriberID { get; set; }
 

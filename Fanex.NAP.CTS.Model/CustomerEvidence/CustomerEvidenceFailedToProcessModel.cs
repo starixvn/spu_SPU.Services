@@ -4,7 +4,7 @@
     {
         public string FileKey { get; set; }
 
-        public int CTSCustID { get; set; }
+        public long CTSCustID { get; set; }
        
         public int SubscriberID { get; set; }
 
