@@ -5,10 +5,10 @@
     using Fanex.MailDelivery.Core.Models;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;    
-    using Fanex.NAP.SPU.Core;
-    using Newtonsoft.Json;
+    using Fanex.NAP.SPU.Core;    
     using System;
-    using System.Collections.Generic;    
+    using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
 
     public class Service
@@ -134,40 +134,45 @@
 
         private void HandleLogError()
         {
-            var processErrorList = _processingService.GetLogError();
+            var isSendMail = Convert.ToBoolean(ConfigurationManager.AppSettings["IsSendMailToSPU"].ToString());
 
-            if (processErrorList.Any())
+            if (isSendMail)
             {
-                var table = "";
-                table += "<table style='" + CssStyleTable(400) + "'>";
-                table += "<tr>";
-                table += "<td style='" + CssStyleTh() + "'>Key</td>";
-                table += "<td style='" + CssStyleTh() + "'>CTSCustID</td>";
-                table += "<td style='" + CssStyleTh() + "'>EvidenceID</td>";
-                table += "<td style='" + CssStyleTh() + "'>ErrorContent</td>";
-                table += "</tr>";
-                var index = 1;
+                var processErrorList = _processingService.GetLogError();
 
-                foreach (var item in processErrorList)
+                if (processErrorList.Any())
                 {
-                    table += "<tr>";                    
-                    table += "<td style='" + CssStyleTd() + "'>" + item.FileKey + "</td>";
-                    table += "<td style='" + CssStyleTd() + "'>" + item.CTSCustID + "</td>";
-                    table += "<td style='" + CssStyleTd() + "'>" + item.EvidenceID + "</td>";
-                    table += "<td style='" + CssStyleTd() + "'>" + item.ErrorContent + "</td>";
+                    var table = "";
+                    table += "<table style='" + CssStyleTable(400) + "'>";
+                    table += "<tr>";
+                    table += "<td style='" + CssStyleTh() + "'>Key</td>";
+                    table += "<td style='" + CssStyleTh() + "'>CTSCustID</td>";
+                    table += "<td style='" + CssStyleTh() + "'>EvidenceID</td>";
+                    table += "<td style='" + CssStyleTh() + "'>ErrorContent</td>";
                     table += "</tr>";
+                    var index = 1;
 
-                    index++;
+                    foreach (var item in processErrorList)
+                    {
+                        table += "<tr>";
+                        table += "<td style='" + CssStyleTd() + "'>" + item.FileKey + "</td>";
+                        table += "<td style='" + CssStyleTd() + "'>" + item.CTSCustID + "</td>";
+                        table += "<td style='" + CssStyleTd() + "'>" + item.EvidenceID + "</td>";
+                        table += "<td style='" + CssStyleTd() + "'>" + item.ErrorContent + "</td>";
+                        table += "</tr>";
 
-                    if (index == 100)
-                        break;
+                        index++;
+
+                        if (index == 100)
+                            break;
+                    }
+
+                    table += "</table>";
+
+                    var body = GenerateMailBody(table);
+
+                    SendMailInternal(10278938, body);
                 }
-
-                table += "</table>";
-
-                var body = GenerateMailBody(table);
-
-                SendMailInternal(10278938, body);
             }
         }
 

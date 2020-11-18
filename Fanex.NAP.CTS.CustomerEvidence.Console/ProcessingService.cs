@@ -53,7 +53,8 @@
                 {
                     x.CTSCustID,
                     x.EvidenceID,
-                    x.Remark
+                    x.Remark,
+                    x.CreatedBy
                 });
 
                 var jsonData = JsonConvert.SerializeObject(objects);
