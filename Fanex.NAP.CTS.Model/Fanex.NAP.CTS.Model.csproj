@@ -50,8 +50,10 @@
     <Compile Include="CustomerClassificationModel.cs" />
     <Compile Include="CustomerCategoryClassificationModel.cs" />
     <Compile Include="CustomerClassModel.cs" />
+    <Compile Include="CustomerEvidence\CustomerCategoryLastedModel.cs" />
     <Compile Include="CustomerEvidence\CustomerEvidenceFromFileModel.cs" />
     <Compile Include="CustomerEvidence\CustomerEvidenceFailedToProcessModel.cs" />
+    <Compile Include="CustomerEvidence\SyncCustomerClassToMainModel.cs" />
     <Compile Include="DBResult\DBResult.cs" />
     <Compile Include="DeleteDataToSoon88ViewModel.cs" />
     <Compile Include="PreparedDeleteDataToSoon88ViewModel.cs" />

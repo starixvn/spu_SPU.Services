@@ -50,6 +50,7 @@
     <Compile Include="CustomerClassification\ClassifyCategoryForProbationCustCriteria.cs" />
     <Compile Include="CustomerClassification\UpdateLastScanDateForProbationCustCriteria.cs" />
     <Compile Include="CustomerEvidence\GetAssociatedAccountByCTSCustIdsCriteria.cs" />
+    <Compile Include="CustomerEvidence\GetCustomerCategoryLastedCriteria.cs" />
     <Compile Include="CustomerEvidence\GetCustomerEvidenceFromFileCriteria.cs" />
     <Compile Include="CustomerEvidence\InsertCustEvidencesCriteria.cs" />
     <Compile Include="CustomerEvidence\RemoveCustEvidencesByCTSCustIdsCriteria.cs" />

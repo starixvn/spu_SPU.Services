@@ -4,6 +4,7 @@
     using Fanex.Data.Repository;
     using Fanex.NAP.CTS.Criteria;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.FS.XML;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -84,13 +85,28 @@
             return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
         }
 
-        public DBResult SyncCustomerClassToMainDb(string custClassToXml)
+        public IEnumerable<CustomerCategoryLastedModel> GetCustomerCategoryLasted(string idList, bool isCustId, bool isExcludedDetailedCategory)
+        {
+            var criteria = new GetCustomerCategoryLastedCriteria
+            {
+                IDList = idList,
+                IsUsingCustID = isCustId,
+                IsExcludedDetailedCategory = isExcludedDetailedCategory
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerCategoryLastedModel>(criteria).ToList();
+            }
+        }
+
+        public DBResult SyncCustomerClassToMainDb(IEnumerable<SyncCustomerClassToMainModel> ccList)
         {
             var repository = new DynamicRepository();
 
             var criteria = new SyncCustomerClassToMainDbCriteria
             {
-                custList = custClassToXml
+                custList = ccList.ToXmlString()
             };
 
             repository.Execute(criteria);

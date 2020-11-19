@@ -5,6 +5,7 @@
     using Fanex.NAP.CTS.Model;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class CustomerEvidenceService : ICustomerEvidenceService
     {
@@ -66,9 +67,20 @@
         {
             try
             {
-                var custClassToXml = "";
+                var customerCategoryLastedList = dataAccess.GetCustomerCategoryLasted(ctsCustIds, false, true);
 
-                return dataAccess.SyncCustomerClassToMainDb(custClassToXml);
+                if (customerCategoryLastedList != null && customerCategoryLastedList.Any())
+                {
+                    var ccToMain = customerCategoryLastedList.Select(x => new SyncCustomerClassToMainModel
+                    {
+                        CustID = x.CustId,
+                        CategoryIdMapping = GetMappingCTSCategoryToMainCC(x.CategoryId)
+                    });
+
+                    return dataAccess.SyncCustomerClassToMainDb(ccToMain);
+                }
+
+                return new DBResult { ErrorCode = 0, ErrorMsg = string.Empty };
             }
             catch (Exception ex)
             {
@@ -117,6 +129,47 @@
                 LogService.Error($"CustomerEvidenceService UpdateBetLimitOfFlaggedCustomer exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
+            }
+        }
+
+        private int GetMappingCTSCategoryToMainCC(int categoryId)
+        {
+            switch (categoryId)
+            {
+                case 52:
+                case 72:
+                case 152:
+                    return 8;
+                case 54:
+                case 58:
+                case 74:
+                case 78:
+                case 154:
+                case 158:
+                    return 9;
+                case 53:
+                case 55:
+                case 59:
+                case 73:
+                case 75:
+                case 79:
+                case 153:
+                case 155:
+                case 159:
+                    return 10;
+                case 56:
+                case 60:
+                case 76:
+                case 80:
+                case 156:
+                    return 11;
+                case 57:
+                case 157:
+                    return 13;
+                case -1:
+                    return -1;
+                default:
+                    return -99;
             }
         }
     }
