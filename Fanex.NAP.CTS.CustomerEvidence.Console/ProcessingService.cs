@@ -97,10 +97,10 @@
             {
                 var objects = custEvidences.Select(x => new
                 {
-                    x.CustID,
-                    x.CTSCustID,
-                    x.SubscriberID,
-                    x.EvidenceID,
+                    CustId = x.CustID,
+                    CTSCustId = x.CTSCustID,
+                    SubscriberId = x.SubscriberID,
+                    EvidenceId = x.EvidenceID,
                     ActionType = actionType
                 });
 
@@ -122,7 +122,7 @@
 
         public IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
         {
-            var ctsCustIdList = custEvidences.Select(x => new { x.CTSCustID }).Distinct();
+            var ctsCustIdList = custEvidences.Select(x => x.CTSCustID).Distinct();
 
             var ctsCustIds = string.Join(",", ctsCustIdList.Distinct().ToList());
 
@@ -159,13 +159,11 @@
 
         public IProcessingService UpdateProcessedCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
         {
-            var objects = custEvidences.Select(x => new { x.ID });
-
-            var jsonData = JsonConvert.SerializeObject(objects);
+            var idList = string.Join(",", custEvidences.Select(x => x.ID));
 
             var starixITId = 10278938;
 
-            var dbResult = _custEvidenceService.UpdateProcessedCustEvidence(jsonData, starixITId);
+            var dbResult = _custEvidenceService.UpdateProcessedCustEvidence(idList, starixITId);
 
             if (dbResult.ErrorCode != 0)
             {

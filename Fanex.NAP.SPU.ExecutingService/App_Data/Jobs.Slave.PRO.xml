@@ -1505,6 +1505,46 @@
         <cron-expression>0 0 18 1/1 * ? *</cron-expression>
       </cron>
     </trigger>
+
+    <job>
+      <name>CTS_Customer_Evidence_From_File</name>
+      <group>CustomerEvidence</group>
+      <description>Fanex.NAP.CTS.CustomerEvidence.Console</description>
+      <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+      <job-data-map>
+        <entry>
+          <key>Active</key>
+          <value>true</value>
+        </entry>
+        <entry>
+          <key>FileName</key>
+          <value>Fanex.NAP.CTS.CustomerEvidence.Console.exe</value>
+        </entry>
+        <entry>
+          <key>Master</key>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.CTS.CustomerEvidence.Console</value>
+        </entry>
+        <entry>
+          <key>Slave</key>
+          <value>E:\WWW\SERVICES\SPU\Fanex.NAP.CTS.CustomerEvidence.Console</value>
+        </entry>
+      </job-data-map>
+    </job>
+
+    <trigger>
+      <cron>
+        <name>CTS_Cutomer_Evidence_From_File_Trigger</name>
+        <group>CustomerEvidence</group>
+        <description>CTS_Cutomer_Evidence_From_File_Trigger</description>
+        <job-name>CTS_Customer_Evidence_From_File</job-name>
+        <job-group>CustomerEvidence</job-group>
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <repeat-count>-1</repeat-count>
+        <repeat-interval>30</repeat-interval>
+      </cron>
+    </trigger>
     
   </schedule>
 

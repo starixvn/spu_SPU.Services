@@ -90,11 +90,11 @@
             }
         }
 
-        public DBResult UpdateProcessedCustEvidence(string jsonData, int userId)
+        public DBResult UpdateProcessedCustEvidence(string idList, int userId)
         {
             try
             {
-                return dataAccess.UpdateProcessedCustEvidence(jsonData, userId);
+                return dataAccess.UpdateProcessedCustEvidence(idList, userId);
             }
             catch (Exception ex)
             {
