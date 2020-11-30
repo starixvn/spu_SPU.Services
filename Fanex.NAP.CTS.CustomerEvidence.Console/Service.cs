@@ -72,8 +72,10 @@
                 {
                     if (isOverwrite)
                     {
-                        isSuccess = _processingService.RemoveOldEvidence(custEvidences);
-                        isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 2, isSuccess);
+                        var custEviRemovedList = Enumerable.Empty<CustomerEvidenceRemovedModel>();
+
+                        isSuccess = _processingService.RemoveOldEvidence(custEvidences, out custEviRemovedList);
+                        isSuccess = _processingService.SyncCustomerEvidenceToCTSCategory(custEvidences, 2, custEviRemovedList, isSuccess);
                     }
 
                     isSuccess = _processingService.InsertNewCustomerEvidence(custEvidences, isOverwrite, isSuccess);
@@ -98,7 +100,7 @@
                     .SyncCustomerClassToMainDb(custEvidenceProcesseds)
                     .UpdateBetLimitOfFlaggedCustomer(custEvidenceProcesseds);
             }            
-        }
+        }        
         
         private IEnumerable<IEnumerable<CustomerEvidenceFromFileModel>> ChunkSize(List<CustomerEvidenceFromFileModel> custEvidenceInFiles)
         {

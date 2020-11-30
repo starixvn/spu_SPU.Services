@@ -20,7 +20,7 @@
             }
         }
 
-        public DBResult RemoveCustomerEvidenceByCTSCustIds(string jsonData, long sessionId, bool isRollBack, bool isClearLog)
+        public ResultRemoveCustomerEvidence RemoveCustomerEvidenceByCTSCustIds(string jsonData, long sessionId, bool isRollBack, bool isClearLog)
         {
             var criteria = new RemoveCustEvidencesByCTSCustIdsCriteria
             {
@@ -30,17 +30,21 @@
                 IsClearLog = isClearLog
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                db.ExecuteNonQuery(criteria);
+            var result = new ResultRemoveCustomerEvidence();           
+            var repository = new DynamicRepository();
 
-                if (string.IsNullOrEmpty(criteria.ErrorMessage))
-                {
-                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
-                }
+            result.CustEviRemovedList = repository.Fetch<CustomerEvidenceRemovedModel>(criteria);
+
+            if (string.IsNullOrEmpty(criteria.ErrorMessage))
+            {
+                result.DBResult = new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
+            }
+            else
+            {
+                result.DBResult = new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
             }
 
-            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+            return result;
         }
 
         public DBResult InsertCustomerEvidenceMuitiple(string jsonData, int userId, bool isOverwrite)

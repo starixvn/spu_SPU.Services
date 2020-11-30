@@ -7,7 +7,7 @@
     {
         IEnumerable<CustomerEvidenceFromFileModel> GetCustomerEvidenceFromFile();
 
-        DBResult RemoveCustomerEvidenceByCTSCustIds(string jsonData, long sessionId, bool isRollBack, bool isClearLog);
+        ResultRemoveCustomerEvidence RemoveCustomerEvidenceByCTSCustIds(string jsonData, long sessionId, bool isRollBack, bool isClearLog);
 
         DBResult InsertCustomerEvidenceMuitiple(string jsonData, int userId, bool isOverwrite);
 

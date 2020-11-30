@@ -21,7 +21,7 @@
             return dataAccess.GetCustomerEvidenceFromFile();
         }
 
-        public DBResult RemoveCustomerEvidenceByCTSCustIds(string jsonData, long sessionId, bool isRollBack, bool isClearLog)
+        public ResultRemoveCustomerEvidence RemoveCustomerEvidenceByCTSCustIds(string jsonData, long sessionId, bool isRollBack, bool isClearLog)
         {
             try
             {
@@ -31,7 +31,7 @@
             {
                 LogService.Error($"CustomerEvidenceService RemoveCustomerEvidenceByCTSCustIds exception: {ex.Message}", ex);
 
-                return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
+                return new ResultRemoveCustomerEvidence { DBResult = new DBResult { ErrorCode = -1, ErrorMsg = ex.Message } };
             }
         }
 

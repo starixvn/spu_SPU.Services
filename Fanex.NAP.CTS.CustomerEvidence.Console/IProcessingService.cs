@@ -5,9 +5,11 @@
 
     public interface IProcessingService
     {
-        bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
+        bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, out IEnumerable<CustomerEvidenceRemovedModel> custEviRemovedList);
 
         bool InsertNewCustomerEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, bool isOverwrite, bool isPrevSuccess);
+
+        bool SyncCustomerEvidenceToCTSCategory(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, int actionType, IEnumerable<CustomerEvidenceRemovedModel> custEviRemovedList, bool isPrevSuccess);
 
         bool SyncCustomerEvidenceToCTSCategory(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, int actionType, bool isPrevSuccess);
 

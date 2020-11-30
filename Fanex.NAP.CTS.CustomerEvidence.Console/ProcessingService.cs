@@ -19,19 +19,25 @@
             _failedToProcessList = new List<CustomerEvidenceFailedToProcessModel>();
         }
 
-        public bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
+        public bool RemoveOldEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, out IEnumerable<CustomerEvidenceRemovedModel> custEviRemovedList)
         {
+            custEviRemovedList = new List<CustomerEvidenceRemovedModel>();
             var ctsCustIdList = custEvidences.Select(x => new { x.CTSCustID }).Distinct();
 
             var jsonData = JsonConvert.SerializeObject(ctsCustIdList);
 
             var sessionId = long.Parse(DateTime.Now.ToString("yyyyMMddHHmmss"));
 
-            var dbResult = _custEvidenceService.RemoveCustomerEvidenceByCTSCustIds(jsonData, sessionId, false, false);            
+            var result = _custEvidenceService.RemoveCustomerEvidenceByCTSCustIds(jsonData, sessionId, false, false);
 
-            if (dbResult.ErrorCode != 0)
+            if (result.CustEviRemovedList != null)
             {
-                WriteLogError("RemoveOldEvidence", dbResult.ErrorMsg, custEvidences);
+                custEviRemovedList = result.CustEviRemovedList.ToList();
+            }
+
+            if (result.DBResult.ErrorCode != 0)
+            {
+                WriteLogError("RemoveOldEvidence", result.DBResult.ErrorMsg, custEvidences);
 
                 return false;
             }
@@ -85,6 +91,50 @@
             return isPrevSuccess;
         }
 
+        public bool SyncCustomerEvidenceToCTSCategory(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, int actionType, IEnumerable<CustomerEvidenceRemovedModel> custEviRemovedList, bool isPrevSuccess)
+        {
+            if (isPrevSuccess)
+            {
+                var objects = custEvidences.Select(x => new
+                {
+                    CustId = x.CustID,
+                    CTSCustId = x.CTSCustID,
+                    SubscriberId = x.SubscriberID,
+                    EvidenceId = x.EvidenceID,
+                    ActionType = actionType
+                }).ToList();
+
+                if (custEviRemovedList != null && custEviRemovedList.Any())
+                {
+                    var removeds = custEviRemovedList.Select(x => new
+                    {
+                        x.CustId,
+                        x.CTSCustId,
+                        x.SubscriberId,
+                        x.EvidenceId,
+                        x.ActionType
+                    });
+
+                    objects.AddRange(removeds);
+                }
+
+                var jsonData = JsonConvert.SerializeObject(objects);
+
+                var dbResult = _custEvidenceService.SyncCustomerEvidenceToCategory(jsonData);
+
+                if (dbResult.ErrorCode != 0)
+                {
+                    WriteLogError("InsertNewCustEvidence", dbResult.ErrorMsg, custEvidences);
+
+                    return false;
+                }
+
+                return true;
+            }
+
+            return isPrevSuccess;
+        }
+
         /// <summary>
         /// Sync To CTS Category
         /// </summary>
@@ -108,18 +158,19 @@
 
                 var dbResult = _custEvidenceService.SyncCustomerEvidenceToCategory(jsonData);
 
-                if(dbResult.ErrorCode != 0)
+                if (dbResult.ErrorCode != 0)
                 {
                     WriteLogError("InsertNewCustEvidence", dbResult.ErrorMsg, custEvidences);
 
                     return false;
                 }
+
                 return true;
             }
 
             return isPrevSuccess;
         }
-
+      
         public IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
         {
             var ctsCustIdList = custEvidences.Select(x => x.CTSCustID).Distinct();
