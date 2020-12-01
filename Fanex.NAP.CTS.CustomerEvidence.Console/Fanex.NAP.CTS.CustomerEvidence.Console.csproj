@@ -51,8 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.CTS.CustomerEvidence.Console.exe.LOCAL.config" />
-    <None Include="Fanex.NAP.CTS.CustomerEvidence.Console.exe.PRO.config" />
+    <None Include="Fanex.NAP.CTS.CustomerEvidence.Console.exe.LOCAL.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Fanex.NAP.CTS.CustomerEvidence.Console.exe.PRO.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="MailTemplate\MailInformTemplate.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
