@@ -87,7 +87,6 @@
     <Compile Include="ExecuteDeviceAPIJob.cs" />
     <Compile Include="ExecuteJobBase.cs" />
     <Compile Include="ExecuteTransactionAPIJob.cs" />
-    <Compile Include="GeneralCategoryClassifyCustomerJob.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="ExecuteConsoleJob.cs" />
     <Compile Include="Runner.cs">

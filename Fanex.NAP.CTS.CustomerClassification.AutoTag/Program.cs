@@ -54,12 +54,10 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                 do
                 {
                     newClassification = dataCenterService.GetNewClassification();
-
-                    var detailedClassification = newClassification?.Where(c => !c.IsGeneralCategory);
+                    
                     var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
                     var newMemberCategories = newClassification?.Where(c => !c.IsGeneralCategory && c.CategoryId == 2);
-
-                    InsertDetailClassificationCustsToCTS(detailedClassification, dataCenterService);
+                    
                     InsertNewMemberCategoriesToMainDB(newMemberCategories, dataCenterService);
                     InsertGeneralClassificationCusts(generalClassification, dataCenterService);                  
 
@@ -79,27 +77,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             Console.WriteLine("CustomerClassification.AutoTag done");
             Console.ReadLine();
         }
-
-        static void InsertDetailClassificationCustsToCTS(IEnumerable<CustomerClassificationModelMoreInfo> detailedClassification, DataCenterService dataService)
-        {
-            if (detailedClassification == null || !detailedClassification.Any())
-            {
-                return;
-            }
-
-            var tasks = new List<Task>();
-            var newInternalClassificationChunk = detailedClassification.Chunk(AppSettings.BatchSize).ToList();
-
-            for (int i = 0; i < newInternalClassificationChunk.Count; i++)
-            {
-                string jsonData = JsonConvert.SerializeObject(newInternalClassificationChunk[i]);
-                dataService.AutoTagClassification(jsonData);
-
-                var custIdList = string.Join(",", newInternalClassificationChunk[i].Select(c => c.CustId).Distinct());
-                dataService.UpdateAppliedStatusClassification(custIdList, false);
-            }
-        }
-
+       
         static void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification, DataCenterService dataService)
         {
             if (generalClassification == null || !generalClassification.Any())
