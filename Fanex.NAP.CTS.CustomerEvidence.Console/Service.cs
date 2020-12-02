@@ -5,11 +5,13 @@
     using Fanex.MailDelivery.Core.Models;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;    
-    using Fanex.NAP.SPU.Core;    
+    using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
+    using System.Text;
 
     public class Service
     {
@@ -135,14 +137,16 @@
         }
 
         private void HandleLogError()
-        {
-            var isSendMail = Convert.ToBoolean(ConfigurationManager.AppSettings["IsSendMailToSPU"].ToString());
+        {            
+            var processErrorList = _processingService.GetLogError();
 
-            if (isSendMail)
+            if (processErrorList.Any())
             {
-                var processErrorList = _processingService.GetLogError();
+                LogError(processErrorList);
 
-                if (processErrorList.Any())
+                var isSendMail = Convert.ToBoolean(ConfigurationManager.AppSettings["IsSendMailToSPU"].ToString());
+
+                if (isSendMail)
                 {
                     var table = "";
                     table += "<table style='" + CssStyleTable(400) + "'>";
@@ -174,10 +178,21 @@
                     var body = GenerateMailBody(table);
 
                     SendMailInternal(10278938, body);
-                }
+                }               
             }
         }
 
+        private void LogError(List<CustomerEvidenceFailedToProcessModel> processErrorList)
+        {
+            var sbError = new StringBuilder();
+
+            var jsonData = JsonConvert.SerializeObject(processErrorList);
+
+            var message = $"CustomerEvidence Service Failed: { jsonData }";
+
+            LogService.Error(message);
+        }
+      
         private string CssStyleTable(int width)
         {
             var css = "border-collapse: collapse;";
@@ -242,7 +257,7 @@
             {
                 var message = $"CustomerEvidence Service InsertCustEvidence exception: { ex.Message }";
 
-                //LogService.Error(message, ex);
+                LogService.Error(message, ex);
             }
         }
 
