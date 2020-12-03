@@ -8,6 +8,9 @@
         [SpParam(SqlParamName = "ip_IDList")]
         public string IdList { get; set; }
 
+        [SpParam(SqlParamName = "ip_IsProcessed")]
+        public bool IsProcessed { get; set; }
+
         [SpParam(SqlParamName = "ip_UpdatedBy")]
         public int UserId { get; set; }
 

@@ -208,13 +208,13 @@
             return this;
         }
 
-        public IProcessingService UpdateProcessedCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
+        public IProcessingService UpdateProcessedCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, bool isProcessed)
         {
             var idList = string.Join(",", custEvidences.Select(x => x.ID));
 
             var starixITId = 10278938;
 
-            var dbResult = _custEvidenceService.UpdateProcessedCustEvidence(idList, starixITId);
+            var dbResult = _custEvidenceService.UpdateProcessedCustEvidence(idList, isProcessed, starixITId);
 
             if (dbResult.ErrorCode != 0)
             {

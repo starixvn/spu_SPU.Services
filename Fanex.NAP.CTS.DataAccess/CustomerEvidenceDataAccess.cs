@@ -118,11 +118,12 @@
             return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
         }
 
-        public DBResult UpdateProcessedCustEvidence(string idList, int userId)
+        public DBResult UpdateProcessedCustEvidence(string idList, bool isProcessed, int userId)
         {
             var criteria = new UpdateProcessedCustEvidenceCriteria
             {
                 IdList = idList,
+                IsProcessed = isProcessed,
                 UserId = userId
             };
 

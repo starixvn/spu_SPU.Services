@@ -15,7 +15,7 @@
 
         DBResult SyncCustomerClassToMainDb(string ctsCustIds);
 
-        DBResult UpdateProcessedCustEvidence(string jsonData, int userId);
+        DBResult UpdateProcessedCustEvidence(string jsonData, bool isProcessed, int userId);
 
         IEnumerable<int> GetAssociatedAccountByCTSCustIds(string ctsCustIds);
 

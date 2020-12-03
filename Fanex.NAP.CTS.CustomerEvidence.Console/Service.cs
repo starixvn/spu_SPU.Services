@@ -86,9 +86,9 @@
                     if (isSuccess)
                     {
                         custEvidenceProcesseds.AddRange(custEvidences);
-
-                        _processingService.UpdateProcessedCustEvidence(custEvidences);
                     }
+                    
+                    _processingService.UpdateProcessedCustEvidence(custEvidences, isSuccess);
                 }
                 catch (Exception ex)
                 {
