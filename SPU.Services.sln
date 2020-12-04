@@ -185,6 +185,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.ProbationMoni
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.CustomerEvidence.Console", "Fanex.NAP.CTS.CustomerEvidence.Console\Fanex.NAP.CTS.CustomerEvidence.Console.csproj", "{C78398E9-58B6-48FE-9FEA-0715BFCB8942}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console", "Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console\Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console.csproj", "{566A3B51-E7A6-49FF-9FE0-ECB95B9609C8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console", "Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console\Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console.csproj", "{045F246D-AE47-4B8E-BDE0-D73CC9F3E2EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -490,6 +494,14 @@ Global
 		{C78398E9-58B6-48FE-9FEA-0715BFCB8942}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C78398E9-58B6-48FE-9FEA-0715BFCB8942}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C78398E9-58B6-48FE-9FEA-0715BFCB8942}.Release|Any CPU.Build.0 = Release|Any CPU
+		{566A3B51-E7A6-49FF-9FE0-ECB95B9609C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{566A3B51-E7A6-49FF-9FE0-ECB95B9609C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{566A3B51-E7A6-49FF-9FE0-ECB95B9609C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{566A3B51-E7A6-49FF-9FE0-ECB95B9609C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{045F246D-AE47-4B8E-BDE0-D73CC9F3E2EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{045F246D-AE47-4B8E-BDE0-D73CC9F3E2EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{045F246D-AE47-4B8E-BDE0-D73CC9F3E2EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{045F246D-AE47-4B8E-BDE0-D73CC9F3E2EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -567,9 +579,11 @@ Global
 		{C839D052-A9F1-4598-BE72-0C89CB838775} = {B896D4DF-5A35-43AA-A0D0-F971D4C13160}
 		{19F30755-6E4D-43CF-80E0-17B259FDAAD8} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{C78398E9-58B6-48FE-9FEA-0715BFCB8942} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
+		{566A3B51-E7A6-49FF-9FE0-ECB95B9609C8} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
+		{045F246D-AE47-4B8E-BDE0-D73CC9F3E2EE} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal
