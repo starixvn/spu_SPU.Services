@@ -71,13 +71,18 @@
 
                 if (customerCategoryLastedList != null && customerCategoryLastedList.Any())
                 {
-                    var ccToMain = customerCategoryLastedList.Select(x => new SyncCustomerClassToMainModel
-                    {
-                        CustID = x.CustId,
-                        CategoryIdMapping = GetMappingCTSCategoryToMainCC(x.CategoryId)
-                    });
+                    var ccToMain = customerCategoryLastedList
+                        .Select(x => new SyncCustomerClassToMainModel
+                        {
+                            CustID = x.CustId,
+                            CategoryIdMapping = GetMappingCTSCategoryToMainCC(x.CategoryId)
+                        })
+                        .Where(x => x.CategoryIdMapping != -99); // CategoryIdMapping = -99 is not mapping
 
-                    return dataAccess.SyncCustomerClassToMainDb(ccToMain);
+                    if (ccToMain.Any())
+                    {
+                        return dataAccess.SyncCustomerClassToMainDb(ccToMain);
+                    }                    
                 }
 
                 return new DBResult { ErrorCode = 0, ErrorMsg = string.Empty };
@@ -169,7 +174,7 @@
                 case -1:
                     return -1;
                 default:
-                    return -99;
+                    return -99; // is not mapping
             }
         }
     }
