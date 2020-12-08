@@ -1,10 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Functions>
-  <Function Name="Classify Customer">
+  <Function Name="CustomerClassification">
     <Setting Key="CTS_DC_GetCustomerClassificationForScanning" SpName="CTS_DC_GetCustomerClassificationIntervalScan" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_Daily" SpName="CTS_NormalAccountsClassification_GeneralCategorize_Daily" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
     <Setting Key="CTS_DC_GetCustomerClassificationIntervalScan_Complete" SpName="CTS_DC_GetCustomerClassificationIntervalScan_Complete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-    <Setting Key="CustomerClassification_CategorizeCustomer_Daily" SpName="CustomerClassification_CategorizeCustomer_Daily" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
-    <Setting Key="CTS_DC_AutoTagCustomerClassification" SpName="CTS_DC_AutoTagCustomerClassification" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-  </Function>
+  </Function> 
 </Functions>

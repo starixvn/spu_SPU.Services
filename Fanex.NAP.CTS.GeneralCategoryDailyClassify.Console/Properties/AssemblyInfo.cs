@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console")]
+[assembly: AssemblyTitle("Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Fanex.NAP.CTS.ClassifyCustomer.Realtime.Console")]
+[assembly: AssemblyProduct("Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("a6a95893-4069-49a2-87c7-dd7a0e97d1f6")]
+[assembly: Guid("566a3b51-e7a6-49ff-9fe0-ecb95b9609c8")]
 
 // Version information for an assembly consists of the following four values:
 //
