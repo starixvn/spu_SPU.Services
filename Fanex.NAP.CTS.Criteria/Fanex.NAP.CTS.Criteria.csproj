@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomerClassification\GetLastestClassificationCriteria.cs" />
     <Compile Include="CustomerClassification\GetLastestCategoryCriteria.cs" />
     <Compile Include="CustomerClassification\InsertProbationNotificationCriteria.cs" />
     <Compile Include="CustomerClassification\GetProbationCustForScanningCriteria.cs" />

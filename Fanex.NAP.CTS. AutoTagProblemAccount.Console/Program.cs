@@ -63,11 +63,11 @@
 
                         for (int i = 0; i < lastestCustIdsChunk.Count; i++)
                         {
-                            var lastestCategories = GetLatestCategoryForCusts(string.Join(",", lastestCustIdsChunk[i].Select(c => c)), dataService);
+                            var lastestClassifications = GetLatestClassificationForCusts(string.Join(",", lastestCustIdsChunk[i].Select(c => c)), dataService);
 
-                            if (lastestCategories != null && lastestCategories.Any())
+                            if (lastestClassifications != null && lastestClassifications.Any())
                             {
-                                InsertProblemAccountToMainDB(lastestCategories.ToList(), dataService);
+                                InsertProblemCustomerToMainDB(lastestClassifications.ToList(), dataService);
                             }
                         }
                     }
@@ -172,6 +172,42 @@
             var lastestCategories = dataService.GetLastestCategory(custIds, true, false)?.Where(c => c.CategoryIdMapping != -99)?.Distinct();
 
             return lastestCategories;
+        }
+
+        static IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassificationForCusts(string custIds, DataCenterService dataService)
+        {
+            var lastestClassification = dataService.GetLatestClassification(custIds, true)?.Distinct();
+
+            return lastestClassification;
+        }
+
+        static void InsertProblemCustomerToMainDB(List<ProblemCustomerForMainDBModel> problemCustomers, DataCenterService dataService)
+        {
+            var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
+            problemCustomers.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
+
+            if (problemCustomers != null && problemCustomers.Any())
+            {
+                var countRetry = 0;
+
+                while (countRetry < AppSettings.RetryTime)
+                {
+                    try
+                    {
+                        dataService.InsertProblemCustomerClassificationToMainDB(problemCustomers);
+                        countRetry = AppSettings.RetryTime + 1;
+                    }
+                    catch (Exception ex)
+                    {
+                        var logMessage = new LogMessage(ex.Message)
+                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                        LogService.Error($"AutoTag Problem Customer - Insert Problem Customer Classification To MainDB service - Start Exception {logMessage}");
+                        countRetry += 1;
+                    }
+                }
+            }
         }
     }
 }

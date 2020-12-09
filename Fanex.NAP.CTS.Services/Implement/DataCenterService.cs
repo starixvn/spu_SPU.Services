@@ -159,6 +159,19 @@ namespace Fanex.NAP.CTS.Services
             Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
         }
 
+        public void InsertProblemCustomerClassificationToMainDB(List<ProblemCustomerForMainDBModel> custIdList)
+        {
+            dataCenterDataAccess.InsertProblemCustomerCategoryToMainDB(custIdList);
+
+            var custClassList = custIdList.Select(c => new CustomerClassModel()
+            {
+                CustID = c.CustID,
+                CustomerClass = c.CustomerClass
+            });
+
+            Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
+        }
+
         public IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIds)
         {
             return dataCenterDataAccess.GetCustomerClassByCustId(custIds);
@@ -288,7 +301,12 @@ namespace Fanex.NAP.CTS.Services
         {
             return dataCenterDataAccess.GetLastestCategory(ctsCustID, isCustId, isExcludedDetailedCategory);
         }
-        
+
+        public IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassification(string ctsCustID, bool isCustId)
+        {
+            return dataCenterDataAccess.GetLatestClassification(ctsCustID, isCustId);
+        }
+
         public IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
         {
             return dataCenterDataAccess.FeedDataToToSoon88(custClasses, isDelete);

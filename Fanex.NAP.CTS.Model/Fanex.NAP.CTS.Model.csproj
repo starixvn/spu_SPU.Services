@@ -46,9 +46,9 @@
   <ItemGroup>
     <Compile Include="AssociationModel.cs" />
     <Compile Include="AssociationWithCategory.cs" />
-    <Compile Include="CustomerClassificationModelMoreInfo.cs" />
-    <Compile Include="CustomerClassificationModel.cs" />
-    <Compile Include="CustomerCategoryClassificationModel.cs" />
+    <Compile Include="CustomerClassification\CustomerClassificationModelMoreInfo.cs" />
+    <Compile Include="CustomerClassification\CustomerClassificationModel.cs" />
+    <Compile Include="CustomerClassification\CustomerCategoryClassificationModel.cs" />
     <Compile Include="CustomerClassModel.cs" />
     <Compile Include="CustomerEvidence\CustomerCategoryLastedModel.cs" />
     <Compile Include="CustomerEvidence\CustomerEvidenceFromFileModel.cs" />
@@ -58,12 +58,13 @@
     <Compile Include="CustomerEvidence\SyncCustomerClassToMainModel.cs" />
     <Compile Include="DBResult\DBResult.cs" />
     <Compile Include="DeleteDataToSoon88ViewModel.cs" />
+    <Compile Include="MainDB\ProblemCustomerForMainDBModel.cs" />
     <Compile Include="PreparedDeleteDataToSoon88ViewModel.cs" />
     <Compile Include="S88Result.cs" />
     <Compile Include="UpdateDataToSoon88ViewModel.cs" />
     <Compile Include="FrequencyExecution.cs" />
     <Compile Include="GraphDB\AssociationModelForGraph.cs" />
-    <Compile Include="CustomerGeneralClassificationModel.cs" />
+    <Compile Include="CustomerClassification\CustomerGeneralClassificationModel.cs" />
     <Compile Include="GetMultiProblemAccountsModel.cs" />
     <Compile Include="PreparedUpdateDataToSoon88ViewModel.cs" />
     <Compile Include="ProblemAccountForMainDBModel.cs" />
@@ -74,9 +75,7 @@
     <Compile Include="RobotUser.cs" />
     <Compile Include="UserPermissionModel.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MainDB\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.FS.XML\Fanex.NAP.FS.XML.csproj">
       <Project>{0122573A-EB7D-4A8B-84EF-8B5DA635752E}</Project>

@@ -236,6 +236,18 @@
             repository.Execute(criteria);
         }
 
+        public void InsertProblemCustomerCategoryToMainDB(List<ProblemCustomerForMainDBModel> custIdList)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertCustomerGeneralCategoryToMainDBCriteria
+            {
+                custList = custIdList.ToXmlString()
+            };
+
+            repository.Execute(criteria);
+        }
+
         public void AutoTagCustomerClassification(string newClassification)
         {
             var repository = new DynamicRepository();
@@ -613,6 +625,20 @@
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<ProblemAccountForMainDBModel>(criteria).ToList();
+            }
+        }
+
+        public IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassification(string ctsCustID, bool isCustId)
+        {
+            var criteria = new GetLastestClassificationCriteria()
+            {
+                CustIDList = ctsCustID,
+                IsUsingCustID = isCustId                
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<ProblemCustomerForMainDBModel>(criteria).ToList();
             }
         }
 
