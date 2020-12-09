@@ -311,6 +311,11 @@ namespace Fanex.NAP.CTS.Services
         {
             return dataCenterDataAccess.FeedDataToToSoon88(custClasses, isDelete);
         }
-        
+
+        public DBResult UpdateAppliedCustomerClassification(string jsonData)
+        {
+            return dataCenterDataAccess.UpdateAppliedCustomerClassification(jsonData);
+        }
+
     }
 }

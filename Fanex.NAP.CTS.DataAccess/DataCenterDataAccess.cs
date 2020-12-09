@@ -638,7 +638,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<ProblemCustomerForMainDBModel>(criteria).ToList();
+                return db.Query<ProblemCustomerForMainDBModel>(criteria);
             }
         }
 
@@ -654,6 +654,25 @@
 
             return repository.Fetch<AssociationWithCategory>(criteria);
         }
-        
+
+        public DBResult UpdateAppliedCustomerClassification(string problemCustomerJson)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateAppliedCustomerClassificationCriteria
+            {
+                ProblemCustomerJson = problemCustomerJson
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                repository.Fetch<string>(criteria);
+
+                return new DBResult {
+                    ErrorCode = !string.IsNullOrEmpty(criteria.ErrorMessage) ? - 1 : 0,
+                    ErrorMsg = criteria.ErrorMessage
+                };                
+            }
+        }
     }
 }

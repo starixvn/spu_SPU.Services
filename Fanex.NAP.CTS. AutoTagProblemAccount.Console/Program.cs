@@ -21,9 +21,7 @@
     class Program
     {
         static void Main(string[] args)
-        {
-            var dataService = new DataCenterService();
-
+        {            
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
@@ -47,27 +45,33 @@
             var backupData = new List<MultipleProblemAccountsModel>();
             try
             {
-                var result = GetProblemAccounts(dataService);
+                var result = GetProblemAccounts();
 
                 if (result.ProblemAccounts != null && result.ProblemAccounts.Any())
                 {
                     backupData = result.ProblemAccounts;
 
-                    var lastestCustIds = InsertProblemAccountToCTS(result.ProblemAccounts, dataService);
+                    var latestCustIds = InsertProblemAccountToCTS(result.ProblemAccounts);
 
-                    dataService.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);
+                    WrapperDataCenterService.Instance.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);
 
-                    if (lastestCustIds != null && lastestCustIds.Any())
+                    if (latestCustIds != null && latestCustIds.Any())
                     {
-                        var lastestCustIdsChunk  = lastestCustIds.Chunk(batchSize).ToList();
+                        var latestCustIdsChunk  = latestCustIds.Chunk(batchSize);
 
-                        for (int i = 0; i < lastestCustIdsChunk.Count; i++)
+                        foreach(var custids in latestCustIdsChunk)
                         {
-                            var lastestClassifications = GetLatestClassificationForCusts(string.Join(",", lastestCustIdsChunk[i].Select(c => c)), dataService);
+                            var lastestClassifications = GetLatestClassificationForCusts(string.Join(",", custids));
 
                             if (lastestClassifications != null && lastestClassifications.Any())
                             {
-                                InsertProblemCustomerToMainDB(lastestClassifications.ToList(), dataService);
+                                var updatedProblemCustomers = InsertProblemCustomerToMainDB(lastestClassifications.ToList());
+
+                                var resultAppliedCC = UpdateAppliedCustomerClassification(updatedProblemCustomers);
+                                if (resultAppliedCC.ErrorCode != 0)
+                                {
+                                    LogService.Error(resultAppliedCC.ErrorMsg);
+                                }
                             }
                         }
                     }
@@ -75,7 +79,7 @@
                     return;
                 }
 
-                dataService.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);             
+                WrapperDataCenterService.Instance.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);             
             }
             catch (Exception ex)
             {
@@ -89,33 +93,34 @@
                 LogService.Error(logMessage);
             }
 
+            Console.WriteLine("Done for AutoTagProblemAccount");
             Console.ReadLine();
         }
-
-        static GetMultiProblemAccountsModel GetProblemAccounts(DataCenterService dataService)
+        
+        static GetMultiProblemAccountsModel GetProblemAccounts()
         {
-            var previousTimingExecution = dataService.GetPreviousTimingExecution(Constants.PARAMETER_VALUE)?.SingleOrDefault();
+            var previousTimingExecution = WrapperDataCenterService.Instance.GetPreviousTimingExecution(Constants.PARAMETER_VALUE)?.SingleOrDefault();
 
             var problemAccounts = new List<MultipleProblemAccountsModel>();
             var savedDataTime = DateTime.Now;
 
             if (string.IsNullOrEmpty(previousTimingExecution.ParameterValue))
             {
-                problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
-                problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
+                problemAccounts = WrapperDataCenterService.Instance.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
+                problemAccounts.AddRange(WrapperDataCenterService.Instance.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
             }
             else
             {
                 if (AppSettings.IsFirstTimeRunForIBC)
-                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
+                    problemAccounts = WrapperDataCenterService.Instance.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
                 else
-                    problemAccounts = dataService.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
+                    problemAccounts = WrapperDataCenterService.Instance.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
 
 
                 if (AppSettings.IsFirstTimeRunForCN88)
-                    problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
+                    problemAccounts.AddRange(WrapperDataCenterService.Instance.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
                 else
-                    problemAccounts.AddRange(dataService.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
+                    problemAccounts.AddRange(WrapperDataCenterService.Instance.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
             }
 
             return new GetMultiProblemAccountsModel()
@@ -125,7 +130,7 @@
             };
         }
 
-        static IEnumerable<string> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts, DataCenterService dataService)
+        static IEnumerable<string> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
         {
             var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
@@ -135,12 +140,12 @@
 
             var jsonData = JsonConvert.SerializeObject(result);
             
-            return dataService.InsertProblemAccounts(jsonData);
+            return WrapperDataCenterService.Instance.InsertProblemAccounts(jsonData);
         }
 
-        static void InsertProblemAccountToMainDB(List<ProblemAccountForMainDBModel> problemAccounts, DataCenterService dataService)
+        static void InsertProblemAccountToMainDB(List<ProblemAccountForMainDBModel> problemAccounts)
         {
-            var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
+            var specialCustomerClass = WrapperDataCenterService.Instance.GetAllSpecialCustomerClass();
             problemAccounts.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
 
             if (problemAccounts != null && problemAccounts.Any())
@@ -151,7 +156,7 @@
                 {
                     try
                     {
-                        dataService.InsertProblemAccountClassificationToMainDB(problemAccounts);
+                        WrapperDataCenterService.Instance.InsertProblemAccountClassificationToMainDB(problemAccounts);
                         countRetry = AppSettings.RetryTime + 1;
                     }
                     catch (Exception ex)
@@ -167,34 +172,29 @@
             }
         }
 
-        static IEnumerable<ProblemAccountForMainDBModel> GetLatestCategoryForCusts(string custIds, DataCenterService dataService)
+        static IEnumerable<ProblemAccountForMainDBModel> GetLatestCategoryForCusts(string custIds)
         {
-            var lastestCategories = dataService.GetLastestCategory(custIds, true, false)?.Where(c => c.CategoryIdMapping != -99)?.Distinct();
+            var lastestCategories = WrapperDataCenterService.Instance.GetLastestCategory(custIds, true, false)?.Where(c => c.CategoryIdMapping != -99)?.Distinct();
 
             return lastestCategories;
         }
 
-        static IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassificationForCusts(string custIds, DataCenterService dataService)
+        static IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassificationForCusts(string custIds)
         {
-            var lastestClassification = dataService.GetLatestClassification(custIds, true)?.Distinct();
-
-            return lastestClassification;
+            return WrapperDataCenterService.Instance.GetLatestClassification(custIds, true)?.Distinct();
         }
 
-        static void InsertProblemCustomerToMainDB(List<ProblemCustomerForMainDBModel> problemCustomers, DataCenterService dataService)
+        static IEnumerable<ProblemCustomerForMainDBModel> InsertProblemCustomerToMainDB(IEnumerable<ProblemCustomerForMainDBModel> problemCustomers)
         {
-            var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
-            problemCustomers.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
-
-            if (problemCustomers != null && problemCustomers.Any())
+            var candidateProblemCustomers = SkipSpecialCustomerClass(problemCustomers);
+            if (candidateProblemCustomers != null && candidateProblemCustomers.Any())
             {
                 var countRetry = 0;
-
                 while (countRetry < AppSettings.RetryTime)
                 {
                     try
                     {
-                        dataService.InsertProblemCustomerClassificationToMainDB(problemCustomers);
+                        WrapperDataCenterService.Instance.InsertProblemCustomerClassificationToMainDB(candidateProblemCustomers.ToList());
                         countRetry = AppSettings.RetryTime + 1;
                     }
                     catch (Exception ex)
@@ -208,6 +208,38 @@
                     }
                 }
             }
+
+            return candidateProblemCustomers;
+        }
+        static IEnumerable<ProblemCustomerForMainDBModel> SkipSpecialCustomerClass(IEnumerable<ProblemCustomerForMainDBModel> problemCustomers)
+        {
+            if (problemCustomers != null)
+            {
+                var specialCustomerClass = WrapperDataCenterService.Instance.GetAllSpecialCustomerClass();
+                if (specialCustomerClass != null && specialCustomerClass.Any())
+                {
+                    return problemCustomers.Where(item => !specialCustomerClass.Contains(item.CustID));
+                }
+            }
+
+            return problemCustomers;
+        }
+        static DBResult UpdateAppliedCustomerClassification(IEnumerable<ProblemCustomerForMainDBModel> updatedProblemCustomers)
+        {
+            if (updatedProblemCustomers != null && updatedProblemCustomers.Any())
+            {
+                var result = updatedProblemCustomers.Select(a => new UpdateAppliedCustomerClassificationModel
+                {
+                    CustId = a.CustID,
+                    ScannedTime = a.ScannedTime
+                });
+
+                var jsonData = JsonConvert.SerializeObject(result);
+
+                return WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(jsonData);
+            }
+
+            return new DBResult();
         }
     }
 }

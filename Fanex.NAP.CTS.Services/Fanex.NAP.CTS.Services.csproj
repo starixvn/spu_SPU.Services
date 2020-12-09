@@ -66,6 +66,7 @@
     <Compile Include="Helper\HeplerTranformCusClassificationToCustDB.cs" />
     <Compile Include="Implement\CustomerEvidenceService.cs" />
     <Compile Include="Implement\DataCenterService.cs" />
+    <Compile Include="Implement\WrapperDataCenterService.cs" />
     <Compile Include="Interface\ICustomerEvidenceService.cs" />
     <Compile Include="Interface\IDataCenterService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
