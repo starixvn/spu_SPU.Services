@@ -34,7 +34,7 @@
                         ctsDataCenterService.UpdateCustomerGeneralClassificationtoMainDB(listCust.Select(c => new CustomerClassModel
                         {
                             CustID = c.CustID,
-                            CustomerClass = Constants.NEW_MEMBER_CATEGORY
+                            CustomerClass = Constants.NEW_MEMBER_CLASSIFICATION
                         }).ToList());
                     }
 

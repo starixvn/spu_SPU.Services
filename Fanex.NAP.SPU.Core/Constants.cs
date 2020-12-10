@@ -32,10 +32,21 @@
 
         public const string AAM_USER_PERMISSION = FSFunctionKeys.AssociatedAccountMonitor + "UserPermission";
 
-        public const int NEW_MEMBER_CATEGORY = 3;
+        public const int NEW_MEMBER_CLASSIFICATION = 3;
 
         public const int PARAMETER_VALUE = 2;
 
         public const string SALT = "!%HGDwweHqw#";
+
+        public enum CATEGORY : int
+        {
+            NEWMEMBER = 201,
+            NORMALMEMBER = 202,
+            SMARTPUNTER = 203,
+            HIGHRISKPUNTER = 204,
+            VIP = 205,
+            PROBATION = 206,
+            VVIP = 213
+        };
     }
 }
