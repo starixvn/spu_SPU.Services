@@ -102,8 +102,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console.PRO.config" />
-    <None Include="Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console.LOCAL.config" />
+    <None Include="Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console.PRO.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console.LOCAL.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>

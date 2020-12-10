@@ -106,8 +106,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console.PRO.config" />
-    <None Include="Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console.LOCAL.config" />
+    <None Include="Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console.PRO.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console.LOCAL.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
