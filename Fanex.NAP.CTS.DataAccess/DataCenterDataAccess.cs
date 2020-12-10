@@ -350,7 +350,7 @@
 
             var criteria = new GetCustomerClassificationByCategoryCriteria
             {
-                CategoryIdList = "202,205", // Hard code for 'Main Normal Account' & 'Main VIP'
+                CategoryIdList = "201,202,205", // Hard code for 'New member' & 'Main Normal Account' & 'Main VIP'
                 CustSportsJson = custSportJson
             };
 

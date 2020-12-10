@@ -1,23 +1,23 @@
-﻿using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Data.SqlServer;
-using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.CTS.Services;
-using Fanex.NAP.FS.Core;
-using Fanex.NAP.SPU.Core;
-using Newtonsoft.Json;
-using SharpRaven;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Threading;
-
-namespace Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console
+﻿namespace Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console
 {
+    using Fanex.Data;
+    using Fanex.Data.MySql;
+    using Fanex.Data.SqlServer;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
+    using SharpRaven;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using System.Threading;
+
     class Program
     {
         static void Main(string[] args)

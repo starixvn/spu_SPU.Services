@@ -1,12 +1,7 @@
-﻿using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.Criteria.CustomerClassification
+﻿namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
+    using Fanex.Data.Repository;
+
     public class CategorizeCustomerGeneralCategoryRealtimeCriteria : NonQueryCommand
     {
         public string CustomersXML { get; set; }
