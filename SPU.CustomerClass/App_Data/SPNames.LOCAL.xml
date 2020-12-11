@@ -5,4 +5,14 @@
     <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
     <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter.ctsService" />
   </Function>
+
+  <Function Name="RobotUsers">
+    <Setting Key="CTS_DC_GetSystemParameterById" SpName="CTS_DC_GetSystemParameterById" DbName="MySQL.CTS_DataCenter.ctsService"/>
+    <Setting Key="CTS_DC_UpdateSystemParameterById" SpName="CTS_DC_UpdateSystemParameterById" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="CTS_DC_SpecialCustClass_InsertRobotUsers" SpName="CTS_DC_SpecialCustClass_InsertRobotUsers" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+
+    <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+    <Setting Key="CTS_Customer_RobotListSel" SpName="CTS_Customer_RobotListSel" DbName="DBONUSER.ON_USER.bodbSPUNet"/>
+    <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter.ctsService" />
+  </Function>
 </Functions>

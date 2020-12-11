@@ -52,6 +52,7 @@
                 var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
                 
                 var customerHasChanges = dataCenterService.GetCustomerGeneralCategoryHasChangeForRunRealtime();
+                Console.WriteLine("customerHasChanges: " + customerHasChanges.Count());
 
                 if (customerHasChanges.Any())
                 {
@@ -60,12 +61,15 @@
                     {
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
                         var customers = dataCenterService.GetCustomerGeneralCategoryForRunRealtime(custSportJson);
+                        Console.WriteLine("GetCustomerGeneralCategoryForRunRealtime: " + customers.Count());
                         dataCenterService.ClassifyCustomerGeneralCategoryRealtime(customers);
                         Thread.Sleep(3000);
                     }
                 }
 
                 dataCenterService.RealtimeUpdateLastScanTime(true);
+                Console.WriteLine("RealtimeUpdateLastScanTime done");
+                Console.ReadLine();
             }
             catch (Exception ex)
             {
