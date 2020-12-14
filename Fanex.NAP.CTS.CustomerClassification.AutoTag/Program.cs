@@ -122,33 +122,55 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             {
                 return;
             }
+            
+            var retryTime = AppSettings.RetryTime;
 
-            var countRetry = 0;
+            var listCustClassChunk = custGeneralCategoryInRuleForMainDB.Chunk(AppSettings.BatchSize).ToList();
 
-            while (countRetry < AppSettings.RetryTime)
+            foreach (var listCust in listCustClassChunk)
             {
-                try
-                {
-                    var listCustClassChunk = custGeneralCategoryInRuleForMainDB.Chunk(AppSettings.BatchSize).ToList();
+                var isSuccess = false;
 
-                    foreach (var listCust in listCustClassChunk)
+                while (!isSuccess && retryTime > 0)
+                {
+                    try
                     {
-                        dataService.UpdateCustomerGeneralClassificationtoMainDB(listCust);
+                        // Get lastest classification
+                        var custIds = string.Join(",", listCust.Select(x => x.CustId));
+                        var lastestClassifications = dataService.GetLatestClassification(custIds, true);
+
+                        // Update general classification to MainDB
+                        dataService.UpdateCustomerGeneralClassificationtoMainDB(listCust, AppSettings.RetryTime);
+
+                        // Update applied classification
+                        if (lastestClassifications != null && lastestClassifications.Any())
+                        {
+                            var updateApplyCCs = lastestClassifications.Select(x => new { CustId = x.CustID, x.ScannedTime });
+                            var jsonData = JsonConvert.SerializeObject(updateApplyCCs);
+
+                            dataService.UpdateAppliedCustomerClassification(jsonData);
+                        }
+
+                        isSuccess = true;
                     }
+                    catch (Exception ex)
+                    {
+                        retryTime = retryTime - 1;
 
-                    countRetry = AppSettings.RetryTime + 1;
-                }
-                catch (Exception ex)
-                {
-                    var logMessage = new LogMessage(ex.Message)
-                        .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                        .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                        if (retryTime == 0)
+                        {
+                            var jsonDataForLog = JsonConvert.SerializeObject(listCust);
 
-                    LogService.Error($"AutoTag Customer Classification - Update General Classification Customer to MainDB service - Start Exception {logMessage}");
-                    countRetry += 1;
+                            var logMessage = new LogMessage(ex.Message)
+                               .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                               .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                            LogService.Error($"AutoTag Customer Classification service - InsertGeneralClassificationCustToMainDB Exception {logMessage} with listCust: {jsonDataForLog}");
+                        }
+                    }
                 }
             }
-        }
+        }             
 
         static void InsertNewMemberCategoriesToMainDB(IEnumerable<CustomerClassificationModelMoreInfo> newMemberClassification, DataCenterService dataService)
         {

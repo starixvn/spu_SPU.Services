@@ -127,7 +127,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateAppliedStatusClassification(custIdList, isGeneralCategory);
         }
 
-        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerGeneralClassificationModel> custIdList)
+        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerGeneralClassificationModel> custIdList, int retryTime)
         {
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList.ToList());
 
@@ -137,7 +137,30 @@ namespace Fanex.NAP.CTS.Services
                 CustomerClass = c.CategoryIdMapping
             });
 
-            Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
+            FeedDataToSoon88(custClassList, retryTime);
+        }
+        
+        private void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClassList, int retryTime)
+        {            
+            var isSuccess = false;
+
+            while (!isSuccess && retryTime > 0)
+            {
+                try
+                {
+                    Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
+
+                    isSuccess = true;
+                }
+                catch (Exception ex)
+                {
+                    retryTime = retryTime - 1;
+
+                    var jsonData = JsonConvert.SerializeObject(custClassList);
+
+                    LogService.Error($"DataCenterService FeedDataToSoon88 Exception: {ex.Message} with custClassList: {jsonData}", ex);
+                }
+            }
         }
 
         public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerClassModel> custClassList)
