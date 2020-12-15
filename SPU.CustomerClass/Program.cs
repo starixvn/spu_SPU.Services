@@ -1,21 +1,24 @@
 ﻿namespace SPU.CustomerClass
 {
     using Fanex.Data;
-    using Fanex.Data.SqlServer;
     using Fanex.Data.MySql;
+    using Fanex.Data.SqlServer;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry.RavenClient;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
+    using SharpRaven;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
+    using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Text;
     using System.Threading;
-    using System.Threading.Tasks;
-    using System.Globalization;
 
     class Program
     {
@@ -25,7 +28,6 @@
         {
             try
             {
-                Console.WriteLine("Starting...!");
                 DbSettingProviderManager
                      .StartNewSession()
                      .WithSqlServer()
@@ -34,30 +36,53 @@
                      .UseDefaultConnectionStringProvider()
                      .Run();
 
+                //LogManager
+                //   .SetDefaultLogCategory(AppSettings.FanexLogCategory)
+                //   .Use(new List<ILogEngine>
+                //   {
+                //        new SentryLogging(new SentryEngineOptions
+                //        {
+                //            Dsn = new Dsn(AppSettings.SentryLogging)
+                //        })
+                //   });
+
+                //Console.WriteLine("Starting...!");
+                //LogService.Info("Starting update data to Soon88");
+
                 var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
                 var delayTime = Convert.ToInt32(ConfigurationManager.AppSettings["DelayTimePerBatch"]);
                 var filePath = @"import/data.csv";
-                int inputFunction = Welcome();
+                UpdateCustomerClass(filePath, batchSize, delayTime);
 
-                switch (inputFunction)
-                {
-                    case 1:
-                        UpdateCustomerClass(filePath, batchSize, delayTime);
-                        break;
-                    case 2:
-                        UpdateRobotUser();
-                        break;
-                    default:
-                        break;
-                }
+                //int inputFunction = Welcome();
+
+                //switch (inputFunction)
+                //{
+                //    case 1:
+                //        UpdateCustomerClass(filePath, batchSize, delayTime);
+                //        break;
+                //    case 2:
+                //        UpdateRobotUser();
+                //        break;
+                //    default:
+                //        break;
+                //}
+
+                //LogService.Info("Update data to Soon88 done!");
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
-            }
+                var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
+                //LogService.Error(logMessage);
+            }
+#if DEBUG
             Console.ReadLine();
+#endif
         }
 
         private static void UpdateRobotUser()
@@ -95,8 +120,9 @@
         {
             Console.WriteLine("Reading data...!");
             List<CustomerClassModel> listCustClass = ReadDataFromCsvFile(filePath);
-            int totalItems = listCustClass.Count;
-            int updatedItem = 0;
+            decimal totalItems = listCustClass.Count;
+            decimal updatedItem = 0;
+            decimal percent = 0;
             var listCustClassChunk = listCustClass.Chunk(batchSize).ToList();
 
             Console.WriteLine("Reading data done! - " + listCustClass.Count + " customers");
@@ -106,7 +132,8 @@
                 Console.WriteLine("Updating data...! - Total count: " + listCust.Count());
                 dataService.UpdateCustomerGeneralClassificationtoMainDB(listCust);
                 updatedItem += listCust.Count();
-                Console.WriteLine("In Progess..." + updatedItem / totalItems * 100 + "%");
+                percent = Math.Round(updatedItem / totalItems * 100, 5);
+                Console.WriteLine("In Progess..." + percent + "%");
                 Thread.Sleep(delayTime * 1000);
             }
 
