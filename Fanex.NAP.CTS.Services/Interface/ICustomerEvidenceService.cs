@@ -13,12 +13,14 @@
 
         DBResult SyncCustomerEvidenceToCategory(string jsonData);
 
-        DBResult SyncCustomerClassToMainDb(string ctsCustIds);
+        DBResult SyncCustomerClassToMainDb(string ctsCustIds, out List<SyncCustomerClassToMainModel> custClasses);
 
         DBResult UpdateProcessedCustEvidence(string jsonData, bool isProcessed, int userId);
 
         IEnumerable<int> GetAssociatedAccountByCTSCustIds(string ctsCustIds);
 
         DBResult UpdateBetLimitOfFlaggedCustomer(string custIds);
+
+        void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses);
     }
 }

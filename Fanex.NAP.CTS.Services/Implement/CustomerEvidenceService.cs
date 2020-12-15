@@ -3,6 +3,7 @@
     using Fanex.Logging;
     using Fanex.NAP.CTS.DataAccess;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Services.Helper;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -63,8 +64,10 @@
             }
         }
 
-        public DBResult SyncCustomerClassToMainDb(string ctsCustIds)
+        public DBResult SyncCustomerClassToMainDb(string ctsCustIds, out List<SyncCustomerClassToMainModel> custClasses)
         {
+            custClasses = new List<SyncCustomerClassToMainModel>();
+
             try
             {
                 var customerCategoryLastedList = dataAccess.GetCustomerCategoryLasted(ctsCustIds, false, true);
@@ -81,8 +84,10 @@
 
                     if (ccToMain.Any())
                     {
+                        custClasses = ccToMain.ToList();
+
                         return dataAccess.SyncCustomerClassToMainDb(ccToMain);
-                    }                    
+                    }
                 }
 
                 return new DBResult { ErrorCode = 0, ErrorMsg = string.Empty };
@@ -134,6 +139,18 @@
                 LogService.Error($"CustomerEvidenceService UpdateBetLimitOfFlaggedCustomer exception: {ex.Message}", ex);
 
                 return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
+            }
+        }
+
+        public void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
+        {
+            try
+            {
+                FeedDataToSoon88Helper.FeedDataToSoon88(custClasses);
+            }
+            catch (Exception ex)
+            {
+                LogService.Error($"CustomerEvidenceService FeedDataToSoon88 exception: {ex.Message}", ex);
             }
         }
 

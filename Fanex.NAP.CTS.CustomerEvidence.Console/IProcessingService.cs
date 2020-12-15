@@ -13,7 +13,9 @@
 
         bool SyncCustomerEvidenceToCTSCategory(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, int actionType, bool isPrevSuccess);
 
-        IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences);
+        IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, out List<SyncCustomerClassToMainModel> custClasses);
+
+        IProcessingService FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses);
 
         IProcessingService UpdateProcessedCustEvidence(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, bool isProcessed);
 
