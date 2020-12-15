@@ -170,7 +170,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     }
                 }
             }
-        }             
+        }
 
         static void InsertNewMemberCategoriesToMainDB(IEnumerable<CustomerClassificationModelMoreInfo> newMemberClassification, DataCenterService dataService)
         {
