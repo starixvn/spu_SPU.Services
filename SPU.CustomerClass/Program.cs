@@ -36,22 +36,22 @@
                      .UseDefaultConnectionStringProvider()
                      .Run();
 
-                //LogManager
-                //   .SetDefaultLogCategory(AppSettings.FanexLogCategory)
-                //   .Use(new List<ILogEngine>
-                //   {
-                //        new SentryLogging(new SentryEngineOptions
-                //        {
-                //            Dsn = new Dsn(AppSettings.SentryLogging)
-                //        })
-                //   });
+                LogManager
+                   .SetDefaultLogCategory(AppSettings.FanexLogCategory)
+                   .Use(new List<ILogEngine>
+                   {
+                        new SentryLogging(new SentryEngineOptions
+                        {
+                            Dsn = new Dsn(AppSettings.SentryLogging)
+                        })
+                   });
 
-                //Console.WriteLine("Starting...!");
-                //LogService.Info("Starting update data to Soon88");
+                Console.WriteLine("Starting...!");
+                LogService.Info("Starting update data to Soon88");
 
                 var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
                 var delayTime = Convert.ToInt32(ConfigurationManager.AppSettings["DelayTimePerBatch"]);
-                var filePath = @"import/data.csv";
+                var filePath = Directory.GetCurrentDirectory() + @"\import\data.csv";
                 UpdateCustomerClass(filePath, batchSize, delayTime);
 
                 //int inputFunction = Welcome();
@@ -68,7 +68,7 @@
                 //        break;
                 //}
 
-                //LogService.Info("Update data to Soon88 done!");
+                LogService.Info("Update data to Soon88 done!");
 
             }
             catch (Exception ex)
@@ -78,7 +78,7 @@
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                //LogService.Error(logMessage);
+                LogService.Error(logMessage);
             }
 #if DEBUG
             Console.ReadLine();
@@ -142,6 +142,7 @@
 
         private static List<CustomerClassModel> ReadDataFromCsvFile(string filePath)
         {
+            LogService.Info("filePath: " + filePath);
             StreamReader sreader = new StreamReader(filePath);
             var listCustClass = new List<CustomerClassModel>();
             var stringLine = string.Empty;
