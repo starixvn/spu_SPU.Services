@@ -51,9 +51,7 @@
 
                 var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
                 var delayTime = Convert.ToInt32(ConfigurationManager.AppSettings["DelayTimePerBatch"]);
-                var filePathTest = AppDomain.CurrentDomain.BaseDirectory + @"\import\data.csv";
-                LogService.Info("filePathTest: " + filePathTest);
-                var filePath = @"E:\WWW\SERVICES\SPU\CTS\Fanex.NAP.CTS.ClassifyCustomer.Daily.Console\import\data.csv";
+                var filePath = AppDomain.CurrentDomain.BaseDirectory + @"import\data.csv";
 
                 UpdateCustomerClass(filePath, batchSize, delayTime);
 
