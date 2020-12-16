@@ -98,11 +98,23 @@
 
             if (custEvidenceProcesseds.Any())
             {
+                var custClassesModel = new List<SyncCustomerClassToMainModel>();
+
                 _processingService
-                    .SyncCustomerClassToMainDb(custEvidenceProcesseds)
+                    .SyncCustomerClassToMainDb(custEvidenceProcesseds, out custClassesModel)
                     .UpdateBetLimitOfFlaggedCustomer(custEvidenceProcesseds);
-            }            
-        }        
+
+                var custClassList = custClassesModel
+                    .Where(x => x.CategoryIdMapping != -99)
+                    .Select(x => new CustomerClassModel()
+                {
+                    CustID = x.CustID,
+                    CustomerClass = x.CategoryIdMapping
+                });
+
+                _processingService.FeedDataToSoon88(custClassList);
+            }
+        }
         
         private IEnumerable<IEnumerable<CustomerEvidenceFromFileModel>> ChunkSize(List<CustomerEvidenceFromFileModel> custEvidenceInFiles)
         {
@@ -134,7 +146,7 @@
             }
 
             yield return queue;           
-        }
+        }       
 
         private void HandleLogError()
         {            

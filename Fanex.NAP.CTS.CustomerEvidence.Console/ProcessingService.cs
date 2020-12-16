@@ -6,6 +6,8 @@
     using System.Threading;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
 
     public class ProcessingService : IProcessingService
@@ -171,13 +173,15 @@
             return isPrevSuccess;
         }
       
-        public IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
+        public IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, out List<SyncCustomerClassToMainModel> custClasses)
         {
             var ctsCustIdList = custEvidences.Select(x => x.CTSCustID).Distinct();
 
             var ctsCustIds = string.Join(",", ctsCustIdList.Distinct().ToList());
 
-            var dbResult = _custEvidenceService.SyncCustomerClassToMainDb(ctsCustIds);
+            custClasses = new List<SyncCustomerClassToMainModel>();
+
+            var dbResult = _custEvidenceService.SyncCustomerClassToMainDb(ctsCustIds, out custClasses);
 
             if (dbResult.ErrorCode != 0)
             {
@@ -202,6 +206,28 @@
                 if (dbResult.ErrorCode != 0)
                 {
                     WriteLogError("UpdateBetLimitOfFlaggedCustomer", dbResult.ErrorMsg, custEvidences);
+                }
+            }
+
+            return this;
+        }
+
+        public IProcessingService FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
+        {
+            if (custClasses != null && custClasses.Any())
+            {
+                var batchSize = AppSettings.BatchSize;
+
+                if (batchSize == 0)
+                {
+                    batchSize = 100;
+                }
+
+                var custClassesChunk = custClasses.Chunk(batchSize);
+
+                foreach (var cc in custClassesChunk)
+                {
+                    _custEvidenceService.FeedDataToSoon88(cc);
                 }
             }
 
