@@ -53,21 +53,19 @@
                 var delayTime = Convert.ToInt32(ConfigurationManager.AppSettings["DelayTimePerBatch"]);
                 var filePath = AppDomain.CurrentDomain.BaseDirectory + @"import\data.csv";
 
-                UpdateCustomerClass(filePath, batchSize, delayTime);
+                int inputFunction = Welcome();
 
-                //int inputFunction = Welcome();
-
-                //switch (inputFunction)
-                //{
-                //    case 1:
-                //        UpdateCustomerClass(filePath, batchSize, delayTime);
-                //        break;
-                //    case 2:
-                //        UpdateRobotUser();
-                //        break;
-                //    default:
-                //        break;
-                //}
+                switch (inputFunction)
+                {
+                    case 1:
+                        UpdateCustomerClass(filePath, batchSize, delayTime);
+                        break;
+                    case 2:
+                        UpdateRobotUser();
+                        break;
+                    default:
+                        break;
+                }
 
                 LogService.Info("Update data to Soon88 done!");
 
