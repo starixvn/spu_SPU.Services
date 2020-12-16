@@ -4,18 +4,16 @@ using Fanex.Data.SqlServer;
 using Fanex.Logging;
 using Fanex.Logging.Extensions;
 using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry;
+using Fanex.Logging.Sentry.RavenClient;
 using Fanex.NAP.CTS.Model;
 using Fanex.NAP.CTS.Services;
 using Fanex.NAP.SPU.Core;
 using Newtonsoft.Json;
-using Sentry;
+using SharpRaven;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console
 {
