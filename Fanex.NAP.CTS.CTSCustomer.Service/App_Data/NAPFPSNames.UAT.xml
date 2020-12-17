@@ -15,5 +15,13 @@
     <Setting Key="DC_IPTableLog_AddNewLog" SpName="DC_IPTableLog_AddNewLog" DbName="MySQL.FPS_DataCenter"/>
     <Setting Key="DC_IPTableLog_GetLatestUpdatedDate" SpName="DC_IPTableLog_GetLatestUpdatedDate" DbName="MySQL.FPS_DataCenter"/>
     <Setting Key="DC_IPRangeLocation_UpdateByXML" SpName="DC_IPRangeLocation_UpdateByXML" DbName="MySQL.FPS_DataCenter"/>
+    <Setting Key="CTS_DC_CustClassification_GetLatestClassification" SpName="CTS_DC_CustClassification_GetLatestClassification" DbName="MySQL.CTS_DataCenter.ctsService" />
+    <Setting Key="CTS_DC_CustClassification_UpdateIsAppliedCC" SpName="CTS_DC_CustClassification_UpdateIsAppliedCC" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
+    
+    <!--bodb02-->
+    <Setting Key="CTS_CustomerClass_GetByCustId" SpName="CTS_CustomerClass_GetByCustId" DbName="DBCTS.bodb02.bodbSPUNet" />
+
+    <!--bodbAdminNet-->
+    <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
   </Function>
 </Functions>

@@ -36,7 +36,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<CustomerGeneralClassificationModel> InsertMainCustomerClassification(string newClassification);
 
-        void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerGeneralClassificationModel> custIdList, int retryTime);
+        void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LastestClassificationModel> custIdList);
 
         void InsertProblemAccountClassificationToMainDB(List<ProblemAccountForMainDBModel> custIdList);
 

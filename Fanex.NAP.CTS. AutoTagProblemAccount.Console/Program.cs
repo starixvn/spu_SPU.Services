@@ -181,7 +181,8 @@
 
         static IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassificationForCusts(string custIds)
         {
-            return WrapperDataCenterService.Instance.GetLatestClassification(custIds, true)?.Distinct();
+            //return WrapperDataCenterService.Instance.GetLatestClassification(custIds, true)?.Distinct();
+            return null;
         }
 
         static IEnumerable<ProblemCustomerForMainDBModel> InsertProblemCustomerToMainDB(IEnumerable<ProblemCustomerForMainDBModel> problemCustomers)

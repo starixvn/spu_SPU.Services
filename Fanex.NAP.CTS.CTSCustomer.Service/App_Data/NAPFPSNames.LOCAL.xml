@@ -8,8 +8,15 @@
     <Setting Key="CTS_DC_HealingCTSCustomer" SpName="CTS_DC_HealingCTSCustomer" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_UpdateUsername2" SpName="CTS_DC_UpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_InsertNewCustomerCategory" SpName="CTS_DC_InsertNewCustomerCategory" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-
+    <Setting Key="CTS_DC_CustClassification_GetLatestClassification" SpName="CTS_DC_CustClassification_GetLatestClassification" DbName="MySQL.CTS_DataCenter.ctsService" />
+    <Setting Key="CTS_DC_CustClassification_UpdateIsAppliedCC" SpName="CTS_DC_CustClassification_UpdateIsAppliedCC" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
     <!-- DCS_DataCenter -->
     <Setting Key="DCS_DC_TransformToCTS_Account_Completed" SpName="DCS_DC_TransformToCTS_Account_Completed" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
+    
+    <!--bodb02-->
+    <Setting Key="CTS_CustomerClass_GetByCustId" SpName="CTS_CustomerClass_GetByCustId" DbName="DBCTS.bodb02.bodbSPUNet" />
+   
+    <!--bodbAdminNet-->
+    <Setting Key="Acc_CustomerUpdateCustomerClass" SpName="Acc_CustomerUpdateCustomerClass_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
   </Function>
 </Functions>

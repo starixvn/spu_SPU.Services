@@ -135,21 +135,22 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                 {
                     try
                     {
-                        // Get lastest classification
-                        var custIds = string.Join(",", listCust.Select(x => x.CustId));
-                        var lastestClassifications = dataService.GetLatestClassification(custIds, true);
+                        //// Get lastest classification
+                        //var custIds = string.Join(",", listCust.Select(x => x.CustId));
 
-                        // Update general classification to MainDB
-                        dataService.UpdateCustomerGeneralClassificationtoMainDB(listCust, AppSettings.RetryTime);
+                        //var lastestClassifications = dataService.GetLatestClassification(custIds, true);
 
-                        // Update applied classification
-                        if (lastestClassifications != null && lastestClassifications.Any())
-                        {
-                            var updateApplyCCs = lastestClassifications.Select(x => new { CustId = x.CustID, x.ScannedTime });
-                            var jsonData = JsonConvert.SerializeObject(updateApplyCCs);
+                        //// Update general classification to MainDB
+                        //dataService.UpdateCustomerGeneralClassificationtoMainDB(lastestClassifications);
 
-                            dataService.UpdateAppliedCustomerClassification(jsonData);
-                        }
+                        //// Update applied classification
+                        //if (lastestClassifications != null && lastestClassifications.Any())
+                        //{
+                        //    var updateApplyCCs = lastestClassifications.Select(x => new { CustId = x.CustID, x.ScannedTime });
+                        //    var jsonData = JsonConvert.SerializeObject(updateApplyCCs);
+
+                        //    dataService.UpdateAppliedCustomerClassification(jsonData);
+                        //}
 
                         isSuccess = true;
                     }
@@ -183,7 +184,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
             var newMembers = customerClass?.Where(c => c.CustomerClass == null);
 
-            TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime, AppSettings.BatchSize);
+            //TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime, AppSettings.BatchSize);
         }
     }
 }

@@ -123,7 +123,8 @@
                 {
                     dataCenterService.TransformCustomerFromMainDB(customers);
 
-                    var custIdList = string.Join(",", customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct());                 
+                    var custIdList = string.Join(",", customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct());           
+                    
                     var newMembers = dataCenterService.InsertCategoryForNewCustomer(custIdList).ToList();
 
                     TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, false, AppSettings.RetryTime, AppSettings.BatchSize);

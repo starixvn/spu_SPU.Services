@@ -25,7 +25,16 @@
             {
                 var custIds = CheckNewMemberClassification(string.Join(",", listCust));
 
-                var lastestClassifications = WrapperDataCenterService.Instance.GetLatestClassification(listCust);
+                var validNewMembers = listCust.Join(custIds,
+                    x1 => x1.CustId,
+                    x2 => x2,
+                    (x1, x2) => new TypeCategoryCustomerModel
+                    {  
+                        CustId = x2,
+                        TypeId = x1.TypeId
+                    });
+
+                var lastestClassifications = WrapperDataCenterService.Instance.GetLatestClassification(validNewMembers);
 
                 SyncCCToMainDB(lastestClassifications, IsCCAutoTag, retryTime);
 
