@@ -59,7 +59,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList);
 
-        List<int> InsertCategoryForNewCustomer(string customerList);
+        IEnumerable<TypeCategoryCustomerModel> InsertCategoryForNewCustomer(string customerList);
 
         IEnumerable<int> GetAllSpecialCustomerClass();
 
@@ -67,7 +67,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory);
 
-        IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassification(string ctsCustID, bool isCustId);
+        IEnumerable<LastestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts);
 
         IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete);
         

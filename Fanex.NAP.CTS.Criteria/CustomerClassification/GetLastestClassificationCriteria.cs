@@ -5,11 +5,8 @@
 
     public class GetLastestClassificationCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "ip_CustomerList")]
-        public string CustIDList { get; set; }
-
-        [SpParam(SqlParamName = "ip_IsCustId")]
-        public bool IsUsingCustID { get; set; }       
+        [SpParam(SqlParamName = "ip_CustomerCategorizes")]
+        public string CustomerCategorizes { get; set; }       
 
         public override string GetSettingKey()
             => "CTS_DC_CustClassification_GetLatestClassification";

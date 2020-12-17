@@ -45,7 +45,7 @@
             }
         }
 
-        public List<int> InsertCategoryForNewCustomer(string custIds)
+        public List<TypeCategoryCustomerModel> InsertCategoryForNewCustomer(string custIds)
         {
             var criteria = new InsertNewCustomerCategoryCriteria
             {
@@ -54,7 +54,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<int>(criteria).ToList();
+                return db.Query<TypeCategoryCustomerModel>(criteria).ToList();
             }
         }
 
@@ -200,7 +200,7 @@
             repository.Execute(criteria);
         }
 
-        public void UpdateCustomerGeneralClassificationtoMainDB(List<CustomerGeneralClassificationModel> custIdList)
+        public void UpdateCustomerGeneralClassificationtoMainDB(List<LastestClassificationModel> custIdList)
         {
             var repository = new DynamicRepository();
 
@@ -628,17 +628,16 @@
             }
         }
 
-        public IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassification(string ctsCustID, bool isCustId)
+        public IEnumerable<LastestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts)
         {
             var criteria = new GetLastestClassificationCriteria()
             {
-                CustIDList = ctsCustID,
-                IsUsingCustID = isCustId                
+                CustomerCategorizes = JsonConvert.SerializeObject(typeCategoryCusts)
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<ProblemCustomerForMainDBModel>(criteria);
+                return db.Query<LastestClassificationModel>(criteria);
             }
         }
 

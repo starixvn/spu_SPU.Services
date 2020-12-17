@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.CTS.Services.Helper
 {
     using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
@@ -14,6 +16,34 @@
 
     public static class FeedDataToSoon88Helper
     {
+        public static void FeedCCToSoon88(IEnumerable<LastestClassificationModel> custsToMainDB)
+        {
+            if (custsToMainDB == null || !custsToMainDB.Any())
+            {
+                return;
+            }
+
+            try
+            {
+                var custClassList = custsToMainDB.Select(c => new CustomerClassModel()
+                {
+                    CustID = c.CustId,
+                    CustomerClass = c.CustomerClass
+                });
+
+                FeedDataToSoon88(custClassList);
+            }
+            catch (Exception ex)
+            {
+                var jsonDataForLog = JsonConvert.SerializeObject(custsToMainDB);
+
+                var logMessage = new LogMessage(ex.Message)
+                .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error($"Feed Data to Soon88 - Start Exception {logMessage} with listCust: {jsonDataForLog}", ex);
+            }
+        }
 
         public static void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
         {

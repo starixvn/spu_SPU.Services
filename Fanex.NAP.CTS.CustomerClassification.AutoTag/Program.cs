@@ -183,7 +183,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
             var newMembers = customerClass?.Where(c => c.CustomerClass == null);
 
-            HeplerTranformCusClassificationToCustDB.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime, AppSettings.BatchSize);
+            TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime, AppSettings.BatchSize);
         }
     }
 }

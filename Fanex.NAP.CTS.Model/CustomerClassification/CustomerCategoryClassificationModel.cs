@@ -3,7 +3,7 @@
 
     public class CustomerCategoryClassificationModel
     { 
-        public int CustID { get; set; }
+        public long CustID { get; set; }
 
         public int? CustomerClass { get; set; }
     }

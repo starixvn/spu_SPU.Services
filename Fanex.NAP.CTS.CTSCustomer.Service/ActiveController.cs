@@ -4,7 +4,9 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.CTS.Services.Helper;
     using Fanex.NAP.CTS.Services.Interface;
+    using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;
     using System;
@@ -120,8 +122,12 @@
                 if (customers != null && customers.Any())
                 {
                     dataCenterService.TransformCustomerFromMainDB(customers);
-                    var custIdList = string.Join(",", customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct());
-                    dataCenterService.InsertCategoryForNewCustomer(custIdList);
+
+                    var custIdList = string.Join(",", customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct());                 
+                    var newMembers = dataCenterService.InsertCategoryForNewCustomer(custIdList).ToList();
+
+                    TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, false, AppSettings.RetryTime, AppSettings.BatchSize);
+
                     return true;
                 }
             }

@@ -3,11 +3,9 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.CTS.Services.Helper;
     using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
-    using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using Quartz;
     using RestSharp;
@@ -66,14 +64,6 @@
 
                     var maxCustId = dataCenterService.GetCurrentMaxCustId(false);
                     var listOfCust = dataCenterService.GetCustomerFromMainDB(packageSize, apiUrls.Count(), maxCustId);
-
-                    if (listOfCust != null && listOfCust.Any())
-                    {
-                        var customerClass = ctsDataCenterService.GetCustomerClassByCustId(string.Join(",", listOfCust?.Select(c => c.CustId)));
-                        var newMembers = customerClass?.Where(c => c.CustomerClass == null);
-
-                        HeplerTranformCusClassificationToCustDB.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime, AppSettings.BatchSize);
-                    }
 
                     if (!listOfCust.Any())
                     {

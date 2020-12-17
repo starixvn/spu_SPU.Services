@@ -40,7 +40,7 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.TransformCustomerFromMainDB(customerJson);
         }
 
-        public List<int> InsertCategoryForNewCustomer(string customerList)
+        public IEnumerable<TypeCategoryCustomerModel> InsertCategoryForNewCustomer (string customerList)
         {
             return dataCenterDataAccess.InsertCategoryForNewCustomer(customerList);
         }
@@ -127,40 +127,17 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateAppliedStatusClassification(custIdList, isGeneralCategory);
         }
 
-        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerGeneralClassificationModel> custIdList, int retryTime)
+        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LastestClassificationModel> custIdList)
         {
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList.ToList());
 
-            var custClassList = custIdList.Where(c => c.CategoryIdMapping != -99).Select(c => new CustomerClassModel()
-            {
-                CustID = c.CustId,
-                CustomerClass = c.CategoryIdMapping
-            });
+            //var custClassList = custIdList.Select(c => new CustomerClassModel()
+            //{
+            //    CustID = c.CustId,
+            //    CustomerClass = c.CustomerClass
+            //});
 
-            FeedDataToSoon88(custClassList, retryTime);
-        }
-        
-        private void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClassList, int retryTime)
-        {            
-            var isSuccess = false;
-
-            while (!isSuccess && retryTime > 0)
-            {
-                try
-                {
-                    Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
-
-                    isSuccess = true;
-                }
-                catch (Exception ex)
-                {
-                    retryTime = retryTime - 1;
-
-                    var jsonData = JsonConvert.SerializeObject(custClassList);
-
-                    LogService.Error($"DataCenterService FeedDataToSoon88 Exception: {ex.Message} with custClassList: {jsonData}", ex);
-                }
-            }
+            //FeedDataToSoon88(custClassList, retryTime); //TODO separate this logic 
         }
 
         public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerClassModel> custClassList)
@@ -325,9 +302,9 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetLastestCategory(ctsCustID, isCustId, isExcludedDetailedCategory);
         }
 
-        public IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassification(string ctsCustID, bool isCustId)
+        public IEnumerable<LastestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts)
         {
-            return dataCenterDataAccess.GetLatestClassification(ctsCustID, isCustId);
+            return dataCenterDataAccess.GetLatestClassification(typeCategoryCusts);
         }
 
         public IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
