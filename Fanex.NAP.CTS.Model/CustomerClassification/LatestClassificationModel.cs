@@ -5,7 +5,7 @@
     using System.Xml.Serialization;
 
     [XName("r")]
-    public class LastestClassificationModel
+    public class LatestClassificationModel
     { 
 
         [XName("id")]
@@ -17,6 +17,9 @@
         [XmlIgnore]
         public DateTime ScannedTime { get; set; }
 
+        /// <summary>
+        /// TODO: Remove these 
+        /// </summary>
         [XmlIgnore]
         public bool IsRescanPA { get; set; }
 

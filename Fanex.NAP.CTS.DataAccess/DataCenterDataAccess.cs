@@ -200,7 +200,7 @@
             repository.Execute(criteria);
         }
 
-        public void UpdateCustomerGeneralClassificationtoMainDB(List<LastestClassificationModel> custIdList)
+        public void UpdateCustomerGeneralClassificationtoMainDB(List<LatestClassificationModel> custIdList)
         {
             var repository = new DynamicRepository();
 
@@ -381,13 +381,13 @@
             repository.Execute(criteria);
         }
 
-        public void ClassifyCustomerGeneralCategoryDaily(IEnumerable<CustomerClassificationModel> customers)
+        public void ClassifyCustomerGeneralCategoryDaily(string customers)
         {
             var repository = new DynamicRepository();
 
             var criteria = new NormalAccountsClassificationGeneralCategorizeDailyCriteria
             {
-                ListCustIds = string.Join(",", customers.Select(c => c.CustId))
+                ListCustIds = customers
             };
 
             repository.Execute(criteria);
@@ -628,7 +628,7 @@
             }
         }
 
-        public IEnumerable<LastestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts)
+        public IEnumerable<LatestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts)
         {
             var criteria = new GetLastestClassificationCriteria()
             {
@@ -637,7 +637,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<LastestClassificationModel>(criteria);
+                return db.Query<LatestClassificationModel>(criteria);
             }
         }
 

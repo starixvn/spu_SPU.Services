@@ -127,7 +127,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateAppliedStatusClassification(custIdList, isGeneralCategory);
         }
 
-        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LastestClassificationModel> custIdList)
+        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList)
         {
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList.ToList());
 
@@ -207,7 +207,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.ClassifyCustomerDaily(customers);
         }
 
-        public void ClassifyCustomerGeneralCategoryDaily(IEnumerable<CustomerClassificationModel> customers)
+        public void ClassifyCustomerGeneralCategoryDaily(string customers)
         {
             dataCenterDataAccess.ClassifyCustomerGeneralCategoryDaily(customers);
         }
@@ -302,7 +302,7 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetLastestCategory(ctsCustID, isCustId, isExcludedDetailedCategory);
         }
 
-        public IEnumerable<LastestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts)
+        public IEnumerable<LatestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts)
         {
             return dataCenterDataAccess.GetLatestClassification(typeCategoryCusts);
         }

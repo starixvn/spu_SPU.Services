@@ -59,7 +59,7 @@
     <Compile Include="CustomerEvidence\SyncCustomerClassToMainModel.cs" />
     <Compile Include="DBResult\DBResult.cs" />
     <Compile Include="DeleteDataToSoon88ViewModel.cs" />
-    <Compile Include="CustomerClassification\LastestClassificationModel.cs" />
+    <Compile Include="CustomerClassification\LatestClassificationModel.cs" />
     <Compile Include="CustomerClassification\TypeCategoryCustomerModel.cs" />
     <Compile Include="MainDB\ProblemCustomerForMainDBModel.cs" />
     <Compile Include="PreparedDeleteDataToSoon88ViewModel.cs" />

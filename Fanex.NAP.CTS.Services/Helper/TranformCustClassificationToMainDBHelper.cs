@@ -31,7 +31,7 @@
             }
         }
 
-        public static bool SyncCCToMainDB(IEnumerable<LastestClassificationModel> lastestClassifications, int retryTime)
+        public static bool SyncCCToMainDB(IEnumerable<LatestClassificationModel> lastestClassifications, int retryTime)
         {
             if (lastestClassifications == null || !lastestClassifications.Any())
             {
@@ -70,7 +70,7 @@
             return true;
         }
 
-        public static void UpdateAppliedCustomerClassification(IEnumerable<LastestClassificationModel> lastestClassifications)
+        public static void UpdateAppliedCustomerClassification(IEnumerable<LatestClassificationModel> lastestClassifications)
         {
             if (lastestClassifications == null || !lastestClassifications.Any())
             {

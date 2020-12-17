@@ -36,7 +36,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<TypeCategoryCustomerModel> InsertMainCustomerClassification(string newClassification);
 
-        void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LastestClassificationModel> custIdList);
+        void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList);
 
         void InsertProblemAccountClassificationToMainDB(List<ProblemAccountForMainDBModel> custIdList);
 
@@ -67,7 +67,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory);
 
-        IEnumerable<LastestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts);
+        IEnumerable<LatestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts);
 
         IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete);
 

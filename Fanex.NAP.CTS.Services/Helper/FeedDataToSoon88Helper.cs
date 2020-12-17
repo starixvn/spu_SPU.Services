@@ -16,7 +16,7 @@
 
     public static class FeedDataToSoon88Helper
     {
-        public static void FeedCCToSoon88(IEnumerable<LastestClassificationModel> custsToMainDB)
+        public static void FeedCCToSoon88(IEnumerable<LatestClassificationModel> custsToMainDB)
         {
             if (custsToMainDB == null || !custsToMainDB.Any())
             {

@@ -127,7 +127,8 @@
                     
                     var newMembers = dataCenterService.InsertCategoryForNewCustomer(custIdList).ToList();
 
-                    //TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, false, AppSettings.RetryTime, AppSettings.BatchSize);
+                    ///TODO: Update flag for SP rescan daily
+                    RescanDailyForNormalAutoTagHelper.RescanNormalDaily(newMembers);
 
                     return true;
                 }
