@@ -12,7 +12,7 @@
 
     public static class TranformCustClassificationToMainDBHelper
     {
-        public static void InsertNewMemberCategoryToMainDB(List<TypeCategoryCustomerModel> newMembers, bool IsCCAutoTag, int retryTime, int batchSize)
+        public static void InsertNewMemberCategoryToMainDB(List<TypeCategoryCustomerModel> newMembers, int retryTime, int batchSize)
         {
             if (newMembers == null || !newMembers.Any())
             {
@@ -23,27 +23,15 @@
 
             foreach (var listCust in newMembersChunk)
             {
-                var custIds = CheckNewMemberClassification(string.Join(",", listCust));
+                var lastestClassifications = WrapperDataCenterService.Instance.GetLatestClassification(listCust);
 
-                var validNewMembers = listCust.Join(custIds,
-                    x1 => x1.CustId,
-                    x2 => x2,
-                    (x1, x2) => new TypeCategoryCustomerModel
-                    {  
-                        CustId = x2,
-                        TypeId = x1.TypeId
-                    });
-
-                var lastestClassifications = WrapperDataCenterService.Instance.GetLatestClassification(validNewMembers);
-
-                SyncCCToMainDB(lastestClassifications, IsCCAutoTag, retryTime);
+                SyncCCToMainDB(lastestClassifications, retryTime);
 
                 UpdateAppliedCustomerClassification(lastestClassifications);
             }
-
         }
 
-        public static bool SyncCCToMainDB(IEnumerable<LastestClassificationModel> lastestClassifications, bool IsCCAutoTag, int retryTime)
+        public static bool SyncCCToMainDB(IEnumerable<LastestClassificationModel> lastestClassifications, int retryTime)
         {
             if (lastestClassifications == null || !lastestClassifications.Any())
             {
@@ -68,7 +56,7 @@
                        .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                        .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                        var jobName = IsCCAutoTag ? "AutoTag Customer Classification" : "Tranform Customer Service";
+                        var jobName = "AutoTag Customer Classification";
 
                         LogService.Error($"{jobName} - Update New Member Classification Customer to MainDB service - Start Exception {logMessage} with listCust: {jsonDataForLog}", ex);
                          
