@@ -1,27 +1,30 @@
-﻿using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Data.SqlServer;
-using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.CTS.Model;
-using Fanex.NAP.CTS.Services;
-using Fanex.NAP.CTS.Services.Helper;
-using Fanex.NAP.FS.Core;
-using Fanex.NAP.SPU.Core;
-using Newtonsoft.Json;
-using SharpRaven;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
+﻿namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 {
+    using Fanex.Data;
+    using Fanex.Data.MySql;
+    using Fanex.Data.SqlServer;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.CTS.Services.Helper;
+    using Fanex.NAP.CTS.Services.Interface;
+    using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
+    using SharpRaven;
+    using System;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     class Program
     {
+        static IDataCenterService dataCenterService = new DataCenterService();
+
         static void Main(string[] args)
         {
             DbSettingProviderManager
@@ -46,7 +49,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
 
             try
             {
-                var dataCenterService = new DataCenterService();
+                
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
 
                 int insertedRows = 0;
@@ -55,12 +58,10 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                 {
                     newClassification = dataCenterService.GetNewClassification();
                     
-                    var generalClassification = newClassification?.Where(c => c.IsGeneralCategory);
-                    var newMemberCategories = newClassification?.Where(c => c.IsGeneralCategory && c.CategoryId == (int) Constants.CATEGORY.NEWMEMBER);
-                    
-                    InsertNewMemberCategoriesToMainDB(newMemberCategories, dataCenterService);
-                    InsertGeneralClassificationCusts(generalClassification, dataCenterService);                  
+                    var generalClassifications = newClassification?.Where(c => c.IsGeneralCategory);
 
+                    InsertGeneralClassificationCusts(generalClassifications);
+                
                 } while (newClassification != null && newClassification.Any());
 
                 insertedRows += newClassification.Count;
@@ -77,43 +78,95 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
             Console.WriteLine("CustomerClassification.AutoTag done");
             Console.ReadLine();
         }
-       
-        static void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification, DataCenterService dataService)
+
+        static void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
         {
-            if (generalClassification == null || !generalClassification.Any())
+            if (generalClassification == null && generalClassification.Any())
             {
-                return;
-            }
+                var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
+                var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
 
-            var tasks = new List<Task>();
-            var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
-            var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
-
-            for (int i = 0; i < newGeneralClassificationChunk.Count; i++)
-            {
-                string jsonData = JsonConvert.SerializeObject(newGeneralClassificationChunk[i]);
-                var custForMainDB = dataService.InsertMainCustomerClassification(jsonData);
-
-                if (custForMainDB != null && custForMainDB.Any())
+                foreach (var listClassification in newGeneralClassificationChunk)
                 {
-                    custGeneralCategoryForMainDB.AddRange(custForMainDB);
+                    try
+                    {
+                        var jsonData = JsonConvert.SerializeObject(listClassification);
+
+                        // Insert data in CTS
+                        var typeCustModel = dataCenterService.InsertMainCustomerClassification(jsonData);
+
+                        var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
+
+                        // Update IsApplied in mainDB
+                        dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
+
+                        // Get lastest classification in CTS
+                        var lastestClassifications = dataCenterService.GetLatestClassification(typeCustModel);
+
+                        // Update applied classification
+                        if (lastestClassifications != null && lastestClassifications.Any())
+                        {
+                            // Update CustomerClass in table custinfo to MainDB
+                            dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(lastestClassifications);
+
+                            var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
+
+                            jsonData = JsonConvert.SerializeObject(updateApplyCCs);
+
+                            // Update IsAppliedCC = 1 in CTS
+                            dataCenterService.UpdateAppliedCustomerClassification(jsonData);
+                        }
+
+                        // Feed data to Soon88
+                        FeedDataToSoon88Helper.FeedCCToSoon88(lastestClassifications);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                    }
                 }
 
-                var custIdList = string.Join(",", newGeneralClassificationChunk[i].Select(c => c.CustId).Distinct());
-                dataService.UpdateAppliedStatusClassification(custIdList, true);
             }
-
-            InsertGeneralClassificationCustToMainDB(custGeneralCategoryForMainDB, dataService);
+           
         }
 
-        static void InsertGeneralClassificationCustToMainDB(List<CustomerGeneralClassificationModel> custGeneralCategoryForMainDB, DataCenterService dataService)
+        //static void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
+        //{
+        //    if (generalClassification == null || !generalClassification.Any())
+        //    {
+        //        return;
+        //    }
+
+        //    var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
+        //    var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
+
+        //    for (int i = 0; i < newGeneralClassificationChunk.Count; i++)
+        //    {
+
+        //        string jsonData = JsonConvert.SerializeObject(newGeneralClassificationChunk[i]);
+
+        //        var custForMainDB = dataCenterService.InsertMainCustomerClassification(jsonData);
+
+        //        if (custForMainDB != null && custForMainDB.Any())
+        //        {
+        //            custGeneralCategoryForMainDB.AddRange(custForMainDB);
+        //        }
+
+        //        var custIdList = string.Join(",", newGeneralClassificationChunk[i].Select(c => c.CustId).Distinct());
+        //        dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
+        //    }
+
+        //    InsertGeneralClassificationCustToMainDB(custGeneralCategoryForMainDB);
+        //}
+
+        static void InsertGeneralClassificationCustToMainDB(List<CustomerGeneralClassificationModel> custGeneralCategoryForMainDB)
         {
             if (custGeneralCategoryForMainDB == null || !custGeneralCategoryForMainDB.Any())
             {
                 return;
             }
 
-            var specialCustomerClass = dataService.GetAllSpecialCustomerClass();
+            var specialCustomerClass = dataCenterService.GetAllSpecialCustomerClass();
             custGeneralCategoryForMainDB.RemoveAll(item => specialCustomerClass.Contains(item.CustId));
 
             var custGeneralCategoryInRuleForMainDB = custGeneralCategoryForMainDB?.Where(c => c.CategoryIdMapping != -99).ToList();
@@ -135,22 +188,28 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                 {
                     try
                     {
-                        //// Get lastest classification
-                        //var custIds = string.Join(",", listCust.Select(x => x.CustId));
+                        // Get lastest classification
+                        var custIds = string.Join(",", listCust.Select(x => x.CustId));
 
-                        //var lastestClassifications = dataService.GetLatestClassification(custIds, true);
+                        var lastestCusts = listCust.Select(x => new TypeCategoryCustomerModel
+                        {
+                            CustId = x.CustId,
+                            TypeId = 4
+                        });
 
-                        //// Update general classification to MainDB
-                        //dataService.UpdateCustomerGeneralClassificationtoMainDB(lastestClassifications);
+                        var lastestClassifications = dataCenterService.GetLatestClassification(lastestCusts);
 
-                        //// Update applied classification
-                        //if (lastestClassifications != null && lastestClassifications.Any())
-                        //{
-                        //    var updateApplyCCs = lastestClassifications.Select(x => new { CustId = x.CustID, x.ScannedTime });
-                        //    var jsonData = JsonConvert.SerializeObject(updateApplyCCs);
+                        // Update general classification to MainDB
+                        dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(lastestClassifications);
 
-                        //    dataService.UpdateAppliedCustomerClassification(jsonData);
-                        //}
+                        // Update applied classification
+                        if (lastestClassifications != null && lastestClassifications.Any())
+                        {
+                            var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
+                            var jsonData = JsonConvert.SerializeObject(updateApplyCCs);
+
+                            dataCenterService.UpdateAppliedCustomerClassification(jsonData);
+                        }
 
                         isSuccess = true;
                     }
@@ -171,20 +230,7 @@ namespace Fanex.NAP.CTS.CustomerClassification.AutoTag
                     }
                 }
             }
-        }
+        }        
 
-        static void InsertNewMemberCategoriesToMainDB(IEnumerable<CustomerClassificationModelMoreInfo> newMemberClassification, DataCenterService dataService)
-        {
-            if(newMemberClassification == null || !newMemberClassification.Any())
-            {
-                return;
-            }
-
-            var customerClass = dataService.GetCustomerClassByCustId(string.Join(",", newMemberClassification?.Select(c => c.CustId)));
-
-            var newMembers = customerClass?.Where(c => c.CustomerClass == null);
-
-            //TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, true, AppSettings.RetryTime, AppSettings.BatchSize);
-        }
     }
 }

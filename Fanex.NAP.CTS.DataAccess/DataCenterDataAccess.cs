@@ -260,7 +260,7 @@
             repository.Execute(criteria);
         }
 
-        public IEnumerable<CustomerGeneralClassificationModel> InsertMainCustomerClassification(string newClassification)
+        public IEnumerable<TypeCategoryCustomerModel> InsertMainCustomerClassification(string newClassification)
         {
             var repository = new DynamicRepository();
 
@@ -269,7 +269,7 @@
                 NewClassification = newClassification
             };
 
-            return repository.Fetch<CustomerGeneralClassificationModel>(criteria);
+            return repository.Fetch<TypeCategoryCustomerModel>(criteria);
         }
 
 

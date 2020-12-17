@@ -127,7 +127,7 @@
                     
                     var newMembers = dataCenterService.InsertCategoryForNewCustomer(custIdList).ToList();
 
-                    TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, false, AppSettings.RetryTime, AppSettings.BatchSize);
+                    //TranformCustClassificationToMainDBHelper.InsertNewMemberCategoryToMainDB(newMembers, false, AppSettings.RetryTime, AppSettings.BatchSize);
 
                     return true;
                 }

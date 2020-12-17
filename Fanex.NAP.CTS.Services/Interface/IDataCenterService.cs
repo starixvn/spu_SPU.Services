@@ -34,7 +34,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void AutoTagClassification(string newClassification);
 
-        IEnumerable<CustomerGeneralClassificationModel> InsertMainCustomerClassification(string newClassification);
+        IEnumerable<TypeCategoryCustomerModel> InsertMainCustomerClassification(string newClassification);
 
         void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LastestClassificationModel> custIdList);
 
@@ -70,6 +70,8 @@ namespace Fanex.NAP.CTS.Services.Interface
         IEnumerable<LastestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts);
 
         IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete);
-        
+
+        DBResult UpdateAppliedCustomerClassification(string jsonData);
+
     }
 }

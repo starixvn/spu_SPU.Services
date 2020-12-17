@@ -107,7 +107,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
-        public IEnumerable<CustomerGeneralClassificationModel> InsertMainCustomerClassification(string newClassification)
+        public IEnumerable<TypeCategoryCustomerModel> InsertMainCustomerClassification(string newClassification)
         {
            return dataCenterDataAccess.InsertMainCustomerClassification(newClassification);
         }
