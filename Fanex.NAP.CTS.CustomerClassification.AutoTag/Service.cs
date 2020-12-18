@@ -13,8 +13,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Threading;
 
     public class Service
     {
@@ -33,7 +32,6 @@
 
             try
             {
-
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
 
                 int insertedRows = 0;
@@ -62,7 +60,7 @@
 
         private void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
         {
-            if (generalClassification == null && generalClassification.Any())
+            if (generalClassification != null && generalClassification.Any())
             {
                 var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
                 var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
@@ -71,44 +69,40 @@
                 {
                     try
                     {
-                        var jsonData = JsonConvert.SerializeObject(listClassification);
+                        var jsonClassification = JsonConvert.SerializeObject(listClassification);
 
-                        // Insert data in CTS
-                        var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonData);
+                        // 1. Insert data in CTS
+                        var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
 
                         var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
 
-                        // Update IsApplied in mainDB
+                        // 2. Update IsApplied in mainDB
                         _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
 
-                        // Get lastest classification in CTS
+                        // 3. Get lastest classification in CTS
                         var lastestClassifications = _dataCenterService.GetLatestClassification(typeCustModel);
-
-                        // Update applied classification
+                        
                         if (lastestClassifications != null && lastestClassifications.Any())
                         {
-                            // Update CustomerClass in table custinfo to MainDB
-                            _dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(lastestClassifications);
+                            // 4. Update CustomerClass in table custinfo to MainDB
+                            _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
 
                             var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
 
-                            jsonData = JsonConvert.SerializeObject(updateApplyCCs);
+                            var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
 
-                            // Update IsAppliedCC = 1 in CTS
-                            _dataCenterService.UpdateAppliedCustomerClassification(jsonData);
+                            // 5. Update IsAppliedCC = 1 in CTS
+                            _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+
+                            // 6. Push CC to Soon88
+                            _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                         }
-
-                        // Feed data to Soon88
-                        //FeedDataToSoon88Helper.FeedCCToSoon88(lastestClassifications);
-
-                        _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                     }
                     catch (Exception ex)
                     {
-
+                        LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts exception {ex.Message}", ex);
                     }
                 }
-
             }
         }
     }
