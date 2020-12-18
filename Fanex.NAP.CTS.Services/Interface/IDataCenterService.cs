@@ -46,12 +46,13 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch, int parentCateId);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);
-        
+        IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);        
 
         void ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
 
         void ClassifyCustomerDailyDone(string custSportJson, int parentCateId);
+
+        void ClassifyCustomerGeneralCategoryDaily(string customers);
 
         void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers);
 
