@@ -15,12 +15,10 @@
 
     public class RescanCustomerClassificationService : IRescanCustomerClassificationService
     {
-        private readonly IPushDataToExternalService _pushDataToExternalService;
         private readonly IDataCenterService _dataCenterService;
 
         public RescanCustomerClassificationService()
-        {
-            _pushDataToExternalService = new PushDataToExternalService();
+        {            
             _dataCenterService = new DataCenterService();
         }        
 
@@ -33,15 +31,6 @@
 
             // Check and rescan normal account
             RescanNormalAccount(customers);
-
-            return isSuccess;
-        }
-
-        public bool PushCustomerClassificationToExternal(IEnumerable<TypeCategoryCustomerModel> customers)
-        {
-            var ccLatestList = _dataCenterService.GetLatestClassification(customers);
-
-            var isSuccess = _pushDataToExternalService.PushCustomerClassificationToExternal(ccLatestList);
 
             return isSuccess;
         }
@@ -86,7 +75,6 @@
 
             return true;
         }
-
-      
+        
     }
 }

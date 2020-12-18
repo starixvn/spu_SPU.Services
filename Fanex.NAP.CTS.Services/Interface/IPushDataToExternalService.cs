@@ -5,7 +5,8 @@
 
     public interface IPushDataToExternalService
     {
-        bool PushCustomerClassificationToExternal(IEnumerable<LatestClassificationModel> customerClassifications);
+        bool PushCustomerClassificationToMain(IEnumerable<LatestClassificationModel> customerClassifications, int retryTime);
 
+        void PushCustomerClassificationToSoon88(IEnumerable<LatestClassificationModel> customerClassifications);
     }
 }

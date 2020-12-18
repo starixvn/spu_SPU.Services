@@ -6,7 +6,6 @@
     public interface IRescanCustomerClassificationService
     {
         bool RescanCustomerClassification(List<TypeCategoryCustomerModel> customers);
-
-        bool PushCustomerClassificationToExternal(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts);
+    
     }
 }
