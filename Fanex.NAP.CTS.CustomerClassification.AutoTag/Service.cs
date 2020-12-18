@@ -80,7 +80,7 @@
                         _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
 
                         // 3. Get lastest classification in CTS
-                        var lastestClassifications = _dataCenterService.GetLatestClassification(typeCustModel);
+                        var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",",typeCustModel));
                         
                         if (lastestClassifications != null && lastestClassifications.Any())
                         {

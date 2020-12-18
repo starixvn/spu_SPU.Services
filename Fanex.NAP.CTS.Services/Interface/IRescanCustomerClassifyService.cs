@@ -5,7 +5,7 @@
 
     public interface IRescanCustomerClassificationService
     {
-        bool RescanCustomerClassification(List<TypeCategoryCustomerModel> customers);
+        bool RescanCustomerClassification(List<int> customers);
     
     }
 }

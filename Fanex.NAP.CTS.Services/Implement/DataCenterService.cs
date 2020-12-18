@@ -40,7 +40,7 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.TransformCustomerFromMainDB(customerJson);
         }
 
-        public IEnumerable<TypeCategoryCustomerModel> InsertCategoryForNewCustomer (string customerList)
+        public IEnumerable<int> InsertCategoryForNewCustomer (string customerList)
         {
             return dataCenterDataAccess.InsertCategoryForNewCustomer(customerList);
         }
@@ -107,7 +107,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
-        public IEnumerable<TypeCategoryCustomerModel> InsertMainCustomerClassification(string newClassification)
+        public IEnumerable<int> InsertMainCustomerClassification(string newClassification)
         {
            return dataCenterDataAccess.InsertMainCustomerClassification(newClassification);
         }
@@ -232,7 +232,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.RealtimeUpdateLastScanTime(isGeneralCategory);
         }
 
-        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)
+        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime? dateTime)
         {
             return dataCenterDataAccess.GetProblemAccounts(custIDs, dateTime);
         }
@@ -242,7 +242,7 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
         }
 
-        public IEnumerable<string> InsertProblemAccounts(string jsonData)
+        public IEnumerable<int> InsertProblemAccounts(string jsonData)
         {
             return dataCenterDataAccess.InsertProblemAccount(jsonData);
         }
@@ -302,9 +302,9 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetLastestCategory(ctsCustID, isCustId, isExcludedDetailedCategory);
         }
 
-        public IEnumerable<LatestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts)
+        public IEnumerable<LatestClassificationModel> GetLatestClassification(string custIds)
         {
-            return dataCenterDataAccess.GetLatestClassification(typeCategoryCusts);
+            return dataCenterDataAccess.GetLatestClassification(custIds);
         }
 
         public IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
@@ -312,10 +312,14 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.FeedDataToToSoon88(custClasses, isDelete);
         }
 
-        public DBResult UpdateAppliedCustomerClassification(string jsonData)
+        public void UpdateAppliedCustomerClassification(string jsonData)
         {
-            return dataCenterDataAccess.UpdateAppliedCustomerClassification(jsonData);
-        }
+            var resultAppliedCC =  dataCenterDataAccess.UpdateAppliedCustomerClassification(jsonData);
 
+            if (resultAppliedCC.ErrorCode != 0)
+            {
+                LogService.Error($" Update Applied Customer Classification fails - Exception {resultAppliedCC.ErrorMsg} with data: {jsonData}");
+            }
+        }
     }
 }

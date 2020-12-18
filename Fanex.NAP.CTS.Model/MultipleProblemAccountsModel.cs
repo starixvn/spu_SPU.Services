@@ -2,7 +2,7 @@
 {
     public class MultipleProblemAccountsModel
     {
-        public int CustID { get; set; }
+        public long CustID { get; set; }
 
         public int ReasonID { get; set; }
     }

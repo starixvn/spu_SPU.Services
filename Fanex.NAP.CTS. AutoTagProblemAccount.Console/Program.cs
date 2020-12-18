@@ -130,7 +130,7 @@
             };
         }
 
-        static IEnumerable<string> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        static IEnumerable<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
         {
             var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
@@ -237,7 +237,7 @@
 
                 var jsonData = JsonConvert.SerializeObject(result);
 
-                return WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(jsonData);
+                 WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(jsonData);
             }
 
             return new DBResult();

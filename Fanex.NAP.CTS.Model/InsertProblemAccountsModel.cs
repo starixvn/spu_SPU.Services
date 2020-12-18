@@ -8,7 +8,7 @@ namespace Fanex.NAP.CTS.Model
 {
     public class InsertProblemAccountsModel
     {
-        public int CustId { get; set; }
+        public long CustId { get; set; }
 
         public int CategoryId { get; set; }
     }

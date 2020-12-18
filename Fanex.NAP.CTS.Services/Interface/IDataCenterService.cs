@@ -1,5 +1,6 @@
 ﻿using Fanex.NAP.CTS.Model;
 using Fanex.NAP.SPU.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Fanex.NAP.CTS.Services.Interface
@@ -34,7 +35,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void AutoTagClassification(string newClassification);
 
-        IEnumerable<TypeCategoryCustomerModel> InsertMainCustomerClassification(string newClassification);
+        IEnumerable<int> InsertMainCustomerClassification(string newClassification);
 
         void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList);
 
@@ -60,7 +61,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList);
 
-        IEnumerable<TypeCategoryCustomerModel> InsertCategoryForNewCustomer(string customerList);
+        IEnumerable<int> InsertCategoryForNewCustomer(string customerList);
 
         IEnumerable<int> GetAllSpecialCustomerClass();
 
@@ -68,11 +69,14 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory);
 
-        IEnumerable<LatestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts);
+        IEnumerable<LatestClassificationModel> GetLatestClassification(string custIds);
 
         IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete);
 
-        DBResult UpdateAppliedCustomerClassification(string jsonData);
+        void UpdateAppliedCustomerClassification(string jsonData);
 
+        IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime? dateTime);
+
+        IEnumerable<int> InsertProblemAccounts(string jsonData);
     }
 }

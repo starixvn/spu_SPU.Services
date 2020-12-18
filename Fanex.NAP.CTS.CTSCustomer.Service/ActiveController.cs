@@ -16,11 +16,13 @@
 
     public class ActiveController : ApiController
     {
-        private readonly IDataCenterService dataCenterService;
+        private readonly IDataCenterService _dataCenterService;
+        private readonly IRescanCustomerClassificationService _rescanCustomerClassificationService;
 
         public ActiveController()
         {
-            dataCenterService = new DataCenterService();
+            _dataCenterService = new DataCenterService();
+            _rescanCustomerClassificationService = new RescanCustomerClassificationService();
         }
 
         public string Index()
@@ -62,7 +64,7 @@
 
                     if (customers != null && customers.Any())
                     {
-                        dataCenterService.FillUpCustomerFromMainDB(customers);
+                        _dataCenterService.FillUpCustomerFromMainDB(customers);
                         return true;
                     }
                 }
@@ -97,7 +99,7 @@
                 {
                     if (customers != null && customers.Any())
                     {
-                        dataCenterService.UpdateUsername2(customers);
+                        _dataCenterService.UpdateUsername2(customers);
                         return true;
                     }
                 }
@@ -121,14 +123,11 @@
             {
                 if (customers != null && customers.Any())
                 {
-                    dataCenterService.TransformCustomerFromMainDB(customers);
+                    _dataCenterService.TransformCustomerFromMainDB(customers);
 
-                    var custIdList = string.Join(",", customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct());           
-                    
-                    var newMembers = dataCenterService.InsertCategoryForNewCustomer(custIdList).ToList();
+                    var custIdList = customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct().ToList();
 
-                    ///TODO: Update flag for SP rescan daily
-                    RescanDailyForNormalAutoTagHelper.RescanNormalDaily(newMembers);
+                    _rescanCustomerClassificationService.RescanCustomerClassification(custIdList);
 
                     return true;
                 }

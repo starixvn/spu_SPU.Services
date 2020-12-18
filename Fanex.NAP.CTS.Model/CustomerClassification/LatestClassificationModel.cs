@@ -7,7 +7,6 @@
     [XName("r")]
     public class LatestClassificationModel
     { 
-
         [XName("id")]
         public long CustId { get; set; }
 
@@ -16,14 +15,5 @@
 
         [XmlIgnore]
         public DateTime ScannedTime { get; set; }
-
-        /// <summary>
-        /// TODO: Remove these 
-        /// </summary>
-        [XmlIgnore]
-        public bool IsRescanPA { get; set; }
-
-        [XmlIgnore]
-        public bool IsRescanNormal { get; set; }
     }
 }

@@ -45,7 +45,7 @@
             }
         }
 
-        public List<TypeCategoryCustomerModel> InsertCategoryForNewCustomer(string custIds)
+        public List<int> InsertCategoryForNewCustomer(string custIds)
         {
             var criteria = new InsertNewCustomerCategoryCriteria
             {
@@ -54,7 +54,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<TypeCategoryCustomerModel>(criteria).ToList();
+                return db.Query<int>(criteria).ToList();
             }
         }
 
@@ -260,7 +260,7 @@
             repository.Execute(criteria);
         }
 
-        public IEnumerable<TypeCategoryCustomerModel> InsertMainCustomerClassification(string newClassification)
+        public IEnumerable<int> InsertMainCustomerClassification(string newClassification)
         {
             var repository = new DynamicRepository();
 
@@ -269,7 +269,7 @@
                 NewClassification = newClassification
             };
 
-            return repository.Fetch<TypeCategoryCustomerModel>(criteria);
+            return repository.Fetch<int>(criteria);
         }
 
 
@@ -442,7 +442,7 @@
             repository.Execute(criteria);
         }
 
-        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime dateTime)
+        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime? dateTime)
         {
             var criteria = new GetProblemAccountsCriteria
             {
@@ -470,7 +470,7 @@
             }
         }
 
-        public IEnumerable<string> InsertProblemAccount(string problemAccountJson)
+        public IEnumerable<int> InsertProblemAccount(string problemAccountJson)
         {
             var repository = new DynamicRepository();
 
@@ -481,7 +481,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-               return repository.Fetch<string>(criteria);
+               return repository.Fetch<int>(criteria);
             }
         }
 
@@ -628,11 +628,11 @@
             }
         }
 
-        public IEnumerable<LatestClassificationModel> GetLatestClassification(IEnumerable<TypeCategoryCustomerModel> typeCategoryCusts)
+        public IEnumerable<LatestClassificationModel> GetLatestClassification(string custIds)
         {
             var criteria = new GetLastestClassificationCriteria()
             {
-                CustomerCategorizes = JsonConvert.SerializeObject(typeCategoryCusts)
+                CustIds = custIds
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

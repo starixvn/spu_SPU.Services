@@ -6,6 +6,8 @@
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -16,31 +18,69 @@
     public class RescanCustomerClassificationService : IRescanCustomerClassificationService
     {
         private readonly IDataCenterService _dataCenterService;
+        private readonly IPushDataToExternalService _pushDataToExternalService;
 
         public RescanCustomerClassificationService()
-        {            
+        {
             _dataCenterService = new DataCenterService();
-        }        
+            _pushDataToExternalService = new PushDataToExternalService();
+        }
 
-        public bool RescanCustomerClassification(List<TypeCategoryCustomerModel> customers)
+        public bool RescanCustomerClassification(List<int> custIds)
         {
             var isSuccess = true;
 
             // Check and rescan problem account
-            RescanProblemAccount();
+            var problemAccounts = CheckToReScanPA(string.Join(",", custIds.Select(c => c))).ToList();
+
+            if (problemAccounts != null && problemAccounts.Any())
+            {
+                RescanProblemAccount(problemAccounts);
+
+                custIds.RemoveAll(item => problemAccounts.Select(c => c.CustID).Contains(item));
+            }
 
             // Check and rescan normal account
-            RescanNormalAccount(customers);
+            if (custIds != null && custIds.Any())
+            {
+                RescanNormalAccount(custIds);
+            }
 
             return isSuccess;
         }
-      
-        private bool RescanProblemAccount()
-        {
-            throw new NotImplementedException();
-        }     
 
-        private bool RescanNormalAccount(List<TypeCategoryCustomerModel> customers)
+        private void RescanProblemAccount(List<MultipleProblemAccountsModel> problemAccounts)
+        {
+            if (problemAccounts == null && !problemAccounts.Any())
+            {
+                return;
+            }
+
+            var latestCustIds = InsertProblemAccountToCTS(problemAccounts);
+
+            if (latestCustIds == null && !latestCustIds.Any())
+            {
+                return;
+            }
+
+            var latestCustIdsChunk = latestCustIds.Chunk(AppSettings.BatchSize);
+
+            foreach (var custids in latestCustIdsChunk)
+            {
+                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",",custids));
+
+                if (lastestClassifications != null && lastestClassifications.Any())
+                {
+                    _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
+
+                    _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
+
+                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                }
+            }
+        }
+
+        private bool RescanNormalAccount(List<int> customers)
         {
             if (customers == null || !customers.Any())
             {
@@ -51,30 +91,43 @@
 
             var custIdsChunk = customers.Chunk(batchSize).ToList();
 
-            try
+            foreach (var custIds in custIdsChunk)
             {
-                foreach (var custIds in custIdsChunk)
-                {
-                    var lastestClassifications = _dataCenterService.GetLatestClassification(custIds);
+                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",",custIds));
 
-                    var custIdsToBeRescaned = string.Join(",", lastestClassifications.Select(cust => cust.CustId));
+                var custIdsToBeRescaned = string.Join(",", lastestClassifications.Select(cust => cust.CustId));
 
-                    _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned);
-                }
-            }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);
-
-                return false;
+                _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned);
             }
 
             return true;
         }
-        
+
+        private IEnumerable<MultipleProblemAccountsModel> CheckToReScanPA(string custIds)
+        {
+            var problemAccounts = new List<MultipleProblemAccountsModel>();
+
+            if (string.IsNullOrEmpty(custIds))
+            {
+                return problemAccounts;
+            }
+
+            problemAccounts = _dataCenterService.GetProblemAccounts(custIds, null).ToList();
+
+            return problemAccounts;
+        }
+
+        private IEnumerable<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        {
+            var result = problemAccounts.Select(a => new InsertProblemAccountsModel
+            {
+                CustId = a.CustID,
+                CategoryId = a.ReasonID
+            });
+
+            var jsonData = JsonConvert.SerializeObject(result);
+
+            return _dataCenterService.InsertProblemAccounts(jsonData);
+        }
     }
 }

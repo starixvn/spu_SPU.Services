@@ -63,8 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper\FeedDataToSoon88Helper.cs" />
-    <Compile Include="Helper\RescanDailyForNormalAutoTagHelper.cs" />
-    <Compile Include="Helper\TranformCustClassificationToMainDBHelper.cs" />
     <Compile Include="Implement\CustomerEvidenceService.cs" />
     <Compile Include="Implement\DataCenterService.cs" />
     <Compile Include="Implement\PushDataToExternalService.cs" />
