@@ -551,7 +551,7 @@
             return repository.Fetch<RobotUser>(criteria);
         }
 
-        public IEnumerable<CustomerClassModel> InsertRobotUsers(string custIds)
+        public IEnumerable<LatestClassificationModel> InsertRobotUsers(string custIds)
         {
             var repository = new DynamicRepository();
 
@@ -560,7 +560,7 @@
                 CustIds = custIds
             };
 
-            return repository.Fetch<CustomerClassModel>(criteria);
+            return repository.Fetch<LatestClassificationModel>(criteria);
         }
 
         public IEnumerable<ProbationModel> GetProbationCustForScanning(int numberOfRecord)

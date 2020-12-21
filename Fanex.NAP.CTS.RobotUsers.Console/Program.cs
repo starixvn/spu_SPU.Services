@@ -11,6 +11,7 @@
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
     using Sentry;
     using System;
     using System.Collections.Generic;
@@ -25,6 +26,7 @@
         static void Main(string[] args)
         {
             var dataService = new DataCenterService();
+            var pushDataToExternalService = new PushDataToExternalService();
 
             DbSettingProviderManager
                  .StartNewSession()
@@ -44,29 +46,36 @@
                     })
                });
 
-            var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
-            var creditSites = ConfigurationManager.AppSettings["Credit-Sites"].ToString();
             var executedTime = DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME);
-            var paramId = 3;
 
             try
             {
-                var previousTimingExecution = dataService.GetPreviousTimingExecution(paramId)?.SingleOrDefault();
+                var previousTimingExecution = dataService.GetPreviousTimingExecution(Constants.PARAMETER_ROBOTUSER_ID)?.SingleOrDefault();
 
                 var fromDate = DateTime.Parse(previousTimingExecution.ParameterValue);
-                var robotUsers = dataService.GetRobotUser(fromDate, creditSites);
+                var robotUsers = dataService.GetRobotUser(fromDate, AppSettings.CreditSizes);
                 if (robotUsers.Any())
                 {
-                    var robotUsersChunks = robotUsers.Chunk(batchSize).ToList();
+                    var robotUsersChunks = robotUsers.Chunk(AppSettings.BatchSize).ToList();
                     foreach (var robotUserList in robotUsersChunks)
                     {
                         var custClasses = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
-                        dataService.UpdateCustomerGeneralClassificationtoMainDB(custClasses);
+
+                        if (custClasses != null && custClasses.Any())
+                        {
+                            bool isSyncMainSuccessfully = pushDataToExternalService.PushCustomerClassificationToMain(custClasses, AppSettings.RetryTime);
+
+                            if (isSyncMainSuccessfully)
+                            {
+                                dataService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(custClasses));
+                            }
+                        }
+
                         Thread.Sleep(300);
                     }
                 }
 
-                dataService.UpdateTimingExecution(executedTime, paramId);
+                dataService.UpdateTimingExecution(executedTime, Constants.PARAMETER_ROBOTUSER_ID);
             }
             catch (Exception ex)
             {

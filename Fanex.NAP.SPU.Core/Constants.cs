@@ -36,6 +36,8 @@
 
         public const int PARAMETER_VALUE = 2;
 
+        public const int PARAMETER_ROBOTUSER_ID= 3;
+
         public const string SALT = "!%HGDwweHqw#";
 
         public enum CATEGORY : int

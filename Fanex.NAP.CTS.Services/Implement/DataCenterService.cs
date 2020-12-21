@@ -264,7 +264,7 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetRobotUsers(fromDate, creditSiteList);
         }
 
-        public IEnumerable<CustomerClassModel> InsertRobotUsers(string custIds)
+        public IEnumerable<LatestClassificationModel> InsertRobotUsers(string custIds)
         {
             return dataCenterDataAccess.InsertRobotUsers(custIds);
         }
