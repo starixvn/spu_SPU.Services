@@ -23,9 +23,21 @@
             {
                 try
                 {
-                    WrapperDataCenterService.Instance.UpdateCustomerGeneralClassificationtoMainDB(customerClassifications);
+                    var result =  WrapperDataCenterService.Instance.UpdateCustomerGeneralClassificationtoMainDB(customerClassifications);
 
-                    retryTime = -1;
+                    if (result.ErrorCode != 0 && retryTime == 0)
+                    {
+                        LogService.Error($"CTS - PushDataToExternalService - exception from MainDB {result.ErrorMsg} with listCust: {JsonConvert.SerializeObject(customerClassifications)}");
+                        return false;
+                    }
+                    else if (result.ErrorCode != 0)
+                    {
+                        retryTime--;
+                    }
+                    else
+                    {
+                        retryTime = -1;
+                    }
                 }
                 catch (Exception ex)
                 {

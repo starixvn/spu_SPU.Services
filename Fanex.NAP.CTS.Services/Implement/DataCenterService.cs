@@ -127,9 +127,9 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.UpdateAppliedStatusClassification(custIdList, isGeneralCategory);
         }
 
-        public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList)
+        public DBResult UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList)
         {
-            dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList.ToList());
+            return dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList.ToList());
         }
 
         public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerClassModel> custClassList)

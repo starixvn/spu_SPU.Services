@@ -87,9 +87,7 @@
 
             foreach (var custIds in custIdsChunk)
             {
-                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",",custIds));
-
-                var custIdsToBeRescaned = string.Join(",", lastestClassifications.Select(cust => cust.CustId));
+                var custIdsToBeRescaned = string.Join(",", custIds);
 
                 _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned, false);
             }

@@ -200,7 +200,7 @@
             repository.Execute(criteria);
         }
 
-        public void UpdateCustomerGeneralClassificationtoMainDB(List<LatestClassificationModel> custIdList)
+        public DBResult UpdateCustomerGeneralClassificationtoMainDB(List<LatestClassificationModel> custIdList)
         {
             var repository = new DynamicRepository();
 
@@ -210,6 +210,8 @@
             };
 
             repository.Execute(criteria);
+
+            return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
         }
 
         public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerClassModel> custClassList)
