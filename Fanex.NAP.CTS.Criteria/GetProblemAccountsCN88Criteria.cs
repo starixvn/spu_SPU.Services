@@ -10,7 +10,7 @@
         public string CustIds { get; set; }
 
         [SpParam(SqlParamName = "datetime")]
-        public DateTime Datetime { get; set; }
+        public DateTime? Datetime { get; set; }
 
         public override string GetSettingKey()
         {

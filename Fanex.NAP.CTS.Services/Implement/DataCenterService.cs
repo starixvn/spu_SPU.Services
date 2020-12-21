@@ -207,9 +207,9 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.ClassifyCustomerDaily(customers);
         }
 
-        public void ClassifyCustomerGeneralCategoryDaily(string customers)
+        public void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days)
         {
-            dataCenterDataAccess.ClassifyCustomerGeneralCategoryDaily(customers);
+            dataCenterDataAccess.ClassifyCustomerGeneralCategoryDaily(customers, isCheckLast14Days);
         }
 
         public void ClassifyCustomerDailyDone(string custSportJson, int parentCateId)
@@ -237,7 +237,7 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetProblemAccounts(custIDs, dateTime);
         }
 
-        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime dateTime)
+        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime? dateTime)
         {
             return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
         }

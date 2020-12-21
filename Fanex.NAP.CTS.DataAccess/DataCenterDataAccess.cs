@@ -381,13 +381,14 @@
             repository.Execute(criteria);
         }
 
-        public void ClassifyCustomerGeneralCategoryDaily(string customers)
+        public void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days = true)
         {
             var repository = new DynamicRepository();
 
             var criteria = new NormalAccountsClassificationGeneralCategorizeDailyCriteria
             {
-                ListCustIds = customers
+                ListCustIds = customers,
+                IsCheckLast14Days = isCheckLast14Days
             };
 
             repository.Execute(criteria);
@@ -456,7 +457,7 @@
             }
         }
 
-        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime dateTime)
+        public IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime? dateTime)
         {
             var criteria = new GetProblemAccountsCN88Criteria
             {

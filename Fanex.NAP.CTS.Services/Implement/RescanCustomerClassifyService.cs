@@ -97,7 +97,7 @@
 
                 var custIdsToBeRescaned = string.Join(",", lastestClassifications.Select(cust => cust.CustId));
 
-                _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned);
+                _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned, false);
             }
 
             return true;
@@ -113,6 +113,8 @@
             }
 
             problemAccounts = _dataCenterService.GetProblemAccounts(custIds, null).ToList();
+
+            problemAccounts.AddRange(_dataCenterService.GetProblemAccounts_CN88(custIds, null).ToList());
 
             return problemAccounts;
         }

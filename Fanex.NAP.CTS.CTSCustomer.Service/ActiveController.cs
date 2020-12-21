@@ -139,7 +139,7 @@
                       .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
                       .ToString();
 
-                LogService.Error(logMessage);
+                LogService.Error( $"InsertNewCustomer - exception {logMessage} with listCust: {JsonConvert.SerializeObject(customers)}");
             }
 
             return false;

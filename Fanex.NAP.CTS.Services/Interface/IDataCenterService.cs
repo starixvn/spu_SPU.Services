@@ -53,7 +53,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void ClassifyCustomerDailyDone(string custSportJson, int parentCateId);
 
-        void ClassifyCustomerGeneralCategoryDaily(string customers);
+        void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days);
 
         void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers);
 
@@ -76,6 +76,8 @@ namespace Fanex.NAP.CTS.Services.Interface
         void UpdateAppliedCustomerClassification(string jsonData);
 
         IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime? dateTime);
+
+        IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime? dateTime);
 
         IEnumerable<int> InsertProblemAccounts(string jsonData);
     }
