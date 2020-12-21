@@ -3,9 +3,8 @@
     using Fanex.NAP.CTS.Model;
     using System.Collections.Generic;
 
-    public interface IRescanCustomerClassificationService
+    public interface IRescanCustomerClassifyService
     {
         bool RescanCustomerClassification(List<int> customers);
-    
     }
 }

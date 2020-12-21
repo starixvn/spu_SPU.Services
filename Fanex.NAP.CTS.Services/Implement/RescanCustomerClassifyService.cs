@@ -15,12 +15,12 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class RescanCustomerClassificationService : IRescanCustomerClassificationService
+    public class RescanCustomerClassifyService : IRescanCustomerClassifyService
     {
         private readonly IDataCenterService _dataCenterService;
         private readonly IPushDataToExternalService _pushDataToExternalService;
 
-        public RescanCustomerClassificationService()
+        public RescanCustomerClassifyService()
         {
             _dataCenterService = new DataCenterService();
             _pushDataToExternalService = new PushDataToExternalService();
@@ -71,9 +71,12 @@
 
                 if (lastestClassifications != null && lastestClassifications.Any())
                 {
-                    _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
+                    bool isSyncMainSuccessfully = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
 
-                    _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
+                    if(isSyncMainSuccessfully)
+                    {
+                        _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
+                    }
 
                     _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                 }
@@ -87,9 +90,7 @@
                 return true;
             }
 
-            var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
-
-            var custIdsChunk = customers.Chunk(batchSize).ToList();
+            var custIdsChunk = customers.Chunk(AppSettings.BatchSize).ToList();
 
             foreach (var custIds in custIdsChunk)
             {

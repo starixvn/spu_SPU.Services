@@ -130,14 +130,6 @@ namespace Fanex.NAP.CTS.Services
         public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList)
         {
             dataCenterDataAccess.UpdateCustomerGeneralClassificationtoMainDB(custIdList.ToList());
-
-            //var custClassList = custIdList.Select(c => new CustomerClassModel()
-            //{
-            //    CustID = c.CustId,
-            //    CustomerClass = c.CustomerClass
-            //});
-
-            //FeedDataToSoon88(custClassList, retryTime); //TODO separate this logic 
         }
 
         public void UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<CustomerClassModel> custClassList)

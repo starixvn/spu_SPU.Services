@@ -17,12 +17,12 @@
     public class ActiveController : ApiController
     {
         private readonly IDataCenterService _dataCenterService;
-        private readonly IRescanCustomerClassificationService _rescanCustomerClassificationService;
+        private readonly IRescanCustomerClassifyService _rescanCustomerClassificationService;
 
         public ActiveController()
         {
             _dataCenterService = new DataCenterService();
-            _rescanCustomerClassificationService = new RescanCustomerClassificationService();
+            _rescanCustomerClassificationService = new RescanCustomerClassifyService();
         }
 
         public string Index()
