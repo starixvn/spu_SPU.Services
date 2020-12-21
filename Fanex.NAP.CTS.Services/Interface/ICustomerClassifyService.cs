@@ -1,9 +1,8 @@
 ﻿namespace Fanex.NAP.CTS.Services
 {
-    using Fanex.NAP.CTS.Model;
     using System.Collections.Generic;
 
-    public interface IRescanCustomerClassifyService
+    public interface ICustomerClassifyService
     {
         bool RescanCustomerClassification(List<int> customers);
     }

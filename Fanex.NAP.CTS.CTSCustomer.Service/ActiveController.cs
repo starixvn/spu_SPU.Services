@@ -17,12 +17,12 @@
     public class ActiveController : ApiController
     {
         private readonly IDataCenterService _dataCenterService;
-        private readonly IRescanCustomerClassifyService _rescanCustomerClassificationService;
+        private readonly ICustomerClassifyService _customerClassificationService;
 
         public ActiveController()
         {
             _dataCenterService = new DataCenterService();
-            _rescanCustomerClassificationService = new RescanCustomerClassifyService();
+            _customerClassificationService = new CustomerClassifyService();
         }
 
         public string Index()
@@ -127,7 +127,7 @@
 
                     var custIdList = customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct().ToList();
 
-                    _rescanCustomerClassificationService.RescanCustomerClassification(custIdList);
+                    _customerClassificationService.RescanCustomerClassification(custIdList);
 
                     return true;
                 }

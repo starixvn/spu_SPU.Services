@@ -66,12 +66,12 @@
     <Compile Include="Implement\CustomerEvidenceService.cs" />
     <Compile Include="Implement\DataCenterService.cs" />
     <Compile Include="Implement\PushDataToExternalService.cs" />
-    <Compile Include="Implement\RescanCustomerClassifyService.cs" />
+    <Compile Include="Implement\CustomerClassifyService.cs" />
     <Compile Include="Implement\WrapperDataCenterService.cs" />
     <Compile Include="Interface\ICustomerEvidenceService.cs" />
     <Compile Include="Interface\IDataCenterService.cs" />
     <Compile Include="Interface\IPushDataToExternalService.cs" />
-    <Compile Include="Interface\IRescanCustomerClassifyService.cs" />
+    <Compile Include="Interface\ICustomerClassifyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,26 +1,19 @@
 ﻿namespace Fanex.NAP.CTS.Services
 {
-    using Fanex.Logging;
-    using Fanex.Logging.Extensions;
-    using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
-    using Newtonsoft.Json;
-    using System;
-    using System.Collections.Generic;
-    using System.Configuration;
+    using Newtonsoft.Json;    
+    using System.Collections.Generic;    
     using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
-    public class RescanCustomerClassifyService : IRescanCustomerClassifyService
+    public class CustomerClassifyService : ICustomerClassifyService
     {
         private readonly IDataCenterService _dataCenterService;
         private readonly IPushDataToExternalService _pushDataToExternalService;
 
-        public RescanCustomerClassifyService()
+        public CustomerClassifyService()
         {
             _dataCenterService = new DataCenterService();
             _pushDataToExternalService = new PushDataToExternalService();
@@ -31,7 +24,7 @@
             var isSuccess = true;
 
             // Check and rescan problem account
-            var problemAccounts = CheckToReScanPA(string.Join(",", custIds.Select(c => c))).ToList();
+            var problemAccounts = CheckToReScanPA(string.Join(",", custIds)).ToList();
 
             if (problemAccounts != null && problemAccounts.Any())
             {
