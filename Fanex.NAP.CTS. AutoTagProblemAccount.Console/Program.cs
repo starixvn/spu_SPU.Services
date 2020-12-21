@@ -40,43 +40,40 @@
                     })
                });
 
+            var logData = new List<MultipleProblemAccountsModel>();
+            var pushDataToExternalService = new PushDataToExternalService();
 
-            var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
-            var backupData = new List<MultipleProblemAccountsModel>();
             try
             {
                 var result = GetProblemAccounts();
 
                 if (result.ProblemAccounts != null && result.ProblemAccounts.Any())
                 {
-                    backupData = result.ProblemAccounts;
+                    logData = result.ProblemAccounts;
 
-                    var latestCustIds = InsertProblemAccountToCTS(result.ProblemAccounts);
+                    var custIds = InsertProblemAccountToCTS(result.ProblemAccounts);
 
-                    WrapperDataCenterService.Instance.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);
-
-                    if (latestCustIds != null && latestCustIds.Any())
+                    if (custIds != null && custIds.Any())
                     {
-                        var latestCustIdsChunk  = latestCustIds.Chunk(batchSize);
+                        var custIdsChunk  = custIds.Chunk(AppSettings.BatchSize);
 
-                        foreach(var custids in latestCustIdsChunk)
+                        foreach(var custs in custIdsChunk)
                         {
-                            var lastestClassifications = GetLatestClassificationForCusts(string.Join(",", custids));
+                            var lastestClassifications = WrapperDataCenterService.Instance.GetLatestClassification(string.Join(",", custs));
 
                             if (lastestClassifications != null && lastestClassifications.Any())
                             {
-                                var updatedProblemCustomers = InsertProblemCustomerToMainDB(lastestClassifications.ToList());
+                                bool isSyncMainSuccessfully = pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
 
-                                var resultAppliedCC = UpdateAppliedCustomerClassification(updatedProblemCustomers);
-                                if (resultAppliedCC.ErrorCode != 0)
+                                if (isSyncMainSuccessfully)
                                 {
-                                    LogService.Error(resultAppliedCC.ErrorMsg);
+                                    WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
                                 }
+
+                                pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                             }
                         }
                     }
-
-                    return;
                 }
 
                 WrapperDataCenterService.Instance.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);             
@@ -87,17 +84,14 @@
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                if(backupData != null && backupData.Any())
-                    logMessage += $"Full data input: {JsonConvert.SerializeObject(backupData)}"; 
+                if(logData != null && logData.Any())
+                    logMessage += $"Full data input: {JsonConvert.SerializeObject(logData)}"; 
 
                 LogService.Error(logMessage);
             }
-
-            Console.WriteLine("Done for AutoTagProblemAccount");
-            Console.ReadLine();
         }
         
-        static GetMultiProblemAccountsModel GetProblemAccounts()
+        private static GetMultiProblemAccountsModel GetProblemAccounts()
         {
             var previousTimingExecution = WrapperDataCenterService.Instance.GetPreviousTimingExecution(Constants.PARAMETER_VALUE)?.SingleOrDefault();
 
@@ -106,19 +100,19 @@
 
             if (string.IsNullOrEmpty(previousTimingExecution.ParameterValue))
             {
-                problemAccounts = WrapperDataCenterService.Instance.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
-                problemAccounts.AddRange(WrapperDataCenterService.Instance.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
+                problemAccounts = WrapperDataCenterService.Instance.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, null).ToList();
+                problemAccounts.AddRange(WrapperDataCenterService.Instance.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, null));
             }
             else
             {
                 if (AppSettings.IsFirstTimeRunForIBC)
-                    problemAccounts = WrapperDataCenterService.Instance.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, savedDataTime).ToList();
+                    problemAccounts = WrapperDataCenterService.Instance.GetProblemAccounts(Constants.GET_ALL_INITIAL_DATA, null).ToList();
                 else
                     problemAccounts = WrapperDataCenterService.Instance.GetProblemAccounts(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)).ToList();
 
 
                 if (AppSettings.IsFirstTimeRunForCN88)
-                    problemAccounts.AddRange(WrapperDataCenterService.Instance.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, savedDataTime));
+                    problemAccounts.AddRange(WrapperDataCenterService.Instance.GetProblemAccounts_CN88(Constants.GET_ALL_INITIAL_DATA, null));
                 else
                     problemAccounts.AddRange(WrapperDataCenterService.Instance.GetProblemAccounts_CN88(Constants.GET_CHANGED_DATA_FROM_DATETIME, DateTime.Parse(previousTimingExecution.ParameterValue)));
             }
@@ -130,7 +124,7 @@
             };
         }
 
-        static IEnumerable<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        private static IEnumerable<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
         {
             var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
@@ -141,106 +135,6 @@
             var jsonData = JsonConvert.SerializeObject(result);
             
             return WrapperDataCenterService.Instance.InsertProblemAccounts(jsonData);
-        }
-
-        static void InsertProblemAccountToMainDB(List<ProblemAccountForMainDBModel> problemAccounts)
-        {
-            var specialCustomerClass = WrapperDataCenterService.Instance.GetAllSpecialCustomerClass();
-            problemAccounts.RemoveAll(item => specialCustomerClass.Contains(item.CustID));
-
-            if (problemAccounts != null && problemAccounts.Any())
-            {
-                var countRetry = 0;
-
-                while (countRetry < AppSettings.RetryTime)
-                {
-                    try
-                    {
-                        WrapperDataCenterService.Instance.InsertProblemAccountClassificationToMainDB(problemAccounts);
-                        countRetry = AppSettings.RetryTime + 1;
-                    }
-                    catch (Exception ex)
-                    {
-                        var logMessage = new LogMessage(ex.Message)
-                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                        LogService.Error($"AutoTag Problem Account - Insert ProblemAccount Classification To MainDB service - Start Exception {logMessage}");
-                        countRetry += 1;
-                    }
-                }
-            }
-        }
-
-        static IEnumerable<ProblemAccountForMainDBModel> GetLatestCategoryForCusts(string custIds)
-        {
-            var lastestCategories = WrapperDataCenterService.Instance.GetLastestCategory(custIds, true, false)?.Where(c => c.CategoryIdMapping != -99)?.Distinct();
-
-            return lastestCategories;
-        }
-
-        static IEnumerable<ProblemCustomerForMainDBModel> GetLatestClassificationForCusts(string custIds)
-        {
-            //return WrapperDataCenterService.Instance.GetLatestClassification(custIds, true)?.Distinct();
-            return null;
-        }
-
-        static IEnumerable<ProblemCustomerForMainDBModel> InsertProblemCustomerToMainDB(IEnumerable<ProblemCustomerForMainDBModel> problemCustomers)
-        {
-            var candidateProblemCustomers = SkipSpecialCustomerClass(problemCustomers);
-            if (candidateProblemCustomers != null && candidateProblemCustomers.Any())
-            {
-                var countRetry = 0;
-                while (countRetry < AppSettings.RetryTime)
-                {
-                    try
-                    {
-                        WrapperDataCenterService.Instance.InsertProblemCustomerClassificationToMainDB(candidateProblemCustomers.ToList());
-                        countRetry = AppSettings.RetryTime + 1;
-                    }
-                    catch (Exception ex)
-                    {
-                        var logMessage = new LogMessage(ex.Message)
-                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                        LogService.Error($"AutoTag Problem Customer - Insert Problem Customer Classification To MainDB service - Start Exception {logMessage}");
-                        countRetry += 1;
-                    }
-                }
-            }
-
-            return candidateProblemCustomers;
-        }
-        static IEnumerable<ProblemCustomerForMainDBModel> SkipSpecialCustomerClass(IEnumerable<ProblemCustomerForMainDBModel> problemCustomers)
-        {
-            if (problemCustomers != null)
-            {
-                var specialCustomerClass = WrapperDataCenterService.Instance.GetAllSpecialCustomerClass();
-                if (specialCustomerClass != null && specialCustomerClass.Any())
-                {
-                    return problemCustomers.Where(item => !specialCustomerClass.Contains(item.CustID));
-                }
-            }
-
-            return problemCustomers;
-        }
-        static DBResult UpdateAppliedCustomerClassification(IEnumerable<ProblemCustomerForMainDBModel> updatedProblemCustomers)
-        {
-            if (updatedProblemCustomers != null && updatedProblemCustomers.Any())
-            {
-                var result = updatedProblemCustomers.Select(a => new UpdateAppliedCustomerClassificationModel
-                {
-                    CustId = a.CustID,
-                    ScannedTime = a.ScannedTime
-                });
-
-                var jsonData = JsonConvert.SerializeObject(result);
-
-                 WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(jsonData);
-            }
-
-            return new DBResult();
         }
     }
 }
