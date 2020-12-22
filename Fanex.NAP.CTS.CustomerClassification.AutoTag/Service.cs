@@ -74,32 +74,39 @@
                         // 1. Insert data in CTS
                         var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
 
-                        var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
-
-                        // 2. Update IsApplied in mainDB
-                        _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
-
-                        // 3. Get lastest classification in CTS
-                        var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",",typeCustModel));
-                        
-                        if (lastestClassifications != null && lastestClassifications.Any())
+                        if (!string.IsNullOrEmpty(typeCustModel.ErrorMessage))
                         {
-                            // 4. Update CustomerClass in table custinfo to MainDB
-                            var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
+                            var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
 
-                            if (isSuccessToMain)
+                            // 2. Update IsApplied in mainDB
+                            _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
+
+                            // 3. Get lastest classification in CTS
+                            var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", typeCustModel));
+
+                            if (lastestClassifications != null && lastestClassifications.Any())
                             {
-                                var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
+                                // 4. Update CustomerClass in table custinfo to MainDB
+                                var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
 
-                                var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
+                                if (isSuccessToMain)
+                                {
+                                    var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
 
-                                // 5. Update IsAppliedCC = 1 in CTS
-                                _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
-                            }                            
+                                    var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
 
-                            // 6. Push CC to Soon88
-                            _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                                    // 5. Update IsAppliedCC = 1 in CTS
+                                    _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+                                }
+
+                                // 6. Push CC to Soon88
+                                _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                            }
                         }
+                        else
+                        {
+                            LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts - InsertMainCustomerClassification error:  {typeCustModel.ErrorMessage}");
+                        }                        
                     }
                     catch (Exception ex)
                     {
