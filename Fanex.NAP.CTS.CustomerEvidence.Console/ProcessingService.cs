@@ -6,6 +6,7 @@
     using System.Threading;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
@@ -13,11 +14,15 @@
     public class ProcessingService : IProcessingService
     {
         private ICustomerEvidenceService _custEvidenceService;
+        private IDataCenterService _dataCenterService;
+        private IPushDataToExternalService _pushDataToExternalService;
         private List<CustomerEvidenceFailedToProcessModel> _failedToProcessList;
 
         public ProcessingService()
         {
             _custEvidenceService = new CustomerEvidenceService();
+            _dataCenterService = new DataCenterService();
+            _pushDataToExternalService = new PushDataToExternalService();
             _failedToProcessList = new List<CustomerEvidenceFailedToProcessModel>();
         }
 
@@ -173,19 +178,36 @@
             return isPrevSuccess;
         }
       
-        public IProcessingService SyncCustomerClassToMainDb(IEnumerable<CustomerEvidenceFromFileModel> custEvidences, out List<SyncCustomerClassToMainModel> custClasses)
+        public IProcessingService PushCustomerClassifyToExternal(IEnumerable<CustomerEvidenceFromFileModel> custEvidences)
         {
-            var ctsCustIdList = custEvidences.Select(x => x.CTSCustID).Distinct();
+            var custIdList = custEvidences.Select(x => x.CustID).Distinct();
 
-            var ctsCustIds = string.Join(",", ctsCustIdList.Distinct().ToList());
+            var latestCustIds = string.Join(",", custIdList.ToList());
 
-            custClasses = new List<SyncCustomerClassToMainModel>();
+            var latestCustIdsChunk = latestCustIds.Chunk(AppSettings.PushCCToExternalChunkSize);
 
-            var dbResult = _custEvidenceService.SyncCustomerClassToMainDb(ctsCustIds, out custClasses);
-
-            if (dbResult.ErrorCode != 0)
+            foreach (var custIds in latestCustIdsChunk)
             {
-                WriteLogError("SyncCustomerClassToMainDb", dbResult.ErrorMsg, custEvidences);
+                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
+
+                if (lastestClassifications != null && lastestClassifications.Any())
+                {
+                    // Update CustomerClass in table custinfo to MainDB
+                    var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
+
+                    if (isSuccessToMain)
+                    {
+                        var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
+
+                        var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
+
+                        // Update IsAppliedCC = 1 in CTS
+                        _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+                    }
+
+                    // Push CC to Soon88
+                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                }
             }
 
             return this;

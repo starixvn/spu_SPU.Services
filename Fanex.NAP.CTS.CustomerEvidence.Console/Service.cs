@@ -101,18 +101,8 @@
                 var custClassesModel = new List<SyncCustomerClassToMainModel>();
 
                 _processingService
-                    .SyncCustomerClassToMainDb(custEvidenceProcesseds, out custClassesModel)
+                    .PushCustomerClassifyToExternal(custEvidenceProcesseds)
                     .UpdateBetLimitOfFlaggedCustomer(custEvidenceProcesseds);
-
-                var custClassList = custClassesModel
-                    .Where(x => x.CategoryIdMapping != -99)
-                    .Select(x => new CustomerClassModel()
-                {
-                    CustID = x.CustID,
-                    CustomerClass = x.CategoryIdMapping
-                });
-
-                _processingService.FeedDataToSoon88(custClassList);
             }
         }
         

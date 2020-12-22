@@ -85,14 +85,17 @@
                         if (lastestClassifications != null && lastestClassifications.Any())
                         {
                             // 4. Update CustomerClass in table custinfo to MainDB
-                            _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
+                            var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
 
-                            var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
+                            if (isSuccessToMain)
+                            {
+                                var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
 
-                            var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
+                                var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
 
-                            // 5. Update IsAppliedCC = 1 in CTS
-                            _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+                                // 5. Update IsAppliedCC = 1 in CTS
+                                _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+                            }                            
 
                             // 6. Push CC to Soon88
                             _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
