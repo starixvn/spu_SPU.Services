@@ -262,8 +262,10 @@
             repository.Execute(criteria);
         }
 
-        public IEnumerable<int> InsertMainCustomerClassification(string newClassification)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
         {
+            var custIds = new List<int>();
+
             var repository = new DynamicRepository();
 
             var criteria = new InsertMainCustomerClassificationCriteria
@@ -271,7 +273,9 @@
                 NewClassification = newClassification
             };
 
-            return repository.Fetch<int>(criteria);
+            custIds = repository.Fetch<int>(criteria).ToList();
+
+            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds };
         }
 
 
@@ -473,8 +477,9 @@
             }
         }
 
-        public IEnumerable<int> InsertProblemAccount(string problemAccountJson)
+        public InsertCategoryResultModel InsertProblemAccount(string problemAccountJson)
         {
+            var custIds = new List<int>();
             var repository = new DynamicRepository();
 
             var criteria = new InsertProblemAccountCriteria
@@ -484,8 +489,10 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-               return repository.Fetch<int>(criteria);
+                custIds = repository.Fetch<int>(criteria).ToList();
             }
+
+            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds };
         }
 
         public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId)
@@ -553,8 +560,9 @@
             return repository.Fetch<RobotUser>(criteria);
         }
 
-        public IEnumerable<LatestClassificationModel> InsertRobotUsers(string custIds)
+        public InsertRobotUserResultModel InsertRobotUsers(string custIds)
         {
+            var custClassification = new List<LatestClassificationModel>();
             var repository = new DynamicRepository();
 
             var criteria = new InsertRobotUsersIntoSpecialCustClassCriteria
@@ -562,7 +570,9 @@
                 CustIds = custIds
             };
 
-            return repository.Fetch<LatestClassificationModel>(criteria);
+            custClassification =  repository.Fetch<LatestClassificationModel>(criteria).ToList();
+
+            return new InsertRobotUserResultModel() { ErrorMessage = criteria.ErrorMessage, CustClassification = custClassification };
         }
 
         public IEnumerable<ProbationModel> GetProbationCustForScanning(int numberOfRecord)

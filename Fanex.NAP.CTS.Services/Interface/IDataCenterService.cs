@@ -35,7 +35,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         void AutoTagClassification(string newClassification);
 
-        IEnumerable<int> InsertMainCustomerClassification(string newClassification);
+        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification);
 
         DBResult UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList);
 
@@ -79,6 +79,6 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime? dateTime);
 
-        IEnumerable<int> InsertProblemAccounts(string jsonData);
+        InsertCategoryResultModel InsertProblemAccounts(string jsonData);
     }
 }

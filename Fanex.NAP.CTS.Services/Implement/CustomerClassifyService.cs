@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Services
 {
+    using Fanex.Logging;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
@@ -49,30 +50,35 @@
                 return;
             }
 
-            var latestCustIds = InsertProblemAccountToCTS(problemAccounts);
+            var output = InsertProblemAccountToCTS(problemAccounts);
 
-            if (latestCustIds == null && !latestCustIds.Any())
+            if (string.IsNullOrEmpty(output.ErrorMessage) && output.CustIds != null && output.CustIds.Any())
             {
-                return;
-            }
+                var custIdsChunk = output.CustIds.Chunk(AppSettings.BatchSize);
 
-            var latestCustIdsChunk = latestCustIds.Chunk(AppSettings.BatchSize);
-
-            foreach (var custids in latestCustIdsChunk)
-            {
-                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",",custids));
-
-                if (lastestClassifications != null && lastestClassifications.Any())
+                foreach (var custids in custIdsChunk)
                 {
-                    bool isSyncMainSuccessfully = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
+                    var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custids));
 
-                    if(isSyncMainSuccessfully)
+                    if (lastestClassifications != null && lastestClassifications.Any())
                     {
-                        _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
-                    }
+                        bool isSyncMainSuccessfully = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
 
-                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                        if (isSyncMainSuccessfully)
+                        {
+                            _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
+                        }
+
+                        _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                    }
                 }
+            }
+            else if(!string.IsNullOrEmpty(output.ErrorMessage))
+            {
+
+                LogService.Error($"Service - Rescan Problem Account Exception: {output.ErrorMessage} - Data: {JsonConvert.SerializeObject(problemAccounts)}");
+
+                return;
             }
         }
 
@@ -111,7 +117,7 @@
             return problemAccounts;
         }
 
-        private IEnumerable<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        private InsertCategoryResultModel InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
         {
             var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {

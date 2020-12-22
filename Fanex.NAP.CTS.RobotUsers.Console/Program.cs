@@ -59,16 +59,20 @@
                     var robotUsersChunks = robotUsers.Chunk(AppSettings.BatchSize).ToList();
                     foreach (var robotUserList in robotUsersChunks)
                     {
-                        var custClasses = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
+                        var output = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
 
-                        if (custClasses != null && custClasses.Any())
+                        if (string.IsNullOrEmpty(output.ErrorMessage) && output.CustClassification != null && output.CustClassification.Any())
                         {
-                            bool isSyncMainSuccessfully = pushDataToExternalService.PushCustomerClassificationToMain(custClasses, AppSettings.RetryTime);
+                            bool isSyncMainSuccessfully = pushDataToExternalService.PushCustomerClassificationToMain(output.CustClassification, AppSettings.RetryTime);
 
                             if (isSyncMainSuccessfully)
                             {
-                                dataService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(custClasses));
+                                dataService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(output.CustClassification));
                             }
+                        }
+                        else if(!string.IsNullOrEmpty(output.ErrorMessage))
+                        {
+                            LogService.Error($"Service Robot User exception: {output.ErrorMessage} - Data: {JsonConvert.SerializeObject(robotUserList.Select(c => c.CustId))}");
                         }
 
                         Thread.Sleep(300);
@@ -84,7 +88,6 @@
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                 LogService.Error(logMessage);
-                Console.WriteLine(logMessage);
             }
         }
     }

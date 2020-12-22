@@ -51,11 +51,11 @@
                 {
                     logData = result.ProblemAccounts;
 
-                    var custIds = InsertProblemAccountToCTS(result.ProblemAccounts);
+                    var output = InsertProblemAccountToCTS(result.ProblemAccounts);
 
-                    if (custIds != null && custIds.Any())
+                    if (string.IsNullOrEmpty(output.ErrorMessage) & output.CustIds != null && output.CustIds.Any())
                     {
-                        var custIdsChunk  = custIds.Chunk(AppSettings.BatchSize);
+                        var custIdsChunk  = output.CustIds.Chunk(AppSettings.BatchSize);
 
                         foreach(var custs in custIdsChunk)
                         {
@@ -73,6 +73,12 @@
                                 pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                             }
                         }
+                    }
+                    else if(!string.IsNullOrEmpty(output.ErrorMessage))
+                    {
+                        LogService.Error($"Service Autotag Problem Account exception: {output.ErrorMessage} - Data: {JsonConvert.SerializeObject(result.ProblemAccounts)}");
+
+                        return;
                     }
                 }
 
@@ -124,7 +130,7 @@
             };
         }
 
-        private static IEnumerable<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        private static InsertCategoryResultModel InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
         {
             var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {

@@ -107,7 +107,7 @@
                 foreach (var robotUserList in robotUsersChunks)
                 {
                     var custClasses = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
-                    dataService.UpdateCustomerGeneralClassificationtoMainDB(custClasses);
+                    dataService.UpdateCustomerGeneralClassificationtoMainDB(custClasses.CustClassification);
                     Thread.Sleep(300);
                 }
             }

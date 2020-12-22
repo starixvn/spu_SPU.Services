@@ -107,7 +107,7 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
-        public IEnumerable<int> InsertMainCustomerClassification(string newClassification)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
         {
            return dataCenterDataAccess.InsertMainCustomerClassification(newClassification);
         }
@@ -234,7 +234,7 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
         }
 
-        public IEnumerable<int> InsertProblemAccounts(string jsonData)
+        public InsertCategoryResultModel InsertProblemAccounts(string jsonData)
         {
             return dataCenterDataAccess.InsertProblemAccount(jsonData);
         }
@@ -264,7 +264,7 @@ namespace Fanex.NAP.CTS.Services
             return dataCenterDataAccess.GetRobotUsers(fromDate, creditSiteList);
         }
 
-        public IEnumerable<LatestClassificationModel> InsertRobotUsers(string custIds)
+        public InsertRobotUserResultModel InsertRobotUsers(string custIds)
         {
             return dataCenterDataAccess.InsertRobotUsers(custIds);
         }

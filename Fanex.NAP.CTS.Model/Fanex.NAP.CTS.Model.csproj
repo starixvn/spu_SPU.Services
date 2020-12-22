@@ -58,6 +58,8 @@
     <Compile Include="CustomerEvidence\ResultRemoveCustomerEvidence.cs" />
     <Compile Include="CustomerEvidence\SyncCustomerClassToMainModel.cs" />
     <Compile Include="DBResult\DBResult.cs" />
+    <Compile Include="DBResult\InsertCategoryResultModel.cs" />
+    <Compile Include="DBResult\InsertRobotUserResultModel.cs" />
     <Compile Include="DeleteDataToSoon88ViewModel.cs" />
     <Compile Include="CustomerClassification\LatestClassificationModel.cs" />
     <Compile Include="MainDB\ProblemCustomerForMainDBModel.cs" />
