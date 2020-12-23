@@ -7,7 +7,6 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry;
-    using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
@@ -15,11 +14,8 @@
     using Sentry;
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
-    using System.Text;
     using System.Threading;
-    using System.Threading.Tasks;
 
     class Program
     {
