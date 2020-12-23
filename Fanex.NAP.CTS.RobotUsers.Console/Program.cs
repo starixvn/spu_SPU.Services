@@ -46,6 +46,8 @@
 
             try
             {
+                LogService.Info($"Service Robot User - start");
+
                 var previousTimingExecution = dataService.GetPreviousTimingExecution(Constants.PARAMETER_ROBOTUSER_ID)?.SingleOrDefault();
 
                 var fromDate = DateTime.Parse(previousTimingExecution.ParameterValue);
@@ -57,6 +59,8 @@
                     {
                         var output = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
 
+                        LogService.Info($"Service Robot User - Inser CTS done! with {string.Join(",", robotUserList.Select(c => c.CustId))}");
+
                         if (string.IsNullOrEmpty(output.ErrorMessage) && output.CustClassification != null && output.CustClassification.Any())
                         {
                             bool isSyncMainSuccessfully = pushDataToExternalService.PushCustomerClassificationToMain(output.CustClassification, AppSettings.RetryTime);
@@ -65,6 +69,8 @@
                             {
                                 dataService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(output.CustClassification));
                             }
+
+                            LogService.Info($"Service Robot User - Push CC To Main done! with {JsonConvert.SerializeObject(output.CustClassification)}");
                         }
                         else if(!string.IsNullOrEmpty(output.ErrorMessage))
                         {
@@ -73,6 +79,8 @@
 
                         Thread.Sleep(300);
                     }
+
+                    LogService.Info("Service Robot User done!");
                 }
 
                 dataService.UpdateTimingExecution(executedTime, Constants.PARAMETER_ROBOTUSER_ID);
