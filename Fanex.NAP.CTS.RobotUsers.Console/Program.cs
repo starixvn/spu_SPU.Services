@@ -46,7 +46,7 @@
 
             try
             {
-                LogService.Info($"Service Robot User - start");
+                LogService.Info("Service Robot User - start!");
 
                 var previousTimingExecution = dataService.GetPreviousTimingExecution(Constants.PARAMETER_ROBOTUSER_ID)?.SingleOrDefault();
 
@@ -79,11 +79,11 @@
 
                         Thread.Sleep(300);
                     }
-
-                    LogService.Info("Service Robot User done!");
                 }
 
                 dataService.UpdateTimingExecution(executedTime, Constants.PARAMETER_ROBOTUSER_ID);
+
+                LogService.Info("Service Robot User done!");
             }
             catch (Exception ex)
             {
