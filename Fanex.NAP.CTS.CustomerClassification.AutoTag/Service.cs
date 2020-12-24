@@ -38,7 +38,11 @@
 
                 do
                 {
+                    LogService.Info("Service Autotag Normal - start!");
+
                     newClassification = _dataCenterService.GetNewClassification();
+
+                    LogService.Info($"Service Autotag Normal - Get New Classification:{JsonConvert.SerializeObject(newClassification)}");
 
                     var generalClassifications = newClassification?.Where(c => c.IsGeneralCategory);
 
@@ -74,6 +78,8 @@
                         // 1. Insert data in CTS
                         var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
 
+                        LogService.Info($"Service Autotag Normal - Insert CTS Complete!:{JsonConvert.SerializeObject(jsonClassification)} - Output: {JsonConvert.SerializeObject(typeCustModel)}" );
+
                         if (!string.IsNullOrEmpty(typeCustModel.ErrorMessage))
                         {
                             var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
@@ -83,6 +89,8 @@
 
                             // 3. Get lastest classification in CTS
                             var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", typeCustModel));
+
+                            LogService.Info($"Service Autotag Normal - Get latest Complete!:{JsonConvert.SerializeObject(lastestClassifications)}");
 
                             if (lastestClassifications != null && lastestClassifications.Any())
                             {
@@ -97,10 +105,14 @@
 
                                     // 5. Update IsAppliedCC = 1 in CTS
                                     _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+
+                                    LogService.Info("Service Autotag Normal - Insert MainDB Complete!");
                                 }
 
                                 // 6. Push CC to Soon88
                                 _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+
+                                LogService.Info("Service Autotag Normal - FeedSoon88 Complete!");
                             }
                         }
                         else
