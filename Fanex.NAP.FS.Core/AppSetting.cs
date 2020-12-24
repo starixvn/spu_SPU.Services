@@ -82,5 +82,7 @@
 
         public static int MaxCustIdForHealing => Convert.ToInt32(ConfigurationManager.AppSettings["MaxCustIdForHealing"]);
 
+        public static int UpdateInternalChunkSize => Convert.ToInt32(ConfigurationManager.AppSettings["Internal-ChunkSize"]);
+
     }
 }

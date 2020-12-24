@@ -1,7 +1,5 @@
 ﻿namespace Fanex.NAP.CTS.Services
 {
-    using Fanex.Logging;
-    using Fanex.Logging.Extensions;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
@@ -28,17 +26,15 @@
             var isSuccess = true;
 
             // Check and rescan problem account
-            var existedEvidecns = CheckExistedEvidenceToRescanPA(string.Join(",", custIds)).ToList();
-
+            var existedEvidences = CheckExistedEvidenceToRescanPA(string.Join(",", custIds)).ToList();
             var problemAccounts = CheckToReScanPAFromNapCM(string.Join(",", custIds)).ToList();
 
-            if ((problemAccounts != null && problemAccounts.Any())
-                || (existedEvidecns != null && existedEvidecns.Any()))
+            if ((problemAccounts != null && problemAccounts.Any()) || (existedEvidences != null && existedEvidences.Any()))
             {
-                RescanProblemAccount(problemAccounts, existedEvidecns);
+                RescanProblemAccount(problemAccounts, existedEvidences);
 
                 custIds.RemoveAll(item => problemAccounts.Select(c => c.CustID).Contains(item));
-                custIds.RemoveAll(item => existedEvidecns.Select(c => c.CustId).Contains(item));
+                custIds.RemoveAll(item => existedEvidences.Select(c => c.CustId).Contains(item));
             }
 
             // Check and rescan normal account
@@ -52,13 +48,8 @@
 
         private void RescanProblemAccount(List<MultipleProblemAccountsModel> problemAccounts, List<CustEvidenceModel> existedEvidences)
         {
-            if (problemAccounts == null && !problemAccounts.Any()
-                && existedEvidences == null && !existedEvidences.Any())
-            {
-                return;
-            }
+            var result1 = _customerEvidenceService.InsertCustEvidenceToCategory(existedEvidences);
 
-            var result1 = _customerEvidenceService.InsertCustEvidenceToCategory(JsonConvert.SerializeObject(existedEvidences));
             var result2 = InsertProblemAccountToCTS(problemAccounts);
 
             if (string.IsNullOrEmpty(result1.ErrorMessage) || string.IsNullOrEmpty(result2.ErrorMessage))
@@ -123,16 +114,20 @@
                 return problemAccounts;
             }
 
-            problemAccounts = _dataCenterService.GetProblemAccounts(custIds, null).ToList();
-
+            var problemAccountsNAPCM = _dataCenterService.GetProblemAccounts(custIds, null).ToList();
             var problemAccountsCN88 = _dataCenterService.GetProblemAccounts_CN88(custIds, null).ToList();
+
+            if (problemAccountsNAPCM != null && problemAccountsNAPCM.Any())
+            {
+                problemAccounts.AddRange(problemAccountsNAPCM);
+            }
 
             if (problemAccountsCN88 != null && problemAccountsCN88.Any())
             {
                 problemAccounts.AddRange(problemAccountsCN88);
             }
 
-            return problemAccounts ?? new List<MultipleProblemAccountsModel>();
+            return problemAccounts;
         }
 
         private IEnumerable<CustEvidenceModel> CheckExistedEvidenceToRescanPA(string custIds)
@@ -155,11 +150,9 @@
             {
                 CustId = a.CustID,
                 CategoryId = a.ReasonID
-            });
+            }).ToList();
 
-            var jsonData = JsonConvert.SerializeObject(result);
-
-            return _dataCenterService.InsertProblemAccounts(jsonData);
+            return _dataCenterService.InsertProblemAccounts(result);
         }
     }
 }

@@ -92,8 +92,12 @@
         public InsertCategoryResultModel InsertCustEvidenceToCategory(string jsonData)
         {
             var custIds = new List<int>();
-
             var repository = new DynamicRepository();
+
+            if (string.IsNullOrEmpty(jsonData))
+            {
+                return new InsertCategoryResultModel() { ErrorMessage = string.Empty, CustIds = custIds }; ;
+            }
 
             var criteria = new SyncCustEvidenceToCTSCategoryCriteria
             {
@@ -105,7 +109,7 @@
                 custIds = repository.Fetch<int>(criteria).ToList();
             }
 
-            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds };
+            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = (custIds != null) ? custIds : new List<int>() };
         }
 
         public IEnumerable<CustomerCategoryLastedModel> GetCustomerCategoryLasted(string idList, bool isCustId, bool isExcludedDetailedCategory)

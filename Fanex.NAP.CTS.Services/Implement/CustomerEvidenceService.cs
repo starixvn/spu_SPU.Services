@@ -4,6 +4,8 @@
     using Fanex.NAP.CTS.DataAccess;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services.Helper;
+    using Fanex.NAP.FS.Core;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -64,22 +66,35 @@
             }
         }
 
-        public InsertCategoryResultModel InsertCustEvidenceToCategory(string jsonData)
+        public InsertCategoryResultModel InsertCustEvidenceToCategory(List<CustEvidenceModel> existedEvidences)
         {
             try
             {
-                var result = dataAccess.InsertCustEvidenceToCategory(jsonData);
-
-                if(!string.IsNullOrEmpty(result.ErrorMessage))
+                if (existedEvidences == null || !existedEvidences.Any())
                 {
-                    LogService.Error($"Service - Rescan PA - SyncCustomerEvidenceToCategory exception: {result.ErrorMessage} - Data: {jsonData}");
+                    return new InsertCategoryResultModel() { ErrorMessage = string.Empty, CustIds = null };
                 }
 
-                return result;
+                var evidencesChunk = existedEvidences.Chunk(AppSetting.UpdateInternalChunkSize);
+
+                var custIds = new List<int>();
+
+                foreach (var evidences in evidencesChunk)
+                {
+                    var output = dataAccess.InsertCustEvidenceToCategory((JsonConvert.SerializeObject(evidences)));
+                    custIds.AddRange(output.CustIds);
+
+                    if (!string.IsNullOrEmpty(output.ErrorMessage))
+                    {
+                        LogService.Error($"Service - Rescan PA - SyncCustomerEvidenceToCategory exception: {output.ErrorMessage} - Data: {JsonConvert.SerializeObject(output.CustIds)}");
+                    }
+                }
+
+                return new InsertCategoryResultModel { ErrorMessage = string.Empty,  CustIds = custIds };
             }
             catch (Exception ex)
             {
-                LogService.Error($"Service - Rescan PA - SyncCustomerEvidenceToCategory exception: {ex.Message} - Data: {jsonData}", ex);
+                LogService.Error($"Service - Rescan PA - SyncCustomerEvidenceToCategory exception: {ex.Message} - Data: {JsonConvert.SerializeObject(existedEvidences)}", ex);
 
                 return new InsertCategoryResultModel { ErrorMessage = ex.Message,  CustIds = null };
             }

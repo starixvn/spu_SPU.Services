@@ -130,11 +130,9 @@
             {
                 CustId = a.CustID,
                 CategoryId = a.ReasonID
-            });
-
-            var jsonData = JsonConvert.SerializeObject(result);
+            }).ToList();
             
-            return WrapperDataCenterService.Instance.InsertProblemAccounts(jsonData);
+            return WrapperDataCenterService.Instance.InsertProblemAccounts(result);
         }
     }
 }

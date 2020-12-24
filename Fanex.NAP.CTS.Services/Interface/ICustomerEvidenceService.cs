@@ -13,7 +13,7 @@
 
         DBResult SyncCustomerEvidenceToCategory(string jsonData);
 
-        InsertCategoryResultModel InsertCustEvidenceToCategory(string jsonData);
+        InsertCategoryResultModel InsertCustEvidenceToCategory(List<CustEvidenceModel> existedEvidences);
 
         DBResult SyncCustomerClassToMainDb(string ctsCustIds, out List<SyncCustomerClassToMainModel> custClasses);
 
