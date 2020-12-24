@@ -236,7 +236,23 @@ namespace Fanex.NAP.CTS.Services
 
         public InsertCategoryResultModel InsertProblemAccounts(string jsonData)
         {
-            return dataCenterDataAccess.InsertProblemAccount(jsonData);
+            try
+            {
+                var result =  dataCenterDataAccess.InsertProblemAccount(jsonData);
+
+                if( !string.IsNullOrEmpty(result.ErrorMessage))
+                {
+                    LogService.Error($"Service - Rescan PA - SyncCustomerEvidenceToCategory exception: {result.ErrorMessage} - Data: {jsonData}");
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogService.Error($"Service - Rescan PA - SyncCustomerEvidenceToCategory exception: {ex.Message} - Data: {jsonData}", ex);
+
+                return new InsertCategoryResultModel { ErrorMessage = ex.Message, CustIds = null };
+            }
         }
 
         public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId)
@@ -312,6 +328,11 @@ namespace Fanex.NAP.CTS.Services
             {
                 LogService.Error($"Service - Update Applied Customer Classification fails - Exception {resultAppliedCC.ErrorMsg} with data: {jsonData}");
             }
+        }
+
+        public IEnumerable<CustEvidenceModel> GetExistedEvidences(string custIDs)
+        {
+            return dataCenterDataAccess.GetExistedEvidences(custIDs);
         }
     }
 }

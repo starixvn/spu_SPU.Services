@@ -686,5 +686,18 @@
                 };                
             }
         }
+
+        public IEnumerable<CustEvidenceModel> GetExistedEvidences(string custIDs)
+        {
+            var criteria = new GetExistedEvidencesCriteria
+            {
+                CustIds = custIDs
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustEvidenceModel>(criteria).ToList();
+            }
+        }
     }
 }

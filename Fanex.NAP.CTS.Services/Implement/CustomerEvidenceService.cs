@@ -64,6 +64,27 @@
             }
         }
 
+        public InsertCategoryResultModel InsertCustEvidenceToCategory(string jsonData)
+        {
+            try
+            {
+                var result = dataAccess.InsertCustEvidenceToCategory(jsonData);
+
+                if(!string.IsNullOrEmpty(result.ErrorMessage))
+                {
+                    LogService.Error($"Service - Rescan PA - SyncCustomerEvidenceToCategory exception: {result.ErrorMessage} - Data: {jsonData}");
+                }
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                LogService.Error($"Service - Rescan PA - SyncCustomerEvidenceToCategory exception: {ex.Message} - Data: {jsonData}", ex);
+
+                return new InsertCategoryResultModel { ErrorMessage = ex.Message,  CustIds = null };
+            }
+        }
+
         public DBResult SyncCustomerClassToMainDb(string ctsCustIds, out List<SyncCustomerClassToMainModel> custClasses)
         {
             custClasses = new List<SyncCustomerClassToMainModel>();

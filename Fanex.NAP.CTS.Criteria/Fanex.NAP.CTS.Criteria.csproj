@@ -70,7 +70,7 @@
     <Compile Include="GetRobotUserCriteria.cs" />
     <Compile Include="InsertCustomerGeneralCategoryToMainDBCriteria.cs" />
     <Compile Include="InsertMainCustomerClassificationCriteria.cs" />
-    <Compile Include="GetProblemAccountsCN88Criteria.cs" />
+    <Compile Include="ProblemAccount\GetProblemAccountsCN88Criteria.cs" />
     <Compile Include="InsertUserPermissionCriteria.cs" />
     <Compile Include="MainDB\UpdateBetLimitByEvidenceRemovingCriteria.cs" />
     <Compile Include="MoveToTransaction07GetPackageCriteria.cs" />
@@ -86,9 +86,10 @@
     <Compile Include="CustomerClassification\GetCustomerHasChangeForRunRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\RealtimeUpdateLastScanTimeCriteria.cs" />
     <Compile Include="GetPreviousTimingExecutionCriteria.cs" />
-    <Compile Include="GetProblemAccountsCriteria.cs" />
+    <Compile Include="ProblemAccount\GetExistedEvidencesCriteria.cs" />
+    <Compile Include="ProblemAccount\GetProblemAccountsCriteria.cs" />
     <Compile Include="GetUsername2FromMainDb.cs" />
-    <Compile Include="InsertProblemAccountCriteria.cs" />
+    <Compile Include="ProblemAccount\InsertProblemAccountCriteria.cs" />
     <Compile Include="TransformAssociationAffectedEvidenceCriteria.cs" />
     <Compile Include="InsertNewCustomerCategoryCriteria.cs" />
     <Compile Include="TransformUpdatingLastLoginTimeCriteria.cs" />

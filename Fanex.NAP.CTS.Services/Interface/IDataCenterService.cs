@@ -80,5 +80,7 @@ namespace Fanex.NAP.CTS.Services.Interface
         IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime? dateTime);
 
         InsertCategoryResultModel InsertProblemAccounts(string jsonData);
+
+        IEnumerable<CustEvidenceModel> GetExistedEvidences(string custIDs);
     }
 }

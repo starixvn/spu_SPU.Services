@@ -89,6 +89,25 @@
             return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
         }
 
+        public InsertCategoryResultModel InsertCustEvidenceToCategory(string jsonData)
+        {
+            var custIds = new List<int>();
+
+            var repository = new DynamicRepository();
+
+            var criteria = new SyncCustEvidenceToCTSCategoryCriteria
+            {
+                CustEvidences = jsonData
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                custIds = repository.Fetch<int>(criteria).ToList();
+            }
+
+            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds };
+        }
+
         public IEnumerable<CustomerCategoryLastedModel> GetCustomerCategoryLasted(string idList, bool isCustId, bool isExcludedDetailedCategory)
         {
             var criteria = new GetCustomerCategoryLastedCriteria

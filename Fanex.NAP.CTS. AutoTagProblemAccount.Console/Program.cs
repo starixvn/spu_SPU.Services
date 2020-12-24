@@ -74,12 +74,6 @@
                             }
                         }
                     }
-                    else if(!string.IsNullOrEmpty(output.ErrorMessage))
-                    {
-                        LogService.Error($"Service Autotag Problem Account exception: {output.ErrorMessage} - Data: {JsonConvert.SerializeObject(result.ProblemAccounts)}");
-
-                        return;
-                    }
                 }
 
                 WrapperDataCenterService.Instance.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);             
