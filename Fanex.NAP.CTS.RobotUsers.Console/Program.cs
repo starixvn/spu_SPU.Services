@@ -70,6 +70,8 @@
                                 dataService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(output.CustClassification));
                             }
 
+                            pushDataToExternalService.PushCustomerClassificationToSoon88(output.CustClassification);
+
                             LogService.Info($"Service Robot User - Push CC To Main done! with {JsonConvert.SerializeObject(output.CustClassification)}");
                         }
                         else if(!string.IsNullOrEmpty(output.ErrorMessage))

@@ -310,7 +310,7 @@ namespace Fanex.NAP.CTS.Services
 
             if (resultAppliedCC.ErrorCode != 0)
             {
-                LogService.Error($" Update Applied Customer Classification fails - Exception {resultAppliedCC.ErrorMsg} with data: {jsonData}");
+                LogService.Error($"Service - Update Applied Customer Classification fails - Exception {resultAppliedCC.ErrorMsg} with data: {jsonData}");
             }
         }
     }
