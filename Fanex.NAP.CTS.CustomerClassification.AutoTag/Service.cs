@@ -80,7 +80,7 @@
 
                         LogService.Info($"Service Autotag Normal - Insert CTS Complete!:{JsonConvert.SerializeObject(jsonClassification)} - Output: {JsonConvert.SerializeObject(typeCustModel)}" );
 
-                        if (!string.IsNullOrEmpty(typeCustModel.ErrorMessage))
+                        if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))
                         {
                             var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
 

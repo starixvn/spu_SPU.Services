@@ -5,7 +5,7 @@
 
     public class GetLastestClassificationCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "ip_CustomerIDs")]
+        [SpParam(SqlParamName = "ip_CustIDs")]
         public string CustIds { get; set; }       
 
         public override string GetSettingKey()
