@@ -52,36 +52,38 @@
 
             var result2 = InsertProblemAccountToCTS(problemAccounts);
 
-            if (string.IsNullOrEmpty(result1.ErrorMessage) || string.IsNullOrEmpty(result2.ErrorMessage))
+            var custIdsToSyncCC = new List<int>();
+
+            if (result1.CustIds != null && result1.CustIds.Any())
             {
-                var custIdsToSyncCC = new List<int>();
+                custIdsToSyncCC.AddRange(result1.CustIds);
+            }
+            else if (result2.CustIds != null && result2.CustIds.Any())
+            {
+                custIdsToSyncCC.AddRange(result2.CustIds);
+            }
 
-                if (result1.CustIds != null && result1.CustIds.Any())
+            if (custIdsToSyncCC == null || !custIdsToSyncCC.Any())
+            {
+                return;
+            }
+
+            var custIdsChunk = custIdsToSyncCC.Distinct().Chunk(AppSettings.BatchSize);
+
+            foreach (var custids in custIdsChunk)
+            {
+                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custids));
+
+                if (lastestClassifications != null && lastestClassifications.Any())
                 {
-                    custIdsToSyncCC.AddRange(result1.CustIds);
-                }
-                else if (result2.CustIds != null && result2.CustIds.Any())
-                {
-                    custIdsToSyncCC.AddRange(result2.CustIds);
-                }
+                    bool isSyncMainSuccessfully = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
 
-                var custIdsChunk = custIdsToSyncCC.Distinct().Chunk(AppSettings.BatchSize);
-
-                foreach (var custids in custIdsChunk)
-                {
-                    var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custids));
-
-                    if (lastestClassifications != null && lastestClassifications.Any())
+                    if (isSyncMainSuccessfully)
                     {
-                        bool isSyncMainSuccessfully = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
-
-                        if (isSyncMainSuccessfully)
-                        {
-                            _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
-                        }
-
-                        _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                        _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
                     }
+
+                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                 }
             }
         }

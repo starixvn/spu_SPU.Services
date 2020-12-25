@@ -43,7 +43,14 @@ namespace Fanex.NAP.CTS.Services
 
         public IEnumerable<int> InsertCategoryForNewCustomer (string customerList)
         {
-            return dataCenterDataAccess.InsertCategoryForNewCustomer(customerList);
+            var result = dataCenterDataAccess.InsertCategoryForNewCustomer(customerList);
+
+            if (!string.IsNullOrEmpty(result.ErrorMessage))
+            {
+                LogService.Error($"Service - Insert New Customer throws exception: {result.ErrorMessage} - Data: {customerList}");
+            }
+
+            return result.CustIds;
         }
         
 

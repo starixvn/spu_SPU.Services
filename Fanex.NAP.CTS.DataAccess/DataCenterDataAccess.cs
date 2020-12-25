@@ -45,8 +45,10 @@
             }
         }
 
-        public List<int> InsertCategoryForNewCustomer(string custIds)
+        public InsertCategoryResultModel InsertCategoryForNewCustomer(string custIds)
         {
+            var customerIds = new List<int>();
+
             var criteria = new InsertNewCustomerCategoryCriteria
             {
                 CustIds = custIds
@@ -54,8 +56,10 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<int>(criteria).ToList();
+                customerIds = db.Query<int>(criteria).ToList();
             }
+
+            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = customerIds };
         }
 
         public int FillUpCustomerFromMainDB(string customerJson)
@@ -490,7 +494,7 @@
                 custIds = repository.Fetch<int>(criteria).ToList();
             }
 
-            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds };
+            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds ?? new List<int>()};
         }
 
         public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId)

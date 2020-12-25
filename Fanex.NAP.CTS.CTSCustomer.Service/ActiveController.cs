@@ -127,7 +127,9 @@
 
                     var custIdList = customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct().ToList();
 
-                    _customerClassificationService.RescanCustomerClassification(custIdList);
+                    var custIds = _dataCenterService.InsertCategoryForNewCustomer(string.Join(",", custIdList));
+
+                    _customerClassificationService.RescanCustomerClassification(custIds.ToList());
 
                     return true;
                 }
