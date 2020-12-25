@@ -182,7 +182,7 @@
         {
             var custIdList = custEvidences.Select(x => x.CustID).Distinct();
 
-            var latestCustIds = string.Join(",", custIdList.ToList());
+            var latestCustIds = custIdList.ToList();
 
             var latestCustIdsChunk = latestCustIds.Chunk(AppSettings.PushCCToExternalChunkSize);
 
