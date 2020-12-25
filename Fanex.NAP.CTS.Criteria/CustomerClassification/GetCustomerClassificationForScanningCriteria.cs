@@ -1,13 +1,8 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.Criteria.CustomerClassification
+﻿namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+
     public class GetCustomerClassificationForScanningCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "ip_NoOfRecord")]
@@ -16,12 +11,9 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
         [SpParam(SqlParamName = "ip_Batch")]
         public int BatchQuantity { get; set; }
         
-        [SpParam(SqlParamName = "ip_ParentCategoryID")]
-        public int ParentCategoryId { get; set; }
-
         public override string GetSettingKey()
         {
-            return "CTS_DC_GetCustomerClassificationForScanning";
+            return "CTS_DC_GetCustomerClassificationIntervalScan";
         }
 
         public override bool IsValid()

@@ -27,7 +27,7 @@
   </Function>
 
   <Function Name="CustomerClassification">
-    <Setting Key="CTS_DC_GetCustomerClassificationForScanning" SpName="CTS_DC_GetCustomerClassificationIntervalScan" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="CTS_DC_GetCustomerClassificationIntervalScan" SpName="CTS_DC_GetCustomerClassificationIntervalScan" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_GetCustomerClassificationIntervalScan_Complete"
              SpName="CTS_DC_GetCustomerClassificationIntervalScan_Complete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_Daily"

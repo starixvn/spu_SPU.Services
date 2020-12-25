@@ -47,7 +47,6 @@ namespace Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console
         {
             IEnumerable<CustomerClassificationModel> customers = null;            
             var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
-            int parentCateID = Convert.ToInt32(ConfigurationManager.AppSettings["Parent-CategoryID"]);
             int countTotalCusts = 0;
 
             var dataCenterService = new DataCenterService();
@@ -56,16 +55,16 @@ namespace Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console
             {
                 try
                 {
-                    customers = dataCenterService.GetCustomerForRunDaily(1, batchSize, parentCateID);
+                    customers = dataCenterService.GetCustomerForRunDaily(1, batchSize);
 
-                    if (customers.Any())
+                    if (customers != null && customers.Any())
                     {
                         var custGroupByBatch = customers.GroupBy(c => c.BatchID);
                         foreach (var custGroup in custGroupByBatch)
                         {
                             dataCenterService.ClassifyCustomerGeneralCategoryDaily(string.Join(",", custGroup.Select(c => c.CustId)), true);
                             string jsonData = JsonConvert.SerializeObject(custGroup.Select(a => new { a.CustId, a.SportGroupId }));
-                            dataCenterService.ClassifyCustomerDailyDone(jsonData, parentCateID);
+                            dataCenterService.ClassifyCustomerDailyDone(jsonData);
                             countTotalCusts += custGroup.Count();
                         }
                     }
