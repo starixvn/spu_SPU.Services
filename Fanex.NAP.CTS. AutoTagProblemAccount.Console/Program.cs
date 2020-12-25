@@ -47,11 +47,15 @@
             {
                 var result = GetProblemAccounts();
 
+                LogService.Info($"Service Autotag PA - Get PA From NApCM & CN88 :{JsonConvert.SerializeObject(result)}");
+
                 if (result.ProblemAccounts != null && result.ProblemAccounts.Any())
                 {
                     logData = result.ProblemAccounts;
 
                     var output = InsertProblemAccountToCTS(result.ProblemAccounts);
+
+                    LogService.Info($"Service Autotag PA - Insert to CTS done :{JsonConvert.SerializeObject(result.ProblemAccounts)}");
 
                     if (string.IsNullOrEmpty(output.ErrorMessage) & output.CustIds != null && output.CustIds.Any())
                     {
@@ -68,9 +72,13 @@
                                 if (isSyncMainSuccessfully)
                                 {
                                     WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
+
+                                    LogService.Info($"Service Autotag PA - Sync CC done with :{JsonConvert.SerializeObject(lastestClassifications)}");
                                 }
 
                                 pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+
+                                LogService.Info($"Service Autotag PA - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}");
                             }
                         }
                     }
