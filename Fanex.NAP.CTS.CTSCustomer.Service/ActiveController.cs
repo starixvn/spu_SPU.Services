@@ -121,6 +121,8 @@
         {
             try
             {
+                LogService.Info($"Service Insert new customer -  Insert CTS Start with {string.Join(",", customers)}");
+
                 if (customers != null && customers.Any())
                 {
                     _dataCenterService.TransformCustomerFromMainDB(customers);
