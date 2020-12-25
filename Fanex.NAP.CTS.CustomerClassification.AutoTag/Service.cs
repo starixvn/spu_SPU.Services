@@ -88,7 +88,7 @@
                             _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
 
                             // 3. Get lastest classification in CTS
-                            var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", typeCustModel));
+                            var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", typeCustModel.CustIds));
 
                             LogService.Info($"Service Autotag Normal - Get latest Complete!:{JsonConvert.SerializeObject(lastestClassifications)}");
 
