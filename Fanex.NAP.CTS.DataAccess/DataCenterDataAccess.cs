@@ -268,8 +268,6 @@
 
         public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
         {
-            var custIds = new List<int>();
-
             var repository = new DynamicRepository();
 
             var criteria = new InsertMainCustomerClassificationCriteria
@@ -277,7 +275,7 @@
                 NewClassification = newClassification
             };
 
-            custIds = repository.Fetch<int>(criteria).ToList();
+            var custIds = repository.Fetch<int>(criteria).ToList();
 
             return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds };
         }
@@ -645,6 +643,11 @@
 
         public IEnumerable<LatestClassificationModel> GetLatestClassification(string custIds)
         {
+            if (string.IsNullOrEmpty(custIds))
+            {
+                return new List<LatestClassificationModel>();
+            }
+
             var criteria = new GetLastestClassificationCriteria()
             {
                 CustIds = custIds
