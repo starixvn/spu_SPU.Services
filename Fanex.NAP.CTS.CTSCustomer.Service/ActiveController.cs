@@ -129,7 +129,11 @@
 
                     var custIds = _dataCenterService.InsertCategoryForNewCustomer(string.Join(",", custIdList));
 
+                    LogService.Info($"Service Insert new customer -  Insert CTS Complete!:{string.Join(",", custIdList)}");
+
                     _customerClassificationService.RescanCustomerClassification(custIds.ToList());
+
+                    LogService.Info($"Service Insert new customer -  Rescan Complete!:{string.Join(",", custIds)}");
 
                     return true;
                 }
