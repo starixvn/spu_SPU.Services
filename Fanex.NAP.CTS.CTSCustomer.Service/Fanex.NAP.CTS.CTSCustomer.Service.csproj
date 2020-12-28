@@ -76,7 +76,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Dapper">
+      <Version>2.0.78</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Data">
+      <Version>4.2.2</Version>
+    </PackageReference>
     <PackageReference Include="Fanex.Data.MySql">
+      <Version>4.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Data.SqlServer">
       <Version>4.2.2</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Logging">
