@@ -347,5 +347,19 @@ namespace Fanex.NAP.SPU.Core
                 return size == 0 ? 150 : size;
             }
         }
+
+        public static bool IsWriteLogInfo
+        {
+            get
+            {
+                var isWriteLog = false;
+
+                var configWriteLog = ConfigurationManager.AppSettings["IsWriteLogInfo"];
+
+                bool.TryParse(configWriteLog, out isWriteLog);
+
+                return isWriteLog;
+            }
+        }
     }
 }

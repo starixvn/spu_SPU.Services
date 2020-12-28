@@ -28,21 +28,22 @@
 
         public void Process()
         {
-            var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
-
             try
             {
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
 
                 int insertedRows = 0;
+                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
 
                 do
                 {
-                    LogService.Info("Service Autotag Normal - start!");
+                    if(isWriteLogInfo)
+                        LogService.Info("Service Autotag Normal - start!");
 
                     newClassification = _dataCenterService.GetNewClassification();
 
-                    LogService.Info($"Service Autotag Normal - Get New Classification:{JsonConvert.SerializeObject(newClassification)}");
+                    if (isWriteLogInfo)
+                        LogService.Info($"Service Autotag Normal - Get New Classification:{JsonConvert.SerializeObject(newClassification)}");
 
                     var generalClassifications = newClassification?.Where(c => c.IsGeneralCategory);
 
@@ -66,6 +67,7 @@
         {
             if (generalClassification != null && generalClassification.Any())
             {
+                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
                 var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
 
                 foreach (var listClassification in newGeneralClassificationChunk)
@@ -76,8 +78,9 @@
 
                         // 1. Insert data in CTS
                         var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
-
-                        LogService.Info($"Service Autotag Normal - Insert CTS Complete!:{JsonConvert.SerializeObject(jsonClassification)} - Output: {JsonConvert.SerializeObject(typeCustModel)}" );
+                        
+                        if(isWriteLogInfo)
+                            LogService.Info($"Service Autotag Normal - Insert CTS Complete!:{JsonConvert.SerializeObject(jsonClassification)} - Output: {JsonConvert.SerializeObject(typeCustModel)}");                        
 
                         if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))
                         {
@@ -87,32 +90,40 @@
                             _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
 
                             // 3. Get lastest classification in CTS
-                            var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", typeCustModel.CustIds));
-
-                            LogService.Info($"Service Autotag Normal - Get latest Complete!:{JsonConvert.SerializeObject(lastestClassifications)}");
-
-                            if (lastestClassifications != null && lastestClassifications.Any())
+                            var latestCustIdsChunk = typeCustModel.CustIds.Chunk(AppSettings.PushCCToExternalChunkSize);
+                            foreach (var custIds in latestCustIdsChunk)
                             {
-                                // 4. Update CustomerClass in table custinfo to MainDB
-                                var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
+                                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
 
-                                if (isSuccessToMain)
+                                if (isWriteLogInfo)
+                                    LogService.Info($"Service Autotag Normal - Get latest Complete!:{JsonConvert.SerializeObject(lastestClassifications)}");
+
+                                if (lastestClassifications != null && lastestClassifications.Any())
                                 {
-                                    var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
+                                    // 4. Update CustomerClass in table custinfo to MainDB
+                                    var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
 
-                                    var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
+                                    if (isSuccessToMain)
+                                    {
+                                        var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
 
-                                    // 5. Update IsAppliedCC = 1 in CTS
-                                    _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+                                        var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
 
-                                    LogService.Info("Service Autotag Normal - Insert MainDB Complete!");
+                                        // 5. Update IsAppliedCC = 1 in CTS
+                                        _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+
+                                        if (isWriteLogInfo)
+                                            LogService.Info("Service Autotag Normal - Insert MainDB Complete!");
+                                    }
+
+                                    // 6. Push CC to Soon88
+
+                                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                                 }
-
-                                // 6. Push CC to Soon88
-                                _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
-
-                                LogService.Info("Service Autotag Normal - FeedSoon88 Complete!");
                             }
+
+                            if (isWriteLogInfo)
+                                LogService.Info("Service Autotag Normal - FeedSoon88 Complete!");
                         }
                         else
                         {
