@@ -66,7 +66,7 @@
             }
         }
 
-        public InsertCategoryResultModel InsertCustEvidenceToCategory(List<CustEvidenceModel> existedEvidences)
+        public InsertCategoryResultModel SyncCustomerEvidenceToCategory(List<CustEvidenceModel> existedEvidences)
         {
             try
             {
@@ -81,7 +81,7 @@
 
                 foreach (var evidences in evidencesChunk)
                 {
-                    var output = dataAccess.InsertCustEvidenceToCategory((JsonConvert.SerializeObject(evidences)));
+                    var output = dataAccess.SyncCustomerEvidenceToCategory2((JsonConvert.SerializeObject(evidences)));
                     custIds.AddRange(output.CustIds);
 
                     if (!string.IsNullOrEmpty(output.ErrorMessage))

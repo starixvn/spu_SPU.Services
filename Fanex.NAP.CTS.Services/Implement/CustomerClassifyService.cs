@@ -24,15 +24,17 @@
         public void RescanCustomerClassification(List<int> custIds)
         {
             // Check and rescan problem account
-            var existedEvidences = CheckExistedEvidenceToRescanPA(string.Join(",", custIds)).ToList();
-            var problemAccounts = CheckToReScanPAFromNapCM(string.Join(",", custIds)).ToList();
+            var existedCustEvidences = GetExistedCustomerEvidences(string.Join(",", custIds)).ToList();
+            var existedProblemAccounts = GetExistedProblemAccounts(string.Join(",", custIds)).ToList();
 
-            if ((problemAccounts != null && problemAccounts.Any()) || (existedEvidences != null && existedEvidences.Any()))
+            var isRescanPA = (existedCustEvidences != null && existedCustEvidences.Any()) || (existedProblemAccounts != null && existedProblemAccounts.Any());
+
+            if (isRescanPA)
             {
-                RescanProblemAccount(problemAccounts, existedEvidences);
+                RescanProblemAccount(existedProblemAccounts, existedCustEvidences);
 
-                custIds.RemoveAll(item => problemAccounts.Select(c => c.CustID).Contains(item));
-                custIds.RemoveAll(item => existedEvidences.Select(c => c.CustId).Contains(item));
+                custIds.RemoveAll(item => existedProblemAccounts.Select(c => c.CustID).Contains(item));
+                custIds.RemoveAll(item => existedCustEvidences.Select(c => c.CustId).Contains(item));
             }
 
             // Check and rescan normal account
@@ -42,26 +44,63 @@
             }
         }
 
-        private void RescanProblemAccount(List<MultipleProblemAccountsModel> problemAccounts, List<CustEvidenceModel> existedEvidences)
+        private IEnumerable<CustEvidenceModel> GetExistedCustomerEvidences(string custIds)
         {
-            var result1 = _customerEvidenceService.InsertCustEvidenceToCategory(existedEvidences);
+            var existedEvidences = new List<CustEvidenceModel>();
 
-            var result2 = InsertProblemAccountToCTS(problemAccounts);
+            if (string.IsNullOrEmpty(custIds))
+            {
+                return existedEvidences;
+            }
 
+            existedEvidences = _dataCenterService.GetExistedEvidences(custIds).ToList();
+
+            return existedEvidences ?? new List<CustEvidenceModel>();
+        }
+
+        private IEnumerable<MultipleProblemAccountsModel> GetExistedProblemAccounts(string custIds)
+        {
+            var problemAccounts = new List<MultipleProblemAccountsModel>();
+
+            if (string.IsNullOrEmpty(custIds))
+            {
+                return problemAccounts;
+            }
+
+            var problemAccountsNAPCM = _dataCenterService.GetProblemAccounts(custIds, null).ToList();
+            var problemAccountsCN88 = _dataCenterService.GetProblemAccounts_CN88(custIds, null).ToList();
+
+            if (problemAccountsNAPCM != null && problemAccountsNAPCM.Any())
+            {
+                problemAccounts.AddRange(problemAccountsNAPCM);
+            }
+
+            if (problemAccountsCN88 != null && problemAccountsCN88.Any())
+            {
+                problemAccounts.AddRange(problemAccountsCN88);
+            }
+
+            return problemAccounts;
+        }
+
+        private void RescanProblemAccount(List<MultipleProblemAccountsModel> problemAccounts, List<CustEvidenceModel> existedEvidences)
+        {            
             var custIdsToSyncCC = new List<int>();
 
-            if (result1.CustIds != null && result1.CustIds.Any())
+            // Re-Sync Customer Evidence to category in CTS
+            var result = _customerEvidenceService.SyncCustomerEvidenceToCategory(existedEvidences);
+
+            if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
             {
-                custIdsToSyncCC.AddRange(result1.CustIds);
-            }
-            else if (result2.CustIds != null && result2.CustIds.Any())
-            {
-                custIdsToSyncCC.AddRange(result2.CustIds);
+                custIdsToSyncCC.AddRange(result.CustIds);
             }
 
-            if (custIdsToSyncCC == null || !custIdsToSyncCC.Any())
+            // Re-Insert Problem Account in CTS
+            result = InsertProblemAccountToCTS(problemAccounts);
+
+            if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
             {
-                return;
+                custIdsToSyncCC.AddRange(result.CustIds);
             }
 
             var custIdsChunk = custIdsToSyncCC.Distinct().Chunk(AppSettings.BatchSize);
@@ -99,46 +138,7 @@
 
                 _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned, false);
             }
-        }
-
-        private IEnumerable<MultipleProblemAccountsModel> CheckToReScanPAFromNapCM(string custIds)
-        {
-            var problemAccounts = new List<MultipleProblemAccountsModel>();
-
-            if (string.IsNullOrEmpty(custIds))
-            {
-                return problemAccounts;
-            }
-
-            var problemAccountsNAPCM = _dataCenterService.GetProblemAccounts(custIds, null).ToList();
-            var problemAccountsCN88 = _dataCenterService.GetProblemAccounts_CN88(custIds, null).ToList();
-
-            if (problemAccountsNAPCM != null && problemAccountsNAPCM.Any())
-            {
-                problemAccounts.AddRange(problemAccountsNAPCM);
-            }
-
-            if (problemAccountsCN88 != null && problemAccountsCN88.Any())
-            {
-                problemAccounts.AddRange(problemAccountsCN88);
-            }
-
-            return problemAccounts;
-        }
-
-        private IEnumerable<CustEvidenceModel> CheckExistedEvidenceToRescanPA(string custIds)
-        {
-            var existedEvidences = new List<CustEvidenceModel>();
-
-            if (string.IsNullOrEmpty(custIds))
-            {
-                return existedEvidences;
-            }
-
-            existedEvidences = _dataCenterService.GetExistedEvidences(custIds).ToList();
-
-            return existedEvidences ?? new List<CustEvidenceModel>();
-        }
+        }               
 
         private InsertCategoryResultModel InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
         {
@@ -150,5 +150,6 @@
 
             return _dataCenterService.InsertProblemAccounts(result);
         }
+
     }
 }

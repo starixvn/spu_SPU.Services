@@ -89,7 +89,7 @@
             return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
         }
 
-        public InsertCategoryResultModel InsertCustEvidenceToCategory(string jsonData)
+        public InsertCategoryResultModel SyncCustomerEvidenceToCategory2(string jsonData)
         {
             var custIds = new List<int>();
             var repository = new DynamicRepository();
