@@ -29,28 +29,33 @@
         {
             try
             {
-                var custEvidenceFromFiles = _custEvidenceService.GetCustomerEvidenceFromFile();
+                var custEvidenceFromFiles = Enumerable.Empty<CustomerEvidenceFromFileModel>();
 
-                if (custEvidenceFromFiles != null && custEvidenceFromFiles.Any())
+                do
                 {
-                    var groups = custEvidenceFromFiles.GroupBy(x => x.FileKey);
+                    custEvidenceFromFiles = _custEvidenceService.GetCustomerEvidenceFromFile();
 
-                    foreach (var custEviList in groups)
+                    if (custEvidenceFromFiles != null && custEvidenceFromFiles.Any())
                     {
-                        var isOverwrite = custEviList.ToList()[0].IsOverwrite;
+                        var groups = custEvidenceFromFiles.GroupBy(x => x.FileKey);
 
-                        try
+                        foreach (var custEviList in groups)
                         {
-                            InsertCustomerEvidence(custEviList, isOverwrite);
+                            var isOverwrite = custEviList.ToList()[0].IsOverwrite;
+
+                            try
+                            {
+                                InsertCustomerEvidence(custEviList, isOverwrite);
+                            }
+                            catch (Exception ex)
+                            {
+                                LogService.Error($"CustomerEvidence Service InsertCustomerEvidence exception: { ex.Message }", ex);
+                            }
                         }
-                        catch (Exception ex)
-                        {
-                            LogService.Error($"CustomerEvidence Service InsertCustomerEvidence exception: { ex.Message }", ex);
-                        }
+
+                        HandleLogError();
                     }
-
-                    HandleLogError();
-                }
+                } while (custEvidenceFromFiles != null && custEvidenceFromFiles.Any());
             }
             catch (Exception ex)
             {
