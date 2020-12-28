@@ -127,11 +127,11 @@
                 {
                     _dataCenterService.TransformCustomerFromMainDB(customers);
 
-                    var custIdList = customers.Where(c => c.IsDangerous == false).Select(c => c.CustId).Distinct().ToList();
+                    var custIdList = customers.Select(c => c.CustId).Distinct().ToList();
 
                     var custIds = _dataCenterService.InsertCategoryForNewCustomer(string.Join(",", custIdList));
 
-                    LogService.Info($"Service Insert new customer -  Insert CTS Complete!:{string.Join(",", custIdList)}");
+                    LogService.Info($"Service Insert new category for customers -  Insert CTS Complete!:{string.Join(",", custIdList)}");
 
                     _customerClassificationService.RescanCustomerClassification(custIds.ToList());
 
