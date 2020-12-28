@@ -4,6 +4,6 @@
 
     public interface ICustomerClassifyService
     {
-        bool RescanCustomerClassification(List<int> customers);
+        void RescanCustomerClassification(List<int> customers);
     }
 }

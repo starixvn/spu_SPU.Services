@@ -21,10 +21,8 @@
             _customerEvidenceService = new CustomerEvidenceService();
         }
 
-        public bool RescanCustomerClassification(List<int> custIds)
+        public void RescanCustomerClassification(List<int> custIds)
         {
-            var isSuccess = true;
-
             // Check and rescan problem account
             var existedEvidences = CheckExistedEvidenceToRescanPA(string.Join(",", custIds)).ToList();
             var problemAccounts = CheckToReScanPAFromNapCM(string.Join(",", custIds)).ToList();
@@ -42,8 +40,6 @@
             {
                 RescanNormalAccount(custIds);
             }
-
-            return isSuccess;
         }
 
         private void RescanProblemAccount(List<MultipleProblemAccountsModel> problemAccounts, List<CustEvidenceModel> existedEvidences)
@@ -88,11 +84,11 @@
             }
         }
 
-        private bool RescanNormalAccount(List<int> customers)
+        private void RescanNormalAccount(List<int> customers)
         {
             if (customers == null || !customers.Any())
             {
-                return true;
+                return;
             }
 
             var custIdsChunk = customers.Chunk(AppSettings.BatchSize).ToList();
@@ -103,8 +99,6 @@
 
                 _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned, false);
             }
-
-            return true;
         }
 
         private IEnumerable<MultipleProblemAccountsModel> CheckToReScanPAFromNapCM(string custIds)

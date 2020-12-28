@@ -66,7 +66,6 @@
         {
             if (generalClassification != null && generalClassification.Any())
             {
-                var custGeneralCategoryForMainDB = new List<CustomerGeneralClassificationModel>();
                 var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
 
                 foreach (var listClassification in newGeneralClassificationChunk)
