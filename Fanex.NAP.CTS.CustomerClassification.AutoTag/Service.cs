@@ -72,10 +72,10 @@
 
                 foreach (var listClassification in newGeneralClassificationChunk)
                 {
+                    var jsonClassification = JsonConvert.SerializeObject(listClassification);
+
                     try
                     {
-                        var jsonClassification = JsonConvert.SerializeObject(listClassification);
-
                         // 1. Insert data in CTS
                         var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
                         
@@ -127,12 +127,12 @@
                         }
                         else
                         {
-                            LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts - InsertMainCustomerClassification error:  {typeCustModel.ErrorMessage}");
+                            LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts - InsertMainCustomerClassification failed:  {typeCustModel.ErrorMessage} with Data: {jsonClassification}");
                         }                        
                     }
                     catch (Exception ex)
                     {
-                        LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts exception {ex.Message}", ex);
+                        LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts exception {ex.Message} with Data: {jsonClassification}", ex);
                     }
                 }
             }
