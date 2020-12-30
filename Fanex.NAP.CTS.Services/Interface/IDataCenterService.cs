@@ -1,15 +1,14 @@
-﻿using Fanex.NAP.CTS.Model;
-using Fanex.NAP.SPU.Model;
-using System;
-using System.Collections.Generic;
-
-namespace Fanex.NAP.CTS.Services.Interface
+﻿namespace Fanex.NAP.CTS.Services.Interface
 {
+    using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.SPU.Model;
+    using System;
+    using System.Collections.Generic;
     public interface IDataCenterService
     {
         void TransformDCSAccount(List<RawAccountModel> accountList);
 
-        List<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList);
+        IEnumerable<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList);
 
         int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList);
 
@@ -47,7 +46,7 @@ namespace Fanex.NAP.CTS.Services.Interface
 
         IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);        
+        IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);
 
         void ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
 

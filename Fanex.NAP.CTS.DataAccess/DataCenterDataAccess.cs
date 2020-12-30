@@ -32,8 +32,10 @@
             repository.Execute(criteria);
         }
 
-        public List<int> TransformCustomerFromMainDB(string customerJson)
+        public InsertCategoryResultModel TransformCustomerFromMainDB(string customerJson)
         {
+            var customerIds = new List<int>();
+
             var criteria = new TransformCustomerFromMainDbCriteria
             {
                 CustomerJson = customerJson
@@ -41,8 +43,10 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<int>(criteria).ToList();
+                customerIds = db.Query<int>(criteria).ToList();
             }
+
+            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = customerIds };
         }
 
         public InsertCategoryResultModel InsertCategoryForNewCustomer(string custIds)

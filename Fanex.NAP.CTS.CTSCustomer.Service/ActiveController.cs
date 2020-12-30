@@ -121,21 +121,21 @@
         {
             try
             {
-                LogService.Info($"Service Insert new customer -  Insert CTS Start with {string.Join(",", customers)}");
+                LogService.Info($"CTSCustomer.Service - InsertNewCustomer start with {JsonConvert.SerializeObject(customers)}");
 
                 if (customers != null && customers.Any())
                 {
-                    _dataCenterService.TransformCustomerFromMainDB(customers);
+                    var custIds =_dataCenterService.TransformCustomerFromMainDB(customers).Distinct();
+                    
+                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer - TransformCustomerFromMainDB done with data: {JsonConvert.SerializeObject(customers)}");
 
-                    var custIdList = customers.Select(c => c.CustId).Distinct().ToList();
+                    var custIdsToSyncCC = _dataCenterService.InsertCategoryForNewCustomer(string.Join(",", custIds));
 
-                    var custIds = _dataCenterService.InsertCategoryForNewCustomer(string.Join(",", custIdList));
+                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer - InsertCategoryForNewCustomer done with data: {string.Join(",", custIds)}");
 
-                    LogService.Info($"Service Insert new category for customers -  Insert CTS Complete!:{string.Join(",", custIdList)}");
+                    _customerClassificationService.RescanCustomerClassification(custIdsToSyncCC.ToList());
 
-                    _customerClassificationService.RescanCustomerClassification(custIds.ToList());
-
-                    LogService.Info($"Service Insert new customer -  Rescan Complete!:{string.Join(",", custIds)}");
+                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassification done with data: {string.Join(",", custIdsToSyncCC)}");
 
                     return true;
                 }
@@ -147,7 +147,7 @@
                       .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
                       .ToString();
 
-                LogService.Error( $"InsertNewCustomer - exception {logMessage} with listCust: {JsonConvert.SerializeObject(customers)}");
+                LogService.Error( $"CTSCustomer.Service - InsertNewCustomer throws exception {logMessage} with listCust: {JsonConvert.SerializeObject(customers)}");
             }
 
             return false;

@@ -1,16 +1,16 @@
-﻿using Fanex.Logging;
-using Fanex.NAP.CTS.DataAccess;
-using Fanex.NAP.CTS.Model;
-using Fanex.NAP.CTS.Services.Interface;
-using Fanex.NAP.FS.Core;
-using Fanex.NAP.SPU.Model;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Fanex.NAP.CTS.Services
+﻿namespace Fanex.NAP.CTS.Services
 {
+    using Fanex.Logging;
+    using Fanex.NAP.CTS.DataAccess;
+    using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Services.Interface;
+    using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Model;
+    using Newtonsoft.Json;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
     public class DataCenterService : IDataCenterService
     {
         private readonly DataCenterDataAccess dataCenterDataAccess;
@@ -34,11 +34,18 @@ namespace Fanex.NAP.CTS.Services
             dataCenterDataAccess.TransformDCSAccount(accountJson);
         }
 
-        public List<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList)
+        public IEnumerable<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList)
         {
             var customerJson = JsonConvert.SerializeObject(customerList);
 
-            return dataCenterDataAccess.TransformCustomerFromMainDB(customerJson);
+            var result = dataCenterDataAccess.TransformCustomerFromMainDB(customerJson);
+
+            if (!string.IsNullOrEmpty(result.ErrorMessage))
+            {
+                LogService.Error($"CTSCustomer.Service - InsertNewCustomer - TransformCustomerFromMainDB throws exception: {result.ErrorMessage} - Data: {customerJson}");
+            }
+
+            return result.CustIds;
         }
 
         public IEnumerable<int> InsertCategoryForNewCustomer (string customerList)
@@ -47,7 +54,7 @@ namespace Fanex.NAP.CTS.Services
 
             if (!string.IsNullOrEmpty(result.ErrorMessage))
             {
-                LogService.Error($"Service - Insert New Customer throws exception: {result.ErrorMessage} - Data: {customerList}");
+                LogService.Error($"CTSCustomer.Service - InsertNewCustomer - InsertCategoryForNewCustomer throws exception: {result.ErrorMessage} - Data: { JsonConvert.SerializeObject(customerList)}");
             }
 
             return result.CustIds;
