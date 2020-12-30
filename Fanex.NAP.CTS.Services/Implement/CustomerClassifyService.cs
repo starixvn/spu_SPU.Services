@@ -80,7 +80,7 @@
                 problemAccounts.AddRange(problemAccountsCN88);
             }
 
-            return problemAccounts;
+            return problemAccounts.Distinct();
         }
 
         private void RescanProblemAccount(List<MultipleProblemAccountsModel> problemAccounts, List<CustEvidenceModel> existedEvidences)

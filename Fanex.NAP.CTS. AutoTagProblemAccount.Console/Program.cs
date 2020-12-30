@@ -127,7 +127,7 @@
 
             return new GetMultiProblemAccountsModel()
             {
-                ProblemAccounts = problemAccounts,
+                ProblemAccounts = problemAccounts.Distinct().ToList(),
                 BackupTimingExecution = savedDataTime
             };
         }
