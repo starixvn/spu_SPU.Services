@@ -7,6 +7,7 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry;
+    using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
@@ -23,6 +24,7 @@
         {
             var dataService = new DataCenterService();
             var pushDataToExternalService = new PushDataToExternalService();
+            var logData = new List<RobotUser>();
 
             DbSettingProviderManager
                  .StartNewSession()
@@ -46,7 +48,7 @@
 
             try
             {
-                LogService.Info("Service Robot User - start!");
+                LogService.Info("RobotUsers.Console - start!");
 
                 var previousTimingExecution = dataService.GetPreviousTimingExecution(Constants.PARAMETER_ROBOTUSER_ID)?.SingleOrDefault();
 
@@ -54,12 +56,14 @@
                 var robotUsers = dataService.GetRobotUser(fromDate, AppSettings.CreditSizes);
                 if (robotUsers.Any())
                 {
+                    logData = robotUsers.ToList();
                     var robotUsersChunks = robotUsers.Chunk(AppSettings.BatchSize).ToList();
+
                     foreach (var robotUserList in robotUsersChunks)
                     {
                         var output = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
 
-                        LogService.Info($"Service Robot User - Inser CTS done! with {string.Join(",", robotUserList.Select(c => c.CustId))}");
+                        LogService.Info($"RobotUsers.Console - InsertRobotUsers done! with {string.Join(",", robotUserList.Select(c => c.CustId))}");
 
                         if (string.IsNullOrEmpty(output.ErrorMessage) && output.CustClassification != null && output.CustClassification.Any())
                         {
@@ -72,11 +76,11 @@
 
                             pushDataToExternalService.PushCustomerClassificationToSoon88(output.CustClassification);
 
-                            LogService.Info($"Service Robot User - Push CC To Main done! with {JsonConvert.SerializeObject(output.CustClassification)}");
+                            LogService.Info($"RobotUsers.Console - PushCustomerClassificationToMain done! with {JsonConvert.SerializeObject(output.CustClassification)}");
                         }
                         else if(!string.IsNullOrEmpty(output.ErrorMessage))
                         {
-                            LogService.Error($"Service Robot User exception: {output.ErrorMessage} - Data: {JsonConvert.SerializeObject(robotUserList.Select(c => c.CustId))}");
+                            LogService.Error($"RobotUsers.Console throw exception: {output.ErrorMessage} - Data: {JsonConvert.SerializeObject(robotUserList.Select(c => c.CustId))}");
                         }
 
                         Thread.Sleep(300);
@@ -85,13 +89,16 @@
 
                 dataService.UpdateTimingExecution(executedTime, Constants.PARAMETER_ROBOTUSER_ID);
 
-                LogService.Info("Service Robot User done!");
+                LogService.Info("RobotUsers.Console - done!");
             }
             catch (Exception ex)
             {
-                var logMessage = new LogMessage("Robot User -" + ex.Message)
+                var logMessage = new LogMessage("RobotUsers.Console - " + ex.Message)
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                if (logData != null && logData.Any())
+                    logMessage += $" Full data input: {JsonConvert.SerializeObject(logData)}";
 
                 LogService.Error(logMessage);
             }

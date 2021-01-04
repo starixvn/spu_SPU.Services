@@ -361,5 +361,18 @@ namespace Fanex.NAP.SPU.Core
                 return isWriteLog;
             }
         }
+
+        public static int InternalChunkSize
+        {
+            get
+            {
+                var size = 500;
+                var configSize = ConfigurationManager.AppSettings["Internal-ChunkSize"];
+
+                int.TryParse(configSize, out size);
+
+                return size == 0 ? 500 : size;
+            }
+        }
     }
 }

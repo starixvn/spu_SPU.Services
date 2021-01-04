@@ -4,7 +4,6 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Services;
-    using Fanex.NAP.CTS.Services.Helper;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
@@ -13,6 +12,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Http;
+    using Fanex.NAP.FS.Core;
 
     public class ActiveController : ApiController
     {
@@ -125,20 +125,28 @@
 
                 if (customers != null && customers.Any())
                 {
-                    var custIds =_dataCenterService.TransformCustomerFromMainDB(customers).Distinct();
-                    
-                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer - TransformCustomerFromMainDB done with data: {JsonConvert.SerializeObject(customers)}");
+                    var customersChunk = customers.Distinct().Chunk(AppSettings.InternalChunkSize);
 
-                    var custIdsToSyncCC = _dataCenterService.InsertCategoryForNewCustomer(string.Join(",", custIds));
+                    foreach (var custs in customersChunk)
+                    {
 
-                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer - InsertCategoryForNewCustomer done with data: {string.Join(",", custIds)}");
+                        var custIds = _dataCenterService.TransformCustomerFromMainDB(custs.ToList()).Distinct();
 
-                    _customerClassificationService.RescanCustomerClassification(custIdsToSyncCC.ToList());
+                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - TransformCustomerFromMainDB done with data: {JsonConvert.SerializeObject(custs)}");
 
-                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassification done with data: {string.Join(",", custIdsToSyncCC)}");
+                        var custIdsToSyncCC = _dataCenterService.InsertCategoryForNewCustomer(string.Join(",", custIds));
 
-                    return true;
+                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - InsertCategoryForNewCustomer done with data: {string.Join(",", custIds)}");
+
+                        _customerClassificationService.RescanCustomerClassification(custIdsToSyncCC.ToList());
+
+                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassification done with data: {string.Join(",", custIdsToSyncCC)}");
+
+                        return true;
+                    }
                 }
+
+                LogService.Info($"CTSCustomer.Service - InsertNewCustomer done");
             }
             catch (Exception ex)
             {
