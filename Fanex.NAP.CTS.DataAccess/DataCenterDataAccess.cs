@@ -48,24 +48,7 @@
 
             return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = customerIds };
         }
-
-        public InsertCategoryResultModel InsertCategoryForNewCustomer(string custIds)
-        {
-            var customerIds = new List<int>();
-
-            var criteria = new InsertNewCustomerCategoryCriteria
-            {
-                CustIds = custIds
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                customerIds = db.Query<int>(criteria).ToList();
-            }
-
-            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = customerIds };
-        }
-
+      
         public int FillUpCustomerFromMainDB(string customerJson)
         {
             var criteria = new TransformCustomerFromMainDbCriteria

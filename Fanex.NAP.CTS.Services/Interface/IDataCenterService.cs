@@ -58,9 +58,7 @@
 
         void ClassifyCustomerGeneralCategoryRealtime(IEnumerable<CustomerClassificationModel> customers);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList);
-
-        IEnumerable<int> InsertCategoryForNewCustomer(string customerList);
+        IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList);        
 
         IEnumerable<int> GetAllSpecialCustomerClass();
 

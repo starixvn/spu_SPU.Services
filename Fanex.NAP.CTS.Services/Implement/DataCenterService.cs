@@ -46,20 +46,7 @@
             }
 
             return result.CustIds;
-        }
-
-        public IEnumerable<int> InsertCategoryForNewCustomer (string customerList)
-        {
-            var result = dataCenterDataAccess.InsertCategoryForNewCustomer(customerList);
-
-            if (!string.IsNullOrEmpty(result.ErrorMessage))
-            {
-                LogService.Error($"CTSCustomer.Service - InsertNewCustomer - InsertCategoryForNewCustomer throws exception: {result.ErrorMessage} - Data: { JsonConvert.SerializeObject(customerList)}");
-            }
-
-            return result.CustIds;
-        }
-        
+        }      
 
         public int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList)
         {

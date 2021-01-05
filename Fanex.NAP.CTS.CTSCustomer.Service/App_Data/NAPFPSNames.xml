@@ -7,8 +7,7 @@
     <Setting Key="CTS_DC_InsertCTSCustomer" SpName="CTS_DC_InsertCTSCustomer" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_HealingCTSCustomer" SpName="CTS_DC_HealingCTSCustomer" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_UpdateUsername2" SpName="CTS_DC_UpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-    <Setting Key="CTS_DC_GetCustomerForUpdateUsername2" SpName="CTS_DC_GetCustomerForUpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsService"/>
-    <Setting Key="CTS_DC_InsertNewCustomerCategory" SpName="CTS_DC_InsertNewCustomerCategory" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="CTS_DC_GetCustomerForUpdateUsername2" SpName="CTS_DC_GetCustomerForUpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsService"/>    
     <Setting Key="CTS_DC_CustClassification_GetLatestClassification" SpName="CTS_DC_CustClassification_GetLatestClassification" DbName="MySQL.CTS_DataCenter.ctsService" />
     <Setting Key="CTS_DC_CustClassification_UpdateIsAppliedCC" SpName="CTS_DC_CustClassification_UpdateIsAppliedCC" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
     <Setting Key="CTS_DC_InsertCategorizedProblemAccounts" SpName="CTS_DC_InsertCategorizedProblemAccounts" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>

@@ -21,27 +21,46 @@
             _customerEvidenceService = new CustomerEvidenceService();
         }
 
-        public void RescanCustomerClassification(List<int> custIds)
+        public void RescanCustomerClassify(List<int> custIds, bool isRescanPA, bool isPushCCToSoon88)
         {
-            // Check and rescan problem account
-            var existedCustEvidences = GetExistedCustomerEvidences(string.Join(",", custIds)).ToList();
-            var existedProblemAccounts = GetExistedProblemAccounts(string.Join(",", custIds)).ToList();
+            var custIdList = new List<int>();
 
-            var isRescanPA = (existedCustEvidences != null && existedCustEvidences.Any()) || (existedProblemAccounts != null && existedProblemAccounts.Any());
+            // Re-Sync Customer Evidence to category in CTS
+            var custIdCCs = SyncCustomerEvidenceToCategory(custIds);
+            custIdList.AddRange(custIdCCs);
 
             if (isRescanPA)
             {
-                RescanProblemAccount(existedProblemAccounts, existedCustEvidences);
-
-                custIds.RemoveAll(item => existedProblemAccounts.Select(c => c.CustID).Contains(item));
-                custIds.RemoveAll(item => existedCustEvidences.Select(c => c.CustId).Contains(item));
+                // Re-Insert Problem Account in CTS
+                custIdCCs = InsertProblemAccount(custIds);
+                custIdList.AddRange(custIdCCs);
             }
+
+            var custIdsToSyncCC = custIdList.Distinct().ToList();
+
+            // Push Customer class to MainDB, Soon88, ...
+            SyncCustomerClassToExternal(custIdsToSyncCC, isPushCCToSoon88);
 
             // Check and rescan normal account
             if (custIds != null && custIds.Any())
-            {
                 RescanNormalAccount(custIds);
+        }
+
+        private List<int> SyncCustomerEvidenceToCategory(List<int> custIds)
+        {
+            var custIdsToSyncCC = new List<int>();
+
+            var existedCustEvidences = GetExistedCustomerEvidences(string.Join(",", custIds)).ToList();
+
+            // Re-Sync Customer Evidence to category in CTS
+            var result = _customerEvidenceService.SyncCustomerEvidenceToCategory(existedCustEvidences);
+
+            if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
+            {
+                custIdsToSyncCC.AddRange(result.CustIds);
             }
+
+            return custIdsToSyncCC;
         }
 
         private IEnumerable<CustEvidenceModel> GetExistedCustomerEvidences(string custIds)
@@ -56,6 +75,22 @@
             existedEvidences = _dataCenterService.GetExistedEvidences(custIds).ToList();
 
             return existedEvidences ?? new List<CustEvidenceModel>();
+        }
+
+        private List<int> InsertProblemAccount(List<int> custIds)
+        {
+            var custIdsToSyncCC = new List<int>();
+
+            var existedProblemAccounts = GetExistedProblemAccounts(string.Join(",", custIds)).ToList();
+
+            var result = InsertProblemAccountToCTS(existedProblemAccounts);
+
+            if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
+            {
+                custIdsToSyncCC.AddRange(result.CustIds);
+            }
+
+            return custIdsToSyncCC;
         }
 
         private IEnumerable<MultipleProblemAccountsModel> GetExistedProblemAccounts(string custIds)
@@ -83,26 +118,19 @@
             return problemAccounts.Distinct();
         }
 
-        private void RescanProblemAccount(List<MultipleProblemAccountsModel> problemAccounts, List<CustEvidenceModel> existedEvidences)
-        {            
-            var custIdsToSyncCC = new List<int>();
-
-            // Re-Sync Customer Evidence to category in CTS
-            var result = _customerEvidenceService.SyncCustomerEvidenceToCategory(existedEvidences);
-
-            if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
+        private InsertCategoryResultModel InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        {
+            var result = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
-                custIdsToSyncCC.AddRange(result.CustIds);
-            }
+                CustId = a.CustID,
+                CategoryId = a.ReasonID
+            }).ToList();
 
-            // Re-Insert Problem Account in CTS
-            result = InsertProblemAccountToCTS(problemAccounts);
+            return _dataCenterService.InsertProblemAccounts(result);
+        }
 
-            if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
-            {
-                custIdsToSyncCC.AddRange(result.CustIds);
-            }
-
+        private void SyncCustomerClassToExternal(List<int> custIdsToSyncCC, bool isPushCCToSoon88)
+        {
             var custIdsChunk = custIdsToSyncCC.Distinct().Chunk(AppSettings.BatchSize);
 
             foreach (var custids in custIdsChunk)
@@ -114,14 +142,13 @@
                     bool isSyncMainSuccessfully = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
 
                     if (isSyncMainSuccessfully)
-                    {
                         _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
-                    }
 
-                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                    if (isPushCCToSoon88)
+                        _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                 }
             }
-        }
+        }       
 
         private void RescanNormalAccount(List<int> customers)
         {
@@ -139,17 +166,6 @@
                 _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned, false);
             }
         }               
-
-        private InsertCategoryResultModel InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
-        {
-            var result = problemAccounts.Select(a => new InsertProblemAccountsModel
-            {
-                CustId = a.CustID,
-                CategoryId = a.ReasonID
-            }).ToList();
-
-            return _dataCenterService.InsertProblemAccounts(result);
-        }
-
+        
     }
 }

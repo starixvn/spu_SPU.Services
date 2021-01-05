@@ -121,7 +121,10 @@
         {
             try
             {
-                LogService.Info($"CTSCustomer.Service - InsertNewCustomer start with {JsonConvert.SerializeObject(customers)}");
+                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
+
+                if (isWriteLogInfo)
+                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer start with {JsonConvert.SerializeObject(customers)}");
 
                 if (customers != null && customers.Any())
                 {
@@ -129,24 +132,22 @@
 
                     foreach (var custs in customersChunk)
                     {
+                        var custIdList = _dataCenterService.TransformCustomerFromMainDB(custs.ToList());
 
-                        var custIds = _dataCenterService.TransformCustomerFromMainDB(custs.ToList()).Distinct();
+                        if (custIdList != null && custIdList.Any())
+                        {
+                            _customerClassificationService.RescanCustomerClassify(custIdList.Distinct().ToList(), true, true);
 
-                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - TransformCustomerFromMainDB done with data: {JsonConvert.SerializeObject(custs)}");
-
-                        var custIdsToSyncCC = _dataCenterService.InsertCategoryForNewCustomer(string.Join(",", custIds));
-
-                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - InsertCategoryForNewCustomer done with data: {string.Join(",", custIds)}");
-
-                        _customerClassificationService.RescanCustomerClassification(custIdsToSyncCC.ToList());
-
-                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassification done with data: {string.Join(",", custIdsToSyncCC)}");
+                            if (isWriteLogInfo)
+                                LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassify done with data: {string.Join(",", custIdList)}");
+                        }
 
                         return true;
                     }
                 }
 
-                LogService.Info($"CTSCustomer.Service - InsertNewCustomer done");
+                if (isWriteLogInfo)
+                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer done");
             }
             catch (Exception ex)
             {

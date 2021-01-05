@@ -46,7 +46,10 @@
             {
                 var result = GetProblemAccounts();
 
-                LogService.Info($"AutoTagProblemAccount.Service - Get PA From NAPCM & CN88 with Data: {JsonConvert.SerializeObject(result)}");
+                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
+
+                if(isWriteLogInfo)
+                    LogService.Info($"AutoTagProblemAccount.Service - Get PA From NAPCM & CN88 with Data: {JsonConvert.SerializeObject(result)}");
 
                 if (result.ProblemAccounts != null && result.ProblemAccounts.Any())
                 {
@@ -54,7 +57,8 @@
 
                     var output = InsertProblemAccountToCTS(result.ProblemAccounts);
 
-                    LogService.Info($"AutoTagProblemAccount.Service - InsertProblemAccountToCTS done with: {JsonConvert.SerializeObject(result.ProblemAccounts)}");
+                    if (isWriteLogInfo)
+                        LogService.Info($"AutoTagProblemAccount.Service - InsertProblemAccountToCTS done with: {JsonConvert.SerializeObject(result.ProblemAccounts)}");
 
                     if (string.IsNullOrEmpty(output.ErrorMessage) & output.CustIds != null && output.CustIds.Any())
                     {
@@ -72,12 +76,14 @@
                                 {
                                     WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
 
-                                    LogService.Info($"AutoTagProblemAccount.Service - Sync CC done with :{JsonConvert.SerializeObject(lastestClassifications)}");
+                                    if (isWriteLogInfo)
+                                        LogService.Info($"AutoTagProblemAccount.Service - Sync CC done with :{JsonConvert.SerializeObject(lastestClassifications)}");
                                 }
 
                                 pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
 
-                                LogService.Info($"AutoTagProblemAccount.Service - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}");
+                                if (isWriteLogInfo)
+                                    LogService.Info($"AutoTagProblemAccount.Service - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}");
                             }
                         }
                     }
@@ -85,7 +91,8 @@
 
                 WrapperDataCenterService.Instance.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);
 
-                LogService.Info($"AutoTagProblemAccount.Service - Done!");
+                if (isWriteLogInfo)
+                    LogService.Info($"AutoTagProblemAccount.Service - Done!");
             }
             catch (Exception ex)
             {

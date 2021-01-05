@@ -48,12 +48,17 @@
 
             try
             {
-                LogService.Info("RobotUsers.Console - start!");
+                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
+
+                if (isWriteLogInfo)                
+                    LogService.Info("RobotUsers.Console - start!");
 
                 var previousTimingExecution = dataService.GetPreviousTimingExecution(Constants.PARAMETER_ROBOTUSER_ID)?.SingleOrDefault();
 
                 var fromDate = DateTime.Parse(previousTimingExecution.ParameterValue);
+
                 var robotUsers = dataService.GetRobotUser(fromDate, AppSettings.CreditSizes);
+
                 if (robotUsers.Any())
                 {
                     logData = robotUsers.ToList();
@@ -63,7 +68,8 @@
                     {
                         var output = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
 
-                        LogService.Info($"RobotUsers.Console - InsertRobotUsers done! with {string.Join(",", robotUserList.Select(c => c.CustId))}");
+                        if (isWriteLogInfo)
+                            LogService.Info($"RobotUsers.Console - InsertRobotUsers done! with {string.Join(",", robotUserList.Select(c => c.CustId))}");
 
                         if (string.IsNullOrEmpty(output.ErrorMessage) && output.CustClassification != null && output.CustClassification.Any())
                         {
@@ -72,11 +78,10 @@
                             if (isSyncMainSuccessfully)
                             {
                                 dataService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(output.CustClassification));
-                            }
+                            }                            
 
-                            pushDataToExternalService.PushCustomerClassificationToSoon88(output.CustClassification);
-
-                            LogService.Info($"RobotUsers.Console - PushCustomerClassificationToMain done! with {JsonConvert.SerializeObject(output.CustClassification)}");
+                            if (isWriteLogInfo)
+                                LogService.Info($"RobotUsers.Console - PushCustomerClassificationToMain done! with {JsonConvert.SerializeObject(output.CustClassification)}");
                         }
                         else if(!string.IsNullOrEmpty(output.ErrorMessage))
                         {
@@ -89,7 +94,8 @@
 
                 dataService.UpdateTimingExecution(executedTime, Constants.PARAMETER_ROBOTUSER_ID);
 
-                LogService.Info("RobotUsers.Console - done!");
+                if (isWriteLogInfo)
+                    LogService.Info("RobotUsers.Console - done!");
             }
             catch (Exception ex)
             {
