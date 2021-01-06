@@ -236,39 +236,33 @@
             return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
         }
 
-        public InsertCategoryResultModel InsertProblemAccounts(List<InsertProblemAccountsModel> problemAccounts)
+        public InsertCategoryResultModel InsertProblemAccounts(IEnumerable<InsertProblemAccountsModel> problemAccounts)
         {
+            var result = new InsertCategoryResultModel() {
+                ErrorMessage = string.Empty, 
+                CustIds = new List<int>() 
+            };
+
             try
             {
                 if (problemAccounts == null || !problemAccounts.Any())
                 {
-                    return new InsertCategoryResultModel() { ErrorMessage = string.Empty, CustIds = null };
+                    return result;
                 }
+              
+                result = dataCenterDataAccess.InsertProblemAccount(JsonConvert.SerializeObject(problemAccounts));
 
-                var problemAccountsChunk = problemAccounts.Chunk(AppSetting.UpdateInternalChunkSize);
-
-                var custIds = new List<int>();
-
-                foreach (var problemAccs in problemAccountsChunk)
+                if (!string.IsNullOrEmpty(result.ErrorMessage))
                 {
-                    var result = dataCenterDataAccess.InsertProblemAccount(JsonConvert.SerializeObject(problemAccs));
-
-                    custIds.AddRange(result.CustIds);
-
-                    if (!string.IsNullOrEmpty(result.ErrorMessage))
-                    {
-                        LogService.Error($"Service - Rescan PA - Insert Problem Acocunts exception: {result.ErrorMessage} - Data: {JsonConvert.SerializeObject(problemAccs)}");
-                    }
+                    LogService.Error($"Service - Rescan PA - Insert Problem Acocunts exception: {result.ErrorMessage} - Data: {JsonConvert.SerializeObject(problemAccounts)}");
                 }
-
-                return new InsertCategoryResultModel { ErrorMessage = string.Empty, CustIds = custIds };
             }
             catch (Exception ex)
             {
                 LogService.Error($"Service - Rescan PA - Insert Problem Acocunts exception: {ex.Message} - Data: {JsonConvert.SerializeObject(problemAccounts)}", ex);
-
-                return new InsertCategoryResultModel { ErrorMessage = ex.Message, CustIds = null };
             }
+
+            return result;
         }
 
         public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId)

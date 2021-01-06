@@ -55,35 +55,22 @@
                 {
                     logData = result.ProblemAccounts;
 
-                    var output = InsertProblemAccountToCTS(result.ProblemAccounts);
+                    var problemAccountsChunk = result.ProblemAccounts.Chunk(AppSetting.UpdateInternalChunkSize);
 
-                    if (isWriteLogInfo)
-                        LogService.Info($"AutoTagProblemAccount.Service - InsertProblemAccountToCTS done with: {JsonConvert.SerializeObject(result.ProblemAccounts)}");
-
-                    if (string.IsNullOrEmpty(output.ErrorMessage) & output.CustIds != null && output.CustIds.Any())
+                    foreach (var problemAccs in problemAccountsChunk)
                     {
-                        var custIdsChunk  = output.CustIds.Chunk(AppSettings.BatchSize);
+                        var custs = InsertProblemAccountToCTS(problemAccs);
 
-                        foreach(var custs in custIdsChunk)
+                        if (isWriteLogInfo)
+                            LogService.Info($"AutoTagProblemAccount.Service - InsertProblemAccountToCTS done with: {JsonConvert.SerializeObject(problemAccs)}");
+
+                        if (custs != null && custs.Any())
                         {
-                            var lastestClassifications = WrapperDataCenterService.Instance.GetLatestClassification(string.Join(",", custs));
+                            var custIdsChunk = custs.Chunk(AppSettings.PushCCToExternalChunkSize);
 
-                            if (lastestClassifications != null && lastestClassifications.Any())
+                            foreach (var custIds in custIdsChunk)
                             {
-                                bool isSyncMainSuccessfully = pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
-
-                                if (isSyncMainSuccessfully)
-                                {
-                                    WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
-
-                                    if (isWriteLogInfo)
-                                        LogService.Info($"AutoTagProblemAccount.Service - Sync CC done with :{JsonConvert.SerializeObject(lastestClassifications)}");
-                                }
-
-                                pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
-
-                                if (isWriteLogInfo)
-                                    LogService.Info($"AutoTagProblemAccount.Service - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}");
+                                PushDataToExternal(custIds, isWriteLogInfo, pushDataToExternalService);
                             }
                         }
                     }
@@ -140,15 +127,38 @@
             };
         }
 
-        private static InsertCategoryResultModel InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        private static IEnumerable<int> InsertProblemAccountToCTS(IEnumerable<MultipleProblemAccountsModel> problemAccounts)
         {
-            var result = problemAccounts.Select(a => new InsertProblemAccountsModel
+            var inputData = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
                 CustId = a.CustID,
                 CategoryId = a.ReasonID
             }).ToList();
             
-            return WrapperDataCenterService.Instance.InsertProblemAccounts(result);
+            return WrapperDataCenterService.Instance.InsertProblemAccounts(inputData).CustIds;
+        }
+
+        private static void PushDataToExternal (IEnumerable<int> custIds, bool isWriteLogInfo, PushDataToExternalService service)
+        {
+            var lastestClassifications = WrapperDataCenterService.Instance.GetLatestClassification(string.Join(",", custIds));
+
+            if (lastestClassifications != null && lastestClassifications.Any())
+            {
+                bool isSyncMainSuccessfully = service.PushCustomerClassificationToMain(lastestClassifications, AppSettings.RetryTime);
+
+                if (isSyncMainSuccessfully)
+                {
+                    WrapperDataCenterService.Instance.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
+
+                    if (isWriteLogInfo)
+                        LogService.Info($"AutoTagProblemAccount.Service - Sync CC done with :{JsonConvert.SerializeObject(lastestClassifications)}");
+                }
+
+                service.PushCustomerClassificationToSoon88(lastestClassifications);
+
+                if (isWriteLogInfo)
+                    LogService.Info($"AutoTagProblemAccount.Service - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}");
+            }
         }
     }
 }

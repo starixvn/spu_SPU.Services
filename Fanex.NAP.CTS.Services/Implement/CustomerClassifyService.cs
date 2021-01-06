@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.Services
 {
+    using Fanex.Logging;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
@@ -83,11 +84,11 @@
 
             var existedProblemAccounts = GetExistedProblemAccounts(string.Join(",", custIds)).ToList();
 
-            var result = InsertProblemAccountToCTS(existedProblemAccounts);
+            var custs = InsertProblemAccountToCTS(existedProblemAccounts);
 
-            if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
+            if (custs != null && custs.Any())
             {
-                custIdsToSyncCC.AddRange(result.CustIds);
+                custIdsToSyncCC = custs;
             }
 
             return custIdsToSyncCC;
@@ -118,20 +119,31 @@
             return problemAccounts.Distinct();
         }
 
-        private InsertCategoryResultModel InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        private List<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
         {
-            var result = problemAccounts.Select(a => new InsertProblemAccountsModel
+            var inputData = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
                 CustId = a.CustID,
                 CategoryId = a.ReasonID
             }).ToList();
 
-            return _dataCenterService.InsertProblemAccounts(result);
+            var problemAccountsChunk = inputData.Chunk(AppSetting.UpdateInternalChunkSize);
+
+            var custIds = new List<int>();
+
+            foreach (var problemAccs in problemAccountsChunk)
+            {
+                var result = _dataCenterService.InsertProblemAccounts(problemAccs);
+
+                custIds.AddRange(result.CustIds);
+            }
+
+            return custIds;
         }
 
         private void SyncCustomerClassToExternal(List<int> custIdsToSyncCC, bool isPushCCToSoon88)
         {
-            var custIdsChunk = custIdsToSyncCC.Distinct().Chunk(AppSettings.BatchSize);
+            var custIdsChunk = custIdsToSyncCC.Distinct().Chunk(AppSettings.PushCCToExternalChunkSize);
 
             foreach (var custids in custIdsChunk)
             {
@@ -157,7 +169,7 @@
                 return;
             }
 
-            var custIdsChunk = customers.Chunk(AppSettings.BatchSize).ToList();
+            var custIdsChunk = customers.Chunk(AppSettings.InternalChunkSize).ToList();
 
             foreach (var custIds in custIdsChunk)
             {

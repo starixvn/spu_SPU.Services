@@ -76,7 +76,7 @@
 
         IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime? dateTime);
 
-        InsertCategoryResultModel InsertProblemAccounts(List<InsertProblemAccountsModel> problemAccounts);
+        InsertCategoryResultModel InsertProblemAccounts(IEnumerable<InsertProblemAccountsModel> problemAccounts);
 
         IEnumerable<CustEvidenceModel> GetExistedEvidences(string custIDs);
     }
