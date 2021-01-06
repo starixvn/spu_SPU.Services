@@ -79,5 +79,9 @@
         InsertCategoryResultModel InsertProblemAccounts(IEnumerable<InsertProblemAccountsModel> problemAccounts);
 
         IEnumerable<CustEvidenceModel> GetExistedEvidences(string custIDs);
+
+        IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId);
+
+        void UpdateTimingExecution(string newDataTime, int paramId);
     }
 }

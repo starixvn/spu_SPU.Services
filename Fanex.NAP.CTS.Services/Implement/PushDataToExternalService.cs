@@ -4,14 +4,20 @@
     using System.Collections.Generic;
     using System.Linq;
     using Fanex.Logging;
-    using Fanex.Logging.Extensions;
-    using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services.Helper;
+    using Fanex.NAP.CTS.Services.Interface;
     using Newtonsoft.Json;
 
     public class PushDataToExternalService : IPushDataToExternalService
     {
+        private readonly IDataCenterService _dataCenterService;
+
+        public PushDataToExternalService()
+        {
+            _dataCenterService = new DataCenterService();
+        }
+
         public bool PushCustomerClassificationToMain(IEnumerable<LatestClassificationModel> customerClassifications, int retryTime)
         {
             if (customerClassifications == null || !customerClassifications.Any())
@@ -23,7 +29,7 @@
             {
                 try
                 {
-                    var result =  WrapperDataCenterService.Instance.UpdateCustomerGeneralClassificationtoMainDB(customerClassifications);
+                    var result = _dataCenterService.UpdateCustomerGeneralClassificationtoMainDB(customerClassifications);
 
                     if (result.ErrorCode != 0 && retryTime == 0)
                     {
