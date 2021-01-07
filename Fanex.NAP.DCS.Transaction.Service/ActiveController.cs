@@ -8,15 +8,20 @@
     using Fanex.NAP.DCS.Transaction.Service.Services.Interface;
     using Newtonsoft.Json;
     using System;
+    using System.Collections.Generic;
     using System.Web.Http;
 
     public class ActiveController : ApiController
     {
         private readonly IDataTransformService dataTransformService;
+        private readonly IList<string> IgnoreMessages;
 
         public ActiveController()
         {
             dataTransformService = new DataTransformService();
+            IgnoreMessages = new List<string> {
+                "Deadlock found when trying to get lock; try restarting transaction"
+            };
         }
 
         public bool Post()
@@ -43,25 +48,28 @@
             try
             {
                 if (model.MinTransId != 0 && model.MaxTransId != 0)
-                {                    
-                    
+                {
+
                     dataTransformService
                     .Initial(model.MinTransId, model.MaxTransId)
                     .UnhandleSubscriberAccountProcessing()
                     .UserAgentProcessing()
-                    .TransactionProcessing();                                                 
+                    .TransactionProcessing();
 
                     return true;
                 }
             }
             catch (Exception ex)
             {
-                var logMessage = new LogMessage(ex.Message)
+                if(!this.IgnoreMessages.Contains(ex.Message))
+                {
+                    var logMessage = new LogMessage(ex.Message)
                       .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                       .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex))
                       .ToString();
 
-                LogService.Error(logMessage);
+                    LogService.Error(logMessage);
+                }                
             }
 
             return false;
