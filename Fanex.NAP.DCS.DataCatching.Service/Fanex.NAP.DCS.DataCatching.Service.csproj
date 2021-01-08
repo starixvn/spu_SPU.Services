@@ -63,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.FPS.Renovation.DataCatching.Service.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.DCS.Core\Fanex.NAP.DCS.Core.csproj">

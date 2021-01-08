@@ -99,7 +99,6 @@
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Fanex.NAP.FPS.Renovation.DataTransform.Service.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPFPSNames.LOCAL.xml">
