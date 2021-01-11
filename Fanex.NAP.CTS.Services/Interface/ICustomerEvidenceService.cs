@@ -11,9 +11,9 @@
 
         DBResult InsertCustomerEvidenceMuitiple(string jsonData, int userId, bool isOverwrite);
 
-        DBResult SyncCustomerEvidenceToCategory(string jsonData);
+        DBResult SyncCustomerEvidenceToCategory(string jsonData, bool isRescan);
 
-        InsertCategoryResultModel SyncCustomerEvidenceToCategory(List<CustEvidenceModel> existedEvidences);
+        InsertCategoryResultModel SyncCustomerEvidenceToCategory(List<CustEvidenceModel> existedEvidences, bool isRescan);
 
         DBResult SyncCustomerClassToMainDb(string ctsCustIds, out List<SyncCustomerClassToMainModel> custClasses);
 

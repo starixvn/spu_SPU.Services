@@ -54,7 +54,7 @@
             var existedCustEvidences = GetExistedCustomerEvidences(string.Join(",", custIds)).ToList();
 
             // Re-Sync Customer Evidence to category in CTS
-            var result = _customerEvidenceService.SyncCustomerEvidenceToCategory(existedCustEvidences);
+            var result = _customerEvidenceService.SyncCustomerEvidenceToCategory(existedCustEvidences, true);
 
             if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
             {
@@ -133,7 +133,7 @@
 
             foreach (var problemAccs in problemAccountsChunk)
             {
-                var result = _dataCenterService.InsertProblemAccounts(problemAccs);
+                var result = _dataCenterService.InsertProblemAccounts(problemAccs, true);
 
                 custIds.AddRange(result.CustIds);
             }

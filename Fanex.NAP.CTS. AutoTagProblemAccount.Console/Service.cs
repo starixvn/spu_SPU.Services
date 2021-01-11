@@ -123,7 +123,7 @@
                 CategoryId = a.ReasonID
             }).ToList();
 
-            return _dataCenterService.InsertProblemAccounts(inputData).CustIds;
+            return _dataCenterService.InsertProblemAccounts(inputData, false).CustIds;
         }
 
         private static void PushDataToExternal(IEnumerable<int> custIds, bool isWriteLogInfo)

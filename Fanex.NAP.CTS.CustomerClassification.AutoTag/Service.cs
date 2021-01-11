@@ -77,7 +77,7 @@
                     try
                     {
                         // 1. Insert data in CTS
-                        var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
+                        var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false);
                         
                         if(isWriteLogInfo)
                             LogService.Info($"Service Autotag Normal - Insert CTS Complete!:{JsonConvert.SerializeObject(jsonClassification)} - Output: {JsonConvert.SerializeObject(typeCustModel)}");                        
@@ -117,7 +117,6 @@
                                     }
 
                                     // 6. Push CC to Soon88
-
                                     _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                                 }
                             }

@@ -69,11 +69,12 @@
             return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
         }
 
-        public DBResult SyncCustomerEvidenceToCategory(string jsonData)
+        public DBResult SyncCustomerEvidenceToCategory(string jsonData, bool isRescan)
         {
             var criteria = new SyncCustEvidenceToCTSCategoryCriteria
             {
-                CustEvidences = jsonData
+                CustEvidences = jsonData,
+                IsRescan = isRescan
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -89,7 +90,7 @@
             return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
         }
 
-        public InsertCategoryResultModel SyncCustomerEvidenceToCategory2(string jsonData)
+        public InsertCategoryResultModel SyncCustomerEvidenceToCategory2(string jsonData, bool isRescan)
         {
             var custIds = new List<int>();
             var repository = new DynamicRepository();
@@ -101,7 +102,8 @@
 
             var criteria = new SyncCustEvidenceToCTSCategoryCriteria
             {
-                CustEvidences = jsonData
+                CustEvidences = jsonData,
+                IsRescan = isRescan
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

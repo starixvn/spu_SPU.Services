@@ -13,6 +13,9 @@
         [SpParam(SqlParamName = "ip_CustSport")]
         public string CustSportJson { get; set; }
 
+        [SpParam(SqlParamName = "op_ErrorMessage")]
+        public string ErrorMessage { get; set; }
+
         public override string GetSettingKey()
         {
             return "CTS_DC_CustClassification_Probation_UpdateLastScanDate";

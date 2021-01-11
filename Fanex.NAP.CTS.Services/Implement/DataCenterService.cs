@@ -109,9 +109,9 @@
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
-        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan)
         {
-           return dataCenterDataAccess.InsertMainCustomerClassification(newClassification);
+           return dataCenterDataAccess.InsertMainCustomerClassification(newClassification, isRescan);
         }
 
         public void DCSMoveTransToTransaction07(string transIdList)
@@ -236,7 +236,7 @@
             return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
         }
 
-        public InsertCategoryResultModel InsertProblemAccounts(IEnumerable<InsertProblemAccountsModel> problemAccounts)
+        public InsertCategoryResultModel InsertProblemAccounts(IEnumerable<InsertProblemAccountsModel> problemAccounts, bool isRescan)
         {
             var result = new InsertCategoryResultModel() {
                 ErrorMessage = string.Empty, 
@@ -250,7 +250,7 @@
                     return result;
                 }
               
-                result = dataCenterDataAccess.InsertProblemAccount(JsonConvert.SerializeObject(problemAccounts));
+                result = dataCenterDataAccess.InsertProblemAccount(JsonConvert.SerializeObject(problemAccounts), isRescan);
 
                 if (!string.IsNullOrEmpty(result.ErrorMessage))
                 {

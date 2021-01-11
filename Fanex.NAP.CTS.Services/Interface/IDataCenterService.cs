@@ -34,7 +34,7 @@
 
         void AutoTagClassification(string newClassification);
 
-        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification);
+        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan);
 
         DBResult UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList);
 
@@ -76,7 +76,7 @@
 
         IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts_CN88(string custIDs, DateTime? dateTime);
 
-        InsertCategoryResultModel InsertProblemAccounts(IEnumerable<InsertProblemAccountsModel> problemAccounts);
+        InsertCategoryResultModel InsertProblemAccounts(IEnumerable<InsertProblemAccountsModel> problemAccounts, bool isRescan);
 
         IEnumerable<CustEvidenceModel> GetExistedEvidences(string custIDs);
 

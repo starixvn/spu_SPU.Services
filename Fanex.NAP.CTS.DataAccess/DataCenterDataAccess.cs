@@ -253,13 +253,14 @@
             repository.Execute(criteria);
         }
 
-        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan)
         {
             var repository = new DynamicRepository();
 
             var criteria = new InsertMainCustomerClassificationCriteria
             {
-                NewClassification = newClassification
+                NewClassification = newClassification,
+                IsRescan = isRescan
             };
 
             var custIds = repository.Fetch<int>(criteria).ToList();
@@ -464,14 +465,15 @@
             }
         }
 
-        public InsertCategoryResultModel InsertProblemAccount(string problemAccountJson)
+        public InsertCategoryResultModel InsertProblemAccount(string problemAccountJson, bool isRescan)
         {
             var custIds = new List<int>();
             var repository = new DynamicRepository();
 
             var criteria = new InsertProblemAccountCriteria
             {
-                ProblemAccountJson = problemAccountJson
+                ProblemAccountJson = problemAccountJson,
+                IsRescan = isRescan
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

@@ -52,11 +52,11 @@
             }
         }
 
-        public DBResult SyncCustomerEvidenceToCategory(string jsonData)
+        public DBResult SyncCustomerEvidenceToCategory(string jsonData, bool isRescan)
         {
             try
             {
-                return dataAccess.SyncCustomerEvidenceToCategory(jsonData);
+                return dataAccess.SyncCustomerEvidenceToCategory(jsonData, isRescan);
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@
             }
         }
 
-        public InsertCategoryResultModel SyncCustomerEvidenceToCategory(List<CustEvidenceModel> existedEvidences)
+        public InsertCategoryResultModel SyncCustomerEvidenceToCategory(List<CustEvidenceModel> existedEvidences, bool isRescan)
         {
             try
             {
@@ -81,7 +81,7 @@
 
                 foreach (var evidences in evidencesChunk)
                 {
-                    var output = dataAccess.SyncCustomerEvidenceToCategory2((JsonConvert.SerializeObject(evidences)));
+                    var output = dataAccess.SyncCustomerEvidenceToCategory2((JsonConvert.SerializeObject(evidences)), isRescan);
                     custIds.AddRange(output.CustIds);
 
                     if (!string.IsNullOrEmpty(output.ErrorMessage))

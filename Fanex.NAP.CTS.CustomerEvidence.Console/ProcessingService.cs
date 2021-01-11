@@ -127,7 +127,7 @@
 
                 var jsonData = JsonConvert.SerializeObject(objects);
 
-                var dbResult = _custEvidenceService.SyncCustomerEvidenceToCategory(jsonData);
+                var dbResult = _custEvidenceService.SyncCustomerEvidenceToCategory(jsonData, false);
 
                 if (dbResult.ErrorCode != 0)
                 {
@@ -163,7 +163,7 @@
 
                 var jsonData = JsonConvert.SerializeObject(objects);
 
-                var dbResult = _custEvidenceService.SyncCustomerEvidenceToCategory(jsonData);
+                var dbResult = _custEvidenceService.SyncCustomerEvidenceToCategory(jsonData, false);
 
                 if (dbResult.ErrorCode != 0)
                 {
