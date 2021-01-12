@@ -21,6 +21,10 @@
 
         public int ActiveDays { get; set; }
 
+        public decimal LastXDaysMargin { get; set; }
+
+        public decimal ProbationPeriodWinloss { get; set; }
+
         public bool IsGeneralCategory { get; set; }
     }
 }
