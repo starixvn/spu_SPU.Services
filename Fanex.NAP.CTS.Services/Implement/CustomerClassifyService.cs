@@ -8,6 +8,7 @@
     using Newtonsoft.Json;    
     using System.Collections.Generic;    
     using System.Linq;
+    using static Fanex.NAP.SPU.Core.Constants;
 
     public class CustomerClassifyService : ICustomerClassifyService
     {
@@ -22,18 +23,18 @@
             _customerEvidenceService = new CustomerEvidenceService();
         }
 
-        public void RescanCustomerClassify(List<int> custIds, bool isRescanPA, bool isPushCCToSoon88)
+        public void RescanCustomerClassify(List<int> custIds, bool isRescanPA, bool isPushCCToSoon88, FLOWTYPERESCANCC flowTypeRescanCC)
         {
             var custIdList = new List<int>();
 
             // Re-Sync Customer Evidence to category in CTS
-            var custIdCCs = SyncCustomerEvidenceToCategory(custIds);
+            var custIdCCs = SyncCustomerEvidenceToCategory(custIds, flowTypeRescanCC);
             custIdList.AddRange(custIdCCs);
 
             if (isRescanPA)
             {
                 // Re-Insert Problem Account in CTS
-                custIdCCs = InsertProblemAccount(custIds);
+                custIdCCs = InsertProblemAccount(custIds, flowTypeRescanCC);
                 custIdList.AddRange(custIdCCs);
             }
 
@@ -47,14 +48,16 @@
                 RescanNormalAccount(custIds);
         }
 
-        private List<int> SyncCustomerEvidenceToCategory(List<int> custIds)
+        private List<int> SyncCustomerEvidenceToCategory(List<int> custIds, FLOWTYPERESCANCC flowTypeRescanCC)
         {
             var custIdsToSyncCC = new List<int>();
 
             var existedCustEvidences = GetExistedCustomerEvidences(string.Join(",", custIds)).ToList();
 
+            var isWriteLogRescan = flowTypeRescanCC != FLOWTYPERESCANCC.NEWMEMBER;
+
             // Re-Sync Customer Evidence to category in CTS
-            var result = _customerEvidenceService.SyncCustomerEvidenceToCategory(existedCustEvidences, true);
+            var result = _customerEvidenceService.SyncCustomerEvidenceToCategory(existedCustEvidences, isWriteLogRescan);
 
             if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
             {
@@ -78,13 +81,13 @@
             return existedEvidences ?? new List<CustEvidenceModel>();
         }
 
-        private List<int> InsertProblemAccount(List<int> custIds)
+        private List<int> InsertProblemAccount(List<int> custIds, FLOWTYPERESCANCC flowTypeRescanCC)
         {
             var custIdsToSyncCC = new List<int>();
 
             var existedProblemAccounts = GetExistedProblemAccounts(string.Join(",", custIds)).ToList();
 
-            var custs = InsertProblemAccountToCTS(existedProblemAccounts);
+            var custs = InsertProblemAccountToCTS(existedProblemAccounts, flowTypeRescanCC);
 
             if (custs != null && custs.Any())
             {
@@ -119,7 +122,7 @@
             return problemAccounts.Distinct();
         }
 
-        private List<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts)
+        private List<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts, FLOWTYPERESCANCC flowTypeRescanCC)
         {
             var inputData = problemAccounts.Select(a => new InsertProblemAccountsModel
             {
@@ -131,9 +134,11 @@
 
             var custIds = new List<int>();
 
+            var isWriteLogRescan = flowTypeRescanCC != FLOWTYPERESCANCC.NEWMEMBER;
+
             foreach (var problemAccs in problemAccountsChunk)
             {
-                var result = _dataCenterService.InsertProblemAccounts(problemAccs, true);
+                var result = _dataCenterService.InsertProblemAccounts(problemAccs, isWriteLogRescan);
 
                 custIds.AddRange(result.CustIds);
             }

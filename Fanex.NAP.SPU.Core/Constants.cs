@@ -50,5 +50,10 @@
             PROBATION = 206,
             VVIP = 213
         };
+
+        public enum FLOWTYPERESCANCC
+        {
+            NEWMEMBER
+        }
     }
 }

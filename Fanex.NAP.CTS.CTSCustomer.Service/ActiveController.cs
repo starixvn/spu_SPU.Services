@@ -136,7 +136,7 @@
 
                         if (custIdList != null && custIdList.Any())
                         {
-                            _customerClassificationService.RescanCustomerClassify(custIdList.Distinct().ToList(), true, true);
+                            _customerClassificationService.RescanCustomerClassify(custIdList.Distinct().ToList(), true, true, Constants.FLOWTYPERESCANCC.NEWMEMBER);
 
                             if (isWriteLogInfo)
                                 LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassify done with data: {string.Join(",", custIdList)}");
