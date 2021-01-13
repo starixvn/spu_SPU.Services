@@ -21,6 +21,8 @@ namespace Fanex.NAP.CTS.CTSCustomer.Service
         {
             try
             {
+                LogService.Info($"Customer Transform service is STARTED at {DateTime.Now}");
+
                 _webApp = WebApp.Start<Startup>(AppSettings.HostPathForAccount);
             }
             catch
