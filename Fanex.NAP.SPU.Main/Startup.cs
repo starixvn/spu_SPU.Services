@@ -1,15 +1,14 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace Fanex.NAP.SPU.Main
 {
+    using CrystalQuartz.AspNetCore;
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Hosting;   
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
+    using Quartz;
+    using Quartz.Impl;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -23,6 +22,11 @@ namespace Fanex.NAP.SPU.Main
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AllowSynchronousIO = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,6 +52,34 @@ namespace Fanex.NAP.SPU.Main
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            var scheduler = CreateScheduler();
+            app.UseCrystalQuartz(() => scheduler);
+
         }
+
+        private static IScheduler CreateScheduler()
+        {
+            var schedulerFactory = new StdSchedulerFactory();
+            var scheduler = schedulerFactory.GetScheduler().Result;
+
+            var job = JobBuilder.Create<ExecuteJob>()
+                .WithIdentity("localJob", "default")
+                .Build();
+
+            var trigger = TriggerBuilder.Create()
+               .WithIdentity("trigger1", "default")
+               .ForJob(job)
+               .StartNow()
+               .WithCronSchedule("0 /1 * ? * *")
+               .Build();
+
+            scheduler.ScheduleJob(job, trigger);
+
+            scheduler.Start();
+
+            return scheduler;
+        }
+
     }
 }
