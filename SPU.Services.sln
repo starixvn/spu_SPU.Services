@@ -92,6 +92,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Test", "Fanex.NAP.SPU.Test\Fanex.NAP.SPU.Test.csproj", "{89D2F2F7-2910-4393-95CE-E31F2CDFDC0C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CTS", "CTS", "{26122A54-0179-4FF8-847B-85BC0FCC544F}"
+	ProjectSection(SolutionItems) = preProject
+		Fanex.NAP.SPU.Main\Startup.cs = Fanex.NAP.SPU.Main\Startup.cs
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{DD353243-A0C1-4321-BED1-41E443F6CA25}"
 EndProject

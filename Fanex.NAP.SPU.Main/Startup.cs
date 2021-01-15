@@ -1,6 +1,7 @@
 namespace Fanex.NAP.SPU.Main
 {
     using CrystalQuartz.AspNetCore;
+    using HealthChecks.UI.Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;   
     using Microsoft.Extensions.Configuration;
@@ -27,6 +28,12 @@ namespace Fanex.NAP.SPU.Main
             {
                 options.AllowSynchronousIO = true;
             });
+            services.AddHealthChecksUI(setup =>
+            {
+                setup.SetEvaluationTimeInSeconds(5);
+                setup.DisableDatabaseMigrations();
+            })
+            .AddMySqlStorage("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_Monitoring;Persist Security Info=True;User ID=ctsLogOwner;Password=password");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +47,12 @@ namespace Fanex.NAP.SPU.Main
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseHealthChecksUI(delegate (Options option) {
+                option.UIPath = "/hc";
+                option.AddCustomStylesheet(@"wwwroot/css/healthcheck.css");
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();
