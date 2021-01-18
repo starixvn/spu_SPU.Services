@@ -9,6 +9,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.Network" Version="5.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
     <PackageReference Include="CrystalQuartz.AspNetCore" Version="6.8.1" />
     <PackageReference Include="Quartz" Version="3.2.3" />
     <PackageReference Include="AspNetCore.HealthChecks.RabbitMQ" Version="5.0.1" />
@@ -19,6 +20,10 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.MySql.Storage" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="5.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="HealthChecks\" />
   </ItemGroup>
 
 </Project>

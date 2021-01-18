@@ -1,8 +1,10 @@
 namespace Fanex.NAP.SPU.Main
 {
     using CrystalQuartz.AspNetCore;
+    using HealthChecks.UI.Client;
     using HealthChecks.UI.Configuration;
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Hosting;   
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -22,18 +24,21 @@ namespace Fanex.NAP.SPU.Main
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appSettings = new AppSettings(Configuration);
+
             services.AddControllersWithViews();
 
             services.Configure<IISServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;
             });
-            services.AddHealthChecksUI(setup =>
-            {
-                setup.SetEvaluationTimeInSeconds(5);
-                setup.DisableDatabaseMigrations();
-            })
-            .AddMySqlStorage("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_Monitoring;Persist Security Info=True;User ID=ctsLogOwner;Password=password");
+
+            services
+                .AddHealthChecks()
+                .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome1");
+
+            services.AddHealthChecksUI()
+            .AddMySqlStorage(appSettings.HealthCheckStorage);                        
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +52,11 @@ namespace Fanex.NAP.SPU.Main
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+
+            app.UseHealthChecks("/self", new HealthCheckOptions() { 
+                Predicate = _=> true,
+                ResponseWriter  = UIResponseWriter.WriteHealthCheckUIResponse
+            });
 
             app.UseHealthChecksUI(delegate (Options option) {
                 option.UIPath = "/hc";
