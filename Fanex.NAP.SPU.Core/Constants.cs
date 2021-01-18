@@ -55,5 +55,15 @@
         {
             NEWMEMBER
         }
+
+        public enum PARAMETER : int
+        {
+            LASTSCANNED_PA = 2,
+            LASTSCANNED_ROBOTUSERID = 3,
+            LASTSCANNED_CUSTID = 7,
+            LASTSCANNED_CUSTSUBID = 8,
+            LASTUPDATED_TIME = 9,
+            LASTUPDATED_CUSTID = 10,
+        };
     }
 }

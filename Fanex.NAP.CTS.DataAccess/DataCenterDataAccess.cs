@@ -33,9 +33,9 @@
             repository.Execute(criteria);
         }
 
-        public InsertCategoryResultModel TransformCustomerFromMainDB(string customerJson)
+        public InsertCustomerResultModel TransformCustomerFromMainDB(string customerJson)
         {
-            var customerIds = new List<int>();
+            var customerIds = new List<InsertCustomerModel>();
 
             var criteria = new TransformCustomerFromMainDbCriteria
             {
@@ -44,10 +44,10 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                customerIds = db.Query<int>(criteria).ToList();
+                customerIds = db.Query<InsertCustomerModel>(criteria).ToList();
             }
 
-            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = customerIds };
+            return new InsertCustomerResultModel() { ErrorMessage = criteria.ErrorMessage, CustomerIds = customerIds };
         }
       
         public int FillUpCustomerFromMainDB(string customerJson)
@@ -711,6 +711,23 @@
 
                 return result;
             }
+        }
+        
+        public void ReTranformAccount (string jsonData)
+        {
+            if(string.IsNullOrEmpty(jsonData))
+            {
+                return;
+            }
+
+            var repository = new DynamicRepository();
+
+            var criteria = new ReTransformAccountCriteria
+            {
+                customer = jsonData
+            };
+
+            repository.Execute(criteria);
         }
     }
 }

@@ -34,7 +34,7 @@
             dataCenterDataAccess.TransformDCSAccount(accountJson);
         }
 
-        public IEnumerable<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList)
+        public IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList)
         {
             var customerJson = JsonConvert.SerializeObject(customerList);
 
@@ -45,8 +45,8 @@
                 LogService.Error($"CTSCustomer.Service - InsertNewCustomer - TransformCustomerFromMainDB throws exception: {result.ErrorMessage} - Data: {customerJson}");
             }
 
-            return result.CustIds;
-        }      
+            return result.CustomerIds;
+        }
 
         public int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList)
         {
@@ -355,6 +355,11 @@
             }
                         
             return JsonConvert.SerializeObject(result);
+        }
+        
+        public void ReTransformAccount(string jsonData)
+        {
+            dataCenterDataAccess.ReTranformAccount(jsonData);
         }
     }
 }

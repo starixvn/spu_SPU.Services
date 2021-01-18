@@ -1,5 +1,6 @@
 ﻿using Fanex.NAP.DCS.Model;
 using Fanex.NAP.SPU.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Fanex.NAP.DCS.Services.Interface
@@ -18,9 +19,9 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         List<RawAccountModel> GetRawUnsuccessAccount(int numOfAccount);
 
-        List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, int numOfBatch, int maxCustId);
+        List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, Int64 lastScannedCustID);
 
-        List<CustomerMainDbModel> GetCustSubFromMainDB(int numOfAccount, int numOfBatch, int maxCustId);
+        List<CustomerMainDbModel> GetCustSubFromMainDB(int numOfAccount, Int64 lastScannedCustID);
 
         int GetCurrentMaxCustId(bool isCustSub);
 
@@ -33,5 +34,7 @@ namespace Fanex.NAP.DCS.Services.Interface
         List<RawTransactionByIpModel> GetUnsuccessTransByIp(int numOfTrans, int numOfBatch);
 
         void ArchiveTransaction07(int size);
+
+        SystemParemeterModel GetPreviousExecution(int paramId);
     }
 }

@@ -63,6 +63,7 @@
     <Compile Include="CustomerEvidence\UpdateProcessedCustEvidenceCriteria.cs" />
     <Compile Include="GetAssociationWithCategoryCriteria.cs" />
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
+    <Compile Include="ReTransformAccountCriteria.cs" />
     <Compile Include="InsertRobotUsersIntoSpecialCustClassCriteria.cs" />
     <Compile Include="CustomerClassification\CategorizeCustomerGeneralCategoryRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerGeneralCategoryHasChangeForRunRealtimeCriteria.cs" />

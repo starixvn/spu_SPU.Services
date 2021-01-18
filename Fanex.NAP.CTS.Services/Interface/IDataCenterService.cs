@@ -9,7 +9,7 @@
     {
         void TransformDCSAccount(List<RawAccountModel> accountList);
 
-        IEnumerable<int> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList);
+        IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList);
 
         int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList);
 
@@ -86,5 +86,7 @@
         IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId);
 
         void UpdateTimingExecution(string newDataTime, int paramId);
+
+        void ReTransformAccount(string jsonData);
     }
 }

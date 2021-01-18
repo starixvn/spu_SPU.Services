@@ -13,6 +13,7 @@
     using System.Linq;
     using System.Web.Http;
     using Fanex.NAP.FS.Core;
+    using System.Threading.Tasks;
 
     public class ActiveController : ApiController
     {
@@ -136,18 +137,47 @@
 
                         if (custIdList != null && custIdList.Any())
                         {
-                            _customerClassificationService.RescanCustomerClassify(custIdList.Distinct().ToList(), true, true, Constants.FLOWTYPERESCANCC.NEWMEMBER);
+                            var tasks = new List<Task>();
 
-                            if (isWriteLogInfo)
-                                LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassify done with data: {string.Join(",", custIdList)}");
-                        }
+                            tasks.Add(Task.Run(() =>
+                            {
+                                try
+                                {
+                                    var custToRescan = custIdList.Where(c => !c.IsExisting).Select(c => c.CustID).Distinct().ToList();
+                                    _customerClassificationService.RescanCustomerClassify(custToRescan, true, true, Constants.FLOWTYPERESCANCC.NEWMEMBER);
 
-                        return true;
+                                    if (isWriteLogInfo)
+                                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassify done with data: {string.Join(",", custIdList)}");
+                                }
+                                catch (Exception ex)
+                                {
+                                    var logMessage = new LogMessage(ex.Message).AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex)).AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                                    LogService.Error($"CTSCustomer.Service - InsertNewCustomer throws exception {logMessage} with listCust: {JsonConvert.SerializeObject(custIdList)}");
+                                }
+                            }));
+
+                            tasks.Add(Task.Run(() =>
+                            {
+                                try
+                                {
+                                    _dataCenterService.ReTransformAccount(JsonConvert.SerializeObject(custIdList));
+                                }
+                                catch (Exception ex)
+                                {
+                                    var logMessage = new LogMessage(ex.Message).AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex)).AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                                    LogService.Error($"CTSCustomer.Service - InsertNewCustomer - ReTransformAccount throws exception {logMessage} with listCust: {JsonConvert.SerializeObject(custIdList)}");
+                                }
+                            }));
+
+                            Task.WhenAll(tasks.ToArray()).Wait();
+                        }              
                     }
                 }
 
                 if (isWriteLogInfo)
                     LogService.Info($"CTSCustomer.Service - InsertNewCustomer done");
+
+                return true;
             }
             catch (Exception ex)
             {

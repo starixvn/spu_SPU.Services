@@ -4,7 +4,7 @@
   <Function Name="Data Center">
     <!-- CTS_DataCenter -->
     <Setting Key="CTS_DC_TransformDCSAccountToCTSCustomer" SpName="CTS_DC_TransformDCSAccountToCTSCustomer" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-    <Setting Key="CTS_DC_InsertCTSCustomer" SpName="CTS_DC_InsertCTSCustomer" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="CTS_DC_CTSCustomer_Insert" SpName="CTS_DC_CTSCustomer_Insert" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_HealingCTSCustomer" SpName="CTS_DC_HealingCTSCustomer" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_UpdateUsername2" SpName="CTS_DC_UpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_GetCustomerForUpdateUsername2" SpName="CTS_DC_GetCustomerForUpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsService"/>    
@@ -14,7 +14,8 @@
     <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter.ctsService" />
     <Setting Key="CTS_DC_CustEvidence_SyncToCategory" SpName="CTS_DC_CustEvidence_SyncToCategory" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
     <Setting Key="CTS_DC_CustEvidence_GetExistedEvidencesToSync" SpName="CTS_DC_CustEvidence_GetExistedEvidencesToSync" DbName="MySQL.CTS_DataCenter.ctsService" />
-    
+	<Setting Key="CTS_DC_CTSCustomer_InsertComplete" SpName="CTS_DC_CTSCustomer_InsertComplete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+	  
     <!-- DCS_DataCenter -->
     <Setting Key="DCS_DC_TransformToCTS_Account_Completed" SpName="DCS_DC_TransformToCTS_Account_Completed" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
 

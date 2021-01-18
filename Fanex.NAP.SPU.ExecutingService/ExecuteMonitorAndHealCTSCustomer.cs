@@ -66,14 +66,14 @@
 
                     while (!healingDone)
                     {
-                        mainDBCusts = dataCenterService.GetCustomerFromMainDB(packageSize, apiUrls.Count(), maxCustId);
+                        mainDBCusts = dataCenterService.GetCustomerFromMainDB(packageSize, maxCustId);
 
                         if (!mainDBCusts.Any())
                         {
                             maxCustId = 0;
                             while (true)
                             {
-                                mainDBCusts = dataCenterService.GetCustSubFromMainDB(packageSize, apiUrls.Count(), maxCustId);
+                                mainDBCusts = dataCenterService.GetCustSubFromMainDB(packageSize,  maxCustId);
 
                                 if (!mainDBCusts.Any())
                                 {

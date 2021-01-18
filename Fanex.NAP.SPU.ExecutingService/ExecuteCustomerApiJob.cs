@@ -6,6 +6,7 @@
     using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using Quartz;
     using RestSharp;
@@ -60,18 +61,24 @@
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
+                    var listCustInfo = new List<CustomerMainDbModel>();
+
                     var apiUrls = rootPath.Split(';');
 
-                    var maxCustId = dataCenterService.GetCurrentMaxCustId(false);
-                    var listOfCust = dataCenterService.GetCustomerFromMainDB(packageSize, apiUrls.Count(), maxCustId);
+                    var lastScannedCustID = dataCenterService.GetPreviousExecution((int)Constants.PARAMETER.LASTSCANNED_CUSTID);
+                    var lastScannedCustSubID = dataCenterService.GetPreviousExecution((int)Constants.PARAMETER.LASTSCANNED_CUSTSUBID);
 
-                    if (!listOfCust.Any())
+                    if (lastScannedCustID != null)
                     {
-                        var maxCustSubId = dataCenterService.GetCurrentMaxCustId(true);
-                        listOfCust = dataCenterService.GetCustSubFromMainDB(packageSize, apiUrls.Count(), maxCustSubId);
+                        listCustInfo.AddRange(dataCenterService.GetCustomerFromMainDB(packageSize, Int64.Parse(lastScannedCustID.ParameterValue)));
                     }
 
-                    await SendRequest(listOfCust, apiUrls, jobDataMap);
+                    if (lastScannedCustSubID != null)
+                    {
+                        listCustInfo.AddRange(dataCenterService.GetCustSubFromMainDB(packageSize, Int64.Parse(lastScannedCustSubID.ParameterValue)));
+                    }
+
+                    await SendRequest(listCustInfo, apiUrls, jobDataMap);
                 }
             }
             else

@@ -254,13 +254,12 @@
             }
         }
 
-        public List<CustomerMainDbModel> GetCustomerFromMainDB(int quantityPerBatch, int numOfBatch, int maxCustId)
+        public List<CustomerMainDbModel> GetCustomerFromMainDB(int quantityPerBatch, Int64 lastScannedCustID)
         {
             var criteria = new GetCustomersFromMainDbCriteria
             {
-                MaxCustId = maxCustId,
+                LastCustId = lastScannedCustID,
                 RowSize = quantityPerBatch,
-                NumberOfBatch = numOfBatch
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -269,13 +268,12 @@
             }
         }
 
-        public List<CustomerMainDbModel> GetCustSubFromMainDB(int quantityPerBatch, int numOfBatch, int maxCustId)
+        public List<CustomerMainDbModel> GetCustSubFromMainDB(int quantityPerBatch, Int64 lastScannedCustID)
         {
             var criteria = new GetCustSubFromMainDbCriteria
             {
-                MaxCustId = maxCustId,
-                RowSize = quantityPerBatch,
-                NumberOfBatch = numOfBatch
+                LastCustSubId = lastScannedCustID,
+                RowSize = quantityPerBatch
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -396,6 +394,19 @@
 
             repository.Execute(criteria);
             isComplete = criteria.IsCompleted;
+        }
+
+        public SystemParemeterModel GetPreviousExecution(int paramId)
+        {
+            var criteria = new GetPreviousExecutionCriteria
+            {
+                ParamID = paramId
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<SystemParemeterModel>(criteria).FirstOrDefault();
+            }
         }
     }
 }

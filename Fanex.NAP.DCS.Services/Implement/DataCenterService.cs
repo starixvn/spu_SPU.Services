@@ -46,14 +46,14 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.GetRawAccount(numOfAccount, numOfBatch);
         }
 
-        public List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, int numOfBatch, int maxCustId)
+        public List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, Int64 lastScannedCustID)
         {
-            return dataCenter.GetCustomerFromMainDB(numOfAccount, numOfBatch, maxCustId);
+            return dataCenter.GetCustomerFromMainDB(numOfAccount, lastScannedCustID);
         }
 
-        public List<CustomerMainDbModel> GetCustSubFromMainDB(int numOfAccount, int numOfBatch, int maxCustId)
+        public List<CustomerMainDbModel> GetCustSubFromMainDB(int numOfAccount, Int64 lastScannedCustID)
         {
-            return dataCenter.GetCustSubFromMainDB(numOfAccount, numOfBatch, maxCustId);
+            return dataCenter.GetCustSubFromMainDB(numOfAccount, lastScannedCustID);
         }
 
         public int GetCurrentMaxCustId(bool isCustSub)
@@ -105,6 +105,11 @@ namespace Fanex.NAP.DCS.Services.Implement
         public void DeleteDataArchiveTransaction07(DateTime runningDate, ref bool isCompleted)
         {
             dataCenter.DeleteDataArchiveTransaction07(runningDate, ref isCompleted);
+        }
+
+        public SystemParemeterModel GetPreviousExecution(int paramId)
+        {
+            return dataCenter.GetPreviousExecution(paramId);
         }
     }
 }
