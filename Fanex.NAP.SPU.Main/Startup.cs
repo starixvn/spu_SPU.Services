@@ -1,6 +1,7 @@
 namespace Fanex.NAP.SPU.Main
 {
     using CrystalQuartz.AspNetCore;
+    using Fanex.NAP.SPU.Middleware;
     using HealthChecks.UI.Client;
     using HealthChecks.UI.Configuration;
     using Microsoft.AspNetCore.Builder;
@@ -24,10 +25,10 @@ namespace Fanex.NAP.SPU.Main
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var appSettings = new AppSettings(Configuration);
-
             services.AddControllersWithViews();
+            services.AddAppSettings();
 
+            var appSettings = new AppSettings(this.Configuration);
             services.Configure<IISServerOptions>(options =>
             {
                 options.AllowSynchronousIO = true;

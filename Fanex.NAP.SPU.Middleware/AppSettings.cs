@@ -1,16 +1,12 @@
-﻿
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Fanex.NAP.SPU.Main
+namespace Fanex.NAP.SPU.Middleware
 {
     public interface IAppSettings
     {
-         string HealthCheckStorage { get; }            
+        string HealthCheckStorage { get; }
     }
 
     public class AppSettings : IAppSettings
@@ -21,7 +17,7 @@ namespace Fanex.NAP.SPU.Main
         {
             this.configuration = configuration;
 
-            HealthCheckStorage = GetValue<string>(nameof(HealthCheckStorage));       
+            HealthCheckStorage = GetValue<string>(nameof(HealthCheckStorage));
         }
 
         public string HealthCheckStorage { get; }
@@ -32,7 +28,7 @@ namespace Fanex.NAP.SPU.Main
             {
                 var value = configuration[key];
 
-                TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(T));
+                var typeConverter = TypeDescriptor.GetConverter(typeof(T));
 
                 return (T)typeConverter.ConvertFromString(value);
             }
