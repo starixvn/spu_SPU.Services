@@ -198,7 +198,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NAP.SPU.Main", "Fanex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NAP.SPU.Middleware", "Fanex.NAP.SPU.Middleware\Fanex.NAP.SPU.Middleware.csproj", "{7A2EB693-65A0-486F-8E22-1DCD9F2C4C9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Gateway", "ASP.NET.CORE\Fanex.NAP.SPU.Gateway\Fanex.NAP.SPU.Gateway.csproj", "{F2E04341-F839-425C-8880-B6CDF1E7B1CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NAP.SPU.Gateway", "ASP.NET.CORE\Fanex.NAP.SPU.Gateway\Fanex.NAP.SPU.Gateway.csproj", "{F2E04341-F839-425C-8880-B6CDF1E7B1CF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.VRMemberBigStake.Console", "Fanex.NAP.CMS.VRMemberBigStake.Console\Fanex.NAP.CMS.VRMemberBigStake.Console.csproj", "{60B3F0F2-D8E3-48BF-8B24-DFF4D4FC4CBC}"
 EndProject
@@ -621,7 +621,7 @@ Global
 		{F2E04341-F839-425C-8880-B6CDF1E7B1CF} = {0A926929-8CBD-48FC-854F-E4B10C92B95D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal

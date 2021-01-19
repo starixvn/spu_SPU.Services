@@ -1,5 +1,6 @@
 ﻿using Fanex.NAP.SPU.Main.Models;
 using Fanex.NAP.SPU.Main.Provider;
+using Fanex.NAP.SPU.Main.Utilities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -26,8 +27,10 @@ namespace Fanex.NAP.SPU.Main.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
-        {
+        public IActionResult UpdateJobs()
+        {            
+            _schedulerProvider.UpdateJobs();
+
             return View();
         }
 

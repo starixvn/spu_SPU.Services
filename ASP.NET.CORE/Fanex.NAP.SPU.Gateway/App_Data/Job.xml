@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<schedule>
+	<job>
+		<name>FS_BigStateNearGoal_Job</name>
+		<group>FraudSensorJob</group>
+		<description>BigStateNearGoalJob</description>
+		<job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+		<durable>true</durable>
+		<recover>false</recover>
+		<job-data-map>
+			<entry>
+				<key>Active</key>
+				<value>false</value>
+			</entry>
+			<entry>
+				<key>FileName</key>
+				<value>Fanex.NAP.FS.BigStakeNearGoal.Console.exe</value>
+			</entry>
+			<entry>
+				<key>Master</key>
+				<value>D:\WWW\SPU\Fanex.NAP.FS.BigStakeNearGoal.Console</value>
+			</entry>			
+		</job-data-map>
+	</job>
+	<trigger>
+		<simple>
+			<name>FS_BigStateNearGoal_Trigger</name>
+			<group>FraudSensorTrigger</group>
+			<description>BigStateNearGoalTrigger</description>
+			<job-name>FS_BigStateNearGoal_Job</job-name>
+			<job-group>FraudSensorJob</job-group>
+			<misfire-instruction>SmartPolicy</misfire-instruction>
+			<repeat-count>-1</repeat-count>
+			<repeat-interval>60000</repeat-interval>
+		</simple>
+	</trigger>
+	
+</schedule>
