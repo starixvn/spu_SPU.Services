@@ -1,4 +1,5 @@
 ﻿using Fanex.NAP.SPU.Main.Models;
+using Fanex.NAP.SPU.Main.Provider;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,10 +13,12 @@ namespace Fanex.NAP.SPU.Main.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ISchedulerProvider _schedulerProvider;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ISchedulerProvider schedulerProvider)
         {
             _logger = logger;
+            _schedulerProvider = schedulerProvider;
         }
 
         public IActionResult Index()

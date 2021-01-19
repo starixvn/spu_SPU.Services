@@ -1,6 +1,7 @@
 namespace Fanex.NAP.SPU.Main
 {
     using CrystalQuartz.AspNetCore;
+    using Fanex.NAP.SPU.Main.Provider;
     using Fanex.NAP.SPU.Middleware;
     using HealthChecks.UI.Client;
     using HealthChecks.UI.Configuration;
@@ -20,7 +21,7 @@ namespace Fanex.NAP.SPU.Main
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }        
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -39,7 +40,9 @@ namespace Fanex.NAP.SPU.Main
                 .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome1");
 
             services.AddHealthChecksUI()
-            .AddMySqlStorage(appSettings.HealthCheckStorage);                        
+            .AddMySqlStorage(appSettings.HealthCheckStorage);
+
+            services.AddSingleton<ISchedulerProvider, SchedulerProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,33 +80,12 @@ namespace Fanex.NAP.SPU.Main
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            var scheduler = CreateScheduler();
+            var schedulerProvider = (ISchedulerProvider)app.ApplicationServices.GetService(typeof(ISchedulerProvider));
+            var scheduler = schedulerProvider.CreateScheduler();            
+
             app.UseCrystalQuartz(() => scheduler);
 
         }
-
-        private static IScheduler CreateScheduler()
-        {
-            var schedulerFactory = new StdSchedulerFactory();
-            var scheduler = schedulerFactory.GetScheduler().Result;
-
-            var job = JobBuilder.Create<ExecuteJob>()
-                .WithIdentity("localJob", "default")
-                .Build();
-
-            var trigger = TriggerBuilder.Create()
-               .WithIdentity("trigger1", "default")
-               .ForJob(job)
-               .StartNow()
-               .WithCronSchedule("0 /1 * ? * *")
-               .Build();
-
-            scheduler.ScheduleJob(job, trigger);
-
-            scheduler.Start();
-
-            return scheduler;
-        }
-
+       
     }
 }
