@@ -33,9 +33,9 @@
             repository.Execute(criteria);
         }
 
-        public InsertCustomerResultModel TransformCustomerFromMainDB(string customerJson)
+        public IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(string customerJson)
         {
-            var customerIds = new List<InsertCustomerModel>();
+            var custInfos = new List<InsertCustomerModel>();
 
             var criteria = new TransformCustomerFromMainDbCriteria
             {
@@ -44,10 +44,10 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                customerIds = db.Query<InsertCustomerModel>(criteria).ToList();
+                custInfos = db.Query<InsertCustomerModel>(criteria).ToList();
             }
 
-            return new InsertCustomerResultModel() { ErrorMessage = criteria.ErrorMessage, CustomerIds = customerIds };
+            return custInfos;
         }
       
         public int FillUpCustomerFromMainDB(string customerJson)

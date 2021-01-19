@@ -36,16 +36,20 @@
 
         public IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList)
         {
-            var customerJson = JsonConvert.SerializeObject(customerList);
+            var custInfos = new List<InsertCustomerModel>();
 
-            var result = dataCenterDataAccess.TransformCustomerFromMainDB(customerJson);
-
-            if (!string.IsNullOrEmpty(result.ErrorMessage))
+            try
             {
-                LogService.Error($"CTSCustomer.Service - InsertNewCustomer - TransformCustomerFromMainDB throws exception: {result.ErrorMessage} - Data: {customerJson}");
+                var customerJson = JsonConvert.SerializeObject(customerList);
+
+                custInfos = dataCenterDataAccess.TransformCustomerFromMainDB(customerJson)?.ToList();
+            }
+            catch (Exception ex)
+            {
+                LogService.Error($"Service - InsertNewCustomer - TransformCustomerFromMainDB exception: {ex.Message} - Data: {JsonConvert.SerializeObject(customerList)}", ex);
             }
 
-            return result.CustomerIds;
+            return custInfos;
         }
 
         public int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList)
