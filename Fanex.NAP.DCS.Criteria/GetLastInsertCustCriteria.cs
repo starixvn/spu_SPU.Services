@@ -3,14 +3,14 @@
     using Fanex.Data;
     using Fanex.Data.Repository;
 
-    public class GetPreviousExecutionCriteria : NonQueryCommand
+    public class GetLastInsertCustCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_ParamID")]
-        public int ParamID { get; set; }
+        [SpParam(SqlParamName = "ip_IsCustSub")]
+        public bool IsCustSub { get; set; }
 
         public override string GetSettingKey()
         {
-            return "CTS_DC_GetSystemParameterById";
+            return "CTS_DC_CTSCustomer_GetLastInsertCust";
         }
 
         public override bool IsValid()

@@ -35,6 +35,6 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         void ArchiveTransaction07(int size);
 
-        SystemParemeterModel GetPreviousExecution(int paramId);
+        int GetLastInsertCust (bool isCustSub);
     }
 }

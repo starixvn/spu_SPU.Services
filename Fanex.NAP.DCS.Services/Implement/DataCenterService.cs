@@ -107,9 +107,9 @@ namespace Fanex.NAP.DCS.Services.Implement
             dataCenter.DeleteDataArchiveTransaction07(runningDate, ref isCompleted);
         }
 
-        public SystemParemeterModel GetPreviousExecution(int paramId)
+        public int GetLastInsertCust(bool isCustSub)
         {
-            return dataCenter.GetPreviousExecution(paramId);
+            return dataCenter.GetLastInsertCust(isCustSub);
         }
     }
 }

@@ -396,16 +396,16 @@
             isComplete = criteria.IsCompleted;
         }
 
-        public SystemParemeterModel GetPreviousExecution(int paramId)
+        public int GetLastInsertCust(bool isCustSub)
         {
-            var criteria = new GetPreviousExecutionCriteria
+            var criteria = new GetLastInsertCustCriteria
             {
-                ParamID = paramId
+                IsCustSub = isCustSub
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<SystemParemeterModel>(criteria).FirstOrDefault();
+                return db.Query<int>(criteria).FirstOrDefault();
             }
         }
     }
