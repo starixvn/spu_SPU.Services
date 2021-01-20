@@ -11,8 +11,6 @@
 
         IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList);
 
-        int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList);
-
         void InsertAssociation(List<AssociationModel> associationList);
 
         void TransformAssociationByDevice(List<RawAssociationModel> rawAssociation);
@@ -88,5 +86,11 @@
         void UpdateTimingExecution(string newDataTime, int paramId);
 
         void ReTransformAccount(string jsonData);
+
+        IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds);
+
+        IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds);
+        
+        void UpdateCustomerInfo(string customers);
     }
 }

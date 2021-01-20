@@ -30,6 +30,7 @@
             try
             {
                 LogService.Info("ExecuteMonitorAndHealCTSCustomer start");
+
                 if (!this.CheckUM())
                 {
                     await ExecuteAPI(context);
@@ -48,8 +49,7 @@
         private async Task ExecuteAPI(IJobExecutionContext context)
         {
             var jobDataMap = context.JobDetail.JobDataMap;
-            bool healingDone = false;
-            List<CustomerMainDbModel> mainDBCusts;
+            TranformCustModel mainDBCusts;
 
             if (jobDataMap != null)
             {
@@ -57,39 +57,20 @@
 
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
-                int maxCustId = AppSetting.MaxCustIdForHealing;
-                LogService.Info("ExecuteMonitorAndHealCTSCustomer - maxCustId: " + maxCustId.ToString());
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
                     var apiUrls = rootPath.Split(';');
 
-                    while (!healingDone)
+                    var output = dataCenterService.GetLastUpdatedTime();
+
+                    LogService.Info($"ExecuteMonitorAndHealCTSCustomer - lastScannedCustID: {output.LastUpdateCustID} - lastScannedCustSubID: {output.LastUpdateTime}");
+
+                    mainDBCusts = dataCenterService.GetUpdatedCustFromCustHistory(output.LastUpdateTime, output.LastUpdateCustID, packageSize);
+
+                    if (mainDBCusts != null)
                     {
-                        mainDBCusts = dataCenterService.GetCustomerFromMainDB(packageSize, maxCustId);
-
-                        if (!mainDBCusts.Any())
-                        {
-                            maxCustId = 0;
-                            while (true)
-                            {
-                                mainDBCusts = dataCenterService.GetCustSubFromMainDB(packageSize,  maxCustId);
-
-                                if (!mainDBCusts.Any())
-                                {
-                                    healingDone = true;
-                                    break;
-                                }
-
-                                maxCustId = mainDBCusts.Max(c => c.CustSubId);
-                                await SendRequest(mainDBCusts, apiUrls, jobDataMap);
-                            }
-                        }
-                        else
-                        {
-                            maxCustId = mainDBCusts.Max(c => c.CustId);
-                            await SendRequest(mainDBCusts, apiUrls, jobDataMap);
-                        }
+                        await SendRequest(mainDBCusts, apiUrls, jobDataMap);
                     }
                 }
             }
@@ -99,29 +80,19 @@
             }
         }
 
-        private async Task SendRequest(List<CustomerMainDbModel> listCust, string[] urlList, JobDataMap mappingData)
+        private async Task SendRequest(TranformCustModel listCust, string[] urlList, JobDataMap mappingData)
         {
-            var groupTrans = listCust.GroupBy(x => x.BatchId);
-            var tasks = new List<Task>();
             var index = 0;
+            var custInfo = new List<TranformCustModel>() { listCust };
 
-            foreach (var trans in groupTrans)
-            {
-                var task = Task.Run(() =>
-                {
-                    var apiUrl = urlList[index >= urlList.Length ? 0 : index];
+            using (var task = Task.Run(() =>
+             {
+                 var apiUrl = urlList[index >= urlList.Length ? 0 : index];
 
-                    return Executing(trans.ToList(), apiUrl, mappingData.GetString("Action"));
-                });
+                 return Executing(custInfo, apiUrl, mappingData.GetString("Action"));
+             }))
 
-                await Task.Delay(10);
-
-                tasks.Add(task);
-
-                index++;
-            }
-
-            await Task.WhenAll(tasks.ToArray());
+            await Task.Delay(10);
         }
     }
 }

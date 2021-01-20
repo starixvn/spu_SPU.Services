@@ -52,13 +52,6 @@
             return custInfos;
         }
 
-        public int FillUpCustomerFromMainDB(List<CustomerMainDbModel> customerList)
-        {
-            var customerJson = JsonConvert.SerializeObject(customerList);
-            var result = dataCenterDataAccess.FillUpCustomerFromMainDB(customerJson);
-            return result;
-        }
-
         public List<CTSCustomer> GetCustomerForUpdateUsername2(int rowSize, bool isUpdateCustSub, int maxCTSCustId)
         {
             return dataCenterDataAccess.GetCustomersForUpdateUsername2(rowSize, isUpdateCustSub, maxCTSCustId);
@@ -364,6 +357,21 @@
         public void ReTransformAccount(string jsonData)
         {
             dataCenterDataAccess.ReTranformAccount(jsonData);
+        }
+
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds)
+        {
+            return dataCenterDataAccess.GetCustomerFromMainDB(custIds);
+        }
+
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds)
+        {
+            return dataCenterDataAccess.GetCustomerFromCTS(custIds);
+        }
+
+        public void UpdateCustomerInfo(string customers)
+        {
+            dataCenterDataAccess.UpdateCustomerInfo(customers);
         }
     }
 }

@@ -6,7 +6,7 @@
 
     public class GetCustomersFromMainDbCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "LastCustId")]
+        [SpParam(SqlParamName = "lastCustId")]
         public Int64 LastCustId { get; set; }
 
         [SpParam(SqlParamName = "rowSize")]

@@ -49,16 +49,6 @@
 
             return custInfos;
         }
-      
-        public int FillUpCustomerFromMainDB(string customerJson)
-        {
-            var criteria = new TransformCustomerFromMainDbCriteria
-            {
-                CustomerJson = customerJson
-            };
-
-            return repository.Execute(criteria);
-        }
 
         public void TransformAssociationByDevice(string associationJson)
         {
@@ -725,6 +715,52 @@
             var criteria = new ReTransformAccountCriteria
             {
                 customer = jsonData
+            };
+
+            repository.Execute(criteria);
+        }
+
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds)
+        {
+            var custInfos = new List<CustomerMainDbModel>();
+
+            var criteria = new GetCustomerInfoFromMainDBCriteria
+            {
+                CustIds = custIds
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                custInfos = db.Query<CustomerMainDbModel>(criteria).ToList();
+            }
+
+            return custInfos;
+        }
+
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds)
+        {
+            var custInfos = new List<CustomerMainDbModel>();
+
+            var criteria = new GetCustomerInfoFromCTSCriteria
+            {
+                CustIds = custIds
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                custInfos = db.Query<CustomerMainDbModel>(criteria).ToList();
+            }
+
+            return custInfos;
+        }
+
+        public void UpdateCustomerInfo(string customers)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateCustomerInfoCriteria
+            {
+                Customers = customers
             };
 
             repository.Execute(criteria);

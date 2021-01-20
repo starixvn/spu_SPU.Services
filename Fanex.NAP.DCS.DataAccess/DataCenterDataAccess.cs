@@ -408,5 +408,30 @@
                 return db.Query<int>(criteria).FirstOrDefault();
             }
         }
+
+        public LastUpdateValueModel GetLastUpdatedTime()
+        {
+            var criteria = new GetLastUpdatedTimeCriteria();
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<LastUpdateValueModel>(criteria).FirstOrDefault();
+            }
+        }
+
+        public TranformCustModel GetUpdatedCustFromCustHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        {
+            var criteria = new GetUpdatedCustFromCustHistoryCriteria
+            {
+                LastUpdateTime = lastUpdatedTime,
+                LastCustId = lastUpdatedCustId,
+                RowSize = numOfAccount,
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<TranformCustModel>(criteria).FirstOrDefault();
+            }
+        }
     }
 }

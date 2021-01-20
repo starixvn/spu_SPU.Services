@@ -26,6 +26,8 @@
     <Setting Key="CTS_GetMainDbCustomerForUpdateUsername2" SpName="CTS_GetMainDbCustomerForUpdateUsername2_xtest" DbName="DBCTS.bodb02.bodbSPUNet"/>
     <Setting Key="CTS_DC_GetSystemParameterById" SpName="CTS_DC_GetSystemParameterById" DbName="MySQL.CTS_DataCenter.ctsService"/>
 	<Setting Key="CTS_DC_CTSCustomer_GetLastInsertCust" SpName="CTS_DC_CTSCustomer_GetLastInsertCust" DbName="MySQL.CTS_DataCenter.ctsService"/>
+    <Setting Key="CTS_DC_CTSCustomer_GetLastUpdateTime" SpName="CTS_DC_CTSCustomer_GetLastUpdateTime" DbName="MySQL.CTS_DataCenter.ctsService"/>
+	<Setting Key="CTS_CustInfoHistory_GetUpdatedCustID" SpName="CTS_CustInfoHistory_GetUpdatedCustID" DbName="DBCTS.bodbCustHistory.bodbSPUNet"/>
   </Function>
 
   <Function Name="CustomerClassification">
@@ -42,6 +44,7 @@
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_RealTime"  SpName="CTS_NormalAccountsClassification_GeneralCategorize_RealTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
     <Setting Key="CTS_NormalAccountsClassification_UpdateLastScanTime" SpName="CTS_NormalAccountsClassification_UpdateLastScanTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
   </Function>
+	
   <Function Name="Association">
     <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter.ctsService" />
   </Function>

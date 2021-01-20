@@ -58,6 +58,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DeleteDataForArchiveTransaction07Criteria.cs" />
+    <Compile Include="GetUpdatedCustFromCustHistoryCriteria.cs" />
+    <Compile Include="GetLastUpdatedTimeCriteria.cs" />
     <Compile Include="GetLastInsertCustCriteria.cs" />
     <Compile Include="MoveDataForArchiveTransaction07Criteria.cs" />
     <Compile Include="GetScheduleForArchiveTransaction07Criteria.cs" />

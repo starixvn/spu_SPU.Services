@@ -61,13 +61,38 @@
             {
                 try
                 {
-                    var customers = JsonConvert.DeserializeObject<List<CustomerMainDbModel>>(jsonContent);
+                    var tranformCusts = JsonConvert.DeserializeObject<List<TranformCustModel>>(jsonContent).FirstOrDefault();
 
-                    if (customers != null && customers.Any())
+                    if (tranformCusts != null )
                     {
-                        _dataCenterService.FillUpCustomerFromMainDB(customers);
-                        return true;
+                        var custInfoFromMainDB =  _dataCenterService.GetCustomerFromMainDB(tranformCusts.CustIdList);
+                        var custInfoFromCTS = _dataCenterService.GetCustomerFromCTS(tranformCusts.CustIdList);
+                        var custToUpdateInfo = new List<CustomerMainDbModel>();
+
+                        if (custInfoFromMainDB == null || !custInfoFromMainDB.Any())
+                        {
+                            return true;
+                        }
+
+                        custToUpdateInfo = custInfoFromMainDB.Where(custsDB => !custInfoFromCTS.Any(custCTS =>
+                                custCTS.CustId == custsDB.CustId
+                            && custCTS.Currency == custsDB.Currency
+                            && custCTS.CurrencyId == custsDB.CurrencyId
+                            && custCTS.Srecommend == custsDB.Srecommend
+                            && custCTS.Mrecommend == custsDB.Mrecommend
+                            && custCTS.Recommend == custsDB.Recommend
+                            && custCTS.CustStatusID == custsDB.CustStatusID
+                            && custCTS.Danger1 == custsDB.Danger1
+                            && custCTS.Danger2 == custsDB.Danger2
+                            && custCTS.Danger3 == custsDB.Danger3)).ToList();
+                        
+                        if(custToUpdateInfo != null && custToUpdateInfo.Any())
+                        {
+                            _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo));
+                        }
                     }
+
+                    return true;
                 }
                 catch (Exception ex)
                 {
