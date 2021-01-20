@@ -18,7 +18,7 @@
 
   <Function Name="CTS">
     <Setting Key="CTS_DC_GetMaxCustIdCTSCustomer" SpName="CTS_DC_GetMaxCustIdCTSCustomer" DbName="MySQL.CTS_DataCenter.ctsService"/>
-    <Setting Key="CTS_DC_GetCustomerForUpdateUsername2" SpName="CTS_DC_GetCustomerForUpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsService"/>
+    <Setting Key="CTS_DC_CTSCustomer_GetNULLUserName2" SpName="CTS_DC_CTSCustomer_GetNULLUserName2" DbName="MySQL.CTS_DataCenter.ctsService"/>
 
     <!--  SQL Server -->
     <Setting Key="CTS_Customer_GetNewCustomerInfo" SpName="CTS_Customer_GetNewCustomerInfo" DbName="DBCTS.bodb02.bodbSPUNet"/>
@@ -28,6 +28,7 @@
 	<Setting Key="CTS_DC_CTSCustomer_GetLastInsertCust" SpName="CTS_DC_CTSCustomer_GetLastInsertCust" DbName="MySQL.CTS_DataCenter.ctsService"/>
 	<Setting Key="CTS_DC_CTSCustomer_GetLastUpdateTime" SpName="CTS_DC_CTSCustomer_GetLastUpdateTime" DbName="MySQL.CTS_DataCenter.ctsService"/>
     <Setting Key="CTS_CustInfoHistory_GetUpdatedCustID" SpName="CTS_CustInfoHistory_GetUpdatedCustID" DbName="DBCTS.bodbCustHistory.bodbSPUNet"/>
+	<Setting Key="CTS_Customer_GetNotNULLUserName2ByXML" SpName="CTS_Customer_GetNotNULLUserName2ByXML" DbName="DBCTS.bodb02.bodbSPUNet"/>
   </Function>
 
   <Function Name="CustomerClassification">

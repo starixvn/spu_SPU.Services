@@ -64,6 +64,7 @@
     <Compile Include="GetAssociationWithCategoryCriteria.cs" />
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
     <Compile Include="GetCustomerInfoFromCTSCriteria.cs" />
+    <Compile Include="GetCustomersWithHavingUsername2Criteria.cs" />
     <Compile Include="ReTransformAccountCriteria.cs" />
     <Compile Include="InsertRobotUsersIntoSpecialCustClassCriteria.cs" />
     <Compile Include="CustomerClassification\CategorizeCustomerGeneralCategoryRealtimeCriteria.cs" />
@@ -100,7 +101,7 @@
     <Compile Include="UpdateCustomerInfoCriteria.cs" />
     <Compile Include="UpdateTimingExecutionCriteria.cs" />
     <Compile Include="UpdateUsername2Criteria.cs" />
-    <Compile Include="GetCustomersForUpdateUsername2Criteria.cs" />
+    <Compile Include="GetCustomersWithNullUsername2Criteria.cs" />
     <Compile Include="TransformAssociationByDeviceCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TransformDCSAccountToCTSCustomerCriteria.cs" />

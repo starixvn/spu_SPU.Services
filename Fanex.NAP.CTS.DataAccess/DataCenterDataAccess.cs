@@ -87,20 +87,45 @@
             repository.Execute(criteria);
         }
 
-        public List<CTSCustomer> GetCustomersForUpdateUsername2(int rowSize, bool isUpdateCustSub, int maxCTSCustId)
+        public List<GetCustIdModel> GetCustWithNullUserName2(int rowSize, Int64 preCTSCustId)
         {
-            var criteria = new GetCustomersForUpdateUsername2Criteria
+            var criteria = new GetCustomersWithNullUsername2Criteria
             {
                 Size = rowSize,
-                MaxCustId = maxCTSCustId,
-                IsUpdateCustSub = isUpdateCustSub
+                PreCTSCustID = preCTSCustId
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<CTSCustomer>(criteria).ToList();
+                return db.Query<GetCustIdModel>(criteria).ToList();
             }
         }
+
+        public List<GetCustIdModel> GetCustWithHavingUserName2(List<GetCustIdModel> custs)
+        {
+            var criteria = new GetCustomersWithHavingUsername2Criteria
+            {
+                cust = custs.ToXmlString()
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<GetCustIdModel>(criteria).ToList();
+            }
+        }
+
+        //public void UpdateUserName2(List<GetCustIdModel> custs)
+        //{
+        //    var criteria = new GetCustomersWithHavingUsername2Criteria
+        //    {
+        //        cust = custs.ToXmlString()
+        //    };
+
+        //    using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+        //    {
+        //        return db.Query<GetCustIdModel>(criteria).ToList();
+        //    }
+        //}
 
         public List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
         {
@@ -116,13 +141,14 @@
             }
         }
 
-        public int UpdateUsername2(string customerJson)
+        public int UpdateUsername2(string customerJson, int size)
         {
             var repository = new DynamicRepository();
 
             var criteria = new UpdateUsername2Criteria
             {
-                CustomerJson = customerJson
+                CustomerJson = customerJson,
+                Size = size
             };
 
             return repository.Execute(criteria);

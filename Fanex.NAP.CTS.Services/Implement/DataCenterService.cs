@@ -52,9 +52,14 @@
             return custInfos;
         }
 
-        public List<CTSCustomer> GetCustomerForUpdateUsername2(int rowSize, bool isUpdateCustSub, int maxCTSCustId)
+        public List<GetCustIdModel> GetCustWithNullUserName2(int rowSize, Int64 preCTSCustId)
         {
-            return dataCenterDataAccess.GetCustomersForUpdateUsername2(rowSize, isUpdateCustSub, maxCTSCustId);
+            return dataCenterDataAccess.GetCustWithNullUserName2(rowSize, preCTSCustId);
+        }
+
+        public List<GetCustIdModel> GetCustWithHavingUserName2(List<GetCustIdModel> custs)
+        {
+            return dataCenterDataAccess.GetCustWithHavingUserName2(custs);
         }
 
         public List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
@@ -62,11 +67,16 @@
             return dataCenterDataAccess.GetUsername2FromMainDb(custIds,isCustSub);
         }
 
-        public int UpdateUsername2(List<CustomerMainDbModel> customerList)
+        public int UpdateUsername2(List<GetCustIdModel> customerList, int size)
         {
-            var customerJson = JsonConvert.SerializeObject(customerList);
+            var customerJson = JsonConvert.SerializeObject(customerList.Select(c => new 
+            {
+                CustId = c.CustID ,
+                CustSubId = c.CustSubID,
+                Username2 = c.UserName2
+            }));
 
-            return dataCenterDataAccess.UpdateUsername2(customerJson);
+            return dataCenterDataAccess.UpdateUsername2(customerJson, size);
         }
 
         public void InsertAssociation(List<AssociationModel> associationList)

@@ -25,7 +25,7 @@
 
     <Setting Key="FPS_DC_TransformData_Transaction_GetNullDeviceIDTransList" SpName="FPSB_DC_TransformData_Transaction_GetNullDeviceIDTransList" DbName="MySQL.FPS_DataCenter"/>
     <Setting Key="FPS_DC_TransformData_Transaction_UpdateDeviceID" SpName="FPSB_DC_TransformData_Transaction_UpdateDeviceID" DbName="MySQL.FPS_DataCenter"/>
-    <Setting Key="CTS_DC_UpdateUsername2" SpName="CTS_DC_UpdateUsername2" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+    <Setting Key="CTS_DC_CTSCustomer_UpdateUserName2" SpName="CTS_DC_CTSCustomer_UpdateUserName2" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
   </Function>
   <Function Name="CapturingTransaction">
     <Setting Key="FPS_RT_TransformData_GetPackage" SpName="FPSB_RT_TransformData_GetPackage_New" DbName="MySQL.FPS_RawTransaction">

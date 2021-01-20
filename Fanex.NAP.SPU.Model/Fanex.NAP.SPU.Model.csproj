@@ -54,6 +54,7 @@
     <Compile Include="JobData.cs" />
     <Compile Include="JobDataSevices.cs" />
     <Compile Include="JobDataRoot.cs" />
+    <Compile Include="GetCustIdModel.cs" />
     <Compile Include="LastScannedCustModel.cs" />
     <Compile Include="LastUpdateValueModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +69,12 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.FS.XML\Fanex.NAP.FS.XML.csproj">
+      <Project>{0122573a-eb7d-4a8b-84ef-8b5da635752e}</Project>
+      <Name>Fanex.NAP.FS.XML</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,9 +17,11 @@
 
         void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIpJson);
 
-        List<CTSCustomer> GetCustomerForUpdateUsername2(int rowSize, bool isUpdateCustSub, int maxCTSCustId);
+        List<GetCustIdModel> GetCustWithNullUserName2(int rowSize, Int64 preCTSCustId);
 
-        int UpdateUsername2(List<CustomerMainDbModel> customerList);
+        List<GetCustIdModel> GetCustWithHavingUserName2(List<GetCustIdModel> custs);
+
+        int UpdateUsername2(List<GetCustIdModel> customerList, int size);
 
         List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub);
 

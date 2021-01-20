@@ -47,10 +47,8 @@
         private async Task ExecuteAPI(IJobExecutionContext context)
         {
             var jobDataMap = context.JobDetail.JobDataMap;
-            bool updateUsername2Done = false;
-            List<CTSCustomer> customers;
-            string custids;
-            List<CustomerMainDbModel> mainDBCusts;
+            List<GetCustIdModel> custsFromCTS;
+            List<GetCustIdModel> custFromMainDB;
 
             if (jobDataMap != null)
             {
@@ -58,41 +56,27 @@
 
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
-                int maxCustId = 0;
+                Int64 preCTSCustId = 0;
 
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
                     var apiUrls = rootPath.Split(';');
 
-                    while (!updateUsername2Done)
+                    while (true)
                     {
-                        customers = dataCenterService.GetCustomerForUpdateUsername2(packageSize, false, maxCustId);
-                        custids = string.Join(",", customers.Select(c => c.CustId.ToString()));
-                        mainDBCusts = dataCenterService.GetUsername2FromMainDb(custids, false);
+                        custsFromCTS = dataCenterService.GetCustWithNullUserName2(packageSize, preCTSCustId);
 
-                        if (!customers.Any())
+                        if (custsFromCTS == null || !custsFromCTS.Any())
                         {
-                            maxCustId = 0;
-                            while (true)
-                            {
-                                customers = dataCenterService.GetCustomerForUpdateUsername2(packageSize, true, maxCustId);
-                                custids = string.Join(",", customers.Select(c => c.CustSubId.ToString()));
-                                mainDBCusts = dataCenterService.GetUsername2FromMainDb(custids, true);
-
-                                if (!customers.Any())
-                                {
-                                    updateUsername2Done = true;
-                                    break;
-                                }
-
-                                maxCustId = customers.Max(c => c.CustSubId);
-                                await SendRequest(mainDBCusts, apiUrls, jobDataMap);
-                            }
+                            break;
                         }
-                        else
-                        {
-                            maxCustId = customers.Max(c => c.CustId);
-                            await SendRequest(mainDBCusts, apiUrls, jobDataMap);
+
+                        custFromMainDB = dataCenterService.GetCustWithHavingUserName2(custsFromCTS);
+                        preCTSCustId = custsFromCTS.Max(c => c.CTSCustID);
+
+                        if(custFromMainDB != null & custFromMainDB.Any())
+                        {     
+                            await SendRequest(custFromMainDB, apiUrls, jobDataMap);
                         }
                     }
                 }
@@ -103,27 +87,20 @@
             }
         }
 
-        private async Task SendRequest(List<CustomerMainDbModel> listCust, string[] urlList, JobDataMap mappingData)
+        private async Task SendRequest(List<GetCustIdModel> listCust, string[] urlList, JobDataMap mappingData)
         {
-            var groupTrans = listCust.GroupBy(x => x.BatchId);
             var tasks = new List<Task>();
-            var index = 0;
 
-            foreach (var trans in groupTrans)
+            var task = Task.Run(() =>
             {
-                var task = Task.Run(() =>
-                {
-                    var apiUrl = urlList[index >= urlList.Length ? 0 : index];
+                var apiUrl = urlList[0];
 
-                    return Executing(trans.ToList(), apiUrl, mappingData.GetString("Action"));
-                });
+                return Executing(listCust, apiUrl, mappingData.GetString("Action"));
+            });
 
-                await Task.Delay(10);
+            await Task.Delay(10);
 
-                tasks.Add(task);
-
-                index++;
-            }
+            tasks.Add(task);
 
             await Task.WhenAll(tasks.ToArray());
         }
