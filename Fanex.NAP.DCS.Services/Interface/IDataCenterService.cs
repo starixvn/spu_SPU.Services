@@ -37,7 +37,7 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         void ArchiveTransaction07(int size);
 
-        int GetLastInsertCust (bool isCustSub);
+        LastScannedCustModel GetLastInsertCust ();
 
         LastUpdateValueModel GetLastUpdatedTime();
     }

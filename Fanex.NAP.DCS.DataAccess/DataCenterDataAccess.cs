@@ -396,16 +396,13 @@
             isComplete = criteria.IsCompleted;
         }
 
-        public int GetLastInsertCust(bool isCustSub)
+        public LastScannedCustModel GetLastInsertCust()
         {
-            var criteria = new GetLastInsertCustCriteria
-            {
-                IsCustSub = isCustSub
-            };
+            var criteria = new GetLastInsertCustCriteria();
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<int>(criteria).FirstOrDefault();
+                return db.Query<LastScannedCustModel>(criteria).FirstOrDefault();
             }
         }
 

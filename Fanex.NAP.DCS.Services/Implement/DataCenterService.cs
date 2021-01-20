@@ -107,9 +107,9 @@ namespace Fanex.NAP.DCS.Services.Implement
             dataCenter.DeleteDataArchiveTransaction07(runningDate, ref isCompleted);
         }
 
-        public int GetLastInsertCust(bool isCustSub)
+        public LastScannedCustModel GetLastInsertCust()
         {
-            return dataCenter.GetLastInsertCust(isCustSub);
+            return dataCenter.GetLastInsertCust();
         }
 
         public LastUpdateValueModel GetLastUpdatedTime()

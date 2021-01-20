@@ -65,11 +65,10 @@
 
                     var apiUrls = rootPath.Split(';');
 
-                    var lastScannedCustID = dataCenterService.GetLastInsertCust(false);
-                    var lastScannedCustSubID = dataCenterService.GetLastInsertCust(true);
+                    var lastScanned = dataCenterService.GetLastInsertCust();
 
-                    listCustInfo.AddRange(dataCenterService.GetCustomerFromMainDB(packageSize, lastScannedCustID));
-                    listCustInfo.AddRange(dataCenterService.GetCustSubFromMainDB(packageSize, lastScannedCustSubID));
+                    listCustInfo.AddRange(dataCenterService.GetCustomerFromMainDB(packageSize, lastScanned.LastCustID));
+                    listCustInfo.AddRange(dataCenterService.GetCustSubFromMainDB(packageSize, lastScanned.LastCustSubID));
 
                     await SendRequest(listCustInfo, apiUrls, jobDataMap);
                 }

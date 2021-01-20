@@ -5,9 +5,6 @@
 
     public class GetLastInsertCustCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_IsCustSub")]
-        public bool IsCustSub { get; set; }
-
         public override string GetSettingKey()
         {
             return "CTS_DC_CTSCustomer_GetLastInsertCust";
