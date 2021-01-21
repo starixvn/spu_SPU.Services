@@ -2,6 +2,8 @@
 {
     public class InsertCustomerModel
     {
+        public int CTSCustID { get; set; }
+
         public int CustID { get; set; }
 
         public int CustSubID { get; set; }
