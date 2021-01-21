@@ -13,20 +13,10 @@ namespace Fanex.NAP.SPU.Main.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly ISchedulerProvider _schedulerProvider;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-            
-        }
 
         public IActionResult Index()
         {
             return View();
         }
-       
-            //_schedulerProvider.UpdateJobs();
     }
 }
