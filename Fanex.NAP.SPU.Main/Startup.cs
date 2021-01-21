@@ -50,13 +50,14 @@ namespace Fanex.NAP.SPU.Main
             services.AddHostedService<QuartzHostedService>();
             services.AddSingleton<HelloJob>();
 
+            services.AddSingletonJob();
 
             //services.AddSingleton(new JobSchedule(
             //    jobType: typeof(HelloJob),
             //    cronExpression: "0/5 * * * * ?",
             //    apiUrl: "")); //every 5 seconds
 
-            services.AddSingleton<JobScheduler>();
+            //services.AddSingleton<JobScheduler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +78,7 @@ namespace Fanex.NAP.SPU.Main
             });
 
             app.UseHealthChecksUI(delegate (Options option) {
-                option.UIPath = "/hc";
+                option.UIPath = "/healthz";
                 option.AddCustomStylesheet(@"wwwroot/css/healthcheck.css");
             });
 
@@ -97,7 +98,7 @@ namespace Fanex.NAP.SPU.Main
             var schedulerProvider = (ISchedulerFactory)app.ApplicationServices.GetService(typeof(ISchedulerFactory));
 
 
-            app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
+            app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);           
 
         }
        

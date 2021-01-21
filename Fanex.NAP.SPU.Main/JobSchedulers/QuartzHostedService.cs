@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Quartz;
 using Quartz.Spi;
 using System.Collections.Generic;
@@ -47,6 +48,19 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
         {
             await _scheduler.Shutdown(cancellationToken);
         }
+
+        public async Task AddJob(this IServiceCollection services)
+        {
+            //var job = CreateJob(jobSchedule);
+            //var trigger = CreateTrigger(jobSchedule);
+
+            //await _scheduler.ScheduleJob(job, trigger, cancellationToken);
+        }
+
+        //public async Task AddJob(JobSchedule schedule)
+        //{
+        //    return Task.CompletedTask();
+        //}
 
         private static ITrigger CreateTrigger(JobSchedule schedule)
         {
