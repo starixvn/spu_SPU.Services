@@ -1,0 +1,21 @@
+﻿{
+  "Jobs": [
+    {
+      "JobName": "Job1",
+      "Group": "Group1",
+      "Class": "Class1",
+      "Description": "Description1,",
+      "IsActive": "true",
+      "Triggers": [
+        {
+          "TriggerType": "TriggerType1",
+          "TriggerName": "TriggerName1",
+          "Description": "Description",
+          "RepeatInterval": "1",
+          "CronExpression": "CronExpression1"
+        }
+      ]
+    }
+
+  ]
+}
