@@ -31,6 +31,9 @@ namespace Fanex.NAP.SPU.Main.Controllers
         {            
             _schedulerProvider.UpdateJobs();
 
+
+
+
             return View();
         }
 
