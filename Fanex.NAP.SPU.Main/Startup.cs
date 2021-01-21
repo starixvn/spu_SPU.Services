@@ -1,6 +1,7 @@
 namespace Fanex.NAP.SPU.Main
 {
     using CrystalQuartz.AspNetCore;
+    using Fanex.NAP.SPU.Main.JobSchedulers;
     using Fanex.NAP.SPU.Main.Provider;
     using Fanex.NAP.SPU.Middleware;
     using HealthChecks.UI.Client;
@@ -13,6 +14,7 @@ namespace Fanex.NAP.SPU.Main
     using Microsoft.Extensions.Hosting;
     using Quartz;
     using Quartz.Impl;
+    using Quartz.Spi;
 
     public class Startup
     {
@@ -42,7 +44,16 @@ namespace Fanex.NAP.SPU.Main
             services.AddHealthChecksUI()
             .AddMySqlStorage(appSettings.HealthCheckStorage);
 
-            services.AddSingleton<ISchedulerProvider, SchedulerProvider>();
+            services.AddSingleton<IJobFactory, JobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            services.AddSingleton<QuartzJobRunner>();
+            services.AddHostedService<QuartzHostedService>();
+            services.AddSingleton<HelloJob>();
+
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(HelloJob),
+                cronExpression: "0/5 * * * * ?", 
+                apiUrl:"")); //every 5 seconds
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -80,10 +91,10 @@ namespace Fanex.NAP.SPU.Main
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            var schedulerProvider = (ISchedulerProvider)app.ApplicationServices.GetService(typeof(ISchedulerProvider));
-            var scheduler = schedulerProvider.CreateScheduler();            
+            var schedulerProvider = (ISchedulerFactory)app.ApplicationServices.GetService(typeof(ISchedulerFactory));
+            
 
-            app.UseCrystalQuartz(() => scheduler);
+            app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
 
         }
        
