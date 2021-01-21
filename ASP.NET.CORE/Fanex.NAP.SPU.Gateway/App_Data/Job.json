@@ -1,21 +1,36 @@
 ﻿{
   "Jobs": [
     {
-      "JobName": "Job1",
-      "Group": "Group1",
-      "Class": "Class1",
-      "Description": "Description1,",
+      "JobName": "Job 1",
+      "Group": "Group 1",
+      "Class": "Class 1",
+      "Description": "Description 1,",
       "IsActive": "true",
       "Triggers": [
         {
           "TriggerType": "TriggerType1",
-          "TriggerName": "TriggerName1",
+          "TriggerName": "TriggerName 1",
           "Description": "Description",
           "RepeatInterval": "1",
           "CronExpression": "CronExpression1"
         }
       ]
+    },
+    {
+      "JobName": "Job 2",
+      "Group": "Group 1",
+      "Class": "Class 1",
+      "Description": "Description 2,",
+      "IsActive": "true",
+      "Triggers": [
+        {
+          "TriggerType": "TriggerType1",
+          "TriggerName": "TriggerName 2",
+          "Description": "Description 2",
+          "RepeatInterval": "1",
+          "CronExpression": "CronExpression 2"
+        }
+      ]
     }
-
   ]
 }

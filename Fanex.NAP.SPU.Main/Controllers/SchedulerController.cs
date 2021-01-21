@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.SPU.Main.Controllers
 {
+    using Fanex.NAP.SPU.Main.JobSchedulers;
     using Fanex.NAP.SPU.Main.Models;
     using Fanex.NAP.SPU.Main.Provider;
     using Fanex.NAP.SPU.Main.Utilities;
@@ -14,13 +15,13 @@
     {
         private readonly ILogger<SchedulerController> _logger;
         private readonly ISchedulerProvider _schedulerProvider;
+        private readonly JobScheduler jobScheduler;
 
         public SchedulerController(ILogger<SchedulerController> logger, ISchedulerProvider schedulerProvider)
         {
             _logger = logger;
             _schedulerProvider = schedulerProvider;
         }
-
 
         public IActionResult Index()
         {
@@ -35,9 +36,9 @@
 
             try
             {
-                var jobs = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
+                var schedulerModel = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
 
-                _schedulerProvider.UpdateJobs();
+                _schedulerProvider.UpdateJobs(schedulerModel);
             }
             catch (Exception ex)
             {

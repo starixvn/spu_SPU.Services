@@ -12,16 +12,19 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
         private readonly ISchedulerFactory _schedulerFactory;
         private readonly IJobFactory _jobFactory;
         private readonly IEnumerable<JobSchedule> _jobSchedules;
+        private readonly JobScheduler _jobScheduler;
         private IScheduler _scheduler;
 
         public QuartzHostedService(
             ISchedulerFactory schedulerFactory,
             IEnumerable<JobSchedule> jobSchedules,
+            JobScheduler jobScheduler,
             IJobFactory jobFactory)
         {
             _schedulerFactory = schedulerFactory;
             _jobSchedules = jobSchedules;
-            _jobFactory = jobFactory;            
+            _jobFactory = jobFactory;
+            _jobScheduler = jobScheduler;
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
