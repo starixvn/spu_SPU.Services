@@ -69,7 +69,7 @@
                 try
                 {
                     // 1. Insert data in CTS
-                    var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false);
+                    var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false, "");
 
 
                     if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))

@@ -34,7 +34,7 @@
 
         void AutoTagClassification(string newClassification);
 
-        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan);
+        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan, string associationPA);
 
         DBResult UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList);
 

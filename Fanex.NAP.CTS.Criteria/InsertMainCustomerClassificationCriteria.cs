@@ -8,6 +8,9 @@
         [SpParam(SqlParamName = "ip_NewClassification")]
         public string NewClassification { get; set; }
 
+        [SpParam(SqlParamName = "ip_AssociationPA")]
+        public string AssociationPA { get; set; }
+
         [SpParam(SqlParamName = "ip_IsRescan")]
         public bool IsRescan { get; set; }
 

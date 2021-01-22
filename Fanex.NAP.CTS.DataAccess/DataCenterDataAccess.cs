@@ -253,14 +253,15 @@
             repository.Execute(criteria);
         }
 
-        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan, string associationPA)
         {
             var repository = new DynamicRepository();
 
             var criteria = new InsertMainCustomerClassificationCriteria
             {
                 NewClassification = newClassification,
-                IsRescan = isRescan
+                IsRescan = isRescan,
+                AssociationPA = associationPA
             };
 
             var custIds = repository.Fetch<int>(criteria).ToList();
