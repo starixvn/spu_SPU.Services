@@ -160,6 +160,9 @@
                     {
                         var custIdList = _dataCenterService.TransformCustomerFromMainDB(custs.ToList());
 
+                        if (isWriteLogInfo)                  
+                            LogService.Info($"CTSCustomer.Service - Insert: {JsonConvert.SerializeObject(custs.ToList())}");
+
                         if (custIdList != null && custIdList.Any())
                         {
                             var tasks = new List<Task>();
@@ -186,6 +189,9 @@
                                 try
                                 {
                                     _dataCenterService.ReTransformAccount(JsonConvert.SerializeObject(custIdList));
+
+                                    if (isWriteLogInfo)
+                                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - Insert complete: {JsonConvert.SerializeObject(custIdList)}");
                                 }
                                 catch (Exception ex)
                                 {

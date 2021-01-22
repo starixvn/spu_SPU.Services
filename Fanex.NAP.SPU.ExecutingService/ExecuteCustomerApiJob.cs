@@ -8,6 +8,7 @@
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
+    using Newtonsoft.Json;
     using Quartz;
     using RestSharp;
     using System;
@@ -68,7 +69,11 @@
                     var lastScanned = dataCenterService.GetLastInsertCust();
 
                     listCustInfo.AddRange(dataCenterService.GetCustomerFromMainDB(packageSize, lastScanned.LastCustID));
-                    listCustInfo.AddRange(dataCenterService.GetCustSubFromMainDB(packageSize, lastScanned.LastCustSubID));
+                    LogService.Info($"CTSCustomer.Service - Get Cust: {JsonConvert.SerializeObject(listCustInfo)}");
+
+                    var custSub = dataCenterService.GetCustSubFromMainDB(packageSize, lastScanned.LastCustSubID);
+                    listCustInfo.AddRange(custSub);
+                    LogService.Info($"CTSCustomer.Service - Get CustSub: {JsonConvert.SerializeObject(custSub)}");
 
                     await SendRequest(listCustInfo, apiUrls, jobDataMap);
                 }
