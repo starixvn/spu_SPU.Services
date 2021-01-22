@@ -12,20 +12,17 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
     {
         private readonly ISchedulerFactory _schedulerFactory;
         private readonly IJobFactory _jobFactory;
-        private readonly IEnumerable<JobSchedule> _jobSchedules;
-        private readonly JobScheduler _jobScheduler;
+        private readonly JobSchedules _jobSchedules;        
         private IScheduler _scheduler;
 
         public QuartzHostedService(
             ISchedulerFactory schedulerFactory,
-            IEnumerable<JobSchedule> jobSchedules,
-            JobScheduler jobScheduler,
+            JobSchedules jobSchedules,            
             IJobFactory jobFactory)
         {
             _schedulerFactory = schedulerFactory;
             _jobSchedules = jobSchedules;
-            _jobFactory = jobFactory;
-            _jobScheduler = jobScheduler;
+            _jobFactory = jobFactory;            
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -33,7 +30,7 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
             _scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
             _scheduler.JobFactory = _jobFactory;
 
-            foreach (var jobSchedule in _jobSchedules)
+            foreach (var jobSchedule in _jobSchedules.JobScheduleList)
             {
                 var job = CreateJob(jobSchedule);
                 var trigger = CreateTrigger(jobSchedule);
@@ -47,15 +44,7 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             await _scheduler.Shutdown(cancellationToken);
-        }
-
-        public async Task AddJob(this IServiceCollection services)
-        {
-            //var job = CreateJob(jobSchedule);
-            //var trigger = CreateTrigger(jobSchedule);
-
-            //await _scheduler.ScheduleJob(job, trigger, cancellationToken);
-        }
+        }        
 
         //public async Task AddJob(JobSchedule schedule)
         //{

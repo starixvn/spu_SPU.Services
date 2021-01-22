@@ -8,13 +8,14 @@ namespace Fanex.NAP.SPU.Main
     using HealthChecks.UI.Configuration;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-    using Microsoft.AspNetCore.Hosting;   
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Quartz;
     using Quartz.Impl;
     using Quartz.Spi;
+    using System.Collections.Specialized;
 
     public class Startup
     {
@@ -23,7 +24,7 @@ namespace Fanex.NAP.SPU.Main
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }        
+        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -45,7 +46,17 @@ namespace Fanex.NAP.SPU.Main
             .AddMySqlStorage(appSettings.HealthCheckStorage);
 
             services.AddSingleton<IJobFactory, JobFactory>();
-            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            services.AddSingleton<ISchedulerFactory>(p => new StdSchedulerFactory(new NameValueCollection {
+                { "","" },
+                { "","" },
+                { "","" },
+                { "","" },
+                { "","" },
+                { "","" },
+                { "","" },
+                { "","" },
+                { "","" },
+            }));            
             services.AddSingleton<QuartzJobRunner>();
             services.AddHostedService<QuartzHostedService>();
             services.AddSingleton<HelloJob>();
@@ -72,12 +83,14 @@ namespace Fanex.NAP.SPU.Main
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseHealthChecks("/self", new HealthCheckOptions() { 
-                Predicate = _=> true,
-                ResponseWriter  = UIResponseWriter.WriteHealthCheckUIResponse
+            app.UseHealthChecks("/self", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
 
-            app.UseHealthChecksUI(delegate (Options option) {
+            app.UseHealthChecksUI(delegate (Options option)
+            {
                 option.UIPath = "/healthz";
                 option.AddCustomStylesheet(@"wwwroot/css/healthcheck.css");
             });
@@ -98,9 +111,9 @@ namespace Fanex.NAP.SPU.Main
             var schedulerProvider = (ISchedulerFactory)app.ApplicationServices.GetService(typeof(ISchedulerFactory));
 
 
-            app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);           
+            app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
 
         }
-       
+
     }
 }
