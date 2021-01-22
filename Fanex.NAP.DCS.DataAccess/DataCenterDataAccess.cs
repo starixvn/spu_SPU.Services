@@ -400,20 +400,30 @@
         {
             var criteria = new GetLastInsertCustCriteria();
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            var repository = new DynamicRepository();
+
+            var output = repository.FetchMultiple<LastScannedCustModel, LastScannedCustModel>(criteria);
+
+            return new LastScannedCustModel()
             {
-                return db.Query<LastScannedCustModel>(criteria).FirstOrDefault();
-            }
+                LastCustID = output.firstResultSet.SingleOrDefault().LastCustID,
+                LastCustSubID = output.secondResultSet.SingleOrDefault().LastCustSubID
+            };
         }
 
         public LastUpdateValueModel GetLastUpdatedTime()
         {
             var criteria = new GetLastUpdatedTimeCriteria();
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            var repository = new DynamicRepository();
+
+            var output = repository.FetchMultiple<LastUpdateValueModel, LastUpdateValueModel>(criteria);
+
+            return new LastUpdateValueModel()
             {
-                return db.Query<LastUpdateValueModel>(criteria).FirstOrDefault();
-            }
+                LastUpdateCustID = output.firstResultSet.SingleOrDefault().LastUpdateCustID,
+                LastUpdateTime = output.secondResultSet.SingleOrDefault().LastUpdateTime
+            };
         }
 
         public TranformCustModel GetUpdatedCustFromCustHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
