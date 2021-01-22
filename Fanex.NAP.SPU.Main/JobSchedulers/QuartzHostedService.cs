@@ -55,19 +55,18 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
         {
             return TriggerBuilder
                 .Create()
-                .WithIdentity($"{schedule.JobType.FullName}.trigger")
+                .WithIdentity($"{schedule.JobName}.trigger")
                 .WithCronSchedule(schedule.CronExpression)
                 .WithDescription(schedule.CronExpression)
                 .Build();
         }
 
         private static IJobDetail CreateJob(JobSchedule schedule)
-        {
-            var jobType = schedule.JobType;
+        {            
             return JobBuilder
-                .Create(jobType)
-                .WithIdentity(jobType.FullName)
-                .WithDescription(jobType.Name)
+                .Create(schedule.JobType)
+                .WithIdentity(schedule.JobName)
+                .WithDescription(schedule.JobName)
                 .Build();
         }
     }

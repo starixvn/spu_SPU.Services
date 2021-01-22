@@ -56,19 +56,12 @@ namespace Fanex.NAP.SPU.Main
                 { "","" },
                 { "","" },
                 { "","" },
-            }));            
+            }));
             services.AddSingleton<QuartzJobRunner>();
             services.AddHostedService<QuartzHostedService>();
             services.AddSingleton<HelloJob>();
 
             services.AddSingletonJob();
-
-            //services.AddSingleton(new JobSchedule(
-            //    jobType: typeof(HelloJob),
-            //    cronExpression: "0/5 * * * * ?",
-            //    apiUrl: "")); //every 5 seconds
-
-            //services.AddSingleton<JobScheduler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

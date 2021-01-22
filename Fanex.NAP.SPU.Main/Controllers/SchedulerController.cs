@@ -7,20 +7,18 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading.Tasks;
 
     public class SchedulerController : Controller
     {
         private readonly ILogger<SchedulerController> _logger;
         private readonly ISchedulerProvider _schedulerProvider;
-        private readonly JobScheduler jobScheduler;
+        private readonly JobSchedules _jobSchedules;
 
-        public SchedulerController(ILogger<SchedulerController> logger, ISchedulerProvider schedulerProvider)
+        public SchedulerController(ILogger<SchedulerController> logger, ISchedulerProvider schedulerProvider, JobSchedules jobSchedules)
         {
             _logger = logger;
             _schedulerProvider = schedulerProvider;
+            _jobSchedules = jobSchedules;
         }
 
         public IActionResult Index()
@@ -30,19 +28,17 @@
 
         [HttpGet]
         public IActionResult UpdateJobs()
-        {
-            var apiEndpoint = "Scheduler";
-            var apiUrl = "http://localhost:60823/" + apiEndpoint;
-
+        {            
             try
             {
+                var apiUrl = "http://localhost:60823/Scheduler";
+
                 var schedulerModel = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
 
                 _schedulerProvider.UpdateJobs(schedulerModel);
             }
             catch (Exception ex)
             {
-                
             }
 
             return View();

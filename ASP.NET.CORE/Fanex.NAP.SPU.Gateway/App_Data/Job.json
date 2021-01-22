@@ -12,7 +12,7 @@
           "TriggerName": "TriggerName 1",
           "Description": "Description",
           "RepeatInterval": "1",
-          "CronExpression": "CronExpression1"
+          "CronExpression": "0/5 * * * * ?"
         }
       ]
     },
@@ -28,7 +28,7 @@
           "TriggerName": "TriggerName 2",
           "Description": "Description 2",
           "RepeatInterval": "1",
-          "CronExpression": "CronExpression 2"
+          "CronExpression": "0/10 * * * * ?"
         }
       ]
     }
