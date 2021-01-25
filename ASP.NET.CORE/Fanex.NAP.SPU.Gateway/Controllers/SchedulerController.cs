@@ -21,21 +21,13 @@
         [HttpGet]
         public SchedulerModel Get()
         {
-            try
-            {
-                var filePath = AppDomain.CurrentDomain.BaseDirectory + jobTemplate;
+            var filePath = AppDomain.CurrentDomain.BaseDirectory + jobTemplate;
 
-                var jobMappings = System.IO.File.ReadAllText(filePath);
+            var jobMappings = System.IO.File.ReadAllText(filePath);
 
-                var schedule = JsonConvert.DeserializeObject<SchedulerModel>(jobMappings);
+            var schedule = JsonConvert.DeserializeObject<SchedulerModel>(jobMappings);
 
-                return schedule;
-            }
-            catch (Exception ex)
-            {
-            }
-
-            return new SchedulerModel();
+            return schedule;
         }
 
     }

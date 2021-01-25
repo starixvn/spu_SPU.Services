@@ -68,9 +68,9 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
         {
             return TriggerBuilder
                 .Create()
-                .WithIdentity($"{schedule.JobName}.trigger")
+                .WithIdentity($"{schedule.TriggerName}")
                 .WithCronSchedule(schedule.CronExpression)
-                .WithDescription(schedule.CronExpression)
+                .WithDescription(schedule.TriggerName)
                 .Build();
         }
 
@@ -78,7 +78,7 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
         {            
             return JobBuilder
                 .Create(schedule.JobType)
-                .WithIdentity(schedule.JobName)
+                .WithIdentity(schedule.JobName, schedule.Group)
                 .WithDescription(schedule.JobName)
                 .Build();
         }

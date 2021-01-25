@@ -47,15 +47,13 @@ namespace Fanex.NAP.SPU.Main
 
             services.AddSingleton<IJobFactory, JobFactory>();
             services.AddSingleton<ISchedulerFactory>(p => new StdSchedulerFactory(new NameValueCollection {
-                { "","" },
-                { "","" },
-                { "","" },
-                { "","" },
-                { "","" },
-                { "","" },
-                { "","" },
-                { "","" },
-                { "","" },
+                { "quartz.threadPool.type", "Quartz.Simpl.SimpleThreadPool, Quartz" },
+                { "quartz.threadPool.threadCount", "100" },
+                { "quartz.threadPool.threadPriority", "Normal" },            
+                { "quartz.scheduler.exporter.type", "Quartz.Simpl.RemotingSchedulerExporter, Quartz" },           
+                { "quartz.scheduler.exporter.bindName", "QuartzScheduler" },
+                { "quartz.scheduler.instanceName", "SPUService.DEV" },
+                { "quartz.scheduler.instanceId", "AUTO" },
             }));
             services.AddSingleton<QuartzJobRunner>();
             services.AddSingleton<QuartzHostedService>();

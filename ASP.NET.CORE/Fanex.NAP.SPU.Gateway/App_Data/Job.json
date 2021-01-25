@@ -1,34 +1,87 @@
 ﻿{
   "Jobs": [
     {
-      "JobName": "Job 1",
-      "Group": "Group 1",
-      "Class": "Class 1",
-      "Description": "Description 1,",
+      "JobName": "CTS_Auto_Tag_Customer_Clasification_Job",
+      "Group": "Customer Classification",
+      "Description": "CTS_Auto_Tag_Customer_Clasification",
+      "APIUrl": "",
       "IsActive": "true",
       "Triggers": [
         {
-          "TriggerType": "TriggerType1",
-          "TriggerName": "TriggerName 1",
-          "Description": "Description",
-          "RepeatInterval": "1",
-          "CronExpression": "0/5 * * * * ?"
+          "TriggerType": "Simple",
+          "TriggerName": "CTS_Auto_Tag_Customer_Clasification_Trigger",
+          "RepeatInterval": "5",
+          "RepeatForever":  "true",
+          "Unit": "Second",
+          "CronExpression": ""
         }
       ]
     },
     {
-      "JobName": "Job 2",
+      "JobName": "CTS_AutoTag_ProblemAccount",
       "Group": "Group 1",
-      "Class": "Class 1",
-      "Description": "Description 2,",
+      "Description": "Customer Classification",
+      "APIUrl": "",
       "IsActive": "true",
       "Triggers": [
         {
-          "TriggerType": "TriggerType1",
-          "TriggerName": "TriggerName 2",
-          "Description": "Description 2",
+          "TriggerType": "Simple",
+          "TriggerName": "CTS_AutoTag_ProblemAccount_Trigger",
           "RepeatInterval": "1",
+          "RepeatForever": "true",
+          "Unit": "Minute",
+          "CronExpression": ""
+        }
+      ]
+    },
+    {
+      "JobName": "CTS_General_Category_Daily_Classify_Job",
+      "Group": "Customer Classification",
+      "Description": "CTS_General_Category_Daily_Classify",
+      "APIUrl": "",
+      "IsActive": "true",
+      "Triggers": [
+        {
+          "TriggerType": "Cron",
+          "TriggerName": "CTS_General_Category_Daily_Classify_Trigger",
+          "RepeatInterval": "",
+          "RepeatForever": "",
+          "Unit": "",
           "CronExpression": "0/10 * * * * ?"
+        }
+      ]
+    },
+    {
+      "JobName": "CTS_General_Category_Realtime_Classify_Job",
+      "Group": "Customer Classification",
+      "Description": "CTS_General_Category_Realtime_Classify",
+      "APIUrl": "",
+      "IsActive": "true",
+      "Triggers": [
+        {
+          "TriggerType": "Simple",
+          "TriggerName": "CTS_General_Category_Realtime_Classify_Trigger",
+          "RepeatInterval": "2",
+          "RepeatForever": "true",
+          "Unit": "Minute",
+          "CronExpression": ""
+        }
+      ]
+    },
+    {
+      "JobName": "CTS_Probation_Customer_Clasification_Job",
+      "Group": "Customer Classification",
+      "Description": "CTS_Probation_Customer_Clasification",
+      "APIUrl": "",
+      "IsActive": "true",
+      "Triggers": [
+        {
+          "TriggerType": "Simple",
+          "TriggerName": "CTS_Probation_Customer_Clasification_Trigger",
+          "RepeatInterval": "10",
+          "RepeatForever": "true",
+          "Unit": "Second",
+          "CronExpression": ""
         }
       ]
     }
