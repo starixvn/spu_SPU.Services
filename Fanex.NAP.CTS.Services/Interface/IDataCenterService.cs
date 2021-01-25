@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Services.Interface
 {
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.SPU.Model;
     using System;
     using System.Collections.Generic;
@@ -29,6 +30,8 @@
         void UpdateLastLoginTime(int batchSize);
 
         List<CustomerClassificationModelMoreInfo> GetNewClassification();
+
+        string GetNewMemberAssociationProblemAccount(string custIds);
 
         void UpdateAppliedStatusClassification(string custIdList, bool isGeneralCategory);
 

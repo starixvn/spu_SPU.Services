@@ -3,8 +3,8 @@
     using Fanex.Logging;
     using Fanex.NAP.CTS.DataAccess;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.CTS.Services.Interface;
-    using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;
     using System;
@@ -109,9 +109,9 @@
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
-        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan, string associationPA)
         {
-           return dataCenterDataAccess.InsertMainCustomerClassification(newClassification, isRescan);
+           return dataCenterDataAccess.InsertMainCustomerClassification(newClassification, isRescan, associationPA);
         }
 
         public void DCSMoveTransToTransaction07(string transIdList)
@@ -343,6 +343,23 @@
         public IEnumerable<CustEvidenceModel> GetExistedEvidences(string custIDs)
         {
             return dataCenterDataAccess.GetExistedEvidences(custIDs);
+        }
+
+        public string GetNewMemberAssociationProblemAccount(string custIds)
+        {            
+            var result =  dataCenterDataAccess.GetNewCustomerAssociationProblemAccount(custIds, out string errorMessage);
+
+            if(!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                LogService.Error(errorMessage);
+            }
+
+            if(result != null && result.Any())
+            {
+                return JsonConvert.SerializeObject(result);
+            }
+
+            return string.Empty;
         }
     }
 }

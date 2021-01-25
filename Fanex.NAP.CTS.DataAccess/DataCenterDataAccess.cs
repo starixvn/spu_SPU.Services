@@ -6,6 +6,7 @@
     using Fanex.NAP.CTS.Criteria.CustomerClassification;
     using Fanex.NAP.CTS.Criteria.MainDB;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.FS.XML;
     using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;
@@ -692,6 +693,23 @@
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<CustEvidenceModel>(criteria).ToList();
+            }
+        }
+
+        public IEnumerable<CustomerClassificationNewMemberAssociationProblemAccountModel> GetNewCustomerAssociationProblemAccount(string custIdList, out string errorMessage)
+        {
+            var criteria = new GetAssociationProblemAccountForNewMemberClassificationCriteria
+            {
+                CustIdList = custIdList
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                var result =  db.Query<CustomerClassificationNewMemberAssociationProblemAccountModel>(criteria);
+
+                errorMessage = criteria.ErrorMessage;
+
+                return result;
             }
         }
     }

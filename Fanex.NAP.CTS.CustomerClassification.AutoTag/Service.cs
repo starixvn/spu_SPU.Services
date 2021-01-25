@@ -18,6 +18,7 @@
     {
         private readonly IDataCenterService _dataCenterService;
         private readonly IPushDataToExternalService _pushDataToExternalService;
+        private const int _newMemberClassification = 201;
 
         public Service()
         {
@@ -30,20 +31,20 @@
             try
             {
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
-                            
-                do
-                {                   
-                    newClassification = _dataCenterService.GetNewClassification();                   
 
-                    if(newClassification != null && newClassification.Any())
+                do
+                {
+                    newClassification = _dataCenterService.GetNewClassification();
+
+                    if (newClassification != null && newClassification.Any())
                     {
                         var generalClassifications = newClassification.Where(c => c.IsGeneralCategory);
 
-                        if(generalClassifications != null && generalClassifications.Any())
+                        if (generalClassifications != null && generalClassifications.Any())
                         {
                             InsertGeneralClassificationCusts(generalClassifications);
-                        }                        
-                    }                                   
+                        }
+                    }
 
                 } while (newClassification != null && newClassification.Any());
 
@@ -58,6 +59,23 @@
             }
         }
 
+        private string FilterCustomerClassificationByCategoryId(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification, int categoryId = 201)
+        {
+            if (generalClassification != null && generalClassification.Any())
+            {
+                var newMemberClassification = generalClassification.Where(x => x.CategoryId == categoryId);
+
+                if (newMemberClassification != null && newMemberClassification.Any())
+                {
+                    var custIds =  newMemberClassification.Select(x => x.CustId);
+
+                    return string.Join(",", custIds);                                        
+                }
+            }
+
+            return string.Empty;
+        }
+
         private void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
         {
             var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
@@ -68,8 +86,12 @@
 
                 try
                 {
+                    var newMemberCustIds = this.FilterCustomerClassificationByCategoryId(generalClassification, _newMemberClassification);
+
+                    var newMemberAssociationProblemAccounts = _dataCenterService.GetNewMemberAssociationProblemAccount(newMemberCustIds);
+
                     // 1. Insert data in CTS
-                    var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false, "");
+                    var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false, newMemberAssociationProblemAccounts);
 
 
                     if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))
