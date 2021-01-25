@@ -107,6 +107,8 @@ namespace Fanex.NAP.SPU.Main
 
             app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
 
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
         }
 
     }

@@ -1,3 +1,4 @@
+using Fanex.NAP.SPU.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -54,6 +55,8 @@ namespace Fanex.NAP.SPU.Gateway
             {
                 endpoints.MapControllers();
             });
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
         }
     }
 }
