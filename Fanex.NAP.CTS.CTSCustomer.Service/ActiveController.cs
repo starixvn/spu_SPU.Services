@@ -74,9 +74,14 @@
                             return true;
                         }
 
-                        custToUpdateInfo = custInfoFromMainDB.Where(custsDB => !custInfoFromCTS.Contains(custsDB)).ToList();
-                        
-                        if(custToUpdateInfo != null && custToUpdateInfo.Any())
+                        custToUpdateInfo = custInfoFromMainDB.Join(custInfoFromCTS,
+                            custMain => custMain.CustId,
+                            custCTS => custCTS.CustId,
+                            (custMain, custCTS) 
+                            => custMain).Where(c=> !custInfoFromCTS.Contains(c)).ToList();
+
+
+                        if (custToUpdateInfo != null && custToUpdateInfo.Any())
                         {
                             _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo), tranformCusts.LastUpdatedTime, tranformCusts.LastCustId);
                         }
