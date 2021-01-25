@@ -58,6 +58,7 @@ namespace Fanex.NAP.SPU.Main
                 { "","" },
             }));
             services.AddSingleton<QuartzJobRunner>();
+            services.AddSingleton<QuartzHostedService>();
             services.AddHostedService<QuartzHostedService>();
             services.AddSingleton<HelloJob>();
 

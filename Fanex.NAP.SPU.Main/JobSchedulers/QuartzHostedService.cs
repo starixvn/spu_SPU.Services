@@ -12,8 +12,7 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
     {
         private readonly ISchedulerFactory _schedulerFactory;
         private readonly IJobFactory _jobFactory;
-        private readonly JobSchedules _jobSchedules;        
-        private IScheduler _scheduler;
+        private readonly JobSchedules _jobSchedules;
 
         public QuartzHostedService(
             ISchedulerFactory schedulerFactory,
@@ -27,29 +26,43 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
-            _scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
-            _scheduler.JobFactory = _jobFactory;
+            var scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
+            scheduler.JobFactory = _jobFactory;
 
             foreach (var jobSchedule in _jobSchedules.JobScheduleList)
             {
                 var job = CreateJob(jobSchedule);
                 var trigger = CreateTrigger(jobSchedule);
 
-                await _scheduler.ScheduleJob(job, trigger, cancellationToken);
+                await scheduler.ScheduleJob(job, trigger, cancellationToken);
             }
 
-            await _scheduler.Start(cancellationToken);
+            await scheduler.Start(cancellationToken);
         }
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            await _scheduler.Shutdown(cancellationToken);
-        }        
+           var scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
 
-        //public async Task AddJob(JobSchedule schedule)
-        //{
-        //    return Task.CompletedTask();
-        //}
+            await scheduler.Shutdown(cancellationToken);
+        }
+
+        public async Task AddJob()
+        {
+            var scheduler = await _schedulerFactory.GetScheduler();
+
+            foreach (var jobSchedule in _jobSchedules.JobScheduleList)
+            {
+                jobSchedule.JobName = jobSchedule.JobName + "_New_" + System.DateTime.Now.ToLongTimeString();
+                var job = CreateJob(jobSchedule);
+                
+                var trigger = CreateTrigger(jobSchedule);
+
+                await scheduler.ScheduleJob(job, trigger);
+            }
+
+            await Task.CompletedTask;
+        }
 
         private static ITrigger CreateTrigger(JobSchedule schedule)
         {

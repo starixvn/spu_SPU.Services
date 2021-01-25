@@ -10,15 +10,17 @@
 
     public class SchedulerController : Controller
     {
-        private readonly ILogger<SchedulerController> _logger;
-        private readonly ISchedulerProvider _schedulerProvider;
+        private readonly ILogger<SchedulerController> _logger;        
         private readonly JobSchedules _jobSchedules;
+        private readonly QuartzHostedService _quartzHostedService;
 
-        public SchedulerController(ILogger<SchedulerController> logger, ISchedulerProvider schedulerProvider, JobSchedules jobSchedules)
+        public SchedulerController(ILogger<SchedulerController> logger
+            , JobSchedules jobSchedules
+            , QuartzHostedService quartzHostedService)
         {
-            _logger = logger;
-            _schedulerProvider = schedulerProvider;
+            _logger = logger;        
             _jobSchedules = jobSchedules;
+            _quartzHostedService = quartzHostedService;
         }
 
         public IActionResult Index()
@@ -31,11 +33,13 @@
         {            
             try
             {
-                var apiUrl = "http://localhost:60823/Scheduler";
+                //var apiUrl = "http://localhost:60823/Scheduler";
 
-                var schedulerModel = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
+                //var schedulerModel = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
 
-                _schedulerProvider.UpdateJobs(schedulerModel);
+                //_schedulerProvider.UpdateJobs(schedulerModel);
+
+                _quartzHostedService.AddJob();
             }
             catch (Exception ex)
             {
