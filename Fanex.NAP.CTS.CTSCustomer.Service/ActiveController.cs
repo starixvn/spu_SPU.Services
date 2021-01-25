@@ -74,17 +74,7 @@
                             return true;
                         }
 
-                        custToUpdateInfo = custInfoFromMainDB.Where(custsDB => !custInfoFromCTS.Any(custCTS =>
-                                custCTS.CustId == custsDB.CustId
-                            && custCTS.Currency == custsDB.Currency
-                            && custCTS.CurrencyId == custsDB.CurrencyId
-                            && custCTS.Srecommend == custsDB.Srecommend
-                            && custCTS.Mrecommend == custsDB.Mrecommend
-                            && custCTS.Recommend == custsDB.Recommend
-                            && custCTS.CustStatusID == custsDB.CustStatusID
-                            && custCTS.Danger1 == custsDB.Danger1
-                            && custCTS.Danger2 == custsDB.Danger2
-                            && custCTS.Danger3 == custsDB.Danger3)).ToList();
+                        custToUpdateInfo = custInfoFromMainDB.Where(custsDB => !custInfoFromCTS.Contains(custsDB)).ToList();
                         
                         if(custToUpdateInfo != null && custToUpdateInfo.Any())
                         {
