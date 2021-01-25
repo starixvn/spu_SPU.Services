@@ -93,6 +93,6 @@
 
         IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds);
         
-        void UpdateCustomerInfo(string customers);
+        void UpdateCustomerInfo(string customers, DateTime lastUpdateTime, Int64 lastUpdateCustID);
     }
 }

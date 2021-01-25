@@ -780,13 +780,15 @@
             return custInfos;
         }
 
-        public void UpdateCustomerInfo(string customers)
+        public void UpdateCustomerInfo(string customers, DateTime lastUpdateTime, Int64 lastUpdateCustID)
         {
             var repository = new DynamicRepository();
 
             var criteria = new UpdateCustomerInfoCriteria
             {
-                Customers = customers
+                Customers = customers,
+                LastUpdateCustID = lastUpdateCustID,
+                LastUpdateTime = lastUpdateTime
             };
 
             repository.Execute(criteria);

@@ -7,10 +7,10 @@
     [XName("Customer")]
     public class GetCustIdModel
     {
-        [XmlIgnore]
+        [XName("CTSCustID")]
         public Int64 CTSCustID { get; set; }
 
-        [XName("CustId")]
+        [XName("CustID")]
         public Int64 CustID { get; set; }
 
         [XName("CustSubID")]

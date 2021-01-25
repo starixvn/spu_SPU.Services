@@ -379,9 +379,9 @@
             return dataCenterDataAccess.GetCustomerFromCTS(custIds);
         }
 
-        public void UpdateCustomerInfo(string customers)
+        public void UpdateCustomerInfo(string customers, DateTime lastUpdateTime, Int64 lastUpdateCustID)
         {
-            dataCenterDataAccess.UpdateCustomerInfo(customers);
+            dataCenterDataAccess.UpdateCustomerInfo(customers, lastUpdateTime, lastUpdateCustID);
         }
     }
 }

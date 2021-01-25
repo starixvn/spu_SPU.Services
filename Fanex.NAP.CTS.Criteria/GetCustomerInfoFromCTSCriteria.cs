@@ -5,7 +5,7 @@
 
     public class GetCustomerInfoFromCTSCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "custIdList")]
+        [SpParam(SqlParamName = "ip_CustIDList")]
         public string CustIds { get; set; }
 
         public override string GetSettingKey()

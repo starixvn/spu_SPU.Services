@@ -88,7 +88,7 @@
                         
                         if(custToUpdateInfo != null && custToUpdateInfo.Any())
                         {
-                            _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo));
+                            _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo), tranformCusts.LastUpdatedTime, tranformCusts.LastCustId);
                         }
                     }
 
