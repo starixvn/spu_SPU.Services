@@ -535,6 +535,10 @@ Global
 		{F2E04341-F839-425C-8880-B6CDF1E7B1CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2E04341-F839-425C-8880-B6CDF1E7B1CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2E04341-F839-425C-8880-B6CDF1E7B1CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -619,9 +623,10 @@ Global
 		{60B3F0F2-D8E3-48BF-8B24-DFF4D4FC4CBC} = {B9E4F045-5DCA-4951-A90C-B6F182F3DA6A}
 		{7A2EB693-65A0-486F-8E22-1DCD9F2C4C9F} = {0A926929-8CBD-48FC-854F-E4B10C92B95D}
 		{F2E04341-F839-425C-8880-B6CDF1E7B1CF} = {0A926929-8CBD-48FC-854F-E4B10C92B95D}
+		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866} = {0A926929-8CBD-48FC-854F-E4B10C92B95D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

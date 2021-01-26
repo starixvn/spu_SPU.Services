@@ -16,7 +16,7 @@ namespace Fanex.NAP.SPU.Middleware
         public AppSettings(IConfiguration configuration)
         {
             this.configuration = configuration;
-
+                                    
             HealthCheckStorage = GetValue<string>(nameof(HealthCheckStorage));
         }
 

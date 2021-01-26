@@ -1,10 +1,12 @@
 namespace Fanex.NAP.SPU.Main
 {
     using CrystalQuartz.AspNetCore;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers;
     using Fanex.NAP.SPU.Main.JobSchedulers;
     using Fanex.NAP.SPU.Middleware;
     using HealthChecks.UI.Client;
     using HealthChecks.UI.Configuration;
+    using MediatR;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Hosting;
@@ -15,6 +17,7 @@ namespace Fanex.NAP.SPU.Main
     using Quartz;
     using Quartz.Impl;
     using Quartz.Spi;
+    using Refit;
     using System.Collections.Specialized;
     using System.IO;
 
@@ -32,6 +35,7 @@ namespace Fanex.NAP.SPU.Main
         {
             services.AddControllersWithViews();
             services.AddAppSettings();
+            services.AddMediatR(typeof(Startup));
 
             var appSettings = new AppSettings(this.Configuration);
             services.Configure<IISServerOptions>(options =>
@@ -62,9 +66,9 @@ namespace Fanex.NAP.SPU.Main
             services.AddSingleton<QuartzJobRunner>();
             services.AddSingleton<QuartzHostedService>();
             services.AddHostedService<QuartzHostedService>();
-            services.AddSingleton<HelloJob>();
-
+            services.AddSingleton<JobExecute>();
             services.AddSingletonJob();
+            services.AddSingleton(RestService.For<IJobServiceApi>("http://localhost:62391"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
