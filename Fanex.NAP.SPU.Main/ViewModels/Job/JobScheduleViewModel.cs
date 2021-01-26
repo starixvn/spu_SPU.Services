@@ -8,8 +8,8 @@
         public JobScheduleViewModel(JobModel jobModel, TriggerModel triggerModel)
         {
             JobName = jobModel.JobName;
-            JobType = Type.GetType("Fanex.NAP.SPU.Main.JobSchedulers.HelloJob");
-            Group = jobModel.Group;         
+            JobType = Type.GetType(jobModel.JobType);
+            Group = jobModel.Group;
             APIUrl = "";
             JobDescription = jobModel.Description;
             IsActive = jobModel.IsActive;
@@ -44,6 +44,16 @@
         public bool IsNew { get; set; }
 
         public CronTriggerViewModel Cron { get; set; } = new CronTriggerViewModel();
+
+        public bool Validate()
+        {
+            if (string.IsNullOrEmpty(JobName))
+            {
+                return false;
+            }
+
+            return Cron.Validate(this);
+        }
 
     }
 }

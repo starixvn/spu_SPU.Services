@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class TriggerViewModel : IHasValidation
+    public class TriggerViewModel
     {
         public string DateFormat { get; }
         public string TimeFormat { get; }

@@ -5,11 +5,16 @@
     using System;
     using System.Collections.Generic;
 
-    public class CronTriggerViewModel : IHasValidation
+    public class CronTriggerViewModel
     {
-        public void Validate(ICollection<ValidationError> errors)
+        public bool Validate(JobScheduleViewModel model)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrEmpty(model.CronExpression))
+            {
+                return false;
+            }
+
+            return true;
         }
 
         public void Apply(TriggerBuilder builder, JobScheduleViewModel model)

@@ -1,16 +1,7 @@
-﻿using Fanex.NAP.SPU.Main.Models;
-using Fanex.NAP.SPU.Main.Provider;
-using Fanex.NAP.SPU.Main.Utilities;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.SPU.Main.Controllers
+﻿namespace Fanex.NAP.SPU.Main.Controllers
 {
+    using Microsoft.AspNetCore.Mvc;
+    
     public class HomeController : Controller
     {
 

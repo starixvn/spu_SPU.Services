@@ -6,6 +6,8 @@
     {
         public string JobName { get; set; }
 
+        public string JobType { get; set; }
+
         public string Group { get; set; }
 
         public string Class { get; set; }

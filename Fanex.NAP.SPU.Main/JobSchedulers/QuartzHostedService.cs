@@ -31,6 +31,9 @@
 
             foreach (var jobSchedule in _jobSchedules.JobScheduleList)
             {
+                if(!jobSchedule.Validate())
+                    continue;
+
                 var job = CreateJob(jobSchedule);
                 var trigger = CreateTrigger(jobSchedule);
 
@@ -64,15 +67,17 @@
             await Task.CompletedTask;
         }
 
+        private static IJobDetail CreateJob(JobScheduleViewModel schedule)
+        {
+            return JobBuilder
+                .Create(schedule.JobType)
+                .WithIdentity(schedule.JobName, schedule.Group)
+                .WithDescription(schedule.JobName)
+                .Build();
+        }
+
         private static ITrigger CreateTrigger(JobScheduleViewModel schedule)
         {
-            //return TriggerBuilder
-            //    .Create()
-            //    .WithIdentity($"{schedule.TriggerName}")
-            //    .WithCronSchedule(schedule.CronExpression)
-            //    .WithDescription(schedule.TriggerName)
-            //    .Build();
-
             var builder = TriggerBuilder
                 .Create()
                 .WithIdentity($"{schedule.TriggerName}")
@@ -82,14 +87,6 @@
 
             return builder.Build();
         }
-
-        private static IJobDetail CreateJob(JobScheduleViewModel schedule)
-        {            
-            return JobBuilder
-                .Create(schedule.JobType)
-                .WithIdentity(schedule.JobName, schedule.Group)
-                .WithDescription(schedule.JobName)
-                .Build();
-        }
+       
     }
 }

@@ -2,30 +2,28 @@
 {
     using Fanex.NAP.SPU.Gateway.Models;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using Newtonsoft.Json;
-    using System; 
 
     [ApiController]
     [Route("[controller]")]
     public class SchedulerController : ControllerBase
     {
-        private const string jobTemplate = @"App_Data\Job.json";
         private readonly ILogger<SchedulerController> _logger;
+        private readonly IConfiguration _configuration;
 
-        public SchedulerController(ILogger<SchedulerController> logger)
+        public SchedulerController(IConfiguration configuration, ILogger<SchedulerController> logger)
         {
+            _configuration = configuration;
             _logger = logger;
         }
 
         [HttpGet]
         public SchedulerModel Get()
         {
-            var filePath = AppDomain.CurrentDomain.BaseDirectory + jobTemplate;
+            var schedule = new SchedulerModel();
 
-            var jobMappings = System.IO.File.ReadAllText(filePath);
-
-            var schedule = JsonConvert.DeserializeObject<SchedulerModel>(jobMappings);
+            _configuration.GetSection("SchedulerModel").Bind(schedule);
 
             return schedule;
         }

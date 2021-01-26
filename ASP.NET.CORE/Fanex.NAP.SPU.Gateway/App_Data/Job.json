@@ -1,79 +1,86 @@
 ﻿{
-  "Jobs": [
-    {
-      "JobName": "CTS_Auto_Tag_Customer_Clasification_Job",
-      "Group": "Customer Classification",
-      "Description": "CTS_Auto_Tag_Customer_Clasification",
-      "APIUrl": "",
-      "IsActive": "true",
-      "Triggers": [
-        {
-          "TriggerType": "Cron",
-          "TriggerName": "CTS_Auto_Tag_Customer_Clasification_Trigger",
-          "RepeatForever": "true",
-          "CronExpression": "0/10 * * * * ?"
-        }
-      ]
-    },
-    {
-      "JobName": "CTS_AutoTag_ProblemAccount",
-      "Group": "Group 1",
-      "Description": "Customer Classification",
-      "APIUrl": "",
-      "IsActive": "true",
-      "Triggers": [
-        {
-          "TriggerType": "Cron",
-          "TriggerName": "CTS_AutoTag_ProblemAccount_Trigger",
-          "RepeatForever": "true",
-          "CronExpression": "0/20 * * * * ?"
-        }
-      ]
-    },
-    {
-      "JobName": "CTS_General_Category_Daily_Classify_Job",
-      "Group": "Customer Classification",
-      "Description": "CTS_General_Category_Daily_Classify",
-      "APIUrl": "",
-      "IsActive": "true",
-      "Triggers": [
-        {
-          "TriggerType": "Cron",
-          "TriggerName": "CTS_General_Category_Daily_Classify_Trigger",
-          "RepeatForever": "true",
-          "CronExpression": "0/10 * * * * ?"
-        }
-      ]
-    },
-    {
-      "JobName": "CTS_General_Category_Realtime_Classify_Job",
-      "Group": "Customer Classification",
-      "Description": "CTS_General_Category_Realtime_Classify",
-      "APIUrl": "",
-      "IsActive": "true",
-      "Triggers": [
-        {
-          "TriggerType": "Cron",
-          "TriggerName": "CTS_General_Category_Realtime_Classify_Trigger",
-          "RepeatForever": "true",
-          "CronExpression": "0/30 * * * * ?"
-        }
-      ]
-    },
-    {
-      "JobName": "CTS_Probation_Customer_Clasification_Job",
-      "Group": "Customer Classification",
-      "Description": "CTS_Probation_Customer_Clasification",
-      "APIUrl": "",
-      "IsActive": "true",
-      "Triggers": [
-        {
-          "TriggerType": "Cron",
-          "TriggerName": "CTS_Probation_Customer_Clasification_Trigger",
-          "RepeatForever": "true",
-          "CronExpression": "0/30 * * * * ?"
-        }
-      ]
-    }
-  ]
+  "SchedulerModel": {
+    "Jobs": [
+      {
+        "JobName": "CTS_Auto_Tag_Customer_Clasification_Job",
+        "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.HelloJob",
+        "Group": "Customer Classification",
+        "Description": "CTS_Auto_Tag_Customer_Clasification",
+        "APIUrl": "",
+        "IsActive": "true",
+        "Triggers": [
+          {
+            "TriggerType": "Cron",
+            "TriggerName": "AutoTag_Normal",
+            "RepeatForever": "true",
+            "CronExpression": "0/10 * * * * ?"
+          }
+        ]
+      },
+      {
+        "JobName": "CTS_AutoTag_ProblemAccount",
+        "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.HelloJob",
+        "Group": "Customer Classification",
+        "Description": "Customer Classification",
+        "APIUrl": "",
+        "IsActive": "true",
+        "Triggers": [
+          {
+            "TriggerType": "Cron",
+            "TriggerName": "AutoTag_Problem",
+            "RepeatForever": "true",
+            "CronExpression": "0/20 * * * * ?"
+          }
+        ]
+      },
+      {
+        "JobName": "CTS_General_Category_Daily_Classify_Job",
+        "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.HelloJob",
+        "Group": "Customer Classification",
+        "Description": "Classify_Daily",
+        "APIUrl": "",
+        "IsActive": "true",
+        "Triggers": [
+          {
+            "TriggerType": "Cron",
+            "TriggerName": "Classify_Daily",
+            "RepeatForever": "true",
+            "CronExpression": "0/10 * * * * ?"
+          }
+        ]
+      },
+      {
+        "JobName": "CTS_General_Category_Realtime_Classify_Job",
+        "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.HelloJob",
+        "Group": "Customer Classification",
+        "Description": "Classify_Realtime",
+        "APIUrl": "",
+        "IsActive": "true",
+        "Triggers": [
+          {
+            "TriggerType": "Cron",
+            "TriggerName": "Classify_Realtime",
+            "RepeatForever": "true",
+            "CronExpression": "0/30 * * * * ?"
+          }
+        ]
+      },
+      {
+        "JobName": "CTS_Probation_Customer_Clasification_Job",
+        "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.HelloJob",
+        "Group": "Customer Classification",
+        "Description": "Classify_Probation",
+        "APIUrl": "",
+        "IsActive": "true",
+        "Triggers": [
+          {
+            "TriggerType": "Cron",
+            "TriggerName": "Classify_Probation",
+            "RepeatForever": "true",
+            "CronExpression": "0/30 * * * * ?"
+          }
+        ]
+      }
+    ]
+  }  
 }
