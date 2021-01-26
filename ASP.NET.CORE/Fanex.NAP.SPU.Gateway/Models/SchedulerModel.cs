@@ -1,9 +1,10 @@
 ﻿namespace Fanex.NAP.SPU.Gateway.Models
 {
     using System.Collections.Generic;
+    using System.Linq;
 
     public class SchedulerModel
     {
-        public IEnumerable<JobModel> Jobs { get; set; }
+        public IEnumerable<GroupJobModel> GroupJobs { get; set; }
     }
 }

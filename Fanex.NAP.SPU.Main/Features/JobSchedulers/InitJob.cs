@@ -21,15 +21,18 @@
 
         private static IEnumerable<JobModel> GetJobs()
         {
-            var jobList = Enumerable.Empty<JobModel>();
+            var jobList = new List<JobModel>();
 
-            var apiUrl = "http://localhost:55227/Scheduler";
+            var apiUrl = "http://localhost:60823/Scheduler";
 
             var scheduler = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
 
-            if (scheduler != null && scheduler.Jobs.Any())
+            if (scheduler != null && scheduler.GroupJobs.Any())
             {
-                jobList = scheduler.Jobs;
+                foreach (var group in scheduler.GroupJobs)
+                {
+                    jobList.AddRange(group.Jobs);
+                }
             }
 
             return jobList;

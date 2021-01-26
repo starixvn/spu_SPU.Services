@@ -7,18 +7,22 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
 {
     public class JobExecute : IJob
     {
-        private readonly IMediator mediator;
+        //private readonly IMediator mediator;
 
-        public JobExecute(IMediator mediator)
-        {
-            this.mediator = mediator;
-        }
+        //public JobExecute(IMediator mediator)
+        //{
+        //    this.mediator = mediator;
+        //}
 
+        //public Task Execute(IJobExecutionContext context)
+        //{
+        //    var jobName = context.JobDetail.Key.Name;
+
+        //    return mediator.Send(new JobRequest(jobName));
+        //}
         public Task Execute(IJobExecutionContext context)
         {
-            var jobName = context.JobDetail.Key.Name;
-
-            return mediator.Send(new JobRequest(jobName));
+            throw new System.NotImplementedException();
         }
     }
 }

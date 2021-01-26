@@ -1,8 +1,7 @@
 ﻿namespace Fanex.NAP.SPU.Main.Controllers
 {
     using Fanex.NAP.SPU.Main.JobSchedulers;
-    using Fanex.NAP.SPU.Main.Models;
-    using Fanex.NAP.SPU.Main.Provider;
+    using Fanex.NAP.SPU.Main.Models;    
     using Fanex.NAP.SPU.Main.Utilities;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Logging;
