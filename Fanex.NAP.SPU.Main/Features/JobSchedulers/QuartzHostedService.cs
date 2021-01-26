@@ -1,7 +1,7 @@
 ﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
 {
-    using Fanex.NAP.SPU.Main.ViewModels;
-    using Fanex.NAP.SPU.Main.ViewModels.Job;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using Microsoft.Extensions.Hosting;
     using Quartz;
     using Quartz.Spi; 

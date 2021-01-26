@@ -1,6 +1,6 @@
-﻿namespace Fanex.NAP.SPU.Main.ViewModels
+﻿namespace Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels
 {
-    using Fanex.NAP.SPU.Main.ViewModels.Job;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using Quartz;
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.SPU.Main.Models
+﻿namespace Fanex.NAP.SPU.Main.Features.JobSchedulers.Models
 {
     using System.Collections.Generic;
     using System.Linq;    

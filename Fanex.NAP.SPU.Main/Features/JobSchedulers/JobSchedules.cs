@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
 {
-    using Fanex.NAP.SPU.Main.ViewModels.Job;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using System.Collections.Generic;
 
     public class JobSchedules

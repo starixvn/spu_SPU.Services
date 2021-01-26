@@ -1,6 +1,6 @@
-﻿namespace Fanex.NAP.SPU.Main.ViewModels.Job
+﻿namespace Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job
 {
-    using Fanex.NAP.SPU.Main.Models;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
     using System;
 
     public class JobScheduleViewModel

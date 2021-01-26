@@ -1,8 +1,8 @@
 ﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
 {
-    using Fanex.NAP.SPU.Main.Models;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
     using Fanex.NAP.SPU.Main.Utilities;
-    using Fanex.NAP.SPU.Main.ViewModels.Job;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;

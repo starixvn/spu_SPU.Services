@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.SPU.Main.ViewModels
+﻿namespace Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels
 {
     using System;
     using System.Collections.Generic;
