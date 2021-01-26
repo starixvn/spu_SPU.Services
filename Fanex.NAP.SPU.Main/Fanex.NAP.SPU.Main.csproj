@@ -9,6 +9,8 @@
     <PackageReference Include="AspNetCore.HealthChecks.MongoDb" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.Network" Version="5.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.Prometheus.Metrics" Version="5.0.1" />
+    <PackageReference Include="AspNetCore.HealthChecks.Publisher.Prometheus" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
     <PackageReference Include="CrystalQuartz.AspNetCore" Version="6.8.1" />
     <PackageReference Include="Quartz" Version="3.2.4" />

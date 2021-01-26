@@ -40,10 +40,12 @@ namespace Fanex.NAP.SPU.Main
 
             services
                 .AddHealthChecks()
-                .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome1");
+                .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome1")
+                .AddPrometheusGatewayPublisher("http://localhost:9091/metrics","pushgateway");
 
-            services.AddHealthChecksUI()
-            .AddMySqlStorage(appSettings.HealthCheckStorage);
+            services
+                .AddHealthChecksUI()
+                .AddMySqlStorage(appSettings.HealthCheckStorage);
 
             services.AddSingleton<IJobFactory, JobFactory>();
             services.AddSingleton<ISchedulerFactory>(p => new StdSchedulerFactory(new NameValueCollection {
@@ -86,6 +88,8 @@ namespace Fanex.NAP.SPU.Main
                 option.UIPath = "/healthz";
                 option.AddCustomStylesheet(@"wwwroot/css/healthcheck.css");
             });
+
+            
 
             app.UseStaticFiles();
 
