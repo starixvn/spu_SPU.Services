@@ -30,20 +30,14 @@
 
         [HttpGet]
         public IActionResult UpdateJobs()
-        {            
-            try
-            {
-                //var apiUrl = "http://localhost:60823/Scheduler";
+        {
+            //var apiUrl = "http://localhost:60823/Scheduler";
 
-                //var schedulerModel = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
+            //var schedulerModel = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
 
-                //_schedulerProvider.UpdateJobs(schedulerModel);
+            //_schedulerProvider.UpdateJobs(schedulerModel);
 
-                _quartzHostedService.AddJob();
-            }
-            catch (Exception ex)
-            {
-            }
+            //_quartzHostedService.AddJob();
 
             return View();
         }

@@ -1,5 +1,7 @@
 ﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
-{    
+{
+    using Fanex.NAP.SPU.Main.ViewModels;
+    using Fanex.NAP.SPU.Main.ViewModels.Job;
     using Microsoft.Extensions.Hosting;
     using Quartz;
     using Quartz.Spi; 
@@ -47,32 +49,41 @@
 
         public async Task AddJob()
         {
-            var scheduler = await _schedulerFactory.GetScheduler();
+            //var scheduler = await _schedulerFactory.GetScheduler();
 
-            foreach (var jobSchedule in _jobSchedules.JobScheduleList)
-            {
-                jobSchedule.JobName = jobSchedule.JobName + "_New_" + System.DateTime.Now.ToLongTimeString();
-                var job = CreateJob(jobSchedule);
+            //foreach (var jobSchedule in _jobSchedules.JobScheduleList)
+            //{
+            //    jobSchedule.JobName = jobSchedule.JobName + "_New_" + System.DateTime.Now.ToLongTimeString();
+            //    var job = CreateJob(jobSchedule);
                 
-                var trigger = CreateTrigger(jobSchedule);
+            //    var trigger = CreateTrigger(jobSchedule);
 
-                await scheduler.ScheduleJob(job, trigger);
-            }
+            //    await scheduler.ScheduleJob(job, trigger);
+            //}
 
             await Task.CompletedTask;
         }
 
-        private static ITrigger CreateTrigger(JobSchedule schedule)
+        private static ITrigger CreateTrigger(JobScheduleViewModel schedule)
         {
-            return TriggerBuilder
+            //return TriggerBuilder
+            //    .Create()
+            //    .WithIdentity($"{schedule.TriggerName}")
+            //    .WithCronSchedule(schedule.CronExpression)
+            //    .WithDescription(schedule.TriggerName)
+            //    .Build();
+
+            var builder = TriggerBuilder
                 .Create()
                 .WithIdentity($"{schedule.TriggerName}")
-                .WithCronSchedule(schedule.CronExpression)
-                .WithDescription(schedule.TriggerName)
-                .Build();
+                .WithDescription(schedule.TriggerName);
+
+            schedule.Cron.Apply(builder, schedule);
+
+            return builder.Build();
         }
 
-        private static IJobDetail CreateJob(JobSchedule schedule)
+        private static IJobDetail CreateJob(JobScheduleViewModel schedule)
         {            
             return JobBuilder
                 .Create(schedule.JobType)

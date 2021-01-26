@@ -2,6 +2,7 @@
 {
     using Fanex.NAP.SPU.Main.Models;
     using Fanex.NAP.SPU.Main.Utilities;
+    using Fanex.NAP.SPU.Main.ViewModels.Job;
     using Microsoft.Extensions.DependencyInjection;
     using System;
     using System.Collections.Generic;
@@ -22,34 +23,27 @@
         {
             var jobList = Enumerable.Empty<JobModel>();
 
-            try
+            var apiUrl = "http://localhost:60823/Scheduler";
+
+            var scheduler = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
+
+            if (scheduler != null && scheduler.Jobs.Any())
             {
-                var apiUrl = "http://localhost:60823/Scheduler";
-
-                var scheduler = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
-
-                if (scheduler != null && scheduler.Jobs.Any())
-                {
-                    jobList = scheduler.Jobs;
-                }
-
-                return jobList;
+                jobList = scheduler.Jobs;
             }
-            catch (Exception ex)
-            {
-                return jobList;
-            }
+
+            return jobList;
         }
 
         private static JobSchedules GetJobSchedules(IEnumerable<JobModel> jobList)
         {
-            var jobScheduleList = new List<JobSchedule>();
+            var jobScheduleList = new List<JobScheduleViewModel>();
 
             foreach (var job in jobList)
             {
                 foreach (var trigger in job.Triggers)
                 {
-                    jobScheduleList.Add(new JobSchedule(job, trigger));                       
+                    jobScheduleList.Add(new JobScheduleViewModel(job, trigger));                       
                 }
             }
 

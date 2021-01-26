@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
-
-namespace Fanex.NAP.SPU.Main.JobSchedulers
+﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
 {
+    using Fanex.NAP.SPU.Main.ViewModels.Job;
+    using System.Collections.Generic;
+
     public class JobSchedules
     {
-        public JobSchedules(IEnumerable<JobSchedule> jobScheduleList)
+        public JobSchedules(IEnumerable<JobScheduleViewModel> jobScheduleList)
         {
             JobScheduleList = jobScheduleList;
         }
 
-        public IEnumerable<JobSchedule> JobScheduleList { get; }
+        public IEnumerable<JobScheduleViewModel> JobScheduleList { get; }
     }
 }

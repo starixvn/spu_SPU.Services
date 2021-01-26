@@ -8,12 +8,10 @@
       "IsActive": "true",
       "Triggers": [
         {
-          "TriggerType": "Simple",
+          "TriggerType": "Cron",
           "TriggerName": "CTS_Auto_Tag_Customer_Clasification_Trigger",
-          "RepeatInterval": "5",
-          "RepeatForever":  "true",
-          "Unit": "Second",
-          "CronExpression": ""
+          "RepeatForever": "true",
+          "CronExpression": "0/10 * * * * ?"
         }
       ]
     },
@@ -25,12 +23,10 @@
       "IsActive": "true",
       "Triggers": [
         {
-          "TriggerType": "Simple",
+          "TriggerType": "Cron",
           "TriggerName": "CTS_AutoTag_ProblemAccount_Trigger",
-          "RepeatInterval": "1",
           "RepeatForever": "true",
-          "Unit": "Minute",
-          "CronExpression": ""
+          "CronExpression": "0/20 * * * * ?"
         }
       ]
     },
@@ -44,9 +40,7 @@
         {
           "TriggerType": "Cron",
           "TriggerName": "CTS_General_Category_Daily_Classify_Trigger",
-          "RepeatInterval": "",
-          "RepeatForever": "",
-          "Unit": "",
+          "RepeatForever": "true",
           "CronExpression": "0/10 * * * * ?"
         }
       ]
@@ -59,12 +53,10 @@
       "IsActive": "true",
       "Triggers": [
         {
-          "TriggerType": "Simple",
+          "TriggerType": "Cron",
           "TriggerName": "CTS_General_Category_Realtime_Classify_Trigger",
-          "RepeatInterval": "2",
           "RepeatForever": "true",
-          "Unit": "Minute",
-          "CronExpression": ""
+          "CronExpression": "0/30 * * * * ?"
         }
       ]
     },
@@ -76,12 +68,10 @@
       "IsActive": "true",
       "Triggers": [
         {
-          "TriggerType": "Simple",
+          "TriggerType": "Cron",
           "TriggerName": "CTS_Probation_Customer_Clasification_Trigger",
-          "RepeatInterval": "10",
           "RepeatForever": "true",
-          "Unit": "Second",
-          "CronExpression": ""
+          "CronExpression": "0/30 * * * * ?"
         }
       ]
     }

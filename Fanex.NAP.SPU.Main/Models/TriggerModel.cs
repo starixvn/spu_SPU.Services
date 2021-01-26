@@ -8,7 +8,7 @@
 
         public string Description { get; set; }
 
-        public int RepeatInterval { get; set; }
+        public bool RepeatForever { get; set; }
 
         public string CronExpression { get; set; }
 
