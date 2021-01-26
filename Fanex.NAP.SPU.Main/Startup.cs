@@ -2,7 +2,6 @@ namespace Fanex.NAP.SPU.Main
 {
     using CrystalQuartz.AspNetCore;
     using Fanex.NAP.SPU.Main.JobSchedulers;
-    using Fanex.NAP.SPU.Main.Provider;
     using Fanex.NAP.SPU.Middleware;
     using HealthChecks.UI.Client;
     using HealthChecks.UI.Configuration;
@@ -12,10 +11,12 @@ namespace Fanex.NAP.SPU.Main
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Prometheus;
     using Quartz;
     using Quartz.Impl;
     using Quartz.Spi;
     using System.Collections.Specialized;
+    using System.IO;
 
     public class Startup
     {
@@ -40,8 +41,10 @@ namespace Fanex.NAP.SPU.Main
 
             services
                 .AddHealthChecks()
-                .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome1")
-                .AddPrometheusGatewayPublisher("http://localhost:9091/metrics","pushgateway");
+                .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome11")
+                .AddCheck<RandomHealthCheck>("random")
+                .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); })
+                .ForwardToPrometheus();
 
             services
                 .AddHealthChecksUI()
@@ -51,10 +54,9 @@ namespace Fanex.NAP.SPU.Main
             services.AddSingleton<ISchedulerFactory>(p => new StdSchedulerFactory(new NameValueCollection {
                 { "quartz.threadPool.type", "Quartz.Simpl.SimpleThreadPool, Quartz" },
                 { "quartz.threadPool.threadCount", "100" },
-                { "quartz.threadPool.threadPriority", "Normal" },            
-                { "quartz.scheduler.exporter.type", "Quartz.Simpl.RemotingSchedulerExporter, Quartz" },           
+                { "quartz.threadPool.threadPriority", "Normal" },                                       
                 { "quartz.scheduler.exporter.bindName", "QuartzScheduler" },
-                { "quartz.scheduler.instanceName", "SPUService.DEV" },
+                { "quartz.scheduler.instanceName", "SPUService" },
                 { "quartz.scheduler.instanceId", "AUTO" },
             }));
             services.AddSingleton<QuartzJobRunner>();
@@ -102,6 +104,8 @@ namespace Fanex.NAP.SPU.Main
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+                endpoints.MapMetrics();
             });
 
             var schedulerProvider = (ISchedulerFactory)app.ApplicationServices.GetService(typeof(ISchedulerFactory));
@@ -109,7 +113,7 @@ namespace Fanex.NAP.SPU.Main
 
             app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
 
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();                      
 
         }
 
