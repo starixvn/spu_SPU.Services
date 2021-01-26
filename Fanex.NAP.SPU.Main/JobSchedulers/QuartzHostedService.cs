@@ -1,13 +1,11 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Quartz;
-using Quartz.Spi;
-using System.Collections.Generic;
-using System.Threading;
-using System.Threading.Tasks;
+﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
+{    
+    using Microsoft.Extensions.Hosting;
+    using Quartz;
+    using Quartz.Spi; 
+    using System.Threading;
+    using System.Threading.Tasks;
 
-namespace Fanex.NAP.SPU.Main.JobSchedulers
-{
     public class QuartzHostedService : IHostedService
     {
         private readonly ISchedulerFactory _schedulerFactory;

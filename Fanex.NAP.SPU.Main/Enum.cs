@@ -2,8 +2,11 @@
 {
     public enum TriggerType
     {
+        Unknown = 0,
         Cron,
-        Simple
+        Simple,
+        Daily,
+        Calendar
     }
 
     public enum Unit
@@ -16,4 +19,5 @@
         Month,
         Year
     }
+    
 }
