@@ -435,10 +435,16 @@
                 RowSize = numOfAccount,
             };
 
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            var repository = new DynamicRepository();
+
+            var output = repository.FetchMultiple<TranformCustModel, string>(criteria);
+
+            return new TranformCustModel()
             {
-                return db.Query<TranformCustModel>(criteria).FirstOrDefault();
-            }
+                LastUpdatedTime = output.firstResultSet.SingleOrDefault().LastUpdatedTime,
+                LastCustId = output.firstResultSet.SingleOrDefault().LastCustId,
+                CustIdList = output.secondResultSet.SingleOrDefault()
+            };
         }
     }
 }
