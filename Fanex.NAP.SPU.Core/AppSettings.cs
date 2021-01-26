@@ -320,8 +320,6 @@ namespace Fanex.NAP.SPU.Core
 
         public static string TGRSAutoTradingFilePassword => ConfigurationManager.AppSettings["TGRS-AutoTrading-File-Password"];
 
-        public static int UpdateUserName2Batch => Convert.ToInt32(ConfigurationManager.AppSettings["UpdateUserName2-PageSize"]);
-
         public static int CustEvidenceFromFileChunkSize
         {
             get

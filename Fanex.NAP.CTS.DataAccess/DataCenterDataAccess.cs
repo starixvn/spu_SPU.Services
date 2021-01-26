@@ -141,14 +141,13 @@
             }
         }
 
-        public int UpdateUsername2(string customerJson, int size)
+        public int UpdateUsername2(string customerJson)
         {
             var repository = new DynamicRepository();
 
             var criteria = new UpdateUsername2Criteria
             {
-                CustomerJson = customerJson,
-                Size = size
+                CustomerJson = customerJson
             };
 
             return repository.Execute(criteria);

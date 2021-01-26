@@ -120,7 +120,7 @@
                 {
                     if (customers != null && customers.Any())
                     {
-                        _dataCenterService.UpdateUsername2(customers, AppSettings.UpdateUserName2Batch);
+                        _dataCenterService.UpdateUsername2(customers);
                         return true;
                     }
                 }

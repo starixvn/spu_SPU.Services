@@ -421,8 +421,8 @@
 
             return new LastUpdateValueModel()
             {
-                LastUpdateCustID = output.firstResultSet.SingleOrDefault().LastUpdateCustID,
-                LastUpdateTime = output.secondResultSet.SingleOrDefault().LastUpdateTime
+                LastUpdateTime = output.firstResultSet.SingleOrDefault().LastUpdateTime,
+                LastUpdateCustID = output.secondResultSet.SingleOrDefault().LastUpdateCustID           
             };
         }
 

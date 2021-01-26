@@ -21,7 +21,7 @@
 
         List<GetCustIdModel> GetCustWithHavingUserName2(List<GetCustIdModel> custs);
 
-        int UpdateUsername2(List<GetCustIdModel> customerList, int size);
+        int UpdateUsername2(List<GetCustIdModel> customerList);
 
         List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub);
 

@@ -8,9 +8,6 @@
         [SpParam(SqlParamName = "ip_Customer")]
         public string CustomerJson { get; set; }
 
-        [SpParam(SqlParamName = "ip_Size")]
-        public int Size { get; set; }
-
         public override string GetSettingKey()
         {
             return "CTS_DC_CTSCustomer_UpdateUserName2";

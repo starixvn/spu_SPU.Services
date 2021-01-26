@@ -67,7 +67,7 @@
             return dataCenterDataAccess.GetUsername2FromMainDb(custIds,isCustSub);
         }
 
-        public int UpdateUsername2(List<GetCustIdModel> customerList, int size)
+        public int UpdateUsername2(List<GetCustIdModel> customerList)
         {
             var customerJson = JsonConvert.SerializeObject(customerList.Select(c => new 
             {
@@ -76,7 +76,7 @@
                 Username2 = c.UserName2
             }));
 
-            return dataCenterDataAccess.UpdateUsername2(customerJson, size);
+            return dataCenterDataAccess.UpdateUsername2(customerJson);
         }
 
         public void InsertAssociation(List<AssociationModel> associationList)
