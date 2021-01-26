@@ -4,9 +4,7 @@
     {
         public string TriggerType { get; set; }
 
-        public string TriggerName { get; set; }
-
-        public string Description { get; set; }
+        public string TriggerName { get; set; }        
 
         public bool RepeatForever { get; set; }
 

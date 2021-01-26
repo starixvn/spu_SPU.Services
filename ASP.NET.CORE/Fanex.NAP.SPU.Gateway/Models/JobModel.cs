@@ -6,15 +6,9 @@
     {
         public string JobName { get; set; }
 
-        public string JobType { get; set; }
-
-        public string Group { get; set; }        
-
-        public string Description { get; set; }
+        public string JobType { get; set; }                
 
         public string APIUrl { get; set; }
-
-        public bool IsActive { get; set; }
 
         public IEnumerable<TriggerModel> Triggers { get; set; }
     }

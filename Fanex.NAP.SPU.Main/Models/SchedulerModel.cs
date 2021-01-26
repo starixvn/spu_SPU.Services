@@ -8,7 +8,7 @@
         public SchedulerModel()
         {
             GroupJobs = Enumerable.Empty<GroupJobModel>();
-        }
+        }        
 
         public IEnumerable<GroupJobModel> GroupJobs { get; set; }
     }

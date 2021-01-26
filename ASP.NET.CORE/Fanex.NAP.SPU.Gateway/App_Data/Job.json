@@ -2,14 +2,12 @@
   "SchedulerModel": {
     "GroupJobs": [
       {
+        "GroupName": "Customer Classification",
         "Jobs": [
           {
-            "Group": "Customer Classification",
             "JobName": "CTS_Auto_Tag_Customer_Clasification_Job",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
-            "Description": "CTS_Auto_Tag_Customer_Clasification",
-            "APIUrl": "http://localhost:60665/",
-            "IsActive": "true",
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
+            "APIUrl": "http://localhost:60665/",            
             "Triggers": [
               {
                 "TriggerType": "Cron",
@@ -20,12 +18,9 @@
             ]
           },
           {
-            "Group": "Customer Classification",
             "JobName": "CTS_AutoTag_ProblemAccount",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
-            "Description": "Customer Classification",
-            "APIUrl": "",
-            "IsActive": "true",
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
+            "APIUrl": "",            
             "Triggers": [
               {
                 "TriggerType": "Cron",
@@ -36,12 +31,9 @@
             ]
           },
           {
-            "Group": "Customer Classification",
             "JobName": "CTS_General_Category_Daily_Classify_Job",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
-            "Description": "Classify_Daily",
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
             "APIUrl": "",
-            "IsActive": "true",
             "Triggers": [
               {
                 "TriggerType": "Cron",
@@ -52,12 +44,9 @@
             ]
           },
           {
-            "Group": "Customer Classification",
             "JobName": "CTS_General_Category_Realtime_Classify_Job",
             "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
-            "Description": "Classify_Realtime",
-            "APIUrl": "",
-            "IsActive": "true",
+            "APIUrl": "",            
             "Triggers": [
               {
                 "TriggerType": "Cron",
@@ -67,13 +56,10 @@
               }
             ]
           },
-          {
-            "Group": "Customer Classification",
+          {            
             "JobName": "CTS_Probation_Customer_Clasification_Job",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
-            "Description": "Classify_Probation",
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
             "APIUrl": "",
-            "IsActive": "true",
             "Triggers": [
               {
                 "TriggerType": "Cron",
@@ -84,8 +70,25 @@
             ]
           }
         ]
+      },
+      {
+        "GroupName": "Customer Evidence",
+        "Jobs": [
+          {
+            "JobName": "CTS_Customer_Evidence",
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
+            "APIUrl": "http://localhost:60665/",            
+            "Triggers": [
+              {
+                "TriggerType": "Cron",
+                "TriggerName": "Customer_Evidence",
+                "RepeatForever": "true",                
+                "CronExpression": "0/10 * * * * ?"
+              }
+            ]
+          }               
+        ]
       }
-    ]
-
+    ]   
   }
 }

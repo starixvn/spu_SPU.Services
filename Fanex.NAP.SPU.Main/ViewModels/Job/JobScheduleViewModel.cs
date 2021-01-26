@@ -5,14 +5,13 @@
 
     public class JobScheduleViewModel
     {
-        public JobScheduleViewModel(JobModel jobModel, TriggerModel triggerModel)
+        public JobScheduleViewModel(string groupJob, JobModel jobModel, TriggerModel triggerModel)
         {
+            Group = groupJob;
+
             JobName = jobModel.JobName;
-            JobType = Type.GetType(jobModel.JobType);
-            Group = jobModel.Group;
-            APIUrl = "";
-            JobDescription = jobModel.Description;
-            IsActive = jobModel.IsActive;
+            JobType = Type.GetType(jobModel.JobType);            
+            APIUrl = "";           
 
             TriggerType = triggerModel.TriggerType;
             TriggerName = triggerModel.TriggerName;
@@ -20,18 +19,13 @@
             CronExpression = triggerModel.CronExpression;
         }
 
-        public string JobName { get; set; }
-
-        public Type JobType { get; }
-
         public string Group { get; set; }
 
-        public string APIUrl { get; set; }
+        public string JobName { get; set; }
 
-        public string JobDescription { get; set; }        
+        public Type JobType { get; }       
 
-        public bool IsActive { get; set; }
-
+        public string APIUrl { get; set; }     
 
         public string TriggerType { get; set; }
 

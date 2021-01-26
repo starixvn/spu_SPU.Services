@@ -19,9 +19,9 @@
             services.AddSingleton(jobSchedules);
         }
 
-        private static IEnumerable<JobModel> GetJobs()
+        private static IEnumerable<GroupJobModel> GetJobs()
         {
-            var jobList = new List<JobModel>();
+            var groupJob = new List<GroupJobModel>();
 
             var apiUrl = "http://localhost:60823/Scheduler";
 
@@ -29,25 +29,25 @@
 
             if (scheduler != null && scheduler.GroupJobs.Any())
             {
-                foreach (var group in scheduler.GroupJobs)
-                {
-                    jobList.AddRange(group.Jobs);
-                }
+                groupJob.AddRange(scheduler.GroupJobs);
             }
 
-            return jobList;
+            return groupJob;
         }
 
-        private static JobSchedules GetJobSchedules(IEnumerable<JobModel> jobList)
+        private static JobSchedules GetJobSchedules(IEnumerable<GroupJobModel> groupJobList)
         {
             var jobScheduleList = new List<JobScheduleViewModel>();
 
-            foreach (var job in jobList)
+            foreach (var group in groupJobList)
             {
-                foreach (var trigger in job.Triggers)
+                foreach (var job in group.Jobs)
                 {
-                    jobScheduleList.Add(new JobScheduleViewModel(job, trigger));                       
-                }
+                    foreach (var trigger in job.Triggers)
+                    {
+                        jobScheduleList.Add(new JobScheduleViewModel(group.GroupName, job, trigger));
+                    }
+                }                
             }
 
             return new JobSchedules(jobScheduleList);

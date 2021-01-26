@@ -10,6 +10,8 @@
             Jobs = Enumerable.Empty<JobModel>();
         }
 
+        public string GroupName { get; set; }
+
         public IEnumerable<JobModel> Jobs { get; set; }
     }
 }
