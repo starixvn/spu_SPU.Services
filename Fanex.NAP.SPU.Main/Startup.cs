@@ -20,6 +20,7 @@ namespace Fanex.NAP.SPU.Main
     using Refit;
     using System.Collections.Specialized;
     using System.IO;
+    using System.Reflection;
 
     public class Startup
     {
@@ -35,7 +36,7 @@ namespace Fanex.NAP.SPU.Main
         {
             services.AddControllersWithViews();
             services.AddAppSettings();
-            services.AddMediatR(typeof(Startup));
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             var appSettings = new AppSettings(this.Configuration);
             services.Configure<IISServerOptions>(options =>
@@ -63,6 +64,9 @@ namespace Fanex.NAP.SPU.Main
                 { "quartz.scheduler.instanceName", "SPUService" },
                 { "quartz.scheduler.instanceId", "AUTO" },
             }));
+            services.AddSingleton(RestService.For<IJobServiceApi>("http://localhost:62391"));
+            services.AddScoped<IJobService, JobService>();
+
             services.AddSingleton<QuartzJobRunner>();
             services.AddSingleton<QuartzHostedService>();
             services.AddHostedService<QuartzHostedService>();

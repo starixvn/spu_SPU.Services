@@ -11,7 +11,6 @@ namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
     {
         private readonly IJobService jobService;
 
-
         public JobHandler(IJobService jobService)
         {
             this.jobService = jobService;
@@ -19,7 +18,7 @@ namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
 
         public async Task<bool> Handle(JobRequest request, CancellationToken cancellationToken)
         {
-            return await this.jobService.Execute(request.Name);
+            return await jobService.Execute(request.Name);
         }
     }
 }

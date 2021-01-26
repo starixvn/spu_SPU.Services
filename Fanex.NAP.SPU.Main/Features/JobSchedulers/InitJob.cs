@@ -23,7 +23,7 @@
         {
             var jobList = Enumerable.Empty<JobModel>();
 
-            var apiUrl = "http://localhost:60823/Scheduler";
+            var apiUrl = "http://localhost:55227/Scheduler";
 
             var scheduler = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
 
