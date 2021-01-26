@@ -7,6 +7,7 @@
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
+    using Newtonsoft.Json;
     using Quartz;
     using RestSharp;
     using System;
@@ -67,6 +68,8 @@
                     LogService.Info($"ExecuteMonitorAndHealCTSCustomer - lastScannedCustID: {output.LastUpdateCustID} - lastScannedCustSubID: {output.LastUpdateTime}");
 
                     mainDBCusts = dataCenterService.GetUpdatedCustFromCustHistory(output.LastUpdateTime, output.LastUpdateCustID, packageSize);
+
+                    LogService.Info($"ExecuteMonitorAndHealCTSCustomer - Cust From Cust History: {JsonConvert.SerializeObject(mainDBCusts)}");
 
                     if (mainDBCusts != null)
                     {

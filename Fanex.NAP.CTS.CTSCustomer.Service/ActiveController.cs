@@ -80,12 +80,17 @@
                             (custMain, custCTS) 
                             => custMain).Where(c=> !custInfoFromCTS.Contains(c)).ToList();
 
+                        LogService.Info($"ExecuteMonitorAndHealCTSCustomer - Cust From Main: {JsonConvert.SerializeObject(custInfoFromMainDB)}");
+                        LogService.Info($"ExecuteMonitorAndHealCTSCustomer - Cust From CTS: {JsonConvert.SerializeObject(custInfoFromCTS)}");
+                        LogService.Info($"ExecuteMonitorAndHealCTSCustomer - Cust To Update Info: {JsonConvert.SerializeObject(custToUpdateInfo)}");
 
                         if (custToUpdateInfo != null && custToUpdateInfo.Any())
                         {
                             _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo), tranformCusts.LastUpdatedTime, tranformCusts.LastCustId);
                         }
                     }
+
+                    LogService.Info($"ExecuteMonitorAndHealCTSCustomer - done!");
 
                     return true;
                 }
