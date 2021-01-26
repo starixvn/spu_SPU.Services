@@ -6,29 +6,29 @@
     {
         private DateTime createdDate;
 
-        public int BatchId { get; set; }
+        public int BatchID { get; set; }
 
-        public int CustId { get; set; }
+        public int CustID { get; set; }
 
-        public int CustSubId { get; set; }
+        public int CustSubID { get; set; }
 
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
-        public string Username2 { get; set; }
+        public string UserName2 { get; set; }
 
         public string Site { get; set; }
 
-        public int SiteId { get; set; }
+        public int SiteID { get; set; }
 
-        public int RoleId { get; set; }
+        public int RoleID { get; set; }
 
-        public int CurrencyId { get; set; }
+        public int CurrencyID { get; set; }
 
         public string Currency { get; set; }
 
-        public int Srecommend { get; set; }
+        public int SRecommend { get; set; }
 
-        public int Mrecommend { get; set; }
+        public int MRecommend { get; set; }
 
         public int Recommend { get; set; }
 

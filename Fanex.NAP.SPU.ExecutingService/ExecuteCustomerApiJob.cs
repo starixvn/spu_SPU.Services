@@ -6,14 +6,12 @@
     using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.DCS.Services.Interface;
     using Fanex.NAP.FS.Core;
-    using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;
     using Quartz;
     using RestSharp;
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -86,7 +84,7 @@
 
         private async Task SendRequest(List<CustomerMainDbModel> listCust, string[] urlList, JobDataMap mappingData)
         {
-            var groupCusts = listCust.GroupBy(x => x.BatchId);
+            var groupCusts = listCust.GroupBy(x => x.BatchID);
             var tasks = new List<Task>();
             var index = 0;
 

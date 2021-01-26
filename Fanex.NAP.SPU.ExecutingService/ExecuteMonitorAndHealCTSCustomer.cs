@@ -85,12 +85,11 @@
 
         private async Task SendRequest(TranformCustModel listCust, string[] urlList, JobDataMap mappingData)
         {
-            var index = 0;
             var custInfo = new List<TranformCustModel>() { listCust };
 
             using (var task = Task.Run(() =>
              {
-                 var apiUrl = urlList[index >= urlList.Length ? 0 : index];
+                 var apiUrl = urlList[0];
 
                  return Executing(custInfo, apiUrl, mappingData.GetString("Action"));
              }))

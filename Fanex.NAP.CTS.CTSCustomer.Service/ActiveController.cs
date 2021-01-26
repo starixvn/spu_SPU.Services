@@ -75,8 +75,8 @@
                         }
 
                         custToUpdateInfo = custInfoFromMainDB.Join(custInfoFromCTS,
-                            custMain => custMain.CustId,
-                            custCTS => custCTS.CustId,
+                            custMain => custMain.CustID,
+                            custCTS => custCTS.CustID,
                             (custMain, custCTS) 
                             => custMain).Where(c=> !custInfoFromCTS.Contains(c)).ToList();
 
