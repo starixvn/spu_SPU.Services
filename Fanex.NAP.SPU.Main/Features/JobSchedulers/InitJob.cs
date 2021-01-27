@@ -1,38 +1,36 @@
 ﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
 {
-    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
-    using Fanex.NAP.SPU.Main.Utilities;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;    
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using Microsoft.Extensions.DependencyInjection;
-    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers;
+    using Refit;
+    using System.Threading.Tasks;
+    using Fanex.NAP.SPU.Middleware;    
 
     public static class InitJob
     {
-        public static void AddSingletonJob(this IServiceCollection services)
+        public static void AddSingletonJob(this IServiceCollection services, AppSettings appSettings)
         {
-            var jobs = GetJobs();
+            var gatewayURL = appSettings.GetValue<string>("GatewayURL");
 
-            var jobSchedules = GetJobSchedules(jobs);
+            var schedule = GetSchedule(gatewayURL).Result;
 
-            services.AddSingleton(jobSchedules);
+            if (schedule != null && schedule.GroupJobs.Any())
+            {
+                var jobSchedules = GetJobSchedules(schedule.GroupJobs);
+
+                services.AddSingleton(jobSchedules);
+            }
         }
 
-        private static IEnumerable<GroupJobModel> GetJobs()
+        private async static Task<SchedulerModel> GetSchedule(string url)
         {
-            var groupJob = new List<GroupJobModel>();
+            var response = RestService.For<IJobServiceApi>(url);
 
-            var apiUrl = "http://localhost:60823/Scheduler";
-
-            var scheduler = ApiHelper.Get<SchedulerModel>(apiUrl).Result;
-
-            if (scheduler != null && scheduler.GroupJobs.Any())
-            {
-                groupJob.AddRange(scheduler.GroupJobs);
-            }
-
-            return groupJob;
+            return await response.GetScheduler();
         }
 
         private static JobSchedules GetJobSchedules(IEnumerable<GroupJobModel> groupJobList)

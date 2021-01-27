@@ -71,8 +71,7 @@ namespace Fanex.NAP.SPU.Main
             services.AddSingleton<QuartzHostedService>();
             services.AddHostedService<QuartzHostedService>();
             services.AddSingleton<JobExecute>();
-            services.AddSingletonJob();
-            //services.AddSingleton(RestService.For<IJobServiceApi>("http://localhost:60665"));
+            services.AddSingletonJob(appSettings);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,9 +96,7 @@ namespace Fanex.NAP.SPU.Main
             {
                 option.UIPath = "/healthz";
                 option.AddCustomStylesheet(@"wwwroot/css/healthcheck.css");
-            });
-
-            
+            });            
 
             app.UseStaticFiles();
 
