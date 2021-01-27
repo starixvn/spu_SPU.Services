@@ -69,12 +69,7 @@
 
         public int UpdateUsername2(List<GetCustIdModel> customerList)
         {
-            var customerJson = JsonConvert.SerializeObject(customerList.Select(c => new 
-            {
-                CustId = c.CustID ,
-                CustSubId = c.CustSubID,
-                Username2 = c.UserName2
-            }));
+            var customerJson = JsonConvert.SerializeObject(customerList);
 
             return dataCenterDataAccess.UpdateUsername2(customerJson);
         }
