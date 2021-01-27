@@ -126,8 +126,12 @@
                     if (customers != null && customers.Any())
                     {
                         _dataCenterService.UpdateUsername2(customers);
+                        LogService.Info($"CTSCustomer.Service - UpdateUsername2 with { JsonConvert.SerializeObject(customers)}");
+
                         return true;
                     }
+
+                    LogService.Info($"CTSCustomer.Service - UpdateUsername2 done!");
                 }
                 catch (Exception ex)
                 {

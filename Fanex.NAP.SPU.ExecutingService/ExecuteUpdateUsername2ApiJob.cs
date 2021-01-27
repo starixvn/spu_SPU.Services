@@ -7,6 +7,7 @@
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
+    using Newtonsoft.Json;
     using Quartz;
     using RestSharp;
     using System;
@@ -66,12 +67,16 @@
                     {
                         custsFromCTS = dataCenterService.GetCustWithNullUserName2(packageSize, preCTSCustId);
 
+                        LogService.Info($"CTSCustomer.Service - PreCTSCustId: {preCTSCustId} - Cust with Null UserName2 : {JsonConvert.SerializeObject(custsFromCTS.ToList())}");
+
                         if (custsFromCTS == null || !custsFromCTS.Any())
                         {
                             break;
                         }
 
                         custFromMainDB = dataCenterService.GetCustWithHavingUserName2(custsFromCTS);
+                        LogService.Info($"CTSCustomer.Service - Cust UserName2 Info from MainDB: {JsonConvert.SerializeObject(custFromMainDB.ToList())}");
+
                         preCTSCustId = custsFromCTS.Max(c => c.CTSCustID);
 
                         if(custFromMainDB != null & custFromMainDB.Any())
