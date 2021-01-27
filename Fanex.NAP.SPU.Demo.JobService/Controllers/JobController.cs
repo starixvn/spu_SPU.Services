@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,17 +7,23 @@ using System.Threading.Tasks;
 
 namespace Fanex.NAP.SPU.Demo.JobService.Controllers
 {
-    public class JobController : Controller
+    [ApiController]
+    [Route("api/job")]
+    public class JobController : ControllerBase
     {
-        public IActionResult Index()
+        private readonly IMediator mediator;
+
+        public JobController(IMediator mediator)
         {
-            return View();
+            this.mediator = mediator;
         }
 
-        [HttpPost]
-        public IActionResult Index(string name)
+        [HttpPost("execute")]
+        public async Task<bool> Execute(string name)
         {
-            return Json(name);
+            var result = await mediator.Send(new JobRequest(name));
+
+            return result;
         }
     }
 }

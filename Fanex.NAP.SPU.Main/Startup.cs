@@ -1,5 +1,6 @@
 namespace Fanex.NAP.SPU.Main
 {
+    using AutoMapper;
     using CrystalQuartz.AspNetCore;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers;
     using Fanex.NAP.SPU.Main.JobSchedulers;
@@ -34,10 +35,11 @@ namespace Fanex.NAP.SPU.Main
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddAppSettings();
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(typeof(Startup));
 
+            services.AddControllersWithViews();
+            services.AddAppSettings();            
             var appSettings = new AppSettings(this.Configuration);
             services.Configure<IISServerOptions>(options =>
             {
@@ -64,14 +66,15 @@ namespace Fanex.NAP.SPU.Main
                 { "quartz.scheduler.instanceName", "SPUService" },
                 { "quartz.scheduler.instanceId", "AUTO" },
             }));
-            services.AddSingleton(RestService.For<IJobServiceApi>("http://localhost:62391"));
-            services.AddScoped<IJobService, JobService>();
+
+            services.AddSingleton(RestService.For<IJobServiceApi>("http://localhost:62391/api"));
+            services.AddSingleton<IJobService, JobService>();
 
             services.AddSingleton<QuartzJobRunner>();
             services.AddSingleton<QuartzHostedService>();
             services.AddHostedService<QuartzHostedService>();
             services.AddSingleton<JobExecute>();
-            services.AddSingletonJob(appSettings);
+            services.AddSingletonJob();            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,7 +99,9 @@ namespace Fanex.NAP.SPU.Main
             {
                 option.UIPath = "/healthz";
                 option.AddCustomStylesheet(@"wwwroot/css/healthcheck.css");
-            });            
+            });
+
+            
 
             app.UseStaticFiles();
 

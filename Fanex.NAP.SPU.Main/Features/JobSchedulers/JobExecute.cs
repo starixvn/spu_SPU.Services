@@ -1,25 +1,31 @@
-﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
-{
-    using Fanex.NAP.SPU.Main.Features.JobSchedulers;
-    using MediatR;
-    using Quartz;
-    using System.Threading.Tasks;
+﻿using Fanex.NAP.SPU.Main.Features.JobSchedulers;
+using MediatR;
+using Quartz;
+using Sentry;
+using System.Threading.Tasks;
 
-    [DisallowConcurrentExecution]
+namespace Fanex.NAP.SPU.Main.JobSchedulers
+{
+    [DisallowConcurrentExecutionAttribute]
     public class JobExecute : IJob
     {
         private readonly IMediator mediator;
+        private readonly ISentryClient sentryClient;
 
-        public JobExecute(IMediator mediator)
+        public JobExecute(IMediator mediator, ISentryClient sentryClient)
         {
             this.mediator = mediator;
+            this.sentryClient = sentryClient;
         }
 
-        public Task Execute(IJobExecutionContext context)
+        public async Task Execute(IJobExecutionContext context)
         {
             var jobName = context.JobDetail.Key.Name;
 
-            return mediator.Send(new JobRequest(jobName));
-        }
+           var result =  await mediator.Send(new JobRequest(jobName));
+
+            sentryClient.CaptureMessage(result.ToString());
+            
+        }        
     }
 }

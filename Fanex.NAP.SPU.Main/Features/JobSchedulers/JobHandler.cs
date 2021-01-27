@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using MediatR;
 
 namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
 {
@@ -18,7 +15,7 @@ namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
 
         public async Task<bool> Handle(JobRequest request, CancellationToken cancellationToken)
         {
-            return await jobService.Execute(request.Name);
+            return await jobService.Execute(request.Name);                        
         }
     }
 }
