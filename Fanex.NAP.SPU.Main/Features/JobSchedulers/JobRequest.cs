@@ -10,9 +10,12 @@ namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
     {
         public string Name { get; set; }
 
-        public JobRequest(string name)
+        public string ApiUrl { get; set; }
+
+        public JobRequest(string name, string apiUrl)
         {
             this.Name = name;
+            this.ApiUrl = apiUrl;
         }
     }
 }

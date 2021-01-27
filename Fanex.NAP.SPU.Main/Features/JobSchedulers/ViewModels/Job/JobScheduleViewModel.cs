@@ -11,7 +11,7 @@
 
             JobName = jobModel.JobName;
             JobType = Type.GetType(jobModel.JobType);            
-            APIUrl = "";           
+            APIUrl = jobModel.APIUrl;           
 
             TriggerType = triggerModel.TriggerType;
             TriggerName = triggerModel.TriggerName;

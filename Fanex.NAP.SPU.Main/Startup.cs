@@ -67,14 +67,15 @@ namespace Fanex.NAP.SPU.Main
                 { "quartz.scheduler.instanceId", "AUTO" },
             }));
 
-            services.AddSingleton(RestService.For<IJobServiceApi>("http://localhost:62391/api"));
+            //services.AddSingleton(RestService.For<IJobServiceApi>("http://localhost:62391/api"));
+            services.AddRefitClient<IJobServiceApi>();
             services.AddSingleton<IJobService, JobService>();
 
             services.AddSingleton<QuartzJobRunner>();
             services.AddSingleton<QuartzHostedService>();
             services.AddHostedService<QuartzHostedService>();
             services.AddSingleton<JobExecute>();
-            services.AddSingletonJob();            
+            services.AddSingletonJob(appSettings);            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

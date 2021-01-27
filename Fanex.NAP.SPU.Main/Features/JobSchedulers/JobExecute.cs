@@ -21,8 +21,8 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
         public async Task Execute(IJobExecutionContext context)
         {
             var jobName = context.JobDetail.Key.Name;
-
-           var result =  await mediator.Send(new JobRequest(jobName));
+            var apiUrl = context.JobDetail.JobDataMap.Get("apiUrl").ToString();
+           var result =  await mediator.Send(new JobRequest(jobName, apiUrl));
 
             sentryClient.CaptureMessage(result.ToString());
             

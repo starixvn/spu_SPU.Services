@@ -72,6 +72,7 @@
                 .Create(schedule.JobType)
                 .WithIdentity(schedule.JobName, schedule.Group)
                 .WithDescription(schedule.JobName)
+                .UsingJobData("apiUrl", schedule.APIUrl)
                 .Build();
         }
 

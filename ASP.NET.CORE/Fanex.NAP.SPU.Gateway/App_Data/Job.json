@@ -6,69 +6,69 @@
         "Jobs": [
           {
             "JobName": "CTS_Auto_Tag_Customer_Clasification_Job",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
-            "APIUrl": "http://localhost:60665/",            
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
+            "APIUrl": "http://localhost:62391/api",
             "Triggers": [
               {
                 "TriggerType": "Cron",
                 "TriggerName": "AutoTag_Normal",
                 "RepeatForever": "true",
-                "CronExpression": "0/10 * * * * ?"
-              }
-            ]
-          },
-          {
-            "JobName": "CTS_AutoTag_ProblemAccount",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
-            "APIUrl": "",            
-            "Triggers": [
-              {
-                "TriggerType": "Cron",
-                "TriggerName": "AutoTag_Problem",
-                "RepeatForever": "true",
-                "CronExpression": "0/20 * * * * ?"
-              }
-            ]
-          },
-          {
-            "JobName": "CTS_General_Category_Daily_Classify_Job",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
-            "APIUrl": "",
-            "Triggers": [
-              {
-                "TriggerType": "Cron",
-                "TriggerName": "Classify_Daily",
-                "RepeatForever": "true",
-                "CronExpression": "0/10 * * * * ?"
-              }
-            ]
-          },
-          {
-            "JobName": "CTS_General_Category_Realtime_Classify_Job",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
-            "APIUrl": "",            
-            "Triggers": [
-              {
-                "TriggerType": "Cron",
-                "TriggerName": "Classify_Realtime",
-                "RepeatForever": "true",
                 "CronExpression": "0/30 * * * * ?"
               }
             ]
           },
-          {            
-            "JobName": "CTS_Probation_Customer_Clasification_Job",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
-            "APIUrl": "",
-            "Triggers": [
-              {
-                "TriggerType": "Cron",
-                "TriggerName": "Classify_Probation",
-                "RepeatForever": "true",
-                "CronExpression": "0/30 * * * * ?"
-              }
-            ]
-          }
+          //{
+          //  "JobName": "CTS_AutoTag_ProblemAccount",
+          //  "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
+          //  "APIUrl": "",            
+          //  "Triggers": [
+          //    {
+          //      "TriggerType": "Cron",
+          //      "TriggerName": "AutoTag_Problem",
+          //      "RepeatForever": "true",
+          //      "CronExpression": "0/20 * * * * ?"
+          //    }
+          //  ]
+          //},
+          //{
+          //  "JobName": "CTS_General_Category_Daily_Classify_Job",
+          //  "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
+          //  "APIUrl": "",
+          //  "Triggers": [
+          //    {
+          //      "TriggerType": "Cron",
+          //      "TriggerName": "Classify_Daily",
+          //      "RepeatForever": "true",
+          //      "CronExpression": "0/10 * * * * ?"
+          //    }
+          //  ]
+          //},
+          //{
+          //  "JobName": "CTS_General_Category_Realtime_Classify_Job",
+          //  "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
+          //  "APIUrl": "",            
+          //  "Triggers": [
+          //    {
+          //      "TriggerType": "Cron",
+          //      "TriggerName": "Classify_Realtime",
+          //      "RepeatForever": "true",
+          //      "CronExpression": "0/30 * * * * ?"
+          //    }
+          //  ]
+          //},
+          //{            
+          //  "JobName": "CTS_Probation_Customer_Clasification_Job",
+          //  "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
+          //  "APIUrl": "",
+          //  "Triggers": [
+          //    {
+          //      "TriggerType": "Cron",
+          //      "TriggerName": "Classify_Probation",
+          //      "RepeatForever": "true",
+          //      "CronExpression": "0/30 * * * * ?"
+          //    }
+          //  ]
+          //}
         ]
       },
       {
@@ -77,13 +77,13 @@
           {
             "JobName": "CTS_Customer_Evidence",
             "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
-            "APIUrl": "http://localhost:60665/",            
+            "APIUrl": "http://localhost:60665/api",            
             "Triggers": [
               {
                 "TriggerType": "Cron",
                 "TriggerName": "Customer_Evidence",
                 "RepeatForever": "true",                
-                "CronExpression": "0/10 * * * * ?"
+                "CronExpression": "0/45 * * * * ?"
               }
             ]
           }               

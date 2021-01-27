@@ -36,6 +36,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI.MySql.Storage" Version="5.0.1" />
     <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="5.0.1" />
     <PackageReference Include="Refit" Version="5.2.4" />
+    <PackageReference Include="Refit.HttpClientFactory" Version="5.2.4" />
     <PackageReference Include="Sentry.AspNetCore" Version="2.1.8" />
   </ItemGroup>
 
