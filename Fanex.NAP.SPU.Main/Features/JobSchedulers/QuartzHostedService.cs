@@ -1,11 +1,14 @@
 ﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
-{    
+{
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using Microsoft.Extensions.Hosting;
     using Quartz;
-    using Quartz.Spi; 
+    using Quartz.Spi;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
-    using System.Threading.Tasks;
+    using System.Threading.Tasks;    
 
     public class QuartzHostedService : IHostedService
     {
@@ -49,21 +52,45 @@
             await scheduler.Shutdown(cancellationToken);
         }
 
-        public async Task AddJob()
+        public async Task UpdateSchedule(SchedulerModel newSchedule)
         {
-            //var scheduler = await _schedulerFactory.GetScheduler();
+            var scheduler = await _schedulerFactory.GetScheduler();
 
-            //foreach (var jobSchedule in _jobSchedules.JobScheduleList)
-            //{
-            //    jobSchedule.JobName = jobSchedule.JobName + "_New_" + System.DateTime.Now.ToLongTimeString();
-            //    var job = CreateJob(jobSchedule);
-                
-            //    var trigger = CreateTrigger(jobSchedule);
+            var jobSchedules = InitJob.GetJobSchedules(newSchedule.GroupJobs);
 
-            //    await scheduler.ScheduleJob(job, trigger);
-            //}
+            foreach (var jobSchedule in _jobSchedules.JobScheduleList)
+            {
+                var job = CreateJob(jobSchedule);
+                var trigger = CreateTrigger(jobSchedule);
+
+                var isNewJob = IsNewJob(jobSchedule, jobSchedules);
+                var isNewTrigger = IsNewTrigger(jobSchedule, jobSchedules);
+
+                if (isNewJob)
+                    await scheduler.ScheduleJob(job, trigger);
+                else if(isNewTrigger)
+                    await scheduler.ScheduleJob(trigger);
+                else
+                    await scheduler.RescheduleJob(new TriggerKey(jobSchedule.TriggerName), trigger);
+            }
 
             await Task.CompletedTask;
+        }
+      
+        private bool IsNewJob(JobScheduleViewModel schedule, JobSchedules jobSchedules)
+        {
+            var existed = jobSchedules.JobScheduleList.Any(x => x.JobName == schedule.JobName);
+
+            return !existed;
+        }
+
+        private bool IsNewTrigger(JobScheduleViewModel schedule, JobSchedules jobSchedules)
+        {
+            var existed = jobSchedules.JobScheduleList
+                                      .Any(x => x.TriggerName == schedule.TriggerName
+                                          && x.CronExpression == schedule.CronExpression);
+
+            return !existed;
         }
 
         private static IJobDetail CreateJob(JobScheduleViewModel schedule)

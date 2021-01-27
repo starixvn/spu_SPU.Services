@@ -33,7 +33,7 @@
             return await response.GetScheduler();
         }
 
-        private static JobSchedules GetJobSchedules(IEnumerable<GroupJobModel> groupJobList)
+        public static JobSchedules GetJobSchedules(IEnumerable<GroupJobModel> groupJobList)
         {
             var jobScheduleList = new List<JobScheduleViewModel>();
 
