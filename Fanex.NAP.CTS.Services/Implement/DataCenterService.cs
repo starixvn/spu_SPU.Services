@@ -191,9 +191,9 @@
             return dataCenterDataAccess.GetCustomerForRealtimeScanning(custIdList);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList)
+        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList, string categoryIds)
         {
-            return dataCenterDataAccess.GetCustomerGeneralCategoryForRunRealtime(custIdList);
+            return dataCenterDataAccess.GetCustomerGeneralCategoryForRunRealtime(custIdList, categoryIds);
         }
 
         public void ClassifyCustomerDaily (IEnumerable<CustomerClassificationModel> customers)

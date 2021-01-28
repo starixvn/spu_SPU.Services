@@ -50,26 +50,27 @@
             {
                 var dataCenterService = new DataCenterService();
                 var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
-                
-                var customerHasChanges = dataCenterService.GetCustomerGeneralCategoryHasChangeForRunRealtime();
-                Console.WriteLine("customerHasChanges: " + customerHasChanges.Count());
+                var categoryIds = "201,202,205,231,232,233"; // Hard code for 'New member' & 'Main Normal Account' & 'Main VIP' 
 
+                var customerHasChanges = dataCenterService.GetCustomerGeneralCategoryHasChangeForRunRealtime();
+        
                 if (customerHasChanges.Any())
                 {
                     var custChunks = customerHasChanges.Chunk(batchSize).ToList();
+
                     for (int i = 0; i < custChunks.Count; i++)
                     {
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
-                        var customers = dataCenterService.GetCustomerGeneralCategoryForRunRealtime(custSportJson);
-                        Console.WriteLine("GetCustomerGeneralCategoryForRunRealtime: " + customers.Count());
+
+                        var customers = dataCenterService.GetCustomerGeneralCategoryForRunRealtime(custSportJson, categoryIds);
+
                         dataCenterService.ClassifyCustomerGeneralCategoryRealtime(customers);
+
                         Thread.Sleep(3000);
                     }
                 }
 
                 dataCenterService.RealtimeUpdateLastScanTime(true);
-                Console.WriteLine("RealtimeUpdateLastScanTime done");
-                Console.ReadLine();
             }
             catch (Exception ex)
             {

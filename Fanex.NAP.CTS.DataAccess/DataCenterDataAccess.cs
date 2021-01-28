@@ -353,13 +353,13 @@
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custSportJson)
+        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custSportJson, string categoryIds)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetCustomerClassificationByCategoryCriteria
             {
-                CategoryIdList = "201,202,205", // Hard code for 'New member' & 'Main Normal Account' & 'Main VIP'
+                CategoryIdList = categoryIds,
                 CustSportsJson = custSportJson
             };
 
