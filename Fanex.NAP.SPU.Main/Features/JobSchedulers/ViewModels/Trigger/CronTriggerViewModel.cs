@@ -9,6 +9,11 @@
     {
         public bool Validate(JobScheduleViewModel model)
         {
+            if (string.IsNullOrEmpty(model.TriggerName))
+            {
+                return false;
+            }
+
             if (string.IsNullOrEmpty(model.CronExpression))
             {
                 return false;

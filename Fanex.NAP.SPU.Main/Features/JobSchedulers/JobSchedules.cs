@@ -1,15 +1,22 @@
 ﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
 {
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
-    using System.Collections.Generic;
+    using System.Collections.Generic;    
 
     public class JobSchedules
     {
-        public JobSchedules(IEnumerable<JobScheduleViewModel> jobScheduleList)
+        public JobSchedules(List<JobScheduleViewModel> jobScheduleList)
         {
             JobScheduleList = jobScheduleList;
         }
 
-        public IEnumerable<JobScheduleViewModel> JobScheduleList { get; }
+        public List<JobScheduleViewModel> JobScheduleList { get; set; }
+
+        public void UpdateJobScheduleList(IEnumerable<JobScheduleViewModel> jobScheduleList)
+        {
+            this.JobScheduleList.Clear();
+
+            this.JobScheduleList.AddRange(jobScheduleList);
+        }
     }
 }

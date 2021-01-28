@@ -2,8 +2,7 @@
 {
     using Fanex.NAP.SPU.Main.JobSchedulers;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
-    using System;
+    using Microsoft.Extensions.Logging;    
     using Fanex.NAP.SPU.Middleware;
     using Refit;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
@@ -11,17 +10,14 @@
 
     public class SchedulerController : Controller
     {
-        private readonly ILogger<SchedulerController> _logger;
         private readonly JobSchedules _jobSchedules;
         private readonly QuartzHostedService _quartzHostedService;
         private readonly IAppSettings _appSettings;
 
-        public SchedulerController(ILogger<SchedulerController> logger
-            , JobSchedules jobSchedules
+        public SchedulerController(JobSchedules jobSchedules
             , QuartzHostedService quartzHostedService
             , IAppSettings appSettings)
         {
-            _logger = logger;
             _jobSchedules = jobSchedules;
             _quartzHostedService = quartzHostedService;
             _appSettings = appSettings;
@@ -37,9 +33,9 @@
         {
             var response = GetSchedule(_appSettings.GatewayURL).Result;
 
-            await _quartzHostedService.UpdateSchedule(response);
+           var viewModel =  await _quartzHostedService.UpdateSchedule(response);          
 
-            return View();
+            return View(viewModel);
         }
 
         private async Task<SchedulerModel> GetSchedule(string url)

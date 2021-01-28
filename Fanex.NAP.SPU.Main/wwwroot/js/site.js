@@ -2,3 +2,19 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+function Site() {
+    var btnUpdateJobs = $("#btnUpdateJobs");
+   
+    $(document).ready(function () {        
+
+        btnUpdateJobs.on('click', (e) => {
+            let result = confirm('Are you want update?');
+
+            if (!result) {
+                e.preventDefault();
+            }
+        });
+    });
+}
+
+$(Site);

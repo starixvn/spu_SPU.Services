@@ -39,9 +39,7 @@
 
         public bool RepeatForever { get; set; }
 
-        public string CronExpression { get; }
-
-        public bool IsNew { get; set; }
+        public string CronExpression { get; }        
 
         public CronTriggerViewModel Cron { get; set; } = new CronTriggerViewModel();
 

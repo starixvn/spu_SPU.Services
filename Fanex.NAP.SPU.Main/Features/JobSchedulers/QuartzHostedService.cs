@@ -52,8 +52,8 @@
             await scheduler.Shutdown(cancellationToken);
         }
 
-        public async Task UpdateSchedule(SchedulerModel newSchedule)
-        {
+        public async Task<UpdateJobViewModel> UpdateSchedule(SchedulerModel newSchedule)
+        {            
             var scheduler = await _schedulerFactory.GetScheduler();
             
             var newJobSchedules = InitJob.GetJobSchedules(newSchedule.GroupJobs);
@@ -70,7 +70,9 @@
 
             NewJobTrigger(scheduler, newList);
 
-            await Task.CompletedTask;
+            _jobSchedules.UpdateJobScheduleList(newJobSchedules.JobScheduleList);
+
+            return new UpdateJobViewModel(newList, updateList, deleteList);
         }
 
         private IEnumerable<JobScheduleViewModel> CheckUpdate(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
@@ -121,7 +123,10 @@
                 if (isNewTrigger)                
                     await scheduler.ScheduleJob(trigger);                
                 else                
-                    await scheduler.RescheduleJob(new TriggerKey(jobSchedule.TriggerName), trigger);                
+                    await scheduler.RescheduleJob(new TriggerKey(jobSchedule.TriggerName), trigger);
+
+                if (!jobSchedule.IsActive)                
+                    await scheduler.PauseTrigger(new TriggerKey(jobSchedule.TriggerName));                
             }
         }
 
@@ -136,6 +141,9 @@
                 var trigger = CreateTrigger(jobSchedule);
 
                 await scheduler.ScheduleJob(job, trigger);
+
+                if (!jobSchedule.IsActive)
+                    await scheduler.PauseTrigger(new TriggerKey(jobSchedule.TriggerName));
             }
         }
 
