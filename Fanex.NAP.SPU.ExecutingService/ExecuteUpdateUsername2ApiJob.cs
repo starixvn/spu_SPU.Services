@@ -65,9 +65,7 @@
 
                     while (true)
                     {
-                        custsFromCTS = dataCenterService.GetCustWithNullUserName2(packageSize, preCTSCustId);
-
-                        LogService.Info($"CTSCustomer.Service - PreCTSCustId: {preCTSCustId} - Cust with Null UserName2 : {JsonConvert.SerializeObject(custsFromCTS.ToList())}");
+                        custsFromCTS = dataCenterService.GetCustWithNullUserName2(packageSize, preCTSCustId);              
 
                         if (custsFromCTS == null || !custsFromCTS.Any())
                         {
@@ -75,7 +73,6 @@
                         }
 
                         custFromMainDB = dataCenterService.GetCustWithHavingUserName2(custsFromCTS);
-                        LogService.Info($"CTSCustomer.Service - Cust UserName2 Info from MainDB: {JsonConvert.SerializeObject(custFromMainDB.ToList())}");
 
                         preCTSCustId = custsFromCTS.Max(c => c.CTSCustID);
 

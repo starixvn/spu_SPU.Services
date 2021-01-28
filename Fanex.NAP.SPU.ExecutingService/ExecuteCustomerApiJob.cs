@@ -54,7 +54,6 @@
             if(jobDataMap != null)
             {
                 var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
-
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
 
@@ -65,13 +64,10 @@
                     var apiUrls = rootPath.Split(';');
 
                     var lastScanned = dataCenterService.GetLastInsertCust();
-
                     listCustInfo.AddRange(dataCenterService.GetCustomerFromMainDB(packageSize, lastScanned.LastCustID));
-                    LogService.Info($"CTSCustomer.Service - Get Cust: {JsonConvert.SerializeObject(listCustInfo)}");
 
                     var custSub = dataCenterService.GetCustSubFromMainDB(packageSize, lastScanned.LastCustSubID);
                     listCustInfo.AddRange(custSub);
-                    LogService.Info($"CTSCustomer.Service - Get CustSub: {JsonConvert.SerializeObject(custSub)}");
 
                     await SendRequest(listCustInfo, apiUrls, jobDataMap);
                 }

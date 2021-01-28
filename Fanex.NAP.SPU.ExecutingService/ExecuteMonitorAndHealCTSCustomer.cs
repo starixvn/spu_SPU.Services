@@ -65,11 +65,7 @@
 
                     var output = dataCenterService.GetLastUpdatedTime();
 
-                    LogService.Info($"ExecuteMonitorAndHealCTSCustomer - lastScannedCustID: {output.LastUpdateCustID} - lastScannedCustSubID: {output.LastUpdateTime}");
-
                     mainDBCusts = dataCenterService.GetUpdatedCustFromCustHistory(output.LastUpdateTime, output.LastUpdateCustID, packageSize);
-
-                    LogService.Info($"ExecuteMonitorAndHealCTSCustomer - Cust From Cust History: {JsonConvert.SerializeObject(mainDBCusts)}");
 
                     if (mainDBCusts != null)
                     {
