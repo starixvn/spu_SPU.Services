@@ -9,6 +9,6 @@
     <Setting Key="CTS_DC_Association_GetWithCategory" SpName="CTS_DC_Association_GetWithCategory" DbName="MySQL.CTS_DataCenter.ctsService" />
     <Setting Key="CTS_DC_CustClassification_GetLatestClassification" SpName="CTS_DC_CustClassification_GetLatestClassification" DbName="MySQL.CTS_DataCenter.ctsService" />
     <Setting Key="CTS_DC_CustClassification_UpdateIsAppliedCC" SpName="CTS_DC_CustClassification_UpdateIsAppliedCC" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
-	<Setting Key="CTS_DC_CustClassification_NewMember_GetAssociationPA" SpName="CTS_DC_CustClassification_NewMember_GetAssociationPA" DbName="MySQL.CTS_DataCenter.ctsService" />
+	<Setting Key="CTS_DC_CustClassification_NewMember_GetAssociationPA" SpName="CTS_DC_CustClassification_NewMember_GetAssociationPA" DbName="MySQL.CTS_DataCenter.ctsService" TimeOut="600" />
   </Function>
 </Functions>
