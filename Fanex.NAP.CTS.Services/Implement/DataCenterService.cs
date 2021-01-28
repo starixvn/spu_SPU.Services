@@ -353,13 +353,8 @@
             {
                 LogService.Error(errorMessage);
             }
-
-            if(result != null && result.Any())
-            {
-                return JsonConvert.SerializeObject(result);
-            }
-
-            return string.Empty;
+                        
+            return JsonConvert.SerializeObject(result);
         }
     }
 }
