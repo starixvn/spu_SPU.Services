@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Services.Interface
 {
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.SPU.Model;
     using System;
     using System.Collections.Generic;
@@ -30,11 +31,13 @@
 
         List<CustomerClassificationModelMoreInfo> GetNewClassification();
 
+        string GetNewMemberAssociationProblemAccount(string custIds);
+
         void UpdateAppliedStatusClassification(string custIdList, bool isGeneralCategory);
 
         void AutoTagClassification(string newClassification);
 
-        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan);
+        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan, string associationPA);
 
         DBResult UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList);
 
@@ -58,7 +61,7 @@
 
         void ClassifyCustomerGeneralCategoryRealtime(IEnumerable<CustomerClassificationModel> customers);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList);        
+        IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList, string categoryIds);        
 
         IEnumerable<int> GetAllSpecialCustomerClass();
 

@@ -6,6 +6,7 @@
     using Fanex.NAP.CTS.Criteria.CustomerClassification;
     using Fanex.NAP.CTS.Criteria.MainDB;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.FS.XML;
     using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;
@@ -253,14 +254,15 @@
             repository.Execute(criteria);
         }
 
-        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan, string associationPA)
         {
             var repository = new DynamicRepository();
 
             var criteria = new InsertMainCustomerClassificationCriteria
             {
                 NewClassification = newClassification,
-                IsRescan = isRescan
+                IsRescan = isRescan,
+                AssociationPA = associationPA
             };
 
             var custIds = repository.Fetch<int>(criteria).ToList();
@@ -351,13 +353,13 @@
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custSportJson)
+        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custSportJson, string categoryIds)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetCustomerClassificationByCategoryCriteria
             {
-                CategoryIdList = "201,202,205", // Hard code for 'New member' & 'Main Normal Account' & 'Main VIP'
+                CategoryIdList = categoryIds,
                 CustSportsJson = custSportJson
             };
 
@@ -691,6 +693,23 @@
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 return db.Query<CustEvidenceModel>(criteria).ToList();
+            }
+        }
+
+        public IEnumerable<CustomerClassificationNewMemberAssociationProblemAccountModel> GetNewCustomerAssociationProblemAccount(string custIdList, out string errorMessage)
+        {
+            var criteria = new GetAssociationProblemAccountForNewMemberClassificationCriteria
+            {
+                CustIdList = custIdList
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                var result =  db.Query<CustomerClassificationNewMemberAssociationProblemAccountModel>(criteria);
+
+                errorMessage = criteria.ErrorMessage;
+
+                return result;
             }
         }
     }

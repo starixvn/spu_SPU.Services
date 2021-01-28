@@ -11,14 +11,14 @@
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
-    using System.Configuration;
     using System.Linq;
     using System.Threading;
 
     public class Service
     {
-        private IDataCenterService _dataCenterService;
-        private IPushDataToExternalService _pushDataToExternalService;
+        private readonly IDataCenterService _dataCenterService;
+        private readonly IPushDataToExternalService _pushDataToExternalService;
+        private const int _newMemberClassification = 201;
 
         public Service()
         {
@@ -32,26 +32,22 @@
             {
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
 
-                int insertedRows = 0;
-                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
-
                 do
                 {
-                    if(isWriteLogInfo)
-                        LogService.Info("Service Autotag Normal - start!");
-
                     newClassification = _dataCenterService.GetNewClassification();
 
-                    if (isWriteLogInfo)
-                        LogService.Info($"Service Autotag Normal - Get New Classification:{JsonConvert.SerializeObject(newClassification)}");
+                    if (newClassification != null && newClassification.Any())
+                    {
+                        var generalClassifications = newClassification.Where(c => c.IsGeneralCategory);
 
-                    var generalClassifications = newClassification?.Where(c => c.IsGeneralCategory);
-
-                    InsertGeneralClassificationCusts(generalClassifications);
+                        if (generalClassifications != null && generalClassifications.Any())
+                        {
+                            InsertGeneralClassificationCusts(generalClassifications);
+                        }
+                    }
 
                 } while (newClassification != null && newClassification.Any());
 
-                insertedRows += newClassification.Count;
             }
             catch (Exception ex)
             {
@@ -63,76 +59,83 @@
             }
         }
 
-        private void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
+        private string FilterCustomerClassificationByCategoryId(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification, int categoryId = 201)
         {
             if (generalClassification != null && generalClassification.Any())
             {
-                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
-                var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
+                var newMemberClassification = generalClassification.Where(x => x.CategoryId == categoryId);
 
-                foreach (var listClassification in newGeneralClassificationChunk)
+                if (newMemberClassification != null && newMemberClassification.Any())
                 {
-                    var jsonClassification = JsonConvert.SerializeObject(listClassification);
+                    var custIds =  newMemberClassification.Select(x => x.CustId);
 
-                    try
+                    return string.Join(",", custIds);                                        
+                }
+            }
+
+            return string.Empty;
+        }
+
+        private void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
+        {
+            var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
+
+            foreach (var listClassification in newGeneralClassificationChunk)
+            {
+                var jsonClassification = JsonConvert.SerializeObject(listClassification);
+
+                try
+                {
+                    var newMemberCustIds = this.FilterCustomerClassificationByCategoryId(generalClassification, _newMemberClassification);
+
+                    var newMemberAssociationProblemAccounts = _dataCenterService.GetNewMemberAssociationProblemAccount(newMemberCustIds);
+
+                    // 1. Insert data in CTS
+                    var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false, newMemberAssociationProblemAccounts);
+
+
+                    if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))
                     {
-                        // 1. Insert data in CTS
-                        var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false);
-                        
-                        if(isWriteLogInfo)
-                            LogService.Info($"Service Autotag Normal - Insert CTS Complete!:{JsonConvert.SerializeObject(jsonClassification)} - Output: {JsonConvert.SerializeObject(typeCustModel)}");                        
+                        var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
 
-                        if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))
+                        // 2. Update IsApplied in mainDB
+                        _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
+
+                        // 3. Get lastest classification in CTS
+                        var latestCustIdsChunk = typeCustModel.CustIds.Chunk(AppSettings.PushCCToExternalChunkSize);
+
+                        foreach (var custIds in latestCustIdsChunk)
                         {
-                            var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
+                            var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
 
-                            // 2. Update IsApplied in mainDB
-                            _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
-
-                            // 3. Get lastest classification in CTS
-                            var latestCustIdsChunk = typeCustModel.CustIds.Chunk(AppSettings.PushCCToExternalChunkSize);
-                            foreach (var custIds in latestCustIdsChunk)
+                            if (lastestClassifications != null && lastestClassifications.Any())
                             {
-                                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
+                                // 4. Update CustomerClass in table custinfo to MainDB
+                                var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
 
-                                if (isWriteLogInfo)
-                                    LogService.Info($"Service Autotag Normal - Get latest Complete!:{JsonConvert.SerializeObject(lastestClassifications)}");
-
-                                if (lastestClassifications != null && lastestClassifications.Any())
+                                if (isSuccessToMain)
                                 {
-                                    // 4. Update CustomerClass in table custinfo to MainDB
-                                    var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
+                                    var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
 
-                                    if (isSuccessToMain)
-                                    {
-                                        var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
+                                    var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
 
-                                        var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
-
-                                        // 5. Update IsAppliedCC = 1 in CTS
-                                        _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
-
-                                        if (isWriteLogInfo)
-                                            LogService.Info("Service Autotag Normal - Insert MainDB Complete!");
-                                    }
-
-                                    // 6. Push CC to Soon88
-                                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                                    // 5. Update IsAppliedCC = 1 in CTS
+                                    _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
                                 }
-                            }
 
-                            if (isWriteLogInfo)
-                                LogService.Info("Service Autotag Normal - FeedSoon88 Complete!");
+                                // 6. Push CC to Soon88
+                                _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                            }
                         }
-                        else
-                        {
-                            LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts - InsertMainCustomerClassification failed:  {typeCustModel.ErrorMessage} with Data: {jsonClassification}");
-                        }                        
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts exception {ex.Message} with Data: {jsonClassification}", ex);
+                        LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts - InsertMainCustomerClassification failed:  {typeCustModel.ErrorMessage} with Data: {jsonClassification}");
                     }
+                }
+                catch (Exception ex)
+                {
+                    LogService.Error(ex.Message);
                 }
             }
         }

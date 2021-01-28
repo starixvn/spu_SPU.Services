@@ -49,6 +49,7 @@
     <Compile Include="CustomerClassification\CustomerClassificationModelMoreInfo.cs" />
     <Compile Include="CustomerClassification\CustomerClassificationModel.cs" />
     <Compile Include="CustomerClassification\CustomerCategoryClassificationModel.cs" />
+    <Compile Include="CustomerClassification\CustomerClassificationNewMemberAssociationProblemAccountModel.cs" />
     <Compile Include="CustomerClassification\UpdateAppliedCustomerClassificationModel.cs" />
     <Compile Include="CustomerClassification\CustomerClassModel.cs" />
     <Compile Include="CustomerEvidence\CustomerCategoryLastedModel.cs" />
