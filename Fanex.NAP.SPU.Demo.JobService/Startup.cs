@@ -1,11 +1,14 @@
 using Fanex.NAP.SPU.Demo.JobService.Controllers;
+using HealthChecks.UI.Client;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System.IO;
 using System.Reflection;
 
 namespace Fanex.NAP.SPU.Demo.JobService
@@ -25,7 +28,11 @@ namespace Fanex.NAP.SPU.Demo.JobService
 
             services.AddControllers();
             services.AddMediatR(Assembly.GetExecutingAssembly());
-
+            services
+               .AddHealthChecks()
+               .AddCheck<RandomHealthCheck>("random")
+               .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); });
+               
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fanex.NAP.SPU.Demo.JobService", Version = "v1" });
@@ -45,6 +52,12 @@ namespace Fanex.NAP.SPU.Demo.JobService
             }
 
             app.UseRouting();
+
+            app.UseHealthChecks("/healthz", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
 
             app.UseAuthorization();
 

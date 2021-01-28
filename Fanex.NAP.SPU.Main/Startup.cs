@@ -53,9 +53,7 @@ namespace Fanex.NAP.SPU.Main
                 .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); })
                 .ForwardToPrometheus();
 
-            services
-                .AddHealthChecksUI()
-                .AddMySqlStorage(appSettings.HealthCheckStorage);
+           
 
             services.AddSingleton<IJobFactory, JobFactory>();
             services.AddSingleton<ISchedulerFactory>(p => new StdSchedulerFactory(new NameValueCollection {
@@ -66,8 +64,7 @@ namespace Fanex.NAP.SPU.Main
                 { "quartz.scheduler.instanceName", "SPUService" },
                 { "quartz.scheduler.instanceId", "AUTO" },
             }));
-
-            //services.AddSingleton(RestService.For<IJobServiceApi>("http://localhost:62391/api"));
+                        
             services.AddRefitClient<IJobServiceApi>();
             services.AddSingleton<IJobService, JobService>();
 
@@ -90,7 +87,7 @@ namespace Fanex.NAP.SPU.Main
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseHealthChecks("/self", new HealthCheckOptions()
+            app.UseHealthChecks("/healthz", new HealthCheckOptions()
             {
                 Predicate = _ => true,
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
@@ -98,7 +95,7 @@ namespace Fanex.NAP.SPU.Main
 
             app.UseHealthChecksUI(delegate (Options option)
             {
-                option.UIPath = "/healthz";
+                option.UIPath = "/healthcheck";
                 option.AddCustomStylesheet(@"wwwroot/css/healthcheck.css");
             });
 

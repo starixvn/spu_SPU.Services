@@ -21,6 +21,13 @@
                 var jobSchedules = GetJobSchedules(schedule.GroupJobs);
 
                 services.AddSingleton(jobSchedules);
+
+                services
+               .AddHealthChecksUI(opt => {
+                   opt.AddHealthCheckEndpoint("Demo", "http://localhost:62391/healthz");
+                   opt.AddHealthCheckEndpoint("Self", "http://localhost:53278/healthz");
+               })
+               .AddMySqlStorage(appSettings.HealthCheckStorage);
             }
         }
 

@@ -15,7 +15,7 @@ namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
 
         public async Task<bool> Handle(JobRequest request, CancellationToken cancellationToken)
         {
-            return await jobService.Execute(request.Name, request.ApiUrl);                        
+            return await jobService.Execute(request.Name, request.ApiUrl);                       
         }
     }
 }
