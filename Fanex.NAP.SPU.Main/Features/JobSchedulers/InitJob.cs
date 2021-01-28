@@ -14,9 +14,7 @@
     {
         public static void AddSingletonJob(this IServiceCollection services, AppSettings appSettings)
         {
-            var gatewayURL = appSettings.GetValue<string>("GatewayURL");
-
-            var schedule = GetSchedule(gatewayURL).Result;
+            var schedule = GetSchedule(appSettings.GatewayURL).Result;
 
             if (schedule != null && schedule.GroupJobs.Any())
             {

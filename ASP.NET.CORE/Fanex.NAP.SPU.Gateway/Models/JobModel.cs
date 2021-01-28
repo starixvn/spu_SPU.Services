@@ -9,6 +9,10 @@
         public string JobType { get; set; }                
 
         public string APIUrl { get; set; }
+       
+        public string HealthCheckUrl { get; set; }
+
+        public bool IsActive { get; set; }
 
         public IEnumerable<TriggerModel> Triggers { get; set; }
     }

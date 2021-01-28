@@ -55,42 +55,88 @@
         public async Task UpdateSchedule(SchedulerModel newSchedule)
         {
             var scheduler = await _schedulerFactory.GetScheduler();
+            
+            var newJobSchedules = InitJob.GetJobSchedules(newSchedule.GroupJobs);
 
-            var jobSchedules = InitJob.GetJobSchedules(newSchedule.GroupJobs);
+            var updateList = CheckUpdate(_jobSchedules, newJobSchedules);
 
-            foreach (var jobSchedule in _jobSchedules.JobScheduleList)
-            {
-                var job = CreateJob(jobSchedule);
-                var trigger = CreateTrigger(jobSchedule);
+            var newList = CheckNew(_jobSchedules, newJobSchedules);
 
-                var isNewJob = IsNewJob(jobSchedule, jobSchedules);
-                var isNewTrigger = IsNewTrigger(jobSchedule, jobSchedules);
+            var deleteList = CheckDelete(_jobSchedules, newJobSchedules);
 
-                if (isNewJob)
-                    await scheduler.ScheduleJob(job, trigger);
-                else if(isNewTrigger)
-                    await scheduler.ScheduleJob(trigger);
-                else
-                    await scheduler.RescheduleJob(new TriggerKey(jobSchedule.TriggerName), trigger);
-            }
+            DeleteJobTrigger(scheduler, deleteList);
+
+            UpdateJobTrigger(scheduler, updateList);
+
+            NewJobTrigger(scheduler, newList);
 
             await Task.CompletedTask;
         }
-      
-        private bool IsNewJob(JobScheduleViewModel schedule, JobSchedules jobSchedules)
+
+        private IEnumerable<JobScheduleViewModel> CheckUpdate(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
         {
-            var existed = jobSchedules.JobScheduleList.Any(x => x.JobName == schedule.JobName);
+            return oldJobSchedules.JobScheduleList.Join(newJobSchedules.JobScheduleList,
+                x1 => x1.JobName,
+                x2 => x2.JobName,
+                (x1, x2) => x1);
+        }
+
+        private IEnumerable<JobScheduleViewModel> CheckNew(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
+        {
+            var oldJobNameList = oldJobSchedules.JobScheduleList.Select(x => x.JobName);
+
+            return newJobSchedules.JobScheduleList.Where(x => !oldJobNameList.Contains(x.JobName));
+        }
+
+        private IEnumerable<JobScheduleViewModel> CheckDelete(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
+        {
+            var newJobNameList = newJobSchedules.JobScheduleList.Select(x => x.JobName);
+
+            return oldJobSchedules.JobScheduleList.Where(x => !newJobNameList.Contains(x.JobName));
+        }
+
+        private bool IsNewTrigger(JobScheduleViewModel newSchedule, JobSchedules oldJobSchedules)
+        {
+            var existed = oldJobSchedules.JobScheduleList.Any(x => x.TriggerName == newSchedule.TriggerName);
 
             return !existed;
         }
 
-        private bool IsNewTrigger(JobScheduleViewModel schedule, JobSchedules jobSchedules)
+        private async void DeleteJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
         {
-            var existed = jobSchedules.JobScheduleList
-                                      .Any(x => x.TriggerName == schedule.TriggerName
-                                          && x.CronExpression == schedule.CronExpression);
+            foreach (var jobSchedule in jobScheduleList)
+            {
+                await scheduler.DeleteJob(new JobKey(jobSchedule.JobName));
+            }
+        }
 
-            return !existed;
+        private async void UpdateJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
+        {
+            foreach (var jobSchedule in jobScheduleList)
+            {
+                var trigger = CreateTrigger(jobSchedule);
+
+                var isNewTrigger = IsNewTrigger(jobSchedule, _jobSchedules);
+
+                if (isNewTrigger)                
+                    await scheduler.ScheduleJob(trigger);                
+                else                
+                    await scheduler.RescheduleJob(new TriggerKey(jobSchedule.TriggerName), trigger);                
+            }
+        }
+
+        private async void NewJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
+        {
+            foreach (var jobSchedule in jobScheduleList)
+            {
+                if (!jobSchedule.Validate())
+                    continue;
+
+                var job = CreateJob(jobSchedule);
+                var trigger = CreateTrigger(jobSchedule);
+
+                await scheduler.ScheduleJob(job, trigger);
+            }
         }
 
         private static IJobDetail CreateJob(JobScheduleViewModel schedule)

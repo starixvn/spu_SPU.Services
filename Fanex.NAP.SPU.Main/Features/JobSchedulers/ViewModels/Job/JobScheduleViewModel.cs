@@ -11,7 +11,9 @@
 
             JobName = jobModel.JobName;
             JobType = Type.GetType(jobModel.JobType);            
-            APIUrl = jobModel.APIUrl;           
+            APIUrl = jobModel.APIUrl;
+            HealthCheckUrl = jobModel.HealthCheckUrl;
+            IsActive = jobModel.IsActive;
 
             TriggerType = triggerModel.TriggerType;
             TriggerName = triggerModel.TriggerName;
@@ -25,7 +27,11 @@
 
         public Type JobType { get; }       
 
-        public string APIUrl { get; set; }     
+        public string APIUrl { get; set; }
+
+        public string HealthCheckUrl { get; set; }
+
+        public bool IsActive { get; set; }
 
         public string TriggerType { get; set; }
 
