@@ -31,8 +31,7 @@ namespace Fanex.NAP.SPU.Demo.JobService
             services
                .AddHealthChecks()
                .AddCheck<RandomHealthCheck>("random")
-               .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); })
-               .AddPrometheusGatewayPublisher("http://localhost:53278/metrics", "test");
+               .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); });
 
 
             services.AddSwaggerGen(c =>

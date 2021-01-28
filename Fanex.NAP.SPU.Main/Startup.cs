@@ -50,8 +50,7 @@ namespace Fanex.NAP.SPU.Main
                 .AddHealthChecks()
                 .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome11")
                 .AddCheck<RandomHealthCheck>("random")
-                .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); })
-                .ForwardToPrometheus();
+                .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); });
 
            
 
@@ -111,17 +110,16 @@ namespace Fanex.NAP.SPU.Main
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapMetrics();
+                    pattern: "{controller=Home}/{action=Index}/{id?}");                                
             });
 
             var schedulerProvider = (ISchedulerFactory)app.ApplicationServices.GetService(typeof(ISchedulerFactory));
 
             app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
 
-            app.UseMiddleware<ExceptionHandlerMiddleware>();                      
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
 
+            app.UseMetricServer();
         }
 
     }
