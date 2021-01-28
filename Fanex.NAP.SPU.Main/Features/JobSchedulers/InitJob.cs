@@ -23,18 +23,20 @@
                 services.AddSingleton(jobSchedules);
 
                 services
-               .AddHealthChecksUI(opt => {
-                   opt.AddHealthCheckEndpoint("Self", "http://localhost:53278/healthz");
+               .AddHealthChecksUI(setup =>
+               {
+                   setup.AddHealthCheckEndpoint("App", "http://localhost:53278/healthz");
+
                    foreach (var job in jobSchedules.JobScheduleList)
                    {
-                       if(!string.IsNullOrWhiteSpace(job.HealthCheckUrl))
+                       if (!string.IsNullOrWhiteSpace(job.HealthCheckUrl))
                        {
-                           opt.AddHealthCheckEndpoint(job.JobName, job.HealthCheckUrl);
+                           setup.AddHealthCheckEndpoint(job.JobName, job.HealthCheckUrl);
                        }
-                       
-                   }                  
+                   }                                      
                })
-               .AddMySqlStorage(appSettings.HealthCheckStorage);
+               .AddInMemoryStorage();
+               //.AddMySqlStorage(appSettings.HealthCheckStorage);
             }
         }
 

@@ -118,7 +118,6 @@ namespace Fanex.NAP.SPU.Main
 
             var schedulerProvider = (ISchedulerFactory)app.ApplicationServices.GetService(typeof(ISchedulerFactory));
 
-
             app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();                      
