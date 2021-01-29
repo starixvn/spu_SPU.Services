@@ -65,7 +65,7 @@
 
                     while (true)
                     {
-                        custsFromCTS = dataCenterService.GetCustWithNullUserName2(packageSize, preCTSCustId);              
+                        custsFromCTS = dataCenterService.GetCustWithNullUserName2(packageSize, preCTSCustId);
 
                         if (custsFromCTS == null || !custsFromCTS.Any())
                         {

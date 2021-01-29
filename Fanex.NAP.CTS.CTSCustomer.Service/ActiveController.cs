@@ -54,6 +54,7 @@
         [HttpPost]
         public bool InsertMissingCustomer()
         {
+            var isWriteLogInfo = AppSettings.IsWriteLogInfo;
             var requestContent = Request.Content;
             var jsonContent = requestContent.ReadAsStringAsync().Result;
 
@@ -69,6 +70,12 @@
                         var custInfoFromCTS = _dataCenterService.GetCustomerFromCTS(tranformCusts.CustIdList);
                         var custToUpdateInfo = new List<CustomerMainDbModel>();
 
+                        if (isWriteLogInfo)
+                        {
+                            LogService.Info($"Healing - Get from MainDB data: {JsonConvert.SerializeObject(custInfoFromMainDB)}");
+                            LogService.Info($"Healing - Get from CTS data: {JsonConvert.SerializeObject(custInfoFromCTS)}");
+                        }
+
                         if (custInfoFromMainDB == null || !custInfoFromMainDB.Any())
                         {
                             return true;
@@ -80,10 +87,15 @@
                             (custMain, custCTS) 
                             => custMain).Where(c=> !custInfoFromCTS.Contains(c)).ToList();
 
+                        if (isWriteLogInfo)
+                            LogService.Info($"Healing - Cust to update data: {JsonConvert.SerializeObject(custInfoFromMainDB)}");
+
                         if (custToUpdateInfo != null && custToUpdateInfo.Any())
                         {
                             _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo), tranformCusts.LastUpdatedTime, tranformCusts.LastCustId);
                         }
+
+                        LogService.Info($"Healing - done");
                     }
 
                     return true;
@@ -111,23 +123,16 @@
         {
             var requestContent = Request.Content;
             var jsonContent = requestContent.ReadAsStringAsync().Result;
-            var isWriteLogInfo = AppSettings.IsWriteLogInfo;
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
                 var customers = JsonConvert.DeserializeObject<List<GetCustIdModel>>(jsonContent);
-
-                if (isWriteLogInfo)
-                    LogService.Info($"CTSCustomer.Service - UpdateUserName2 - start with data: {JsonConvert.SerializeObject(customers)}");
 
                 try
                 {
                     if (customers != null && customers.Any())
                     {
                         _dataCenterService.UpdateUsername2(customers);
-
-                        if (isWriteLogInfo)
-                            LogService.Info($"CTSCustomer.Service - UpdateUserName2 - done with data: {JsonConvert.SerializeObject(customers)}");
 
                         return true;
                     }
