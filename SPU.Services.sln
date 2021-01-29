@@ -202,6 +202,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NAP.SPU.Gateway", "AS
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CMS.VRMemberBigStake.Console", "Fanex.NAP.CMS.VRMemberBigStake.Console\Fanex.NAP.CMS.VRMemberBigStake.Console.csproj", "{60B3F0F2-D8E3-48BF-8B24-DFF4D4FC4CBC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Demo.JobService2", "ASP.NET.CORE\Fanex.NAP.SPU.Demo.JobService2\Fanex.NAP.SPU.Demo.JobService2.csproj", "{EB90829B-1991-4939-A804-A144C110A0CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -539,6 +541,10 @@ Global
 		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB90829B-1991-4939-A804-A144C110A0CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB90829B-1991-4939-A804-A144C110A0CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB90829B-1991-4939-A804-A144C110A0CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB90829B-1991-4939-A804-A144C110A0CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -624,9 +630,10 @@ Global
 		{7A2EB693-65A0-486F-8E22-1DCD9F2C4C9F} = {0A926929-8CBD-48FC-854F-E4B10C92B95D}
 		{F2E04341-F839-425C-8880-B6CDF1E7B1CF} = {0A926929-8CBD-48FC-854F-E4B10C92B95D}
 		{19CC00B6-CE4B-44F5-8C7B-3548F28FA866} = {0A926929-8CBD-48FC-854F-E4B10C92B95D}
+		{EB90829B-1991-4939-A804-A144C110A0CE} = {0A926929-8CBD-48FC-854F-E4B10C92B95D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal

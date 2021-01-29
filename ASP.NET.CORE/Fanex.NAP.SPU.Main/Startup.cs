@@ -48,7 +48,7 @@ namespace Fanex.NAP.SPU.Main
 
             services
                 .AddHealthChecks()
-                .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome11")
+                .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome1")
                 .AddCheck<RandomHealthCheck>("random")
                 .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); });
 
@@ -117,9 +117,7 @@ namespace Fanex.NAP.SPU.Main
 
             app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
 
-            app.UseMiddleware<ExceptionHandlerMiddleware>();
-
-            app.UseMetricServer();
+            app.UseMiddleware<ExceptionHandlerMiddleware>();                        
         }
 
     }
