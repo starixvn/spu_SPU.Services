@@ -111,15 +111,23 @@
         {
             var requestContent = Request.Content;
             var jsonContent = requestContent.ReadAsStringAsync().Result;
+            var isWriteLogInfo = AppSettings.IsWriteLogInfo;
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
                 var customers = JsonConvert.DeserializeObject<List<GetCustIdModel>>(jsonContent);
+
+                if (isWriteLogInfo)
+                    LogService.Info($"CTSCustomer.Service - UpdateUserName2 - start with data: {JsonConvert.SerializeObject(customers)}");
+
                 try
                 {
                     if (customers != null && customers.Any())
                     {
                         _dataCenterService.UpdateUsername2(customers);
+
+                        if (isWriteLogInfo)
+                            LogService.Info($"CTSCustomer.Service - UpdateUserName2 - done with data: {JsonConvert.SerializeObject(customers)}");
 
                         return true;
                     }
@@ -170,7 +178,7 @@
                                     _customerClassificationService.RescanCustomerClassify(custToRescan, true, true, Constants.FLOWTYPERESCANCC.NEWMEMBER);
 
                                     if (isWriteLogInfo)
-                                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassify done with data: {string.Join(",", custIdList)}");
+                                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassify done with data: {JsonConvert.SerializeObject(custIdList)}");
                                 }
                                 catch (Exception ex)
                                 {
