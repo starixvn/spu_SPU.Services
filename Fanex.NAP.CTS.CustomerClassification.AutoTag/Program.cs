@@ -34,9 +34,6 @@
 
             var service = new Service();
             service.Process();
-
-            Console.WriteLine("CustomerClassification.AutoTag done");
-            Console.ReadLine();
         }
     }
 }
