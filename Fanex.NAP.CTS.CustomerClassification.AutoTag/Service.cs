@@ -37,25 +37,15 @@
                 {
                     newClassification = _dataCenterService.GetNewClassification();
 
-                    if (isWriteLogInfo)
-                        LogService.Info($"Normal AutoTag.Service - GetNew start with data: {JsonConvert.SerializeObject(newClassification)} - Time start: {DateTime.Now}" );
-
                     if (newClassification != null && newClassification.Any())
                     {
                         var generalClassifications = newClassification.Where(c => c.IsGeneralCategory);
 
                         if (generalClassifications != null && generalClassifications.Any())
                         {
-                            if (isWriteLogInfo)
-                                LogService.Info($"Insert to CTS with data: {JsonConvert.SerializeObject(generalClassifications)} - Time: {DateTime.Now}");
-
                             InsertGeneralClassificationCusts(generalClassifications);
                         }
                     }
-
-                    if (isWriteLogInfo)
-                        LogService.Info($"Normal AutoTag.Service - done - Time start: {DateTime.Now}");
-
                 } while (newClassification != null && newClassification.Any());
 
             }
@@ -99,20 +89,10 @@
                 {
                     var newMemberCustIds = this.FilterCustomerClassificationByCategoryId(generalClassification, _newMemberClassification);
 
-                    if (isWriteLogInfo)
-                        LogService.Info($"Check Ass PA with data: {JsonConvert.SerializeObject(newMemberCustIds)} - Time start: {DateTime.Now}");
-
                     var newMemberAssociationProblemAccounts = _dataCenterService.GetNewMemberAssociationProblemAccount(newMemberCustIds);
-
-                    if (isWriteLogInfo)
-                        LogService.Info($"New Member have Ass PA : {JsonConvert.SerializeObject(newMemberAssociationProblemAccounts)} - Time start: {DateTime.Now}");
-
 
                     // 1. Insert data in CTS
                     var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false, newMemberAssociationProblemAccounts);
-
-                    if (isWriteLogInfo)
-                        LogService.Info($"Insert CTS successfull! All data: {JsonConvert.SerializeObject(jsonClassification)} - New Member with PA {JsonConvert.SerializeObject(newMemberAssociationProblemAccounts)} - Time start: {DateTime.Now}");
 
                     if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))
                     {
@@ -127,9 +107,6 @@
                         foreach (var custIds in latestCustIdsChunk)
                         {
                             var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
-
-                            if (isWriteLogInfo)
-                                LogService.Info($"Push CC: {JsonConvert.SerializeObject(lastestClassifications)} - Time start: {DateTime.Now}");
 
                             if (lastestClassifications != null && lastestClassifications.Any())
                             {
