@@ -21,8 +21,9 @@
           },
           {
             "JobName": "CTS_AutoTag_ProblemAccount",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
-            "APIUrl": "",            
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
+            "APIUrl": "http://localhost:62391/api",
+            "HealthCheckUrl": "http://localhost:62391/healthz",
             "Triggers": [
               {
                 "TriggerType": "Cron",

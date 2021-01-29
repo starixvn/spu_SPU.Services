@@ -1,6 +1,6 @@
 ﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
 {
-    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;    
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using Microsoft.Extensions.DependencyInjection;
     using System.Collections.Generic;
@@ -8,7 +8,11 @@
     using Fanex.NAP.SPU.Main.Features.JobSchedulers;
     using Refit;
     using System.Threading.Tasks;
-    using Fanex.NAP.SPU.Middleware;    
+    using Fanex.NAP.SPU.Middleware;
+    using HealthChecks.UI.Core;
+    using System;
+    using Fanex.NAP.SPU.Main.Features.Healthchecks.Models;
+    using Newtonsoft.Json;
 
     public static class InitJob
     {
@@ -25,7 +29,7 @@
                 services
                .AddHealthChecksUI(setup =>
                {
-                   setup.AddHealthCheckEndpoint("App", "http://localhost:53278/healthz");
+                   setup.AddHealthCheckEndpoint("App", "/healthz");
 
                    foreach (var job in jobSchedules.JobScheduleList)
                    {
@@ -33,10 +37,14 @@
                        {
                            setup.AddHealthCheckEndpoint(job.JobName, job.HealthCheckUrl);
                        }
-                   }                                      
+                   }
+
+                   setup.AddWebhookNotification("notification",
+                       "WebhookNotification/send",
+                        payload: JsonConvert.SerializeObject(new NotificationModel("[[LIVENESS]]: [[FAILURE]] [[DESCRIPTIONS]]", 1)),
+                        restorePayload: JsonConvert.SerializeObject(new NotificationModel("[[LIVENESS]] is back to LIFE", 0)));
                })
-               .AddInMemoryStorage();
-               //.AddMySqlStorage(appSettings.HealthCheckStorage);
+               .AddMySqlStorage(appSettings.HealthCheckStorage);
             }
         }
 
@@ -59,7 +67,7 @@
                     {
                         jobScheduleList.Add(new JobScheduleViewModel(group.GroupName, job, trigger));
                     }
-                }                
+                }
             }
 
             return new JobSchedules(jobScheduleList);

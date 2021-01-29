@@ -22,10 +22,7 @@ namespace Fanex.NAP.SPU.Main.JobSchedulers
         {
             var jobName = context.JobDetail.Key.Name;
             var apiUrl = context.JobDetail.JobDataMap.Get("apiUrl").ToString();
-           var result =  await mediator.Send(new JobRequest(jobName, apiUrl));
-
-            sentryClient.CaptureMessage(result.ToString());
-            
-        }        
+             await mediator.Send(new JobRequest(jobName, apiUrl));
+        }
     }
 }
