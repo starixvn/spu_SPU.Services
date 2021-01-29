@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Fanex.NAP.SPU.Middleware\Fanex.NAP.SPU.Middleware.csproj" />
+    <ProjectReference Include="..\Fanex.NAP.SPU.Middleware\Fanex.NAP.SPU.Middleware.csproj" />
   </ItemGroup>
 
 </Project>
