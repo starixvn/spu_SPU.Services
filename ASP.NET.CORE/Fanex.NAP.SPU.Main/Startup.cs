@@ -96,9 +96,7 @@ namespace Fanex.NAP.SPU.Main
             {
                 option.UIPath = "/healthcheck";
                 option.AddCustomStylesheet(@"wwwroot/css/healthcheck.css");
-            });
-
-            
+            });            
 
             app.UseStaticFiles();
 

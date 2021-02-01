@@ -39,10 +39,11 @@ namespace Fanex.NAP.SPU.Gateway
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fanex.NAP.SPU.Gateway v1"));
+                app.UseDeveloperExceptionPage();              
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fanex.NAP.SPU.Gateway v1"));
 
             app.UseHttpsRedirection();
 
@@ -58,7 +59,9 @@ namespace Fanex.NAP.SPU.Gateway
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();

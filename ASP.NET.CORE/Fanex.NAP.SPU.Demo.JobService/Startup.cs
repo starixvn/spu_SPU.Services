@@ -47,10 +47,11 @@ namespace Fanex.NAP.SPU.Demo.JobService
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fanex.NAP.SPU.Demo.JobService v1"));
+                app.UseDeveloperExceptionPage();               
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Fanex.NAP.SPU.Demo.JobService v1"));
 
             app.UseRouting();
 

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Sentry;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -21,27 +22,29 @@ namespace Fanex.NAP.SPU.Gateway
             host.Run();
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((hostingContext, config) =>
-                {
-                    config.Sources.Clear();
+        public static IHostBuilder CreateHostBuilder(string[] args) {
 
-                    var env = hostingContext.HostingEnvironment;
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .AddJsonFile("App_Data/Job.json", optional: true, reloadOnChange: true)
+                .Build();
 
-                    config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                      .AddJsonFile($"appsettings.{env.EnvironmentName}.json",
-                                     optional: true, reloadOnChange: true);
+            return Host.CreateDefaultBuilder(args)
+                    .ConfigureAppConfiguration((hostingContext, config) =>
+                    {
+                        config.Sources.Clear();                      
 
-                    config.AddJsonFile("App_Data/Job.json", optional: true, reloadOnChange: true)
-                          .AddJsonFile($"App_Data/Job.{env.EnvironmentName}.json",
-                                         optional: true, reloadOnChange: true);
-                })
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder
-                    .UseSentry()
-                    .UseStartup<Startup>();
-                });
+                        config.AddConfiguration(configuration);    
+                    })
+                    .ConfigureWebHostDefaults(webBuilder =>
+                    {
+                        webBuilder
+                        .UseSentry()
+                        .UseUrls("")
+                        .UseStartup<Startup>();
+                    });
+        }
+            
     }
 }

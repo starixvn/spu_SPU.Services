@@ -9,6 +9,8 @@ namespace Fanex.NAP.SPU.Middleware
         string HealthCheckStorage { get; }
 
         string GatewayURL { get; }
+
+        int HostingPort { get; }
     }
 
     public class AppSettings : IAppSettings
@@ -22,11 +24,15 @@ namespace Fanex.NAP.SPU.Middleware
             HealthCheckStorage = GetValue<string>(nameof(HealthCheckStorage));
 
             GatewayURL = GetValue<string>(nameof(GatewayURL));
+
+            HostingPort = GetValue<int>(nameof(HostingPort));
         }
 
         public string HealthCheckStorage { get; }
 
-        public string GatewayURL { get; set; }
+        public string GatewayURL { get; }
+
+        public int HostingPort { get; }
 
         public T GetValue<T>(string key)
         {

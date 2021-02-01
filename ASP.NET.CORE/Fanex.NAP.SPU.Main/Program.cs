@@ -1,9 +1,12 @@
 namespace Fanex.NAP.SPU.Main
 {
+    using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
     using Sentry;
     using System;
+    using System.IO;
 
     public class Program
     {
@@ -14,13 +17,22 @@ namespace Fanex.NAP.SPU.Main
             host.Run();
         }
 
-        public static IHost CreateHostBuilder(string[] args) =>
-             Host.CreateDefaultBuilder(args)
-                 .ConfigureWebHostDefaults(webBuilder =>
-                 {
-                     webBuilder
-                     .UseSentry()
-                     .UseStartup<Startup>();
-                 }).Build();        
+        public static IHost CreateHostBuilder(string[] args)
+        {
+            var configuration = new ConfigurationBuilder()
+                   .SetBasePath(Directory.GetCurrentDirectory())
+                   .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                   .Build();
+
+
+            return Host.CreateDefaultBuilder(args)
+                   .ConfigureWebHostDefaults(webBuilder =>
+                   {
+                       webBuilder                       
+                       .UseUrls($"http://*:{configuration["HostingPort"]}")
+                       .UseSentry()                       
+                       .UseStartup<Startup>();
+                   }).Build();
+        }        
     }
 }
