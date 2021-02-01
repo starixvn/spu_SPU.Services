@@ -76,11 +76,6 @@
                             LogService.Info($"Healing - Get from CTS data: {JsonConvert.SerializeObject(custInfoFromCTS)}");
                         }
 
-                        if (custInfoFromMainDB == null || !custInfoFromMainDB.Any())
-                        {
-                            return true;
-                        }
-
                         custToUpdateInfo = custInfoFromMainDB.Join(custInfoFromCTS,
                             custMain => custMain.CustID,
                             custCTS => custCTS.CustID,
@@ -90,10 +85,7 @@
                         if (isWriteLogInfo)
                             LogService.Info($"Healing - Cust to update data: {JsonConvert.SerializeObject(custInfoFromMainDB)}");
 
-                        if (custToUpdateInfo != null && custToUpdateInfo.Any())
-                        {
-                            _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo), tranformCusts.LastUpdatedTime, tranformCusts.LastCustId);
-                        }
+                        _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo), tranformCusts.LastUpdatedTime, tranformCusts.LastCustId);
 
                         LogService.Info($"Healing - done");
                     }
