@@ -10,10 +10,10 @@
         public string Customers { get; set; }
 
         [SpParam(SqlParamName = "ip_LastUpdateTime")]
-        public DateTime LastUpdateTime { get; set; }
+        public DateTime? LastUpdateTime { get; set; }
 
         [SpParam(SqlParamName = "ip_LastUpdateCustID")]
-        public Int64 LastUpdateCustID { get; set; }
+        public Int64? LastUpdateCustID { get; set; }
 
         public override string GetSettingKey()
         {

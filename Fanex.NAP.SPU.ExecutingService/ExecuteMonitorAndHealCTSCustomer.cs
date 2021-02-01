@@ -67,7 +67,7 @@
 
                     mainDBCusts = dataCenterService.GetUpdatedCustFromCustHistory(output.LastUpdateTime, output.LastUpdateCustID, packageSize);
 
-                    if (mainDBCusts != null)
+                    if (mainDBCusts != null && mainDBCusts.LastCustId != null && mainDBCusts.LastUpdatedTime != null)
                     {
                         await SendRequest(mainDBCusts, apiUrls, jobDataMap);
                     }

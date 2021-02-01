@@ -83,7 +83,7 @@
                             => custMain).Where(c=> !custInfoFromCTS.Contains(c)).ToList();
 
                         if (isWriteLogInfo)
-                            LogService.Info($"Healing - Cust to update data: {JsonConvert.SerializeObject(custInfoFromMainDB)}");
+                            LogService.Info($"Healing - Cust to update data: {JsonConvert.SerializeObject(custToUpdateInfo)}");
 
                         _dataCenterService.UpdateCustomerInfo(JsonConvert.SerializeObject(custToUpdateInfo), tranformCusts.LastUpdatedTime, tranformCusts.LastCustId);
 

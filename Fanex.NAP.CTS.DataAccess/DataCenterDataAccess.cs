@@ -779,7 +779,7 @@
             return custInfos;
         }
 
-        public void UpdateCustomerInfo(string customers, DateTime lastUpdateTime, Int64 lastUpdateCustID)
+        public void UpdateCustomerInfo(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
         {
             var repository = new DynamicRepository();
 
