@@ -1,8 +1,11 @@
 using Fanex.NAP.SPU.Middleware;
+using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
@@ -26,6 +29,9 @@ namespace Fanex.NAP.SPU.Gateway
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fanex.NAP.SPU.Gateway", Version = "v1" });
             });
+
+            services
+               .AddHealthChecks();               
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +47,12 @@ namespace Fanex.NAP.SPU.Gateway
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseHealthChecks("/healthz", new HealthCheckOptions()
+            {
+                Predicate = _ => true,
+                ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+            });
 
             app.UseAuthorization();
 
