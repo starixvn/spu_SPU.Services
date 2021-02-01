@@ -54,19 +54,6 @@
             await scheduler.Shutdown(cancellationToken);
         }
 
-        public UpdateJobViewModel CheckUpdateSchedule(SchedulerModel newSchedule)
-        {
-            var newJobSchedules = JobInit.GetJobSchedules(newSchedule.GroupJobs);
-
-            var updateList = CheckUpdate(_jobSchedules, newJobSchedules);
-
-            var newList = CheckNew(_jobSchedules, newJobSchedules);
-
-            var deleteList = CheckDelete(_jobSchedules, newJobSchedules);
-
-            return new UpdateJobViewModel(newList);
-        }
-
         public async Task<UpdateJobViewModel> UpdateSchedule(SchedulerModel newSchedule)
         {            
             var scheduler = await _schedulerFactory.GetScheduler();
