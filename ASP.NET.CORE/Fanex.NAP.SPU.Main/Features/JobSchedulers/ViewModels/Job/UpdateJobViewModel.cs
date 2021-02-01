@@ -4,20 +4,12 @@
 
     public class UpdateJobViewModel
     {
-        public UpdateJobViewModel(IEnumerable<JobScheduleViewModel> newList
-            , IEnumerable<JobScheduleViewModel> updatedList
-            , IEnumerable<JobScheduleViewModel> deletedList)
+        public UpdateJobViewModel(IEnumerable<JobScheduleViewModel> jobScheduleList)
         {
-            NewList = newList;
-            UpdatedList = updatedList;
-            DeletedList = deletedList;
+            JobScheduleList = jobScheduleList;
         }
 
-        public IEnumerable<JobScheduleViewModel> NewList { get; set; }
+        public IEnumerable<JobScheduleViewModel> JobScheduleList { get; set; }
 
-        public IEnumerable<JobScheduleViewModel> UpdatedList { get; set; }
-
-        public IEnumerable<JobScheduleViewModel> DeletedList { get; set; }
-        
     }
 }

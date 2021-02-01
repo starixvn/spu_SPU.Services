@@ -10,5 +10,7 @@
 
         public string CronExpression { get; set; }
 
+        public UpdateStatus UpdateStatus { get; set; }
+
     }
 }

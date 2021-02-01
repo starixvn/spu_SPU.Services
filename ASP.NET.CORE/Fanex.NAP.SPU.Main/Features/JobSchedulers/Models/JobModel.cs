@@ -14,6 +14,8 @@
 
         public bool IsActive { get; set; }
 
+        public UpdateStatus UpdateStatus { get; set; }
+
         public IEnumerable<TriggerModel> Triggers { get; set; }
 
     }

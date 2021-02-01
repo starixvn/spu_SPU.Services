@@ -26,6 +26,8 @@
             _jobFactory = jobFactory;            
         }
 
+        public JobSchedules CurrentJobSchedules { get { return _jobSchedules; } }
+
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             var scheduler = await _schedulerFactory.GetScheduler(cancellationToken);
@@ -52,6 +54,19 @@
             await scheduler.Shutdown(cancellationToken);
         }
 
+        public UpdateJobViewModel CheckUpdateSchedule(SchedulerModel newSchedule)
+        {
+            var newJobSchedules = InitJob.GetJobSchedules(newSchedule.GroupJobs);
+
+            var updateList = CheckUpdate(_jobSchedules, newJobSchedules);
+
+            var newList = CheckNew(_jobSchedules, newJobSchedules);
+
+            var deleteList = CheckDelete(_jobSchedules, newJobSchedules);
+
+            return new UpdateJobViewModel(newList);
+        }
+
         public async Task<UpdateJobViewModel> UpdateSchedule(SchedulerModel newSchedule)
         {            
             var scheduler = await _schedulerFactory.GetScheduler();
@@ -72,10 +87,10 @@
 
             _jobSchedules.UpdateJobScheduleList(newJobSchedules.JobScheduleList);
 
-            return new UpdateJobViewModel(newList, updateList, deleteList);
+            return new UpdateJobViewModel(newList);
         }
 
-        private IEnumerable<JobScheduleViewModel> CheckUpdate(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
+        public IEnumerable<JobScheduleViewModel> CheckUpdate(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
         {
             return oldJobSchedules.JobScheduleList.Join(newJobSchedules.JobScheduleList,
                 x1 => x1.JobName,
@@ -83,14 +98,14 @@
                 (x1, x2) => x1);
         }
 
-        private IEnumerable<JobScheduleViewModel> CheckNew(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
+        public IEnumerable<JobScheduleViewModel> CheckNew(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
         {
             var oldJobNameList = oldJobSchedules.JobScheduleList.Select(x => x.JobName);
 
             return newJobSchedules.JobScheduleList.Where(x => !oldJobNameList.Contains(x.JobName));
         }
 
-        private IEnumerable<JobScheduleViewModel> CheckDelete(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
+        public IEnumerable<JobScheduleViewModel> CheckDelete(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
         {
             var newJobNameList = newJobSchedules.JobScheduleList.Select(x => x.JobName);
 

@@ -2,11 +2,13 @@
 {
     using Fanex.NAP.SPU.Main.JobSchedulers;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;    
     using Fanex.NAP.SPU.Middleware;
     using Refit;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
     using System.Threading.Tasks;
+    using System.Linq;
+    using System.Collections.Generic;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
 
     public class SchedulerController : Controller
     {
@@ -29,20 +31,62 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> UpdateJobs()
+        public IActionResult CheckUpdateJobs()
         {
-            var response = GetSchedule(_appSettings.GatewayURL).Result;
+            var schedulerModel = GetSchedules(_appSettings.GatewayURL).Result;            
 
-           var viewModel =  await _quartzHostedService.UpdateSchedule(response);          
+            foreach (var group in schedulerModel.GroupJobs)
+            {
+                CheckUpdateJob(group.Jobs, _quartzHostedService.CurrentJobSchedules.JobScheduleList);
+            }
+
+            return View(schedulerModel.GroupJobs);
+        }
+
+        private void CheckUpdateJob(IEnumerable<JobModel> jobs, List<JobScheduleViewModel> currentJobSchedules)
+        {
+            foreach (var job in jobs)
+            {
+                var isJobNoUpdate = currentJobSchedules.Any(x => x.JobName == job.JobName
+                        && x.APIUrl == job.APIUrl
+                        && x.IsActive == job.IsActive);
+
+                job.UpdateStatus = isJobNoUpdate ? UpdateStatus.NoUpdate : UpdateStatus.Update;
+
+                CheckUpdateTrigger(job.Triggers, currentJobSchedules);
+            }
+        }
+
+        private void CheckUpdateTrigger(IEnumerable<TriggerModel> triggers, List<JobScheduleViewModel> currentJobSchedules)
+        {
+            foreach (var trigger in triggers)
+            {
+                var isTriggerNoUpdate = currentJobSchedules.Any(x => x.TriggerName == trigger.TriggerName
+                    && x.TriggerType == trigger.TriggerType
+                    && x.CronExpression == trigger.CronExpression);
+
+                trigger.UpdateStatus = isTriggerNoUpdate ? UpdateStatus.NoUpdate : UpdateStatus.Update;
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SaveUpdateJobs()
+        {
+            var schedulerModel = GetSchedules(_appSettings.GatewayURL).Result;
+
+            await _quartzHostedService.UpdateSchedule(schedulerModel);
+
+            var viewModel = new SaveUpdateJobViewModel { Message = "Save Successfully" };
 
             return View(viewModel);
         }
 
-        private async Task<SchedulerModel> GetSchedule(string url)
+        private async Task<SchedulerModel> GetSchedules(string url)
         {
             var response = RestService.For<IJobServiceApi>(url);
 
             return await response.GetScheduler();
         }
+
     }
 }

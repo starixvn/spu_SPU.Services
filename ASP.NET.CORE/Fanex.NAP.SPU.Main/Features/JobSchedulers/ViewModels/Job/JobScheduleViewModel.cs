@@ -10,7 +10,7 @@
             Group = groupJob;
 
             JobName = jobModel.JobName;
-            JobType = Type.GetType(jobModel.JobType);            
+            JobType = Type.GetType(jobModel.JobType);
             APIUrl = jobModel.APIUrl;
             HealthCheckUrl = jobModel.HealthCheckUrl;
             IsActive = jobModel.IsActive;
@@ -39,7 +39,7 @@
 
         public bool RepeatForever { get; set; }
 
-        public string CronExpression { get; }        
+        public string CronExpression { get; }
 
         public CronTriggerViewModel Cron { get; set; } = new CronTriggerViewModel();
 

@@ -19,5 +19,11 @@
         Month,
         Year
     }
+
+    public enum UpdateStatus
+    {
+        NoUpdate,
+        Update
+    }
     
 }
