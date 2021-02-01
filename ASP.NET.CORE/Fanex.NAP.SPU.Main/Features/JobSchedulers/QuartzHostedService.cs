@@ -56,7 +56,7 @@
 
         public UpdateJobViewModel CheckUpdateSchedule(SchedulerModel newSchedule)
         {
-            var newJobSchedules = InitJob.GetJobSchedules(newSchedule.GroupJobs);
+            var newJobSchedules = JobInit.GetJobSchedules(newSchedule.GroupJobs);
 
             var updateList = CheckUpdate(_jobSchedules, newJobSchedules);
 
