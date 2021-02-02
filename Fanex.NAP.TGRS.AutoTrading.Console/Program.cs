@@ -32,18 +32,18 @@ namespace Fanex.NAP.TGRS.AutoTrading.Console
             var retryTimes = 3;
             var service = new Service(directorySaveImage);
 
-            //if (service.IsDateExecute())
-            //{
-            //    do
-            //    {
-            //        Run(service);
+            if (service.IsDateExecute())
+            {
+                do
+                {
+                    Run(service);
 
-            //        retryTimes--;
+                    retryTimes--;
 
-            //    } while (!service.IsSuccessAPIResponse && retryTimes > 0);
-            //}
+                } while (!service.IsSuccessAPIResponse && retryTimes > 0);
+            }
 
-            RunMessageTest(service);
+            //RunMessageTest(service);
         }
 
         static void Run(Service service)

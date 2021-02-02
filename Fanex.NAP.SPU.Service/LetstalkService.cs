@@ -20,18 +20,6 @@
             letstalkService = new LetstalkClientServiceImp(webAPIClientService);
         }
 
-        //public LetstalkService(string targetName, string group, string pathAttachment)
-        //{
-        //    var letstalkApi = new ApplicationSettingServiceImp();
-        //    var webAPIClientService = new WebApiClientServiceImp(letstalkApi);
-        //    letstalkService = new LetstalkClientServiceImp(webAPIClientService);
-
-        //    letstalkModel = new LetstalkModel();
-        //    letstalkModel.LetstalkAttachments = GetAttachmentList(pathAttachment);
-        //    letstalkModel.TargetName = targetName;
-        //    letstalkModel.Group = group;
-        //}
-
         public LetstalkService(string targetName, string group, string pathAttachment)
         {
             var letstalkApi = new ApplicationSettingServiceImp();
@@ -39,10 +27,22 @@
             letstalkService = new LetstalkClientServiceImp(webAPIClientService);
 
             letstalkModel = new LetstalkModel();
-            letstalkModel.LetstalkAttachments = new List<LetstalkAttachment>();
+            letstalkModel.LetstalkAttachments = GetAttachmentList(pathAttachment);
             letstalkModel.TargetName = targetName;
             letstalkModel.Group = group;
         }
+
+        //public LetstalkService(string targetName, string group, string pathAttachment)
+        //{
+        //    var letstalkApi = new ApplicationSettingServiceImp();
+        //    var webAPIClientService = new WebApiClientServiceImp(letstalkApi);
+        //    letstalkService = new LetstalkClientServiceImp(webAPIClientService);
+
+        //    letstalkModel = new LetstalkModel();
+        //    letstalkModel.LetstalkAttachments = new List<LetstalkAttachment>();
+        //    letstalkModel.TargetName = targetName;
+        //    letstalkModel.Group = group;
+        //}
 
         public void Info(string message)
         {

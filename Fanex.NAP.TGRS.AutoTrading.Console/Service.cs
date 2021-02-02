@@ -152,7 +152,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Warn($"SendFileMessageViaLestalk failed ({AppSettings.EnvironmentName}) - { ex.ToString() }");
+                LogService.Warn($"SendFileMessageViaLestalk failed ({AppSettings.EnvironmentName}) - { ex }");
 
                 return false;
             }
