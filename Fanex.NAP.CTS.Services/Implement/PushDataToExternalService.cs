@@ -64,7 +64,12 @@
         }
 
         public void PushCustomerClassificationToSoon88(IEnumerable<LatestClassificationModel> customerClassifications)
-        {            
+        {
+            if (customerClassifications.Where(c => c.CustId == 43979941).Any())
+            {
+                LogService.Info("1. Start FeedCCToSoon88");
+            }
+
             FeedDataToSoon88Helper.FeedCCToSoon88(customerClassifications);
         }
 
