@@ -41,7 +41,7 @@ namespace Fanex.NAP.SPU.Gateway
                     {
                         webBuilder
                         .UseSentry()
-                        .UseUrls("")
+                        .UseUrls($"http://*:{configuration["HostingPort"]}")
                         .UseStartup<Startup>();
                     });
         }
