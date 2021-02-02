@@ -53,21 +53,11 @@
 
             if (updateList.Any())
             {
-                if (updateList.Where(c => c.CustID == 43979941).Any())
-                {
-                    LogService.Info("2. Start UpdateDataToSoon88");
-                }
-
                 UpdateDataToSoon88(updateList, url);
             }
 
             if (deleteList.Any())
             {
-                if (updateList.Where(c => c.CustID == 43979941).Any())
-                {
-                    LogService.Info("2.2 Start UpdateDataToSoon88");
-                }
-
                 DeleteDataInSoon88(deleteList, url);
             }
 
@@ -83,10 +73,6 @@
         private static void UpdateDataToSoon88(IEnumerable<CustomerClassModel> updateList, string url)
         {
             var result = GetAssociationWithCategory(updateList, false);
-            if (result.Where(c => c.RegisterName == "gerrard157").Any())
-            {
-                LogService.Info("3. GetAssociationWithCategory: result has gerrard157");
-            }
 
             var dataGroupByAccount = result.GroupBy(a => a.RegisterName);
             foreach (var groupAcc in dataGroupByAccount)
@@ -113,17 +99,8 @@
                     signature = CreateMD5Hash(JsonConvert.SerializeObject(tempData) + Consts.SALT)
                 };
 
-                if (finalData.account == "gerrard157")
-                {
-                    LogService.Info("4. finalData.account has gerrard157 - finalData: " + JsonConvert.SerializeObject(tempData));
-                }
-
                 var returnedData = ApiHelper.PostWithProxy<S88Result>(url, finalData);
                 Task.WhenAll(returnedData);
-                if (finalData.account == "gerrard157")
-                {
-                    LogService.Info("5. UpdateDataToSoon88 done");
-                }
             }
         }
 
