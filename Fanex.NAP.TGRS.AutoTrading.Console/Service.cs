@@ -3,6 +3,7 @@
     using Fanex.Logging;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Service;
+    using Newtonsoft.Json;
     using System;    
     using System.Drawing;
     using System.IO;
@@ -172,5 +173,37 @@
                 LogService.Warn($"SaveImage fail ({AppSettings.EnvironmentName}) - save path: ({savePath}) : { ex.ToString() }");
             }            
         }      
+
+        public void SendMessageViaLetstalkTest()
+        {
+            try
+            {
+                var subject = "Testing";
+                var content = "Testing";
+
+                if (!string.IsNullOrEmpty(AppSettings.TGRSAutoTradingLetstalkGroup))
+                {
+                    var arrGroupName = AppSettings.TGRSAutoTradingLetstalkGroup.Split(';');
+
+                    foreach (var groupName in arrGroupName)
+                    {
+                        var letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget, groupName, _directorySaveImage);
+
+                        if (!letstalkService.SendFileMessage(subject, content))
+                        {                         
+                            LogService.Warn($"SendMessageViaLetstalkTest ({AppSettings.EnvironmentName}) to {groupName} failed");
+                        }
+                        else
+                        {
+                            LogService.Info($"SendMessageViaLetstalkTest ({AppSettings.EnvironmentName}) to {groupName} done");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Warn($"SendMessageViaLetstalkTest failed ({AppSettings.EnvironmentName}) - { ex.ToString() }");                
+            }
+        }
     }
 }

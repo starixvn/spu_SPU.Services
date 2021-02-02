@@ -20,6 +20,18 @@
             letstalkService = new LetstalkClientServiceImp(webAPIClientService);
         }
 
+        //public LetstalkService(string targetName, string group, string pathAttachment)
+        //{
+        //    var letstalkApi = new ApplicationSettingServiceImp();
+        //    var webAPIClientService = new WebApiClientServiceImp(letstalkApi);
+        //    letstalkService = new LetstalkClientServiceImp(webAPIClientService);
+
+        //    letstalkModel = new LetstalkModel();
+        //    letstalkModel.LetstalkAttachments = GetAttachmentList(pathAttachment);
+        //    letstalkModel.TargetName = targetName;
+        //    letstalkModel.Group = group;
+        //}
+
         public LetstalkService(string targetName, string group, string pathAttachment)
         {
             var letstalkApi = new ApplicationSettingServiceImp();
@@ -27,7 +39,7 @@
             letstalkService = new LetstalkClientServiceImp(webAPIClientService);
 
             letstalkModel = new LetstalkModel();
-            letstalkModel.LetstalkAttachments = GetAttachmentList(pathAttachment);
+            letstalkModel.LetstalkAttachments = new List<LetstalkAttachment>();
             letstalkModel.TargetName = targetName;
             letstalkModel.Group = group;
         }
@@ -62,9 +74,6 @@
 
         public bool SendFileMessage(string subject, string content)
         {
-            var enviroment = AppSettings.Environment;
-            var enviromentText = enviroment == 3 ? "PRO" : (enviroment == 2 ? "UAT": "LOCAL");
-
             if (letstalkModel != null)
             {
                 letstalkModel.Subject = subject;
