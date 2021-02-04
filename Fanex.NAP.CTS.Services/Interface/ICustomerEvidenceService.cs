@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.CTS.Services
 {
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.RemoveEvidenceMultipleAccounts;
     using System.Collections.Generic;
 
     public interface ICustomerEvidenceService
@@ -24,5 +25,13 @@
         DBResult UpdateBetLimitOfFlaggedCustomer(string custIds);
 
         void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses);
+
+        IEnumerable<CustomerEvidenceQueueModel> GetCustomerEvidenceQueue();
+
+        DBResult ModifyCustomerEvidence(string customerEvidence, int actionId);
+
+        DBResult RollbackCustomerEvidence(long sessionId);
+
+        DBResult UpdateCustomerEvidence(string processedIdList);
     }
 }

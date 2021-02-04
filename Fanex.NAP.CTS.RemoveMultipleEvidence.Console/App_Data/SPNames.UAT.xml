@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+	<Function Name="Remove Customer Evidence">
+		<Setting Key="CTS_DC_CustEvidenceQueue_Get"
+				 SpName="CTS_DC_CustEvidenceQueue_Get" DbName="MySQL.CTS_DataCenter.ctsService"/>
+		<Setting Key="CTS_DC_CustEvidenceQueue_TakeAction"
+				 SpName="CTS_DC_CustEvidenceQueue_TakeAction" DbName="MySQL.CTS_DataCenter.ctsService"/>
+		<Setting Key="CTS_DC_CustEvidenceQueue_RollbackRemovedEvidences"
+				 SpName="CTS_DC_CustEvidenceQueue_RollbackRemovedEvidences" DbName="MySQL.CTS_DataCenter.ctsService"/>
+		<Setting Key="CTS_DC_CustEvidenceQueue_Update"
+				 SpName="CTS_DC_CustEvidenceQueue_Update" DbName="MySQL.CTS_DataCenter.ctsService"/>
+	</Function>
+</Functions>

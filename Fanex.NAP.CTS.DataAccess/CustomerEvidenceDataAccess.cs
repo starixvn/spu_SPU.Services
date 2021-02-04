@@ -3,7 +3,10 @@
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.NAP.CTS.Criteria;
+    using Fanex.NAP.CTS.Criteria.RemoveEvidenceMultipleAccounts;
+    using Fanex.NAP.CTS.Criteria.RemoveMultipleEvidences;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.RemoveEvidenceMultipleAccounts;
     using Fanex.NAP.FS.XML;
     using System.Collections.Generic;
     using System.Linq;
@@ -196,6 +199,79 @@
             }
 
             return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+        }
+
+        public IEnumerable<CustomerEvidenceQueueModel> GetCustomerEvidenceQueue()
+        {
+            var criteria = new GetCustEvidenceQueueCriteria();
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<CustomerEvidenceQueueModel>(criteria);
+            }
+        }
+
+        public DBResult ModifyCustomerEvidence(string customerEvidence, int actionId)
+        {
+            var criteria = new ModifyCustomerEvidenceFromQueueCriteria
+            {
+                CustomerEvidence = customerEvidence,
+                ActionId = actionId
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                if (string.IsNullOrEmpty(criteria.ErrorMessage))
+                {
+                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
+                }
+            }
+
+            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+
+        }
+
+        public DBResult RollbackCustomerEvidence(long sessionId)
+        {
+            var criteria = new RollbackCustomerEvidenceCriteria
+            {
+                SessionId = sessionId
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                if (string.IsNullOrEmpty(criteria.ErrorMessage))
+                {
+                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
+                }
+            }
+
+            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+        }
+
+        public DBResult UpdateCustomerEvidence(string processedIdList)
+        {
+            var criteria = new UpdateCustomerEvidenceCriteria
+            {
+                ProcessedIdList = processedIdList
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+
+                if (string.IsNullOrEmpty(criteria.ErrorMessage))
+                {
+                    return new DBResult { ErrorCode = 0, ErrorMsg = criteria.ErrorMessage };
+                }
+            }
+
+            return new DBResult { ErrorCode = -1, ErrorMsg = criteria.ErrorMessage };
+
         }
     }
 }

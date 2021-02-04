@@ -3,6 +3,7 @@
     using Fanex.Logging;
     using Fanex.NAP.CTS.DataAccess;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.RemoveEvidenceMultipleAccounts;
     using Fanex.NAP.CTS.Services.Helper;
     using Fanex.NAP.FS.Core;
     using Newtonsoft.Json;
@@ -230,5 +231,25 @@
                     return -99; // is not mapping
             }
         }
+
+        public IEnumerable<CustomerEvidenceQueueModel> GetCustomerEvidenceQueue()
+        {
+            return dataAccess.GetCustomerEvidenceQueue();
+        }
+
+        public DBResult ModifyCustomerEvidence(string customerEvidence, int actionId)
+        {
+            return dataAccess.ModifyCustomerEvidence(customerEvidence, actionId);
+        }
+
+        public DBResult RollbackCustomerEvidence(long sessionId)
+        {
+            return dataAccess.RollbackCustomerEvidence(sessionId);
+        }
+
+        public DBResult UpdateCustomerEvidence(string processedIdList)
+        {
+            return dataAccess.UpdateCustomerEvidence(processedIdList);
+        }        
     }
 }
