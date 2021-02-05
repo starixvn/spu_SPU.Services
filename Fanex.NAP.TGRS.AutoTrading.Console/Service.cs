@@ -125,7 +125,7 @@
         public bool SendFileMessageViaLestalk()
         {
             try
-            {
+            {                
                 var isSendSuccess = true;
                 var sundayOfLastWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
                 var subject = "Automation Trading Report";
@@ -136,15 +136,21 @@
                     var arrGroupName = AppSettings.TGRSAutoTradingLetstalkGroup.Split(';');
 
                     foreach (var groupName in arrGroupName)
-                    {
+                    {                        
                         var letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget, groupName, _directorySaveImage);
+                        var retry = 3;
 
-                        if (!letstalkService.SendFileMessage(subject, content))
+                        do
                         {
-                            isSendSuccess = false;
+                            isSendSuccess = letstalkService.SendFileMessage(subject, content);
+                            
+                            if (!isSendSuccess)
+                            {
+                                LogService.Warn($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) to {groupName} failed");
 
-                            LogService.Warn($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) to {groupName} failed");
-                        }
+                                retry--;
+                            }
+                        } while (retry > 0 && !isSendSuccess);
                     }
                 }
                                 
@@ -173,37 +179,6 @@
                 LogService.Warn($"SaveImage fail ({AppSettings.EnvironmentName}) - save path: ({savePath}) : { ex.ToString() }");
             }            
         }      
-
-        public void SendMessageViaLetstalkTest()
-        {
-            try
-            {
-                var subject = "Testing";
-                var content = "Testing";
-
-                if (!string.IsNullOrEmpty(AppSettings.TGRSAutoTradingLetstalkGroup))
-                {
-                    var arrGroupName = AppSettings.TGRSAutoTradingLetstalkGroup.Split(';');
-
-                    foreach (var groupName in arrGroupName)
-                    {
-                        var letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget, groupName, _directorySaveImage);
-
-                        if (!letstalkService.SendFileMessage(subject, content))
-                        {                         
-                            LogService.Warn($"SendMessageViaLetstalkTest ({AppSettings.EnvironmentName}) to {groupName} failed");
-                        }
-                        else
-                        {
-                            LogService.Info($"SendMessageViaLetstalkTest ({AppSettings.EnvironmentName}) to {groupName} done");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogService.Warn($"SendMessageViaLetstalkTest failed ({AppSettings.EnvironmentName}) - { ex.ToString() }");                
-            }
-        }
+        
     }
 }

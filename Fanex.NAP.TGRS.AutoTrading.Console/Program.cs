@@ -41,9 +41,7 @@ namespace Fanex.NAP.TGRS.AutoTrading.Console
                     retryTimes--;
 
                 } while (!service.IsSuccessAPIResponse && retryTimes > 0);
-            }
-
-            //RunMessageTest(service);
+            }            
         }
 
         static void Run(Service service)
@@ -66,11 +64,6 @@ namespace Fanex.NAP.TGRS.AutoTrading.Console
                     LogService.Info($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) - sucessfully - {toDate}");
                 }
             }
-        }
-
-        static void RunMessageTest(Service service)
-        {
-            service.SendMessageViaLetstalkTest();
         }
     }
 }
