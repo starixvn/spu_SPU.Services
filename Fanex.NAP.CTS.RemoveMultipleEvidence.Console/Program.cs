@@ -44,7 +44,7 @@
                });
 
             try
-            {
+            {                
                 var customerEvidenceFromQueue = GetCustomerEvidenceFromQueue();
 
                 if (customerEvidenceFromQueue != null && customerEvidenceFromQueue.Any())

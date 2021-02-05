@@ -105,6 +105,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Fanex.NAP.CTS.RemoveEvidenceMultipleAccounts.Console.exe.PRO.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.CTS.RemoveEvidenceMultipleAccounts.Console.exe.LOCAL.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
