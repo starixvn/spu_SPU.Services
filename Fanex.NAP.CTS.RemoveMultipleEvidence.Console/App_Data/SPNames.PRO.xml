@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Functions>
-  <Function Name="Classify Customer">
-    <Setting Key="CTS_DC_CustClassification_Probation_GetCustForScanning"
-             SpName="CTS_DC_CustClassification_Probation_GetCustForScanning" DbName="MySQL.CTS_DataCenter.ctsService"/>
-    <Setting Key="CTS_DC_Notification_InsertProbationNotification"
-             SpName="CTS_DC_Notification_InsertProbationNotification" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-    <Setting Key="CTS_DC_CustClassification_Probation_UpdateLastScanDate"
-             SpName="CTS_DC_CustClassification_Probation_UpdateLastScanDate" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-    <Setting Key="CTS_NormalAccountsClassification_Probation"
-             SpName="CTS_NormalAccountsClassification_Probation" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
-  </Function>
+	<Function Name="Remove Customer Evidence">
+		<Setting Key="CTS_DC_CustEvidenceQueue_Get"
+				 SpName="CTS_DC_CustEvidenceQueue_Get" DbName="MySQL.CTS_DataCenter.ctsService"/>
+		<Setting Key="CTS_DC_CustEvidenceQueue_TakeAction"
+				 SpName="CTS_DC_CustEvidenceQueue_TakeAction" DbName="MySQL.CTS_DataCenter.ctsService"/>
+		<Setting Key="CTS_DC_CustEvidenceQueue_RollbackRemovedEvidences"
+				 SpName="CTS_DC_CustEvidenceQueue_RollbackRemovedEvidences" DbName="MySQL.CTS_DataCenter.ctsService"/>
+		<Setting Key="CTS_DC_CustEvidenceQueue_Update"
+				 SpName="CTS_DC_CustEvidenceQueue_Update" DbName="MySQL.CTS_DataCenter.ctsService"/>
+	</Function>
 </Functions>
