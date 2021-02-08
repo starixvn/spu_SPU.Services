@@ -53,12 +53,9 @@
                 </tr>
 
                 <tr>
-                    <td colspan="5">
+                    <td colspan="4">
                         <table class="table-trigger">
-                            <tr class="table-trigger-tr-header">
-                                <td width="60px" class="table-trigger-td-header">
-                                    <img src="~/Images/toggle.png" />
-                                </td>
+                            <tr class="table-trigger-tr-header">                               
                                 <td class="table-trigger-td-header">
                                     <span>Trigger Type</span>
                                 </td>
@@ -75,8 +72,7 @@
 
                             @foreach (var trigger in job.Triggers)
                             {
-                                <tr style="background-color: @(trigger.UpdateStatus == UpdateStatus.Update ? "#FFFF00" : "#FFFFFF")">
-                                    <td></td>
+                                <tr style="background-color: @(trigger.UpdateStatus == UpdateStatus.Update ? "#FFFF00" : "#FFFFFF")">                                  
                                     <td class="table-trigger-td-body">
                                         <span style="color:#000000">
                                             @trigger.TriggerType
