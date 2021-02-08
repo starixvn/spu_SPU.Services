@@ -745,13 +745,14 @@
             repository.Execute(criteria);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds)
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, int sourceType)
         {
             var custInfos = new List<CustomerMainDbModel>();
 
             var criteria = new GetCustomerInfoFromMainDBCriteria
             {
-                CustIds = custIds
+                CustIds = custIds,
+                SourceType = sourceType
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -762,13 +763,14 @@
             return custInfos;
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds)
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, int sourceType)
         {
             var custInfos = new List<CustomerMainDbModel>();
 
             var criteria = new GetCustomerInfoFromCTSCriteria
             {
-                CustIds = custIds
+                CustIds = custIds,
+                SourceType = sourceType
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -779,13 +781,27 @@
             return custInfos;
         }
 
-        public void UpdateCustomerInfo(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
+        public void UpdateCustInfoComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
         {
             var repository = new DynamicRepository();
 
-            var criteria = new UpdateCustomerInfoCriteria
+            var criteria = new UpdateCustInfoCompleteCriteria
             {
-                Customers = customers,
+                CustInfo = customers,
+                LastUpdateCustID = lastUpdateCustID,
+                LastUpdateTime = lastUpdateTime
+            };
+
+            repository.Execute(criteria);
+        }
+
+        public void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateCustomerCompleteCriteria
+            {
+                CustomerInfo = customers,
                 LastUpdateCustID = lastUpdateCustID,
                 LastUpdateTime = lastUpdateTime
             };

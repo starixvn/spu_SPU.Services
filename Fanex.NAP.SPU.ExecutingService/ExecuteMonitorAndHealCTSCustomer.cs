@@ -50,7 +50,6 @@
         private async Task ExecuteAPI(IJobExecutionContext context)
         {
             var jobDataMap = context.JobDetail.JobDataMap;
-            TranformCustModel mainDBCusts;
 
             if (jobDataMap != null)
             {
@@ -59,17 +58,22 @@
                 var isActive = jobDataMap.GetBoolean("Active");
                 var packageSize = jobDataMap.GetInt("PackageSize");
 
+                TranformCustModel updatedCustFromCustInfo;
+                TranformCustModel updatedCustFromCustomer;
+
                 if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                 {
                     var apiUrls = rootPath.Split(';');
 
                     var output = dataCenterService.GetLastUpdatedTime();
 
-                    mainDBCusts = dataCenterService.GetUpdatedCustFromCustHistory(output.LastUpdateTime, output.LastUpdateCustID, packageSize);
+                    updatedCustFromCustInfo = dataCenterService.GetUpdatedCustFromCustInfoHistory(output.LastUpdateTimeCustInfo, output.LastUpdateCustIDCustInfo, packageSize);
 
-                    if (mainDBCusts != null && mainDBCusts.LastCustId != null && mainDBCusts.LastUpdatedTime != null)
+                    updatedCustFromCustomer = dataCenterService.GetUpdatedCustFromCustomerHistory(output.LastUpdateTimeCustomer, output.LastUpdateCustIDCustomer, packageSize);
+
+                    if (IsValidData(updatedCustFromCustInfo, updatedCustFromCustomer))
                     {
-                        await SendRequest(mainDBCusts, apiUrls, jobDataMap);
+                        await SendRequest(updatedCustFromCustInfo, updatedCustFromCustomer, apiUrls, jobDataMap);
                     }
                 }
             }
@@ -79,11 +83,11 @@
             }
         }
 
-        private async Task SendRequest(TranformCustModel listCust, string[] urlList, JobDataMap mappingData)
+        private async Task SendRequest(TranformCustModel custFromCustInfo, TranformCustModel custFromCustomer, string[] urlList, JobDataMap mappingData)
         {
             var tasks = new List<Task>();
 
-            var custInfo = new List<TranformCustModel>() { listCust };
+            var custInfo = new List<TranformCustModel>() { custFromCustInfo, custFromCustomer};
 
             var task = Task.Run(() =>
              {
@@ -97,6 +101,17 @@
             tasks.Add(task);
 
             await Task.WhenAll(tasks.ToArray());
+        }
+
+        private bool IsValidData(TranformCustModel custFromCustInfo, TranformCustModel custFromCustomer)
+        {
+            if ((custFromCustInfo != null && custFromCustInfo.LastCustId != null && custFromCustInfo.LastUpdatedTime != null) 
+                || (custFromCustomer != null && custFromCustomer.LastCustId != null && custFromCustomer.LastUpdatedTime != null))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

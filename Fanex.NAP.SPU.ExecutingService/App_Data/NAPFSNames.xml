@@ -28,6 +28,7 @@
 	<Setting Key="CTS_DC_CTSCustomer_GetLastInsertCust" SpName="CTS_DC_CTSCustomer_GetLastInsertCust" DbName="MySQL.CTS_DataCenter.ctsService"/>
 	<Setting Key="CTS_DC_CTSCustomer_GetLastUpdateTime" SpName="CTS_DC_CTSCustomer_GetLastUpdateTime" DbName="MySQL.CTS_DataCenter.ctsService"/>
 	<Setting Key="CTS_CustInfoHistory_GetUpdatedCustID" SpName="CTS_CustInfoHistory_GetUpdatedCustID" DbName="DBCTSC.bodbCustHistory.bodbSPUNet"/>
+    <Setting Key="CTS_CustomerHistory_GetUpdatedCustID" SpName="CTS_CustomerHistory_GetUpdatedCustID" DbName="DBCTSC.bodbCustHistory.bodbSPUNet"/>
 	<Setting Key="CTS_Customer_GetNotNULLUserName2ByXML" SpName="CTS_Customer_GetNotNULLUserName2ByXML" DbName="DBCTS.bodb02.bodbSPUNet"/>
   </Function>
 

@@ -364,19 +364,24 @@
             dataCenterDataAccess.ReTranformAccount(jsonData);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds)
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, int sourceType)
         {
-            return dataCenterDataAccess.GetCustomerFromMainDB(custIds);
+            return dataCenterDataAccess.GetCustomerFromMainDB(custIds, sourceType);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds)
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, int sourceType)
         {
-            return dataCenterDataAccess.GetCustomerFromCTS(custIds);
+            return dataCenterDataAccess.GetCustomerFromCTS(custIds, sourceType);
         }
 
-        public void UpdateCustomerInfo(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
+        public void UpdateCustInfoComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
         {
-            dataCenterDataAccess.UpdateCustomerInfo(customers, lastUpdateTime, lastUpdateCustID);
+            dataCenterDataAccess.UpdateCustInfoComplete(customers, lastUpdateTime, lastUpdateCustID);
+        }
+
+        public void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
+        {
+            dataCenterDataAccess.UpdateCustomerComplete(customers, lastUpdateTime, lastUpdateCustID);
         }
     }
 }

@@ -14,7 +14,8 @@
     <Setting Key="CTS_DC_CustEvidence_SyncToCategory" SpName="CTS_DC_CustEvidence_SyncToCategory" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
     <Setting Key="CTS_DC_CustEvidence_GetExistedEvidencesToSync" SpName="CTS_DC_CustEvidence_GetExistedEvidencesToSync" DbName="MySQL.CTS_DataCenter.ctsService" />
 	<Setting Key="CTS_DC_CTSCustomer_InsertComplete" SpName="CTS_DC_CTSCustomer_InsertComplete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-	<Setting Key="CTS_DC_CTSCustomer_UpdateInfoComplete" SpName="CTS_DC_CTSCustomer_UpdateInfoComplete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+	<Setting Key="CTS_DC_CTSCustomer_UpdateCustomerComplete" SpName="CTS_DC_CTSCustomer_UpdateCustomerComplete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+	<Setting Key="CTS_DC_CTSCustomer_UpdateCustInfoComplete" SpName="CTS_DC_CTSCustomer_UpdateCustInfoComplete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
 	<Setting Key="CTS_DC_CTSCustomer_GetInfoByCustIDList" SpName="CTS_DC_CTSCustomer_GetInfoByCustIDList" DbName="MySQL.CTS_DataCenter.ctsService" />
 	  
     <!-- DCS_DataCenter -->

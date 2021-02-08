@@ -89,10 +89,12 @@
 
         void ReTransformAccount(string jsonData);
 
-        IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds);
+        IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, int sourceType);
 
-        IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds);
+        IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, int sourceType);
         
-        void UpdateCustomerInfo(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID);
+        void UpdateCustInfoComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID);
+
+        void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID);
     }
 }

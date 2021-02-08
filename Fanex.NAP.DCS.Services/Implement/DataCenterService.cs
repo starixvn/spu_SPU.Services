@@ -117,9 +117,14 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.GetLastUpdatedTime();
         }     
 
-        public TranformCustModel GetUpdatedCustFromCustHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        public TranformCustModel GetUpdatedCustFromCustInfoHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
         {
-            return dataCenter.GetUpdatedCustFromCustHistory(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
+            return dataCenter.GetUpdatedCustFromCustInfoHistory(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
+        }
+
+        public TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        {
+            return dataCenter.GetUpdatedCustFromCustomerHistory(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
         }
     }
 }

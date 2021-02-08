@@ -4,8 +4,12 @@
 
     public class LastUpdateValueModel
     {
-        public DateTime LastUpdateTime { get; set; }
+        public DateTime LastUpdateTimeCustInfo { get; set; }
 
-        public Int64 LastUpdateCustID { get; set; }
+        public Int64 LastUpdateCustIDCustInfo { get; set; }
+
+        public DateTime LastUpdateTimeCustomer { get; set; }
+
+        public Int64 LastUpdateCustIDCustomer { get; set; }
     }
 }

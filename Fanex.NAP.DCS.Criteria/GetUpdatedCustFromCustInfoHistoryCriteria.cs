@@ -4,7 +4,7 @@
     using Fanex.Data.Repository;
     using System;
 
-    public class GetUpdatedCustFromCustHistoryCriteria : CriteriaBase
+    public class GetUpdatedCustFromCustInfoHistoryCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "lastUpdateTime")]
         public DateTime LastUpdateTime { get; set; }

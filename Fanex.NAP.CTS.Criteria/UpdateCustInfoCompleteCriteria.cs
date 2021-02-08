@@ -4,10 +4,10 @@
     using Fanex.Data.Repository;
     using System;
 
-    public class UpdateCustomerInfoCriteria : NonQueryCommand
+    public class UpdateCustInfoCompleteCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_CustomerInfo")]
-        public string Customers { get; set; }
+        [SpParam(SqlParamName = "ip_CustInfo")]
+        public string CustInfo { get; set; }
 
         [SpParam(SqlParamName = "ip_LastUpdateTime")]
         public DateTime? LastUpdateTime { get; set; }
@@ -17,7 +17,7 @@
 
         public override string GetSettingKey()
         {
-            return "CTS_DC_CTSCustomer_UpdateInfoComplete";
+            return "CTS_DC_CTSCustomer_UpdateCustInfoComplete";
         }
 
         public override bool IsValid()

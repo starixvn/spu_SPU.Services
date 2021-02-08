@@ -66,5 +66,11 @@
             LASTUPDATED_TIME = 9,
             LASTUPDATED_CUSTID = 10,
         };
+
+        public enum UPDATECUSTOMER : int
+        {
+            FROM_CUSTOMER = 1,
+            FROM_CUSTINFO = 2
+        }
     }
 }

@@ -8,6 +8,9 @@
         [SpParam(SqlParamName = "ip_CustIDList")]
         public string CustIds { get; set; }
 
+        [SpParam(SqlParamName = "ip_SourceType")]
+        public int SourceType { get; set; }
+
         public override string GetSettingKey()
         {
             return "CTS_DC_CTSCustomer_GetInfoByCustIDList";

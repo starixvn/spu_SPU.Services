@@ -19,7 +19,9 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         List<RawAccountModel> GetRawUnsuccessAccount(int numOfAccount);
 
-        TranformCustModel GetUpdatedCustFromCustHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
+        TranformCustModel GetUpdatedCustFromCustInfoHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
+
+        TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
 
         List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, Int64 lastScannedCustID);
 

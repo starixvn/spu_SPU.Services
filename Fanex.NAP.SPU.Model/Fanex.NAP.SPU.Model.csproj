@@ -45,6 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CTSCustomer.cs" />
+    <Compile Include="CustInfoModel.cs" />
+    <Compile Include="CustomerInfoModel.cs" />
     <Compile Include="CustomerMainDbModel.cs" />
     <Compile Include="DataResult.cs" />
     <Compile Include="Environment.cs" />

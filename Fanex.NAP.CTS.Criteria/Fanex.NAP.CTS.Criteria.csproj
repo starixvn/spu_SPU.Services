@@ -102,7 +102,8 @@
     <Compile Include="TransformAssociationAffectedEvidenceCriteria.cs" />
     <Compile Include="InsertNewCustomerCategoryCriteria.cs" />
     <Compile Include="TransformUpdatingLastLoginTimeCriteria.cs" />
-    <Compile Include="UpdateCustomerInfoCriteria.cs" />
+    <Compile Include="UpdateCustomerCompleteCriteria.cs" />
+    <Compile Include="UpdateCustInfoCompleteCriteria.cs" />
     <Compile Include="UpdateTimingExecutionCriteria.cs" />
     <Compile Include="UpdateUsername2Criteria.cs" />
     <Compile Include="GetCustomersWithNullUsername2Criteria.cs" />
