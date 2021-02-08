@@ -44,37 +44,42 @@
                });
 
             try
-            {                
-                var customerEvidenceFromQueue = GetCustomerEvidenceFromQueue();
+            {
+                var customerEvidenceFromQueue = Enumerable.Empty<CustomerEvidenceQueueModel>();
 
-                if (customerEvidenceFromQueue != null && customerEvidenceFromQueue.Any())
+                do
                 {
-                    var customerEvidenceSerilizeJson = JsonConvert.SerializeObject(customerEvidenceFromQueue);
+                    customerEvidenceFromQueue = GetCustomerEvidenceFromQueue();
 
-                    var result = customerEvidenceService.ModifyCustomerEvidence(customerEvidenceSerilizeJson, clearActionId);
-
-                    if (result.ErrorCode == -1)
+                    if (customerEvidenceFromQueue != null && customerEvidenceFromQueue.Any())
                     {
-                        LogService.Error(result.ErrorMsg);
-                    }
-                    else
-                    {
-                        var processedIdList = customerEvidenceFromQueue.Select(x => x.Id);
+                        var customerEvidenceSerilizeJson = JsonConvert.SerializeObject(customerEvidenceFromQueue);
 
-                        var updateResult = customerEvidenceService.UpdateCustomerEvidence(string.Join(",", processedIdList));
+                        var result = customerEvidenceService.ModifyCustomerEvidence(customerEvidenceSerilizeJson, clearActionId);
 
-                        if (updateResult.ErrorCode == -1)
+                        if (result.ErrorCode == -1)
                         {
-                            LogService.Error(updateResult.ErrorMsg);
+                            LogService.Error(result.ErrorMsg);
                         }
                         else
                         {
-                            var custIds = customerEvidenceFromQueue.Select(x => (int)x.CustId).ToList();
+                            var processedIdList = customerEvidenceFromQueue.Select(x => x.Id);
 
-                            customerClassifyService.RescanCustomerClassify(custIds, true, true, Constants.FLOWTYPERESCANCC.NEWMEMBER);
+                            var updateResult = customerEvidenceService.UpdateCustomerEvidence(string.Join(",", processedIdList));
+
+                            if (updateResult.ErrorCode == -1)
+                            {
+                                LogService.Error(updateResult.ErrorMsg);
+                            }
+                            else
+                            {
+                                var custIds = customerEvidenceFromQueue.Select(x => (int)x.CustId).ToList();
+
+                                customerClassifyService.RescanCustomerClassify(custIds, true, true, Constants.FLOWTYPERESCANCC.REMOVE_MULTIPLE_EVIDENCE);
+                            }
                         }
                     }
-                }
+                } while (customerEvidenceFromQueue != null && customerEvidenceFromQueue.Any());
             }
             catch (Exception ex)
             {
