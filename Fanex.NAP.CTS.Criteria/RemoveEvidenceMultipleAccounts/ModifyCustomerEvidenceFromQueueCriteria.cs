@@ -1,13 +1,8 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.Criteria.RemoveEvidenceMultipleAccounts
+﻿namespace Fanex.NAP.CTS.Criteria.RemoveEvidenceMultipleAccounts
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+
     public class ModifyCustomerEvidenceFromQueueCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "ip_CustEvidence")]
@@ -15,6 +10,9 @@ namespace Fanex.NAP.CTS.Criteria.RemoveEvidenceMultipleAccounts
 
         [SpParam(SqlParamName = "ip_ActionID")]
         public int ActionId { get; set; }
+
+        [SpParam(SqlParamName = "op_Result")]
+        public string CustIdResultList { get; set; }
 
         [SpParam(SqlParamName = "op_ErrorMessage")]
         public string ErrorMessage { get; set; }

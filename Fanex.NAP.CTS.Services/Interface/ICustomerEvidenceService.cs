@@ -28,7 +28,7 @@
 
         IEnumerable<CustomerEvidenceQueueModel> GetCustomerEvidenceQueue();
 
-        DBResult ModifyCustomerEvidence(string customerEvidence, int actionId);
+        DBResult ModifyCustomerEvidence(string customerEvidence, int actionId, out string custIdResultList);
 
         DBResult RollbackCustomerEvidence(long sessionId);
 

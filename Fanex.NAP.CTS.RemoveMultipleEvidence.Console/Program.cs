@@ -55,7 +55,9 @@
                     {
                         var customerEvidenceSerilizeJson = JsonConvert.SerializeObject(customerEvidenceFromQueue);
 
-                        var result = customerEvidenceService.ModifyCustomerEvidence(customerEvidenceSerilizeJson, clearActionId);
+                        var custIdResultList = string.Empty;
+
+                        var result = customerEvidenceService.ModifyCustomerEvidence(customerEvidenceSerilizeJson, clearActionId, out custIdResultList);
 
                         if (result.ErrorCode == -1)
                         {
@@ -71,11 +73,11 @@
                             {
                                 LogService.Error(updateResult.ErrorMsg);
                             }
-                            else
+                            else if (!string.IsNullOrEmpty(custIdResultList))
                             {
-                                var custIds = customerEvidenceFromQueue.Select(x => (int)x.CustId).ToList();
+                                var custIdList = custIdResultList.Split(',').Select(int.Parse).ToList();
 
-                                customerClassifyService.RescanCustomerClassify(custIds, true, true, Constants.FLOWTYPERESCANCC.REMOVE_MULTIPLE_EVIDENCE);
+                                customerClassifyService.RescanCustomerClassify(custIdList, true, true, Constants.FLOWTYPERESCANCC.REMOVE_MULTIPLE_EVIDENCE);
                             }
                         }
                     }

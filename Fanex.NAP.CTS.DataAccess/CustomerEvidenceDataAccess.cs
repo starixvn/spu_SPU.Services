@@ -211,8 +211,10 @@
             }
         }
 
-        public DBResult ModifyCustomerEvidence(string customerEvidence, int actionId)
+        public DBResult ModifyCustomerEvidence(string customerEvidence, int actionId, out string custIdResultList)
         {
+            custIdResultList = string.Empty;
+
             var criteria = new ModifyCustomerEvidenceFromQueueCriteria
             {
                 CustomerEvidence = customerEvidence,
@@ -222,6 +224,8 @@
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 db.ExecuteNonQuery(criteria);
+
+                custIdResultList = criteria.CustIdResultList;
 
                 if (string.IsNullOrEmpty(criteria.ErrorMessage))
                 {

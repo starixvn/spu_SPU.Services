@@ -237,9 +237,9 @@
             return dataAccess.GetCustomerEvidenceQueue();
         }
 
-        public DBResult ModifyCustomerEvidence(string customerEvidence, int actionId)
+        public DBResult ModifyCustomerEvidence(string customerEvidence, int actionId, out string custIdResultList)
         {
-            return dataAccess.ModifyCustomerEvidence(customerEvidence, actionId);
+            return dataAccess.ModifyCustomerEvidence(customerEvidence, actionId, out custIdResultList);
         }
 
         public DBResult RollbackCustomerEvidence(long sessionId)
