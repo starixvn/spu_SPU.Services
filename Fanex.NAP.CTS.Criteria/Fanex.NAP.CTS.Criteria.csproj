@@ -65,6 +65,10 @@
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
     <Compile Include="GetCustomerInfoFromCTSCriteria.cs" />
     <Compile Include="GetCustomersWithHavingUsername2Criteria.cs" />
+    <Compile Include="RemoveEvidenceMultipleAccounts\GetCustEvidenceQueueCriteria.cs" />
+    <Compile Include="RemoveEvidenceMultipleAccounts\ModifyCustomerEvidenceFromQueueCriteria.cs" />
+    <Compile Include="RemoveEvidenceMultipleAccounts\RollbackCustomerEvidenceCriteria.cs" />
+    <Compile Include="RemoveEvidenceMultipleAccounts\UpdateCustomerEvidenceCriteria.cs" />
     <Compile Include="ReTransformAccountCriteria.cs" />
     <Compile Include="InsertRobotUsersIntoSpecialCustClassCriteria.cs" />
     <Compile Include="CustomerClassification\CategorizeCustomerGeneralCategoryRealtimeCriteria.cs" />

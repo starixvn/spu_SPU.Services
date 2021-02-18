@@ -45,7 +45,11 @@
 
             // Check and rescan normal account
             if (custIds != null && custIds.Any())
-                RescanNormalAccount(custIds);
+            {
+                var newCustIds = custIds.Where(x => !custIdCCs.Contains(x)).ToList();
+
+                RescanNormalAccount(newCustIds);
+            }                
         }
 
         private List<int> SyncCustomerEvidenceToCategory(List<int> custIds, FLOWTYPERESCANCC flowTypeRescanCC)
