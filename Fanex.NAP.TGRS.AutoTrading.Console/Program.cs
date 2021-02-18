@@ -41,7 +41,7 @@ namespace Fanex.NAP.TGRS.AutoTrading.Console
                     retryTimes--;
 
                 } while (!service.IsSuccessAPIResponse && retryTimes > 0);
-            }
+            }            
         }
 
         static void Run(Service service)
