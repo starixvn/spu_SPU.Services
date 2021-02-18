@@ -76,7 +76,7 @@
             }
             catch(Exception ex)
             {
-                LogService.Warn($"MoveFileToArcFolder fail ({AppSettings.EnvironmentName}) - { ex.ToString() }");
+                LogService.Error($"MoveFileToArcFolder fail ({AppSettings.EnvironmentName}) - { ex.ToString() }", ex);
             }
         }
 
@@ -118,7 +118,7 @@
             {
                 IsSuccessAPIResponse = false;
 
-                LogService.Warn($"GenereateAutoTradingToFile ({AppSettings.EnvironmentName}) failed - endpoint: { endpoint } : { ex.ToString() }");
+                LogService.Error($"GenereateAutoTradingToFile ({AppSettings.EnvironmentName}) failed - endpoint: { endpoint } : { ex.ToString() }", ex);
             }            
         }
 
@@ -137,28 +137,27 @@
 
                     foreach (var groupName in arrGroupName)
                     {                        
-                        var letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget, groupName, _directorySaveImage);
-                        var retry = 3;
+                        var letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget, groupName, _directorySaveImage);                        
 
-                        do
+                        if (!letstalkService.CheckExistFileAttach())
                         {
-                            isSendSuccess = letstalkService.SendFileMessage(subject, content);
-                            
-                            if (!isSendSuccess)
-                            {
-                                LogService.Warn($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) to {groupName} failed");
+                            LogService.Warn($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) to {groupName} does not exit file attach");
+                        }
 
-                                retry--;
-                            }
-                        } while (retry > 0 && !isSendSuccess);
+                        isSendSuccess = letstalkService.SendSingleFileAttachMessage(subject, content);
+                            
+                        if (!isSendSuccess)
+                        {
+                            LogService.Warn($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) to {groupName} failed");               
+                        }
                     }
                 }
-                                
+                
                 return isSendSuccess;
             }
             catch (Exception ex)
             {
-                LogService.Warn($"SendFileMessageViaLestalk failed ({AppSettings.EnvironmentName}) - { ex }");
+                LogService.Error($"SendFileMessageViaLestalk failed ({AppSettings.EnvironmentName}) - { ex.ToString() }", ex);
 
                 return false;
             }
@@ -176,7 +175,7 @@
             }
             catch (Exception ex)
             {
-                LogService.Warn($"SaveImage fail ({AppSettings.EnvironmentName}) - save path: ({savePath}) : { ex.ToString() }");
+                LogService.Error($"SaveImage fail ({AppSettings.EnvironmentName}) - save path: ({savePath}) : { ex.ToString() }", ex);
             }            
         }      
         

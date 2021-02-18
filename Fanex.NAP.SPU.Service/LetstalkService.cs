@@ -30,19 +30,7 @@
             letstalkModel.LetstalkAttachments = GetAttachmentList(pathAttachment);
             letstalkModel.TargetName = targetName;
             letstalkModel.Group = group;
-        }
-
-        //public LetstalkService(string targetName, string group, string pathAttachment)
-        //{
-        //    var letstalkApi = new ApplicationSettingServiceImp();
-        //    var webAPIClientService = new WebApiClientServiceImp(letstalkApi);
-        //    letstalkService = new LetstalkClientServiceImp(webAPIClientService);
-
-        //    letstalkModel = new LetstalkModel();
-        //    letstalkModel.LetstalkAttachments = new List<LetstalkAttachment>();
-        //    letstalkModel.TargetName = targetName;
-        //    letstalkModel.Group = group;
-        //}
+        }  
 
         public void Info(string message)
         {
@@ -80,6 +68,50 @@
                 letstalkModel.Content = content;
 
                 return letstalkService.SendMessage(letstalkModel);
+            }
+
+            return false;
+        }
+
+        public bool CheckExistFileAttach()
+        {
+            if (letstalkModel != null && letstalkModel.LetstalkAttachments.Any())
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool SendSingleFileAttachMessage(string subject, string content)
+        {
+            if (letstalkModel != null && letstalkModel.LetstalkAttachments.Any())
+            {
+                var countSuccess = 0;
+                var model = new LetstalkModel
+                {
+                    Subject = subject,
+                    Content = content,
+                    LetstalkAttachments = new List<LetstalkAttachment> { letstalkModel.LetstalkAttachments[0] },
+                    TargetName = letstalkModel.TargetName,
+                    Group = letstalkModel.Group
+                };
+
+                var isSuccess = letstalkService.SendMessage(model);
+                countSuccess = isSuccess ? countSuccess + 1 : countSuccess;
+                
+                var countAttachment = letstalkModel.LetstalkAttachments.Count;
+                for (int i = 1; i < letstalkModel.LetstalkAttachments.Count; i++)
+                {
+                    model.LetstalkAttachments = new List<LetstalkAttachment> { letstalkModel.LetstalkAttachments[i] };
+                    model.Subject = string.Empty;
+                    model.Content = string.Empty;                   
+
+                    isSuccess = letstalkService.SendMessage(model);
+                    countSuccess = isSuccess ? countSuccess + 1 : countSuccess;
+                };
+
+                return countSuccess == countAttachment;
             }
 
             return false;
