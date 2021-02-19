@@ -3,11 +3,14 @@
 
 // Write your JavaScript code.
 function site() {
-    let btnCheckUpdateJobs = $("#btnCheckUpdateJobs");   
+    let domElements = {
+        btnCheckUpdateJobs: $("#btnCheckUpdateJobs"),
+        tblJob: $("#tblJob")
+    };
 
-    $(document).ready(function () {        
+    $(document).ready(function () {
 
-        btnCheckUpdateJobs.on('click', (e) => {
+        domElements.btnCheckUpdateJobs.on('click', (e) => {
             let result = confirm('Are you want check update?');
 
             if (!result) {
@@ -15,6 +18,29 @@ function site() {
             }
         });
 
+        $('.toogle-job').on('click', function () {
+            let span = $(this);
+            let jobName = span.attr('data-job-name');
+
+            if (span.hasClass('toogle-expand')) {
+                span.removeClass('toogle-expand').addClass('toogle-collapse');
+            } else {
+                span.removeClass('toogle-collapse').addClass('toogle-expand');
+            }
+
+            domElements.tblJob.find('tr').each(function () {
+                let tr = $(this);
+                let jobNameCompare = tr.attr('data-job-name');
+
+                if (jobName === jobNameCompare) {
+                    if (tr.hasClass('is-hidden')) {
+                        tr.removeClass('is-hidden');
+                    } else {
+                        tr.addClass('is-hidden');
+                    }
+                }
+            });
+        });
     });
 }
 

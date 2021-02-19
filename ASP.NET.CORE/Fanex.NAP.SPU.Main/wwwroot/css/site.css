@@ -1,5 +1,41 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+:root {
+  --primaryColor: #5ec297;
+  --secondaryColor: #349b72;
+  --darkColor: #000;
+  --midDarkColor: #2f313a;
+  --grayColor: #444;
+  --midGrayColor: #ebebeb;
+  --lightColor: #f6f6f7;
+  --dangerColor: #d26b4e;
+  --warningColor: #ff8f30;
+  --successColor: #3aaa97;
+  --ffBase: 'Roboto',sans-serif;
+  --bgMain: var(--lightColor);
+  --bgSecondary: #fff;
+  --fcNegative: #fff;
+  --fcBase: var(--grayColor);
+  --fcAction: var(--primaryColor);
+  --bgAside: var(--midDarkColor);
+  --bgMenuActive: var(--darkColor);
+  --bcMenuActive: var(--primaryColor);
+  --bcInput: var(--midGrayColor);
+  --bcInputHover: var(--primaryColor);
+  --bgInputHover: var(--primaryColor);
+  --fcInputHover: var(--primaryColor);
+  --bcTable: var(--midGrayColor);
+  --bgTable: var(--bgSecondary);
+  --bgTableSecondary: var(--midGrayColor);
+  --bgTableButton: var(--bgSecondary);
+  --bgButton: var(--secondaryColor);
+  --bgImageDarken: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  --bgImageLigthen: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8));
+  --bgBulletTimeline: var(--primaryColor);
+  --bgLineTimeline: var(--midGrayColor);
+  --bcEventTimeline: var(--midGrayColor);
+  --logoImageUrl: url("https://avatars3.githubusercontent.com/u/25212406?s=460&v=4"); }
+
 a.navbar-brand {
   white-space: normal;
   text-align: center;
@@ -64,48 +100,71 @@ body {
 
 .table-job {
   background-color: #FFFFFF;
-  border: dashed 3px #6D7B8D;
   padding: 5px;
   width: 100%;
   table-layout: fixed; }
-  .table-job .table-job-tr-header {
-    height: 30px;
-    background-color: #336699;
-    color: #FFFFFF;
-    border: solid 1px #659EC7; }
-    .table-job .table-job-tr-header .table-job-td-header {
-      width: 400px;
-      text-align: center;
-      cursor: pointer; }
-  .table-job .table-job-tr-body {
-    border-style: dashed;
-    border-width: 2px; }
-    .table-job .table-job-tr-body .table-job-td-body {
-      text-align: center;
-      border: solid 1px #659EC7;
-      padding: 5px;
-      table-layout: fixed; }
-      .table-job .table-job-tr-body .table-job-td-body span {
-        color: #000000; }
+
+.table-job .table-job-tr-header {
+  height: 2rem;
+  background-color: #336699;
+  color: #FFFFFF; }
+
+.table-job .table-job-tr-header .table-job-td-header {
+  width: 400px;
+  text-align: center;
+  cursor: pointer; }
+
+.table-job .table-job-tr-body .table-job-td-body {
+  text-align: center;
+  padding: 5px;
+  table-layout: fixed; }
+
+.table-job tr.table-job-tr-body:hover {
+  background-color: #ebebeb !important; }
+
+.table-job .table-job-tr-body .table-job-td-body span {
+  color: #000000; }
+
+.toogle-job {
+  cursor: pointer; }
+
+.toogle-expand {
+  background: url("../Images/expand.png") no-repeat;
+  display: inline-block;
+  height: 20px;
+  width: 20px; }
+
+.toogle-collapse {
+  background: url("../Images/collapse.png") no-repeat;
+  display: inline-block;
+  height: 20px;
+  width: 20px; }
 
 .table-trigger {
-  background-color: #659EC7;
-  border: solid 2px #3273d5;
+  background-color: #ebebeb;
   margin-left: 50px;
   padding: 5px;
   width: 100%;
   table-layout: fixed; }
-  .table-trigger .table-trigger-tr-header {
-    height: 30px;
-    background-color: #659EC7;
-    color: #FFFFFF; }
-    .table-trigger .table-trigger-tr-header .table-trigger-td-header {
-      text-align: "center";
-      border: solid 1px #659EC7;
-      padding: 5px;
-      table-layout: fixed; }
-  .table-trigger .table-trigger-td-body {
-    text-align: center;
-    border: solid 1px #659EC7;
-    padding: 5px;
-    table-layout: fixed; }
+
+.table-trigger .table-trigger-tr-header {
+  height: 2rem;
+  text-align: center;
+  line-height: 1.5em;
+  background-color: var(--bgTableSecondary); }
+
+.table-trigger .table-trigger-tr-header .table-trigger-td-header {
+  text-align: "center";
+  border: solid 1px #ebebeb;
+  padding: 5px;
+  table-layout: fixed; }
+
+.table-trigger .table-trigger-td-body {
+  text-align: center;
+  border: solid 1px #ebebeb;
+  padding: 5px;
+  table-layout: fixed; }
+
+.is-hidden {
+  display: none;
+  animation: fadeOut 1s; }

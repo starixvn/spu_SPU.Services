@@ -20,7 +20,7 @@ namespace Fanex.NAP.SPU.Main.Features.Healthchecks.Controllers
         {
             if(model != null)
             {
-                this.sentryClient.CaptureMessage(model.Message, model.ErrorCode == 0 ? Sentry.Protocol.SentryLevel.Info : Sentry.Protocol.SentryLevel.Error);
+                this.sentryClient.CaptureMessage(model.Message, model.ErrorCode == 0 ? Sentry.Protocol.SentryLevel.Info : Sentry.Protocol.SentryLevel.Error);                
             }
 
             return Ok();

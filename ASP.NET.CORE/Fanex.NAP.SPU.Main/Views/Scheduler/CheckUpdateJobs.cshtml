@@ -9,7 +9,7 @@
     <input id="btnSaveUpdateJobs" type="button" title="Save Update Jobs" value="Save Update" onclick="if (confirm('Are you sure?')) { location.href = '@Url.Action("SaveUpdateJobs", "Scheduler")' } ">
 </div>
 
-<table class="table-job" cellpadding="2" cellspacing="2">
+<table id="tblJob" class="table-job" cellpadding="2" cellspacing="2">
     <tr class="table-job-tr-header">
         <td width="50" style="text-align:center"></td>
         <td class="table-job-td-header">
@@ -34,7 +34,7 @@
             {
                 <tr class="table-job-tr-body" style="background-color: @(job.UpdateStatus == UpdateStatus.Update ? "#FFFF00" : "#FFFFFF")">
                     <td class="td-body">
-                        <img src="~/Images/toggle.png" />
+                        <span class="toogle-job toogle-collapse" data-job-name=@(job.JobName)></span>
                     </td>
                     <td class="table-job-td-body">
                         <span>@job.JobName</span>
@@ -52,16 +52,16 @@
                     </td>
                 </tr>
 
-                <tr>
+                <tr data-job-name=@(job.JobName) class="is-hidden">
                     <td colspan="4">
                         <table class="table-trigger">
-                            <tr class="table-trigger-tr-header">                               
-                                <td class="table-trigger-td-header">
-                                    <span>Trigger Type</span>
-                                </td>
+                            <tr class="table-trigger-tr-header">   
                                 <td class="table-trigger-td-header">
                                     <span>Trigger Name</span>
                                 </td>
+                                <td class="table-trigger-td-header">
+                                    <span>Trigger Type</span>
+                                </td>                                
                                 <td class="table-trigger-td-header">
                                     <span>Repeat Forever</span>
                                 </td>
@@ -71,30 +71,30 @@
                             </tr>
 
                             @foreach (var trigger in job.Triggers)
-                            {
-                                <tr style="background-color: @(trigger.UpdateStatus == UpdateStatus.Update ? "#FFFF00" : "#FFFFFF")">                                  
+                             {
+                                <tr data-job-name=@(job.JobName) class="is-hidden" style="background-color: @(trigger.UpdateStatus == UpdateStatus.Update ? "#FFFF00" : "#FFFFFF")">
                                     <td class="table-trigger-td-body">
-                                        <span style="color:#000000">
-                                            @trigger.TriggerType
-                                        </span>
-                                    </td>
-                                    <td class="table-trigger-td-body">
-                                        <span style="color:#000000">
+                                        <span>
                                             @trigger.TriggerName
                                         </span>
                                     </td>
                                     <td class="table-trigger-td-body">
-                                        <span style="color:#000000">
+                                        <span>
+                                            @trigger.TriggerType
+                                        </span>
+                                    </td>
+                                    <td class="table-trigger-td-body">
+                                        <span>
                                             @trigger.RepeatForever
                                         </span>
                                     </td>
                                     <td class="table-trigger-td-body">
-                                        <span style="color:#000000">
+                                        <span>
                                             @trigger.CronExpression
                                         </span>
                                     </td>
                                 </tr>
-                            }
+                             }
 
                         </table>
                     </td>

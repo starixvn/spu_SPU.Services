@@ -1,0 +1,179 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+:root {
+    --primaryColor: #5ec297;
+    --secondaryColor: #349b72;
+    --darkColor: #000;
+    --midDarkColor: #2f313a;
+    --grayColor: #444;
+    --midGrayColor: #ebebeb;
+    --lightColor: #f6f6f7;
+    --dangerColor: #d26b4e;
+    --warningColor: #ff8f30;
+    --successColor: #3aaa97;
+    --ffBase: 'Roboto',sans-serif;
+    --bgMain: var(--lightColor);
+    --bgSecondary: #fff;
+    --fcNegative: #fff;
+    --fcBase: var(--grayColor);
+    --fcAction: var(--primaryColor);
+    --bgAside: var(--midDarkColor);
+    --bgMenuActive: var(--darkColor);
+    --bcMenuActive: var(--primaryColor);
+    --bcInput: var(--midGrayColor);
+    --bcInputHover: var(--primaryColor);
+    --bgInputHover: var(--primaryColor);
+    --fcInputHover: var(--primaryColor);
+    --bcTable: var(--midGrayColor);
+    --bgTable: var(--bgSecondary);
+    --bgTableSecondary: var(--midGrayColor);
+    --bgTableButton: var(--bgSecondary);
+    --bgButton: var(--secondaryColor);
+    --bgImageDarken: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.2));
+    --bgImageLigthen: linear-gradient(rgba(255,255,255,0.8),rgba(255,255,255,0.8));
+    --bgBulletTimeline: var(--primaryColor);
+    --bgLineTimeline: var(--midGrayColor);
+    --bcEventTimeline: var(--midGrayColor);
+    --logoImageUrl: url('https://avatars3.githubusercontent.com/u/25212406?s=460&v=4');
+}
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all; }
+
+/* Provide sufficient contrast against white background */
+a {
+  color: #0366d6; }
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac; }
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac; }
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  font-size: 14px; }
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px; } }
+
+.border-top {
+  border-top: 1px solid #e5e5e5; }
+
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5; }
+
+.box-shadow {
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05); }
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit; }
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%; }
+
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 60px; }
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+  /* Vertically center the text there */ }
+
+.group-info {
+  margin: 20px; }
+
+.table-job {
+  background-color: #FFFFFF;  
+  padding: 5px;
+  width: 100%;
+  table-layout: fixed; }
+    
+    .table-job .table-job-tr-header {
+        height: 2rem;
+        background-color: #336699;
+        color: #FFFFFF;
+    }
+    .table-job .table-job-tr-header .table-job-td-header {
+      width: 400px;
+      text-align: center;
+      cursor: pointer; 
+    }
+
+    .table-job .table-job-tr-body .table-job-td-body {
+        text-align: center;        
+        padding: 5px;
+        table-layout: fixed;
+    }
+
+    .table-job tr.table-job-tr-body:hover {
+        background-color: #ebebeb !important;
+    }
+    
+    .table-job .table-job-tr-body .table-job-td-body span {
+        color: #000000;
+    }
+    .toogle-job {
+        cursor: pointer;
+    }
+
+    .toogle-expand {
+        background: url('../Images/expand.png') no-repeat;
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+    }
+
+    .toogle-collapse {
+        background: url('../Images/collapse.png') no-repeat;
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+    }
+
+    .table-trigger {
+        background-color: #ebebeb;
+        margin-left: 50px;
+        padding: 5px;
+        width: 100%;
+        table-layout: fixed;
+    }
+    .table-trigger .table-trigger-tr-header {
+        height: 2rem;                
+        text-align: center;
+        line-height: 1.5em;
+        background-color: var(--bgTableSecondary);
+    }
+    .table-trigger .table-trigger-tr-header .table-trigger-td-header {
+        text-align: "center";
+        border: solid 1px #ebebeb;
+        padding: 5px;
+        table-layout: fixed;
+    }
+    .table-trigger .table-trigger-td-body {
+        text-align: center;
+        border: solid 1px #ebebeb;
+        padding: 5px;
+        table-layout: fixed;
+    }
+
+    .is-hidden {
+        display: none;
+        animation: fadeOut 1s;
+    }
