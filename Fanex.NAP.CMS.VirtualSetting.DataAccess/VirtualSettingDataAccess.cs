@@ -4,6 +4,7 @@
     using Fanex.Data.Repository;
     using Fanex.NAP.CMS.VirtualSetting.Criteria;
     using Fanex.NAP.CMS.VirtualSetting.Criteria.VR_Agent;
+    using Fanex.NAP.CMS.VirtualSetting.Criteria.VR_BigStakeMember;
     using Fanex.NAP.CMS.VirtualSetting.Model;
     using Fanex.NAP.Framework.Command;
     using Fanex.NAP.SPU.Core;
@@ -356,6 +357,60 @@
             var criteria = new GetVRAgentUpdatedCriteria();           
 
             return _repository.FetchMultiple<VRAgentUpdatedToZeroModel, VRAgentUpdatedToFollowSuperModel>(criteria);
+        }
+
+        #endregion
+
+        #region VR-MemberBigStake
+        public void InsertVRMemberBigStake()
+        {
+            var criteria = new InsertVRMemberBigStakeCriteria();
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+
+        public VRGetMemberBigStakePerformanceModel GetMemberBigStakePerformance()
+        {
+            var criteria = new VRCheckMemberBigStakePerformanceCriteria();
+
+            var result = _repository.FetchMultiple<VRCheckMemberBigStakePerformanceFirstDayModel, VRCheckMemberBigStakePerformanceStatusModel>(criteria);
+
+            return new VRGetMemberBigStakePerformanceModel {
+                FirstBetDateList = result.firstResultSet,
+                 StatusList = result.secondResultSet               
+            };
+        }
+
+        public void UpdateVRMemeberBigStakeFirstBetDate(string custIdList, int type, DateTime betDate)
+        {
+            var criteria = new UpdateFirstBetDateVRMemberBigStakeCriteria
+            {
+                CustIdList = custIdList,
+                Type = type,
+                BetDate = betDate
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
+        }
+
+        public void UpdateVRWhitelistMemberBigStake(string custIdList, int type)
+        {
+            var criteria = new UpdateWhitelistVRMemberBigStakeCriteria
+            {
+                CustIdList = custIdList,
+                Type = type,                
+            };
+
+            using (var objectDb = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                objectDb.ExecuteNonQuery(criteria);
+            }
         }
 
         #endregion

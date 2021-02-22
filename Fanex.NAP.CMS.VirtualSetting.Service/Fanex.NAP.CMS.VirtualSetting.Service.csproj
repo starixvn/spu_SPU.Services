@@ -52,6 +52,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ICustomerSettingsService.cs" />
     <Compile Include="VRAgentService.cs" />
+    <Compile Include="VRMemberBigStakeService.cs" />
     <Compile Include="VROthersportsService.cs" />
     <Compile Include="VRSoccerService.cs" />
     <Compile Include="VRSportsbookService.cs" />

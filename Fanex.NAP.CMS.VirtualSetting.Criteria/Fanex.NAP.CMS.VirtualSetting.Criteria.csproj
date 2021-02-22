@@ -53,6 +53,10 @@
     <Compile Include="BetLimit\RemoveBetLimitCriteria.cs" />
     <Compile Include="BetLimit\UpdateBetLimitCriteria.cs" />
     <Compile Include="BetLimit\VerifyBetLimitCustomerCriteria.cs" />
+    <Compile Include="VR_BigStakeMember\InsertVRMemberBigStakeCriteria.cs" />
+    <Compile Include="VR_BigStakeMember\UpdateFirstBetDateVRMemberBigStakeCriteria.cs" />
+    <Compile Include="VR_BigStakeMember\UpdateWhitelistVRMemberBigStakeCriteria.cs" />
+    <Compile Include="VR_BigStakeMember\VRCheckMemberBigStakePerformanceCriteria.cs" />
     <Compile Include="VR_Soccer\GetBAAccountsCriteria.cs" />
     <Compile Include="VR_Othersports\UpdateVRAutoAdjustmentStatusCriteria.cs" />
     <Compile Include="VR_Othersports\VerifyVRCustomerCriteria.cs" />
