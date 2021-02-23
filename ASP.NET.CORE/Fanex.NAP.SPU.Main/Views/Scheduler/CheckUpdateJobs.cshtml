@@ -32,73 +32,76 @@
         {
             @foreach (var job in groupJob.Jobs)
             {
-                <tr class="table-job-tr-body" style="background-color: @(job.UpdateStatus == UpdateStatus.Update ? "#FFFF00" : "#FFFFFF")">
-                    <td class="td-body">
-                        <span class="toogle-job toogle-collapse" data-job-name=@(job.JobName)></span>
-                    </td>
-                    <td class="table-job-td-body">
-                        <span>@job.JobName</span>
-                    </td>
-                    <td class="table-job-td-body">
-                        <span>
-                            @job.JobType
-                        </span>
-                    </td>
-                    <td class="table-job-td-body">
-                        <span>@job.APIUrl</span>
-                    </td>
-                    <td class="table-job-td-body">
-                        <span>@job.IsActive</span>
-                    </td>
-                </tr>
+                if (job.UpdateStatus == UpdateStatus.Update)
+                {
+                    <tr class="table-job-tr-body" style="background-color:#FFFFFF">
+                        <td class="td-body">
+                            <span class="toogle-job toogle-collapse" data-job-name=@(job.JobName)></span>
+                        </td>
+                        <td class="table-job-td-body">
+                            <span>@job.JobName</span>
+                        </td>
+                        <td class="table-job-td-body">
+                            <span>
+                                @job.JobType
+                            </span>
+                        </td>
+                        <td class="table-job-td-body">
+                            <span>@job.APIUrl</span>
+                        </td>
+                        <td class="table-job-td-body">
+                            <span>@job.IsActive</span>
+                        </td>
+                    </tr>
 
-                <tr data-job-name=@(job.JobName) class="is-hidden">
-                    <td colspan="4">
-                        <table class="table-trigger">
-                            <tr class="table-trigger-tr-header">   
-                                <td class="table-trigger-td-header">
-                                    <span>Trigger Name</span>
-                                </td>
-                                <td class="table-trigger-td-header">
-                                    <span>Trigger Type</span>
-                                </td>                                
-                                <td class="table-trigger-td-header">
-                                    <span>Repeat Forever</span>
-                                </td>
-                                <td class="table-trigger-td-header">
-                                    <span>Cron Expression</span>
-                                </td>
-                            </tr>
-
-                            @foreach (var trigger in job.Triggers)
-                             {
-                                <tr data-job-name=@(job.JobName) class="is-hidden" style="background-color: @(trigger.UpdateStatus == UpdateStatus.Update ? "#FFFF00" : "#FFFFFF")">
-                                    <td class="table-trigger-td-body">
-                                        <span>
-                                            @trigger.TriggerName
-                                        </span>
+                    <tr data-job-name=@(job.JobName) class="is-hidden">
+                        <td colspan="4">
+                            <table class="table-trigger">
+                                <tr class="table-trigger-tr-header">
+                                    <td class="table-trigger-td-header">
+                                        <span>Trigger Name</span>
                                     </td>
-                                    <td class="table-trigger-td-body">
-                                        <span>
-                                            @trigger.TriggerType
-                                        </span>
+                                    <td class="table-trigger-td-header">
+                                        <span>Trigger Type</span>
                                     </td>
-                                    <td class="table-trigger-td-body">
-                                        <span>
-                                            @trigger.RepeatForever
-                                        </span>
+                                    <td class="table-trigger-td-header">
+                                        <span>Repeat Forever</span>
                                     </td>
-                                    <td class="table-trigger-td-body">
-                                        <span>
-                                            @trigger.CronExpression
-                                        </span>
+                                    <td class="table-trigger-td-header">
+                                        <span>Cron Expression</span>
                                     </td>
                                 </tr>
-                             }
 
-                        </table>
-                    </td>
-                </tr>
+                                @foreach (var trigger in job.Triggers)
+                                {
+                                    <tr data-job-name=@(job.JobName) class="is-hidden" style="background-color: #FFFFFF">
+                                        <td class="table-trigger-td-body">
+                                            <span>
+                                                @trigger.TriggerName
+                                            </span>
+                                        </td>
+                                        <td class="table-trigger-td-body">
+                                            <span>
+                                                @trigger.TriggerType
+                                            </span>
+                                        </td>
+                                        <td class="table-trigger-td-body">
+                                            <span>
+                                                @trigger.RepeatForever
+                                            </span>
+                                        </td>
+                                        <td class="table-trigger-td-body">
+                                            <span>
+                                                @trigger.CronExpression
+                                            </span>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </table>
+                        </td>
+                    </tr>
+                }
             }
         }
     }

@@ -9,7 +9,7 @@
             "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
             "APIUrl": "http://localhost:62391/api",
             "HealthCheckUrl": "http://localhost:62391/healthz",
-            "IsActive": false,
+            "Active": "true",
             "Triggers": [
               {
                 "TriggerType": "Cron",
@@ -82,7 +82,7 @@
             "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
             "APIUrl": "https://localhost:44325/api",
             "HealthCheckUrl": "http://localhost:44325/healthz",
-            "IsActive": true,
+            "Active": "true",
             "Triggers": [
               {
                 "TriggerType": "Cron",

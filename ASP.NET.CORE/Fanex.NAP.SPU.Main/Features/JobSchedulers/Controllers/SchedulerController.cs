@@ -47,25 +47,35 @@
         {
             foreach (var job in jobs)
             {
-                var isJobNoUpdate = currentJobSchedules.Any(x => x.JobName == job.JobName
+                var isNoUpdateJob = currentJobSchedules.Any(x => x.JobName == job.JobName
+                        && x.JobType.FullName == job.JobType
                         && x.APIUrl == job.APIUrl
                         && x.IsActive == job.IsActive);
 
-                job.UpdateStatus = isJobNoUpdate ? UpdateStatus.NoUpdate : UpdateStatus.Update;
+                job.UpdateStatus = isNoUpdateJob ? UpdateStatus.NoUpdate : UpdateStatus.Update;
 
-                CheckUpdateTrigger(job.Triggers, currentJobSchedules);
+                if (job.UpdateStatus == UpdateStatus.NoUpdate)
+                {
+                    CheckUpdateTrigger(job, job.Triggers, currentJobSchedules);
+                }
             }
         }
 
-        private void CheckUpdateTrigger(IEnumerable<TriggerModel> triggers, List<JobScheduleViewModel> currentJobSchedules)
+        private void CheckUpdateTrigger(JobModel job, IEnumerable<TriggerModel> triggers, List<JobScheduleViewModel> currentJobSchedules)
         {
             foreach (var trigger in triggers)
             {
                 var isTriggerNoUpdate = currentJobSchedules.Any(x => x.TriggerName == trigger.TriggerName
                     && x.TriggerType == trigger.TriggerType
+                    && x.RepeatForever == trigger.RepeatForever
                     && x.CronExpression == trigger.CronExpression);
 
                 trigger.UpdateStatus = isTriggerNoUpdate ? UpdateStatus.NoUpdate : UpdateStatus.Update;
+
+                if (trigger.UpdateStatus == UpdateStatus.Update)
+                {                    
+                    job.UpdateStatus = UpdateStatus.Update;
+                }
             }
         }
 

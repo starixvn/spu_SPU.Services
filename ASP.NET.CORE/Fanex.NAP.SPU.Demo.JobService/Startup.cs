@@ -71,13 +71,7 @@ namespace Fanex.NAP.SPU.Demo.JobService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
-            //DbSettingProviderManager
-            //    .StartNewSession()
-            //    .WithMySql(resourcePath: "~/App_Data")                
-            //    .Run();          
-
+            });       
         }
 
         private void FanexDataConfig()

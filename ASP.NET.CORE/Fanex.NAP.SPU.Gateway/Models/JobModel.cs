@@ -12,7 +12,21 @@
        
         public string HealthCheckUrl { get; set; }
 
-        public bool IsActive { get; set; }
+        public string Active { get; set; }
+
+        public bool IsActive { 
+            get 
+            {
+                var isActive = true;
+
+                if (!string.IsNullOrEmpty(this.Active))
+                {
+                    bool.TryParse(this.Active, out isActive);
+                }
+
+                return isActive;
+            }         
+        }
 
         public IEnumerable<TriggerModel> Triggers { get; set; }
     }
