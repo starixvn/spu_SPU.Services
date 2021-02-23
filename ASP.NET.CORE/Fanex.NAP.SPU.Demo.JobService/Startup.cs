@@ -72,9 +72,8 @@ namespace Fanex.NAP.SPU.Demo.JobService
 
             DbSettingProviderManager
                 .StartNewSession()
-                .WithMySql(resourcePath: "~/App_Data")                
+                .WithMySql("~/App_Data")
                 .Run();
-
 
         }
     }

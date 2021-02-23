@@ -79,13 +79,15 @@
         "Jobs": [
           {
             "JobName": "CTS_Customer_Evidence",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            
-            "APIUrl": "http://localhost:60665/api",            
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
+            "APIUrl": "https://localhost:44325/api",
+            "HealthCheckUrl": "http://localhost:44325/healthz",
+            "IsActive": true,
             "Triggers": [
               {
                 "TriggerType": "Cron",
                 "TriggerName": "Customer_Evidence",
-                "RepeatForever": "true",                
+                "RepeatForever": "true",
                 "CronExpression": "0/45 * * * * ?"
               }
             ]
