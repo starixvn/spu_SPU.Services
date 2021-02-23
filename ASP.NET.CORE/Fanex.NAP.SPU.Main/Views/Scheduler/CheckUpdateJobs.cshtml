@@ -6,7 +6,8 @@
 }
 
 <div class="group-info">
-    <input id="btnSaveUpdateJobs" type="button" title="Save Update Jobs" value="Save Update" onclick="if (confirm('Are you sure?')) { location.href = '@Url.Action("SaveUpdateJobs", "Scheduler")' } ">
+    <input id="btnSaveUpdateJobs" type="button" title="Save Update Jobs" value="Update" onclick="if (confirm('Are you sure?')) { location.href = '@Url.Action("SaveUpdateJobs", "Scheduler")' } ">
+    <input id="btnReload" type="button" value="Reload" onclick="location.href = '@Url.Action("CheckUpdateJobs", "Scheduler")'" />
 </div>
 
 <table id="tblJob" class="table-job" cellpadding="2" cellspacing="2">

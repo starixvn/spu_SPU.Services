@@ -29,7 +29,7 @@
                 "TriggerType": "Cron",
                 "TriggerName": "AutoTag_Problem",
                 "RepeatForever": "true",
-                "CronExpression": "0/20 * * * * ?"
+                "CronExpression": "0/30 * * * * ?"
               }
             ]
           },
