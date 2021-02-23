@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Fanex.NAP.SPU.Demo.JobService
@@ -42,6 +43,8 @@ namespace Fanex.NAP.SPU.Demo.JobService
             });
 
             services.AddScoped<IJobService, Controllers.JobService>();
+
+            FanexDataConfig();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,11 +73,30 @@ namespace Fanex.NAP.SPU.Demo.JobService
                 endpoints.MapControllers();
             });
 
-            DbSettingProviderManager
-                .StartNewSession()
-                .WithMySql("~/App_Data")
-                .Run();
+            //DbSettingProviderManager
+            //    .StartNewSession()
+            //    .WithMySql(resourcePath: "~/App_Data")                
+            //    .Run();          
 
+        }
+
+        private void FanexDataConfig()
+        {
+            var connections = Configuration
+                                  .GetSection("Connections")
+                                  .GetChildren()
+                                  .AsEnumerable()
+                                  .ToDictionary(
+                                           x => x.GetValue<string>("Name"),
+                                           y => new ConnectionConfiguration(y.GetValue<string>("Name"), y.GetValue<string>("ConnectionString"), y.GetValue<string>("ProviderName"))
+                                   );
+
+            DbSettingProviderManager
+              .StartNewSession()
+              .Use(connections)
+              .WithMySql()
+              .UseDefaultDbSettingProvider(resourcePath: "~/App_Data")
+              .Run();
         }
     }
 }
