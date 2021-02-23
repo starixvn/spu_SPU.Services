@@ -1,3 +1,5 @@
+using Fanex.Data;
+using Fanex.Data.MySql;
 using Fanex.NAP.SPU.Demo.JobService.Controllers;
 using HealthChecks.UI.Client;
 using MediatR;
@@ -67,6 +69,13 @@ namespace Fanex.NAP.SPU.Demo.JobService
             {
                 endpoints.MapControllers();
             });
+
+            DbSettingProviderManager
+                .StartNewSession()
+                .WithMySql(resourcePath: "~/App_Data")                
+                .Run();
+
+
         }
     }
 }

@@ -3,20 +3,11 @@
 
 // Write your JavaScript code.
 function site() {
-    let domElements = {
-        btnCheckUpdateJobs: $("#btnCheckUpdateJobs"),
+    let domElements = {     
         tblJob: $("#tblJob")
     };
 
-    $(document).ready(function () {
-
-        domElements.btnCheckUpdateJobs.on('click', (e) => {
-            let result = confirm('Are you want check update?');
-
-            if (!result) {
-                e.preventDefault();
-            }
-        });
+    $(document).ready(function () {       
 
         $('.toogle-job').on('click', function () {
             let span = $(this);

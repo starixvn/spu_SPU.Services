@@ -42,6 +42,9 @@
                 var trigger = CreateTrigger(jobSchedule);
 
                 await scheduler.ScheduleJob(job, trigger, cancellationToken);
+
+                if (!jobSchedule.IsActive)
+                    await scheduler.PauseTrigger(new TriggerKey(jobSchedule.TriggerName));
             }
 
             await scheduler.Start(cancellationToken);
@@ -66,11 +69,11 @@
 
             var deleteList = CheckDelete(_jobSchedules, newJobSchedules);
 
-            DeleteJobTrigger(scheduler, deleteList);
+            await DeleteJobTrigger(scheduler, deleteList);
 
-            UpdateJobTrigger(scheduler, updateList);
+            await UpdateJobTrigger(scheduler, updateList);
 
-            NewJobTrigger(scheduler, newList);
+            await NewJobTrigger(scheduler, newList);
 
             _jobSchedules.UpdateJobScheduleList(newJobSchedules.JobScheduleList);
 
@@ -82,7 +85,7 @@
             return oldJobSchedules.JobScheduleList.Join(newJobSchedules.JobScheduleList,
                 x1 => x1.JobName,
                 x2 => x2.JobName,
-                (x1, x2) => x1);
+                (x1, x2) => x2);
         }
 
         public IEnumerable<JobScheduleViewModel> CheckNew(JobSchedules oldJobSchedules, JobSchedules newJobSchedules)
@@ -106,7 +109,7 @@
             return !existed;
         }
 
-        private async void DeleteJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
+        private async Task DeleteJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
         {
             foreach (var jobSchedule in jobScheduleList)
             {
@@ -114,7 +117,7 @@
             }
         }
 
-        private async void UpdateJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
+        private async Task UpdateJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
         {
             foreach (var jobSchedule in jobScheduleList)
             {
@@ -132,7 +135,7 @@
             }
         }
 
-        private async void NewJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
+        private async Task NewJobTrigger(IScheduler scheduler, IEnumerable<JobScheduleViewModel> jobScheduleList)
         {
             foreach (var jobSchedule in jobScheduleList)
             {
