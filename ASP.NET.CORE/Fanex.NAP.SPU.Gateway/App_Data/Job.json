@@ -15,7 +15,7 @@
                 "TriggerType": "Cron",
                 "TriggerName": "AutoTag_Normal",
                 "RepeatForever": "true",
-                "CronExpression": "0/30 * * * * ?"
+                "CronExpression": "0/20 * * * * ?"
               }
             ]
           },
@@ -24,6 +24,7 @@
             "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
             "APIUrl": "http://localhost:62392/api",
             "HealthCheckUrl": "http://localhost:62392/healthz",
+            "Active": "false",
             "Triggers": [
               {
                 "TriggerType": "Cron",
@@ -82,7 +83,7 @@
             "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
             "APIUrl": "https://localhost:44325/api",
             "HealthCheckUrl": "http://localhost:44325/healthz",
-            "Active": "true",
+            "Active": "false",
             "Triggers": [
               {
                 "TriggerType": "Cron",

@@ -2,6 +2,9 @@ namespace Fanex.NAP.SPU.Main
 {
     using AutoMapper;
     using CrystalQuartz.AspNetCore;
+    using Fanex.Logging;
+    using Fanex.Logging.RabbitMQ;
+    using Fanex.Logging.Sentry;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers;
     using Fanex.NAP.SPU.Main.JobSchedulers;
     using Fanex.NAP.SPU.Middleware;
@@ -11,14 +14,23 @@ namespace Fanex.NAP.SPU.Main
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using ONEbook.UM;
+    using ONEbook.UM.AspNetCore.Configuration;
+    using ONEbook.UM.Configurations;
+    using ONEbook.UM.Helpers;
+    using ONEbook.UM.Services;
+    using ONEbook.UM.Transport;
     using Prometheus;
     using Quartz;
     using Quartz.Impl;
     using Quartz.Spi;
     using Refit;
+    using Sentry;
+    using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.IO;
     using System.Reflection;
@@ -45,14 +57,27 @@ namespace Fanex.NAP.SPU.Main
             {
                 options.AllowSynchronousIO = true;
             });
+           
+            LogManager
+            .SetDefaultLogCategory("ONEbook-UM")
+             .Use(new List<ILogEngine>
+                    {
+                         new SentryLogging(new SentryEngineOptions
+                         {
+                             Dsn = new Dsn(Configuration["Sentry:Dsn"])
+                         })
+                    });
+
+            services.AddSingleton(Logger.Log);
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddSingleton<IMaintenanceService, MaintenanceService>();
 
             services
                 .AddHealthChecks()
                 .AddMySql("Data Source=10.18.200.70;Port=3307;Initial Catalog=CTS_DataCenter;Persist Security Info=True;User ID=ctsServiceAdmin;Password=Welcome1")
                 .AddCheck<RandomHealthCheck>("random")
-                .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); });
-
-           
+                .AddDiskStorageHealthCheck(setup => { DriveInfo.GetDrives(); });           
 
             services.AddSingleton<IJobFactory, JobFactory>();
             services.AddSingleton<ISchedulerFactory>(p => new StdSchedulerFactory(new NameValueCollection {
@@ -115,7 +140,14 @@ namespace Fanex.NAP.SPU.Main
 
             app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
 
-            app.UseMiddleware<ExceptionHandlerMiddleware>();                        
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+            var umConfig = new UMClientConfiguration(Configuration);
+            UMClientManager
+                .UseConfig(umConfig)
+                .UseRestClient(new RestClient(umConfig))
+                .UseHttpContext(new HttpContextHelper(app.ApplicationServices.GetService<IHttpContextAccessor>()));
+
         }
 
     }
