@@ -3,7 +3,12 @@
     using Fanex.Data;
     using Fanex.NAP.SPU.Demo.JobService.Criteria;    
     using System.Collections.Generic;
-    using System.Linq;    
+    using System.Linq;
+
+    public interface IService
+    {
+        IEnumerable<object> GetPreviousTimingExecution(int paramId);
+    }
 
     public class Service : IService
     {

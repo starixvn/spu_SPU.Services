@@ -30,7 +30,8 @@ namespace Fanex.NAP.SPU.Main.Features.Healthchecks.Services
                         payload: JsonConvert.SerializeObject(new NotificationModel("[[LIVENESS]]: [[FAILURE]] [[DESCRIPTIONS]]", 1)),
                         restorePayload: JsonConvert.SerializeObject(new NotificationModel("[[LIVENESS]] is back to LIFE", 0)));
                })
-               .AddMySqlStorage(appSettings.HealthCheckStorage);
+               .AddInMemoryStorage();
+               //.AddMySqlStorage(appSettings.HealthCheckStorage);
         }
     }
 }
