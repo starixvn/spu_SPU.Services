@@ -76,7 +76,7 @@
 
                         preCTSCustId = custsFromCTS.Max(c => c.CTSCustID);
 
-                        if(custFromMainDB != null & custFromMainDB.Any())
+                        if (custFromMainDB != null && custFromMainDB.Any())
                         {     
                             await SendRequest(custFromMainDB, apiUrls, jobDataMap);
                         }

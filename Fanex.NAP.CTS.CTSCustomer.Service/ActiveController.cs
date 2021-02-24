@@ -259,7 +259,7 @@
         {
             if (sourceType == (int)Constants.UPDATECUSTOMER.FROM_CUSTINFO)
             {
-                var custToUpdateInfo = custInfoFromMainDB
+                var customerInfo = custInfoFromMainDB
                     .Join(custInfoFromCTS, custMain => custMain.CustID,
                                            custCTS => custCTS.CustID,
                                            (custMain, custCTS) => custMain)
@@ -273,11 +273,11 @@
                         Danger3 = c.Danger3
                     }).ToList();
 
-                return JsonConvert.SerializeObject(custToUpdateInfo);
+                return JsonConvert.SerializeObject(customerInfo);
             }
             else
             {
-                var custToUpdateInfo = custInfoFromMainDB
+                var customerInfo = custInfoFromMainDB
                     .Join(custInfoFromCTS, custMain => custMain.CustID,
                                            custCTS => custCTS.CustID,
                                            (custMain, custCTS) => custMain)
@@ -295,21 +295,13 @@
                         Recommend = c.Recommend,
                         Currency = c.Currency,
                         CurrencyID = c.CurrencyID,
-                        UpdateType = 0
-                    }).ToList();
-
-                custToUpdateInfo.ForEach(c =>
-                {
-                    if (custInfoFromCTS.Any(f => f.CustID == c.CustID &&
-                                             (!string.Equals(f.UserName, c.UserName)
+                        UpdateType = (custInfoFromCTS.Any(f => f.CustID == c.CustID &&
+                                                (!string.Equals(f.UserName, c.UserName)
                                              || !string.Equals(f.UserName2, c.UserName2)
-                                             || f.SiteID != c.SiteID)))
-                    {
-                        c.UpdateType = 1;
-                    }
-                });
+                                             || f.SiteID != c.SiteID)) == true) ? 1 : 0
+                    }).ToList();   
 
-                return JsonConvert.SerializeObject(custToUpdateInfo);
+                return JsonConvert.SerializeObject(customerInfo);
             }
         }
     }

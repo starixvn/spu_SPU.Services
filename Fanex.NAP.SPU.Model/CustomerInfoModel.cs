@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.SPU.Model
 {
+    using Newtonsoft.Json;
     using System;
 
     public class CustomerInfoModel
@@ -8,10 +9,13 @@
 
         public int CustID { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string UserName { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string UserName2 { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Site { get; set; }
 
         public int SiteID { get; set; }
@@ -20,6 +24,7 @@
 
         public int CurrencyID { get; set; }
 
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Currency { get; set; }
 
         public int SRecommend { get; set; }
