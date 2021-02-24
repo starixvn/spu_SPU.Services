@@ -7,6 +7,8 @@
     using Fanex.NAP.FS.Model;
     using Fanex.NAP.FS.Service;
     using Fanex.NAP.FS.XML;
+    using Newtonsoft.Json;
+    using RestSharp;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -31,14 +33,33 @@
 
         private IEnumerable<FlaggedCustomer> GetFlaggedCustomer()
         {
-            var param = new CustomerEvidenceList
-            {
-                CustIdList = string.Empty,
-                EvidenceCodeList = string.Empty
-            };
+            //var param = new 
+            //{
+            //    CustIdList = string.Empty,
+            //    EvidenceCodeList = string.Empty
+            //};
 
-            return ApiHelper.Post<IEnumerable<FlaggedCustomer>>(AppSetting.CustomerEvidenceApi, param).Result;
+            var client = new RestClient(AppSetting.CustomerEvidenceApi);
+            client.Timeout = -1;
+            var request = new RestRequest(Method.POST);
+                       
+            request.AddHeader("Content-Type", "application/json");
+            request.AddParameter("application/json", "{CustIdList: null,EvidenceCodeList: null}", ParameterType.RequestBody);
+
+            var response = client.Execute(request);                        
+
+            if(!string.IsNullOrWhiteSpace(response.Content))
+            {                
+                return JsonConvert.DeserializeObject<List<FlaggedCustomer>>(response.Content);
+            }
+
+            LogService.Error("Flagged Customer is null");
+
+            return new List<FlaggedCustomer>();
+
+
         }
+       
 
         public override BaseService CleanResult()
         {
