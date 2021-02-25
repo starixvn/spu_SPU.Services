@@ -30,8 +30,6 @@
         {
             try
             {
-                LogService.Info("ExecuteMonitorAndHealCTSCustomer start");
-
                 if (!this.CheckUM())
                 {
                     await ExecuteAPI(context);
@@ -67,14 +65,9 @@
 
                     var output = dataCenterService.GetLastUpdatedTime();
 
-                    LogService.Info($"Update CTSCustomer.Service - get LastUpdateTime & LastCustID  with {JsonConvert.SerializeObject(output)}");
-
                     updatedCustFromCustInfo = dataCenterService.GetUpdatedCustFromCustInfoHistory(output.LastUpdateTimeCustInfo, output.LastUpdateCustIDCustInfo, packageSize);
 
                     updatedCustFromCustomer = dataCenterService.GetUpdatedCustFromCustomerHistory(output.LastUpdateTimeCustomer, output.LastUpdateCustIDCustomer, packageSize);
-
-                    LogService.Info($"Update CTSCustomer.Service - get CustInfo from history with {JsonConvert.SerializeObject(updatedCustFromCustInfo)}");
-                    LogService.Info($"Update CTSCustomer.Service - get Customer from history with {JsonConvert.SerializeObject(updatedCustFromCustomer)}");
 
                     if (IsValidData(updatedCustFromCustInfo, updatedCustFromCustomer))
                     {
