@@ -413,6 +413,13 @@
             }
         }
 
+        public IEnumerable<VRAutomailBigCreditMemberModel> GetBigCreditMemberForAutomail()
+        {
+            var criteria = new AutoMailBigCreditMemberCriteria();
+
+            return _repository.Fetch<VRAutomailBigCreditMemberModel>(criteria);           
+        }
+
         #endregion
     }
 }

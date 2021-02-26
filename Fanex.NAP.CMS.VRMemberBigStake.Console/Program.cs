@@ -34,7 +34,8 @@
                     .GetMemberBigStakePerformance()
                     .UpdateMemberBigStakeFirstBetDate()
                     .UpdateMemberBigStakeStatus()
-                    .SendMailExternal(AppSettings.MailingListId);
+                    .SendMail(AppSettings.MailingListId)
+                    .EndTime();
             }
             catch (Exception ex)
             {

@@ -17,6 +17,7 @@
     {
         private const string VSMailInformNoMemberAffectTemplate = @"MailTemplate\MailInformNoMemberAffectTemplate.cshtml";
         private const string VSMailInformTemplate = @"MailTemplate\MailInformTemplate.cshtml";
+        private const string FormatDecimalToString_Place = "#,##0.00";
 
         private readonly VRMemberBigStakeService memberBigStakeService;
 
@@ -29,7 +30,14 @@
 
         public Service StartTime()
         {
-            LogService.Info($"VR - Update Member Big Stake - StartTime: {DateTime.Now}.");
+            LogService.Info($"VR - Update Member Big Stake - START TIME: {DateTime.Now}.");
+
+            return this;
+        }
+
+        public Service EndTime()
+        {
+            LogService.Info($"VR - Update Member Big Stake - END TIME: {DateTime.Now}.");
 
             return this;
         }
@@ -137,11 +145,16 @@
             }            
                
             return this;
-        }
+        }        
 
-        public override BaseService SendMailExternal(int mailingListId)
+        public Service SendMail(int mailingListId)
         {
-            var subject = "List of member big stake got VR updated by profiling job";
+            if (mailingListId <= 0)
+            {
+                return this;
+            }
+
+            var subject = DateTime.Now.ToString("yyyyMMdd") + " List of big credit members just having their first ticket.";
             var body = GenerateMailBody();
 
             try
@@ -157,7 +170,7 @@
                         Attachments = new List<MailAttachment>()
                     };
 
-                    SendMail(mail);
+                    SendMail(mail);                                       
                 }
             }
             catch (Exception ex)
@@ -170,7 +183,7 @@
             }
 
             return this;
-        }
+        }        
 
         private string GenerateMailBody()
         {
@@ -178,8 +191,9 @@
 
             try
             {
-                var isExistMember = (getMemberBigStakePerformanceModel.FirstBetDateList != null && getMemberBigStakePerformanceModel.FirstBetDateList.Any())
-                               || (getMemberBigStakePerformanceModel.StatusList != null && getMemberBigStakePerformanceModel.StatusList.Any());
+                var creditMemberBigStake = memberBigStakeService.GetBigCreditMemberForAutomail();
+
+                var isExistMember = creditMemberBigStake != null && creditMemberBigStake.Any();
 
                 var mailTemplatePath = isExistMember
                     ? AppDomain.CurrentDomain.BaseDirectory + VSMailInformTemplate
@@ -189,10 +203,13 @@
 
                 var html = string.Empty;
 
-                html += GenerateContentFirstBetDate();
-                html += GenerateContentStatus();
+                html += GenerateTable(creditMemberBigStake);                
 
                 body = string.Format(body, html);
+
+                var json = JsonConvert.SerializeObject(creditMemberBigStake);
+
+                LogService.Info($"VR - List { creditMemberBigStake.Count() } member(s) Big Stake for send mail: {json}");
             }
             catch (Exception ex)
             {
@@ -206,32 +223,64 @@
             return body;
         }
 
-        private string GenerateContentFirstBetDate()
+        private string GenerateTable(IEnumerable<VRAutomailBigCreditMemberModel> creditMemberBigStake)
         {
-            var content = string.Empty;
+            var table = string.Empty;
 
-            if (getMemberBigStakePerformanceModel.FirstBetDateList != null && getMemberBigStakePerformanceModel.FirstBetDateList.Any())
+            if (creditMemberBigStake != null && creditMemberBigStake.Any())
             {
-                content = $"<br />List {getMemberBigStakePerformanceModel.FirstBetDateList.Count()} member(s) big stake [first bet date] whose VR got updated: <br />";
-                
-                content += JsonConvert.SerializeObject(getMemberBigStakePerformanceModel.FirstBetDateList);
+                table += "<table style='" + CssStyleTable(700) + "'>";
+                table += "<tr>";
+                table += "<td style='" + CssStyleTh() + "'>No.</td>";
+                table += "<td style='" + CssStyleTh() + "'>Member</td>";
+                table += "<td style='" + CssStyleTh() + "'>Site</td>";
+                table += "<td style='" + CssStyleTh() + "'>Given Credit (RM)</td>";
+                table += "<td style='" + CssStyleTh() + "'>Member Turnover (RM)</td>";
+                table += "<td style='" + CssStyleTh() + "'>Member Winloss (RM)</td>";
+                table += "</tr>";
+                var index = 1;
+
+                foreach (var item in creditMemberBigStake)
+                {
+                    table += "<tr>";
+                    table += "<td style='" + CssStyleTd() + "'>" + index + "</td>";
+                    table += "<td style='" + CssStyleTd() + "'>" + item.Member + "</td>";
+                    table += "<td style='" + CssStyleTd() + "'>" + item.Site + "</td>";
+                    table += "<td style='" + CssStyleTd() + "'>" + item.GivenCredit_RM.ToString(FormatDecimalToString_Place) + "</td>";
+                    table += "<td style='" + CssStyleTd() + "'>" + item.MemberTurnover_RM.ToString(FormatDecimalToString_Place) + "</td>";
+                    table += "<td style='" + CssStyleTd() + "'>" + item.MemberWinloss_RM.ToString(FormatDecimalToString_Place) + "</td>";
+                    table += "</tr>";
+
+                    index++;
+                }
+
+                table += "</table></br>";
             }
 
-            return content;
+            return table;
         }
 
-        private string GenerateContentStatus()
+        private string CssStyleTable(int width)
         {
-            var content = string.Empty;
+            var css = "border-collapse: collapse;";
+            css += "width: " + width + "px";
 
-            if (getMemberBigStakePerformanceModel.StatusList != null && getMemberBigStakePerformanceModel.StatusList.Any())
-            {
-                content = $"<br /><br />List {getMemberBigStakePerformanceModel.StatusList.Count()} member(s) big stake [status] whose VR got updated: <br />";
+            return css;
+        }
 
-                content += JsonConvert.SerializeObject(getMemberBigStakePerformanceModel.StatusList);
-            }
+        private string CssStyleTh()
+        {
+            var css = "border: 1px solid black;";
+            css += "font-weight:bold;";
 
-            return content;
+            return css;
+        }
+
+        private string CssStyleTd()
+        {
+            var css = "border: 1px solid black";
+
+            return css;
         }
 
         private void SendMail(Mail mail)

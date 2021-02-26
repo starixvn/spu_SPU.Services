@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
 	<Function Name="VR_Member_Big_Stake">
-		<Setting Key="Task_VRSetting_CheckMemberBigStakePerformance" SpName="Task_VRSetting_CheckMemberBigStakePerformance_xtest" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
-
-		<Setting Key="Acc_VR_MemberBigStake_Ins" SpName="Acc_VR_MemberBigStake_Ins_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
-		<Setting Key="Acc_VR_MemberBigStake_FirstBetDate_Upd" SpName="Acc_VR_MemberBigStake_FirstBetDate_Upd_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
-		<Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd" SpName="Acc_VR_MemberBigStake_WhiteList_Upd_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+		<Setting Key="Task_VRSetting_CheckMemberBigStakePerformance" SpName="Task_VRSetting_CheckMemberBigStakePerformance" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
+		<Setting Key="Acc_Rpt_Automail_BigCreditMembers" SpName="Acc_Rpt_Automail_BigCreditMembers" DbName="DBDW.bodb_dwrs.bodbAdminNet" TimeOut="300" />
+		
+		<Setting Key="Acc_VR_MemberBigStake_Ins" SpName="Acc_VR_MemberBigStake_Ins" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+		<Setting Key="Acc_VR_MemberBigStake_FirstBetDate_Upd" SpName="Acc_VR_MemberBigStake_FirstBetDate_Upd" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+		<Setting Key="Acc_VR_MemberBigStake_WhiteList_Upd" SpName="Acc_VR_MemberBigStake_WhiteList_Upd" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
 	</Function>
 </Functions>

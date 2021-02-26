@@ -68,9 +68,9 @@
 
         void UpdateVRWhitelistMemberBigStake(string custIdList, int type);
 
+        IEnumerable<VRAutomailBigCreditMemberModel> GetBigCreditMemberForAutomail();
 
         #endregion
-
 
     }
 }
