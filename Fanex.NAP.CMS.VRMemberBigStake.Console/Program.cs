@@ -1,14 +1,14 @@
-﻿using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.SPU.Core;
-using SharpRaven;
-using System;
-using System.Collections.Generic;
-
-namespace Fanex.NAP.CMS.VRMemberBigStake.Console
+﻿namespace Fanex.NAP.CMS.VRMemberBigStake.Console
 {
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.SPU.Core;
+    using SharpRaven;
+    using System;
+    using System.Collections.Generic;
+
     static class Program
     {
         static void Main(string[] args)
@@ -33,7 +33,8 @@ namespace Fanex.NAP.CMS.VRMemberBigStake.Console
                     .InsertVRMemberBigStake()
                     .GetMemberBigStakePerformance()
                     .UpdateMemberBigStakeFirstBetDate()
-                    .UpdateMemberBigStakeStatus();
+                    .UpdateMemberBigStakeStatus()
+                    .SendMailExternal(AppSettings.MailingListId);
             }
             catch (Exception ex)
             {
