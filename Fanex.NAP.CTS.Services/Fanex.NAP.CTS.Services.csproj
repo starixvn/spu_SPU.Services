@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Helper\FeedDataToSoon88Helper.cs" />
+    <Compile Include="Implement\AssociationService.cs" />
     <Compile Include="Implement\CustomerEvidenceService.cs" />
     <Compile Include="Implement\DataCenterService.cs" />
     <Compile Include="Implement\PushDataToExternalService.cs" />
