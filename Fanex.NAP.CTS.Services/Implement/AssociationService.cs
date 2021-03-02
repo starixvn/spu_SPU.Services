@@ -1,7 +1,7 @@
-﻿using Fanex.NAP.CTS.DataAccess;
-
-namespace Fanex.NAP.CTS.Services.Implement
+﻿namespace Fanex.NAP.CTS.Services.Implement
 {
+    using Fanex.NAP.CTS.DataAccess;
+
     public interface IAssociationService
     {
         void InsertAssociationDevice(int batchSize);

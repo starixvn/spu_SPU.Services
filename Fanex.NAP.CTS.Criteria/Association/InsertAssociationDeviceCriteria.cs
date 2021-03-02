@@ -1,8 +1,8 @@
-﻿using Fanex.Data;
-using Fanex.Data.Repository;
-
-namespace Fanex.NAP.CTS.Criteria.Association
+﻿namespace Fanex.NAP.CTS.Criteria.Association
 {
+    using Fanex.Data;
+    using Fanex.Data.Repository;
+
     public class InsertAssociationDeviceCriteria : NonQueryCommand
     {
         [SpParam(SqlParamName = "ip_BatchSize")]

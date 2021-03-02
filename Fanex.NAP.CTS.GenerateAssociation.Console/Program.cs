@@ -1,18 +1,17 @@
-﻿using Fanex.Data;
-using Fanex.Data.MySql;
-using Fanex.Data.SqlServer;
-using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Sentry.RavenClient;
-using Fanex.NAP.CTS.Services.Implement;
-using Fanex.NAP.SPU.Core;
-using SharpRaven;
-using System;
-using System.Collections.Generic;
-
-namespace Fanex.NAP.CTS.GenerateAssociationByDevice.Console
+﻿namespace Fanex.NAP.CTS.GenerateAssociationByDevice.Console
 {
+    using Fanex.Data;
+    using Fanex.Data.MySql;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.CTS.Services.Implement;
+    using Fanex.NAP.SPU.Core;
+    using SharpRaven;
+    using System;
+    using System.Collections.Generic;
+
     class Program
     {
 
