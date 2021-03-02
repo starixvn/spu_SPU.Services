@@ -4,6 +4,7 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Model;
+    using Fanex.NAP.CTS.Model.CustomerClassification;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
@@ -59,23 +60,6 @@
             }
         }
 
-        private string FilterCustomerClassificationByCategoryId(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification, int categoryId = 201)
-        {
-            if (generalClassification != null && generalClassification.Any())
-            {
-                var newMemberClassification = generalClassification.Where(x => x.CategoryId == categoryId);
-
-                if (newMemberClassification != null && newMemberClassification.Any())
-                {
-                    var custIds =  newMemberClassification.Select(x => x.CustId);
-
-                    return string.Join(",", custIds);                                        
-                }
-            }
-
-            return string.Empty;
-        }
-
         private void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
         {
             var isWriteLogInfo = AppSettings.IsWriteLogInfo;
@@ -83,16 +67,15 @@
 
             foreach (var listClassification in newGeneralClassificationChunk)
             {
-                var jsonClassification = JsonConvert.SerializeObject(listClassification);
-
                 try
                 {
-                    var newMemberCustIds = this.FilterCustomerClassificationByCategoryId(generalClassification, _newMemberClassification);
+                    //1.1. Check Association With PA
+                    var customerAssociationProblemAccounts = _dataCenterService.GetCustomerAssociationProblemAccount(this.GetCustIds(generalClassification));
 
-                    var newMemberAssociationProblemAccounts = _dataCenterService.GetNewMemberAssociationProblemAccount(newMemberCustIds);
+                    var jsonClassification = MergeCustomerClassificationInfo(listClassification, customerAssociationProblemAccounts);
 
-                    // 1. Insert data in CTS
-                    var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification, false, newMemberAssociationProblemAccounts);
+                    // 1.2. Insert data in CTS
+                    var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
 
                     if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))
                     {
@@ -135,9 +118,55 @@
                 }
                 catch (Exception ex)
                 {
-                    LogService.Error(ex.Message);
+                    LogService.Error($"CustomerClassification.AutoTag Failed with data {JsonConvert.SerializeObject(listClassification)}", ex.Message);
                 }
             }
+        }
+
+        private string GetCustIds(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
+        {
+            if (generalClassification != null && generalClassification.Any())
+            {
+                var custIds = generalClassification.Select(x => x.CustId);
+
+                return string.Join(",", custIds);
+            }
+
+            return string.Empty;
+        }
+
+        private string MergeCustomerClassificationInfo(IEnumerable<CustomerClassificationModelMoreInfo> custClassification, IEnumerable<CustomerAssociationProblemAccountModel> custAssociationPA)
+        {
+            if (custAssociationPA == null || !custAssociationPA.Any()
+                || custClassification == null || !custClassification.Any())
+            {
+                return string.Empty;
+            }
+
+            var result = custClassification.GroupJoin(custAssociationPA,
+                               custClass => custClass.CustId,
+                               custAss => custAss.CustID,
+                               (custClass, custPA) => new { custClass, custPA })
+                               .SelectMany(
+                                    group => group.custPA.DefaultIfEmpty(),
+                                    (group, temp) => new CustomerClassificationModelMoreInfo
+                                    {
+                                        CustId = group.custClass.CustId,
+                                        SportGroupId = group.custClass.SportGroupId,
+                                        CategoryId = group.custClass.CategoryId,
+                                        CreatedTime = group.custClass.CreatedTime,
+                                        TurnoverRM = group.custClass.TurnoverRM,
+                                        WinlossRM = group.custClass.WinlossRM,
+                                        BetCount = group.custClass.BetCount,
+                                        ActiveDays = group.custClass.ActiveDays,
+                                        LastXDaysMargin = group.custClass.LastXDaysMargin,
+                                        ProbationPeriodWinloss = group.custClass.ProbationPeriodWinloss,
+                                        IsGeneralCategory = group.custClass.IsGeneralCategory,
+                                        TaggingID = temp?.TaggingID,
+                                        TaggingType = temp.TaggingType //default false
+                                    });
+
+            return JsonConvert.SerializeObject(result);
         }
     }
 }

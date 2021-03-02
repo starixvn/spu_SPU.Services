@@ -1,13 +1,8 @@
-﻿using Fanex.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.CTS.Criteria.CustomerClassification
+﻿namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 {
-    public class GetAssociationProblemAccountForNewMemberClassificationCriteria : Data.Repository.CriteriaBase
+    using Fanex.Data;
+
+    public class GetAssociationProblemAccountForCustomerClassificationCriteria : Data.Repository.CriteriaBase
     {
         [SpParam(SqlParamName = "ip_ListCustID")]
         public string CustIdList { get; set; }
@@ -17,7 +12,7 @@ namespace Fanex.NAP.CTS.Criteria.CustomerClassification
 
         public override string GetSettingKey()
         {
-            return "CTS_DC_CustClassification_NewMember_GetAssociationPA";
+            return "CTS_DC_CustClassification_GetTaggingByAssociationWithPA";
         }
 
         public override bool IsValid()

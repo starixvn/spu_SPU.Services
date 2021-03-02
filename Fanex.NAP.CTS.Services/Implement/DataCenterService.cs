@@ -111,9 +111,9 @@
             dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
-        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan, string associationPA)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
         {
-           return dataCenterDataAccess.InsertMainCustomerClassification(newClassification, isRescan, associationPA);
+           return dataCenterDataAccess.InsertMainCustomerClassification(newClassification);
         }
 
         public void DCSMoveTransToTransaction07(string transIdList)
@@ -347,16 +347,16 @@
             return dataCenterDataAccess.GetExistedEvidences(custIDs);
         }
 
-        public string GetNewMemberAssociationProblemAccount(string custIds)
+        public IEnumerable<CustomerAssociationProblemAccountModel> GetCustomerAssociationProblemAccount(string custIds)
         {            
-            var result =  dataCenterDataAccess.GetNewCustomerAssociationProblemAccount(custIds, out string errorMessage);
+            var result =  dataCenterDataAccess.GetCustomerAssociationProblemAccount(custIds, out string errorMessage);
 
             if(!string.IsNullOrWhiteSpace(errorMessage))
             {
-                LogService.Error(errorMessage);
+                LogService.Error($"CustomerClassification.AutoTag - Get Association With PA fail with data: {custIds} ", errorMessage);
             }
                         
-            return JsonConvert.SerializeObject(result);
+            return result;
         }
         
         public void ReTransformAccount(string jsonData)

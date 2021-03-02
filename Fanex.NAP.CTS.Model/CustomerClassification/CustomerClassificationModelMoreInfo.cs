@@ -26,5 +26,9 @@
         public decimal ProbationPeriodWinloss { get; set; }
 
         public bool IsGeneralCategory { get; set; }
+
+        public int? TaggingID { get; set; }
+
+        public bool TaggingType { get; set; }
     }
 }

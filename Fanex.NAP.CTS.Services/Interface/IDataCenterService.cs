@@ -31,13 +31,13 @@
 
         List<CustomerClassificationModelMoreInfo> GetNewClassification();
 
-        string GetNewMemberAssociationProblemAccount(string custIds);
+        IEnumerable<CustomerAssociationProblemAccountModel> GetCustomerAssociationProblemAccount(string custIds);
 
         void UpdateAppliedStatusClassification(string custIdList, bool isGeneralCategory);
 
         void AutoTagClassification(string newClassification);
 
-        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan, string associationPA);
+        InsertCategoryResultModel InsertMainCustomerClassification(string newClassification);
 
         DBResult UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList);
 

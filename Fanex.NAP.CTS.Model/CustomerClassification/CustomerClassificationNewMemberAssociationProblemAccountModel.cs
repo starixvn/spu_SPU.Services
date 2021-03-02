@@ -1,12 +1,11 @@
 ﻿namespace Fanex.NAP.CTS.Model.CustomerClassification
 {
-    public class CustomerClassificationNewMemberAssociationProblemAccountModel
+    public class CustomerAssociationProblemAccountModel
     {
+        public int CustID { get; set; }
 
-        public int CustId { get; set; }
+        public int? TaggingID { get; set; }
 
-        public int CTSCustId { get; set; }
-
-        public int CategoryId { get; set; }
+        public bool TaggingType { get; set; }
     }
 }

@@ -270,15 +270,13 @@
             repository.Execute(criteria);
         }
 
-        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification, bool isRescan, string associationPA)
+        public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
         {
             var repository = new DynamicRepository();
 
             var criteria = new InsertMainCustomerClassificationCriteria
             {
-                NewClassification = newClassification,
-                IsRescan = isRescan,
-                AssociationPA = associationPA
+                NewClassification = newClassification
             };
 
             var custIds = repository.Fetch<int>(criteria).ToList();
@@ -712,16 +710,16 @@
             }
         }
 
-        public IEnumerable<CustomerClassificationNewMemberAssociationProblemAccountModel> GetNewCustomerAssociationProblemAccount(string custIdList, out string errorMessage)
+        public IEnumerable<CustomerAssociationProblemAccountModel> GetCustomerAssociationProblemAccount(string custIdList, out string errorMessage)
         {
-            var criteria = new GetAssociationProblemAccountForNewMemberClassificationCriteria
+            var criteria = new GetAssociationProblemAccountForCustomerClassificationCriteria
             {
                 CustIdList = custIdList
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var result =  db.Query<CustomerClassificationNewMemberAssociationProblemAccountModel>(criteria);
+                var result =  db.Query<CustomerAssociationProblemAccountModel>(criteria);
 
                 errorMessage = criteria.ErrorMessage;
 
