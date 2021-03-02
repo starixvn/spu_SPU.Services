@@ -710,7 +710,7 @@
             }
         }
 
-        public IEnumerable<CustomerAssociationProblemAccountModel> GetCustomerAssociationProblemAccount(string custIdList, out string errorMessage)
+        public IEnumerable<CustomerAssociationProblemAccountModel> GetCustomerAssociationProblemAccount(string custIdList)
         {
             var criteria = new GetAssociationProblemAccountForCustomerClassificationCriteria
             {
@@ -720,8 +720,6 @@
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
                 var result =  db.Query<CustomerAssociationProblemAccountModel>(criteria);
-
-                errorMessage = criteria.ErrorMessage;
 
                 return result;
             }

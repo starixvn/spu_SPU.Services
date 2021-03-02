@@ -118,7 +118,11 @@
                 }
                 catch (Exception ex)
                 {
-                    LogService.Error($"CustomerClassification.AutoTag Failed with data {JsonConvert.SerializeObject(listClassification)}", ex.Message);
+                    var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                    LogService.Error($" {logMessage}. Failed with data {JsonConvert.SerializeObject(listClassification)}");
                 }
             }
         }
@@ -163,7 +167,7 @@
                                         ProbationPeriodWinloss = group.custClass.ProbationPeriodWinloss,
                                         IsGeneralCategory = group.custClass.IsGeneralCategory,
                                         TaggingID = temp?.TaggingID,
-                                        TaggingType = temp.TaggingType //default false
+                                        TaggingType = (temp != null)? temp.TaggingType : 0
                                     });
 
             return JsonConvert.SerializeObject(result);

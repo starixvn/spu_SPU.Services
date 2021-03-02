@@ -6,6 +6,6 @@
 
         public int? TaggingID { get; set; }
 
-        public bool TaggingType { get; set; }
+        public int TaggingType { get; set; }
     }
 }

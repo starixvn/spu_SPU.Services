@@ -349,14 +349,7 @@
 
         public IEnumerable<CustomerAssociationProblemAccountModel> GetCustomerAssociationProblemAccount(string custIds)
         {            
-            var result =  dataCenterDataAccess.GetCustomerAssociationProblemAccount(custIds, out string errorMessage);
-
-            if(!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                LogService.Error($"CustomerClassification.AutoTag - Get Association With PA fail with data: {custIds} ", errorMessage);
-            }
-                        
-            return result;
+            return dataCenterDataAccess.GetCustomerAssociationProblemAccount(custIds);
         }
         
         public void ReTransformAccount(string jsonData)
