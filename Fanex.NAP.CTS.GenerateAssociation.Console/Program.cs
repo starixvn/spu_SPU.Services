@@ -40,6 +40,8 @@
             {
 
                 associationService.InsertAssociationDevice(AppSettings.BatchSize);
+
+                LogService.Info("Success");
             }
             catch (Exception ex)
             {
