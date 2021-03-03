@@ -62,6 +62,9 @@
     <Content Include="Fanex.NAP.CMS.VRMemberBigStake.Console.exe.LOCAL.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fanex.NAP.CMS.VRMemberBigStake.Console.exe.UAT.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="MailTemplate\MailInformNoMemberAffectTemplate.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
