@@ -3,6 +3,7 @@
     using Fanex.Data;
     using Fanex.Data.Repository;
     using Fanex.NAP.CTS.Criteria;
+    using Fanex.NAP.CTS.Criteria.Association;
     using Fanex.NAP.CTS.Criteria.CustomerClassification;
     using Fanex.NAP.CTS.Criteria.MainDB;
     using Fanex.NAP.CTS.Model;
@@ -804,6 +805,18 @@
                 CustomerInfo = customers,
                 LastUpdateCustID = lastUpdateCustID,
                 LastUpdateTime = lastUpdateTime
+            };
+
+            repository.Execute(criteria);
+        }
+
+        public void InserAssociationDevice(int batchSize)
+        {            
+            var repository = new DynamicRepository();
+
+            var criteria = new InsertAssociationDeviceCriteria
+            {
+               BatchSize = batchSize
             };
 
             repository.Execute(criteria);

@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Association\InsertAssociationDeviceCriteria.cs" />
     <Compile Include="CustomerClassification\GetAssociationProblemAccountForNewMemberClassificationCriteria.cs" />
     <Compile Include="CustomerClassification\GetLastestClassificationCriteria.cs" />
     <Compile Include="CustomerClassification\GetLastestCategoryCriteria.cs" />
