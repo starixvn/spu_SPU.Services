@@ -6,7 +6,7 @@
         "Jobs": [
           {
             "JobName": "CTS_Auto_Tag_Customer_Clasification_Job",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.Services.JobExecute",
             "APIUrl": "http://localhost:62391/api",
             "HealthCheckUrl": "http://localhost:62391/healthz",
             "Active": "true",
@@ -21,7 +21,7 @@
           },
           {
             "JobName": "CTS_AutoTag_ProblemAccount",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.Services.JobExecute",
             "APIUrl": "http://localhost:62392/api",
             "HealthCheckUrl": "http://localhost:62392/healthz",
             "Active": "false",
@@ -80,7 +80,7 @@
         "Jobs": [
           {
             "JobName": "CTS_Customer_Evidence",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",
+            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.Services.JobExecute",
             "APIUrl": "https://localhost:44325/api",
             "HealthCheckUrl": "http://localhost:44325/healthz",
             "Active": "false",

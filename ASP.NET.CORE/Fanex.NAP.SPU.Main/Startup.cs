@@ -3,10 +3,9 @@ namespace Fanex.NAP.SPU.Main
     using AutoMapper;
     using CrystalQuartz.AspNetCore;
     using Fanex.Logging;
-    using Fanex.Logging.RabbitMQ;
     using Fanex.Logging.Sentry;
-    using Fanex.NAP.SPU.Main.Features.JobSchedulers;
-    using Fanex.NAP.SPU.Main.JobSchedulers;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Services;
+    using Fanex.NAP.SPU.Main.JobSchedulers.Services;
     using Fanex.NAP.SPU.Middleware;
     using HealthChecks.UI.Client;
     using HealthChecks.UI.Configuration;
@@ -20,11 +19,9 @@ namespace Fanex.NAP.SPU.Main
     using Microsoft.Extensions.Hosting;
     using ONEbook.UM;
     using ONEbook.UM.AspNetCore.Configuration;
-    using ONEbook.UM.Configurations;
     using ONEbook.UM.Helpers;
     using ONEbook.UM.Services;
     using ONEbook.UM.Transport;
-    using Prometheus;
     using Quartz;
     using Quartz.Impl;
     using Quartz.Spi;

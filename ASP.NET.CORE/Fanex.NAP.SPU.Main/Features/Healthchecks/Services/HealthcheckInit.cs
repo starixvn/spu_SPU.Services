@@ -1,11 +1,11 @@
-﻿using Fanex.NAP.SPU.Main.Features.Healthchecks.Models;
-using Fanex.NAP.SPU.Main.JobSchedulers;
-using Fanex.NAP.SPU.Middleware;
-using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-
-namespace Fanex.NAP.SPU.Main.Features.Healthchecks.Services
+﻿namespace Fanex.NAP.SPU.Main.Features.Healthchecks.Services
 {
+    using Fanex.NAP.SPU.Main.Features.Healthchecks.Models;
+    using Fanex.NAP.SPU.Main.JobSchedulers.Services;
+    using Fanex.NAP.SPU.Middleware;
+    using Microsoft.Extensions.DependencyInjection;
+    using Newtonsoft.Json;
+
     public static class HealthcheckInit
     {
         public static void AddSingletonHealthCheck(this IServiceCollection services, AppSettings appSettings, JobSchedules jobSchedules)

@@ -1,8 +1,8 @@
-﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
+﻿namespace Fanex.NAP.SPU.Main.JobSchedulers.Services
 {
     using Fanex.NAP.SPU.Main.Features.Healthchecks.Services;
-    using Fanex.NAP.SPU.Main.Features.JobSchedulers;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Services;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using Fanex.NAP.SPU.Middleware;
     using Microsoft.Extensions.DependencyInjection;

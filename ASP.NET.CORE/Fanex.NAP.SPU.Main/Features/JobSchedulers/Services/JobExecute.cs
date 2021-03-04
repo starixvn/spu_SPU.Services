@@ -1,10 +1,10 @@
-﻿using Fanex.NAP.SPU.Main.Features.JobSchedulers;
+﻿using Fanex.NAP.SPU.Main.Features.JobSchedulers.Services;
 using MediatR;
 using Quartz;
 using Sentry;
 using System.Threading.Tasks;
 
-namespace Fanex.NAP.SPU.Main.JobSchedulers
+namespace Fanex.NAP.SPU.Main.JobSchedulers.Services
 {
     [DisallowConcurrentExecutionAttribute]
     public class JobExecute : IJob

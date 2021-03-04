@@ -1,9 +1,9 @@
-﻿using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
+﻿namespace Fanex.NAP.SPU.Main.Features.JobSchedulers.Services
 {
+    using MediatR;
+    using System.Threading;
+    using System.Threading.Tasks;
+
     public class JobHandler : IRequestHandler<JobRequest, bool>
     {
         private readonly IJobService jobService;

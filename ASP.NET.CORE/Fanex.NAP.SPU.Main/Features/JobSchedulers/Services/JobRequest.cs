@@ -1,11 +1,7 @@
-﻿using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
+﻿namespace Fanex.NAP.SPU.Main.Features.JobSchedulers.Services
 {
+    using MediatR;
+
     public class JobRequest: IRequest<bool>
     {
         public string Name { get; set; }

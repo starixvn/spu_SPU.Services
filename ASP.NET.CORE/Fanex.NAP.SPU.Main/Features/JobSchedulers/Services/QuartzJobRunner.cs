@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.SPU.Main.JobSchedulers
+﻿namespace Fanex.NAP.SPU.Main.JobSchedulers.Services
 {
     using Microsoft.Extensions.DependencyInjection;
     using ONEbook.UM.Services;

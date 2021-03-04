@@ -1,8 +1,8 @@
-﻿using Refit;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.SPU.Main.Features.JobSchedulers
+﻿namespace Fanex.NAP.SPU.Main.Features.JobSchedulers.Services
 {
+    using Refit;
+    using System.Threading.Tasks;
+
     public interface IJobService
     {
         Task<bool> Execute(string name, string apiUrl);

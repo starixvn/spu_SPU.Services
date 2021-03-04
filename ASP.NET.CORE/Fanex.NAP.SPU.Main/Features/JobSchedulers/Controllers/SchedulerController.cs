@@ -9,6 +9,8 @@
     using System.Linq;
     using System.Collections.Generic;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
+    using Fanex.NAP.SPU.Main.JobSchedulers.Services;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Services;
 
     public class SchedulerController : Controller
     {

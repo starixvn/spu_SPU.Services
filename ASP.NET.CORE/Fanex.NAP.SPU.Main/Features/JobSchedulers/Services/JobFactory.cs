@@ -3,7 +3,7 @@ using Quartz;
 using Quartz.Spi;
 using System;
 
-namespace Fanex.NAP.SPU.Main.JobSchedulers
+namespace Fanex.NAP.SPU.Main.JobSchedulers.Services
 {
     public class JobFactory : IJobFactory
     {
