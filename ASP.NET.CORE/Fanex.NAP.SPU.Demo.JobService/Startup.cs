@@ -1,8 +1,7 @@
 using Fanex.Data;
 using Fanex.Data.MySql;
-using Fanex.NAP.SPU.Demo.JobService.Controllers;
+using Fanex.NAP.SPU.Demo.JobService.Service;
 using HealthChecks.UI.Client;
-using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -29,8 +28,7 @@ namespace Fanex.NAP.SPU.Demo.JobService
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddControllers();            
             services
                .AddHealthChecks()
                .AddCheck<RandomHealthCheck>("random")
@@ -42,7 +40,8 @@ namespace Fanex.NAP.SPU.Demo.JobService
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Fanex.NAP.SPU.Demo.JobService", Version = "v1" });
             });
 
-            services.AddScoped<IJobService, Controllers.JobService>();
+            services.AddSingleton<IJobService, Service.JobService>();
+            services.AddSingleton<IDataService, DataService>();
 
             FanexDataConfig();
         }

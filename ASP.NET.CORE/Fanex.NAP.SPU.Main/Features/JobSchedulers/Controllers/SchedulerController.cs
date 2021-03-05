@@ -1,16 +1,15 @@
 ﻿namespace Fanex.NAP.SPU.Main.Features.JobSchedulers.Controllers
 {
-    using Fanex.NAP.SPU.Main.JobSchedulers;
-    using Microsoft.AspNetCore.Mvc;
-    using Fanex.NAP.SPU.Middleware;
-    using Refit;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.Models;
-    using System.Threading.Tasks;
-    using System.Linq;
-    using System.Collections.Generic;
+    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Services;
     using Fanex.NAP.SPU.Main.Features.JobSchedulers.ViewModels.Job;
     using Fanex.NAP.SPU.Main.JobSchedulers.Services;
-    using Fanex.NAP.SPU.Main.Features.JobSchedulers.Services;
+    using Fanex.NAP.SPU.Middleware;
+    using Microsoft.AspNetCore.Mvc;
+    using Refit;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
 
     public class SchedulerController : Controller
     {

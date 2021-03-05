@@ -5,16 +5,16 @@
 
     public interface IJobService
     {
-        Task<bool> Execute(string name, string apiUrl);
+        Task<bool> Execute(string jobName, string apiUrl);
     }        
 
     public class JobService : IJobService
     {        
-        public async Task<bool> Execute(string name, string apiUrl)
+        public async Task<bool> Execute(string jobName, string apiUrl)
         {
             var jobServiceAPI = RestService.For<IJobServiceApi>(apiUrl);
 
-            return await jobServiceAPI.Execute(name);
+            return await jobServiceAPI.Execute(jobName);
         }
     }
 }

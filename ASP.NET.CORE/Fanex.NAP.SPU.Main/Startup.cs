@@ -1,6 +1,6 @@
 namespace Fanex.NAP.SPU.Main
 {
-    using AutoMapper;
+    using CrystalQuartz.Application;
     using CrystalQuartz.AspNetCore;
     using Fanex.Logging;
     using Fanex.Logging.Sentry;
@@ -9,7 +9,6 @@ namespace Fanex.NAP.SPU.Main
     using Fanex.NAP.SPU.Middleware;
     using HealthChecks.UI.Client;
     using HealthChecks.UI.Configuration;
-    using MediatR;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics.HealthChecks;
     using Microsoft.AspNetCore.Hosting;
@@ -30,7 +29,6 @@ namespace Fanex.NAP.SPU.Main
     using System.Collections.Generic;
     using System.Collections.Specialized;
     using System.IO;
-    using System.Reflection;
 
     public class Startup
     {
@@ -43,10 +41,8 @@ namespace Fanex.NAP.SPU.Main
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddAutoMapper(typeof(Startup));
-
+        {            
+         
             services.AddControllersWithViews();
             services.AddAppSettings();            
             var appSettings = new AppSettings(this.Configuration);
@@ -134,8 +130,15 @@ namespace Fanex.NAP.SPU.Main
             });
 
             var schedulerProvider = (ISchedulerFactory)app.ApplicationServices.GetService(typeof(ISchedulerFactory));
+            var crystalQuartzOptions = new CrystalQuartzOptions
+            {
+                ErrorDetectionOptions = new ErrorDetectionOptions
+                {
+                    VerbosityLevel = ErrorVerbosityLevel.Detailed
+                }
+            };
 
-            app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result);
+            app.UseCrystalQuartz(() => schedulerProvider.GetScheduler().Result, crystalQuartzOptions);
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 

@@ -1,7 +1,6 @@
 ﻿namespace Fanex.NAP.SPU.Demo.JobService.Controllers
 {
     using Fanex.NAP.SPU.Demo.JobService.Service;
-    using MediatR;
     using Microsoft.AspNetCore.Mvc;
     using Sentry;
     using System;
@@ -10,33 +9,23 @@
     [ApiController]
     [Route("api/job")]
     public class JobController : ControllerBase
-    {
-        private readonly IMediator mediator;
+    {      
         private readonly ISentryClient sentryClient;
+        private readonly IJobService jobService;
 
-        public JobController(IMediator mediator, ISentryClient sentryClient)
-        {
-            this.mediator = mediator;
+        public JobController(ISentryClient sentryClient, IJobService jobService)
+        {           
             this.sentryClient = sentryClient;
+            this.jobService = jobService;
         }
 
         [HttpPost("execute")]
-        public async Task<bool> Execute(string name)
+        public async Task<bool> Execute(string jobName)
         {
-            TestData();
+            sentryClient.CaptureMessage($"{jobName} is running at {DateTime.Now}");
 
-            var result = await mediator.Send(new JobRequest(name));
+           return await this.jobService.Execute(jobName);             
 
-            this.sentryClient.CaptureMessage($"{name} is running at {DateTime.Now}");
-
-            return result;
-        }
-
-        private void TestData()
-        {
-            IService service = new Service();
-
-            var data = service.GetPreviousTimingExecution(3);
-        }
+        }        
     }
 }

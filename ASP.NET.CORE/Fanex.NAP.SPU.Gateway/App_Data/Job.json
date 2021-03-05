@@ -15,25 +15,25 @@
                 "TriggerType": "Cron",
                 "TriggerName": "AutoTag_Normal",
                 "RepeatForever": "true",
-                "CronExpression": "0/20 * * * * ?"
-              }
-            ]
-          },
-          {
-            "JobName": "CTS_AutoTag_ProblemAccount",
-            "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.Services.JobExecute",
-            "APIUrl": "http://localhost:62392/api",
-            "HealthCheckUrl": "http://localhost:62392/healthz",
-            "Active": "false",
-            "Triggers": [
-              {
-                "TriggerType": "Cron",
-                "TriggerName": "AutoTag_Problem",
-                "RepeatForever": "true",
                 "CronExpression": "0/30 * * * * ?"
               }
             ]
           },
+          //{
+          //  "JobName": "CTS_AutoTag_ProblemAccount",
+          //  "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.Services.JobExecute",
+          //  "APIUrl": "http://localhost:62392/api",
+          //  "HealthCheckUrl": "http://localhost:62392/healthz",
+          //  "Active": "false",
+          //  "Triggers": [
+          //    {
+          //      "TriggerType": "Cron",
+          //      "TriggerName": "AutoTag_Problem",
+          //      "RepeatForever": "true",
+          //      "CronExpression": "0/30 * * * * ?"
+          //    }
+          //  ]
+          //},
           //{
           //  "JobName": "CTS_General_Category_Daily_Classify_Job",
           //  "JobType": "Fanex.NAP.SPU.Main.JobSchedulers.JobExecute",            

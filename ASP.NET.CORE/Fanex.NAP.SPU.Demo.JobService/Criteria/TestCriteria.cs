@@ -5,12 +5,12 @@
 
     public class TestCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_ParamID")]
+        [SpParam(SqlParamName = "ip_ParamId")]
         public int ParamID { get; set; }
 
         public override string GetSettingKey()
         {
-            return "CTS_DC_GetSystemParameterById";
+            return "spname";
         }
 
         public override bool IsValid()

@@ -11,6 +11,6 @@
         Task<SchedulerModel> GetScheduler();
 
         [Post("/job/execute")]
-        Task<bool> Execute(string name);
+        Task<bool> Execute(string jobName);
     }    
 }

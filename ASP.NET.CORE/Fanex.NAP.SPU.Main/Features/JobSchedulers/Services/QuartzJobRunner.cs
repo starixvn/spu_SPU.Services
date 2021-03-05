@@ -27,7 +27,7 @@
                 using (var scope = _serviceProvider.CreateScope())
                 {
                     var job = scope.ServiceProvider.GetRequiredService(context.JobDetail.JobType) as IJob;
-
+                    
                     await job.Execute(context);
                 }
             }
