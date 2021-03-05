@@ -241,7 +241,8 @@
                     _dataCenterService.UpdateCustInfoComplete(custInfoToUpdate, custs.LastUpdatedTime, custs.LastCustId);
                 }
 
-                LogService.Info($"Healing - done");
+                if (isWriteLogInfo)
+                    LogService.Info($"Healing - done");
 
             }
             catch (Exception ex)
