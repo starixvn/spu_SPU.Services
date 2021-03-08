@@ -15,8 +15,11 @@
 
     public class Service : BaseService
     {
-        private const string VSMailInformNoMemberAffectTemplate = @"MailTemplate\MailInformNoMemberAffectTemplate.cshtml";
-        private const string VSMailInformTemplate = @"MailTemplate\MailInformTemplate.cshtml";
+        private const string MailInformNoMemberAffectTemplate = @"MailTemplate\MailInformNoMemberAffectTemplate.cshtml";
+        private const string MailInformBigCreditMemberTemplate = @"MailTemplate\MailInformBigCreditMemberTemplate.cshtml";
+        private const string MailInformBigLossTemplate = @"MailTemplate\MailInformBigLossTemplate.cshtml";
+        private const string MailInformBigCreditMemberAndBigLossTemplate = @"MailTemplate\MailInformBigCreditMemberAndBigLossTemplate.cshtml";
+
         private const string FormatDecimalToString_Place = "#,##0.00";
 
         private readonly VRMemberBigStakeService memberBigStakeService;
@@ -192,24 +195,42 @@
             try
             {
                 var creditMemberBigStake = memberBigStakeService.GetBigCreditMemberForAutomail();
+                var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory;
+                var table1 = string.Empty;
+                var table2 = string.Empty;
 
-                var isExistMember = creditMemberBigStake != null && creditMemberBigStake.Any();
+                if (!creditMemberBigStake.BigCreditMemberList.Any() && !creditMemberBigStake.BigCreditMemberWithBigLossList.Any())
+                {
+                    mailTemplatePath += MailInformNoMemberAffectTemplate;
 
-                var mailTemplatePath = isExistMember
-                    ? AppDomain.CurrentDomain.BaseDirectory + VSMailInformTemplate
-                    : AppDomain.CurrentDomain.BaseDirectory + VSMailInformNoMemberAffectTemplate;
+                }
+                else if(creditMemberBigStake.BigCreditMemberList.Any() && !creditMemberBigStake.BigCreditMemberWithBigLossList.Any())
+                {
+                    mailTemplatePath += MailInformBigCreditMemberTemplate;
 
-                body = Utilities.ReadTextFile(mailTemplatePath);
+                    table1 = GenerateTable(creditMemberBigStake.BigCreditMemberList);
+                }
+                else if(!creditMemberBigStake.BigCreditMemberList.Any() && creditMemberBigStake.BigCreditMemberWithBigLossList.Any())
+                {
+                    mailTemplatePath += MailInformBigLossTemplate;
+                    table1 = GenerateTable(creditMemberBigStake.BigCreditMemberWithBigLossList);
+                }
+                else
+                {
+                    mailTemplatePath += MailInformBigCreditMemberAndBigLossTemplate;
 
-                var html = string.Empty;
+                    table1 = GenerateTable(creditMemberBigStake.BigCreditMemberList);
 
-                html += GenerateTable(creditMemberBigStake);                
+                    table2 = GenerateTable(creditMemberBigStake.BigCreditMemberWithBigLossList);
+                }
 
-                body = string.Format(body, html);
+                body = Utilities.ReadTextFile(mailTemplatePath);                                                             
+
+                body = string.Format(body, table1, table2);
 
                 var json = JsonConvert.SerializeObject(creditMemberBigStake);
 
-                LogService.Info($"VR - List { creditMemberBigStake.Count() } member(s) Big Stake for send mail: {json}");
+                LogService.Info($"VR - List member(s) Big Stake for send mail: {json}");
             }
             catch (Exception ex)
             {

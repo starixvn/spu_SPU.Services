@@ -50,6 +50,7 @@
     <Compile Include="VRAgentUpdatedToFollowSuperModel.cs" />
     <Compile Include="VRAgentUpdatedToZeroModel.cs" />
     <Compile Include="VRAutomailBigCreditMemberModel.cs" />
+    <Compile Include="VRAutomainBigCreditMemberViewModel.cs" />
     <Compile Include="VRCheckMemberBigStakePerformanceFirstDayModel.cs" />
     <Compile Include="VRCheckMemberBigStakePerformanceStatusModel.cs" />
     <Compile Include="VRGetMemberBigStakePerformanceModel.cs" />

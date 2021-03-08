@@ -65,10 +65,16 @@
     <Content Include="Fanex.NAP.CMS.VRMemberBigStake.Console.exe.UAT.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="MailTemplate\MailInformBigCreditMemberAndBigLossTemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="MailTemplate\MailInformBigLossTemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="MailTemplate\MailInformNoMemberAffectTemplate.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="MailTemplate\MailInformTemplate.cshtml">
+    <None Include="MailTemplate\MailInformBigCreditMemberTemplate.cshtml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

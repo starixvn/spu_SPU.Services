@@ -38,7 +38,7 @@ namespace Fanex.NAP.CMS.VirtualSetting.Service
             virtualSettingDataAccess.UpdateVRWhitelistMemberBigStake(custIdList, type);
         }
 
-        public IEnumerable<VRAutomailBigCreditMemberModel> GetBigCreditMemberForAutomail()
+        public VRAutomainBigCreditMemberViewModel GetBigCreditMemberForAutomail()
         {
             return virtualSettingDataAccess.GetBigCreditMemberForAutomail();
         }

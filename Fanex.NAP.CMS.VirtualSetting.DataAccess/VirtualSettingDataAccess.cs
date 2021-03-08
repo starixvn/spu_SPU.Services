@@ -413,11 +413,17 @@
             }
         }
 
-        public IEnumerable<VRAutomailBigCreditMemberModel> GetBigCreditMemberForAutomail()
+        public VRAutomainBigCreditMemberViewModel GetBigCreditMemberForAutomail()
         {
             var criteria = new AutoMailBigCreditMemberCriteria();
 
-            return _repository.Fetch<VRAutomailBigCreditMemberModel>(criteria);           
+            var result = _repository.FetchMultiple<VRAutomailBigCreditMemberModel, VRAutomailBigCreditMemberModel>(criteria);
+
+            return new VRAutomainBigCreditMemberViewModel
+            {
+                BigCreditMemberList = result.firstResultSet,
+                BigCreditMemberWithBigLossList = result.secondResultSet
+            };
         }
 
         #endregion
