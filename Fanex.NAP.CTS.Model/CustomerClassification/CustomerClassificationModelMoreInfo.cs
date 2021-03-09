@@ -27,7 +27,7 @@
 
         public bool IsGeneralCategory { get; set; }
 
-        public int? TaggingID { get; set; }
+        public int TaggingID { get; set; }
 
         public int TaggingType { get; set; }
     }
