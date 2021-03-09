@@ -23,7 +23,7 @@
         {
             //dataService.GetData(0);
 
-            return Task.FromResult(false);
+            return Task.FromResult(true);
         }
     }
 }
