@@ -43,7 +43,6 @@
         void RemoveBetLimit(string customerList);
         #endregion
 
-
         #region VR-Agent
         void InsertNewVRAgent();
 
@@ -56,5 +55,22 @@
         (IEnumerable<VRAgentUpdatedToZeroModel>, IEnumerable<VRAgentUpdatedToFollowSuperModel>) GetVRAgentUpdated();
 
         #endregion
+
+
+        #region VR-ByStake
+
+        void InsertVRMemberBigStake();
+
+        VRGetMemberBigStakePerformanceModel GetMemberBigStakePerformance();
+
+
+        void UpdateVRMemeberBigStakeFirstBetDate(string custIdList, int type, DateTime betDate);
+
+        void UpdateVRWhitelistMemberBigStake(string custIdList, int type);
+
+        VRAutomainBigCreditMemberViewModel GetBigCreditMemberForAutomail();
+
+        #endregion
+
     }
 }

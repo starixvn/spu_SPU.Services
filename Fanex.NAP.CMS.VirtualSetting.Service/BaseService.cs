@@ -47,6 +47,9 @@
 
         public virtual BaseService NotifyMessage() { return this; }
 
-        public virtual BaseService SendMailInternal(int mailingListId) { return this; }
+        public virtual BaseService SendMailInternal(int mailingListId) { return this; }       
+        
+
+
     }
 }
