@@ -1,8 +1,5 @@
 ﻿namespace Fanex.NAP.CTS.UserPermission.Console
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
     using Fanex.Data;
     using Fanex.Data.MySql;
     using Fanex.Data.SqlServer;
@@ -10,19 +7,16 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry;
-    using Fanex.NAP.Core.Models.ValueObject;
-    using Fanex.NAP.Core.Service.Impl;
-    using Fanex.NAP.CTS.Model;
-    using Fanex.NAP.CTS.Services;
     using Fanex.NAP.SPU.Core;
-    using Newtonsoft.Json;
     using Sentry;
+    using System;
+    using System.Collections.Generic;
 
     class Program
     {
         static void Main(string[] args)
-        {
-            var dataService = new DataCenterService();
+        {            
+            var permissionService = new PermissionService();
 
             DbSettingProviderManager
                  .StartNewSession()
@@ -31,6 +25,7 @@
                  .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
                  .UseDefaultConnectionStringProvider()
                  .Run();
+
             LogManager
                .SetDefaultLogCategory(AppSettings.FanexLogCategory)
                .Use(new List<ILogEngine>
@@ -42,12 +37,9 @@
                });
             try
             {
-                var permissionUserIds = GetPermissionUserIDs();
-
-                if (permissionUserIds != null && permissionUserIds.Count > 0)
-                {
-                    dataService.InsertUserPermission(JsonConvert.SerializeObject(permissionUserIds));
-                }
+                permissionService
+                    .SyncUserPermission(FSFunctionKeys.AssociatedAccountMonitor, FSFunctionKeys.AssociatedAccountMonitorKey)
+                    .SyncUserPermission(FSFunctionKeys.ProbationManagement, FSFunctionKeys.ProbationManagementKey);
             }
             catch (Exception ex)
             {
@@ -57,30 +49,6 @@
 
                 LogService.Error(logMessage);
             }
-        }
-
-        private static List<UserPermissionModel> GetPermissionUserIDs()
-        {
-            var associatedPermissionUserIds = new UserService().GetUserPolicies(FSFunctionKeys.AssociatedAccountMonitor, Int32.Parse(AppSettings.SiteId)) as List<UserPolicy>;
-            var probationPermissionUserIds = new UserService().GetUserPolicies(FSFunctionKeys.ProbationManagement, Int32.Parse(AppSettings.SiteId)) as List<UserPolicy>;
-
-            var permissionUserIds = new List<UserPermissionModel>();
-            permissionUserIds.AddRange(PreparePermissionUserIds(associatedPermissionUserIds, 1));
-            permissionUserIds.AddRange(PreparePermissionUserIds(probationPermissionUserIds, 2));
-
-            return permissionUserIds;
-        }
-
-        private static List<UserPermissionModel> PreparePermissionUserIds(List<UserPolicy> permissionUserIds, int funcKey)
-        {
-            var output = new List<UserPermissionModel>();
-
-            if (permissionUserIds != null && permissionUserIds.Count > 0)
-            {
-                permissionUserIds.ForEach(c => output.Add(new UserPermissionModel() { UserID = c.User.Id, FuncID = funcKey}));
-            }
-
-            return output;
-        }
+        }        
     }
 }
