@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.UserPermission.Console
 {
+    using Fanex.Logging;
     using Fanex.NAP.Core.Models.ValueObject;
     using Fanex.NAP.Core.Service.Impl;
     using Fanex.NAP.CTS.Model;
@@ -32,6 +33,9 @@
         public PermissionService SyncUserPermission(string functionName, int functionKey)
         {
             var userPolicy = userService.GetUserPolicies(functionName, Int32.Parse(AppSettings.SiteId));
+
+            if (AppSettings.IsWriteLogInfo)
+                LogService.Info($"Get User Permission - {functionName} - {JsonConvert.SerializeObject(userPolicy?.Select(c => c.User.Id))} - {DateTime.Now}");
 
             if(userPolicy != null && userPolicy.Any())
             {
