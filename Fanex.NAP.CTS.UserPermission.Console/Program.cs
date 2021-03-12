@@ -38,8 +38,10 @@
             try
             {
                 permissionService
+                    .Start()
                     .SyncUserPermission(FSFunctionKeys.AssociatedAccountMonitor, FSFunctionKeys.AssociatedAccountMonitorKey)
-                    .SyncUserPermission(FSFunctionKeys.ProbationManagement, FSFunctionKeys.ProbationManagementKey);
+                    .SyncUserPermission(FSFunctionKeys.ProbationManagement, FSFunctionKeys.ProbationManagementKey)
+                    .InsertUserPermission();
             }
             catch (Exception ex)
             {
