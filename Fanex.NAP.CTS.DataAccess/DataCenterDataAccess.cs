@@ -567,7 +567,7 @@
 
         public InsertRobotUserResultModel InsertRobotUsers(string custIds)
         {
-            var custClassification = new List<LatestClassificationModel>();
+            var custClassification = new List<InsertProblemAccountsModel>();
             var repository = new DynamicRepository();
 
             var criteria = new InsertRobotUsersIntoSpecialCustClassCriteria
@@ -575,7 +575,7 @@
                 CustIds = custIds
             };
 
-            custClassification =  repository.Fetch<LatestClassificationModel>(criteria).ToList();
+            custClassification =  repository.Fetch<InsertProblemAccountsModel>(criteria).ToList();
 
             return new InsertRobotUserResultModel() { ErrorMessage = criteria.ErrorMessage, CustClassification = custClassification };
         }

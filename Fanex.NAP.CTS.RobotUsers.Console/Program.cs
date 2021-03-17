@@ -7,24 +7,16 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry;
-    using Fanex.NAP.CTS.Model;
-    using Fanex.NAP.CTS.Services;
-    using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
-    using Newtonsoft.Json;
     using Sentry;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
 
     class Program
     {
         static void Main(string[] args)
         {
-            var dataService = new DataCenterService();
-            var pushDataToExternalService = new PushDataToExternalService();
-            var logData = new List<RobotUser>();
+            var robotService = new RobotService();
 
             DbSettingProviderManager
                  .StartNewSession()
@@ -43,68 +35,19 @@
                         Dsn = new Dsn(AppSettings.SentryLogging)
                     })
                });
-
-            var executedTime = DateTime.Now.ToString(Constants.CONVERT_TO_SQL_DATETIME);
-
             try
             {
-                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
-
-                if (isWriteLogInfo)                
-                    LogService.Info("RobotUsers.Console - start!");
-
-                var previousTimingExecution = dataService.GetPreviousTimingExecution(Constants.PARAMETER_ROBOTUSER_ID)?.SingleOrDefault();
-
-                var fromDate = DateTime.Parse(previousTimingExecution.ParameterValue);
-
-                var robotUsers = dataService.GetRobotUser(fromDate, AppSettings.CreditSizes);
-
-                if (robotUsers.Any())
-                {
-                    logData = robotUsers.ToList();
-                    var robotUsersChunks = robotUsers.Chunk(AppSettings.BatchSize).ToList();
-
-                    foreach (var robotUserList in robotUsersChunks)
-                    {
-                        var output = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
-
-                        if (isWriteLogInfo)
-                            LogService.Info($"RobotUsers.Console - InsertRobotUsers done! with {string.Join(",", robotUserList.Select(c => c.CustId))}");
-
-                        if (string.IsNullOrEmpty(output.ErrorMessage) && output.CustClassification != null && output.CustClassification.Any())
-                        {
-                            bool isSyncMainSuccessfully = pushDataToExternalService.PushCustomerClassificationToMain(output.CustClassification, AppSettings.RetryTime);
-
-                            if (isSyncMainSuccessfully)
-                            {
-                                dataService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(output.CustClassification));
-                            }                            
-
-                            if (isWriteLogInfo)
-                                LogService.Info($"RobotUsers.Console - PushCustomerClassificationToMain done! with {JsonConvert.SerializeObject(output.CustClassification)}");
-                        }
-                        else if(!string.IsNullOrEmpty(output.ErrorMessage))
-                        {
-                            LogService.Error($"RobotUsers.Console throw exception: {output.ErrorMessage} - Data: {JsonConvert.SerializeObject(robotUserList.Select(c => c.CustId))}");
-                        }
-
-                        Thread.Sleep(300);
-                    }
-                }
-
-                dataService.UpdateTimingExecution(executedTime, Constants.PARAMETER_ROBOTUSER_ID);
-
-                if (isWriteLogInfo)
-                    LogService.Info("RobotUsers.Console - done!");
+                robotService
+                    .Start()
+                    .GetRobotUser()
+                    .Process()
+                    .UpdateTimingExecution();
             }
             catch (Exception ex)
             {
                 var logMessage = new LogMessage("RobotUsers.Console - " + ex.Message)
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                if (logData != null && logData.Any())
-                    logMessage += $" Full data input: {JsonConvert.SerializeObject(logData)}";
 
                 LogService.Error(logMessage);
             }

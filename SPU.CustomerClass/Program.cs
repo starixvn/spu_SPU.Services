@@ -106,8 +106,9 @@
                 var robotUsersChunks = robotUsers.Chunk(150).ToList();
                 foreach (var robotUserList in robotUsersChunks)
                 {
-                    var custClasses = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
-                    dataService.UpdateCustomerGeneralClassificationtoMainDB(custClasses.CustClassification);
+                    //var custClasses = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
+
+                    //dataService.UpdateCustomerGeneralClassificationtoMainDB(custClasses.CustClassification);
                     Thread.Sleep(300);
                 }
             }
