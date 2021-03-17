@@ -158,12 +158,12 @@
 
             if (isWriteLogInfo)
             {
-                LogService.Info($"RobotUsers Service - Insert PA Category done! with {custs} - Date: {DateTime.Now}");
+                LogService.Info($"RobotUsers Service - Insert PA Category done! with {JsonConvert.SerializeObject(custs.CustIds)} - Date: {DateTime.Now}");
             }
 
             if (!string.IsNullOrEmpty(custs.ErrorMessage))
             {
-                LogService.Error($"RobotUsers Service throw exception: {custs.ErrorMessage} - Data: {JsonConvert.SerializeObject(custs.CustIds.Select(c => c))} - Date: {DateTime.Now}");
+                LogService.Error($"RobotUsers Service throw exception: {custs.ErrorMessage} - Data: {JsonConvert.SerializeObject(custs.CustIds)} - Date: {DateTime.Now}");
             }
 
             return custs.CustIds;
