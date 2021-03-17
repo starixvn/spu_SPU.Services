@@ -60,9 +60,6 @@
                     case 1:
                         UpdateCustomerClass(filePath, batchSize, delayTime);
                         break;
-                    case 2:
-                        UpdateRobotUser();
-                        break;
                     default:
                         break;
                 }
@@ -82,38 +79,6 @@
 #if DEBUG
             Console.ReadLine();
 #endif
-        }
-
-        private static void UpdateRobotUser()
-        {
-            Console.WriteLine("Start update robot user...");
-
-            var robotUsers = new List<RobotUser>
-            {
-                new RobotUser() { CustId = 47005079, RobotDate = DateTime.ParseExact("12/8/2020 15:56:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) },
-                new RobotUser() { CustId = 46412006, RobotDate = DateTime.ParseExact("11/6/2020 4:57:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) },
-                new RobotUser() { CustId = 46412038, RobotDate = DateTime.ParseExact("11/6/2020 2:23:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) },
-                new RobotUser() { CustId = 46412066, RobotDate = DateTime.ParseExact("11/6/2020 2:22:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) },
-                new RobotUser() { CustId = 46411771, RobotDate = DateTime.ParseExact("11/6/2020 15:03:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) },
-                new RobotUser() { CustId = 46411773, RobotDate = DateTime.ParseExact("11/6/2020 6:11:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) },
-                new RobotUser() { CustId = 47042138, RobotDate = DateTime.ParseExact("12/8/2020 16:11:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) },
-                new RobotUser() { CustId = 46864627, RobotDate = DateTime.ParseExact("11/28/2020 23:42:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) },
-                new RobotUser() { CustId = 46877168, RobotDate = DateTime.ParseExact("12/9/2020 22:33:00","MM/d/yyyy H:mm:ss",CultureInfo.InvariantCulture) }
-            };
-
-            if (robotUsers.Any())
-            {
-                var robotUsersChunks = robotUsers.Chunk(150).ToList();
-                foreach (var robotUserList in robotUsersChunks)
-                {
-                    //var custClasses = dataService.InsertRobotUsers(string.Join(",", robotUserList.Select(c => c.CustId)));
-
-                    //dataService.UpdateCustomerGeneralClassificationtoMainDB(custClasses.CustClassification);
-                    Thread.Sleep(300);
-                }
-            }
-
-            Console.WriteLine("Update robot user done!");
         }
 
         private static void UpdateCustomerClass(string filePath, int batchSize, int delayTime)
@@ -175,7 +140,6 @@
             Console.WriteLine("********** Please use with care **********");
             Console.WriteLine("*** What do you want to do ?");
             Console.WriteLine("1. Update customer class");
-            Console.WriteLine("2. Get robot user");
             Console.WriteLine("Choose function and press ENTER.......");
             inputFromUser = Convert.ToInt32(Console.ReadLine());
 
