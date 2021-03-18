@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.CTS.RobotUsers.Console
 {
     using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.FS.Core;
@@ -10,6 +12,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using System.Threading.Tasks;
 
     public class RobotService
     {
@@ -62,16 +65,29 @@
 
                     var lastestClassification = GetLastestClassification(custIds);
 
-                    PushDataToExternal(lastestClassification);
+                    if (lastestClassification != null && lastestClassification.Any())
+                    {
+                        var tasks = new List<Task>
+                        {
+                            Task.Run(() =>
+                            {
+                                PushDataToExternal(lastestClassification);
+                            }),
 
-                    PushDataToSoon88(lastestClassification);
+                            Task.Run(() =>
+                            {
+                                PushDataToSoon88(lastestClassification);
+                            })
+                        };
 
-                    Thread.Sleep(300);
+                        Task.WhenAll(tasks.ToArray()).Wait();
+                        Thread.Sleep(300);
+                    }
                 }
             }
 
             return this;
-        }
+        } 
 
         public RobotService UpdateTimingExecution()
         {   
@@ -114,7 +130,6 @@
             }            
         }
     
-
         private void PushDataToSoon88(IEnumerable<LatestClassificationModel> lastestClassifications)
         {
             if (lastestClassifications == null || !lastestClassifications.Any())
