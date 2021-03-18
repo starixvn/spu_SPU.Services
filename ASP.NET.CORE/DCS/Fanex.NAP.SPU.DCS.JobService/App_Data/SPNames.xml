@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+	<Function Name="JobSerice">
+		<Setting Key="spname" SpName="spname" DbName="MySQL.CTS_DataCenter.ctsService"/>
+	</Function>
+</Functions>
