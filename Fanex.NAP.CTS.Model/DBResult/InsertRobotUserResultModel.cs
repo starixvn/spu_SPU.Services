@@ -6,6 +6,6 @@
     {
         public string ErrorMessage { get; set; }
 
-        public IEnumerable<LatestClassificationModel> CustClassification { get; set; }
+        public IEnumerable<InsertProblemAccountsModel> CustClassification { get; set; }
     }
 }
