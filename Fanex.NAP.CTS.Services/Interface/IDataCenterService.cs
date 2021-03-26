@@ -2,9 +2,12 @@
 {
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.CustomerClassification;
+    using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using System;
     using System.Collections.Generic;
+    using static Fanex.NAP.SPU.Core.Constants;
+
     public interface IDataCenterService
     {
         void TransformDCSAccount(List<RawAccountModel> accountList);
@@ -89,12 +92,10 @@
 
         void ReTransformAccount(string jsonData);
 
-        IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, int sourceType);
+        IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType);
 
-        IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, int sourceType);
+        IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType);
         
-        void UpdateCustInfoComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID);
-
-        void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID);
+        void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID, UPDATECUSTOMER sourceType);
     }
 }

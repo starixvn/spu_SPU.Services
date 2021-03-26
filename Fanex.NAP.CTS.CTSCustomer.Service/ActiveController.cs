@@ -3,17 +3,19 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
+    using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.CTS.Services.Interface;
+    using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Web.Http;
-    using Fanex.NAP.FS.Core;
     using System.Threading.Tasks;
+    using System.Web.Http;
+    using static Fanex.NAP.SPU.Core.Constants;
 
     public class ActiveController : ApiController
     {
@@ -216,32 +218,13 @@
                     return;
                 }
 
-                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
-                var custInfoFromMainDB = _dataCenterService.GetCustomerFromMainDB(custs.CustIdList, sourceType);
-                var custInfoFromCTS = _dataCenterService.GetCustomerFromCTS(custs.CustIdList, sourceType);
+                var updateCustomerType = (UPDATECUSTOMER)sourceType;
 
-                if (isWriteLogInfo)
-                {
-                    LogService.Info($"Healing - Get from {((sourceType == (int)Constants.UPDATECUSTOMER.FROM_CUSTOMER) ? "Customer History" : "CustInfo")} : {JsonConvert.SerializeObject(custInfoFromMainDB)}");
-                    LogService.Info($"Healing - Get data from CTS to compare with {((sourceType == (int)Constants.UPDATECUSTOMER.FROM_CUSTOMER) ? "Customer History" : "CustInfo")} data: {JsonConvert.SerializeObject(custInfoFromCTS)}");
-                }
+                var custInfoToUpdate = GetCustInfoToUpdate(custs, updateCustomerType);
 
-                var custInfoToUpdate = CompareCustomerInfo(custInfoFromMainDB, custInfoFromCTS, sourceType);
+                _dataCenterService.UpdateCustomerComplete(custInfoToUpdate, custs.LastUpdatedTime, custs.LastCustId, updateCustomerType);
 
-                if (isWriteLogInfo)
-                    LogService.Info($"Healing - Cust to update data: {custInfoToUpdate}");
-
-
-                if (sourceType == (int)Constants.UPDATECUSTOMER.FROM_CUSTOMER)
-                {
-                    _dataCenterService.UpdateCustomerComplete(custInfoToUpdate, custs.LastUpdatedTime, custs.LastCustId);
-                }
-                else
-                {
-                    _dataCenterService.UpdateCustInfoComplete(custInfoToUpdate, custs.LastUpdatedTime, custs.LastCustId);
-                }
-
-                if (isWriteLogInfo)
+                if (AppSettings.IsWriteLogInfo)
                     LogService.Info($"Healing - done");
 
             }
@@ -256,15 +239,39 @@
             }
         }
 
-        private string CompareCustomerInfo(IEnumerable<CustomerMainDbModel> custInfoFromMainDB, IEnumerable<CustomerMainDbModel> custInfoFromCTS, int sourceType)
+        private string GetCustInfoToUpdate(TranformCustModel custs, UPDATECUSTOMER sourceType)
         {
-            if (sourceType == (int)Constants.UPDATECUSTOMER.FROM_CUSTINFO)
+            var custInfoToUpdate = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(custs.CustIdList))
+            {
+                var custInfoFromMainDB = _dataCenterService.GetCustomerFromMainDB(custs.CustIdList, sourceType);
+                var custInfoFromCTS = _dataCenterService.GetCustomerFromCTS(custs.CustIdList, sourceType);
+
+                if (AppSettings.IsWriteLogInfo)
+                {
+                    LogService.Info($"Healing - Get {((sourceType == UPDATECUSTOMER.FROM_CUSTOMER) ? "Customer History" : "CustInfo")} from MainDB: {JsonConvert.SerializeObject(custInfoFromMainDB)}");
+                    LogService.Info($"Healing - Get {((sourceType == UPDATECUSTOMER.FROM_CUSTOMER) ? "Customer History" : "CustInfo")} from CTS: {JsonConvert.SerializeObject(custInfoFromCTS)}");
+                }
+
+                custInfoToUpdate = CompareCustomerInfo(custInfoFromMainDB, custInfoFromCTS, sourceType);           
+            }
+
+            if (AppSettings.IsWriteLogInfo)
+                LogService.Info($"Healing - Cust to update data: {custInfoToUpdate}");
+
+            return custInfoToUpdate;
+        }
+
+        private string CompareCustomerInfo(IEnumerable<CustomerMainDbModel> custInfoFromMainDB, IEnumerable<CustomerMainDbModel> custInfoFromCTS, UPDATECUSTOMER sourceType)
+        {
+            if (sourceType == UPDATECUSTOMER.FROM_CUSTINFO)
             {
                 var customerInfo = custInfoFromMainDB
                     .Join(custInfoFromCTS, custMain => custMain.CustID,
                                            custCTS => custCTS.CustID,
                                            (custMain, custCTS) => custMain)
-                    .Where(c => !custInfoFromCTS.Contains(c))
+                    .Where(c => !custInfoFromCTS.Contains(c, new CustomerInfoEqualityComparer()))
                     .Select(c => new CustInfoModel
                     {
                         CustID = c.CustID,
@@ -282,7 +289,7 @@
                     .Join(custInfoFromCTS, custMain => custMain.CustID,
                                            custCTS => custCTS.CustID,
                                            (custMain, custCTS) => custMain)
-                    .Where(c => !custInfoFromCTS.Contains(c))
+                    .Where(c => !custInfoFromCTS.Contains(c, new CustomerEqualityComparer()))
                     .Select(c => new CustomerInfoModel
                     {
                         CustID = c.CustID,
