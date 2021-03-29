@@ -254,7 +254,10 @@
                     LogService.Info($"Healing - Get {((sourceType == UPDATECUSTOMER.FROM_CUSTOMER) ? "Customer History" : "CustInfo")} from CTS: {JsonConvert.SerializeObject(custInfoFromCTS)}");
                 }
 
-                custInfoToUpdate = CompareCustomerInfo(custInfoFromMainDB, custInfoFromCTS, sourceType);           
+                if(custInfoFromMainDB != null && custInfoFromCTS != null)
+                {
+                    custInfoToUpdate = CompareCustomerInfo(custInfoFromMainDB, custInfoFromCTS, sourceType);
+                }
             }
 
             if (AppSettings.IsWriteLogInfo)
