@@ -241,7 +241,7 @@
 
         private string GetCustInfoToUpdate(TranformCustModel custs, UPDATECUSTOMER sourceType)
         {
-            var custInfoToUpdate = string.Empty;
+            var custInfoToUpdate = JsonConvert.SerializeObject(string.Empty);
 
             if (!string.IsNullOrWhiteSpace(custs.CustIdList))
             {
