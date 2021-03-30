@@ -71,11 +71,11 @@
 
                     LogService.Error(logMessage);
                 }
-                //finally
-                //{
-                //    LogService.Info(messsageLog);
-                //    messsageLog = string.Empty;
-                //}
+                finally
+                {
+                    LogService.Info(messsageLog);
+                    messsageLog = string.Empty;
+                }
             } while (customers == null || customers.Any());
         }
 

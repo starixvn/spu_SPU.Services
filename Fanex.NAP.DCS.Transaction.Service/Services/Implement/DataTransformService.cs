@@ -7,6 +7,7 @@
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.Linq;
+    using Fanex.Logging;
 
     class DataTransformService : IDataTransformService
     {
@@ -25,7 +26,7 @@
             this.fromId = fromId;
             this.toId = toId;
 
-            System.Console.WriteLine($"1.Initial Min Id: {fromId} - Max Id: {toId}");
+            LogService.Info($"1.Initial Min Id: {fromId} - Max Id: {toId}");
 
             return this;
         }             
@@ -34,7 +35,7 @@
         {          
             dataCenter.UserAgentProcess(this.fromId, this.toId);
 
-            System.Console.WriteLine("3.UserAgent Process");
+            LogService.Info($"3.UserAgent Process - move data: { this.fromId} - {this.toId}");
 
             return this;
         }
@@ -43,7 +44,7 @@
         {
             dataCenter.TransactionProcess(this.fromId, this.toId);
 
-            System.Console.WriteLine("5.Transaction Process");
+            LogService.Info($"5.Transaction Process { this.fromId} - {this.toId}");
 
             return this;
         }
@@ -52,7 +53,7 @@
         {
             dataCenter.UnhandleSubscriberActionProcess(this.fromId, this.toId);
 
-            System.Console.WriteLine("2.UnhandleSubscriberActionProcess");
+            LogService.Info("2.UnhandleSubscriberActionProcess");
 
             return this;
         }                              

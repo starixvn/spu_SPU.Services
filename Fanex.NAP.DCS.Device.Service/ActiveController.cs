@@ -40,7 +40,8 @@
             {
                 if (!string.IsNullOrWhiteSpace(jsonData))
                 {                                 
-                    dataCenterService.InsertDevice(jsonData);                                        
+                    dataCenterService.InsertDevice(jsonData);
+                    LogService.Info($"DCS - Tranform - Device: {jsonData}");
 
                     return true;
                 }

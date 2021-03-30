@@ -9,6 +9,7 @@
     using Fanex.Logging.Sentry.RavenClient;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.SPU.Core;
+    using Newtonsoft.Json;
     using SharpRaven;
     using System;
     using System.Collections.Generic;
@@ -49,6 +50,8 @@
                     // Set BetLimit
                     dataCenterService.UpdateBetLimitByEvidenceRemoving(custIds);
                 }
+
+                LogService.Info($"CTS - Tranform - AffectedEvidence: {JsonConvert.SerializeObject(custIds)}");
             }
             catch (Exception ex)
             {

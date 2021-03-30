@@ -49,6 +49,8 @@
                 {
                     dataCenterService.TransformAssociationByDevice(associations);
 
+                    LogService.Info($"CTS - Tranform - AssociationByDevice: {JsonConvert.SerializeObject(associations)}");
+
                     return true;
                 }
             }

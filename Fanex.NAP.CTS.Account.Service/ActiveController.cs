@@ -48,7 +48,9 @@
             {
                 if (accounts != null && accounts.Any())
                 {
-                    dataCenterService.TransformDCSAccount(accounts);                   
+                    dataCenterService.TransformDCSAccount(accounts);
+
+                    LogService.Info($"CTS - Tranform - Account: {JsonConvert.SerializeObject(accounts)}");
 
                     return true;
                 }

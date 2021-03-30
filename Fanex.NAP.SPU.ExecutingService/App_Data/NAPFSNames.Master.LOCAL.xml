@@ -9,7 +9,7 @@
     <Setting Key="DCS_DC_TransformData_Device_Transaction_GetPackage" SpName="DCS_DC_TransformData_Device_Transaction_GetPackage" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="DCS_DC_TransformToCTS_Account_GetPackage" SpName="DCS_DC_TransformToCTS_Account_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
     <Setting Key="DCS_DC_TransformToCTS_Account_Unsuccess_GetPackage" SpName="DCS_DC_TransformToCTS_Account_Unsuccess_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
-    <Setting Key="DCS_ST_TransformData_GetPackage" SpName="DCS_ST_TransformData_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
+    <Setting Key="DCS_ST_TransformData_GetPackage" SpName="DCS_ST_TransformData_GetPackage" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="DCS_DC_TransformToCTS_Association_GetPackage" SpName="DCS_DC_TransformToCTS_Association_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
     <Setting Key="DCS_DC_TransformToCTS_Association_Unsuccess_GetPackage" SpName="DCS_DC_TransformToCTS_Association_Unsuccess_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
     <Setting Key="DCS_DC_TransformToCTS_TransactionIP_GetPackage" SpName="DCS_DC_TransformToCTS_TransactionIP_GetPackage" DbName="MySQL.DCS_DataCenter.ctsService"/>
