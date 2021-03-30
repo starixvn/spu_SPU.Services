@@ -14,6 +14,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using static Fanex.NAP.SPU.Core.Constants;
 
     public class DataCenterDataAccess
     {
@@ -742,14 +743,14 @@
             repository.Execute(criteria);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, int sourceType)
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType)
         {
             var custInfos = new List<CustomerMainDbModel>();
 
             var criteria = new GetCustomerInfoFromMainDBCriteria
             {
                 CustIds = custIds,
-                SourceType = sourceType
+                SourceType = (int)sourceType
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -760,14 +761,14 @@
             return custInfos;
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, int sourceType)
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType)
         {
             var custInfos = new List<CustomerMainDbModel>();
 
             var criteria = new GetCustomerInfoFromCTSCriteria
             {
                 CustIds = custIds,
-                SourceType = sourceType
+                SourceType = (int)sourceType
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))

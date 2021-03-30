@@ -10,6 +10,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using static Fanex.NAP.SPU.Core.Constants;
 
     public class DataCenterService : IDataCenterService
     {
@@ -357,24 +358,26 @@
             dataCenterDataAccess.ReTranformAccount(jsonData);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, int sourceType)
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType)
         {
             return dataCenterDataAccess.GetCustomerFromMainDB(custIds, sourceType);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, int sourceType)
+        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType)
         {
             return dataCenterDataAccess.GetCustomerFromCTS(custIds, sourceType);
         }
 
-        public void UpdateCustInfoComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
+        public void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID, UPDATECUSTOMER sourceType)
         {
-            dataCenterDataAccess.UpdateCustInfoComplete(customers, lastUpdateTime, lastUpdateCustID);
-        }
-
-        public void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
-        {
-            dataCenterDataAccess.UpdateCustomerComplete(customers, lastUpdateTime, lastUpdateCustID);
+            if (sourceType == UPDATECUSTOMER.FROM_CUSTOMER)
+            {
+                dataCenterDataAccess.UpdateCustomerComplete(customers, lastUpdateTime, lastUpdateCustID);
+            }
+            else
+            {
+                dataCenterDataAccess.UpdateCustInfoComplete(customers, lastUpdateTime, lastUpdateCustID);
+            }
         }
     }
 }

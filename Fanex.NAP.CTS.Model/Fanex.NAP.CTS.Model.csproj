@@ -58,6 +58,8 @@
     <Compile Include="CustomerEvidence\CustomerEvidenceRemovedModel.cs" />
     <Compile Include="CustomerEvidence\ResultRemoveCustomerEvidence.cs" />
     <Compile Include="CustomerEvidence\SyncCustomerClassToMainModel.cs" />
+    <Compile Include="EqualityComparerModel\CustomerEqualityComparer.cs" />
+    <Compile Include="EqualityComparerModel\CustomerInfoEqualityComparer.cs" />
     <Compile Include="DBResult\DBResult.cs" />
     <Compile Include="DBResult\InsertCategoryResultModel.cs" />
     <Compile Include="DBResult\InsertCustomerResultModel.cs" />
