@@ -47,6 +47,8 @@
         {
             try
             {
+                var start = DateTime.Now;
+
                 if (model.MinTransId != 0 && model.MaxTransId != 0)
                 {
 
@@ -56,8 +58,15 @@
                     .UserAgentProcessing()
                     .TransactionProcessing();
 
+                    var duration = DateTime.Now - start;
+                    LogService.Info($"6.Transaction Transaction Duration { duration} - Row counter: {model.MaxTransId - model.MinTransId}");
+
                     return true;
                 }
+
+
+
+
             }
             catch (Exception ex)
             {

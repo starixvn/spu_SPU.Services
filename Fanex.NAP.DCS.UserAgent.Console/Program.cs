@@ -45,13 +45,19 @@
                 {
                     var transformUserAgents = userAgent.TransformUserAgent(userAgents);
 
+                    LogService.Info($"CTS - UserAgent TransformUserAgent  : { JsonConvert.SerializeObject(transformUserAgents)}");
+
                     if (transformUserAgents.Any())
                     {
                         var userAgentJson = JsonConvert.SerializeObject(transformUserAgents);
 
                         userAgent.UpdateUserAgent(userAgentJson);
+
+                        LogService.Info($"CTS - UserAgent UpdateUserAgent  : {JsonConvert.SerializeObject(userAgentJson)}");
                     }
                 }
+
+                LogService.Info($"UserAgent done");
             }
             catch (Exception ex)
             {

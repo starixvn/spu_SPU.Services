@@ -38,13 +38,19 @@
         {
             try
             {
+                var start = DateTime.Now;
+
                 if (!string.IsNullOrWhiteSpace(jsonData))
                 {                                 
                     dataCenterService.InsertDevice(jsonData);
-                    LogService.Info($"DCS - Tranform - Device: {jsonData}");
+
+                    var duration = DateTime.Now - start;
+                    LogService.Info($"DCS - Duration Transaction Device  { duration} - data: {jsonData}");
 
                     return true;
                 }
+
+             
             }
             catch (Exception ex)
             {              

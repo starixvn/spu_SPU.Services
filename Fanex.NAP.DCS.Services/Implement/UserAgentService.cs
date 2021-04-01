@@ -19,11 +19,19 @@ namespace Fanex.NAP.DCS.Services.Implement
 
         public ClientInfo ConvertUserAgent(string userAgent)
         {
-            if (!string.IsNullOrWhiteSpace(userAgent))
+            try
             {
-                var uaParser = Parser.GetDefault();
+                if (!string.IsNullOrWhiteSpace(userAgent))
+                {
+                    var uaParser = Parser.GetDefault();
 
-                return uaParser.Parse(userAgent);
+                    return uaParser.Parse(userAgent);
+                }
+            }
+            catch (System.Exception e)
+            {
+
+                LogService.Error($"UserAgent Process - Parse fail: { userAgent} - exception: {e}");
             }
 
             return null;
