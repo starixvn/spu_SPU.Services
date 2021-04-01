@@ -3,7 +3,7 @@
     using Fanex.Data;
     using Fanex.Data.Repository;
 
-    public class InsertCustomerGeneralCategoryToMainDBCriteria : NonQueryCommand
+    public class UpdateCustomerClassificationCriteria : NonQueryCommand
     {
         public string custList { get; set; }
 

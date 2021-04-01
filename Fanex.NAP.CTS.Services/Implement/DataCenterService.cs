@@ -328,6 +328,11 @@
             return dataCenterDataAccess.GetLatestClassification(custIds);
         }
 
+        public IEnumerable<DangerLevelModel> GetDangerLevel(string custIds, DANGERLEVEL typeID)
+        {
+            return dataCenterDataAccess.GetDangerLevel(custIds, typeID);
+        }
+
         public IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
         {
             return dataCenterDataAccess.FeedDataToToSoon88(custClasses, isDelete);
@@ -341,6 +346,11 @@
             {
                 LogService.Error($"Service - Update Applied Customer Classification fails - Exception {resultAppliedCC.ErrorMsg} with data: {jsonData}");
             }
+        }
+
+        public void UpdateAppliedDangerLevel(string custs, DANGERLEVEL typeID)
+        {
+            dataCenterDataAccess.UpdateAppliedDangerLevel(custs, typeID);
         }
 
         public IEnumerable<CustEvidenceModel> GetExistedEvidences(string custIDs)

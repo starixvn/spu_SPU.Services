@@ -74,9 +74,13 @@
 
         IEnumerable<LatestClassificationModel> GetLatestClassification(string custIds);
 
+        IEnumerable<DangerLevelModel> GetDangerLevel(string custIds, DANGERLEVEL typeID);
+
         IEnumerable<AssociationWithCategory> FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete);
 
         void UpdateAppliedCustomerClassification(string jsonData);
+
+        void UpdateAppliedDangerLevel(string custs, DANGERLEVEL typeID);
 
         IEnumerable<MultipleProblemAccountsModel> GetProblemAccounts(string custIDs, DateTime? dateTime);
 

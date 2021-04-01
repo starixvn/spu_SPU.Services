@@ -72,5 +72,12 @@
             FROM_CUSTOMER = 1,
             FROM_CUSTINFO = 2
         }
+
+        public enum DANGERLEVEL : int
+        {
+            ORIGINAL = 1,
+            ABI = 2,
+            OTHER = 3
+        }
     }
 }

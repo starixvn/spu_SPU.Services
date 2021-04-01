@@ -213,7 +213,7 @@
         {
             var repository = new DynamicRepository();
 
-            var criteria = new InsertCustomerGeneralCategoryToMainDBCriteria
+            var criteria = new UpdateCustomerClassificationCriteria
             {
                 custList = custIdList.ToXmlString()
             };
@@ -227,7 +227,7 @@
         {
             var repository = new DynamicRepository();
 
-            var criteria = new InsertCustomerGeneralCategoryToMainDBCriteria
+            var criteria = new UpdateCustomerClassificationCriteria
             {
                 custList = custClassList.ToXmlString()
             };
@@ -235,11 +235,26 @@
             repository.Execute(criteria);
         }
 
+        public DBResult UpdateDangerLevelToMainDB(IEnumerable<DangerLevelModel> dangerLevel, DANGERLEVEL typeId)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateDangerLevelCriteria
+            {
+                CustList = dangerLevel.ToXmlString(),
+                DangerType = (int) typeId
+            };
+
+            repository.Execute(criteria);
+
+            return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
+        }
+
         public void InsertProblemAccountCategoryToMainDB(List<ProblemAccountForMainDBModel> custIdList)
         {
             var repository = new DynamicRepository();
 
-            var criteria = new InsertCustomerGeneralCategoryToMainDBCriteria
+            var criteria = new UpdateCustomerClassificationCriteria
             {
                 custList = custIdList.ToXmlString()
             };
@@ -251,7 +266,7 @@
         {
             var repository = new DynamicRepository();
 
-            var criteria = new InsertCustomerGeneralCategoryToMainDBCriteria
+            var criteria = new UpdateCustomerClassificationCriteria
             {
                 custList = custIdList.ToXmlString()
             };
@@ -665,6 +680,25 @@
             }
         }
 
+        public IEnumerable<DangerLevelModel> GetDangerLevel(string custIds, DANGERLEVEL typeId)
+        {
+            if (string.IsNullOrEmpty(custIds))
+            {
+                return new List<DangerLevelModel>();
+            }
+
+            var criteria = new GetDangerLevelCriteria()
+            {
+                CustIds = custIds,
+                TypeID = (int) typeId
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<DangerLevelModel>(criteria);
+            }
+        }
+
         public IEnumerable<AssociationWithCategory> FeedDataToToSoon88(IEnumerable<CustomerClassModel> custClasses, bool isDelete)
         {
             var repository = new DynamicRepository();
@@ -695,6 +729,22 @@
                     ErrorCode = !string.IsNullOrEmpty(criteria.ErrorMessage) ? - 1 : 0,
                     ErrorMsg = criteria.ErrorMessage
                 };                
+            }
+        }
+
+        public void UpdateAppliedDangerLevel(string custsJson, DANGERLEVEL typeID)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateAppliedDangerLevelCriteria
+            {
+                CustJson = custsJson,
+                TypeID = (int) typeID
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                repository.Execute(criteria);
             }
         }
 
