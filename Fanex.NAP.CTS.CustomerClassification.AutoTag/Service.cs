@@ -8,6 +8,7 @@
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.FS.XML;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using System;
@@ -172,7 +173,7 @@
             {
                 var isUpdateSuccessful = _pushDataToExternalService.UpdateDangerLevelToMain(dangerLevels, DANGERLEVEL.ORIGINAL, 2);
                 if (AppSettings.IsWriteLogInfo) 
-                    LogService.Info($"Normal.Service - Update danger level {(isUpdateSuccessful ? "done" : "fail")} - Time: {DateTime.Now}");
+                    LogService.Info($"Normal.Service - Update danger level {(isUpdateSuccessful ? "done" : "fail")} with [CustList: {dangerLevels.ToXmlString()}, DangerType: { JsonConvert.SerializeObject((int)DANGERLEVEL.ORIGINAL)}] - Time: {DateTime.Now}");
 
                 if (isUpdateSuccessful)
                 {

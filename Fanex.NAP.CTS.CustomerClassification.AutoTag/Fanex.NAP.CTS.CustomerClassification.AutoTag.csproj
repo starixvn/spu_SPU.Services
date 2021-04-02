@@ -106,6 +106,10 @@
       <Project>{f95ab8f2-f7dc-4c12-89e0-090fb0ec6414}</Project>
       <Name>Fanex.NAP.FS.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.FS.XML\Fanex.NAP.FS.XML.csproj">
+      <Project>{0122573a-eb7d-4a8b-84ef-8b5da635752e}</Project>
+      <Name>Fanex.NAP.FS.XML</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>
