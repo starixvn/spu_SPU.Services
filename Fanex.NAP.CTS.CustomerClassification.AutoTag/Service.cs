@@ -36,7 +36,8 @@
                 {
                     newClassification = _dataCenterService.GetNewClassification();
 
-                    if (AppSettings.IsWriteLogInfo)  LogService.Info($"Normal.Service - Get classification: {JsonConvert.SerializeObject(newClassification)} - Time: {DateTime.Now}");
+                    if (AppSettings.IsWriteLogInfo)  
+                        LogService.Info($"Normal.Service - Get classification: {JsonConvert.SerializeObject(newClassification)} - Time: {DateTime.Now}");
 
                     if (newClassification != null && newClassification.Any())
                     {
@@ -71,19 +72,25 @@
                     var custIds = this.GetCustIds(listClassification);
 
                     var customerAssociationProblemAccounts = _dataCenterService.GetCustomerAssociationProblemAccount(custIds);
-                    if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - Get PA Ass: {JsonConvert.SerializeObject(customerAssociationProblemAccounts)} - Time: {DateTime.Now}");
+
+                    if (AppSettings.IsWriteLogInfo) 
+                        LogService.Info($"Normal.Service - Get PA Ass: {JsonConvert.SerializeObject(customerAssociationProblemAccounts)} - Time: {DateTime.Now}");
 
                     var jsonClassification = MergeCustomerClassificationInfo(listClassification, customerAssociationProblemAccounts);
 
                     // 1.2. Insert data in CTS
-                    if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - InputMain Data {jsonClassification} - Time: {DateTime.Now}");
+                    if (AppSettings.IsWriteLogInfo) 
+                        LogService.Info($"Normal.Service - InputMain Data {jsonClassification} - Time: {DateTime.Now}");
+                    
                     var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
 
                     if (IsInsertMainSuccessful(typeCustModel.ErrorMessage, listClassification))
                     {
                         // 2. Update IsApplied in mainDB
                         _dataCenterService.UpdateAppliedStatusClassification(custIds, true);
-                        if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - update IsApplied insertMain done - Time: {DateTime.Now}");
+
+                        if (AppSettings.IsWriteLogInfo) 
+                            LogService.Info($"Normal.Service - update IsApplied insertMain done - Time: {DateTime.Now}");
 
                         //3. Push Data to External
                         PushDataToExternal(typeCustModel?.CustIds.ToList());
@@ -116,7 +123,8 @@
                 if (lastestClassifications != null && lastestClassifications.Any())
                 {
                     bool isSuccess = UpdateCCToMainDB(lastestClassifications);
-                    if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - Push CC {(isSuccess? "done" : "fail" )} {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
+                    if (AppSettings.IsWriteLogInfo) 
+                        LogService.Info($"Normal.Service - Push CC {(isSuccess? "done" : "fail" )} {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
 
                     if (isSuccess)
                     {
@@ -124,6 +132,7 @@
                     }
 
                     _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                    if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - PushSoon88 {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
                 }
             }
         }
@@ -156,12 +165,14 @@
             }
 
             var dangerLevels = _dataCenterService.GetDangerLevel(string.Join(",", lastestCC.Select(c=>c.CustId)), DANGERLEVEL.ORIGINAL);
-            if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - Get Danger {JsonConvert.SerializeObject(dangerLevels)}- Time: {DateTime.Now}");
+            if (AppSettings.IsWriteLogInfo) 
+                LogService.Info($"Normal.Service - Get Danger {JsonConvert.SerializeObject(dangerLevels)}- Time: {DateTime.Now}");
 
             if (dangerLevels != null && dangerLevels.Any())
             {
                 var isUpdateSuccessful = _pushDataToExternalService.UpdateDangerLevelToMain(dangerLevels, DANGERLEVEL.ORIGINAL, 2);
-                if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - Update danger level {(isUpdateSuccessful ? "done" : "fail")} - Time: {DateTime.Now}");
+                if (AppSettings.IsWriteLogInfo) 
+                    LogService.Info($"Normal.Service - Update danger level {(isUpdateSuccessful ? "done" : "fail")} - Time: {DateTime.Now}");
 
                 if (isUpdateSuccessful)
                 {
