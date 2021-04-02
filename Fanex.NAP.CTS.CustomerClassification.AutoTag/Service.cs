@@ -165,7 +165,7 @@
 
                 if (isUpdateSuccessful)
                 {
-                    var updateApplyCCs = dangerLevels.Select(x => new { x.CustID, x.ScannedTime });
+                    var updateApplyCCs = dangerLevels.Select(x => new { x.CustId, x.ScannedTime });
                     var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
 
                     _dataCenterService.UpdateAppliedDangerLevel(jsonUpdateApplyCCs, DANGERLEVEL.ORIGINAL);
@@ -177,7 +177,7 @@
         {
             if (generalClassification != null && generalClassification.Any())
             {
-                var custIds = generalClassification.Select(x => x.CustId);
+                var custIds = generalClassification.Select(x => x.CustId).Distinct();
 
                 return string.Join(",", custIds);
             }

@@ -8,7 +8,7 @@
     public class DangerLevelModel
     { 
         [XName("id")]
-        public long CustID { get; set; }
+        public long CustId { get; set; }
 
         [XName("l")]
         public int DangerLevel { get; set; }

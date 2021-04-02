@@ -12,6 +12,6 @@
 	<Setting Key="CTS_DC_CustClassification_GetTaggingByAssociationWithPA" SpName="CTS_DC_CustClassification_GetTaggingByAssociationWithPA" DbName="MySQL.CTS_DataCenter.ctsService" />
 	<Setting Key="CTS_DC_CustClassification_DangerLevel_Get" SpName="CTS_DC_CustClassification_DangerLevel_Get" DbName="MySQL.CTS_DataCenter.ctsService" />
 	<Setting Key="CTS_DC_CustClassification_DangerLevel_UpdateFlag" SpName="CTS_DC_CustClassification_DangerLevel_UpdateFlag" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
-	<Setting Key="CTS_CustomerUpdDanger" SpName="CTS_CustomerUpdDanger" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
+	<Setting Key="CTS_CustomerUpdDanger" SpName="CTS_CustomerUpdDanger_xtest" DbName="DBCust.CustDB.bodbAdminNet" TimeOut="300" />
   </Function>
 </Functions>
