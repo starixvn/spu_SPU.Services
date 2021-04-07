@@ -21,6 +21,20 @@ namespace Fanex.NAP.DCS.DataAccess
             {
                 return db.Query<StagingRawTransactionModel>(criteria).ToList();
             }
-        }        
+        }
+
+        public List<RawTransactionModel> GetECRawTrans(int batch_size)
+        {
+            var criteria = new GetECRawTransactionCriteria
+            {
+              BatchSize= batch_size,
+              id= -1
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                return db.Query<RawTransactionModel>(criteria).ToList();
+            }
+        }
     }
 }

@@ -10,5 +10,9 @@ namespace Fanex.NAP.DCS.Services.Interface
     public interface IDataTransformService
     {
         List<StagingRawTransactionModel> GetStagingRawTransaction(int isProcessed, int numberOfTicket, int numberOfBatch);
+
+        List<RawTransactionModel> GetECRawTrans(int batch_size);
+
+        void InsertECRawTrans(string data);
     }
 }

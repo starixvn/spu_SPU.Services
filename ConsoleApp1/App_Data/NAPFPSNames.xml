@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Data Center">
+	  <Setting Key="DCS_RT_RawTrans_Insert" SpName="DCS_RT_RawTrans_Insert" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
+	  <Setting Key="EC_ProcessedTransaction180" SpName="EC_ProcessedTransaction180" DbName="MySQL.EC_CTS_DataCenter.ctsServiceAdmin" />
+  </Function> 
+</Functions>

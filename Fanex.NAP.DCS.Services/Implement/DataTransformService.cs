@@ -7,10 +7,12 @@
     public class DataTransformService : IDataTransformService
     {
         private readonly DataAccess.StagingRawTransactionDataAccess stagingRawTransaction;
-  
+        private readonly DataAccess.RawTransactionDataAccess rawTransaction;
+
         public DataTransformService()
         {
             stagingRawTransaction = new DataAccess.StagingRawTransactionDataAccess();
+            rawTransaction = new DataAccess.RawTransactionDataAccess();
         }
 
         public List<StagingRawTransactionModel> GetStagingRawTransaction(int isProcessed, int numberOfTicket, int numberOfBatch)
@@ -20,6 +22,16 @@
             System.Console.WriteLine("1.Get Raw Transaction");
 
             return result;
+        }
+
+        public List<RawTransactionModel> GetECRawTrans(int batch_size)
+        {
+            return stagingRawTransaction.GetECRawTrans(batch_size);
+        }
+
+        public void InsertECRawTrans(string data)
+        {
+            rawTransaction.InsertTransaction(data);
         }
     }
 }
