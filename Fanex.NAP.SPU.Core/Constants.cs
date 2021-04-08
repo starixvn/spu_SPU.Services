@@ -79,5 +79,13 @@
             ABI = 2,
             OTHER = 3
         }
+        
+        public enum ROLE_CUSTOMER : int
+        {
+            MEMBER = 1,
+            AGENT = 2,
+            MASTER = 3,
+            SUPER = 4
+        }
     }
 }

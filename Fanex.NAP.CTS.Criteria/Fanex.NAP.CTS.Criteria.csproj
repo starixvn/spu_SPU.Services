@@ -64,6 +64,7 @@
     <Compile Include="CustomerEvidence\UpdateProcessedCustEvidenceCriteria.cs" />
     <Compile Include="GetAssociationWithCategoryCriteria.cs" />
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
+    <Compile Include="GetRoleCustomerCriteria.cs" />
     <Compile Include="GetCustomerInfoFromCTSCriteria.cs" />
     <Compile Include="GetCustomersWithHavingUsername2Criteria.cs" />
     <Compile Include="GetDangerLevelCriteria.cs" />

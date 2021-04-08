@@ -389,5 +389,10 @@
                 dataCenterDataAccess.UpdateCustInfoComplete(customers, lastUpdateTime, lastUpdateCustID);
             }
         }
+
+        public IEnumerable<RoleCustomerModel> GetRoleCustomer(string custIDs)
+        {
+            return dataCenterDataAccess.GetRoleCustomer(custIDs);
+        }
     }
 }

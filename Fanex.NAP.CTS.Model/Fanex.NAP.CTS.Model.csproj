@@ -70,6 +70,7 @@
     <Compile Include="MainDB\ProblemCustomerForMainDBModel.cs" />
     <Compile Include="PreparedDeleteDataToSoon88ViewModel.cs" />
     <Compile Include="ProblemAccountModel\CustEvidenceModel.cs" />
+    <Compile Include="ProblemAccountModel\RoleCustomerModel.cs" />
     <Compile Include="RemoveEvidenceMultipleAccounts\CustomerEvidenceQueueModel.cs" />
     <Compile Include="S88Result.cs" />
     <Compile Include="UpdateDataToSoon88ViewModel.cs" />

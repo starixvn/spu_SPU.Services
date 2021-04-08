@@ -5,8 +5,8 @@
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
-    using Newtonsoft.Json;    
-    using System.Collections.Generic;    
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
     using System.Linq;
     using static Fanex.NAP.SPU.Core.Constants;
 
@@ -27,6 +27,10 @@
         {
             var custIdList = new List<int>();
 
+            //Prepare SMA CustId to sync CC
+            var roleCusomters = GetAgentCusts(custIds);
+            custIdList.AddRange(roleCusomters);
+
             // Re-Sync Customer Evidence to category in CTS
             var custIdCCs = SyncCustomerEvidenceToCategory(custIds, flowTypeRescanCC);
             custIdList.AddRange(custIdCCs);
@@ -41,15 +45,17 @@
             var custIdsToSyncCC = custIdList.Distinct().ToList();
 
             // Push Customer class to MainDB, Soon88, ...
-            SyncCustomerClassToExternal(custIdsToSyncCC, isPushCCToSoon88);
+            if(custIdsToSyncCC!=null && custIdsToSyncCC.Any())
+            {
+                SyncCustomerClassToExternal(custIdsToSyncCC, isPushCCToSoon88);
+            } 
 
             // Check and rescan normal account
             if (custIds != null && custIds.Any())
             {
                 var newCustIds = custIds.Where(x => !custIdCCs.Contains(x)).ToList();
-
                 RescanNormalAccount(newCustIds);
-            }                
+            }
         }
 
         private List<int> SyncCustomerEvidenceToCategory(List<int> custIds, FLOWTYPERESCANCC flowTypeRescanCC)
@@ -169,7 +175,7 @@
                         _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
                 }
             }
-        }       
+        }
 
         private void RescanNormalAccount(List<int> customers)
         {
@@ -186,7 +192,26 @@
 
                 _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned, false);
             }
-        }               
-        
+        }
+
+        private List<int> GetAgentCusts(List<int> custIds)
+        {
+            var agentIds = new List<int>();
+
+            if (custIds != null && custIds.Any())
+            {
+                var data = _dataCenterService.GetRoleCustomer(string.Join(",", custIds)).ToList();
+
+                if (data != null && data.Any())
+                {
+                    agentIds = data.Where(c => c.RoleID == (int)ROLE_CUSTOMER.AGENT
+                                            || c.RoleID == (int)ROLE_CUSTOMER.MASTER
+                                            || c.RoleID == (int)ROLE_CUSTOMER.SUPER)
+                               .Select(c => c.CustID).ToList();
+                }
+            }
+
+            return agentIds;
+        }
     }
 }
