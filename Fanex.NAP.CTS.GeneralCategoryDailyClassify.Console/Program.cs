@@ -45,14 +45,20 @@ namespace Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console
 
         private static void DailyClassify()
         {
-            IEnumerable<CustomerClassificationModel> customers = null;            
+            IEnumerable<CustomerClassificationModel> customers = null;
             var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
             int countTotalCusts = 0;
-
+            int retry = 0;
             var dataCenterService = new DataCenterService();
 
             do
             {
+                if (retry == 5)
+                {
+                    LogService.Error("Classify Normal customer daily stop, because of error exception " + DateTime.Now.ToString());
+                    return;
+                }
+
                 try
                 {
                     customers = dataCenterService.GetCustomerForRunDaily(1, batchSize);
@@ -68,6 +74,8 @@ namespace Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console
                             countTotalCusts += custGroup.Count();
                         }
                     }
+
+                    retry = 0;
                 }
                 catch (Exception ex)
                 {
@@ -76,9 +84,10 @@ namespace Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console
                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                     LogService.Error(logMessage);
+                    retry++;
                 }
 
-            } while (customers == null || customers.Any());
+            } while (customers != null && customers.Any());
 
             LogService.Info("Classify Normal customer daily: " + countTotalCusts + " Date: " + DateTime.Now.ToString());
         }
