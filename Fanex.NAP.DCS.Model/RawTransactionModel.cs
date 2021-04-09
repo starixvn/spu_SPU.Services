@@ -28,7 +28,7 @@ namespace Fanex.NAP.DCS.Model
         public string IP { get; set; }
 
         [FieldConverter(typeof(ConvertBigInteger))]
-        public BigInteger IPId { get; set; }
+        //public BigInteger IPId { get; set; }
 
         public int PluginID { get; set; }
 

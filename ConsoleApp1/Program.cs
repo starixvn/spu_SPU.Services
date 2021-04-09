@@ -31,7 +31,7 @@
 
                 do
                 {
-                    data = _dataTransformService.GetECRawTrans(2000);
+                    data = _dataTransformService.GetECRawTrans(2);
 
                     if (data != null && data.Any())
                     {

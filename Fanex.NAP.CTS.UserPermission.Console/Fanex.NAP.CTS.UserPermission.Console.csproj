@@ -164,6 +164,14 @@
       <Project>{16A8AC87-AEE3-4A10-B6C6-5E27226CDDD1}</Project>
       <Name>Fanex.NAP.CTS.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Model\Fanex.NAP.DCS.Model.csproj">
+      <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
+      <Name>Fanex.NAP.DCS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Services\Fanex.NAP.DCS.Services.csproj">
+      <Project>{343073c5-6a1f-4e08-8c39-c8b6498bbadb}</Project>
+      <Name>Fanex.NAP.DCS.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853DE-C617-4605-BAC7-60EB6CBD213D}</Project>
       <Name>Fanex.NAP.SPU.Core</Name>

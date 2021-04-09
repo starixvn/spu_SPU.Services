@@ -3,5 +3,7 @@
 <Functions>
   <Function Name="Auto Mark Problem Account">
     <Setting Key="CTS_DC_InsertUserPermission" SpName="CTS_DC_InsertUserPermission" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+	  <Setting Key="DCS_RT_RawTrans_Insert" SpName="DCS_RT_RawTrans_Insert" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
+	  <Setting Key="EC_ProcessedTransaction180" SpName="EC_ProcessedTransaction180" DbName="MySQL.EC_CTS_DataCenter.ctsServiceAdmin" />
   </Function> 
 </Functions>
