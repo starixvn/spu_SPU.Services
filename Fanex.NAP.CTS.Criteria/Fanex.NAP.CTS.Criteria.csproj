@@ -66,6 +66,8 @@
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
     <Compile Include="GetCustomerInfoFromCTSCriteria.cs" />
     <Compile Include="GetCustomersWithHavingUsername2Criteria.cs" />
+    <Compile Include="GetDangerLevelCriteria.cs" />
+    <Compile Include="MainDB\UpdateDangerLevelCriteria.cs" />
     <Compile Include="RemoveEvidenceMultipleAccounts\GetCustEvidenceQueueCriteria.cs" />
     <Compile Include="RemoveEvidenceMultipleAccounts\ModifyCustomerEvidenceFromQueueCriteria.cs" />
     <Compile Include="RemoveEvidenceMultipleAccounts\RollbackCustomerEvidenceCriteria.cs" />
@@ -77,7 +79,7 @@
     <Compile Include="CustomerClassification\NormalAccountsClassificationGeneralCategorizeDailyCriteria.cs" />
     <Compile Include="GetAllSpecialCustomerClassCriteria.cs" />
     <Compile Include="GetRobotUserCriteria.cs" />
-    <Compile Include="InsertCustomerGeneralCategoryToMainDBCriteria.cs" />
+    <Compile Include="MainDB\UpdateCustomerClassificationCriteria.cs" />
     <Compile Include="InsertMainCustomerClassificationCriteria.cs" />
     <Compile Include="ProblemAccount\GetProblemAccountsCN88Criteria.cs" />
     <Compile Include="InsertUserPermissionCriteria.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="TransformAssociationAffectedEvidenceCriteria.cs" />
     <Compile Include="InsertNewCustomerCategoryCriteria.cs" />
     <Compile Include="TransformUpdatingLastLoginTimeCriteria.cs" />
+    <Compile Include="UpdateAppliedDangerLevelCriteria.cs" />
     <Compile Include="UpdateCustomerCompleteCriteria.cs" />
     <Compile Include="UpdateCustInfoCompleteCriteria.cs" />
     <Compile Include="UpdateTimingExecutionCriteria.cs" />

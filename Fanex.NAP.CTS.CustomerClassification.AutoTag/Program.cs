@@ -5,9 +5,8 @@
     using Fanex.Data.SqlServer;
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
-    using Fanex.NAP.SPU.Core;    
+    using Fanex.NAP.SPU.Core;
     using SharpRaven;
-    using System;
     using System.Collections.Generic;
 
     class Program

@@ -8,18 +8,18 @@
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
+    using Fanex.NAP.FS.XML;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
+    using static Fanex.NAP.SPU.Core.Constants;
 
     public class Service
     {
         private readonly IDataCenterService _dataCenterService;
         private readonly IPushDataToExternalService _pushDataToExternalService;
-        private const int _newMemberClassification = 201;
 
         public Service()
         {
@@ -32,11 +32,13 @@
             try
             {
                 var newClassification = new List<CustomerClassificationModelMoreInfo>();
-                var isWriteLogInfo = AppSettings.IsWriteLogInfo;
 
                 do
                 {
                     newClassification = _dataCenterService.GetNewClassification();
+
+                    if (AppSettings.IsWriteLogInfo)  
+                        LogService.Info($"Normal.Service - Get classification: {JsonConvert.SerializeObject(newClassification)} - Time: {DateTime.Now}");
 
                     if (newClassification != null && newClassification.Any())
                     {
@@ -48,7 +50,6 @@
                         }
                     }
                 } while (newClassification != null && newClassification.Any());
-
             }
             catch (Exception ex)
             {
@@ -62,7 +63,6 @@
 
         private void InsertGeneralClassificationCusts(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
         {
-            var isWriteLogInfo = AppSettings.IsWriteLogInfo;
             var newGeneralClassificationChunk = generalClassification.Chunk(AppSettings.BatchSize).ToList();
 
             foreach (var listClassification in newGeneralClassificationChunk)
@@ -70,50 +70,31 @@
                 try
                 {
                     //1.1. Check Association With PA
-                    var customerAssociationProblemAccounts = _dataCenterService.GetCustomerAssociationProblemAccount(this.GetCustIds(generalClassification));
+                    var custIds = this.GetCustIds(listClassification);
+
+                    var customerAssociationProblemAccounts = _dataCenterService.GetCustomerAssociationProblemAccount(custIds);
+
+                    if (AppSettings.IsWriteLogInfo) 
+                        LogService.Info($"Normal.Service - Get PA Ass: {JsonConvert.SerializeObject(customerAssociationProblemAccounts)} - Time: {DateTime.Now}");
 
                     var jsonClassification = MergeCustomerClassificationInfo(listClassification, customerAssociationProblemAccounts);
 
                     // 1.2. Insert data in CTS
+                    if (AppSettings.IsWriteLogInfo) 
+                        LogService.Info($"Normal.Service - InputMain Data {jsonClassification} - Time: {DateTime.Now}");
+                    
                     var typeCustModel = _dataCenterService.InsertMainCustomerClassification(jsonClassification);
 
-                    if (string.IsNullOrEmpty(typeCustModel.ErrorMessage))
+                    if (IsInsertMainSuccessful(typeCustModel.ErrorMessage, listClassification))
                     {
-                        var custIdList = string.Join(",", listClassification.Select(c => c.CustId).Distinct());
-
                         // 2. Update IsApplied in mainDB
-                        _dataCenterService.UpdateAppliedStatusClassification(custIdList, true);
+                        _dataCenterService.UpdateAppliedStatusClassification(custIds, true);
 
-                        // 3. Get lastest classification in CTS
-                        var latestCustIdsChunk = typeCustModel.CustIds.Chunk(AppSettings.PushCCToExternalChunkSize);
+                        if (AppSettings.IsWriteLogInfo) 
+                            LogService.Info($"Normal.Service - update IsApplied insertMain done - Time: {DateTime.Now}");
 
-                        foreach (var custIds in latestCustIdsChunk)
-                        {
-                            var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
-
-                            if (lastestClassifications != null && lastestClassifications.Any())
-                            {
-                                // 4. Update CustomerClass in table custinfo to MainDB
-                                var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestClassifications, 2);
-
-                                if (isSuccessToMain)
-                                {
-                                    var updateApplyCCs = lastestClassifications.Select(x => new { x.CustId, x.ScannedTime });
-
-                                    var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
-
-                                    // 5. Update IsAppliedCC = 1 in CTS
-                                    _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
-                                }
-
-                                // 6. Push CC to Soon88
-                                _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
-                            }
-                        }
-                    }
-                    else
-                    {
-                        LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts - InsertMainCustomerClassification failed:  {typeCustModel.ErrorMessage} with Data: {jsonClassification}");
+                        //3. Push Data to External
+                        PushDataToExternal(typeCustModel?.CustIds.ToList());
                     }
                 }
                 catch (Exception ex)
@@ -127,11 +108,88 @@
             }
         }
 
+        private void PushDataToExternal(List<int> custList)
+        {
+            if (custList == null || !custList.Any())
+            {
+                return;
+            }
+
+            var latestCustIdsChunk = custList.Chunk(AppSettings.PushCCToExternalChunkSize);
+
+            foreach (var custIds in latestCustIdsChunk)
+            {
+                var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
+
+                if (lastestClassifications != null && lastestClassifications.Any())
+                {
+                    bool isSuccess = UpdateCCToMainDB(lastestClassifications);
+                    if (AppSettings.IsWriteLogInfo) 
+                        LogService.Info($"Normal.Service - Push CC {(isSuccess? "done" : "fail" )} {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
+
+                    if (isSuccess)
+                    {
+                        UpdateDangerLevelToMainDB(lastestClassifications);
+                    }
+
+                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                    if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - PushSoon88 {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
+                }
+            }
+        }
+
+        private bool UpdateCCToMainDB(IEnumerable<LatestClassificationModel> lastestCC)
+        {
+            if (lastestCC == null || !lastestCC.Any())
+            {
+                return false;
+            }
+
+            var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestCC, 2);
+
+            if (isSuccessToMain)
+            {
+                var updateApplyCCs = lastestCC.Select(x => new { x.CustId, x.ScannedTime });
+                var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
+
+                _dataCenterService.UpdateAppliedCustomerClassification(jsonUpdateApplyCCs);
+            }
+
+            return isSuccessToMain;
+        }
+
+        private void UpdateDangerLevelToMainDB(IEnumerable<LatestClassificationModel> lastestCC)
+        {
+            if (lastestCC == null || !lastestCC.Any())
+            {
+                return;
+            }
+
+            var dangerLevels = _dataCenterService.GetDangerLevel(string.Join(",", lastestCC.Select(c=>c.CustId)), DANGERLEVEL.ORIGINAL);
+            if (AppSettings.IsWriteLogInfo) 
+                LogService.Info($"Normal.Service - Get Danger {JsonConvert.SerializeObject(dangerLevels)}- Time: {DateTime.Now}");
+
+            if (dangerLevels != null && dangerLevels.Any())
+            {
+                var isUpdateSuccessful = _pushDataToExternalService.UpdateDangerLevelToMain(dangerLevels, DANGERLEVEL.ORIGINAL, 2);
+                if (AppSettings.IsWriteLogInfo) 
+                    LogService.Info($"Normal.Service - Update danger level {(isUpdateSuccessful ? "done" : "fail")} with [CustList: {dangerLevels.ToXmlString()}, DangerType: { JsonConvert.SerializeObject((int)DANGERLEVEL.ORIGINAL)}] - Time: {DateTime.Now}");
+
+                if (isUpdateSuccessful)
+                {
+                    var updateApplyCCs = dangerLevels.Select(x => new { x.CustId, x.ScannedTime });
+                    var jsonUpdateApplyCCs = JsonConvert.SerializeObject(updateApplyCCs);
+
+                    _dataCenterService.UpdateAppliedDangerLevel(jsonUpdateApplyCCs, DANGERLEVEL.ORIGINAL);
+                }
+            }
+        }
+
         private string GetCustIds(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)
         {
             if (generalClassification != null && generalClassification.Any())
             {
-                var custIds = generalClassification.Select(x => x.CustId);
+                var custIds = generalClassification.Select(x => x.CustId).Distinct();
 
                 return string.Join(",", custIds);
             }
@@ -166,11 +224,23 @@
                                         LastXDaysMargin = group.custClass.LastXDaysMargin,
                                         ProbationPeriodWinloss = group.custClass.ProbationPeriodWinloss,
                                         IsGeneralCategory = group.custClass.IsGeneralCategory,
-                                        TaggingID = (temp != null)? temp.TaggingID : 0,
-                                        TaggingType = (temp != null)? temp.TaggingType : 0
+                                        TaggingID = (temp != null) ? temp.TaggingID : 0,
+                                        TaggingType = (temp != null) ? temp.TaggingType : 0
                                     });
 
             return JsonConvert.SerializeObject(result);
+        }
+
+        private bool IsInsertMainSuccessful(string errorMess, IEnumerable<CustomerClassificationModelMoreInfo> data)
+        {
+            if (!string.IsNullOrEmpty(errorMess))
+            {
+                LogService.Error($"CustomerClassification.AutoTag Service - InsertGeneralClassificationCusts - InsertMainCustomerClassification failed:  {errorMess} with Data: {JsonConvert.SerializeObject(data)}");
+
+                return false;
+            }
+
+            return true;
         }
     }
 }
