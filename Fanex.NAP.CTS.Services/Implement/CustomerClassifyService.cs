@@ -27,7 +27,7 @@
         {
             var custIdList = new List<int>();
 
-            //Prepare SMA CustId to sync CC
+            //Get SMA CustId to sync CC
             var roleCusomters = GetAgentCusts(custIds);
             custIdList.AddRange(roleCusomters);
 
@@ -42,19 +42,20 @@
                 custIdList.AddRange(custIdCCs);
             }
 
+            // Push Customer class to MainDB, Soon88, ...
             var custIdsToSyncCC = custIdList.Distinct().ToList();
 
-            // Push Customer class to MainDB, Soon88, ...
-            if(custIdsToSyncCC!=null && custIdsToSyncCC.Any())
+            if (custIdsToSyncCC != null && custIdsToSyncCC.Any())
             {
                 SyncCustomerClassToExternal(custIdsToSyncCC, isPushCCToSoon88);
-            } 
+            }
 
             // Check and rescan normal account
+            custIds.RemoveAll(x => custIdsToSyncCC.Contains(x));
+
             if (custIds != null && custIds.Any())
             {
-                var newCustIds = custIds.Where(x => !custIdCCs.Contains(x)).ToList();
-                RescanNormalAccount(newCustIds);
+                RescanNormalAccount(custIds);
             }
         }
 
