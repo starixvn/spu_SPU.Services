@@ -30,10 +30,12 @@
             //Get SMA CustId to sync CC
             var roleCusomters = GetAgentCusts(custIds);
             custIdList.AddRange(roleCusomters);
+            LogService.Info($"PA Rescan - GetAgentCusts - with data: {JsonConvert.SerializeObject(roleCusomters)}");
 
             // Re-Sync Customer Evidence to category in CTS
             var custIdCCs = SyncCustomerEvidenceToCategory(custIds, flowTypeRescanCC);
             custIdList.AddRange(custIdCCs);
+            LogService.Info($"PA Rescan - Get Evidence Custs - with data: {JsonConvert.SerializeObject(custIdCCs)}");
 
             if (isRescanPA)
             {
@@ -48,10 +50,12 @@
             if (custIdsToSyncCC != null && custIdsToSyncCC.Any())
             {
                 SyncCustomerClassToExternal(custIdsToSyncCC, isPushCCToSoon88);
+                LogService.Info($"PA Rescan - Cust to syncCC - with data: {JsonConvert.SerializeObject(custIdsToSyncCC)}");
             }
 
             // Check and rescan normal account
             custIds.RemoveAll(x => custIdsToSyncCC.Contains(x));
+            LogService.Info($"Normal Rescan - with data: {JsonConvert.SerializeObject(custIds)}");
 
             if (custIds != null && custIds.Any())
             {
@@ -97,6 +101,7 @@
             var custIdsToSyncCC = new List<int>();
 
             var existedProblemAccounts = GetExistedProblemAccounts(string.Join(",", custIds)).ToList();
+            LogService.Info($"PA Rescan - Get PA Custs - with data: {JsonConvert.SerializeObject(existedProblemAccounts)}");
 
             var custs = InsertProblemAccountToCTS(existedProblemAccounts, flowTypeRescanCC);
 
