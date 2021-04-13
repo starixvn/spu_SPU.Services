@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="MiddleSerivce">
+    <GraphSetting Key="TestUpgradeNeo4j" SpName="TestUpgradeNeo4j" DbName="GraphDB" />
+  </Function>
+</Functions>

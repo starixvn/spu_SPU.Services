@@ -1,0 +1,4 @@
+﻿USE ctsfull
+match (c:Customer) 
+return c.CTSCustID as CTSCustID, c.Username as Username
+limit 10

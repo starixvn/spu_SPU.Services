@@ -1,11 +1,11 @@
-﻿using Neo4j.Driver.V1;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-
-namespace Fanex.NAP.SPU.Graph.Core.Neo4j
+﻿namespace Fanex.NAP.SPU.Graph.Core.Neo4j
 {
+    using global::Neo4j.Driver;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+
     public class Neo4jCommandBuilder : ICommandBuilder
     {
         private IDictionary<string, string> spDict = new Dictionary<string, string>();

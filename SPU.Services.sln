@@ -196,6 +196,7 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.CTS.GenerateAssociationByDevice.Console", "Fanex.NAP.CTS.GenerateAssociation.Console\Fanex.NAP.CTS.GenerateAssociationByDevice.Console.csproj", "{53FB4DC4-CE3B-4DDB-9D3B-7FA43C8E77EE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console", "Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console\Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console.csproj", "{119E4E3B-2CF1-4B10-9E4E-66C221725987}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core.TestConsole", "Fanex.NAP.SPU.Graph.Core.TestConsole\Fanex.NAP.SPU.Graph.Core.TestConsole.csproj", "{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -526,6 +527,10 @@ Global
 		{119E4E3B-2CF1-4B10-9E4E-66C221725987}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{119E4E3B-2CF1-4B10-9E4E-66C221725987}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{119E4E3B-2CF1-4B10-9E4E-66C221725987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
