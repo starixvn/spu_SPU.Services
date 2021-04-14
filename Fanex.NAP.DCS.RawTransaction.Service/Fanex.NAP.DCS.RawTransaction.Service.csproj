@@ -122,10 +122,10 @@
       <Version>1.0.1</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Oneyed.DeviceDetector">
-      <Version>2.0.1</Version>
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="FPS.Browserless.Detection">
-      <Version>3.0.4</Version>
+      <Version>4.1.3.5</Version>
     </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.8</Version>
