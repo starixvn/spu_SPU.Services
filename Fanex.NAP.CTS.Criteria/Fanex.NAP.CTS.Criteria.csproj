@@ -63,7 +63,9 @@
     <Compile Include="CustomerEvidence\UpdateBetLimitByEvidenceAddingCriteria.cs" />
     <Compile Include="CustomerEvidence\UpdateProcessedCustEvidenceCriteria.cs" />
     <Compile Include="GetAssociationWithCategoryCriteria.cs" />
+    <Compile Include="GetExistedRobotUserCriteria.cs" />
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
+    <Compile Include="GetCustByRobotSiteRuleCriteria.cs" />
     <Compile Include="GetRoleCustomerCriteria.cs" />
     <Compile Include="GetCustomerInfoFromCTSCriteria.cs" />
     <Compile Include="GetCustomersWithHavingUsername2Criteria.cs" />

@@ -885,5 +885,37 @@
 
             return roleCus;
         }
+
+        public IEnumerable<int> GetCustByRobotSiteRule(string custIds)
+        {
+            var roleCus = new List<int>();
+
+            var criteria = new GetCustByRobotSiteRuleCriteria
+            {
+                CustIds = custIds
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                roleCus = db.Query<int>(criteria).ToList();
+            }
+
+            return roleCus;
+        }
+
+        public string GetExistedRobotUser(string custIds)
+        {
+            var criteria = new GetExistedRobotUserCriteria
+            {
+                CustIds = custIds
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
+
+            return criteria.RobotList;
+        }
     }
 }

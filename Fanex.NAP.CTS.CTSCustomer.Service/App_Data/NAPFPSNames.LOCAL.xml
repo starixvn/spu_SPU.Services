@@ -18,8 +18,9 @@
 	<Setting Key="CTS_DC_CTSCustomer_UpdateCustInfoComplete" SpName="CTS_DC_CTSCustomer_UpdateCustInfoComplete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
 	<Setting Key="CTS_DC_CTSCustomer_GetInfoByCustIDList" SpName="CTS_DC_CTSCustomer_GetInfoByCustIDList" DbName="MySQL.CTS_DataCenter.ctsService" />
 	<Setting Key="CTS_DC_CustInfo_GetCustomerRoles" SpName="CTS_DC_CustInfo_GetCustomerRoles" DbName="MySQL.CTS_DataCenter.ctsService" />
+	<Setting Key="CTS_DC_CustInfo_RobotUser_CheckSiteByCustIds" SpName="CTS_DC_CustInfo_RobotUser_CheckSiteByCustIds" DbName="MySQL.CTS_DataCenter.ctsService" />
 	  
-    <!-- DCS_DataCenter -->
+	  <!-- DCS_DataCenter -->
     <Setting Key="DCS_DC_TransformToCTS_Account_Completed" SpName="DCS_DC_TransformToCTS_Account_Completed" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
     
     <!--bodb02-->
@@ -33,5 +34,8 @@
 
     <!--bodbVR2Model-->
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_Daily" SpName="CTS_NormalAccountsClassification_GeneralCategorize_Daily" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+  
+  	<!--ON_USER-->
+	<Setting Key="CTS_Customer_RobotCheckExist" SpName="CTS_Customer_RobotCheckExist" DbName="DBONUSER.ON_USER.bodbSPUNet"/>    
   </Function>
 </Functions>

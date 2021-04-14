@@ -103,5 +103,9 @@
         void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID, UPDATECUSTOMER sourceType);
 
         IEnumerable<RoleCustomerModel> GetRoleCustomer(string custIDs);
+
+        IEnumerable<int> GetCustByRobotSiteRule(string custIDs);
+
+        string GetExistedRobotUser(string custIDs);
     }
 }

@@ -37,8 +37,12 @@
                 LogService.Info($"PA Rescan - GetAgentCusts - with data: {JsonConvert.SerializeObject(roleCusomters)}");
 
             // Re-Sync Customer Evidence to category in CTS
-            var custIdCCs = SyncCustomerEvidenceToCategory(custIds, flowTypeRescanCC);
-            custIdList.AddRange(custIdCCs);
+            var problemAccountsFromEvi = SyncCustomerEvidenceToCategory(custIds, flowTypeRescanCC);
+            custIdList.AddRange(problemAccountsFromEvi);
+
+            // Re-Sync RobotUser to category in CTS
+            var robotUsers = SyncRobotUserToUpdateCategory(custIds);
+            custIdList.AddRange(robotUsers);
 
             if (_isWriteLogInfo)
                 LogService.Info($"PA Rescan - Get Evidence Custs - with data: {JsonConvert.SerializeObject(custIdCCs)}");
@@ -46,8 +50,8 @@
             if (isRescanPA)
             {
                 // Re-Insert Problem Account in CTS
-                custIdCCs = InsertProblemAccount(custIds, flowTypeRescanCC);
-                custIdList.AddRange(custIdCCs);
+                var problemAccountsFromNAPPA = InsertProblemAccount(custIds, flowTypeRescanCC);
+                custIdList.AddRange(problemAccountsFromNAPPA);
             }
 
             // Push Customer class to MainDB, Soon88, ...
@@ -172,6 +176,22 @@
             }
 
             return custIds;
+        }
+
+        private List<int> SyncRobotUserToUpdateCategory(List<int> custIds)
+        {
+            var robotUser = new List<int>();
+
+            var custs = _dataCenterService.GetCustByRobotSiteRule(string.Join(",", custIds)).ToList();
+
+            var getRobotUser = _dataCenterService.GetExistedRobotUser(string.Join(",", custs));
+
+            if(!string.IsNullOrEmpty(getRobotUser))
+            {
+                robotUser = getRobotUser.Split(',').Select(int.Parse).ToList();
+            }
+
+            return robotUser;
         }
 
         private void SyncCustomerClassToExternal(List<int> custIdsToSyncCC, bool isPushCCToSoon88)

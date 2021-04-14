@@ -394,5 +394,15 @@
         {
             return dataCenterDataAccess.GetRoleCustomer(custIDs);
         }
+
+        public IEnumerable<int> GetCustByRobotSiteRule(string custIDs)
+        {
+            return dataCenterDataAccess.GetCustByRobotSiteRule(custIDs);
+        }
+
+        public string GetExistedRobotUser(string custIDs)
+        {
+            return dataCenterDataAccess.GetExistedRobotUser(custIDs);
+        }
     }
 }
