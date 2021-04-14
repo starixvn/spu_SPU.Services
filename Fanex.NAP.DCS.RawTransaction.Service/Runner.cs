@@ -11,6 +11,7 @@
     using FPS.Browserless.Core;
     using FPS.Browserless.Detection;
     using FPS.Browserless.Detection.TransService;
+    using Newtonsoft.Json;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -166,10 +167,15 @@
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
 
+            if(message.Account.ToUpper() == "DTE189Y115888")
+            {
+                LogMessage(message);
+            }
+
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
                 deviceInfo.DeviceNo = null;
-                transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);
+                transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);                
             }
             else
             {
@@ -249,6 +255,11 @@
         private static String StripUnicodeCharactersFromString(string inputValue)
         {
             return Regex.Replace(inputValue, @"[^\u0000-\u007F]", String.Empty);
+        }
+
+        private static void LogMessage(MessageQueue message)
+        {
+            LogService.Info(JsonConvert.SerializeObject(message));
         }
     }
 }

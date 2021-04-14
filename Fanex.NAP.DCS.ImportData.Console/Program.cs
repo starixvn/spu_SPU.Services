@@ -1,4 +1,5 @@
 ﻿using EasyNetQ;
+using Fanex.DeviceDetector.Factory;
 using Fanex.NAP.SPU.Core;
 using Fanex.NAP.SPU.Queue;
 using Fanex.Oneyed.Infrastructure.Models;
@@ -16,26 +17,41 @@ namespace Fanex.NAP.DCS.ImportData.Console
 
         static void Main(string[] args)
         {
-            _rabbitMQ = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
-                                     AppSettings.RabbitMQ_VirtualHost,
-                                     AppSettings.RabbitMQ_PrefetchCount,
-                                     AppSettings.RabbitMQ_UserName,
-                                     AppSettings.RabbitMQ_Password);
+            //_rabbitMQ = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
+            //                         AppSettings.RabbitMQ_VirtualHost,
+            //                         AppSettings.RabbitMQ_PrefetchCount,
+            //                         AppSettings.RabbitMQ_UserName,
+            //                         AppSettings.RabbitMQ_Password);
 
-            _rabbitMQ.CreateBus()
-                    .DeclareExchange(AppSettings.RabbitMQ_Exchange)
-                    .DeclareQueue(AppSettings.RabbitMQ_QueueName)
-                    .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
-                    .Bind();
+            //_rabbitMQ.CreateBus()
+            //        .DeclareExchange(AppSettings.RabbitMQ_Exchange)
+            //        .DeclareQueue(AppSettings.RabbitMQ_QueueName)
+            //        .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
+            //        .Bind();
 
-            System.Console.Write("Input data path:");
-            var localPath = System.Console.ReadLine();
+            //System.Console.Write("Input data path:");
+            //var localPath = System.Console.ReadLine();
 
-            ReadDataFromConfig(localPath);
+            //ReadDataFromConfig(localPath);
 
-            System.Console.WriteLine("Import data is DONE.");
+            //System.Console.WriteLine("Import data is DONE.");
+
+
+           var di = DeviceFactory.GetDeviceInfo("dd323bad9e1a27669be382cf481e05bf0cf1f75a93c79586588c1cf95171a9d3ae62d6d8974b5010ccd7f726f9ebabcccf41aa410ed522141ff07ae19aa659b6265a36946d9b9b5ee31e5c52f4b79d0922969e63a51203d4df6f895e7344561407ce46c3192000468a82806b8b1f1e59446969db3a23da62d13080990279669c7cc06f95b0efa730c15531a40738d5c8eeec2bc9027bcc0f19446b45e53700264c05897bb46271f24f711931236d59");
+            //"dd323bad9e1a27669be382cf481e05bf0cf1f75a93c79586588c1cf95171a9d3ae62d6d8974b5010ccd7f726f9ebabcccf41aa410ed522141ff07ae19aa659b6265a36946d9b9b5ee31e5c52f4b79d0922969e63a51203d4df6f895e7344561407ce46c3192000468a82806b8b1f1e59446969db3a23da62d13080990279669c7cc06f95b0efa730c15531a40738d5c8eeec2bc9027bcc0f19446b45e53700264c05897bb46271f24f711931236d59"
+            System.Console.WriteLine(IsValidDeviceId(di.DeviceId));
 
             System.Console.ReadKey();
+        }
+
+        public static bool IsValidDeviceId(string deviceId)
+        {
+            return deviceId != "N/A" && IsGuidDeviceId(deviceId);
+        }
+        public static bool IsGuidDeviceId(string deviceId)
+        {
+            Guid newGuid;
+            return Guid.TryParse(deviceId, out newGuid);
         }
 
         static List<string> loadCsvFile(string filePath)
