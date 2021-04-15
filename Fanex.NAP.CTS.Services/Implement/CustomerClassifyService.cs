@@ -25,50 +25,35 @@
             _isWriteLogInfo = AppSettings.IsWriteLogInfo;
         }
 
-        public void RescanCustomerClassify(List<int> custIds, bool isRescanPA, bool isPushCCToSoon88, FLOWTYPERESCANCC flowTypeRescanCC)
+        public void RescanCustomerClassify(List<int> custIds, bool isCheckPAFromNAP, bool isPushCCToSoon88, FLOWTYPERESCANCC flowTypeRescanCC)
         {
             var custIdList = new List<int>();
 
-            //Get SMA CustId to sync CC
+            //Rescan PA - Get SMA CustId
             var roleCusomters = GetAgentCusts(custIds);
             custIdList.AddRange(roleCusomters);
 
-            if (_isWriteLogInfo)
-                LogService.Info($"PA Rescan - GetAgentCusts - with data: {JsonConvert.SerializeObject(roleCusomters)}");
-
-            // Re-Sync Customer Evidence to category in CTS
+            // Rescan PA - Get PA From Evidence in CTS
             var problemAccountsFromEvi = SyncCustomerEvidenceToCategory(custIds, flowTypeRescanCC);
             custIdList.AddRange(problemAccountsFromEvi);
 
-            if (_isWriteLogInfo)
-                LogService.Info($"PA Rescan - Get Evidence Custs - with data: {JsonConvert.SerializeObject(problemAccountsFromEvi)}");
+            // Rescan PA - Get PA From RobotUser & NAP PA
+            var problemAccounts = GetProblemAccounts(custIds, isCheckPAFromNAP);
 
-            // Re-Sync RobotUser to category in CTS
-            var robotUsers = SyncRobotUserToUpdateCategory(custIds);
-            custIdList.AddRange(robotUsers);
-
-            if (_isWriteLogInfo)
-                LogService.Info($"PA Rescan - Get RobotUsers - with data: {JsonConvert.SerializeObject(robotUsers)}");
-
-            if (isRescanPA)
+            if (problemAccounts!= null && problemAccounts.Any())
             {
-                // Re-Insert Problem Account in CTS
-                var problemAccountsFromNAPPA = InsertProblemAccount(custIds, flowTypeRescanCC);
-                custIdList.AddRange(problemAccountsFromNAPPA);
+                custIdList.AddRange(InsertProblemAccount(problemAccounts, flowTypeRescanCC));
             }
 
-            // Push Customer class to MainDB, Soon88, ...
+            //Rescan PA - Push CC & CN88
             var custIdsToSyncCC = custIdList.Distinct().ToList();
 
             if (custIdsToSyncCC != null && custIdsToSyncCC.Any())
             {
                 SyncCustomerClassToExternal(custIdsToSyncCC, isPushCCToSoon88);
-
-                if (_isWriteLogInfo)
-                    LogService.Info($"PA Rescan - Cust to syncCC - with data: {JsonConvert.SerializeObject(custIdsToSyncCC)}");
             }
 
-            // Check and rescan normal account
+            // Rescan Normal 
             custIds.RemoveAll(x => custIdsToSyncCC.Contains(x));
 
             if (_isWriteLogInfo)
@@ -88,13 +73,15 @@
 
             var isWriteLogRescan = flowTypeRescanCC != FLOWTYPERESCANCC.NEWMEMBER;
 
-            // Re-Sync Customer Evidence to category in CTS
             var result = _customerEvidenceService.SyncCustomerEvidenceToCategory(existedCustEvidences, isWriteLogRescan);
 
             if (string.IsNullOrEmpty(result.ErrorMessage) && result.CustIds != null && result.CustIds.Any())
             {
                 custIdsToSyncCC.AddRange(result.CustIds);
             }
+
+            if (_isWriteLogInfo)
+                LogService.Info($"PA Rescan - Get Evidence Custs - with data: {JsonConvert.SerializeObject(custIdsToSyncCC)}");
 
             return custIdsToSyncCC;
         }
@@ -113,26 +100,60 @@
             return existedEvidences ?? new List<CustEvidenceModel>();
         }
 
-        private List<int> InsertProblemAccount(List<int> custIds, FLOWTYPERESCANCC flowTypeRescanCC)
+        private List<MultipleProblemAccountsModel> GetProblemAccounts(List<int> custIds, bool isCheckPAFromNAP)
+        {
+            var problemAccounts = new List<MultipleProblemAccountsModel>();
+
+            if (custIds != null && custIds.Any())
+            {
+                //PA - RobotUser
+                var robotUsers = SyncRobotUserToUpdateCategory(custIds);
+
+                if (robotUsers != null && robotUsers.Any())
+                {
+                    robotUsers.ForEach(c =>
+                    {
+                        problemAccounts.Add(new MultipleProblemAccountsModel()
+                        {
+                            CustID = c,
+                            ReasonID = (int)CATEGORY.ROBOT
+                        });
+                    });
+                }
+
+                if (_isWriteLogInfo)
+                    LogService.Info($"PA Rescan - Get RobotUsers - with data: {JsonConvert.SerializeObject(problemAccounts)}");
+
+                //PA - NAP PA
+                if (isCheckPAFromNAP)
+                {
+                    var existedProblemAccounts = GetProblemAccountFromNAPPA(string.Join(",", custIds)).ToList();
+                    problemAccounts.AddRange(existedProblemAccounts);
+                    
+                    if (_isWriteLogInfo)
+                        LogService.Info($"PA Rescan - Get PA Custs - with data: {JsonConvert.SerializeObject(existedProblemAccounts)}");
+                }
+            }
+
+            return problemAccounts;
+        }
+
+        private List<int> InsertProblemAccount(List<MultipleProblemAccountsModel> problemAccounts, FLOWTYPERESCANCC flowTypeRescanCC)
         {
             var custIdsToSyncCC = new List<int>();
 
-            var existedProblemAccounts = GetExistedProblemAccounts(string.Join(",", custIds)).ToList();
+            if (problemAccounts != null && problemAccounts.Any())
+            { 
+                custIdsToSyncCC = InsertProblemAccountToCTS(problemAccounts, flowTypeRescanCC);
+            }
 
             if (_isWriteLogInfo)
-                LogService.Info($"PA Rescan - Get PA Custs - with data: {JsonConvert.SerializeObject(existedProblemAccounts)}");
-
-            var custs = InsertProblemAccountToCTS(existedProblemAccounts, flowTypeRescanCC);
-
-            if (custs != null && custs.Any())
-            {
-                custIdsToSyncCC = custs;
-            }
+                LogService.Info($"PA Rescan - Get PA Custs (Robot & NAPPA) - with data: {JsonConvert.SerializeObject(custIdsToSyncCC)}");
 
             return custIdsToSyncCC;
         }
 
-        private IEnumerable<MultipleProblemAccountsModel> GetExistedProblemAccounts(string custIds)
+        private IEnumerable<MultipleProblemAccountsModel> GetProblemAccountFromNAPPA(string custIds)
         {
             var problemAccounts = new List<MultipleProblemAccountsModel>();
 
@@ -181,17 +202,17 @@
             return custIds;
         }
 
-        private List<int> SyncRobotUserToUpdateCategory(List<int> custIds)
+        private List<long> SyncRobotUserToUpdateCategory(List<int> custIds)
         {
-            var robotUser = new List<int>();
+            var robotUser = new List<long>();
 
             var custs = _dataCenterService.GetCustByRobotSiteRule(string.Join(",", custIds)).ToList();
 
             var getRobotUser = _dataCenterService.GetExistedRobotUser(string.Join(",", custs));
 
-            if(!string.IsNullOrEmpty(getRobotUser))
+            if (!string.IsNullOrEmpty(getRobotUser))
             {
-                robotUser = getRobotUser.Split(',').Select(int.Parse).ToList();
+                robotUser = getRobotUser.Split(',').Select(long.Parse).ToList();
             }
 
             return robotUser;
@@ -200,6 +221,9 @@
         private void SyncCustomerClassToExternal(List<int> custIdsToSyncCC, bool isPushCCToSoon88)
         {
             var custIdsChunk = custIdsToSyncCC.Distinct().Chunk(AppSettings.PushCCToExternalChunkSize);
+
+            if (_isWriteLogInfo)
+                LogService.Info($"PA Rescan - Cust to syncCC - with data: {JsonConvert.SerializeObject(custIdsToSyncCC)}");
 
             foreach (var custids in custIdsChunk)
             {
@@ -251,6 +275,9 @@
                                .Select(c => c.CustID).ToList();
                 }
             }
+
+            if (_isWriteLogInfo)
+                LogService.Info($"PA Rescan - GetAgentCusts - with data: {JsonConvert.SerializeObject(agentIds)}");
 
             return agentIds;
         }

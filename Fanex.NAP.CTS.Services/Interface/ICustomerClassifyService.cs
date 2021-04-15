@@ -5,6 +5,6 @@
 
     public interface ICustomerClassifyService
     {
-        void RescanCustomerClassify(List<int> customers, bool isRescanPA, bool isPushCCToSoon88, FLOWTYPERESCANCC flowTypeRescanCC);
+        void RescanCustomerClassify(List<int> customers, bool isCheckPAFromNAP, bool isPushCCToSoon88, FLOWTYPERESCANCC flowTypeRescanCC);
     }
 }
