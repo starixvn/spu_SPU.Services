@@ -239,7 +239,7 @@
             return dataCenterDataAccess.GetProblemAccounts_CN88(custIDs, dateTime);
         }
 
-        public InsertCategoryResultModel InsertProblemAccounts(IEnumerable<InsertProblemAccountsModel> problemAccounts, bool isRescan)
+        public InsertCategoryResultModel InsertProblemAccounts(IEnumerable<MultipleProblemAccountsModel> problemAccounts, bool isRescan)
         {
             var result = new InsertCategoryResultModel() {
                 ErrorMessage = string.Empty, 

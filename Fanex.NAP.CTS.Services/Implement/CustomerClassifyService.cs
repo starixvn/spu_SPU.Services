@@ -180,24 +180,21 @@
 
         private List<int> InsertProblemAccountToCTS(List<MultipleProblemAccountsModel> problemAccounts, FLOWTYPERESCANCC flowTypeRescanCC)
         {
-            var inputData = problemAccounts.Select(a => new InsertProblemAccountsModel
-            {
-                CustId = a.CustID,
-                CategoryId = a.ReasonID
-            }).ToList();
-
-            var problemAccountsChunk = inputData.Chunk(AppSetting.UpdateInternalChunkSize);
-
             var custIds = new List<int>();
 
-            var isWriteLogRescan = flowTypeRescanCC != FLOWTYPERESCANCC.NEWMEMBER;
-
-            foreach (var problemAccs in problemAccountsChunk)
+            if(problemAccounts!=null && problemAccounts.Any())
             {
-                var result = _dataCenterService.InsertProblemAccounts(problemAccs, isWriteLogRescan);
+                var problemAccountsChunk = problemAccounts.Chunk(AppSetting.UpdateInternalChunkSize);
 
-                custIds.AddRange(result.CustIds);
-            }
+                var isWriteLogRescan = flowTypeRescanCC != FLOWTYPERESCANCC.NEWMEMBER;
+
+                foreach (var problemAccs in problemAccountsChunk)
+                {
+                    var result = _dataCenterService.InsertProblemAccounts(problemAccs, isWriteLogRescan);
+
+                    custIds.AddRange(result.CustIds);
+                }
+            }    
 
             return custIds;
         }

@@ -144,22 +144,23 @@
                 LogService.Info($"RobotUser Service - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}");
         }
 
-        private IEnumerable<InsertProblemAccountsModel> MappingRobotCategory(IEnumerable<RobotUser> robotUsers)
+        private IEnumerable<MultipleProblemAccountsModel> MappingRobotCategory(IEnumerable<RobotUser> robotUsers)
         {
-            var custCategory = new List<InsertProblemAccountsModel>();
+            var custCategory = new List<MultipleProblemAccountsModel>();
 
             if (robotUsers != null && robotUsers.Any())
             {
-                custCategory = robotUsers.Select(c => new InsertProblemAccountsModel { 
-                    CustId = c.CustId, 
-                    CategoryId = (int)CATEGORY.ROBOT
+                custCategory = robotUsers.Select(c => new MultipleProblemAccountsModel
+                { 
+                    CustID = c.CustId, 
+                    ReasonID = (int)CATEGORY.ROBOT
                 }).ToList();
             }
 
             return custCategory;
         }
 
-        private IEnumerable<int> InsertPACategory(IEnumerable<InsertProblemAccountsModel> custCategory)
+        private IEnumerable<int> InsertPACategory(IEnumerable<MultipleProblemAccountsModel> custCategory)
         {
             var custs = new InsertCategoryResultModel();
 

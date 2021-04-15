@@ -117,13 +117,7 @@
 
         private static IEnumerable<int> InsertProblemAccountToCTS(IEnumerable<MultipleProblemAccountsModel> problemAccounts)
         {
-            var inputData = problemAccounts.Select(a => new InsertProblemAccountsModel
-            {
-                CustId = a.CustID,
-                CategoryId = a.ReasonID
-            }).ToList();
-
-            return _dataCenterService.InsertProblemAccounts(inputData, false).CustIds;
+            return _dataCenterService.InsertProblemAccounts(problemAccounts, false).CustIds;
         }
 
         private static void PushDataToExternal(IEnumerable<int> custIds)
