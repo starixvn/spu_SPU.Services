@@ -122,7 +122,7 @@
                             }
 
                         }
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -159,6 +159,8 @@
 
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
+            LogMessage(message);
+
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
@@ -166,16 +168,11 @@
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
-
-            if(message.Account.ToUpper() == "DTE189Y115888")
-            {
-                LogMessage(message);
-            }
-
+                       
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
                 deviceInfo.DeviceNo = null;
-                transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);                
+                transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);
             }
             else
             {
@@ -259,7 +256,16 @@
 
         private static void LogMessage(MessageQueue message)
         {
-            LogService.Info(JsonConvert.SerializeObject(message));
+            if (AppSettings.WriteLog)
+            {
+                var accounts = AppSettings.WriteAccount.Split(new[] { ',', ';' });
+
+                if (accounts.Any(x => x.Equals(message.Account, StringComparison.OrdinalIgnoreCase)))
+                {
+                    LogService.Info(JsonConvert.SerializeObject(message));
+                }
+            }
+
         }
     }
 }

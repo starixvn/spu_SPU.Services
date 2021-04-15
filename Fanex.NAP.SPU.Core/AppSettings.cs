@@ -80,6 +80,10 @@ namespace Fanex.NAP.SPU.Core
 
         public static string SentryLogging => ConfigurationManager.AppSettings["Log-SentryLogging-Config"];
 
+        public static bool WriteLog => ConfigurationManager.AppSettings["Write-Log"] == "1";
+
+        public static string WriteAccount => ConfigurationManager.AppSettings["Write-Log-Accounts"];
+
         public static int FraudCaseId => Convert.ToInt32(ConfigurationManager.AppSettings["FraudCase.FraudCaseId"].ToString());
 
         public static string FraudCaseName => ConfigurationManager.AppSettings["FraudCase.FraudCaseName"];
