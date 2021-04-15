@@ -40,12 +40,15 @@
             var problemAccountsFromEvi = SyncCustomerEvidenceToCategory(custIds, flowTypeRescanCC);
             custIdList.AddRange(problemAccountsFromEvi);
 
+            if (_isWriteLogInfo)
+                LogService.Info($"PA Rescan - Get Evidence Custs - with data: {JsonConvert.SerializeObject(problemAccountsFromEvi)}");
+
             // Re-Sync RobotUser to category in CTS
             var robotUsers = SyncRobotUserToUpdateCategory(custIds);
             custIdList.AddRange(robotUsers);
 
             if (_isWriteLogInfo)
-                LogService.Info($"PA Rescan - Get Evidence Custs - with data: {JsonConvert.SerializeObject(custIdCCs)}");
+                LogService.Info($"PA Rescan - Get RobotUsers - with data: {JsonConvert.SerializeObject(robotUsers)}");
 
             if (isRescanPA)
             {
