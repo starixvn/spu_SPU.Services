@@ -48,7 +48,8 @@
             HIGHRISKPUNTER = 204,
             VIP = 205,
             PROBATION = 206,
-            VVIP = 213
+            VVIP = 213,
+            ROBOT = 61
         };
 
         public enum FLOWTYPERESCANCC

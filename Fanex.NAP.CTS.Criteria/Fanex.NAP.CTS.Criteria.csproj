@@ -76,7 +76,6 @@
     <Compile Include="RemoveEvidenceMultipleAccounts\RollbackCustomerEvidenceCriteria.cs" />
     <Compile Include="RemoveEvidenceMultipleAccounts\UpdateCustomerEvidenceCriteria.cs" />
     <Compile Include="ReTransformAccountCriteria.cs" />
-    <Compile Include="InsertRobotUsersIntoSpecialCustClassCriteria.cs" />
     <Compile Include="CustomerClassification\CategorizeCustomerGeneralCategoryRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerGeneralCategoryHasChangeForRunRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\NormalAccountsClassificationGeneralCategorizeDailyCriteria.cs" />

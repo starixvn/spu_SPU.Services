@@ -13,6 +13,7 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using static Fanex.NAP.SPU.Core.Constants;
 
     public class RobotService
     {
@@ -57,9 +58,9 @@
             {
                 var robotUsersChunks = robotUsers.Chunk(AppSettings.BatchSize).ToList();
 
-                foreach (var robotUserList in robotUsersChunks)
+                foreach (var robotUsers in robotUsersChunks)
                 {
-                    var custCategory = InsertRobotUsers(robotUserList);
+                    var custCategory = MappingRobotCategory(robotUsers);
 
                     var custIds = InsertPACategory(custCategory);
 
@@ -143,32 +144,28 @@
                 LogService.Info($"RobotUser Service - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}");
         }
 
-        private InsertRobotUserResultModel InsertRobotUsers(IEnumerable<RobotUser> robotUsers)
+        private IEnumerable<InsertProblemAccountsModel> MappingRobotCategory(IEnumerable<RobotUser> robotUsers)
         {
-            var custCategory = new InsertRobotUserResultModel();
-            var custIds = string.Empty;
+            var custCategory = new List<InsertProblemAccountsModel>();
 
             if (robotUsers != null && robotUsers.Any())
             {
-                custIds = string.Join(",", robotUsers.Select(c => c.CustId));
-
-                custCategory = dataService.InsertRobotUsers(custIds);
+                custCategory = robotUsers.Select(c => new InsertProblemAccountsModel { 
+                    CustId = c.CustId, 
+                    CategoryId = (int)CATEGORY.ROBOT
+                }).ToList();
             }
-
-            if (isWriteLogInfo)
-                LogService.Info($"RobotUsers Service - InsertRobotUsers done! with {custIds} - Date: {DateTime.Now}");
 
             return custCategory;
         }
 
-        private IEnumerable<int> InsertPACategory(InsertRobotUserResultModel custCategory)
+        private IEnumerable<int> InsertPACategory(IEnumerable<InsertProblemAccountsModel> custCategory)
         {
             var custs = new InsertCategoryResultModel();
 
-            if (custCategory != null && string.IsNullOrEmpty(custCategory.ErrorMessage)
-                && custCategory.CustClassification != null && custCategory.CustClassification.Any())
+            if (custCategory != null && custCategory.Any())
             {
-                custs = dataService.InsertProblemAccounts(custCategory.CustClassification, false);
+                custs = dataService.InsertProblemAccounts(custCategory, false);
             }
 
             if (isWriteLogInfo)

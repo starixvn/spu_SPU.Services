@@ -63,7 +63,6 @@
     <Compile Include="DBResult\DBResult.cs" />
     <Compile Include="DBResult\InsertCategoryResultModel.cs" />
     <Compile Include="DBResult\InsertCustomerResultModel.cs" />
-    <Compile Include="DBResult\InsertRobotUserResultModel.cs" />
     <Compile Include="DeleteDataToSoon88ViewModel.cs" />
     <Compile Include="CustomerClassification\LatestClassificationModel.cs" />
     <Compile Include="MainDB\DangerLevelModel.cs" />

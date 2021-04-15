@@ -293,11 +293,6 @@
             return dataCenterDataAccess.GetRobotUsers(fromDate, creditSiteList);
         }
 
-        public InsertRobotUserResultModel InsertRobotUsers(string custIds)
-        {
-            return dataCenterDataAccess.InsertRobotUsers(custIds);
-        }
-
         public IEnumerable<ProbationModel> GetProbationCustForScanning(int numberOfRecords)
         {
             return dataCenterDataAccess.GetProbationCustForScanning(numberOfRecords);

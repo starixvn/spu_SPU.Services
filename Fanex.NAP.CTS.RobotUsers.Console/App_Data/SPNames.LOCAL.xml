@@ -4,7 +4,6 @@
   <Function Name="RobotUsers">
     <Setting Key="CTS_DC_GetSystemParameterById" SpName="CTS_DC_GetSystemParameterById" DbName="MySQL.CTS_DataCenter.ctsService"/>
     <Setting Key="CTS_DC_UpdateSystemParameterById" SpName="CTS_DC_UpdateSystemParameterById" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
-    <Setting Key="CTS_DC_SpecialCustClass_InsertRobotUsers" SpName="CTS_DC_SpecialCustClass_InsertRobotUsers" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_DC_CustClassification_UpdateIsAppliedCC" SpName="CTS_DC_CustClassification_UpdateIsAppliedCC" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin" />
 	<Setting Key="CTS_DC_InsertCategorizedProblemAccounts" SpName="CTS_DC_InsertCategorizedProblemAccounts" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
 	<Setting Key="CTS_DC_CustClassification_GetLatestClassification" SpName="CTS_DC_CustClassification_GetLatestClassification" DbName="MySQL.CTS_DataCenter.ctsService" />
