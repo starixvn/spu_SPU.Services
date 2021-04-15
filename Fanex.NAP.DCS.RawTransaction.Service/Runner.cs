@@ -8,7 +8,10 @@
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
+    using FPS.Browserless.Core;
     using FPS.Browserless.Detection;
+    using FPS.Browserless.Detection.TransService;
+    using Newtonsoft.Json;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -27,7 +30,7 @@
         private readonly List<RawTransactionModel> _transactionList;
         private readonly System.Timers.Timer _timer;
         private DateTime _lastInsertTrans;
-
+        private BotTransDetection _botTransDetection;
         public Runner()
         {
             InitializeComponent();
@@ -50,6 +53,8 @@
             _timer = new System.Timers.Timer();
             _timer.Elapsed += InsertTransactionByTimer;
             _timer.Interval = AppSettings.Interval;
+
+            _botTransDetection = new BotTransDetection();
         }
 
         protected override void OnStart(string[] args)
@@ -117,7 +122,7 @@
                             }
 
                         }
-                        
+
                     }
                     catch (Exception ex)
                     {
@@ -154,6 +159,8 @@
 
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
+            LogMessage(message);
+
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
@@ -161,7 +168,7 @@
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
-
+                       
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
                 deviceInfo.DeviceNo = null;
@@ -182,7 +189,7 @@
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
 
-            var rawFlagged = BrowserlessDetection.DetectBrowserlessTransaction(message, deviceNo);
+            var rawFlagged = _botTransDetection.IsBotTransaction(message);
             var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
 
             return new RawTransactionModel
@@ -245,6 +252,20 @@
         private static String StripUnicodeCharactersFromString(string inputValue)
         {
             return Regex.Replace(inputValue, @"[^\u0000-\u007F]", String.Empty);
+        }
+
+        private static void LogMessage(MessageQueue message)
+        {
+            if (AppSettings.WriteLog)
+            {
+                var accounts = AppSettings.WriteAccount.Split(new[] { ',', ';' });
+
+                if (accounts.Any(x => x.Equals(message.Account, StringComparison.OrdinalIgnoreCase)))
+                {
+                    LogService.Info(JsonConvert.SerializeObject(message));
+                }
+            }
+
         }
     }
 }

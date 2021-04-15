@@ -36,8 +36,20 @@
     <Reference Include="EasyNetQ, Version=3.7.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EasyNetQ.3.7.1\lib\net46\EasyNetQ.dll</HintPath>
     </Reference>
+    <Reference Include="Fanex.DeviceDetector, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Oneyed.DeviceDetector.2.0.2\lib\Fanex.DeviceDetector.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.DeviceDetector.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Oneyed.DeviceDetector.2.0.2\lib\Fanex.DeviceDetector.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="Fanex.DI.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fanex.Oneyed.DeviceDetector.2.0.2\lib\Fanex.DI.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Fanex.Oneyed.Infrastructure.Models">
       <HintPath>..\Components\Fanex.Oneyed.Infrastructure.Models.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Diagnostics.Tracing.EventSource, Version=1.1.28.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.1.28\lib\net46\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
@@ -51,6 +63,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
