@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaEmail.Service
 {
     using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
     using Fanex.MailDelivery.Core.Models;
     using Fanex.NAP.SPU.Core;
     using OfficeOpenXml;
@@ -29,6 +31,42 @@
 
         public Service MoveFileToArcFolder()
         {
+            var sourceFolder = _directorySaveFile;
+            var desArcFolder = AppDomain.CurrentDomain.BaseDirectory + @"Arc_Folder\";
+
+            if (!Directory.Exists(desArcFolder))
+            {
+                Directory.CreateDirectory(desArcFolder);
+            }
+
+            var fileAtSourceFolders = Directory.GetFiles(sourceFolder).ToList();
+            var fileAtDesArcFolders = Directory.GetFiles(desArcFolder).ToList();
+
+            try
+            {
+                fileAtDesArcFolders.ForEach(filePath =>
+                {
+                    File.Delete(filePath);
+                });
+
+                fileAtSourceFolders.ForEach(filePath =>
+                {
+                    var fileName = Path.GetFileName(filePath);
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        File.Move(filePath, desArcFolder + fileName);
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
+            }
+
             return this;
         }
 
@@ -72,8 +110,12 @@
             catch (Exception ex)
             {
                 IsSuccessAPIResponse = false;
+                
+                var logMessage = new LogMessage(ex.Message)
+                   .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Warn($"TGRS - Auto Trading: GenereateAutoTradingToFile ({AppSettings.EnvironmentName}) failed - endpoint: { endpoint } : { ex.ToString() }");
+                LogService.Error(logMessage);
             }
 
             return this;
