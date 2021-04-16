@@ -28,7 +28,7 @@
         public void Process()
         {
             var logData = new List<MultipleProblemAccountsModel>();
-
+            
             try
             {
                 var result = GetProblemAccounts();
@@ -36,7 +36,7 @@
                 var isWriteLogInfo = AppSettings.IsWriteLogInfo;
 
                 if (isWriteLogInfo)
-                    LogService.Info($"AutoTagProblemAccount.Service - Get PA From NAPCM & CN88 with Data: {JsonConvert.SerializeObject(result)}");
+                    LogService.Info($"AutoTagProblemAccount.Service - Get PA From NAPCM & CN88 with Data: {JsonConvert.SerializeObject(result)} - Datetime: {DateTime.Now}");
 
                 if (result.ProblemAccounts != null && result.ProblemAccounts.Any())
                 {
@@ -49,7 +49,7 @@
                         var custs = InsertProblemAccountToCTS(problemAccs);
 
                         if (isWriteLogInfo)
-                            LogService.Info($"AutoTagProblemAccount.Service - InsertProblemAccountToCTS done with: {JsonConvert.SerializeObject(problemAccs)}");
+                            LogService.Info($"AutoTagProblemAccount.Service - InsertProblemAccountToCTS done with: {JsonConvert.SerializeObject(problemAccs)} - Datetime: {DateTime.Now}");
 
                         if (custs != null && custs.Any())
                         {
@@ -57,7 +57,7 @@
 
                             foreach (var custIds in custIdsChunk)
                             {
-                                PushDataToExternal(custIds, isWriteLogInfo);
+                                PushDataToExternal(custIds);
                             }
                         }
                     }
@@ -66,7 +66,7 @@
                 _dataCenterService.UpdateTimingExecution(result.BackupTimingExecution.ToString(Constants.CONVERT_TO_SQL_DATETIME), Constants.PARAMETER_VALUE);
 
                 if (isWriteLogInfo)
-                    LogService.Info($"AutoTagProblemAccount.Service - Done!");
+                    LogService.Info($"AutoTagProblemAccount.Service - Done! - Datetime: {DateTime.Now}");
             }
             catch (Exception ex)
             {
@@ -126,7 +126,7 @@
             return _dataCenterService.InsertProblemAccounts(inputData, false).CustIds;
         }
 
-        private static void PushDataToExternal(IEnumerable<int> custIds, bool isWriteLogInfo)
+        private static void PushDataToExternal(IEnumerable<int> custIds)
         {
             var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
 
@@ -138,14 +138,14 @@
                 {
                     _dataCenterService.UpdateAppliedCustomerClassification(JsonConvert.SerializeObject(lastestClassifications));
 
-                    if (isWriteLogInfo)
-                        LogService.Info($"AutoTagProblemAccount.Service - Sync CC done with :{JsonConvert.SerializeObject(lastestClassifications)}");
+                    if (AppSettings.IsWriteLogInfo)
+                        LogService.Info($"AutoTagProblemAccount.Service - Sync CC done with :{JsonConvert.SerializeObject(lastestClassifications)}  - Datetime: {DateTime.Now}");
                 }
 
                 _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
 
-                if (isWriteLogInfo)
-                    LogService.Info($"AutoTagProblemAccount.Service - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}");
+                if (AppSettings.IsWriteLogInfo)
+                    LogService.Info($"AutoTagProblemAccount.Service - Push Soon88 done with :{JsonConvert.SerializeObject(lastestClassifications)}  - Datetime: {DateTime.Now}");
             }
         }
     }

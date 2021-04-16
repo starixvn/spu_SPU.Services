@@ -868,5 +868,22 @@
 
             repository.Execute(criteria);
         }
+
+        public IEnumerable<RoleCustomerModel> GetRoleCustomer(string custIds)
+        {
+            var roleCus = new List<RoleCustomerModel>();
+
+            var criteria = new GetRoleCustomerCriteria
+            {
+                CustIds = custIds
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                roleCus = db.Query<RoleCustomerModel>(criteria).ToList();
+            }
+
+            return roleCus;
+        }
     }
 }

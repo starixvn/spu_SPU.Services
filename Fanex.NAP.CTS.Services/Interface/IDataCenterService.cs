@@ -101,5 +101,7 @@
         IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType);
         
         void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID, UPDATECUSTOMER sourceType);
+
+        IEnumerable<RoleCustomerModel> GetRoleCustomer(string custIDs);
     }
 }

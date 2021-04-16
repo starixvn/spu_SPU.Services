@@ -17,6 +17,7 @@
 	<Setting Key="CTS_DC_CTSCustomer_UpdateCustomerComplete" SpName="CTS_DC_CTSCustomer_UpdateCustomerComplete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
 	<Setting Key="CTS_DC_CTSCustomer_UpdateCustInfoComplete" SpName="CTS_DC_CTSCustomer_UpdateCustInfoComplete" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
 	<Setting Key="CTS_DC_CTSCustomer_GetInfoByCustIDList" SpName="CTS_DC_CTSCustomer_GetInfoByCustIDList" DbName="MySQL.CTS_DataCenter.ctsService" />
+	<Setting Key="CTS_DC_CustInfo_GetCustomerRoles" SpName="CTS_DC_CustInfo_GetCustomerRoles" DbName="MySQL.CTS_DataCenter.ctsService" />
 	  
     <!-- DCS_DataCenter -->
     <Setting Key="DCS_DC_TransformToCTS_Account_Completed" SpName="DCS_DC_TransformToCTS_Account_Completed" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
