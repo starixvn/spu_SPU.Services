@@ -34,7 +34,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,11 +47,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Consts.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaLetstalk.Console.exe.LOCAL.config" />
+    <None Include="Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaLetstalk.Console.exe.PRO.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Fanex.Logging.Extensions.Database">
+      <Version>1.0.8</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
+      <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.3</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
+      <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>
+      <Name>Fanex.NAP.SPU.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Fanex.NAP.SPU.Service\Fanex.NAP.SPU.Service.csproj">
+      <Project>{fd4a2e92-1eb2-43a8-a93a-a1e0a7632097}</Project>
+      <Name>Fanex.NAP.SPU.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -22,7 +22,7 @@
 
             var service = new Service(directorySaveFile)
                     .MoveFileToArcFolder()
-                    .GenerateAutoTradingSpread8LiveToFive(endpoint, saveFileName);
+                    .GenerateAutoTradingSpread8LiveToFile(endpoint, saveFileName);
 
             var mail = service.GenerateMail(saveFileName);
 

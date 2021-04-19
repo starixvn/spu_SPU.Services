@@ -70,7 +70,7 @@
             return this;
         }
 
-        public Service GenerateAutoTradingSpread8LiveToFive(string endpoint, string saveFileName)
+        public Service GenerateAutoTradingSpread8LiveToFile(string endpoint, string saveFileName)
         {
             try
             {
