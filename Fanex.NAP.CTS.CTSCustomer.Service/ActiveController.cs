@@ -161,7 +161,7 @@
                                     _customerClassificationService.RescanCustomerClassify(custToRescan, true, true, Constants.FLOWTYPERESCANCC.NEWMEMBER);
 
                                     if (isWriteLogInfo)
-                                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassify done with data: {JsonConvert.SerializeObject(custIdList)}");
+                                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - RescanCustomerClassify done with data: {JsonConvert.SerializeObject(custToRescan)}");
                                 }
                                 catch (Exception ex)
                                 {
