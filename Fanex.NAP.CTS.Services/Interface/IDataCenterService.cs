@@ -2,7 +2,6 @@
 {
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Model.CustomerClassification;
-    using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Model;
     using System;
     using System.Collections.Generic;
@@ -13,8 +12,6 @@
         void TransformDCSAccount(List<RawAccountModel> accountList);
 
         IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDBModel> customerList);
-
-        void InsertAssociation(List<AssociationModel> associationList);
 
         void TransformAssociationByDevice(List<RawAssociationModel> rawAssociation);
 
@@ -38,13 +35,9 @@
 
         void UpdateAppliedStatusClassification(string custIdList, bool isGeneralCategory);
 
-        void AutoTagClassification(string newClassification);
-
         InsertCategoryResultModel InsertMainCustomerClassification(string newClassification);
 
         DBResult UpdateCustomerGeneralClassificationtoMainDB(IEnumerable<LatestClassificationModel> custIdList);
-
-        void InsertProblemAccountClassificationToMainDB(List<ProblemAccountForMainDBModel> custIdList);
 
         IEnumerable<TransactionModel> DCSMoveTransToTransaction07GetPackage(int batchSize, int NoOfBatch);
 
@@ -52,25 +45,15 @@
 
         IEnumerable<CustomerClassificationModel> GetCustomerForRunDaily(int batchQuantity, int rowQuantityPerBatch);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList);
-
-        void ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers);
-
         void ClassifyCustomerDailyDone(string custSportJson);
 
         void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days);
-
-        void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers);
 
         void ClassifyCustomerGeneralCategoryRealtime(IEnumerable<CustomerClassificationModel> customers);
 
         IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList, string categoryIds);        
 
-        IEnumerable<int> GetAllSpecialCustomerClass();
-
         IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIdList);
-
-        IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory);
 
         IEnumerable<LatestClassificationModel> GetLatestClassification(string custIds);
 

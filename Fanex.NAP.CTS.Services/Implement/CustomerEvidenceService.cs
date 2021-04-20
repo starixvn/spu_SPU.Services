@@ -101,42 +101,6 @@
             }
         }
 
-        public DBResult SyncCustomerClassToMainDb(string ctsCustIds, out List<SyncCustomerClassToMainModel> custClasses)
-        {
-            custClasses = new List<SyncCustomerClassToMainModel>();
-
-            try
-            {
-                var customerCategoryLastedList = dataAccess.GetCustomerCategoryLasted(ctsCustIds, false, true);
-
-                if (customerCategoryLastedList != null && customerCategoryLastedList.Any())
-                {
-                    var ccToMain = customerCategoryLastedList
-                        .Select(x => new SyncCustomerClassToMainModel
-                        {
-                            CustID = x.CustId,
-                            CategoryIdMapping = GetMappingCTSCategoryToMainCC(x.CategoryId)
-                        })
-                        .Where(x => x.CategoryIdMapping != -99); // CategoryIdMapping = -99 is not mapping
-
-                    if (ccToMain.Any())
-                    {
-                        custClasses = ccToMain.ToList();
-
-                        return dataAccess.SyncCustomerClassToMainDb(ccToMain);
-                    }
-                }
-
-                return new DBResult { ErrorCode = 0, ErrorMsg = string.Empty };
-            }
-            catch (Exception ex)
-            {
-                LogService.Error($"CustomerEvidenceService SyncCustomerClassToMainDb exception: {ex.Message}", ex);
-
-                return new DBResult { ErrorCode = -1, ErrorMsg = ex.Message };
-            }
-        }
-
         public DBResult UpdateProcessedCustEvidence(string idList, bool isProcessed, int userId)
         {
             try

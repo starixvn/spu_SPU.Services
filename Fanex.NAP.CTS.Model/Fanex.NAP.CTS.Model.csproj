@@ -78,7 +78,6 @@
     <Compile Include="CustomerClassification\CustomerGeneralClassificationModel.cs" />
     <Compile Include="ProblemAccountModel\GetMultiProblemAccountsModel.cs" />
     <Compile Include="PreparedUpdateDataToSoon88ViewModel.cs" />
-    <Compile Include="ProblemAccountForMainDBModel.cs" />
     <Compile Include="ProbationModel.cs" />
     <Compile Include="ProblemAccountModel\MultipleProblemAccountsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
