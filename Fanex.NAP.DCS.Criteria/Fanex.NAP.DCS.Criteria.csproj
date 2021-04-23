@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArchiveUnusedDeviceCodeCriteria.cs" />
     <Compile Include="DeleteDataForArchiveTransaction07Criteria.cs" />
     <Compile Include="GetUpdatedCustFromCustomerHistoryCriteria.cs" />
     <Compile Include="GetUpdatedCustFromCustInfoHistoryCriteria.cs" />

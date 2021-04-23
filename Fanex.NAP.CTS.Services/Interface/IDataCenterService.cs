@@ -107,7 +107,5 @@
         IEnumerable<int> GetCustByRobotSiteRule(string custIDs);
 
         string GetExistedRobotUser(string custIDs);
-
-        bool ArchiveUnusedDeviceCode(int size);
     }
 }

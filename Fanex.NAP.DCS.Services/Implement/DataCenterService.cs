@@ -1,12 +1,10 @@
-﻿using Fanex.NAP.DCS.Core;
-using Fanex.NAP.DCS.DataAccess;
+﻿using Fanex.NAP.DCS.DataAccess;
 using Fanex.NAP.DCS.Model;
 using Fanex.NAP.DCS.Services.Interface;
 using Fanex.NAP.SPU.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Fanex.NAP.DCS.Services.Implement
 {
@@ -125,6 +123,11 @@ namespace Fanex.NAP.DCS.Services.Implement
         public TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
         {
             return dataCenter.GetUpdatedCustFromCustomerHistory(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
+        }
+
+        public bool ArchiveUnusedDeviceCode(int size)
+        {
+            return dataCenter.RemoveUnusedDeviceCode(size);
         }
     }
 }

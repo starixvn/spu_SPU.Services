@@ -1610,7 +1610,46 @@
         <repeat-interval>30</repeat-interval>
       </cron>
     </trigger>
-    
+
+	  <job>
+		  <name>CTS_Archive_UnusedDeviceCode_Job</name>
+		  <group>Archive Data</group>
+		  <description>CTS_Archive_UnusedDeviceCode_Job</description>
+		  <job-type>Fanex.NAP.SPU.ExecutingService.ExecuteConsoleJob, Fanex.NAP.SPU.ExecutingService</job-type>
+		  <durable>true</durable>
+		  <recover>false</recover>
+		  <job-data-map>
+			  <entry>
+				  <key>Active</key>
+				  <value>true</value>
+			  </entry>
+			  <entry>
+				  <key>FileName</key>
+				  <value>Fanex.NAP.CTS.ArchiveUnusedDeviceCode.Console.exe</value>
+			  </entry>
+			  <entry>
+				  <key>Master</key>
+				  <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.ArchiveUnusedDeviceCode.Console</value>
+			  </entry>
+			  <entry>
+				  <key>Slave</key>
+				  <value>D:\WWW\SPU\CTS\Fanex.NAP.CTS.ArchiveUnusedDeviceCode.Console</value>
+			  </entry>
+		  </job-data-map>
+	  </job>
+
+	  <trigger>
+		  <cron>
+			  <name>CTS_Archive_UnusedDeviceCode_Console_Trigger</name>
+			  <group>Archive Data</group>
+			  <description>CTS_Archive_UnusedDeviceCode_Console_Trigger</description>
+			  <job-name>CTS_Archive_UnusedDeviceCode_Job</job-name>
+			  <job-group>Archive Data</job-group>
+			  <misfire-instruction>SmartPolicy</misfire-instruction>
+			  <cron-expression>0 0 7 1/1 * ? *</cron-expression>
+		  </cron>
+	  </trigger>
+	  
   </schedule>
 
 </job-scheduling-data>

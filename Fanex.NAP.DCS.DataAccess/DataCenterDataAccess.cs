@@ -482,5 +482,20 @@
                 CustIdList = output.secondResultSet.SingleOrDefault()
             };
         }
+
+        public bool RemoveUnusedDeviceCode(int size)
+        {
+            var criteria = new ArchiveUnusedDeviceCodeCriteria
+            {
+                Size = size
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
+
+            return criteria.IsContinue;
+        }
     }
 }

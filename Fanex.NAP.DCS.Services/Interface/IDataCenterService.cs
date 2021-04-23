@@ -42,5 +42,7 @@ namespace Fanex.NAP.DCS.Services.Interface
         LastScannedCustModel GetLastInsertCust ();
 
         LastUpdateValueModel GetLastUpdatedTime();
+
+        bool ArchiveUnusedDeviceCode(int size);
     }
 }

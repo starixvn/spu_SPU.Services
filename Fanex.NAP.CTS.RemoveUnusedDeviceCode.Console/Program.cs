@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.CTS.RemoveUnusedDeviceCode.Console
+﻿namespace Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console
 {
     using Fanex.Data;
     using Fanex.Data.MySql;

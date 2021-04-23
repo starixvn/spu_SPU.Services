@@ -399,10 +399,5 @@
         {
             return dataCenterDataAccess.GetExistedRobotUser(custIDs);
         }
-
-        public bool ArchiveUnusedDeviceCode(int size)
-        {
-            return dataCenterDataAccess.RemoveUnusedDeviceCode(size);
-        }
     }
 }

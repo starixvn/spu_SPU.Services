@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{86E4C060-4AF5-49BA-8E63-A1CFC18BFC4D}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Fanex.NAP.CTS.ArchiveUnusedDeviceCode.Console</RootNamespace>
-    <AssemblyName>Fanex.NAP.CTS.ArchiveUnusedDeviceCode.Console</AssemblyName>
+    <RootNamespace>Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console</RootNamespace>
+    <AssemblyName>Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -119,11 +119,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.CTS.ArchiveUnusedDeviceCode.Console.exe.LOCAL.config">
+    <None Include="Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console.exe.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Fanex.NAP.CTS.ArchiveUnusedDeviceCode.Console.exe.PRO.config">
+    <None Include="Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console.exe.PRO.config">
       <DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
   </ItemGroup>
@@ -145,13 +147,17 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.CTS.Model\Fanex.NAP.CTS.Model.csproj">
-      <Project>{aa3e4730-2ee7-43ac-a9f3-992c4ef5dab6}</Project>
-      <Name>Fanex.NAP.CTS.Model</Name>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Criteria\Fanex.NAP.DCS.Criteria.csproj">
+      <Project>{1fda7272-3467-4d5b-a64d-7f4edb287f17}</Project>
+      <Name>Fanex.NAP.DCS.Criteria</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.CTS.Services\Fanex.NAP.CTS.Services.csproj">
-      <Project>{16a8ac87-aee3-4a10-b6c6-5e27226cddd1}</Project>
-      <Name>Fanex.NAP.CTS.Services</Name>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Model\Fanex.NAP.DCS.Model.csproj">
+      <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
+      <Name>Fanex.NAP.DCS.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Services\Fanex.NAP.DCS.Services.csproj">
+      <Project>{343073c5-6a1f-4e08-8c39-c8b6498bbadb}</Project>
+      <Name>Fanex.NAP.DCS.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
       <Project>{491853de-c617-4605-bac7-60eb6cbd213d}</Project>

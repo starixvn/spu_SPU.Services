@@ -1,9 +1,9 @@
-﻿namespace Fanex.NAP.CTS.RemoveUnusedDeviceCode.Console
+﻿namespace Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console
 {
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using System;
@@ -28,7 +28,7 @@
                     isContinue = _dataCenterService.ArchiveUnusedDeviceCode(AppSettings.InternalChunkSize);
 
                     if (AppSettings.IsWriteLogInfo)
-                        LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue {JsonConvert.SerializeObject(isContinue)} - Time: {DateTime.Now}");
+                        LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {JsonConvert.SerializeObject(isContinue)} - Time: {DateTime.Now}");
 
                 } while (isContinue);
             }

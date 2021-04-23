@@ -62,7 +62,6 @@
     <Compile Include="CustomerEvidence\SyncCustEvidenceToCTSCategoryCriteria.cs" />
     <Compile Include="CustomerEvidence\UpdateBetLimitByEvidenceAddingCriteria.cs" />
     <Compile Include="CustomerEvidence\UpdateProcessedCustEvidenceCriteria.cs" />
-    <Compile Include="ArchiveUnusedDeviceCodeCriteria.cs" />
     <Compile Include="GetAssociationWithCategoryCriteria.cs" />
     <Compile Include="GetExistedRobotUserCriteria.cs" />
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
