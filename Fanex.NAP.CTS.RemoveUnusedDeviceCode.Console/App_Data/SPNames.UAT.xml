@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+	<Function Name="Archive Unused Device Code">
+		<Setting Key="DCS_DC_ArchiveData_DeviceCode" SpName="DCS_DC_ArchiveData_DeviceCode_xtest" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
+	</Function>
+</Functions>

@@ -242,7 +242,7 @@
             var criteria = new UpdateDangerLevelCriteria
             {
                 CustList = dangerLevel.ToXmlString(),
-                DangerType = (int) typeId
+                DangerType = (int)typeId
             };
 
             repository.Execute(criteria);
@@ -513,7 +513,7 @@
                 custIds = repository.Fetch<int>(criteria).ToList();
             }
 
-            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds ?? new List<int>()};
+            return new InsertCategoryResultModel() { ErrorMessage = criteria.ErrorMessage, CustIds = custIds ?? new List<int>() };
         }
 
         public IEnumerable<SystemParemeterModel> GetPreviousTimingExecution(int paramId)
@@ -603,7 +603,7 @@
             };
 
             repository.Execute(criteria);
-        }   
+        }
 
         public IEnumerable<ProbationModel> ClassifyCategoryForProbationCust(IEnumerable<ProbationModel> custList)
         {
@@ -675,7 +675,7 @@
             var criteria = new GetDangerLevelCriteria()
             {
                 CustIds = custIds,
-                TypeID = (int) typeId
+                TypeID = (int)typeId
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -710,10 +710,11 @@
             {
                 repository.Fetch<string>(criteria);
 
-                return new DBResult {
-                    ErrorCode = !string.IsNullOrEmpty(criteria.ErrorMessage) ? - 1 : 0,
+                return new DBResult
+                {
+                    ErrorCode = !string.IsNullOrEmpty(criteria.ErrorMessage) ? -1 : 0,
                     ErrorMsg = criteria.ErrorMessage
-                };                
+                };
             }
         }
 
@@ -724,7 +725,7 @@
             var criteria = new UpdateAppliedDangerLevelCriteria
             {
                 CustJson = custsJson,
-                TypeID = (int) typeID
+                TypeID = (int)typeID
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -755,15 +756,15 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                var result =  db.Query<CustomerAssociationProblemAccountModel>(criteria);
+                var result = db.Query<CustomerAssociationProblemAccountModel>(criteria);
 
                 return result;
             }
         }
-        
-        public void ReTranformAccount (string jsonData)
+
+        public void ReTranformAccount(string jsonData)
         {
-            if(string.IsNullOrEmpty(jsonData))
+            if (string.IsNullOrEmpty(jsonData))
             {
                 return;
             }
@@ -843,12 +844,12 @@
         }
 
         public void InserAssociationDevice(int batchSize)
-        {            
+        {
             var repository = new DynamicRepository();
 
             var criteria = new InsertAssociationDeviceCriteria
             {
-               BatchSize = batchSize
+                BatchSize = batchSize
             };
 
             repository.Execute(criteria);
@@ -901,6 +902,21 @@
             }
 
             return criteria.RobotList;
+        }
+
+        public bool RemoveUnusedDeviceCode(int size)
+        {
+            var criteria = new ArchiveUnusedDeviceCodeCriteria
+            {
+                Size = size
+            };
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                db.ExecuteNonQuery(criteria);
+            }
+
+            return criteria.IsContinue;
         }
     }
 }
