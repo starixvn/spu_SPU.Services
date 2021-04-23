@@ -13,6 +13,7 @@
     {
         static void Main(string[] args)
         {
+            LogService.Info($"ArchiveUnusedDeviceCode.Service start");
             var service = new Service();
 
             DbSettingProviderManager
