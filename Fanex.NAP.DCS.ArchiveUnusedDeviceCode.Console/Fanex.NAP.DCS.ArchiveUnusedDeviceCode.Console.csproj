@@ -125,6 +125,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console.exe.LOCAL.config" />
+    <None Include="Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console.exe.PRO.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
