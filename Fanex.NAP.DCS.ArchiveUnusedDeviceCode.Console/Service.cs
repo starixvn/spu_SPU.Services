@@ -19,8 +19,6 @@
 
         public void Process()
         {
-            LogService.Info($"ArchiveUnusedDeviceCode.Service start");
-
             try
             {
                 var isContinue = false;
@@ -28,6 +26,7 @@
                 do
                 {
                     isContinue = _dataCenterService.ArchiveUnusedDeviceCode(AppSettings.InternalChunkSize);
+                    LogService.Info(AppSettings.IsWriteLogInfo.ToString());
 
                     if (AppSettings.IsWriteLogInfo)
                         LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {JsonConvert.SerializeObject(isContinue)} - Time: {DateTime.Now}");
