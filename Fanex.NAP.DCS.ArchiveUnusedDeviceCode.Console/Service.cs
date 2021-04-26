@@ -5,7 +5,6 @@
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.DCS.Services.Implement;
     using Fanex.NAP.SPU.Core;
-    using Newtonsoft.Json;
     using System;
     using System.Threading;
 
@@ -30,7 +29,7 @@
                     isContinue = _dataCenterService.ArchiveUnusedDeviceCode(AppSettings.InternalChunkSize);
 
                     if (isWriteLog)
-                        LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {JsonConvert.SerializeObject(isContinue)} - Time: {DateTime.Now}");
+                        LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {isContinue} - Time: {DateTime.Now}");
 
                     Thread.Sleep(30000);
 
