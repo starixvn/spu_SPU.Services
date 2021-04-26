@@ -13,9 +13,6 @@
     {
         static void Main(string[] args)
         {
-            LogService.Info($"ArchiveUnusedDeviceCode.Service start");
-            var service = new Service();
-
             DbSettingProviderManager
                  .StartNewSession()
                  .WithSqlServer()
@@ -34,6 +31,7 @@
                     })
                });
 
+            var service = new Service();
             service.Process();
         }
     }
