@@ -28,6 +28,8 @@
                 {
                     isContinue = _dataCenterService.ArchiveUnusedDeviceCode(AppSettings.InternalChunkSize);
 
+                    LogService.Info(isWriteLog.ToString());
+
                     if (isWriteLog)
                         LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {isContinue} - Time: {DateTime.Now}");
 
