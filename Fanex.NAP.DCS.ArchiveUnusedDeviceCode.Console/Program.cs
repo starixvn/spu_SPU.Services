@@ -2,7 +2,6 @@
 {
     using Fanex.Data;
     using Fanex.Data.MySql;
-    using Fanex.Data.SqlServer;
     using Fanex.Logging;
     using Fanex.Logging.Sentry;
     using Fanex.NAP.SPU.Core;
@@ -14,12 +13,11 @@
         static void Main(string[] args)
         {
             DbSettingProviderManager
-                 .StartNewSession()
-                 .WithSqlServer()
-                 .WithMySql()
-                 .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
-                 .UseDefaultConnectionStringProvider()
-                 .Run();
+                .StartNewSession()
+                .WithMySql()
+                .UseDefaultDbSettingProvider(resourcePath: AppSettings.AppDataSetting)
+                .UseDefaultConnectionStringProvider()
+                .Run();
 
             LogManager
                .SetDefaultLogCategory(AppSettings.FanexLogCategory)

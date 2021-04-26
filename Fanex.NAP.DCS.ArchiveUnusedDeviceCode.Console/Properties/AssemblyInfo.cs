@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Fanex.NAP.CTS.RemoveUnusedDeviceCode.Console")]
+[assembly: AssemblyTitle("Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Fanex.NAP.CTS.RemoveUnusedDeviceCode.Console")]
+[assembly: AssemblyProduct("Fanex.NAP.DCS.ArchiveUnusedDeviceCode.Console")]
 [assembly: AssemblyCopyright("Copyright ©  2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("86e4c060-4af5-49ba-8e63-a1cfc18bfc4d")]
+[assembly: Guid("119e4e3b-2cf1-4b10-9e4e-66c221725987")]
 
 // Version information for an assembly consists of the following four values:
 //
