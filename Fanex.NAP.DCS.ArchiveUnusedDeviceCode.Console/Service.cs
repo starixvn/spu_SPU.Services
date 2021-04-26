@@ -29,12 +29,12 @@
                 {
                     isContinue = _dataCenterService.ArchiveUnusedDeviceCode(AppSettings.InternalChunkSize);
 
-                    
-                     LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {JsonConvert.SerializeObject(isContinue)} - Time: {DateTime.Now}");
+                    if (isWriteLog)
+                        LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {JsonConvert.SerializeObject(isContinue)} - Time: {DateTime.Now}");
+
+                    Thread.Sleep(30000);
 
                 } while (isContinue);
-
-                Thread.Sleep(30000);
             }
             catch (Exception ex)
             {
