@@ -7,6 +7,7 @@
     using Fanex.NAP.SPU.Core;
     using Newtonsoft.Json;
     using System;
+    using System.Threading;
 
     public class Service
     {
@@ -21,17 +22,19 @@
         {
             try
             {
+                bool isWriteLog = AppSettings.IsWriteLogInfo;
                 var isContinue = false;
 
                 do
                 {
                     isContinue = _dataCenterService.ArchiveUnusedDeviceCode(AppSettings.InternalChunkSize);
-                    LogService.Info(AppSettings.IsWriteLogInfo.ToString());
 
-                    if (AppSettings.IsWriteLogInfo)
-                        LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {JsonConvert.SerializeObject(isContinue)} - Time: {DateTime.Now}");
+                    
+                     LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {JsonConvert.SerializeObject(isContinue)} - Time: {DateTime.Now}");
 
                 } while (isContinue);
+
+                Thread.Sleep(30000);
             }
             catch (Exception ex)
             {
