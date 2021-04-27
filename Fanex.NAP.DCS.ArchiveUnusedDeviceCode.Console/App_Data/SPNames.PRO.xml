@@ -2,6 +2,6 @@
 
 <Functions>
 	<Function Name="Archive Unused Device Code">
-		<Setting Key="DCS_DC_ArchiveData_DeviceCode" SpName="DCS_DC_ArchiveData_DeviceCode" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
+		<Setting Key="DCS_DC_ArchiveData_DeviceCode" SpName="DCS_DC_ArchiveData_DeviceCode" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" TimeOut="300"/>
 	</Function>
 </Functions>

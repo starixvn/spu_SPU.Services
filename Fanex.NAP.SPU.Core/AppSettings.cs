@@ -378,5 +378,19 @@ namespace Fanex.NAP.SPU.Core
                 return size == 0 ? 500 : size;
             }
         }
+
+        public static int BreakTime
+        {
+            get
+            {
+                var breakTime = 30000;  //30s
+
+                var configFeatures = ConfigurationManager.AppSettings["BreakTime"];
+
+                int.TryParse(configFeatures, out breakTime);
+
+                return breakTime == 0 ? 30000 : breakTime;
+            }
+        }
     }
 }

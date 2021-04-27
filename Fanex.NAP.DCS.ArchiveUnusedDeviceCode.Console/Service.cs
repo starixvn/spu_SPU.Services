@@ -21,21 +21,18 @@
         {
             try
             {
-                bool isWriteLog = AppSettings.IsWriteLogInfo;
-                var isContinue = false;
+                bool isWriteLogInfo = AppSettings.IsWriteLogInfo;
+                var isContinue = true;
 
-                do
+                while (isContinue)
                 {
                     isContinue = _dataCenterService.ArchiveUnusedDeviceCode(AppSettings.InternalChunkSize);
 
-                    LogService.Info(isWriteLog.ToString());
-
-                    if (isWriteLog)
+                    if (isWriteLogInfo)
                         LogService.Info($"ArchiveUnusedDeviceCode.Service - IsContinue: {isContinue} - Time: {DateTime.Now}");
 
-                    Thread.Sleep(30000);
-
-                } while (isContinue);
+                    Thread.Sleep(AppSettings.BreakTime);
+                };
             }
             catch (Exception ex)
             {
