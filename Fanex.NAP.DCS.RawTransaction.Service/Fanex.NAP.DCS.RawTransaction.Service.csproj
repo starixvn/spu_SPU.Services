@@ -125,7 +125,7 @@
       <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="FPS.Browserless.Detection">
-      <Version>4.1.3.5</Version>
+      <Version>4.1.3.6</Version>
     </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.8</Version>
