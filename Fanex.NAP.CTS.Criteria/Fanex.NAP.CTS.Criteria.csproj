@@ -66,10 +66,14 @@
     <Compile Include="GetExistedRobotUserCriteria.cs" />
     <Compile Include="GetCustomerClassByCustIdCriteria.cs" />
     <Compile Include="GetCustByRobotSiteRuleCriteria.cs" />
+    <Compile Include="GetLastUpdatedTimeCriteria.cs" />
     <Compile Include="GetRoleCustomerCriteria.cs" />
     <Compile Include="GetCustomerInfoFromCTSCriteria.cs" />
     <Compile Include="GetCustomersWithHavingUsername2Criteria.cs" />
     <Compile Include="GetDangerLevelCriteria.cs" />
+    <Compile Include="GetUpdatedCustFromCustInfoHistoryCriteria.cs" />
+    <Compile Include="GetUpdatedCustFromCustomerHistoryCriteria.cs" />
+    <Compile Include="GetUpdatedCustFromProductStatusHistoryCriteria.cs" />
     <Compile Include="MainDB\UpdateDangerLevelCriteria.cs" />
     <Compile Include="RemoveEvidenceMultipleAccounts\GetCustEvidenceQueueCriteria.cs" />
     <Compile Include="RemoveEvidenceMultipleAccounts\ModifyCustomerEvidenceFromQueueCriteria.cs" />
@@ -103,6 +107,7 @@
     <Compile Include="InsertNewCustomerCategoryCriteria.cs" />
     <Compile Include="TransformUpdatingLastLoginTimeCriteria.cs" />
     <Compile Include="UpdateAppliedDangerLevelCriteria.cs" />
+    <Compile Include="UpdateCustomerStatusCompleteCriteria.cs" />
     <Compile Include="UpdateCustomerCompleteCriteria.cs" />
     <Compile Include="UpdateCustInfoCompleteCriteria.cs" />
     <Compile Include="UpdateTimingExecutionCriteria.cs" />

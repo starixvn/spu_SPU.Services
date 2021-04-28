@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.DCS.Criteria
+﻿namespace Fanex.NAP.CTS.Criteria
 {
     using Fanex.Data;
     using Fanex.Data.Repository;

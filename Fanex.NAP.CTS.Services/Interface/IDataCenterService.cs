@@ -88,5 +88,13 @@
         IEnumerable<int> GetCustByRobotSiteRule(string custIDs);
 
         string GetExistedRobotUser(string custIDs);
+
+        TranformCustModel GetUpdatedCustFromCustInfoHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
+
+        TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
+
+        TranformCustModel GetUpdatedCustFromProductStatus(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
+
+        LastUpdateValueModel GetLastUpdatedTime();
     }
 }

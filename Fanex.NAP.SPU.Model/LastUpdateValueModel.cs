@@ -11,5 +11,9 @@
         public DateTime LastUpdateTimeCustomer { get; set; }
 
         public Int64 LastUpdateCustIDCustomer { get; set; }
+
+        public DateTime LastUpdateTimeCustProductStatus { get; set; }
+
+        public Int64 LastUpdateCustIDCustProductStatus { get; set; }
     }
 }

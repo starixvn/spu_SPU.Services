@@ -909,7 +909,7 @@
         </entry>
         <entry>
           <key>Action</key>
-          <value>api/active/InsertMissingCustomer</value>
+          <value>api/active/UpdateCustomerInfo</value>
         </entry>
         <entry>
           <key>Master</key>

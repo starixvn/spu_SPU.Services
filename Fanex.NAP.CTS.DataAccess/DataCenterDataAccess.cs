@@ -704,6 +704,20 @@
             repository.Execute(criteria);
         }
 
+        public void UpdateCustomerStatusComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID)
+        {
+            var repository = new DynamicRepository();
+
+            var criteria = new UpdateCustomerStatusCompleteCriteria
+            {
+                CustomerInfo = customers,
+                LastUpdateCustID = lastUpdateCustID,
+                LastUpdateTime = lastUpdateTime
+            };
+
+            repository.Execute(criteria);
+        }
+
         public void InserAssociationDevice(int batchSize)
         {
             var repository = new DynamicRepository();
@@ -763,6 +777,98 @@
             }
 
             return criteria.RobotList;
+        }
+
+        public LastUpdateValueModel GetLastUpdatedTime()
+        {
+            var criteria = new GetLastUpdatedTimeCriteria();
+
+            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
+            {
+                using (var result = db.QueryMultiple(criteria))
+                {
+                    var LastUpdateTimeCustInfo = result.Read<DateTime>().FirstOrDefault();
+                    var LastUpdateCustIDCustInfo = result.Read<Int64>().FirstOrDefault();
+                    var LastUpdateTimeCustomer = result.Read<DateTime>().FirstOrDefault();
+                    var LastUpdateCustIDCustomer = result.Read<Int64>().FirstOrDefault();
+                    var LastUpdateTimeCustomerStatus = result.Read<DateTime>().FirstOrDefault();
+                    var LastUpdateCustIDCustomerStatus = result.Read<Int64>().FirstOrDefault();
+
+                    return new LastUpdateValueModel()
+                    {
+                        LastUpdateCustIDCustInfo = LastUpdateCustIDCustInfo,
+                        LastUpdateTimeCustInfo = LastUpdateTimeCustInfo,
+                        LastUpdateCustIDCustomer = LastUpdateCustIDCustomer,
+                        LastUpdateTimeCustomer = LastUpdateTimeCustomer,
+                        LastUpdateCustIDCustProductStatus = LastUpdateCustIDCustomerStatus,
+                        LastUpdateTimeCustProductStatus = LastUpdateTimeCustomerStatus
+                    };
+                }
+            }
+
+        }
+
+        public TranformCustModel GetUpdatedCustFromCustInfoHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        {
+            var criteria = new GetUpdatedCustFromCustInfoHistoryCriteria
+            {
+                LastUpdateTime = lastUpdatedTime,
+                LastCustId = lastUpdatedCustId,
+                RowSize = numOfAccount,
+            };
+
+            var repository = new DynamicRepository();
+
+            var output = repository.FetchMultiple<TranformCustModel, string>(criteria);
+
+            return new TranformCustModel()
+            {
+                LastUpdatedTime = output.firstResultSet.SingleOrDefault().LastUpdatedTime,
+                LastCustId = output.firstResultSet.SingleOrDefault().LastCustId,
+                CustIdList = output.secondResultSet.SingleOrDefault()
+            };
+        }
+
+        public TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        {
+            var criteria = new GetUpdatedCustFromCustomerHistoryCriteria
+            {
+                LastUpdateTime = lastUpdatedTime,
+                LastCustId = lastUpdatedCustId,
+                RowSize = numOfAccount,
+            };
+
+            var repository = new DynamicRepository();
+
+            var output = repository.FetchMultiple<TranformCustModel, string>(criteria);
+
+            return new TranformCustModel()
+            {
+                LastUpdatedTime = output.firstResultSet.SingleOrDefault().LastUpdatedTime,
+                LastCustId = output.firstResultSet.SingleOrDefault().LastCustId,
+                CustIdList = output.secondResultSet.SingleOrDefault()
+            };
+        }
+
+        public TranformCustModel GetUpdatedCustFromProductStatus(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        {
+            var criteria = new GetUpdatedCustFromProductStatusHistoryCriteria
+            {
+                LastUpdateTime = lastUpdatedTime,
+                LastCustId = lastUpdatedCustId,
+                RowSize = numOfAccount,
+            };
+
+            var repository = new DynamicRepository();
+
+            var output = repository.FetchMultiple<TranformCustModel, string>(criteria);
+
+            return new TranformCustModel()
+            {
+                LastUpdatedTime = output.firstResultSet.SingleOrDefault().LastUpdatedTime,
+                LastCustId = output.firstResultSet.SingleOrDefault().LastCustId,
+                CustIdList = output.secondResultSet.SingleOrDefault()
+            };
         }
     }
 }

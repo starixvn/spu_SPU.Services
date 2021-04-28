@@ -3,16 +3,13 @@
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.DCS.Services.Implement;
-    using Fanex.NAP.DCS.Services.Interface;
+    using Fanex.NAP.CTS.Services;
+    using Fanex.NAP.CTS.Services.Interface;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Model;
-    using Newtonsoft.Json;
     using Quartz;
-    using RestSharp;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
     [PersistJobDataAfterExecution]
@@ -49,43 +46,57 @@
         {
             var jobDataMap = context.JobDetail.JobDataMap;
 
-            if (jobDataMap != null)
+            try
             {
-                var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
-
-                var isActive = jobDataMap.GetBoolean("Active");
-                var packageSize = jobDataMap.GetInt("PackageSize");
-
-                TranformCustModel updatedCustFromCustInfo;
-                TranformCustModel updatedCustFromCustomer;
-
-                if (isActive && !string.IsNullOrWhiteSpace(rootPath))
+                if (jobDataMap != null)
                 {
-                    var apiUrls = rootPath.Split(';');
+                    var rootPath = jobDataMap.GetString(AppSetting.ClusterKey);
+                    var isActive = jobDataMap.GetBoolean("Active");
+                    var packageSize = jobDataMap.GetInt("PackageSize");
 
-                    var output = dataCenterService.GetLastUpdatedTime();
-
-                    updatedCustFromCustInfo = dataCenterService.GetUpdatedCustFromCustInfoHistory(output.LastUpdateTimeCustInfo, output.LastUpdateCustIDCustInfo, packageSize);
-
-                    updatedCustFromCustomer = dataCenterService.GetUpdatedCustFromCustomerHistory(output.LastUpdateTimeCustomer, output.LastUpdateCustIDCustomer, packageSize);
-
-                    if (IsValidData(updatedCustFromCustInfo, updatedCustFromCustomer))
+                    if (isActive && !string.IsNullOrWhiteSpace(rootPath))
                     {
-                        await SendRequest(updatedCustFromCustInfo, updatedCustFromCustomer, apiUrls, jobDataMap);
+                        var apiUrls = rootPath.Split(';');
+
+                        var output = dataCenterService.GetLastUpdatedTime();
+
+                        var updatedCustFromCustInfo = dataCenterService.GetUpdatedCustFromCustInfoHistory(output.LastUpdateTimeCustInfo, output.LastUpdateCustIDCustInfo, packageSize);
+
+                        var updatedCustFromCustomer = dataCenterService.GetUpdatedCustFromCustomerHistory(output.LastUpdateTimeCustomer, output.LastUpdateCustIDCustomer, packageSize);
+
+                        var updatedCustFromProductStatus = dataCenterService.GetUpdatedCustFromProductStatus(output.LastUpdateTimeCustProductStatus, output.LastUpdateCustIDCustProductStatus, packageSize);
+
+                        if (IsValidData(updatedCustFromCustInfo, updatedCustFromCustomer, updatedCustFromProductStatus))
+                        {
+                            var custInfo = new List<TranformCustModel>()
+                            {
+                                updatedCustFromCustInfo,
+                                updatedCustFromCustomer,
+                                updatedCustFromProductStatus
+                            };
+
+                            await SendRequest(custInfo, apiUrls, jobDataMap);
+                        }
                     }
                 }
+                else
+                {
+                    LogService.Error("Update Customer Service - Job Data cannot be null");
+                }
             }
-            else
+            catch (Exception ex)
             {
-                LogService.Error("Job Data cannot be null");
+                var logMessage = new LogMessage("Update Customer Service - " + ex.Message)
+                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
             }
         }
 
-        private async Task SendRequest(TranformCustModel custFromCustInfo, TranformCustModel custFromCustomer, string[] urlList, JobDataMap mappingData)
+        private async Task SendRequest(List<TranformCustModel> custInfo, string[] urlList, JobDataMap mappingData)
         {
             var tasks = new List<Task>();
-
-            var custInfo = new List<TranformCustModel>() { custFromCustInfo, custFromCustomer};
 
             var task = Task.Run(() =>
              {
@@ -101,10 +112,11 @@
             await Task.WhenAll(tasks.ToArray());
         }
 
-        private bool IsValidData(TranformCustModel custFromCustInfo, TranformCustModel custFromCustomer)
+        private bool IsValidData(TranformCustModel custFromCustInfo, TranformCustModel custFromCustomer, TranformCustModel custFromProductStatus)
         {
             if ((custFromCustInfo != null && custFromCustInfo.LastCustId != null && custFromCustInfo.LastUpdatedTime != null) 
-                || (custFromCustomer != null && custFromCustomer.LastCustId != null && custFromCustomer.LastUpdatedTime != null))
+                || (custFromCustomer != null && custFromCustomer.LastCustId != null && custFromCustomer.LastUpdatedTime != null)
+                || (custFromProductStatus != null && custFromProductStatus.LastCustId != null && custFromProductStatus.LastUpdatedTime != null))
             {
                 return true;
             }

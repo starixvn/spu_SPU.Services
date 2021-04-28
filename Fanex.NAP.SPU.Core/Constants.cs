@@ -72,7 +72,8 @@
         public enum UPDATECUSTOMER : int
         {
             FROM_CUSTOMER = 1,
-            FROM_CUSTINFO = 2
+            FROM_CUSTINFO = 2,
+            FROM_PRODUCTSTATUS = 3
         }
 
         public enum DANGERLEVEL : int

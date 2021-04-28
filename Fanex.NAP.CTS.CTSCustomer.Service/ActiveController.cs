@@ -28,11 +28,15 @@
             _customerClassificationService = new CustomerClassifyService();
         }
 
+        #region API End-point
         public string Index()
         {
             return "ahihi";
         }
 
+        /// <summary>
+        /// API for Insert new customer from MainDB to CTS
+        /// </summary>
         [HttpPost]
         public bool InsertCustomer()
         {
@@ -54,8 +58,11 @@
             return false;
         }
 
+        /// <summary>
+        /// API for Update customer information 
+        /// </summary>
         [HttpPost]
-        public bool InsertMissingCustomer()
+        public bool UpdateCustomerInfo()
         {
             var requestContent = Request.Content;
             var jsonContent = requestContent.ReadAsStringAsync().Result;
@@ -73,9 +80,11 @@
 
                     var custFromCusInfo = dataTranfrom[0];
                     var custFromCustomer = dataTranfrom[1];
+                    var custFromProductStatus = dataTranfrom[2];
 
-                    UpdateCustomer(custFromCusInfo, (int)Constants.UPDATECUSTOMER.FROM_CUSTINFO);
-                    UpdateCustomer(custFromCustomer, (int)Constants.UPDATECUSTOMER.FROM_CUSTOMER);
+                    UpdateCustomer(custFromCusInfo, UPDATECUSTOMER.FROM_CUSTINFO);
+                    UpdateCustomer(custFromCustomer, UPDATECUSTOMER.FROM_CUSTOMER);
+                    UpdateCustomer(custFromProductStatus, UPDATECUSTOMER.FROM_PRODUCTSTATUS);
 
                     return true;
                 }
@@ -91,12 +100,15 @@
             }
             else
             {
-                LogService.Error("Request content is empty.");
+                LogService.Error("Update Customer Service - Request content is empty.");
             }
 
             return false;
         }
 
+        /// <summary>
+        /// API for update Username
+        /// </summary>
         [HttpPost]
         public bool UpdateUsername2()
         {
@@ -129,6 +141,10 @@
 
             return false;
         }
+
+        #endregion
+
+        #region private method
 
         private bool InsertNewCustomer(List<CustomerMainDBModel> customers, long? lastCustID)
         {
@@ -210,7 +226,7 @@
             return false;
         }
 
-        private void UpdateCustomer(TranformCustModel custs, int sourceType)
+        private void UpdateCustomer(TranformCustModel custs, UPDATECUSTOMER sourceType)
         {
             try
             {
@@ -219,14 +235,12 @@
                     return;
                 }
 
-                var updateCustomerType = (UPDATECUSTOMER)sourceType;
+                var custInfoToUpdate = GetCustInfoToUpdate(custs, sourceType);
 
-                var custInfoToUpdate = GetCustInfoToUpdate(custs, updateCustomerType);
-
-                _dataCenterService.UpdateCustomerComplete(custInfoToUpdate, custs.LastUpdatedTime, custs.LastCustId, updateCustomerType);
+                _dataCenterService.UpdateCustomerComplete(custInfoToUpdate, custs.LastUpdatedTime, custs.LastCustId, sourceType);
 
                 if (AppSettings.IsWriteLogInfo)
-                    LogService.Info($"Healing - done");
+                    LogService.Info($"Update Customer Service - done");
 
             }
             catch (Exception ex)
@@ -251,8 +265,8 @@
 
                 if (AppSettings.IsWriteLogInfo)
                 {
-                    LogService.Info($"Healing - Get {((sourceType == UPDATECUSTOMER.FROM_CUSTOMER) ? "Customer History" : "CustInfo")} from MainDB: {JsonConvert.SerializeObject(custInfoFromMainDB)}");
-                    LogService.Info($"Healing - Get {((sourceType == UPDATECUSTOMER.FROM_CUSTOMER) ? "Customer History" : "CustInfo")} from CTS: {JsonConvert.SerializeObject(custInfoFromCTS)}");
+                    LogService.Info($"Update Customer Info - sourceType {sourceType} - get data from MainDB: {JsonConvert.SerializeObject(custInfoFromMainDB)}");
+                    LogService.Info($"Update Customer Info - sourceType {sourceType} - get data from CTS: {JsonConvert.SerializeObject(custInfoFromCTS)}");
                 }
 
                 if(custInfoFromMainDB != null && custInfoFromCTS != null)
@@ -262,59 +276,83 @@
             }
 
             if (AppSettings.IsWriteLogInfo)
-                LogService.Info($"Healing - Cust to update data: {custInfoToUpdate}");
+                LogService.Info($"Update Customer Service - Cust to update data: {custInfoToUpdate}");
 
             return custInfoToUpdate;
         }
 
         private string CompareCustomerInfo(IEnumerable<CustomerMainDBModel> custInfoFromMainDB, IEnumerable<CustomerMainDBModel> custInfoFromCTS, UPDATECUSTOMER sourceType)
         {
-            if (sourceType == UPDATECUSTOMER.FROM_CUSTINFO)
+            switch (sourceType)
             {
-                var customerInfo = custInfoFromMainDB
-                    .Join(custInfoFromCTS, custMain => custMain.CustID,
-                                           custCTS => custCTS.CustID,
-                                           (custMain, custCTS) => custMain)
-                    .Where(c => !custInfoFromCTS.Contains(c, new CustomerInfoEqualityComparer()))
-                    .Select(c => new CustInfoModel
+                case UPDATECUSTOMER.FROM_CUSTOMER:
                     {
-                        CustID = c.CustID,
-                        CustStatusID = c.CustStatusID,
-                        Danger1 = c.Danger1,
-                        Danger2 = c.Danger2,
-                        Danger3 = c.Danger3
-                    }).ToList();
+                        var customerInfo = custInfoFromMainDB
+                            .Join(custInfoFromCTS, custMain => custMain.CustID,
+                                                    custCTS => custCTS.CustID,
+                                                    (custMain, custCTS) => custMain)
+                            .Where(c => !custInfoFromCTS.Contains(c, new CustomerEqualityComparer()))
+                            .Select(c => new CustomerInfoModel
+                            {
+                                CustID = c.CustID,
+                                UserName = c.UserName,
+                                UserName2 = c.UserName2,
+                                SiteID = c.SiteID,
+                                Site = c.Site,
+                                RoleID = c.RoleID,
+                                SRecommend = c.SRecommend,
+                                MRecommend = c.MRecommend,
+                                Recommend = c.Recommend,
+                                Currency = c.Currency,
+                                CurrencyID = c.CurrencyID,
+                                UpdateType = (custInfoFromCTS.Any(f => f.CustID == c.CustID &&
+                                                        (!string.Equals(f.UserName, c.UserName)
+                                                        || !string.Equals(f.UserName2, c.UserName2)
+                                                        || f.SiteID != c.SiteID)) == true) ? 1 : 0
+                            }).ToList();
 
-                return JsonConvert.SerializeObject(customerInfo);
-            }
-            else
-            {
-                var customerInfo = custInfoFromMainDB
-                    .Join(custInfoFromCTS, custMain => custMain.CustID,
-                                           custCTS => custCTS.CustID,
-                                           (custMain, custCTS) => custMain)
-                    .Where(c => !custInfoFromCTS.Contains(c, new CustomerEqualityComparer()))
-                    .Select(c => new CustomerInfoModel
+                        return JsonConvert.SerializeObject(customerInfo);
+                    }
+
+                case UPDATECUSTOMER.FROM_CUSTINFO:
                     {
-                        CustID = c.CustID,
-                        UserName = c.UserName,
-                        UserName2 = c.UserName2,
-                        SiteID = c.SiteID,
-                        Site = c.Site,
-                        RoleID = c.RoleID,
-                        SRecommend = c.SRecommend,
-                        MRecommend = c.MRecommend,
-                        Recommend = c.Recommend,
-                        Currency = c.Currency,
-                        CurrencyID = c.CurrencyID,
-                        UpdateType = (custInfoFromCTS.Any(f => f.CustID == c.CustID &&
-                                                (!string.Equals(f.UserName, c.UserName)
-                                             || !string.Equals(f.UserName2, c.UserName2)
-                                             || f.SiteID != c.SiteID)) == true) ? 1 : 0
-                    }).ToList();   
+                        var customerInfo = custInfoFromMainDB
+                            .Join(custInfoFromCTS, custMain => custMain.CustID,
+                                                   custCTS => custCTS.CustID,
+                                                   (custMain, custCTS) => custMain)
+                            .Where(c => !custInfoFromCTS.Contains(c, new CustomerInfoEqualityComparer()))
+                            .Select(c => new CustInfoModel
+                            {
+                                CustID = c.CustID,
+                                CustStatusID = c.CustStatusID,
+                                Danger1 = c.Danger1,
+                                Danger2 = c.Danger2,
+                                Danger3 = c.Danger3
+                            }).ToList();
 
-                return JsonConvert.SerializeObject(customerInfo);
+                        return JsonConvert.SerializeObject(customerInfo);
+                    }
+
+                case UPDATECUSTOMER.FROM_PRODUCTSTATUS:
+                    {
+                        var customerInfo = custInfoFromMainDB
+                            .Join(custInfoFromCTS, custMain => custMain.CustID,
+                                                   custCTS => custCTS.CustID,
+                                                   (custMain, custCTS) => custMain)
+                            .Where(c => !custInfoFromCTS.Contains(c, new CustomerStaticEqualityComparer()))
+                            .Select(c => new CustInfoModel
+                            {
+                                CustID = c.CustID,
+                                CustStatusID = c.CustStatusID
+                            }).ToList();
+
+                        return JsonConvert.SerializeObject(customerInfo);
+                    }
             }
+
+            return JsonConvert.SerializeObject(string.Empty);
         }
+
+        #endregion
     }
 }

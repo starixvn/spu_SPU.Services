@@ -59,9 +59,6 @@
   <ItemGroup>
     <Compile Include="ArchiveUnusedDeviceCodeCriteria.cs" />
     <Compile Include="DeleteDataForArchiveTransaction07Criteria.cs" />
-    <Compile Include="GetUpdatedCustFromCustomerHistoryCriteria.cs" />
-    <Compile Include="GetUpdatedCustFromCustInfoHistoryCriteria.cs" />
-    <Compile Include="GetLastUpdatedTimeCriteria.cs" />
     <Compile Include="GetLastInsertCustCriteria.cs" />
     <Compile Include="MoveDataForArchiveTransaction07Criteria.cs" />
     <Compile Include="GetScheduleForArchiveTransaction07Criteria.cs" />

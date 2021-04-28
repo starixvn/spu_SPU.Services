@@ -1,10 +1,10 @@
-﻿namespace Fanex.NAP.DCS.Criteria
+﻿namespace Fanex.NAP.CTS.Criteria
 {
     using Fanex.Data;
     using Fanex.Data.Repository;
     using System;
 
-    public class GetUpdatedCustFromCustomerHistoryCriteria : CriteriaBase
+    public class GetUpdatedCustFromProductStatusHistoryCriteria : CriteriaBase
     {
         [SpParam(SqlParamName = "lastUpdateTime")]
         public DateTime LastUpdateTime { get; set; }
@@ -17,7 +17,7 @@
 
         public override string GetSettingKey()
         {
-            return "CTS_CustomerHistory_GetUpdatedCustID";
+            return "CTS_CustProductStatusHistory_GetUpdatedCustID";
         }
 
         public override bool IsValid()

@@ -1,10 +1,10 @@
-﻿using Fanex.NAP.DCS.Model;
-using Fanex.NAP.SPU.Model;
-using System;
-using System.Collections.Generic;
-
-namespace Fanex.NAP.DCS.Services.Interface
+﻿namespace Fanex.NAP.DCS.Services.Interface
 {
+    using Fanex.NAP.DCS.Model;
+    using Fanex.NAP.SPU.Model;
+    using System;
+    using System.Collections.Generic;
+
     public interface IDataCenterService
     {
         List<int> GetUpdatedAccount(int size);
@@ -40,8 +40,6 @@ namespace Fanex.NAP.DCS.Services.Interface
         void ArchiveTransaction07(int size);
 
         LastScannedCustModel GetLastInsertCust ();
-
-        LastUpdateValueModel GetLastUpdatedTime();
 
         bool ArchiveUnusedDeviceCode(int size);
     }

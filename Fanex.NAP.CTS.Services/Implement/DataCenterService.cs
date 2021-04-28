@@ -302,13 +302,23 @@
 
         public void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID, UPDATECUSTOMER sourceType)
         {
-            if (sourceType == UPDATECUSTOMER.FROM_CUSTOMER)
+            switch (sourceType)
             {
-                dataCenterDataAccess.UpdateCustomerComplete(customers, lastUpdateTime, lastUpdateCustID);
-            }
-            else
-            {
-                dataCenterDataAccess.UpdateCustInfoComplete(customers, lastUpdateTime, lastUpdateCustID);
+                case UPDATECUSTOMER.FROM_CUSTOMER:
+                    {
+                        dataCenterDataAccess.UpdateCustomerComplete(customers, lastUpdateTime, lastUpdateCustID);
+                        break;
+                    }
+                case UPDATECUSTOMER.FROM_CUSTINFO:
+                    {
+                        dataCenterDataAccess.UpdateCustInfoComplete(customers, lastUpdateTime, lastUpdateCustID);
+                        break;
+                    }
+                case UPDATECUSTOMER.FROM_PRODUCTSTATUS:
+                    {
+                        dataCenterDataAccess.UpdateCustomerStatusComplete(customers, lastUpdateTime, lastUpdateCustID);
+                        break;
+                    }
             }
         }
 
@@ -325,6 +335,26 @@
         public string GetExistedRobotUser(string custIDs)
         {
             return dataCenterDataAccess.GetExistedRobotUser(custIDs);
+        }
+
+        public TranformCustModel GetUpdatedCustFromCustInfoHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        {
+            return dataCenterDataAccess.GetUpdatedCustFromCustInfoHistory(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
+        }
+
+        public TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        {
+            return dataCenterDataAccess.GetUpdatedCustFromCustomerHistory(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
+        }
+
+        public TranformCustModel GetUpdatedCustFromProductStatus(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
+        {
+            return dataCenterDataAccess.GetUpdatedCustFromProductStatus(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
+        }
+
+        public LastUpdateValueModel GetLastUpdatedTime()
+        {
+            return dataCenterDataAccess.GetLastUpdatedTime();
         }
     }
 }
