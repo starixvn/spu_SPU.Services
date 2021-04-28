@@ -1,5 +1,5 @@
 ﻿
-namespace Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaEmail.Service
+namespace Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service
 {
     partial class Runner
     {

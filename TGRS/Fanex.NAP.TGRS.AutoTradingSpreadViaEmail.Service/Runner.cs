@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaEmail.Service
+﻿namespace Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service
 {
     using Fanex.MailDelivery.Client;
     using Fanex.NAP.SPU.Core;

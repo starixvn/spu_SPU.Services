@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaEmail.Service
+﻿namespace Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service
 {
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
@@ -25,38 +25,38 @@
                         })
                     });
 
-            //ServiceBase[] ServicesToRun;
-            //ServicesToRun = new ServiceBase[]
-            //{
-            //    new Runner()
-            //};
+            ServiceBase[] ServicesToRun;
+            ServicesToRun = new ServiceBase[]
+            {
+                new Runner()
+            };
 
-            //if (System.Environment.UserInteractive)
-            //{
-            //    // run console
-            //    var type = typeof(ServiceBase);
-            //    const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
-            //    var method = type.GetMethod("OnStart", Flags);
+            if (System.Environment.UserInteractive)
+            {
+                // run console
+                var type = typeof(ServiceBase);
+                const BindingFlags Flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                var method = type.GetMethod("OnStart", Flags);
 
-            //    foreach (var service in ServicesToRun)
-            //    {
-            //        method.Invoke(service, new object[] { args });
-            //    }
+                foreach (var service in ServicesToRun)
+                {
+                    method.Invoke(service, new object[] { args });
+                }
 
-            //    Console.WriteLine("Press any key to exit!");
-            //    Console.ReadLine();
+                Console.WriteLine("Press any key to exit!");
+                Console.ReadLine();
 
-            //    foreach (var service in ServicesToRun)
-            //    {
-            //        service.Stop();
-            //    }
-            //}
-            //else
-            //{
-            //    ServiceBase.Run(ServicesToRun);
-            //}
+                foreach (var service in ServicesToRun)
+                {
+                    service.Stop();
+                }
+            }
+            else
+            {
+                ServiceBase.Run(ServicesToRun);
+            }
 
-            Test();
+            //Test();
         }
 
         static void Test()
