@@ -125,9 +125,8 @@
         {
             if (IsSuccessAPIResponse)
             {
-                var fromDate = "07/Nov/2019";
                 var toDate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).ToString("dd/MMM/yyyy");
-                var subject = "Automail Report - Model TA Performance Event Details - " + fromDate + " to " + toDate;
+                var subject = "Automail Report - Live Performance Report " + toDate;
                 var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @"MailTemplate\MailInformTemplate.cshtml";
 
                 var body = Utilities.ReadTextFile(mailTemplatePath);

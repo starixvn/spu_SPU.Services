@@ -97,10 +97,11 @@
     <None Include="Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service.exe.LOCAL.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="MailTemplate\MailInformTemplate.cshtml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="MailTemplate\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <PackageReference Include="EPPlus">
       <Version>4.1.0</Version>
