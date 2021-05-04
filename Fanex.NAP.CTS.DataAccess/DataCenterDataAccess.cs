@@ -710,7 +710,7 @@
 
             var criteria = new UpdateCustomerStatusCompleteCriteria
             {
-                CustomerInfo = customers,
+                CustProductStatus = customers,
                 LastUpdateCustID = lastUpdateCustID,
                 LastUpdateTime = lastUpdateTime
             };

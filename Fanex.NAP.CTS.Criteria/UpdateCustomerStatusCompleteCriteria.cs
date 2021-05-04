@@ -6,8 +6,8 @@
 
     public class UpdateCustomerStatusCompleteCriteria : NonQueryCommand
     {
-        [SpParam(SqlParamName = "ip_CustomerInfo")]
-        public string CustomerInfo { get; set; }
+        [SpParam(SqlParamName = "ip_CustProductStatus")]
+        public string CustProductStatus { get; set; }
 
         [SpParam(SqlParamName = "ip_LastUpdateTime")]
         public DateTime? LastUpdateTime { get; set; }
