@@ -23,6 +23,7 @@
     class Program
     {
         readonly static DataCenterService dataService = new DataCenterService();
+        readonly static CustomerClassifyService customerClassificationService = new CustomerClassifyService();
 
         static void Main(string[] args)
         {
@@ -47,7 +48,6 @@
                    });
 
                 Console.WriteLine("Starting...!");
-                LogService.Info("Starting update data to Soon88");
 
                 var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
                 var delayTime = Convert.ToInt32(ConfigurationManager.AppSettings["DelayTimePerBatch"]);
@@ -58,14 +58,19 @@
                 switch (inputFunction)
                 {
                     case 1:
-                        UpdateCustomerClass(filePath, batchSize, delayTime);
-                        break;
+                        {
+                            UpdateCustomerClass(filePath, batchSize, delayTime);
+                            break;
+                        }
+
+                    case 2:
+                        {
+                            RescanCustomerClassification(filePath, batchSize, delayTime);
+                            break;
+                        }
                     default:
                         break;
                 }
-
-                LogService.Info("Update data to Soon88 done!");
-
             }
             catch (Exception ex)
             {
@@ -98,11 +103,35 @@
                 dataService.UpdateCustomerGeneralClassificationtoMainDB(listCust);
                 updatedItem += listCust.Count();
                 percent = Math.Round(updatedItem / totalItems * 100, 5);
-                Console.WriteLine("In Progess..." + percent + "%");
+                Console.WriteLine("In Progress..." + percent + "%");
                 Thread.Sleep(delayTime * 1000);
             }
 
             Console.WriteLine("Update customer class done!");
+        }
+
+        private static void RescanCustomerClassification(string filePath, int batchSize, int delayTime)
+        {
+            Console.WriteLine("Reading data...!");
+            List<int> custIDs = ReadCustIDsFromCsvFile(filePath);
+            decimal totalItems = custIDs.Count;
+            decimal updatedItem = 0;
+            decimal percent = 0;
+            var custIDsChunk = custIDs.Chunk(batchSize).ToList();
+
+            Console.WriteLine("Reading data done! - " + custIDs.Count + " custIds");
+            Console.WriteLine("Updating data...!");
+            foreach (var custIDsBatch in custIDsChunk)
+            {
+                Console.WriteLine("Updating data...! - Total count: " + custIDsBatch.Count());
+                customerClassificationService.RescanCustomerClassify(custIDsBatch.ToList(), true, true, Constants.FLOWTYPERESCANCC.NEWMEMBER); //NEWMBER for insert new log history
+                updatedItem += custIDsBatch.Count();
+                percent = Math.Round(updatedItem / totalItems * 100, 5);
+                Console.WriteLine("In Progress..." + percent + "%");
+                Thread.Sleep(delayTime * 1000);
+            }
+
+            Console.WriteLine("Rescan customer classification done!");
         }
 
         private static List<CustomerClassModel> ReadDataFromCsvFile(string filePath)
@@ -133,6 +162,29 @@
             return listCustClass;
         }
 
+        private static List<int> ReadCustIDsFromCsvFile(string filePath)
+        {
+            LogService.Info("filePath: " + filePath);
+            StreamReader sreader = new StreamReader(filePath);
+            var custIds = new List<int>();
+            var stringLine = string.Empty;
+            string[] values = null;
+            while (!sreader.EndOfStream)
+            {
+                stringLine = sreader.ReadLine();
+                values = stringLine.Split(',');
+                var custId = values[0].Trim();
+
+                if (!string.IsNullOrEmpty(custId))
+                {
+                    custIds.Add(int.Parse(custId));
+                }
+            }
+
+            sreader.Close();
+            return custIds;
+        }
+
         private static int Welcome()
         {
             int inputFromUser = 0;
@@ -140,6 +192,7 @@
             Console.WriteLine("********** Please use with care **********");
             Console.WriteLine("*** What do you want to do ?");
             Console.WriteLine("1. Update customer class");
+            Console.WriteLine("2. Rescan customer class");
             Console.WriteLine("Choose function and press ENTER.......");
             inputFromUser = Convert.ToInt32(Console.ReadLine());
 

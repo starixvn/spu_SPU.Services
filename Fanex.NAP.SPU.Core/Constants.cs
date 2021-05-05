@@ -55,7 +55,8 @@
         public enum FLOWTYPERESCANCC
         {
             NEWMEMBER,
-            REMOVE_MULTIPLE_EVIDENCE
+            REMOVE_MULTIPLE_EVIDENCE,
+            OTHER
         }
 
         public enum PARAMETER : int
