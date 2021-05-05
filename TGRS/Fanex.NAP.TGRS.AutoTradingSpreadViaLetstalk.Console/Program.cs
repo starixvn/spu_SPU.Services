@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaLetstalk.Console
+﻿namespace Fanex.NAP.TGRS.AutoTradingSpreadViaLetstalk.Console
 {
     using Fanex.Logging;
     using Fanex.Logging.Sentry.RavenClient;
@@ -35,7 +35,7 @@
 
             service.MoveFileToArcFolder();
 
-            service.GenerateAutoTradingSpread8LiveToFile(Consts.Endpoint_AutoTrading_Percent8Variance, Consts.FileName_AutoTrading_Percent8Variance);
+            service.GenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Percent8Variance, Consts.FileName_AutoTrading_Percent8Variance);
 
             //service.GenerateAutoTradingSpread8LiveToFile(Consts.Endpoint_AutoTrading_Percent8Virtual, Consts.FileName_AutoTrading_Percent8Virtual);
 

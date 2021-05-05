@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaLetstalk.Console
+﻿namespace Fanex.NAP.TGRS.AutoTradingSpreadViaLetstalk.Console
 {
     public static class Consts
     {

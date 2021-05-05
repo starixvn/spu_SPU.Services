@@ -1,4 +1,4 @@
-﻿namespace Fanex.NAP.TGRS.AutoTradingSpread8LiveInfoViaLetstalk.Console
+﻿namespace Fanex.NAP.TGRS.AutoTradingSpreadViaLetstalk.Console
 {
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
@@ -66,7 +66,7 @@
             }
         }
 
-        public void GenerateAutoTradingSpread8LiveToFile(string endpoint, string saveImageName)
+        public void GenerateAutoTradingSpreadToFile(string endpoint, string saveImageName)
         {
             try
             {
@@ -95,7 +95,7 @@
                         {
                             IsSuccessAPIResponse = false;
 
-                            LogService.Warn($"GenerateAutoTradingSpread8LiveToFile response failed - endpoint: { endpoint } : { content.ReadAsStringAsync().Result }");
+                            LogService.Warn($"GenerateAutoTradingSpreadToFile response failed - endpoint: { endpoint } : { content.ReadAsStringAsync().Result }");
                         }
                     }
                 }
