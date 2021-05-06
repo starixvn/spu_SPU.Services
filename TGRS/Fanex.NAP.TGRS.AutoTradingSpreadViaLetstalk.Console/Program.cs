@@ -35,7 +35,9 @@
 
             service.MoveFileToArcFolder();
 
-            service.GenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Percent8Variance, Consts.FileName_AutoTrading_Percent8Variance);
+            service.GenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Percent8, Consts.FileName_AutoTrading_Percent8);
+
+            service.GenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Percent8LastWeek, Consts.FileName_AutoTrading_Percent8LastWeek);
 
             //service.GenerateAutoTradingSpread8LiveToFile(Consts.Endpoint_AutoTrading_Percent8Virtual, Consts.FileName_AutoTrading_Percent8Virtual);
 
