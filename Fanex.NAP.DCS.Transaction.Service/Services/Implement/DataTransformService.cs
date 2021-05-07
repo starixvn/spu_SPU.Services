@@ -12,15 +12,15 @@
     {
         private readonly DataAccess.DataCenterDataAccess dataCenter;
 
-        private int fromId;
-        private int toId;
+        private long fromId;
+        private long toId;
 
         public DataTransformService()
         {
             dataCenter = new DataCenterDataAccess();
         }
 
-        public IDataTransformService Initial(int fromId, int toId)
+        public IDataTransformService Initial(long fromId, long toId)
         {
             this.fromId = fromId;
             this.toId = toId;

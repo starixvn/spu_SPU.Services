@@ -9,9 +9,9 @@ namespace Fanex.NAP.DCS.Model
 {
     public class StagingRawTransactionModel
     {
-        public int MinTransId { get; set; }
+        public long MinTransId { get; set; }
 
-        public int MaxTransId { get; set; }
+        public long MaxTransId { get; set; }
 
         public string APIUrl { get; set; }
     }

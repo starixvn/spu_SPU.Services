@@ -11,10 +11,10 @@ namespace Fanex.NAP.DCS.Criteria
     public class ProcessTransactionCriteria : NonQueryCommand
     {
         [SpParam(SqlParamName = "ip_FromTransID")]
-        public int FromStagingTransId { get; set; }
+        public long FromStagingTransId { get; set; }
 
         [SpParam(SqlParamName = "ip_ToTransID")]
-        public int ToStagingTransId { get; set; }
+        public long ToStagingTransId { get; set; }
 
         public override string GetSettingKey()
         {

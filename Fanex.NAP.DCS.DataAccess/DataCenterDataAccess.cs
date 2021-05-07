@@ -38,7 +38,7 @@
             repository.Execute(criteria);
         }
 
-        public void UserAgentProcess(int fromId, int toId)
+        public void UserAgentProcess(long fromId, long toId)
         {
             var repository = new DynamicRepository();
 
@@ -51,7 +51,7 @@
             repository.Execute(criteria);
         }
 
-        public void TransactionProcess(int fromId, int toId)
+        public void TransactionProcess(long fromId, long toId)
         {
             var repository = new DynamicRepository();
 
@@ -64,7 +64,7 @@
             repository.Execute(criteria);
         }
 
-        public DataResult CompleteProcess(int fromId, int toId)
+        public DataResult CompleteProcess(long fromId, long toId)
         {
             var repository = new DynamicRepository();
 
@@ -100,7 +100,7 @@
             };
         }
 
-        public DataResult UnhandleSubscriberActionProcess(int fromId, int toId)
+        public DataResult UnhandleSubscriberActionProcess(long fromId, long toId)
         {
             var repository = new DynamicRepository();
 

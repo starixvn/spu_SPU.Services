@@ -5,7 +5,7 @@ namespace Fanex.NAP.DCS.Transaction.Service.Services.Interface
 {
     interface IDataTransformService
     {
-        IDataTransformService Initial(int fromId, int toId);
+        IDataTransformService Initial(long fromId, long toId);
                
         IDataTransformService UserAgentProcessing();
 
