@@ -4,8 +4,10 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.SPU.Core;
-    using Fanex.NAP.SPU.Service;    
+    using Fanex.NAP.SPU.Service;
+    using Newtonsoft.Json;
     using System;
+    using System.Collections.Generic;
     using System.Drawing;
     using System.IO;
     using System.Linq;
@@ -79,6 +81,98 @@
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     var response = client.GetAsync(requestUri).Result;
+
+                    using (var content = response.Content)
+                    {
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            var byteImages = content.ReadAsByteArrayAsync().Result;
+
+                            if (byteImages != null)
+                            {
+                                SaveImage(byteImages, savePath);
+                            }
+                        }
+                        else
+                        {
+                            IsSuccessAPIResponse = false;
+
+                            LogService.Warn($"GenerateAutoTradingSpreadToFile response failed - endpoint: { endpoint } : { content.ReadAsStringAsync().Result }");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                IsSuccessAPIResponse = false;
+
+                var logMessage = new LogMessage(ex.Message)
+                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
+            }
+        }
+
+        public string GetLeagueIds(string endpoint, bool isPercent)
+        {
+            var leagueIds = string.Empty;
+
+            try
+            {
+                using (var client = new HttpClient())
+                {
+                    var requestUri = _urlTGRSAPI + endpoint;
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    
+                    var contentString = new StringContent(JsonConvert.SerializeObject(isPercent), System.Text.Encoding.UTF8, "application/json");                    
+
+                    var response = client.PostAsync(requestUri, contentString).Result;
+
+                    using (var content = response.Content)
+                    {
+                        if (response.StatusCode == HttpStatusCode.OK)
+                        {
+                            leagueIds = content.ReadAsStringAsync().Result;                           
+                        }
+                        else
+                        {
+                            IsSuccessAPIResponse = false;
+
+                            LogService.Warn($"GenerateAutoTradingSpreadToFile response failed - endpoint: { endpoint } : { content.ReadAsStringAsync().Result }");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                IsSuccessAPIResponse = false;
+
+                var logMessage = new LogMessage(ex.Message)
+                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
+            }
+
+            return leagueIds;
+        }
+
+        public void PostGenerateAutoTradingSpreadToFile(string endpoint, string saveImageName, IEnumerable<int> leagueIds)
+        {
+            try
+            {
+                var savePath = _directorySaveImage + saveImageName;
+
+                using (var client = new HttpClient())
+                {
+                    var requestUri = _urlTGRSAPI + endpoint;
+
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    
+                    var contentString = new StringContent(JsonConvert.SerializeObject(leagueIds), System.Text.Encoding.UTF8, "application/json");
+                    var response = client.PostAsync(requestUri, contentString).Result;
 
                     using (var content = response.Content)
                     {

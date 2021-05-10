@@ -7,6 +7,7 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Threading.Tasks;
 
     class Program
@@ -35,13 +36,24 @@
 
             service.MoveFileToArcFolder();
 
-            service.GenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Percent8, Consts.FileName_AutoTrading_Percent8);
+            var leagueIds = service.GetLeagueIds(Consts.Endpoint_AutoTrading_LeagueIds, true);         
+            var leagueIdList = leagueIds != string.Empty ? leagueIds.Split(',').Select(int.Parse).ToList() : new List<int>();
 
-            service.GenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Percent8LastWeek, Consts.FileName_AutoTrading_Percent8LastWeek);
+            if (leagueIdList.Any())
+            {
+                service.PostGenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Percent8, Consts.FileName_AutoTrading_Percent8, leagueIdList);
 
-            //service.GenerateAutoTradingSpread8LiveToFile(Consts.Endpoint_AutoTrading_Percent8Virtual, Consts.FileName_AutoTrading_Percent8Virtual);
+                service.PostGenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Percent8LastWeek, Consts.FileName_AutoTrading_Percent8LastWeek, leagueIdList);
+            }
 
-            //service.GenerateAutoTradingSpread8LiveToFile(Consts.Endpoint_AutoTrading_Percent8RealEx8RM, Consts.FileName_AutoTrading_Percent8RealEx8RM);
+            var leagueIds2 = service.GetLeagueIds(Consts.Endpoint_AutoTrading_LeagueIds, false);
+            var leagueIdList2 = leagueIds2 != null ? leagueIds2.Split(',').Select(int.Parse).ToList() : new List<int>();
+
+            if (leagueIdList2.Any())
+            {
+                service.PostGenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Over8Percent, Consts.FileName_AutoTrading_Over8Percent, leagueIdList2);
+            }            
+
         }
     }
 }
