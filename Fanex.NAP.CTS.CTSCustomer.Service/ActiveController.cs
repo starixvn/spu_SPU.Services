@@ -178,7 +178,7 @@
                                     _dataCenterService.ReTransformAccount(JsonConvert.SerializeObject(custIdList), lastCustID);
 
                                     if (isWriteLogInfo)
-                                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - Insert complete: {JsonConvert.SerializeObject(custIdList)}");
+                                        LogService.Info($"CTSCustomer.Service - InsertNewCustomer - Insert complete: {JsonConvert.SerializeObject(custIdList)} - LastCustID {lastCustID}");
                                 }
                                 catch (Exception ex)
                                 {
