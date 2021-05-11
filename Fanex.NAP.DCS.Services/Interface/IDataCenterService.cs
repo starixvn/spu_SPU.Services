@@ -23,9 +23,9 @@ namespace Fanex.NAP.DCS.Services.Interface
 
         TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
 
-        List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, Int64 lastScannedCustID);
+        UpdateCustomerModel GetCustomerFromMainDB(int numOfAccount, Int64 lastScannedCustID);
 
-        List<CustomerMainDbModel> GetCustSubFromMainDB(int numOfAccount, Int64 lastScannedCustID);
+        List<CustomerMainDBModel> GetCustSubFromMainDB(int numOfAccount, Int64 lastScannedCustID);
 
         int GetCurrentMaxCustId(bool isCustSub);
 

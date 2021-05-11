@@ -6,7 +6,10 @@
     public class ReTransformAccountCriteria : NonQueryCommand
     {
         [SpParam(SqlParamName = "ip_Customer")]
-        public string customer { get; set; }
+        public string CustomerInfo { get; set; }
+
+        [SpParam(SqlParamName = "ip_LastInsertCustID")]
+        public long? LastInsertCustID { get; set; }
 
         public override string GetSettingKey()
         {

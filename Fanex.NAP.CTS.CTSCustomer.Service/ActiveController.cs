@@ -41,14 +41,15 @@
 
             if (!string.IsNullOrWhiteSpace(jsonContent))
             {
-                var result = JsonConvert.DeserializeObject<List<CustomerMainDbModel>>(jsonContent);
+                var result = JsonConvert.DeserializeObject<List<UpdateCustomerModel>>(jsonContent).ToList();
 
-                return InsertNewCustomer(result);
+                if(result != null && result.Any())
+                { 
+                    return InsertNewCustomer(result[0].CustomerInfos, result[0].LastInsertCustID);
+                }               
             }
-            else
-            {
-                LogService.Error("Request content is empty.");
-            }
+                
+            LogService.Error($"Insert New Customer - Request content is empty. {jsonContent}");
 
             return false;
         }
@@ -129,16 +130,16 @@
             return false;
         }
 
-        private bool InsertNewCustomer(List<CustomerMainDbModel> customers)
+        private bool InsertNewCustomer(List<CustomerMainDBModel> customers, long? lastCustID)
         {
             try
             {
                 var isWriteLogInfo = AppSettings.IsWriteLogInfo;
 
                 if (isWriteLogInfo)
-                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer start with {JsonConvert.SerializeObject(customers)}");
+                    LogService.Info($"CTSCustomer.Service - InsertNewCustomer start with {JsonConvert.SerializeObject(customers)} - LastCustId = {lastCustID}");
 
-                if (customers != null && customers.Any())
+                if (customers != null && customers.Any() && lastCustID != null)
                 {
                     var customersChunk = customers.Distinct().Chunk(AppSettings.InternalChunkSize);
 
@@ -174,7 +175,7 @@
                             {
                                 try
                                 {
-                                    _dataCenterService.ReTransformAccount(JsonConvert.SerializeObject(custIdList));
+                                    _dataCenterService.ReTransformAccount(JsonConvert.SerializeObject(custIdList), lastCustID);
 
                                     if (isWriteLogInfo)
                                         LogService.Info($"CTSCustomer.Service - InsertNewCustomer - Insert complete: {JsonConvert.SerializeObject(custIdList)}");
@@ -266,7 +267,7 @@
             return custInfoToUpdate;
         }
 
-        private string CompareCustomerInfo(IEnumerable<CustomerMainDbModel> custInfoFromMainDB, IEnumerable<CustomerMainDbModel> custInfoFromCTS, UPDATECUSTOMER sourceType)
+        private string CompareCustomerInfo(IEnumerable<CustomerMainDBModel> custInfoFromMainDB, IEnumerable<CustomerMainDBModel> custInfoFromCTS, UPDATECUSTOMER sourceType)
         {
             if (sourceType == UPDATECUSTOMER.FROM_CUSTINFO)
             {

@@ -35,7 +35,7 @@
             dataCenterDataAccess.TransformDCSAccount(accountJson);
         }
 
-        public IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList)
+        public IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDBModel> customerList)
         {
             var custInfos = new List<InsertCustomerModel>();
 
@@ -63,7 +63,7 @@
             return dataCenterDataAccess.GetCustWithHavingUserName2(custs);
         }
 
-        public List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
+        public List<CustomerMainDBModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
         {
             return dataCenterDataAccess.GetUsername2FromMainDb(custIds,isCustSub);
         }
@@ -358,17 +358,17 @@
             return dataCenterDataAccess.GetCustomerAssociationProblemAccount(custIds);
         }
         
-        public void ReTransformAccount(string jsonData)
+        public void ReTransformAccount(string jsonData, long? lastCustID)
         {
-            dataCenterDataAccess.ReTranformAccount(jsonData);
+            dataCenterDataAccess.ReTranformAccount(jsonData, lastCustID);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType)
+        public IEnumerable<CustomerMainDBModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType)
         {
             return dataCenterDataAccess.GetCustomerFromMainDB(custIds, sourceType);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType)
+        public IEnumerable<CustomerMainDBModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType)
         {
             return dataCenterDataAccess.GetCustomerFromCTS(custIds, sourceType);
         }

@@ -129,7 +129,7 @@
         //    }
         //}
 
-        public List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
+        public List<CustomerMainDBModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
         {
             var criteria = new GetUsername2FromMainDb
             {
@@ -139,7 +139,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<CustomerMainDbModel>(criteria).ToList();
+                return db.Query<CustomerMainDBModel>(criteria).ToList();
             }
         }
 
@@ -762,7 +762,7 @@
             }
         }
 
-        public void ReTranformAccount(string jsonData)
+        public void ReTranformAccount(string jsonData, long? lastCustID)
         {
             if (string.IsNullOrEmpty(jsonData))
             {
@@ -773,15 +773,16 @@
 
             var criteria = new ReTransformAccountCriteria
             {
-                customer = jsonData
+                CustomerInfo = jsonData,
+                LastInsertCustID = lastCustID
             };
 
             repository.Execute(criteria);
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType)
+        public IEnumerable<CustomerMainDBModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType)
         {
-            var custInfos = new List<CustomerMainDbModel>();
+            var custInfos = new List<CustomerMainDBModel>();
 
             var criteria = new GetCustomerInfoFromMainDBCriteria
             {
@@ -791,15 +792,15 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                custInfos = db.Query<CustomerMainDbModel>(criteria).ToList();
+                custInfos = db.Query<CustomerMainDBModel>(criteria).ToList();
             }
 
             return custInfos;
         }
 
-        public IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType)
+        public IEnumerable<CustomerMainDBModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType)
         {
-            var custInfos = new List<CustomerMainDbModel>();
+            var custInfos = new List<CustomerMainDBModel>();
 
             var criteria = new GetCustomerInfoFromCTSCriteria
             {
@@ -809,7 +810,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                custInfos = db.Query<CustomerMainDbModel>(criteria).ToList();
+                custInfos = db.Query<CustomerMainDBModel>(criteria).ToList();
             }
 
             return custInfos;
