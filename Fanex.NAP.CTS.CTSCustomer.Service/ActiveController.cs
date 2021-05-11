@@ -139,7 +139,7 @@
                 if (isWriteLogInfo)
                     LogService.Info($"CTSCustomer.Service - InsertNewCustomer start with {JsonConvert.SerializeObject(customers)} - LastCustId = {lastCustID}");
 
-                if (customers != null && customers.Any() && lastCustID != null)
+                if (customers != null && customers.Any())
                 {
                     var customersChunk = customers.Distinct().Chunk(AppSettings.InternalChunkSize);
 

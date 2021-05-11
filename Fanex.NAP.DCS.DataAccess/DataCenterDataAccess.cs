@@ -266,13 +266,13 @@
             {
                 using (var result = db.QueryMultiple(criteria))
                 {
-                    var customers = result.Read<CustomerMainDBModel>();
-                    var LastCustID = result.Read<Int64>().FirstOrDefault();
+                    var customers = result?.Read<CustomerMainDBModel>();
+                    var LastCustID = result?.Read<Int64?>();
 
                     return new UpdateCustomerModel()
                     {
                         CustomerInfos = customers.ToList(),
-                        LastInsertCustID = LastCustID
+                        LastInsertCustID = LastCustID?.FirstOrDefault()
                     };
                 }
             }
