@@ -52,8 +52,11 @@
             if (leagueIdList2.Any())
             {
                 service.PostGenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Over8Percent, Consts.FileName_AutoTrading_Over8Percent, leagueIdList2);
-            }            
 
+                service.PostGenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_Over8PercentLastWeek, Consts.FileName_AutoTrading_OverPercent8LastWeek, leagueIdList2);
+            }
+
+            service.PostGenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_NewTA, Consts.FileName_AutoTrading_NewTA, new List<int>());
         }
     }
 }
