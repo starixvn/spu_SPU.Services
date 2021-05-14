@@ -44,10 +44,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CTSCustomer.cs" />
+    <Compile Include="UpdateCustomerModel.cs" />
     <Compile Include="CustInfoModel.cs" />
     <Compile Include="CustomerInfoModel.cs" />
-    <Compile Include="CustomerMainDbModel.cs" />
+    <Compile Include="CustomerMainDBModel.cs" />
     <Compile Include="DataResult.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="ExecutePath.cs" />

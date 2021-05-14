@@ -44,12 +44,12 @@ namespace Fanex.NAP.DCS.Services.Implement
             return dataCenter.GetRawAccount(numOfAccount, numOfBatch);
         }
 
-        public List<CustomerMainDbModel> GetCustomerFromMainDB(int numOfAccount, Int64 lastScannedCustID)
+        public UpdateCustomerModel GetCustomerFromMainDB(int numOfAccount, Int64 lastScannedCustID)
         {
             return dataCenter.GetCustomerFromMainDB(numOfAccount, lastScannedCustID);
         }
 
-        public List<CustomerMainDbModel> GetCustSubFromMainDB(int numOfAccount, Int64 lastScannedCustID)
+        public List<CustomerMainDBModel> GetCustSubFromMainDB(int numOfAccount, Int64 lastScannedCustID)
         {
             return dataCenter.GetCustSubFromMainDB(numOfAccount, lastScannedCustID);
         }

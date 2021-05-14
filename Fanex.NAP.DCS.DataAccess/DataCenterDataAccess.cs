@@ -245,7 +245,7 @@
         {
             var criteria = new GetRawUnsucessAccountListCriteria
             {
-                NumberOfAccount = quantityPerBatch                
+                NumberOfAccount = quantityPerBatch
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
@@ -254,7 +254,7 @@
             }
         }
 
-        public List<CustomerMainDbModel> GetCustomerFromMainDB(int quantityPerBatch, Int64 lastScannedCustID)
+        public UpdateCustomerModel GetCustomerFromMainDB(int quantityPerBatch, Int64 lastScannedCustID)
         {
             var criteria = new GetCustomersFromMainDbCriteria
             {
@@ -264,11 +264,21 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<CustomerMainDbModel>(criteria).ToList();
+                using (var result = db.QueryMultiple(criteria))
+                {
+                    var customers = result?.Read<CustomerMainDBModel>();
+                    var LastCustID = result?.Read<Int64?>();
+
+                    return new UpdateCustomerModel()
+                    {
+                        CustomerInfos = customers.ToList(),
+                        LastInsertCustID = LastCustID?.FirstOrDefault()
+                    };
+                }
             }
         }
 
-        public List<CustomerMainDbModel> GetCustSubFromMainDB(int quantityPerBatch, Int64 lastScannedCustID)
+        public List<CustomerMainDBModel> GetCustSubFromMainDB(int quantityPerBatch, Int64 lastScannedCustID)
         {
             var criteria = new GetCustSubFromMainDbCriteria
             {
@@ -278,7 +288,7 @@
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.Query<CustomerMainDbModel>(criteria).ToList();
+                return db.Query<CustomerMainDBModel>(criteria).ToList();
             }
         }
 

@@ -3,9 +3,9 @@
     using Fanex.NAP.SPU.Model;
     using System.Collections.Generic;
 
-    public class CustomerInfoEqualityComparer : IEqualityComparer<CustomerMainDbModel>
+    public class CustomerInfoEqualityComparer : IEqualityComparer<CustomerMainDBModel>
     {
-        public bool Equals(CustomerMainDbModel x, CustomerMainDbModel y)
+        public bool Equals(CustomerMainDBModel x, CustomerMainDBModel y)
         {
             if (x.CustID == y.CustID
                 && x.CustStatusID == y.CustStatusID
@@ -17,7 +17,7 @@
             return false;
         }
 
-        public int GetHashCode(CustomerMainDbModel obj)
+        public int GetHashCode(CustomerMainDBModel obj)
         {
             return obj.GetHashCode();
         }

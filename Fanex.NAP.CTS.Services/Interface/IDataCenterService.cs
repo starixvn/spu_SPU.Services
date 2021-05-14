@@ -12,7 +12,7 @@
     {
         void TransformDCSAccount(List<RawAccountModel> accountList);
 
-        IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDbModel> customerList);
+        IEnumerable<InsertCustomerModel> TransformCustomerFromMainDB(List<CustomerMainDBModel> customerList);
 
         void InsertAssociation(List<AssociationModel> associationList);
 
@@ -26,7 +26,7 @@
 
         int UpdateUsername2(List<GetCustIdModel> customerList);
 
-        List<CustomerMainDbModel> GetUsername2FromMainDb(string custIds, bool isCustSub);
+        List<CustomerMainDBModel> GetUsername2FromMainDb(string custIds, bool isCustSub);
 
         IEnumerable<int> TransformAssociationAffectedEvidence(int batchSize);
 
@@ -94,11 +94,11 @@
 
         void UpdateTimingExecution(string newDataTime, int paramId);
 
-        void ReTransformAccount(string jsonData);
+        void ReTransformAccount(string jsonData, long? lastCustID);
 
-        IEnumerable<CustomerMainDbModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType);
+        IEnumerable<CustomerMainDBModel> GetCustomerFromMainDB(string custIds, UPDATECUSTOMER sourceType);
 
-        IEnumerable<CustomerMainDbModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType);
+        IEnumerable<CustomerMainDBModel> GetCustomerFromCTS(string custIds, UPDATECUSTOMER sourceType);
         
         void UpdateCustomerComplete(string customers, DateTime? lastUpdateTime, Int64? lastUpdateCustID, UPDATECUSTOMER sourceType);
 
