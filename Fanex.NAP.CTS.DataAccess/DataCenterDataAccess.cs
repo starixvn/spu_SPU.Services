@@ -104,34 +104,7 @@
             }
         }
 
-        //public void UpdateUserName2(List<GetCustIdModel> custs)
-        //{
-        //    var criteria = new GetCustomersWithHavingUsername2Criteria
-        //    {
-        //        cust = custs.ToXmlString()
-        //    };
-
-        //    using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-        //    {
-        //        return db.Query<GetCustIdModel>(criteria).ToList();
-        //    }
-        //}
-
-        public List<CustomerMainDBModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
-        {
-            var criteria = new GetUsername2FromMainDb
-            {
-                CustIds = custIds,
-                IsGetCustSub = isCustSub
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<CustomerMainDBModel>(criteria).ToList();
-            }
-        }
-
-        public int UpdateUsername2(string customerJson)
+         public int UpdateUsername2(string customerJson)
         {
             var repository = new DynamicRepository();
 

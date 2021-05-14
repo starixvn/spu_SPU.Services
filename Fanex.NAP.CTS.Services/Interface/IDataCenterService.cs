@@ -23,8 +23,6 @@
 
         int UpdateUsername2(List<GetCustIdModel> customerList);
 
-        List<CustomerMainDBModel> GetUsername2FromMainDb(string custIds, bool isCustSub);
-
         IEnumerable<int> TransformAssociationAffectedEvidence(int batchSize);
 
         void UpdateLastLoginTime(int batchSize);

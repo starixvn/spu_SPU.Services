@@ -63,11 +63,6 @@
             return dataCenterDataAccess.GetCustWithHavingUserName2(custs);
         }
 
-        public List<CustomerMainDBModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
-        {
-            return dataCenterDataAccess.GetUsername2FromMainDb(custIds,isCustSub);
-        }
-
         public int UpdateUsername2(List<GetCustIdModel> customerList)
         {
             var customerJson = JsonConvert.SerializeObject(customerList);
