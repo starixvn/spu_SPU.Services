@@ -57,6 +57,16 @@
             }
 
             service.PostGenerateAutoTradingSpreadToFile(Consts.Endpoint_AutoTrading_NewTA, Consts.FileName_AutoTrading_NewTA, new List<int>());
+
+            if (service.IsSuccessAPIResponse)
+            {
+                if (service.SendFileMessageViaLestalk())
+                {
+                    var toDate = DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss");
+
+                    LogService.Info($"SendFileMessageViaLestalk ({AppSettings.EnvironmentName}) - sucessfully - {toDate}");
+                }
+            }
         }
     }
 }
