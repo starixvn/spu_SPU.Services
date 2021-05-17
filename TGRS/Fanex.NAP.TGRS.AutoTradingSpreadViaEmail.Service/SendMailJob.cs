@@ -11,7 +11,7 @@
         protected override JobMessage Run(Schedule schedule, IJobExecutionContext jobContext)
         {
             var endpoint = "AutoTrading/GetAutoTradingSpread8LiveExcel";
-            var toDate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).ToString("dd-MMM-yyyy");
+            var toDate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).ToString("yyyy.MMM.dd");
             var saveFileName = "Live Performance Report - " + toDate + ".xlsx";
             var directorySaveFile = AppDomain.CurrentDomain.BaseDirectory + @"Attachment\";
 

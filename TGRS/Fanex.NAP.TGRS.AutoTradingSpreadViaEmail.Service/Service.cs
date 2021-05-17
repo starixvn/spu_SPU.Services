@@ -125,7 +125,7 @@
         {
             if (IsSuccessAPIResponse)
             {
-                var toDate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).ToString("dd/MMM/yyyy");
+                var toDate = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek).ToString("yyyy.MMM.dd");
                 var subject = "Automail Report - Live Performance Report " + toDate;
                 var mailTemplatePath = AppDomain.CurrentDomain.BaseDirectory + @"MailTemplate\MailInformTemplate.cshtml";
 
