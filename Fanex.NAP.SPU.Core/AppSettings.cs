@@ -343,12 +343,12 @@ namespace Fanex.NAP.SPU.Core
         {
             get
             {
-                var size = 150;
+                var size = 500;
                 var configSize = ConfigurationManager.AppSettings["PushCCToExternal-ChunkSize"];
 
                 int.TryParse(configSize, out size);
 
-                return size == 0 ? 150 : size;
+                return size == 0 ? 500 : size;
             }
         }
 
