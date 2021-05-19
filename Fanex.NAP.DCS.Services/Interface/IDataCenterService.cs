@@ -19,10 +19,6 @@
 
         List<RawAccountModel> GetRawUnsuccessAccount(int numOfAccount);
 
-        TranformCustModel GetUpdatedCustFromCustInfoHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
-
-        TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount);
-
         UpdateCustomerModel GetCustomerFromMainDB(int numOfAccount, Int64 lastScannedCustID);
 
         List<CustomerMainDBModel> GetCustSubFromMainDB(int numOfAccount, Int64 lastScannedCustID);
