@@ -16,8 +16,6 @@
 
         InsertCategoryResultModel SyncCustomerEvidenceToCategory(List<CustEvidenceModel> existedEvidences, bool isRescan);
 
-        DBResult SyncCustomerClassToMainDb(string ctsCustIds, out List<SyncCustomerClassToMainModel> custClasses);
-
         DBResult UpdateProcessedCustEvidence(string jsonData, bool isProcessed, int userId);
 
         IEnumerable<int> GetAssociatedAccountByCTSCustIds(string ctsCustIds);

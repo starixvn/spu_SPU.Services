@@ -1,8 +1,6 @@
 ﻿namespace Fanex.NAP.CTS.RobotUsers.Console
 {
     using Fanex.Logging;
-    using Fanex.Logging.Extensions;
-    using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.FS.Core;
@@ -48,6 +46,9 @@
             var fromDate = DateTime.Parse(previousTimingExecution.ParameterValue);
 
             robotUsers = dataService.GetRobotUser(fromDate, AppSettings.CreditSizes);
+
+            if (isWriteLogInfo)
+                LogService.Info($"RobotUsers Service - Get robot {JsonConvert.SerializeObject(robotUsers)}");
 
             return this;
         }
@@ -98,7 +99,7 @@
             }    
 
             if (isWriteLogInfo)
-                LogService.Info("RobotUsers Service - done!");
+                LogService.Info($"RobotUsers Service - Update time mark {JsonConvert.SerializeObject(updateExecutionTime)} done!");
 
             return this;
         }

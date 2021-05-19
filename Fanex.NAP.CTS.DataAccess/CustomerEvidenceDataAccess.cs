@@ -132,20 +132,6 @@
             }
         }
 
-        public DBResult SyncCustomerClassToMainDb(IEnumerable<SyncCustomerClassToMainModel> ccList)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new SyncCustomerClassToMainDbCriteria
-            {
-                custList = ccList.ToXmlString()
-            };
-
-            repository.Execute(criteria);
-
-            return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
-        }
-
         public DBResult UpdateProcessedCustEvidence(string idList, bool isProcessed, int userId)
         {
             var criteria = new UpdateProcessedCustEvidenceCriteria

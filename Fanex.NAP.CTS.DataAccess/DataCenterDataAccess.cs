@@ -65,18 +65,6 @@
             }
         }
 
-        public int InsertAssociation(string associationJson)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new InsertAssociationCriteria
-            {
-                AssociationJson = associationJson
-            };
-
-            return repository.Execute(criteria);
-        }
-
         public void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIPJson)
         {
             var repository = new DynamicRepository();
@@ -116,34 +104,7 @@
             }
         }
 
-        //public void UpdateUserName2(List<GetCustIdModel> custs)
-        //{
-        //    var criteria = new GetCustomersWithHavingUsername2Criteria
-        //    {
-        //        cust = custs.ToXmlString()
-        //    };
-
-        //    using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-        //    {
-        //        return db.Query<GetCustIdModel>(criteria).ToList();
-        //    }
-        //}
-
-        public List<CustomerMainDBModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
-        {
-            var criteria = new GetUsername2FromMainDb
-            {
-                CustIds = custIds,
-                IsGetCustSub = isCustSub
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<CustomerMainDBModel>(criteria).ToList();
-            }
-        }
-
-        public int UpdateUsername2(string customerJson)
+         public int UpdateUsername2(string customerJson)
         {
             var repository = new DynamicRepository();
 
@@ -213,7 +174,7 @@
         {
             var repository = new DynamicRepository();
 
-            var criteria = new UpdateCustomerClassificationCriteria
+            var criteria = new SyncCustomerClassToMainDbCriteria
             {
                 custList = custIdList.ToXmlString()
             };
@@ -227,7 +188,7 @@
         {
             var repository = new DynamicRepository();
 
-            var criteria = new UpdateCustomerClassificationCriteria
+            var criteria = new SyncCustomerClassToMainDbCriteria
             {
                 custList = custClassList.ToXmlString()
             };
@@ -248,42 +209,6 @@
             repository.Execute(criteria);
 
             return new DBResult { ErrorCode = criteria.ErrorCode, ErrorMsg = criteria.ErrorMessage };
-        }
-
-        public void InsertProblemAccountCategoryToMainDB(List<ProblemAccountForMainDBModel> custIdList)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new UpdateCustomerClassificationCriteria
-            {
-                custList = custIdList.ToXmlString()
-            };
-
-            repository.Execute(criteria);
-        }
-
-        public void InsertProblemCustomerCategoryToMainDB(List<ProblemCustomerForMainDBModel> custIdList)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new UpdateCustomerClassificationCriteria
-            {
-                custList = custIdList.ToXmlString()
-            };
-
-            repository.Execute(criteria);
-        }
-
-        public void AutoTagCustomerClassification(string newClassification)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new AutoTagCustomerClassificationCriteria
-            {
-                NewClassification = newClassification
-            };
-
-            repository.Execute(criteria);
         }
 
         public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
@@ -370,19 +295,6 @@
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerForRealtimeScanning(string custSportJson)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new GetCustomerClassificationByCategoryCriteria
-            {
-                CategoryIdList = "2,5", // Hard code for New Cust & VIP Category
-                CustSportsJson = custSportJson
-            };
-
-            return repository.Fetch<CustomerClassificationModel>(criteria);
-        }
-
         public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custSportJson, string categoryIds)
         {
             var repository = new DynamicRepository();
@@ -394,18 +306,6 @@
             };
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
-        }
-
-        public void ClassifyCustomerDaily(IEnumerable<CustomerClassificationModel> customers)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new CategorizeCustomerDailyCriteria
-            {
-                CustomersXML = customers.ToXmlString()
-            };
-
-            repository.Execute(criteria);
         }
 
         public void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days = true)
@@ -428,18 +328,6 @@
             var criteria = new GetCustomerClassificationForScanningCompleteCriteria
             {
                 CustSportJson = custSportJson
-            };
-
-            repository.Execute(criteria);
-        }
-
-        public void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new CategorizeCustomerRealtimeCriteria
-            {
-                CustomersXML = customers.ToXmlString()
             };
 
             repository.Execute(criteria);
@@ -556,18 +444,6 @@
             }
         }
 
-        public IEnumerable<int> GetAllSpecialCustomerClass()
-        {
-            var repository = new DynamicRepository();
-
-            var criteria = new GetAllSpecialCustomerClassCriteria
-            {
-                IsGetAllInfo = false
-            };
-
-            return repository.Fetch<int>(criteria);
-        }
-
         public IEnumerable<RobotUser> GetRobotUsers(DateTime fromDate, string creditSiteList)
         {
             var repository = new DynamicRepository();
@@ -629,22 +505,6 @@
             };
 
             repository.Execute(criteria);
-        }
-
-        public IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory)
-        {
-            var criteria = new GetLastestCategoryCriteria()
-            {
-                CustIDList = ctsCustID,
-                IsUsingCustID = isCustId,
-                IsExcludedDetailedCategory = isExcludedDetailedCategory
-
-            };
-
-            using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
-            {
-                return db.Query<ProblemAccountForMainDBModel>(criteria).ToList();
-            }
         }
 
         public IEnumerable<LatestClassificationModel> GetLatestClassification(string custIds)

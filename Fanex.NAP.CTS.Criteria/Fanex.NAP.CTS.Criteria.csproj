@@ -79,20 +79,16 @@
     <Compile Include="CustomerClassification\CategorizeCustomerGeneralCategoryRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerGeneralCategoryHasChangeForRunRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\NormalAccountsClassificationGeneralCategorizeDailyCriteria.cs" />
-    <Compile Include="GetAllSpecialCustomerClassCriteria.cs" />
     <Compile Include="GetRobotUserCriteria.cs" />
-    <Compile Include="MainDB\UpdateCustomerClassificationCriteria.cs" />
     <Compile Include="InsertMainCustomerClassificationCriteria.cs" />
     <Compile Include="ProblemAccount\GetProblemAccountsCN88Criteria.cs" />
     <Compile Include="InsertUserPermissionCriteria.cs" />
     <Compile Include="MainDB\UpdateBetLimitByEvidenceRemovingCriteria.cs" />
     <Compile Include="MoveToTransaction07GetPackageCriteria.cs" />
     <Compile Include="MoveToTransaction07Criteria.cs" />
-    <Compile Include="AutoTagCustomerClassificationCriteria.cs" />
     <Compile Include="CustomerClassificationGetNewClassificationCriteria.cs" />
     <Compile Include="CustomerClassificationUpdateNewClassificationCriteria.cs" />
     <Compile Include="CustomerClassification\CategorizeCustomerDailyCriteria.cs" />
-    <Compile Include="CustomerClassification\CategorizeCustomerRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerClassificationByCategoryCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerClassificationForScanningCompleteCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerClassificationForScanningCriteria.cs" />
@@ -101,7 +97,6 @@
     <Compile Include="GetPreviousTimingExecutionCriteria.cs" />
     <Compile Include="ProblemAccount\GetExistedEvidencesCriteria.cs" />
     <Compile Include="ProblemAccount\GetProblemAccountsCriteria.cs" />
-    <Compile Include="GetUsername2FromMainDb.cs" />
     <Compile Include="ProblemAccount\InsertProblemAccountCriteria.cs" />
     <Compile Include="GetCustomerInfoFromMainDBCriteria.cs" />
     <Compile Include="TransformAssociationAffectedEvidenceCriteria.cs" />
@@ -116,7 +111,6 @@
     <Compile Include="TransformAssociationByDeviceCriteria.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="TransformDCSAccountToCTSCustomerCriteria.cs" />
-    <Compile Include="InsertAssociationCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformDCSTransactionIPToCTSAssociationByIPCriteria.cs" />
   </ItemGroup>
