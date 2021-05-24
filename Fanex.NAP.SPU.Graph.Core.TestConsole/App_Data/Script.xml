@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="MiddleSerivce">
-    <GraphSetting Key="TestUpgradeNeo4j" SpName="TestUpgradeNeo4j" DbName="GraphDB" />
+    <GraphSetting Key="CountTotal" SpName="CountTotal" DbName="GraphDB" />
+    <GraphSetting Key="GetReport" SpName="GetReport" DbName="GraphDB" />
   </Function>
 </Functions>

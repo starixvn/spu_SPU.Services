@@ -42,22 +42,21 @@
         public ExecutionResult<IEnumerable<T>> Execute<T>(IDriver driver, string command, object parameters = null)
         {
             IEnumerable<T> data = null;
-            using (driver)
+
+            var session = driver.AsyncSession();
+            var taskResult = session.WriteTransactionAsync(async tx =>
             {
-                var session = driver.AsyncSession();
-                var taskResult = session.WriteTransactionAsync(async tx =>
-                {
-                    var result = await tx.RunAsync(command, parameters);
-                    var tempData = await result.ToListAsync(r => r.As<IRecord>());
-                    data = tempData.Select(ParseRecord<T>).ToArray();
+                var result = await tx.RunAsync(command, parameters);
+                var tempData = await result.ToListAsync(r => r.As<IRecord>());
+                data = tempData.Select(ParseRecord<T>).ToArray();
 
-                    var counters = result.ConsumeAsync().Result.Counters;
-                    affectedNodes = counters.NodesCreated + counters.NodesDeleted;
-                    affectedRelationship = counters.RelationshipsCreated + counters.RelationshipsDeleted;
-                });
+                var counters = result.ConsumeAsync().Result.Counters;
+                affectedNodes = counters.NodesCreated + counters.NodesDeleted;
+                affectedRelationship = counters.RelationshipsCreated + counters.RelationshipsDeleted;
+            });
 
-                taskResult.Wait();
-            }
+            taskResult.Wait();
+
 
             return new ExecutionResult<IEnumerable<T>>
             {

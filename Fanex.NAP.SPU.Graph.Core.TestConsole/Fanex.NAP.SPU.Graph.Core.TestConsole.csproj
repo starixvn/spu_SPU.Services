@@ -111,12 +111,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\AssociationReportModel.cs" />
     <Compile Include="Models\CTSCustomer.cs" />
+    <Compile Include="Models\GraphAssociationReportPaging.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="App_Data\scripts\GetReport.scrypt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -130,7 +135,7 @@
     <Content Include="App_Data\Script.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="App_Data\scripts\TestUpgradeNeo4j.scrypt">
+    <None Include="App_Data\scripts\CountTotal.scrypt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
