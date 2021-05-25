@@ -4,6 +4,7 @@
     using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -42,21 +43,25 @@
         public ExecutionResult<IEnumerable<T>> Execute<T>(IDriver driver, string command, object parameters = null)
         {
             IEnumerable<T> data = null;
+            var configs = ConfigurationManager.AppSettings["GraphDB"].ToString().Split(';');
 
-            var session = driver.AsyncSession();
-            var taskResult = session.WriteTransactionAsync(async tx =>
+            using (driver = GraphDatabase.Driver(configs[0], AuthTokens.Basic(configs[1], configs[2])))
             {
-                var result = await tx.RunAsync(command, parameters);
-                var tempData = await result.ToListAsync(r => r.As<IRecord>());
-                data = tempData.Select(ParseRecord<T>).ToArray();
+                var session = driver.AsyncSession();
 
-                var counters = result.ConsumeAsync().Result.Counters;
-                affectedNodes = counters.NodesCreated + counters.NodesDeleted;
-                affectedRelationship = counters.RelationshipsCreated + counters.RelationshipsDeleted;
-            });
+                var taskResult = session.WriteTransactionAsync(async tx =>
+                {
+                    var result = await tx.RunAsync(command, parameters);
+                    var tempData = await result.ToListAsync(r => r.As<IRecord>());
+                    data = tempData.Select(ParseRecord<T>).ToArray();
 
-            taskResult.Wait();
+                    var counters = result.ConsumeAsync().Result.Counters;
+                    affectedNodes = counters.NodesCreated + counters.NodesDeleted;
+                    affectedRelationship = counters.RelationshipsCreated + counters.RelationshipsDeleted;
+                });
 
+                taskResult.Wait();
+            }
 
             return new ExecutionResult<IEnumerable<T>>
             {

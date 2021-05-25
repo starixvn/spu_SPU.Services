@@ -17,6 +17,7 @@ namespace Fanex.NAP.SPU.Graph.Core.TestConsole
                 .RegisterCommandBuilder(new Neo4jCommandBuilder("~/App_Data/scripts"))
                 .RegisterCommandExecutor(new Neo4jExecutor())
                 .Run();
+
             var result = new GraphAssociationReportPaging();
             var param = new
             {

@@ -9,9 +9,10 @@
         public (Type driverType, object driver) GetDriver(string config)
         {
             var configs = config.Split(';');
-
+            
             return (typeof(IDriver), GraphDatabase.Driver(configs[0], AuthTokens.Basic(configs[1], configs[2])
                 , configNeo4j => configNeo4j.WithEncryptionLevel(EncryptionLevel.None)));
+
         }
     }
 }
