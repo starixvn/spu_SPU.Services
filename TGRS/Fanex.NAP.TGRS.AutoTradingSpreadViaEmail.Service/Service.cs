@@ -81,6 +81,7 @@
                     var requestUri = _urlTGRSAPI + endpoint;
 
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    client.Timeout = TimeSpan.FromMinutes(30);
 
                     var response = client.GetAsync(requestUri).Result;
 
