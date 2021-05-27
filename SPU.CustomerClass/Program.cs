@@ -15,7 +15,6 @@
     using System;
     using System.Collections.Generic;
     using System.Configuration;
-    using System.Globalization;
     using System.IO;
     using System.Linq;
     using System.Threading;
@@ -147,13 +146,17 @@
                 values = stringLine.Split(',');
                 var custId = values[0].Trim();
                 var custClass = values[1].Trim();
+                var category = values[2].Trim();
 
-                if (!string.IsNullOrEmpty(custId) && !string.IsNullOrEmpty(custClass))
+                if (!string.IsNullOrEmpty(custId) 
+                    && !string.IsNullOrEmpty(custClass) 
+                    && !string.IsNullOrEmpty(category))
                 {
                     listCustClass.Add(new CustomerClassModel()
                     {
                         CustID = int.Parse(custId),
-                        CustomerClass = int.Parse(custClass)
+                        CustomerClass = int.Parse(custClass),
+                        Category = int.Parse(category)
                     });
                 }
             }

@@ -11,5 +11,7 @@
         [XName("c")]
         public int CustomerClass { get; set; }
 
+        [XName("t")]
+        public int Category { get; set; }
     }
 }

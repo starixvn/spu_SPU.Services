@@ -63,24 +63,12 @@
             return dataCenterDataAccess.GetCustWithHavingUserName2(custs);
         }
 
-        public List<CustomerMainDBModel> GetUsername2FromMainDb(string custIds, bool isCustSub)
-        {
-            return dataCenterDataAccess.GetUsername2FromMainDb(custIds,isCustSub);
-        }
-
         public int UpdateUsername2(List<GetCustIdModel> customerList)
         {
             var customerJson = JsonConvert.SerializeObject(customerList);
 
             return dataCenterDataAccess.UpdateUsername2(customerJson);
         }
-
-        public void InsertAssociation(List<AssociationModel> associationList)
-        {
-            var associationJson = JsonConvert.SerializeObject(associationList);
-
-            dataCenterDataAccess.InsertAssociation(associationJson);
-        }    
 
         public void TransformDCSTransactionIPToCTSAssociationByIP(string transactionByIpJson)
         {           
@@ -105,11 +93,6 @@
         public List<CustomerClassificationModelMoreInfo> GetNewClassification()
         {
             return dataCenterDataAccess.GetNewClassification();
-        }
-
-        public void AutoTagClassification(string newClassification)
-        {
-            dataCenterDataAccess.AutoTagCustomerClassification(newClassification);
         }
 
         public InsertCategoryResultModel InsertMainCustomerClassification(string newClassification)
@@ -143,32 +126,6 @@
             Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
         }
 
-        public void InsertProblemAccountClassificationToMainDB(List<ProblemAccountForMainDBModel> custIdList)
-        {
-            dataCenterDataAccess.InsertProblemAccountCategoryToMainDB(custIdList);
-
-            var custClassList = custIdList.Where(c => c.CategoryIdMapping != -99).Select(c => new CustomerClassModel()
-            {
-                CustID = c.CustID,
-                CustomerClass = c.CategoryIdMapping
-            });
-
-            Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
-        }
-
-        public void InsertProblemCustomerClassificationToMainDB(List<ProblemCustomerForMainDBModel> custIdList)
-        {
-            dataCenterDataAccess.InsertProblemCustomerCategoryToMainDB(custIdList);
-
-            var custClassList = custIdList.Select(c => new CustomerClassModel()
-            {
-                CustID = c.CustID,
-                CustomerClass = c.CustomerClass
-            });
-
-            Helper.FeedDataToSoon88Helper.FeedDataToSoon88(custClassList);
-        }
-
         public IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIds)
         {
             return dataCenterDataAccess.GetCustomerClassByCustId(custIds);
@@ -179,29 +136,14 @@
             return dataCenterDataAccess.GetCustomerForDailyScanning(batchQuantity, rowQuantityPerBatch);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerHasChangeForRunRealtime()
-        {
-            return dataCenterDataAccess.GetCustomerHasChangeForRunRealtime();
-        }
-
         public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryHasChangeForRunRealtime()
         {
             return dataCenterDataAccess.GetCustomerGeneralCategoryHasChangeForRunRealtime();
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerForRunRealtime(string custIdList)
-        {
-            return dataCenterDataAccess.GetCustomerForRealtimeScanning(custIdList);
-        }
-
         public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList, string categoryIds)
         {
             return dataCenterDataAccess.GetCustomerGeneralCategoryForRunRealtime(custIdList, categoryIds);
-        }
-
-        public void ClassifyCustomerDaily (IEnumerable<CustomerClassificationModel> customers)
-        {
-            dataCenterDataAccess.ClassifyCustomerDaily(customers);
         }
 
         public void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days)
@@ -212,11 +154,6 @@
         public void ClassifyCustomerDailyDone(string custSportJson)
         {
             dataCenterDataAccess.ClassifyCustomerDailyDone(custSportJson);
-        }
-
-        public void ClassifyCustomerRealtime(IEnumerable<CustomerClassificationModel> customers)
-        {
-            dataCenterDataAccess.ClassifyCustomerRealtime(customers);
         }
 
         public void ClassifyCustomerGeneralCategoryRealtime(IEnumerable<CustomerClassificationModel> customers)
@@ -283,11 +220,6 @@
             dataCenterDataAccess.InsertUserPermission(permissionUserIdsJson);
         }
 
-        public IEnumerable<int> GetAllSpecialCustomerClass()
-        {
-            return dataCenterDataAccess.GetAllSpecialCustomerClass();
-        }
-
         public IEnumerable<RobotUser> GetRobotUser(DateTime fromDate, string creditSiteList)
         {
             return dataCenterDataAccess.GetRobotUsers(fromDate, creditSiteList);
@@ -311,11 +243,6 @@
         public void InsertProbationNotification(IEnumerable<ProbationModel> scanList, IEnumerable<ProbationModel> resultList)
         {
             dataCenterDataAccess.InsertProbationNotification(scanList, resultList);
-        }
-
-        public IEnumerable<ProblemAccountForMainDBModel> GetLastestCategory(string ctsCustID, bool isCustId, bool isExcludedDetailedCategory)
-        {
-            return dataCenterDataAccess.GetLastestCategory(ctsCustID, isCustId, isExcludedDetailedCategory);
         }
 
         public IEnumerable<LatestClassificationModel> GetLatestClassification(string custIds)
