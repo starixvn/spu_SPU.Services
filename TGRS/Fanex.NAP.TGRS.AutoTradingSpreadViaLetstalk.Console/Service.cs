@@ -66,53 +66,7 @@
 
                 LogService.Error(logMessage);
             }
-        }
-
-        public void GenerateAutoTradingSpreadToFile(string endpoint, string saveImageName)
-        {
-            try
-            {
-                var savePath = _directorySaveImage + saveImageName;
-
-                using (var client = new HttpClient())
-                {
-                    var requestUri = _urlTGRSAPI + endpoint;
-
-                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                    var response = client.GetAsync(requestUri).Result;
-
-                    using (var content = response.Content)
-                    {
-                        if (response.StatusCode == HttpStatusCode.OK)
-                        {
-                            var byteImages = content.ReadAsByteArrayAsync().Result;
-
-                            if (byteImages != null)
-                            {
-                                SaveImage(byteImages, savePath);
-                            }
-                        }
-                        else
-                        {
-                            IsSuccessAPIResponse = false;
-
-                            LogService.Warn($"GenerateAutoTradingSpreadToFile response failed - endpoint: { endpoint } : { content.ReadAsStringAsync().Result }");
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                IsSuccessAPIResponse = false;
-
-                var logMessage = new LogMessage(ex.Message)
-                 .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                 .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);
-            }
-        }
+        }       
 
         public string GetLeagueIds(string endpoint, bool isPercent)
         {
@@ -125,7 +79,8 @@
                     var requestUri = _urlTGRSAPI + endpoint;
 
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    
+                    client.Timeout = TimeSpan.FromMinutes(3);
+
                     var contentString = new StringContent(JsonConvert.SerializeObject(isPercent), System.Text.Encoding.UTF8, "application/json");                    
 
                     var response = client.PostAsync(requestUri, contentString).Result;
@@ -170,7 +125,8 @@
                     var requestUri = _urlTGRSAPI + endpoint;
 
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    
+                    client.Timeout = TimeSpan.FromMinutes(6);
+
                     var contentString = new StringContent(JsonConvert.SerializeObject(leagueIds), System.Text.Encoding.UTF8, "application/json");
                     var response = client.PostAsync(requestUri, contentString).Result;
 
