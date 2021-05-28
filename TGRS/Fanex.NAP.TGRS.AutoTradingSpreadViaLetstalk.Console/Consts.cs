@@ -6,7 +6,7 @@
 
         public const string FileName_AutoTrading_Percent8LastWeek = "Percent8LW.png";
 
-        public const string FileName_AutoTrading_Over8Percent = "Over8Percent.png";
+        public const string FileName_AutoTrading_Over8Percent = "OverPercent8.png";
 
         public const string FileName_AutoTrading_OverPercent8LastWeek = "OverPercent8LW.png";
 

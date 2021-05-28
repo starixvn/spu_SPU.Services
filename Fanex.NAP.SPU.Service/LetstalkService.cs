@@ -30,7 +30,19 @@
             letstalkModel.LetstalkAttachments = GetAttachmentList(pathAttachment);
             letstalkModel.TargetName = targetName;
             letstalkModel.Group = group;
-        }  
+        }
+
+        public LetstalkService(string targetName, string group, string pathAttachment, string fileName)
+        {
+            var letstalkApi = new ApplicationSettingServiceImp();
+            var webAPIClientService = new WebApiClientServiceImp(letstalkApi);
+            letstalkService = new LetstalkClientServiceImp(webAPIClientService);
+
+            letstalkModel = new LetstalkModel();
+            letstalkModel.LetstalkAttachments = GetAttachmentList(pathAttachment, fileName);
+            letstalkModel.TargetName = targetName;
+            letstalkModel.Group = group;
+        }
 
         public void Info(string message)
         {
@@ -163,5 +175,29 @@
 
             return attatchment;
         }
+
+        private List<LetstalkAttachment> GetAttachmentList(string pathAttachment, string fileName)
+        {
+            var attatchment = new List<LetstalkAttachment>();
+
+            var filePaths = Directory.GetFiles(pathAttachment).ToList();
+
+            filePaths.ForEach(file =>
+            {
+                var xfileName = Path.GetFileName(file);
+
+                if (xfileName == fileName)
+                {
+                    attatchment.Add(new LetstalkAttachment
+                    {
+                        FileName = file,
+                        Bytes = FileBinaryService.ConvertFileToBinary(file)
+                    });
+                }        
+            });
+
+            return attatchment;
+        }
+
     }
 }

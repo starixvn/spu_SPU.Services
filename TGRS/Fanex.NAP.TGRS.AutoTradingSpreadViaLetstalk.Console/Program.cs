@@ -70,10 +70,11 @@
 
             if (service.IsSuccessAPIResponse)
             {
-                if (service.SendFileMessageViaLestalk())
-                {                    
-                    LogService.Info($"SendFileMessageViaLestalk has sucessfully - {toDate}");
-                }
+                //if (service.SendFileMessageViaLestalk())
+                //{                    
+                //    LogService.Info($"AutoTrading Spread SendFileMessageViaLestalk has sucessfully - {toDate}");
+                //}
+                LogService.Info($"AutoTrading Spread has sucessfully - {toDate}");
             }
             else
             {

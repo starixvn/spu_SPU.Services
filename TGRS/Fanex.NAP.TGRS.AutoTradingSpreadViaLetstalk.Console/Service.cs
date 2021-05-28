@@ -167,9 +167,6 @@
             try
             {
                 var isSendSuccess = true;
-                var sundayOfLastWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
-                var subject = "Spread 8% Live Performance Report";
-                var content = "Good day Sir, Spread 8% Live Performance - Event Details 01/Jan/2019 - " + sundayOfLastWeek.ToString("dd/MM/yyyy");
 
                 if (!string.IsNullOrEmpty(AppSettings.TGRSAutoTradingLetstalkGroup))
                 {
@@ -177,19 +174,7 @@
 
                     foreach (var groupName in arrGroupName)
                     {
-                        var letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget, groupName, _directorySaveImage);
-
-                        if (!letstalkService.CheckExistFileAttach())
-                        {
-                            LogService.Warn($"SendFileMessageViaLestalk to {groupName} does not exit file attach");
-                        }
-
-                        isSendSuccess = letstalkService.SendSingleFileAttachMessage(subject, content);
-
-                        if (!isSendSuccess)
-                        {
-                            LogService.Warn($"SendFileMessageViaLestalk to {groupName} failed");
-                        }
+                        isSendSuccess = SendSingleFileAttachMessage(groupName);
                     }
                 }
 
@@ -226,5 +211,42 @@
                 LogService.Error(logMessage);
             }
         }
+
+        private bool SendSingleFileAttachMessage(string groupName)
+        {
+            var isSendSuccess = true;
+            var sundayOfLastWeek = DateTime.Now.AddDays(-(int)DateTime.Now.DayOfWeek);
+            var toDateOfLastFourWeek = sundayOfLastWeek.AddDays(-21);
+            var strSundayOfLastWeek = sundayOfLastWeek.ToString("dd/MM/yyyy");
+            var strToDateOfLastFourWeek = toDateOfLastFourWeek.ToString("dd/MM/yyyy");
+           
+            var dicMessages = new Dictionary<string, string>();
+            dicMessages.Add(Consts.FileName_AutoTrading_Percent8, $"8 Points report update till { strSundayOfLastWeek }");
+            dicMessages.Add(Consts.FileName_AutoTrading_Percent8LastWeek, $"8 Points by week report from { strToDateOfLastFourWeek } to { strSundayOfLastWeek }");
+            dicMessages.Add(Consts.FileName_AutoTrading_Over8Percent, $"Over than 8 Points update till { strSundayOfLastWeek }");
+            dicMessages.Add(Consts.FileName_AutoTrading_OverPercent8LastWeek, $"Over than 8 Points by week report update from { strToDateOfLastFourWeek } to { strSundayOfLastWeek }");
+            dicMessages.Add(Consts.FileName_AutoTrading_NewTA, $"New TA model for special league (France 2 & Spain Segunda) win-lose report till { strSundayOfLastWeek }");
+
+            foreach (var message in dicMessages)
+            {
+                var letstalkService = new LetstalkService(AppSettings.TGRSAutoTradingLetstalkTarget, groupName, _directorySaveImage, message.Key);
+
+                if (!letstalkService.CheckExistFileAttach())
+                {
+                    LogService.Warn($"AutoTrading Spread SendFileMessageViaLestalk to {groupName} does not exit file attach");
+                }
+                else
+                {
+                    if(!letstalkService.SendSingleFileAttachMessage(string.Empty, message.Value))
+                    {
+                        isSendSuccess = false;
+                        LogService.Warn($"AutoTrading Spread SendFileMessageViaLestalk to groupName: {groupName}, fileName: { message.Key } failed");
+                    }
+                }
+            }            
+
+            return isSendSuccess;
+        }
+
     }
 }
