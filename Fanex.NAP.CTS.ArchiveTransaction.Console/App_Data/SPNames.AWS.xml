@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="ArchiveRawTrans">
+    <Setting Key="DCS_DC_TransformData_MoveTransaction" SpName="DCS_DC_TransformData_MoveTransaction" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" Timeout="600" />
+    <Setting Key="DCS_DC_TransformData_MoveTransaction_GetPackage"
+             SpName="DCS_DC_TransformData_MoveTransaction_GetPackage" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" Timeout="600" />
+  </Function>
+</Functions>

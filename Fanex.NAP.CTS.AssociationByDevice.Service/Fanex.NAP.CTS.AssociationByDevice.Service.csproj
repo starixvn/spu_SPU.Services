@@ -60,6 +60,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="App_Data\NAPFPSNames.AWS.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Fanex.NAP.CTS.AssociationByDevice.Service.exe.LOCAL.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -68,6 +71,7 @@
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fanex.NAP.CTS.AssociationByDevice.Service.exe.AWS.config" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fanex.Data.MySql">

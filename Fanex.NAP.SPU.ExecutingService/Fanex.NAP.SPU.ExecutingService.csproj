@@ -100,8 +100,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="App_Data\Jobs.Master.AWS.xml" >
+	<DependentUpon>Jobs.xml</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="App_Data\Jobs.Master.PRO.xml">
       <DependentUpon>Jobs.xml</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\Jobs.Slave.AWS.xml" >
+	  <DependentUpon>Jobs.xml</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\Jobs.Slave.PRO.xml">
@@ -110,6 +118,14 @@
     </Content>
     <Content Include="App_Data\Jobs.Slave.LOCAL.xml">
       <DependentUpon>Jobs.xml</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\NAPFSNames.Master.AWS.xml" >
+	<DependentUpon>NAPFSNames.xml</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\NAPFSNames.Slave.AWS.xml" >
+	<DependentUpon>NAPFSNames.xml</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\NAPFSNames.Slave.PRO.xml">
@@ -143,6 +159,12 @@
     </Content>
     <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Slave.PRO.config">
       <DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Master.AWS.config" ><DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fanex.NAP.SPU.ExecutingService.exe.Slave.AWS.config" ><DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

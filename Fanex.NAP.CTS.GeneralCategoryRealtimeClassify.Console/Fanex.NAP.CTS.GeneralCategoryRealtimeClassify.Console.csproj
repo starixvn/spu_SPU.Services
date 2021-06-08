@@ -105,6 +105,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console.exe.AWS.config" />
     <None Include="Fanex.NAP.CTS.GeneralCategoryRealtimeClassify.Console.exe.PRO.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -133,6 +134,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\NAPFPSNames.LOCAL.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\NAPFPSNames.AWS.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\NAPFPSNames.PRO.xml">

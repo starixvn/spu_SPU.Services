@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="App_Data\NAPFSNames.AWS.xml" />
     <Content Include="Fanex.NAP.FS.ScannedOfficeIP.Console.exe.LOCAL.config">
       <DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -58,6 +59,7 @@
       <DependentUpon>App.Config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Fanex.NAP.FS.ScannedOfficeIP.Console.exe.AWS.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.FS.Core\Fanex.NAP.FS.Core.csproj">

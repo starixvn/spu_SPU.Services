@@ -108,6 +108,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="Fanex.NAP.CTS.ProbationMonitor.Console.exe.AWS.config" />
     <None Include="Fanex.NAP.CTS.ProbationMonitor.Console.exe.LOCAL.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -118,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SPNames.LOCAL.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\SPNames.AWS.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\SPNames.PRO.xml">

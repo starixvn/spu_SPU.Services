@@ -148,6 +148,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Fanex.NAP.CTS.UserPermission.Console.exe.AWS.config" />
     <None Include="Fanex.NAP.CTS.UserPermission.Console.exe.LOCAL.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -171,6 +172,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\SPNames.LOCAL.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\SPNames.AWS.xml">
       <SubType>Designer</SubType>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

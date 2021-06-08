@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="Auto Mark Problem Account">
+    <Setting Key="CTS_DC_InsertUserPermission" SpName="CTS_DC_InsertUserPermission" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
+  </Function>
+</Functions>

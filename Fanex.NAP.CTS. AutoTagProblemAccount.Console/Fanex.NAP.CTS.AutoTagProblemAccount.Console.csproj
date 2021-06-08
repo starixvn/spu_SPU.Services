@@ -119,6 +119,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <Content Include="Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe.AWS.config" />
     <None Include="Fanex.NAP.CTS.AutoTagProblemAccount.Console.exe.LOCAL.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
@@ -155,6 +156,10 @@
     <Content Include="App_Data\SPNames.LOCAL.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
+    </Content>
+    <Content Include="App_Data\SPNames.AWS.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="App_Data\SPNames.PRO.xml">
       <SubType>Designer</SubType>

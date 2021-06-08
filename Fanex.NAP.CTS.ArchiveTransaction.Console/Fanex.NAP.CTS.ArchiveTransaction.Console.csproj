@@ -51,6 +51,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="App_Data\SPNames.AWS.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Fanex.NAP.CTS.ArchiveTransaction.Console.exe.PRO.config">
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -59,6 +62,7 @@
       <DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fanex.NAP.CTS.ArchiveTransaction.Console.exe.AWS.config" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Fanex.Data.MySql">
