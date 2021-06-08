@@ -200,10 +200,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core.TestConsole", "Fanex.NAP.SPU.Graph.Core.TestConsole\Fanex.NAP.SPU.Graph.Core.TestConsole.csproj", "{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core.TestWeb", "Fanex.NAP.SPU.Graph.Core.TestWeb\Fanex.NAP.SPU.Graph.Core.TestWeb.csproj", "{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}"
-EndProjectProject("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service", "TGRS\Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service\Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service.csproj", "{064E20FE-37C9-4BFA-BE65-B5016A593738}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTradingSpreadViaLetstalk.Console", "TGRS\Fanex.NAP.TGRS.AutoTradingSpreadViaLetstalk.Console\Fanex.NAP.TGRS.AutoTradingSpreadViaLetstalk.Console.csproj", "{62B47E17-5F7F-4A93-958E-E81921937C98}"
-EndProjectGlobal
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service", "TGRS\Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service\Fanex.NAP.TGRS.AutoTradingSpreadViaEmail.Service.csproj", "{064E20FE-37C9-4BFA-BE65-B5016A593738}"
+EndProject
+Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
@@ -532,32 +534,22 @@ EndProjectGlobal
 		{119E4E3B-2CF1-4B10-9E4E-66C221725987}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{119E4E3B-2CF1-4B10-9E4E-66C221725987}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{119E4E3B-2CF1-4B10-9E4E-66C221725987}.Release|Any CPU.Build.0 = Release|Any CPU
-{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Release|Any CPU.Build.0 = Release|Any CPU
-{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Release|Any CPU.Build.0 = Release|Any CPU{064E20FE-37C9-4BFA-BE65-B5016A593738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-{064E20FE-37C9-4BFA-BE65-B5016A593738}.Debug|Any CPU.Build.0 = Debug|Any CPU
-{064E20FE-37C9-4BFA-BE65-B5016A593738}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{064E20FE-37C9-4BFA-BE65-B5016A593738}.Release|Any CPU.Build.0 = Release|Any CPU
-{62B47E17-5F7F-4A93-958E-E81921937C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-{62B47E17-5F7F-4A93-958E-E81921937C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-{62B47E17-5F7F-4A93-958E-E81921937C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{62B47E17-5F7F-4A93-958E-E81921937C98}.Release|Any CPU.Build.0 = Release|Any CPU{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Release|Any CPU.Build.0 = Release|Any CPU
-{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Release|Any CPU.Build.0 = Release|Any CPU
-{064E20FE-37C9-4BFA-BE65-B5016A593738}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{064E20FE-37C9-4BFA-BE65-B5016A593738}.Release|Any CPU.Build.0 = Release|Any CPU
-{62B47E17-5F7F-4A93-958E-E81921937C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-{62B47E17-5F7F-4A93-958E-E81921937C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
-{62B47E17-5F7F-4A93-958E-E81921937C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
-{62B47E17-5F7F-4A93-958E-E81921937C98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62B47E17-5F7F-4A93-958E-E81921937C98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62B47E17-5F7F-4A93-958E-E81921937C98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62B47E17-5F7F-4A93-958E-E81921937C98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62B47E17-5F7F-4A93-958E-E81921937C98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{064E20FE-37C9-4BFA-BE65-B5016A593738}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{064E20FE-37C9-4BFA-BE65-B5016A593738}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{064E20FE-37C9-4BFA-BE65-B5016A593738}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{064E20FE-37C9-4BFA-BE65-B5016A593738}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -641,11 +633,11 @@ EndProjectGlobal
 		{60B3F0F2-D8E3-48BF-8B24-DFF4D4FC4CBC} = {B9E4F045-5DCA-4951-A90C-B6F182F3DA6A}
 		{53FB4DC4-CE3B-4DDB-9D3B-7FA43C8E77EE} = {E798E345-ADD1-4D71-AF9E-383AEF1F33C1}
 		{119E4E3B-2CF1-4B10-9E4E-66C221725987} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
-		{064E20FE-37C9-4BFA-BE65-B5016A593738} = {70A00573-E8CB-4BD7-BD77-100D131E38A8}
 		{62B47E17-5F7F-4A93-958E-E81921937C98} = {70A00573-E8CB-4BD7-BD77-100D131E38A8}
+		{064E20FE-37C9-4BFA-BE65-B5016A593738} = {70A00573-E8CB-4BD7-BD77-100D131E38A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
