@@ -5,20 +5,17 @@
 
     public class GetCustomerClassificationByCategoryCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "ip_CategoryIDList")]
-        public string CategoryIdList { get; set; }
-
         [SpParam(SqlParamName = "ip_CustSport")]
         public string CustSportsJson { get; set; }
 
         public override string GetSettingKey()
         {
-            return "CTS_DC_GetCustomerClassificationByCategory";
+            return "CTS_DC_GetCustomerClassificationByCust";
         }
 
         public override bool IsValid()
         {
-            return !string.IsNullOrEmpty(CategoryIdList);
+            return true;
         }
     }
 }

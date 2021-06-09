@@ -136,14 +136,14 @@
             return dataCenterDataAccess.GetCustomerForDailyScanning(batchQuantity, rowQuantityPerBatch);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryHasChangeForRunRealtime()
+        public IEnumerable<CustomerClassificationModel> GetCustomerHasChangeForRunRealtime()
         {
-            return dataCenterDataAccess.GetCustomerGeneralCategoryHasChangeForRunRealtime();
+            return dataCenterDataAccess.GetCustomerHasChangeForRunRealtime();
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList, string categoryIds)
+        public IEnumerable<CustomerClassificationModel> GetCustomerClassificationForRunRealtime(string custSportJson)
         {
-            return dataCenterDataAccess.GetCustomerGeneralCategoryForRunRealtime(custIdList, categoryIds);
+            return dataCenterDataAccess.GetCustomerClassificationForRunRealtime(custSportJson);
         }
 
         public void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days)

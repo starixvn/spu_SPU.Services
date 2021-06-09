@@ -49,7 +49,7 @@
 
         void ClassifyCustomerGeneralCategoryRealtime(IEnumerable<CustomerClassificationModel> customers);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList, string categoryIds);        
+        IEnumerable<CustomerClassificationModel> GetCustomerClassificationForRunRealtime(string custSportJson);        
 
         IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIdList);
 

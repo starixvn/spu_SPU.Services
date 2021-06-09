@@ -92,7 +92,6 @@
     <Compile Include="CustomerClassification\GetCustomerClassificationByCategoryCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerClassificationForScanningCompleteCriteria.cs" />
     <Compile Include="CustomerClassification\GetCustomerClassificationForScanningCriteria.cs" />
-    <Compile Include="CustomerClassification\GetCustomerHasChangeForRunRealtimeCriteria.cs" />
     <Compile Include="CustomerClassification\RealtimeUpdateLastScanTimeCriteria.cs" />
     <Compile Include="GetPreviousTimingExecutionCriteria.cs" />
     <Compile Include="ProblemAccount\GetExistedEvidencesCriteria.cs" />

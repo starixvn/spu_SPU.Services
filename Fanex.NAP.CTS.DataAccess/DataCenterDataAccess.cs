@@ -281,27 +281,17 @@
         {
             var repository = new DynamicRepository();
 
-            var criteria = new GetCustomerHasChangeForRunRealtimeCriteria();
-
-            return repository.Fetch<CustomerClassificationModel>(criteria);
-        }
-
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryHasChangeForRunRealtime()
-        {
-            var repository = new DynamicRepository();
-
             var criteria = new GetCustomerGeneralCategoryHasChangeForRunRealtimeCriteria();
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custSportJson, string categoryIds)
+        public IEnumerable<CustomerClassificationModel> GetCustomerClassificationForRunRealtime(string custSportJson)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetCustomerClassificationByCategoryCriteria
             {
-                CategoryIdList = categoryIds,
                 CustSportsJson = custSportJson
             };
 
