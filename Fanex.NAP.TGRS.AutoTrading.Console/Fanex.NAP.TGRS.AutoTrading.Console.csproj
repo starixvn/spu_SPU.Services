@@ -71,6 +71,9 @@
     <Content Include="Fanex.NAP.TGRS.AutoTrading.Console.exe.PRO.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Fanex.NAP.TGRS.AutoTrading.Console.exe.AWS.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Fanex.NAP.SPU.Core\Fanex.NAP.SPU.Core.csproj">
