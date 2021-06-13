@@ -1,5 +1,6 @@
 ﻿namespace Fanex.NAP.DCS.RawTransaction.Service
 {
+    using EasyNetQ;
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
@@ -189,8 +190,8 @@
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
 
-            var rawFlagged = _botTransDetection.IsBotTransaction(message);
-            var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
+            //var rawFlagged = _botTransDetection.IsBotTransaction(message);
+            //var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
 
             return new RawTransactionModel
             {
@@ -203,7 +204,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = !flagged ? -1 : (int)rawFlagged,
+                Flagged = 1,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
