@@ -10,7 +10,6 @@
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
     using FPS.Browserless.Core;
-    using FPS.Browserless.Detection;
     using FPS.Browserless.Detection.TransService;
     using Newtonsoft.Json;
     using System;
@@ -19,7 +18,6 @@
     using System.Configuration;
     using System.Linq;
     using System.ServiceProcess;
-    using System.Text;
     using System.Text.RegularExpressions;
     using System.Timers;
     using Utilities = Core.Utilities;
@@ -93,7 +91,7 @@
         {
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
-                var trans = new List<RawTransactionModel>();
+                var trans = new List<RawTransactionModel>();                                
 
                 _rabbitMQ.AdvanceBus.Consume<MessageQueue>(_rabbitMQ.Queue, (message, info) =>
                 {
@@ -190,8 +188,8 @@
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
 
-            //var rawFlagged = _botTransDetection.IsBotTransaction(message);
-            //var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
+            var rawFlagged = _botTransDetection.IsBotTransaction(message);
+            var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
 
             return new RawTransactionModel
             {
@@ -204,7 +202,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = 1,
+                Flagged = !flagged ? -1 : (int)rawFlagged,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,

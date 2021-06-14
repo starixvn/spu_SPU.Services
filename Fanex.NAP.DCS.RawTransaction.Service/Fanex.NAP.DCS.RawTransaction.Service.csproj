@@ -54,10 +54,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Fanex.Oneyed.Infrastructure.Models, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Components\Fanex.Oneyed.Infrastructure.Models.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -110,7 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EasyNetQ">
-      <Version>3.7.1</Version>
+      <Version>6.3.1</Version>
     </PackageReference>
     <PackageReference Include="Fanex.Data.Repository">
       <Version>4.2.2</Version>
@@ -128,10 +124,10 @@
       <Version>4.1.3.6</Version>
     </PackageReference>
     <PackageReference Include="log4net">
-      <Version>2.0.8</Version>
+      <Version>2.0.12</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
-      <Version>12.0.3</Version>
+      <Version>13.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
