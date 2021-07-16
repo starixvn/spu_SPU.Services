@@ -3,7 +3,7 @@
 <Functions>
   <Function Name="CustomerClassification">
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_RealTime_CheckChanges" SpName="CTS_NormalAccountsClassification_GeneralCategorize_RealTime_CheckChanges" DbName="DBCTS.bodbVR2Model.bodbSPUNet" TimeOut="1200"/>
-    <Setting Key="CTS_DC_GetCustomerClassificationByCust" SpName="CTS_DC_GetCustomerClassificationByCust" DbName="MySQL.CTS_DataCenter.ctsService"/>
+    <Setting Key="CTS_DC_GetCustomerClassificationByCategory" SpName="CTS_DC_GetCustomerClassificationByCategory" DbName="MySQL.CTS_DataCenter.ctsService"/>
     <Setting Key="CTS_NormalAccountsClassification_GeneralCategorize_RealTime"  SpName="CTS_NormalAccountsClassification_GeneralCategorize_RealTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet" TimeOut="1200"/>
     <Setting Key="CTS_NormalAccountsClassification_UpdateLastScanTime" SpName="CTS_NormalAccountsClassification_UpdateLastScanTime" DbName="DBCTS.bodbVR2Model.bodbSPUNet" />
   </Function>
