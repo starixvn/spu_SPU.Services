@@ -155,8 +155,7 @@
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
             LogMessage(message);
-
-            var perfDate = DateTime.Now;
+                        
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
@@ -167,11 +166,7 @@
             var token = message.Token ?? string.Empty;
             var analysis = Utilities.GetAnalysis(message.Device);
 
-            LogService.Info($"Variable - start: { perfDate.ToString("dd/MM/yyyy HH:mm:ss:ffff") } - end: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff")}");
-
-            perfDate = DateTime.Now;
             var flagged = Browserless(token, analysis, userAgent, deviceNo);
-            LogService.Info($"Browserless - start: { perfDate.ToString("dd/MM/yyyy HH:mm:ss:ffff") } - end: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff")}");
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
@@ -213,9 +208,7 @@
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null
-            };
-
-            LogService.Info($"Transform - start: { perfDate.ToString("dd/MM/yyyy HH:mm:ss:ffff") } - end: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff")}");
+            };                       
 
             return result;
         }
@@ -298,17 +291,17 @@
                             }
                         }
 
-                        if (string.IsNullOrWhiteSpace(analysis))
-                        {
-                            return Flagged.EmptyAnalysis;
-                        }
-                        else
-                        {
-                            if (!IsValidAnalysisKey(analysis))
-                            {
-                                return Flagged.InvalidAnalysis;
-                            }
-                        }
+                        //if (string.IsNullOrWhiteSpace(analysis))
+                        //{
+                        //    return Flagged.EmptyAnalysis;
+                        //}
+                        //else
+                        //{
+                        //    if (!IsValidAnalysisKey(analysis))
+                        //    {
+                        //        return Flagged.InvalidAnalysis;
+                        //    }
+                        //}
 
                         if (string.IsNullOrWhiteSpace(userAgent))
                         {
