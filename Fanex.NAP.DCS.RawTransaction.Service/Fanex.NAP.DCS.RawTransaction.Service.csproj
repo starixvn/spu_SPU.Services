@@ -75,6 +75,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowserlessDetection.cs" />
+    <Compile Include="Flagged.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -119,9 +121,6 @@
     </PackageReference>
     <PackageReference Include="Fanex.Oneyed.DeviceDetector">
       <Version>2.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="FPS.Browserless.Detection">
-      <Version>4.1.3.6</Version>
     </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.12</Version>

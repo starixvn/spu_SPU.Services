@@ -56,6 +56,13 @@
             return splitingDI.Length >= 7 ? splitingDI[6] : string.Empty;
         }
 
+        public static string GetAnalysis(string di)
+        {
+            string[] splitedDI = di.Split(new[] { "###" }, StringSplitOptions.None);
+
+            return splitedDI.Length > 8 ? splitedDI[8] : string.Empty;
+        }
+
         public static string XMLConvert(object data)
         {
             var emptyNamespaces = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });

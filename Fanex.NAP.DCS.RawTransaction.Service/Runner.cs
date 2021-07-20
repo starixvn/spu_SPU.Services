@@ -163,7 +163,16 @@
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
-                       
+            var token = message.Token ?? string.Empty;
+            var analysis = Utilities.GetAnalysis(message.Device);
+
+            var flagged = Browserless(token, analysis, userAgent, deviceNo);
+
+            if(flagged != Flagged.Human)
+            {
+                LogService.Info(message.Account + " - " + message.Subscriber + "-" + (int)flagged );
+            }
+
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
                 deviceInfo.DeviceNo = null;
@@ -183,10 +192,9 @@
             {
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
-
+                        
             var rawFlagged = _botTransDetection.IsBotTransaction(message);
             var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
-
             return new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
@@ -198,7 +206,7 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = !flagged ? -1 : (int)rawFlagged,
+                Flagged = (int)flagged,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
@@ -261,6 +269,118 @@
                 }
             }
 
+        }
+        private static Flagged Browserless(string token, string analysis, string userAgent, string deviceNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(deviceNo))
+                {
+                    return Flagged.EmptyDevice;
+                }
+                else
+                {
+                    if (deviceNo != "N/A" && Utilities.IsGuidDeviceId(deviceNo))
+                    {
+                        if (string.IsNullOrWhiteSpace(token))
+                        {
+                            return Flagged.EmptyToken;
+                        }
+                        else
+                        {
+                            if (!IsValidateToken(token))
+                            {
+                                return Flagged.InvalidToken;
+                            }
+                        }
+
+                        if (string.IsNullOrWhiteSpace(analysis))
+                        {
+                            return Flagged.EmptyAnalysis;
+                        }
+                        else
+                        {
+                            if (!IsValidAnalysisKey(analysis))
+                            {
+                                return Flagged.InvalidAnalysis;
+                            }
+                        }
+
+                        if (string.IsNullOrWhiteSpace(userAgent))
+                        {
+                            return Flagged.EmptyUserAgent;
+                        }
+                        else
+                        {
+                            if (IsHeadless(userAgent))
+                            {
+                                return Flagged.Headless;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Flagged.InvalidDevice;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Error(ex.Message);
+            }
+
+            return Flagged.Human;
+        }
+
+
+        private static bool IsValidateToken(string token)
+        {
+            var decryptedToken = BrowserlessDetection.Decrypt(token);
+            var splitedToken = decryptedToken.Split('@');
+            if (splitedToken.Length != 2)
+            {
+                return false;
+            }
+            else
+            {
+                if (splitedToken.Length > 0)
+                {
+                    var submitTime = DateTime.Parse(splitedToken[0]);
+
+                    if (DateTime.Now.ToUniversalTime() < submitTime)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsValidAnalysisKey(string analysis)
+        {
+            string JsEnabledKey = "js-enabled";
+            string[] AnalysisFormatKey = new string[] { "startTime", "version", "exceptions", "executions", "storages", "devices", "enable" };
+
+            if (!analysis.Contains(JsEnabledKey))
+            {
+                foreach (var analysiItem in AnalysisFormatKey)
+                {
+                    if (!analysis.Contains(analysiItem))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsHeadless(string userAgent)
+        {
+            if (userAgent.Contains("Headless")) return true;
+
+            return false;
         }
     }
 }
