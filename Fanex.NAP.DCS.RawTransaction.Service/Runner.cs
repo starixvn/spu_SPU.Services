@@ -156,6 +156,7 @@
         {
             LogMessage(message);
 
+            var perfDate = DateTime.Now;
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
@@ -166,7 +167,11 @@
             var token = message.Token ?? string.Empty;
             var analysis = Utilities.GetAnalysis(message.Device);
 
-            var flagged = Flagged.Human; //Browserless(token, analysis, userAgent, deviceNo);
+            LogService.Info($"Variable - start: { perfDate.ToString("dd/MM/yyyy HH:mm:ss:ffff") } - end: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff")}");
+
+            perfDate = DateTime.Now;
+            var flagged = Browserless(token, analysis, userAgent, deviceNo);
+            LogService.Info($"Browserless - start: { perfDate.ToString("dd/MM/yyyy HH:mm:ss:ffff") } - end: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff")}");
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
@@ -190,7 +195,7 @@
 
             var rawFlagged = _botTransDetection.IsBotTransaction(message);
             var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
-            return new RawTransactionModel
+            var result = new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
                 InvalidDevice = string.IsNullOrWhiteSpace(invalidDevice) ? null : invalidDevice,
@@ -209,6 +214,10 @@
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null
             };
+
+            LogService.Info($"Transform - start: { perfDate.ToString("dd/MM/yyyy HH:mm:ss:ffff") } - end: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss:ffff")}");
+
+            return result;
         }
 
         private void InsertTransactionByTimer(object sender, ElapsedEventArgs e)
