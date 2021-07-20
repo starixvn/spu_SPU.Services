@@ -9,8 +9,6 @@
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
-    using FPS.Browserless.Core;
-    using FPS.Browserless.Detection.TransService;
     using Newtonsoft.Json;
     using System;
     using System.Collections;
@@ -29,7 +27,7 @@
         private readonly List<RawTransactionModel> _transactionList;
         private readonly System.Timers.Timer _timer;
         private DateTime _lastInsertTrans;
-        private BotTransDetection _botTransDetection;
+        
         public Runner()
         {
             InitializeComponent();
@@ -52,8 +50,6 @@
             _timer = new System.Timers.Timer();
             _timer.Elapsed += InsertTransactionByTimer;
             _timer.Interval = AppSettings.Interval;
-
-            _botTransDetection = new BotTransDetection();
         }
 
         protected override void OnStart(string[] args)
