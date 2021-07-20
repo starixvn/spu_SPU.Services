@@ -166,12 +166,11 @@
             var token = message.Token ?? string.Empty;
             var analysis = Utilities.GetAnalysis(message.Device);
 
+            LogService.Info($"Browserless - Start: {DateTime.Now}");
+
             var flagged = Browserless(token, analysis, userAgent, deviceNo);
 
-            if(flagged != Flagged.Human)
-            {
-                LogService.Info(message.Account + " - " + message.Subscriber + "-" + (int)flagged );
-            }
+            LogService.Info($"Browserless - End: {DateTime.Now}");
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
@@ -288,10 +287,14 @@
                         }
                         else
                         {
+                            LogService.Info($"IsValidateToken - Start: {DateTime.Now}");
+
                             if (!IsValidateToken(token))
                             {
                                 return Flagged.InvalidToken;
                             }
+
+                            LogService.Info($"IsValidateToken - End: {DateTime.Now}");
                         }
 
                         if (string.IsNullOrWhiteSpace(analysis))
@@ -300,10 +303,14 @@
                         }
                         else
                         {
+                            LogService.Info($"IsValidAnalysisKey - Start: {DateTime.Now}");
+
                             if (!IsValidAnalysisKey(analysis))
                             {
                                 return Flagged.InvalidAnalysis;
                             }
+
+                            LogService.Info($"IsValidAnalysisKey - End: {DateTime.Now}");
                         }
 
                         if (string.IsNullOrWhiteSpace(userAgent))
@@ -312,10 +319,14 @@
                         }
                         else
                         {
+                            LogService.Info($"IsHeadless - Start: {DateTime.Now}");
+
                             if (IsHeadless(userAgent))
                             {
                                 return Flagged.Headless;
                             }
+
+                            LogService.Info($"IsHeadless - End: {DateTime.Now}");
                         }
                     }
                     else
