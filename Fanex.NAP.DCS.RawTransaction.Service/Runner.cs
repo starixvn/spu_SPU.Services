@@ -9,9 +9,6 @@
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
-    using FPS.Browserless.Core;
-    using FPS.Browserless.Detection;
-    using FPS.Browserless.Detection.TransService;
     using Newtonsoft.Json;
     using System;
     using System.Collections;
@@ -19,7 +16,6 @@
     using System.Configuration;
     using System.Linq;
     using System.ServiceProcess;
-    using System.Text;
     using System.Text.RegularExpressions;
     using System.Timers;
     using Utilities = Core.Utilities;
@@ -31,7 +27,7 @@
         private readonly List<RawTransactionModel> _transactionList;
         private readonly System.Timers.Timer _timer;
         private DateTime _lastInsertTrans;
-        private BotTransDetection _botTransDetection;
+
         public Runner()
         {
             InitializeComponent();
@@ -54,8 +50,6 @@
             _timer = new System.Timers.Timer();
             _timer.Elapsed += InsertTransactionByTimer;
             _timer.Interval = AppSettings.Interval;
-
-            _botTransDetection = new BotTransDetection();
         }
 
         protected override void OnStart(string[] args)
@@ -93,7 +87,7 @@
         {
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
-                var trans = new List<RawTransactionModel>();
+                var trans = new List<RawTransactionModel>();                                
 
                 _rabbitMQ.AdvanceBus.Consume<MessageQueue>(_rabbitMQ.Queue, (message, info) =>
                 {
@@ -161,7 +155,7 @@
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
             LogMessage(message);
-
+                        
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
@@ -169,7 +163,11 @@
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
-                       
+            var token = message.Token ?? string.Empty;
+            var analysis = Utilities.GetAnalysis(message.Device);
+
+            var flagged = Browserless(token, analysis, userAgent, deviceNo);
+
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
                 deviceInfo.DeviceNo = null;
@@ -189,11 +187,8 @@
             {
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
-
-            //var rawFlagged = _botTransDetection.IsBotTransaction(message);
-            //var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
-
-            return new RawTransactionModel
+                        
+            var result = new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
                 InvalidDevice = string.IsNullOrWhiteSpace(invalidDevice) ? null : invalidDevice,
@@ -204,14 +199,16 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = 1,
+                Flagged = (int)flagged,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null
-            };
+            };                       
+
+            return result;
         }
 
         private void InsertTransactionByTimer(object sender, ElapsedEventArgs e)
@@ -267,6 +264,118 @@
                 }
             }
 
+        }
+        private static Flagged Browserless(string token, string analysis, string userAgent, string deviceNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(deviceNo))
+                {
+                    return Flagged.EmptyDevice;
+                }
+                else
+                {
+                    if (deviceNo != "N/A" && Utilities.IsGuidDeviceId(deviceNo))
+                    {
+                        if (string.IsNullOrWhiteSpace(token))
+                        {
+                            return Flagged.EmptyToken;
+                        }
+                        else
+                        {
+                            if (!IsValidateToken(token))
+                            {
+                                return Flagged.InvalidToken;
+                            }
+                        }                                               
+
+                        if (string.IsNullOrWhiteSpace(analysis))
+                        {
+                            return Flagged.EmptyAnalysis;
+                        }
+                        else
+                        {
+                            if (!IsValidAnalysisKey(analysis))
+                            {
+                                return Flagged.InvalidAnalysis;
+                            }
+                        }
+
+                        if (string.IsNullOrWhiteSpace(userAgent))
+                        {
+                            return Flagged.EmptyUserAgent;
+                        }
+                        else
+                        {
+                            if (IsHeadless(userAgent))
+                            {
+                                return Flagged.Headless;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Flagged.InvalidDevice;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Error(ex.Message);
+            }
+
+            return Flagged.Human;
+        }
+
+
+        private static bool IsValidateToken(string token)
+        {
+            var decryptedToken = BrowserlessDetection.Decrypt(token);
+            var splitedToken = decryptedToken.Split('@');
+            if (splitedToken.Length != 2)
+            {
+                return false;
+            }
+            else
+            {
+                if (splitedToken.Length > 0)
+                {
+                    var submitTime = DateTime.Parse(splitedToken[0]);
+
+                    if (DateTime.Now.ToUniversalTime() < submitTime)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsValidAnalysisKey(string analysis)
+        {
+            string JsEnabledKey = "js-enabled";
+            string[] AnalysisFormatKey = new string[] { "startTime", "version", "exceptions", "executions", "storages", "devices", "enable" };
+
+            if (!analysis.Contains(JsEnabledKey))
+            {
+                foreach (var analysiItem in AnalysisFormatKey)
+                {
+                    if (!analysis.Contains(analysiItem))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsHeadless(string userAgent)
+        {
+            if (userAgent.Contains("Headless")) return true;
+
+            return false;
         }
     }
 }
