@@ -298,14 +298,15 @@
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days = true)
+        public void ClassifyCustomerGeneralCategoryDaily(string customers,int funcId = -1, bool isCheckLast14Days = true)
         {
             var repository = new DynamicRepository();
 
             var criteria = new NormalAccountsClassificationGeneralCategorizeDailyCriteria
             {
                 ListCustIds = customers,
-                IsCheckLast14Days = isCheckLast14Days
+                IsCheckLast14Days = isCheckLast14Days,
+                FunctionId = funcId
             };
 
             repository.Execute(criteria);

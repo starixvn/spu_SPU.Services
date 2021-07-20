@@ -8,6 +8,8 @@
 
         public bool IsCheckLast14Days { get; set; }
 
+        public int FunctionId { get; set; }
+
         public override string GetSettingKey()
         {
             return "CTS_NormalAccountsClassification_GeneralCategorize_Daily";

@@ -146,9 +146,9 @@
             return dataCenterDataAccess.GetCustomerClassificationForRunRealtime(custSportJson);
         }
 
-        public void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days)
+        public void ClassifyCustomerGeneralCategoryDaily(string customers, int funcId, bool isCheckLast14Days)
         {
-            dataCenterDataAccess.ClassifyCustomerGeneralCategoryDaily(customers, isCheckLast14Days);
+            dataCenterDataAccess.ClassifyCustomerGeneralCategoryDaily(customers, funcId, isCheckLast14Days);
         }
 
         public void ClassifyCustomerDailyDone(string custSportJson)
