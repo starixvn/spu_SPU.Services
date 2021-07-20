@@ -27,7 +27,7 @@
         private readonly List<RawTransactionModel> _transactionList;
         private readonly System.Timers.Timer _timer;
         private DateTime _lastInsertTrans;
-        
+
         public Runner()
         {
             InitializeComponent();
@@ -166,11 +166,7 @@
             var token = message.Token ?? string.Empty;
             var analysis = Utilities.GetAnalysis(message.Device);
 
-            LogService.Info($"Browserless - Start: {DateTime.Now}");
-
-            var flagged = Browserless(token, analysis, userAgent, deviceNo);
-
-            LogService.Info($"Browserless - End: {DateTime.Now}");
+            var flagged = Flagged.Human; //Browserless(token, analysis, userAgent, deviceNo);
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
@@ -191,7 +187,7 @@
             {
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
-                        
+
             var rawFlagged = _botTransDetection.IsBotTransaction(message);
             var flagged = Enum.IsDefined(typeof(DeviceFlagged), rawFlagged);
             return new RawTransactionModel
@@ -287,14 +283,10 @@
                         }
                         else
                         {
-                            LogService.Info($"IsValidateToken - Start: {DateTime.Now}");
-
                             if (!IsValidateToken(token))
                             {
                                 return Flagged.InvalidToken;
                             }
-
-                            LogService.Info($"IsValidateToken - End: {DateTime.Now}");
                         }
 
                         if (string.IsNullOrWhiteSpace(analysis))
@@ -303,14 +295,10 @@
                         }
                         else
                         {
-                            LogService.Info($"IsValidAnalysisKey - Start: {DateTime.Now}");
-
                             if (!IsValidAnalysisKey(analysis))
                             {
                                 return Flagged.InvalidAnalysis;
                             }
-
-                            LogService.Info($"IsValidAnalysisKey - End: {DateTime.Now}");
                         }
 
                         if (string.IsNullOrWhiteSpace(userAgent))
@@ -319,14 +307,10 @@
                         }
                         else
                         {
-                            LogService.Info($"IsHeadless - Start: {DateTime.Now}");
-
                             if (IsHeadless(userAgent))
                             {
                                 return Flagged.Headless;
                             }
-
-                            LogService.Info($"IsHeadless - End: {DateTime.Now}");
                         }
                     }
                     else
