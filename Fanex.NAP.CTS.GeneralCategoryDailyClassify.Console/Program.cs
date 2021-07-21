@@ -62,7 +62,7 @@ namespace Fanex.NAP.CTS.GeneralCategoryDailyClassify.Console
                         var custGroupByBatch = customers.GroupBy(c => c.BatchID);
                         foreach (var custGroup in custGroupByBatch)
                         {
-                            dataCenterService.ClassifyCustomerGeneralCategoryDaily(string.Join(",", custGroup.Select(c => c.CustId)), true);
+                            dataCenterService.ClassifyCustomerGeneralCategoryDaily(string.Join(",", custGroup.Select(c => c.CustId)), -1, true);
                             string jsonData = JsonConvert.SerializeObject(custGroup.Select(a => new { a.CustId, a.SportGroupId }));
                             dataCenterService.ClassifyCustomerDailyDone(jsonData);
                             countTotalCusts += custGroup.Count();

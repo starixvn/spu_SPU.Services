@@ -281,41 +281,32 @@
         {
             var repository = new DynamicRepository();
 
-            var criteria = new GetCustomerHasChangeForRunRealtimeCriteria();
-
-            return repository.Fetch<CustomerClassificationModel>(criteria);
-        }
-
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryHasChangeForRunRealtime()
-        {
-            var repository = new DynamicRepository();
-
             var criteria = new GetCustomerGeneralCategoryHasChangeForRunRealtimeCriteria();
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custSportJson, string categoryIds)
+        public IEnumerable<CustomerClassificationModel> GetCustomerClassificationForRunRealtime(string custSportJson)
         {
             var repository = new DynamicRepository();
 
             var criteria = new GetCustomerClassificationByCategoryCriteria
             {
-                CategoryIdList = categoryIds,
                 CustSportsJson = custSportJson
             };
 
             return repository.Fetch<CustomerClassificationModel>(criteria);
         }
 
-        public void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days = true)
+        public void ClassifyCustomerGeneralCategoryDaily(string customers,int funcId = -1, bool isCheckLast14Days = true)
         {
             var repository = new DynamicRepository();
 
             var criteria = new NormalAccountsClassificationGeneralCategorizeDailyCriteria
             {
                 ListCustIds = customers,
-                IsCheckLast14Days = isCheckLast14Days
+                IsCheckLast14Days = isCheckLast14Days,
+                FunctionId = funcId
             };
 
             repository.Execute(criteria);

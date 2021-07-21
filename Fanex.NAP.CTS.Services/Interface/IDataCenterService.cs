@@ -45,11 +45,11 @@
 
         void ClassifyCustomerDailyDone(string custSportJson);
 
-        void ClassifyCustomerGeneralCategoryDaily(string customers, bool isCheckLast14Days);
+        void ClassifyCustomerGeneralCategoryDaily(string customers, int funcId, bool isCheckLast14Days);
 
         void ClassifyCustomerGeneralCategoryRealtime(IEnumerable<CustomerClassificationModel> customers);
 
-        IEnumerable<CustomerClassificationModel> GetCustomerGeneralCategoryForRunRealtime(string custIdList, string categoryIds);        
+        IEnumerable<CustomerClassificationModel> GetCustomerClassificationForRunRealtime(string custSportJson);        
 
         IEnumerable<CustomerCategoryClassificationModel> GetCustomerClassByCustId(string custIdList);
 

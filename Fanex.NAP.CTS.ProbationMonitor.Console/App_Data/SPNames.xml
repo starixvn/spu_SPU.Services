@@ -9,6 +9,6 @@
     <Setting Key="CTS_DC_CustClassification_Probation_UpdateLastScanDate"
              SpName="CTS_DC_CustClassification_Probation_UpdateLastScanDate" DbName="MySQL.CTS_DataCenter.ctsServiceAdmin"/>
     <Setting Key="CTS_NormalAccountsClassification_Probation"
-             SpName="CTS_NormalAccountsClassification_Probation" DbName="DBCTS.bodbVR2Model.bodbSPUNet"/>
+             SpName="CTS_NormalAccountsClassification_Probation" DbName="DBCTS.bodbVR2Model.bodbSPUNet" TimeOut="600"/>
   </Function>
 </Functions>

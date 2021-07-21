@@ -61,7 +61,7 @@
 
             if (custIds != null && custIds.Any())
             {
-                RescanNormalAccount(custIds);
+                RescanNormalAccount(custIds, flowTypeRescanCC);
             }
         }
 
@@ -239,7 +239,7 @@
             }
         }
 
-        private void RescanNormalAccount(List<int> customers)
+        private void RescanNormalAccount(List<int> customers, FLOWTYPERESCANCC flowTypeRescanCC)
         {
             if (customers == null || !customers.Any())
             {
@@ -252,7 +252,9 @@
             {
                 var custIdsToBeRescaned = string.Join(",", custIds);
 
-                _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned, false);
+                int funcid = flowTypeRescanCC == FLOWTYPERESCANCC.NEWMEMBER ? 4 : -1;
+
+                _dataCenterService.ClassifyCustomerGeneralCategoryDaily(custIdsToBeRescaned, funcid, false);
             }
         }
 

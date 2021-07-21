@@ -50,9 +50,9 @@
             {
                 var dataCenterService = new DataCenterService();
                 var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
-                var categoryIds = "201, 202, 205, 231, 232, 233, 222, 221, 223, 212, 211, 213"; // Hard code for 'New member' & 'Main Normal Account' & 'Main VIP'  & special categories
+                //var categoryIds = "201, 202, 205, 231, 232, 233, 222, 221, 223, 212, 211, 213";  'New member' & 'Main Normal Account' & 'Main VIP'  & special categories
 
-                var customerHasChanges = dataCenterService.GetCustomerGeneralCategoryHasChangeForRunRealtime();
+                var customerHasChanges = dataCenterService.GetCustomerHasChangeForRunRealtime();
         
                 if (customerHasChanges.Any())
                 {
@@ -62,7 +62,7 @@
                     {
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
 
-                        var customers = dataCenterService.GetCustomerGeneralCategoryForRunRealtime(custSportJson, categoryIds);
+                        var customers = dataCenterService.GetCustomerClassificationForRunRealtime(custSportJson);
 
                         dataCenterService.ClassifyCustomerGeneralCategoryRealtime(customers);
 
