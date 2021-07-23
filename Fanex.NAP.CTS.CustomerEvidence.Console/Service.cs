@@ -50,10 +50,10 @@
                                 InsertCustomerEvidence(custEviList, isOverwrite);
                             }
                             catch (Exception ex)
-                            {                                
+                            {
                                 var logMessage = new LogMessage(ex.Message)
-                                  .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                                  .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                                     .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                                 LogService.Error(logMessage);
                             }
@@ -107,7 +107,11 @@
                 }
                 catch (Exception ex)
                 {
-                    LogService.Error($"CustomerEvidence Service InsertCustomerEvidence exception: {ex.Message}", ex);
+                    var logMessage = new LogMessage(ex.Message)
+                         .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                         .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                    LogService.Error(logMessage);
                 }
             }
 
