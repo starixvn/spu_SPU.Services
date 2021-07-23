@@ -1,6 +1,8 @@
 ﻿namespace Fanex.NAP.CTS.CustomerEvidence.Console
 {
     using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
     using Fanex.MailDelivery.Client;
     using Fanex.MailDelivery.Core.Models;
     using Fanex.NAP.CTS.Model;
@@ -48,8 +50,12 @@
                                 InsertCustomerEvidence(custEviList, isOverwrite);
                             }
                             catch (Exception ex)
-                            {
-                                LogService.Error($"CustomerEvidence Service InsertCustomerEvidence exception: { ex.Message }", ex);
+                            {                                
+                                var logMessage = new LogMessage(ex.Message)
+                                  .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                                  .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                                LogService.Error(logMessage);
                             }
                         }
 
@@ -58,8 +64,12 @@
                 } while (custEvidenceFromFiles != null && custEvidenceFromFiles.Any());
             }
             catch (Exception ex)
-            {
-                LogService.Error($"CustomerEvidence Service ProcessCustEvidenceFromFile exception: { ex.Message }", ex);
+            {                
+                var logMessage = new LogMessage(ex.Message)
+                      .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                      .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
             }
         }
 
