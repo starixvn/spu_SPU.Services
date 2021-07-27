@@ -87,14 +87,17 @@
 
                     if (IsInsertMainSuccessful(typeCustModel.ErrorMessage, listClassification))
                     {
-                        // 2. Update IsApplied in mainDB
-                        _dataCenterService.UpdateAppliedStatusClassification(custIds, true);
+                        //2. Push Data to External
+                        var isSuccess = PushDataToExternal(typeCustModel?.CustIds.ToList());
 
-                        if (AppSettings.IsWriteLogInfo) 
-                            LogService.Info($"Normal.Service - update IsApplied insertMain done - Time: {DateTime.Now}");
+                        // 3. Update IsApplied in mainDB
+                        if(isSuccess)
+                        {
+                            _dataCenterService.UpdateAppliedStatusClassification(custIds, true);
 
-                        //3. Push Data to External
-                        PushDataToExternal(typeCustModel?.CustIds.ToList());
+                            if (AppSettings.IsWriteLogInfo)
+                                LogService.Info($"Normal.Service - update IsApplied DW done - Time: {DateTime.Now}");
+                        }    
                     }
                 }
                 catch (Exception ex)
@@ -108,15 +111,14 @@
             }
         }
 
-        private void PushDataToExternal(List<int> custList)
+        private bool PushDataToExternal(List<int> custList)
         {
             if (custList == null || !custList.Any())
             {
-                return;
+                return true;
             }
 
             var latestCustIdsChunk = custList.Chunk(AppSettings.PushCCToExternalChunkSize);
-
             foreach (var custIds in latestCustIdsChunk)
             {
                 var lastestClassifications = _dataCenterService.GetLatestClassification(string.Join(",", custIds));
@@ -124,25 +126,33 @@
                 if (lastestClassifications != null && lastestClassifications.Any())
                 {
                     bool isSuccess = UpdateCCToMainDB(lastestClassifications);
-                    if (AppSettings.IsWriteLogInfo) 
-                        LogService.Info($"Normal.Service - Push CC {(isSuccess? "done" : "fail" )} {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
+                    if (AppSettings.IsWriteLogInfo)
+                        LogService.Info($"Normal.Service - Push CC {(isSuccess ? "done" : "fail")} {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
 
                     if (isSuccess)
                     {
-                        UpdateDangerLevelToMainDB(lastestClassifications);
+                        isSuccess = UpdateDangerLevelToMainDB(lastestClassifications);
                     }
 
-                    _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
-                    if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - PushSoon88 {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
+                    if (isSuccess)
+                    {
+                        isSuccess = _pushDataToExternalService.PushCustomerClassificationToSoon88(lastestClassifications);
+                        if (AppSettings.IsWriteLogInfo) LogService.Info($"Normal.Service - PushSoon88 {JsonConvert.SerializeObject(lastestClassifications)}- Time: {DateTime.Now}");
+                    }
+
+                    if (!isSuccess)
+                        return false;
                 }
             }
+
+            return true;
         }
 
         private bool UpdateCCToMainDB(IEnumerable<LatestClassificationModel> lastestCC)
         {
             if (lastestCC == null || !lastestCC.Any())
             {
-                return false;
+                return true;
             }
 
             var isSuccessToMain = _pushDataToExternalService.PushCustomerClassificationToMain(lastestCC, 2);
@@ -158,11 +168,11 @@
             return isSuccessToMain;
         }
 
-        private void UpdateDangerLevelToMainDB(IEnumerable<LatestClassificationModel> lastestCC)
+        private bool UpdateDangerLevelToMainDB(IEnumerable<LatestClassificationModel> lastestCC)
         {
             if (lastestCC == null || !lastestCC.Any())
             {
-                return;
+                return true;
             }
 
             var dangerLevels = _dataCenterService.GetDangerLevel(string.Join(",", lastestCC.Select(c=>c.CustId)), DANGERLEVEL.ORIGINAL);
@@ -182,7 +192,11 @@
 
                     _dataCenterService.UpdateAppliedDangerLevel(jsonUpdateApplyCCs, DANGERLEVEL.ORIGINAL);
                 }
+
+                return isUpdateSuccessful;
             }
+
+            return true;
         }
 
         private string GetCustIds(IEnumerable<CustomerClassificationModelMoreInfo> generalClassification)

@@ -8,7 +8,7 @@
     {
         bool PushCustomerClassificationToMain(IEnumerable<LatestClassificationModel> customerClassifications, int retryTime);
 
-        void PushCustomerClassificationToSoon88(IEnumerable<LatestClassificationModel> customerClassifications);
+        bool PushCustomerClassificationToSoon88(IEnumerable<LatestClassificationModel> customerClassifications);
 
         bool UpdateDangerLevelToMain(IEnumerable<DangerLevelModel> dangerLevels, DANGERLEVEL typeId, int retryTime);
     }

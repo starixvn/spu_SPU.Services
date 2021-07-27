@@ -67,9 +67,9 @@
             return true;
         }
 
-        public void PushCustomerClassificationToSoon88(IEnumerable<LatestClassificationModel> customerClassifications)
+        public bool PushCustomerClassificationToSoon88(IEnumerable<LatestClassificationModel> customerClassifications)
         {
-            FeedDataToSoon88Helper.FeedCCToSoon88(customerClassifications);
+            return FeedDataToSoon88Helper.FeedCCToSoon88(customerClassifications);
         }
 
         public bool UpdateDangerLevelToMain(IEnumerable<DangerLevelModel> dangerLevels, DANGERLEVEL typeId, int retryTime)

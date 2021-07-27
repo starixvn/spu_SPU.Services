@@ -16,11 +16,11 @@
 
     public static class FeedDataToSoon88Helper
     {
-        public static void FeedCCToSoon88(IEnumerable<LatestClassificationModel> custsToMainDB)
+        public static bool FeedCCToSoon88(IEnumerable<LatestClassificationModel> custsToMainDB)
         {
             if (custsToMainDB == null || !custsToMainDB.Any())
             {
-                return;
+                return true;
             }
 
             try
@@ -32,6 +32,8 @@
                 });
 
                 FeedDataToSoon88(custClassList);
+
+                return true;
             }
             catch (Exception ex)
             {
@@ -43,6 +45,8 @@
 
                 LogService.Error($"Feed Data to Soon88 - Start Exception {logMessage} with listCust: {jsonDataForLog}", ex);
             }
+
+            return false;
         }
 
         public static void FeedDataToSoon88(IEnumerable<CustomerClassModel> custClasses)
