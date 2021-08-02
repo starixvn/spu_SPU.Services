@@ -7,6 +7,7 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Sentry.RavenClient;
+    using Fanex.NAP.CTS.Model;
     using Fanex.NAP.CTS.Services;
     using Fanex.NAP.FS.Core;
     using Fanex.NAP.SPU.Core;
@@ -52,19 +53,32 @@
                 var batchSize = Convert.ToInt32(ConfigurationManager.AppSettings["Batch-Size"]);
                 //var categoryIds = "201, 202, 205, 231, 232, 233, 222, 221, 223, 212, 211, 213";  'New member' & 'Main Normal Account' & 'Main VIP'  & special categories
 
-                var customerHasChanges = dataCenterService.GetCustomerHasChangeForRunRealtime();
+                var custsHasChanges = dataCenterService.GetCustomerHasChangeForRunRealtime();
         
-                if (customerHasChanges.Any())
+                if (custsHasChanges.Any())
                 {
-                    var custChunks = customerHasChanges.Chunk(batchSize).ToList();
+                    var custChunks = custsHasChanges.Chunk(batchSize).ToList();
 
                     for (int i = 0; i < custChunks.Count; i++)
                     {
                         var custSportJson = JsonConvert.SerializeObject(custChunks[i]);
 
-                        var customers = dataCenterService.GetCustomerClassificationForRunRealtime(custSportJson);
+                        var custCategories = dataCenterService.GetCustomerClassificationForRunRealtime(custSportJson);
 
-                        dataCenterService.ClassifyCustomerGeneralCategoryRealtime(customers);
+                        var classifyRealtime = custChunks[i].GroupJoin(custCategories,
+                                                    custsHaschanges => custsHaschanges.CustId,
+                                                    custsCategories => custsCategories.CustId,
+                                                    (custsHaschanges, custsCategories) => new { custsHaschanges, custsCategories })
+                                                    .SelectMany(
+                                                        group => group.custsCategories.DefaultIfEmpty(),
+                                                        (group, temp) => new CustomerClassificationModel
+                                                        {
+                                                            CustId = group.custsHaschanges.CustId,
+                                                            SportGroupId = group.custsHaschanges.SportGroupId,
+                                                            CategoryId = (temp != null) ? temp.CategoryId : 0
+                                                        });
+
+                        dataCenterService.ClassifyCustomerGeneralCategoryRealtime(classifyRealtime);
 
                         Thread.Sleep(3000);
                     }
