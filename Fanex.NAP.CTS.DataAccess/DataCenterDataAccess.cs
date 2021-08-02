@@ -295,7 +295,9 @@
                 CustSportsJson = custSportJson
             };
 
-            return repository.Fetch<CustomerClassificationModel>(criteria);
+            var result = repository.Fetch<CustomerClassificationModel>(criteria);
+
+            return result ?? new List<CustomerClassificationModel>();
         }
 
         public void ClassifyCustomerGeneralCategoryDaily(string customers,int funcId = -1, bool isCheckLast14Days = true)
