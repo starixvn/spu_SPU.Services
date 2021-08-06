@@ -47,9 +47,12 @@
 
             _transactionList = new List<RawTransactionModel>();
 
+            _lastInsertTrans = DateTime.Now;
+
             _timer = new System.Timers.Timer();
             _timer.Elapsed += InsertTransactionByTimer;
             _timer.Interval = AppSettings.Interval;
+            
         }
 
         protected override void OnStart(string[] args)
