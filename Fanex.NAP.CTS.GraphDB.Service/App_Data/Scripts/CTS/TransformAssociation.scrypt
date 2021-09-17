@@ -1,3 +1,0 @@
-﻿MATCH (cus:Customer {CustId:$CustId})
-MERGE (dev:Device {DeviceId:$DeviceId})
-MERGE (cus) -[:USED]-> (dev)

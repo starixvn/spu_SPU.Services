@@ -1,7 +1,6 @@
 ﻿using Fanex.NAP.DCS.DataAccess;
 using Fanex.NAP.DCS.Model;
 using Fanex.NAP.DCS.Services.Interface;
-using Fanex.NAP.SPU.Model;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -105,29 +104,5 @@ namespace Fanex.NAP.DCS.Services.Implement
             dataCenter.DeleteDataArchiveTransaction07(runningDate, ref isCompleted);
         }
 
-        public LastScannedCustModel GetLastInsertCust()
-        {
-            return dataCenter.GetLastInsertCust();
-        }
-
-        public LastUpdateValueModel GetLastUpdatedTime()
-        {
-            return dataCenter.GetLastUpdatedTime();
-        }     
-
-        public TranformCustModel GetUpdatedCustFromCustInfoHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
-        {
-            return dataCenter.GetUpdatedCustFromCustInfoHistory(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
-        }
-
-        public TranformCustModel GetUpdatedCustFromCustomerHistory(DateTime lastUpdatedTime, Int64 lastUpdatedCustId, int numOfAccount)
-        {
-            return dataCenter.GetUpdatedCustFromCustomerHistory(lastUpdatedTime, lastUpdatedCustId, numOfAccount);
-        }
-
-        public bool ArchiveUnusedDeviceCode(int size)
-        {
-            return dataCenter.RemoveUnusedDeviceCode(size);
-        }
     }
 }

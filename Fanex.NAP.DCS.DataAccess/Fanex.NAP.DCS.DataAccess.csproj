@@ -57,14 +57,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssociationDataAccess.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IPRangeDataAccess.cs" />
     <Compile Include="RawTransactionDataAccess.cs" />
     <Compile Include="CommonDataAccess.cs" />
-    <Compile Include="DataCenterDataAccess.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StagingRawTransactionDataAccess.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -78,10 +74,6 @@
     <ProjectReference Include="..\Fanex.NAP.DCS.Model\Fanex.NAP.DCS.Model.csproj">
       <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
       <Name>Fanex.NAP.DCS.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
-      <Project>{67FECD9E-043A-4100-BF62-52C1A016B85D}</Project>
-      <Name>Fanex.NAP.SPU.Model</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

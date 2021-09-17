@@ -71,22 +71,14 @@
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Fanex.NAP.CTS.Criteria\Fanex.NAP.CTS.Criteria.csproj">
-      <Project>{E5EDF3A6-41C9-40FC-8503-8E7018275827}</Project>
-      <Name>Fanex.NAP.CTS.Criteria</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.CTS.Model\Fanex.NAP.CTS.Model.csproj">
-      <Project>{AA3E4730-2EE7-43AC-A9F3-992C4EF5DAB6}</Project>
-      <Name>Fanex.NAP.CTS.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
-      <Project>{67fecd9e-043a-4100-bf62-52c1a016b85d}</Project>
-      <Name>Fanex.NAP.SPU.Model</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Fanex.NAP.DCS.Model\Fanex.NAP.DCS.Model.csproj">
+      <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
+      <Name>Fanex.NAP.DCS.Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -57,44 +57,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountExistingModel.cs" />
-    <Compile Include="AccountModel.cs" />
-    <Compile Include="AssociationByCustomerModel.cs" />
-    <Compile Include="AuthenticateUserModel.cs" />
-    <Compile Include="Auth\Interface\IUserRepository.cs" />
-    <Compile Include="BrowserModel.cs" />
-    <Compile Include="BrowserPluginModel.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="CustomerEvidence.cs" />
-    <Compile Include="CustomerInfoModel.cs" />
     <Compile Include="DeviceInfoModel.cs" />
-    <Compile Include="Auth\Interface\IEncrypter.cs" />
-    <Compile Include="DevicePackage.cs" />
-    <Compile Include="ExistingAccountModel.cs" />
-    <Compile Include="GraphModel\Node.cs" />
-    <Compile Include="GraphModel\Relationship.cs" />
-    <Compile Include="GraphModel\ShortestPath.cs" />
+    <Compile Include="Environment.cs" />
     <Compile Include="IpInfoModel.cs" />
     <Compile Include="IpModel.cs" />
-    <Compile Include="IpRangeModel.cs" />
-    <Compile Include="NewCustomerModel.cs" />
-    <Compile Include="NewCustomerInfo.cs" />
-    <Compile Include="NewIPTableUpdatedModel.cs" />
-    <Compile Include="OSModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawTransactionModel.cs" />
     <Compile Include="ScreenInfoModel.cs" />
-    <Compile Include="TotalAssociationByCustomerModel.cs" />
-    <Compile Include="TransactionModel.cs" />
-    <Compile Include="StagingRawTransactionModel.cs" />
-    <Compile Include="Auth\UserModel.cs" />
-    <Compile Include="TransformDevicePackageModel.cs" />
     <Compile Include="TransStatus.cs" />
-    <Compile Include="UserAgentModel.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Fanex.NAP.FPS.Renovation.Model.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="BouncyCastle">

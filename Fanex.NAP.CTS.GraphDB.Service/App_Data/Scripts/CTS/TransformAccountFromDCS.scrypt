@@ -1,9 +1,0 @@
-﻿MERGE (cus:Customer {Username2:$Username2})
-ON CREATE SET cus.CreatedDate=$CreatedDate
-WITH cus
-CREATE (g:Group)
-MERGE (s:Subscriber {SubscriberId: $SubscriberId})
-SET g.GroupId = ID(g)
-SET g.CustomerQuantity = 1
-MERGE (cus)-[:BELONG_TO]->(g)
-MERGE (cus)-[:HAS_SUBSCRIBER]->(s)

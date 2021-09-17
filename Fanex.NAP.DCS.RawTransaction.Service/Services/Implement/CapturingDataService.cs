@@ -87,12 +87,5 @@
                     }
             };
         }
-
-        public int InsertTransaction2(List<RawTransactionModel> rawTrans)
-        {
-            var model = JsonConvert.SerializeObject(rawTrans);
-
-            return capturingData.InsertTransaction2(model);
-        }
     }
 }

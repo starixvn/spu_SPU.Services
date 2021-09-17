@@ -17,11 +17,11 @@ namespace Fanex.NAP.SPU.Core
                 switch (environment)
                 {
                     case "1":
-                        return Convert.ToInt16(Model.Environment.Local);
+                        return Convert.ToInt16(DCS.Model.Environment.Local);
                     case "2":
-                        return Convert.ToInt16(Model.Environment.UAT);
+                        return Convert.ToInt16(DCS.Model.Environment.UAT);
                     default:
-                        return Convert.ToInt16(Model.Environment.Production);
+                        return Convert.ToInt16(DCS.Model.Environment.Production);
                 }
             }
         }

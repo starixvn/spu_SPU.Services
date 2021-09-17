@@ -7,8 +7,6 @@
     {     
         int InsertTransaction(List<RawTransactionModel> rawTrans);
 
-        int InsertTransaction2(List<RawTransactionModel> rawTrans);
-
         DeviceInfoModel GetDeviceInfo(string deviceCode);
     }
 }

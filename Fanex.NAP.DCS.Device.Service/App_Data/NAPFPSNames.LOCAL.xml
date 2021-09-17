@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-
-<Functions>
-  <Function Name="Data Center">
-    <Setting Key="DCS_DC_TransformData_Device_Insert" SpName="DCS_DC_TransformData_Device_Insert" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin"/>
-  </Function>
-</Functions>

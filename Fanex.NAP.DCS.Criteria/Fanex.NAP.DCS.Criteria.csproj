@@ -57,56 +57,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchiveUnusedDeviceCodeCriteria.cs" />
-    <Compile Include="DeleteDataForArchiveTransaction07Criteria.cs" />
-    <Compile Include="GetUpdatedCustFromCustomerHistoryCriteria.cs" />
-    <Compile Include="GetUpdatedCustFromCustInfoHistoryCriteria.cs" />
-    <Compile Include="GetLastUpdatedTimeCriteria.cs" />
-    <Compile Include="GetLastInsertCustCriteria.cs" />
-    <Compile Include="MoveDataForArchiveTransaction07Criteria.cs" />
-    <Compile Include="GetScheduleForArchiveTransaction07Criteria.cs" />
-    <Compile Include="ArchiveTransaction07Criteria.cs" />
-    <Compile Include="CapturingTransactionCriteria2.cs" />
-    <Compile Include="GetCustSubFromMainDbCriteria.cs" />
-    <Compile Include="GetMaxCustIdCriteria.cs" />
-    <Compile Include="GetRawUnsucessAssociationListCriteria.cs" />
-    <Compile Include="GetRawUnsucessTransactionIPListCriteria.cs" />
-    <Compile Include="GetRawUnsucessAccountListCriteria.cs" />
-    <Compile Include="GetRawAccountListCriteria.cs" />
-    <Compile Include="GetRawAssociationListCriteria.cs" />
-    <Compile Include="GetCustomersFromMainDbCriteria.cs" />
-    <Compile Include="GetRawTransactionByIpCriteria.cs" />
-    <Compile Include="GetUpdatedDeviceListCriteria.cs" />
-    <Compile Include="GetUpdatedAccountListCriteria.cs" />
-    <Compile Include="GetUserAgentCriteria.cs" />
-    <Compile Include="InsertFingerPrintCriteria.cs" />
-    <Compile Include="InsertIPTableLogCriteria.cs" />
-    <Compile Include="GetAssociationByCustomerCriteria.cs" />
-    <Compile Include="GetAssociationForGraphDBCriteria.cs" />
-    <Compile Include="GetCustomersEvidencesCriteria.cs" />
-    <Compile Include="GetIPTableLogLatestUpdatedDateCriteria.cs" />
-    <Compile Include="GetIpV6RangeCriteria.cs" />
-    <Compile Include="GetIPDBVersionCriteria.cs" />
-    <Compile Include="GetTotalAssociationByCustomerCriteria.cs" />
     <Compile Include="CapturingTransactionCriteria.cs" />
-    <Compile Include="GetRawTransactionCriteria.cs" />
-    <Compile Include="InsertRawAccountCriteria.cs" />
     <Compile Include="IpInfoCriteria.cs" />
-    <Compile Include="ProcessCompletedCriteria.cs" />
-    <Compile Include="ProcessDeviceCriteria.cs" />
-    <Compile Include="ProcessTransactionCriteria.cs" />
-    <Compile Include="ProcessUnhandleSubscriberActionCriteria.cs" />
-    <Compile Include="ProcessUserAgentCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ProcessAccountCriteria.cs" />
-    <Compile Include="UpdateDeviceIdCriteria.cs" />
-    <Compile Include="UpdateAccountIdCriteria.cs" />
-    <Compile Include="UpdateIpRangeCriteria.cs" />
-    <Compile Include="UpdateUserAgentCriteria.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Fanex.NAP.FPS.Renovation.Criteria.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EasyNetQ">

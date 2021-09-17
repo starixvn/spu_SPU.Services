@@ -74,10 +74,6 @@
       <Project>{07f5d4e0-8c77-48a8-ba21-b7f7e0439a64}</Project>
       <Name>Fanex.NAP.DCS.Model</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Fanex.NAP.SPU.Model\Fanex.NAP.SPU.Model.csproj">
-      <Project>{67FECD9E-043A-4100-BF62-52C1A016B85D}</Project>
-      <Name>Fanex.NAP.SPU.Model</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json">
