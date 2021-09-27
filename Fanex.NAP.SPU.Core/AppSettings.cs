@@ -48,9 +48,17 @@ namespace Fanex.NAP.SPU.Core
             }
         }
 
+        public static string RabbitMQ_Exchange => ConfigurationManager.AppSettings["Queue-Exchange"];
+
         public static string RabbitMQ_QueueName => ConfigurationManager.AppSettings["Queue-Name"];
 
         public static string RabbitMQ_RoutingKey => ConfigurationManager.AppSettings["Queue-RoutingKey"];
+
+        public static string RabbitMQ_Exchange_Monitor => ConfigurationManager.AppSettings["Queue-Exchange-Monitor"];
+
+        public static string RabbitMQ_QueueName_Monitor => ConfigurationManager.AppSettings["Queue-Name-Monitor"];
+
+        public static string RabbitMQ_RoutingKey_Monitor => ConfigurationManager.AppSettings["Queue-RoutingKey-Monitor"];
 
         public static string RabbitMQ_Host => ConfigurationManager.AppSettings["Queue-Host"];
 
@@ -62,9 +70,7 @@ namespace Fanex.NAP.SPU.Core
 
         public static string RabbitMQ_Password => ConfigurationManager.AppSettings["Queue-Password"];
 
-        public static int RabbitMQ_PrefetchCount => Convert.ToInt16(ConfigurationManager.AppSettings["Queue-PrefetchCount"]);
-
-        public static string RabbitMQ_Exchange => ConfigurationManager.AppSettings["Queue-Exchange"];
+        public static int RabbitMQ_PrefetchCount => Convert.ToInt16(ConfigurationManager.AppSettings["Queue-PrefetchCount"]);                
 
         public static string FanexLogCategory => ConfigurationManager.AppSettings["Fanex.Log.Category"];
 

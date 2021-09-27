@@ -61,6 +61,7 @@
     <Compile Include="Environment.cs" />
     <Compile Include="IpInfoModel.cs" />
     <Compile Include="IpModel.cs" />
+    <Compile Include="TransactionMonitoringModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawTransactionModel.cs" />
     <Compile Include="ScreenInfoModel.cs" />
