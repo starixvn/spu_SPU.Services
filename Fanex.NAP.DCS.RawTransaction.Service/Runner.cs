@@ -6,6 +6,7 @@
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.DCS.Core;
     using Fanex.NAP.DCS.Model;
+    using Fanex.NAP.DCS.Model.TransactionMonitoring;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
@@ -188,8 +189,13 @@
         {
             var groupTrans = trans
                                 .Select(x => { x.TransTime = Convert.ToDateTime(x.TransTime.ToString("MM/dd/yyyy")); return x; })
-                                .GroupBy(x => new { x.SubscriberId, x.SubscriberName, x.TransTime })
-                                .Select(x => new TransactionMonitoringModel { SubscriberId = x.Key.SubscriberId, TransDate = x.Key.TransTime, SubscriberName = x.Key.SubscriberName, Count = x.Count() });
+                                .GroupBy(x => new { x.SubscriberId, x.TransTime })
+                                .Select(x => new TransactionMonitoringModel
+                                {
+                                    SubscriberID = x.Key.SubscriberId,
+                                    TransDate = x.Key.TransTime,
+                                    TransTotal = x.Count()
+                                });
 
             if (groupTrans != null && groupTrans.Any())
             {

@@ -1,10 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Functions>
-  <Function Name="CapturingTransaction">
-    <Setting Key="DCS_DC_Transform_RawTrans_Insert" SpName="DCS_DC_Transform_RawTrans_Insert" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" Timeout="600">
-    </Setting>
-    <Setting Key="DCS_RT_RawTrans_Insert2" SpName="DCS_RT_RawTrans_Insert2" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" Timeout="600">
-    </Setting>
-  </Function>
+	<Function Name="TransactionMonitoring">
+		<Setting Key="DCS_DC_SumRawTransaction_Update" SpName="DCS_DC_SumRawTransaction_Update" DbName="MySQL.DCS_DataCenter.ctsServiceAdmin" Timeout="300"></Setting>
+	</Function>
 </Functions>

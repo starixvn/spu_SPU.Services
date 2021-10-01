@@ -1,28 +1,40 @@
-﻿using EasyNetQ;
-using Fanex.Logging;
-using Fanex.Logging.Extensions;
-using Fanex.NAP.DCS.Model;
-using Fanex.NAP.SPU.Core;
-using Fanex.NAP.SPU.Queue;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Configuration;
-using System.Data;
-using System.Diagnostics;
-using System.Linq;
-using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Fanex.NAP.SPU.RawTransMonitoring.Service
+﻿namespace Fanex.NAP.SPU.RawTransMonitoring.Service
 {
+    using EasyNetQ;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.NAP.DCS.Model.TransactionMonitoring;
+    using Fanex.NAP.SPU.Core;
+    using Fanex.NAP.SPU.Queue;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Configuration;
+    using System.Linq;
+    using System.ServiceProcess;
+    using System.Threading;
+    using System.Timers;
+
     public partial class Runner : ServiceBase
     {
         private EasyNetQConnector _rabbitMQConsume;
+        private readonly ITransactionMonitoringService _transactionMonitoringService;
+        private readonly List<TransactionMonitoringModel> _transactionList;
+        private readonly System.Timers.Timer _timer;
+        private DateTime _lastInsertTrans;
+
         public Runner()
         {
             InitializeComponent();
+
+            _transactionMonitoringService = new TransactionMonitoringService();
+            _lastInsertTrans = DateTime.Now;
+            _transactionList = new List<TransactionMonitoringModel>();
+
+            _timer = new System.Timers.Timer();
+            _timer.Elapsed += InsertTransactionByTimer;
+            _timer.Interval = AppSettings.Interval;
         }
 
         protected override void OnStart(string[] args)
@@ -52,6 +64,16 @@ namespace Fanex.NAP.SPU.RawTransMonitoring.Service
                     .Bind();
         }
 
+        private void InsertTransactionByTimer(object sender, ElapsedEventArgs e)
+        {
+            if ((DateTime.Now - _lastInsertTrans).Minutes >= 1 && _transactionList.Count != 0)
+            {
+                InsertTransactionMonitoring(_transactionList);
+
+                _transactionList.Clear();
+            }
+        }
+
         private void ConsumerData()
         {
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
@@ -66,6 +88,12 @@ namespace Fanex.NAP.SPU.RawTransMonitoring.Service
 
                         trans.Add(messageBody);
 
+                        if (trans.Count >= AppSettings.TransBatch)                        
+                        {
+                            InsertTransactionMonitoring(trans);
+
+                            trans.Clear();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -75,6 +103,26 @@ namespace Fanex.NAP.SPU.RawTransMonitoring.Service
                         LogService.Error(logMessage);
                     }
                 });
+            }
+        }
+
+        private void InsertTransactionMonitoring(List<TransactionMonitoringModel> trans)
+        {
+            try
+            {
+                _transactionMonitoringService.SumRawTransaction(trans);
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);                
+            }
+            finally
+            {
+                _lastInsertTrans = DateTime.Now;
             }
         }
     }
