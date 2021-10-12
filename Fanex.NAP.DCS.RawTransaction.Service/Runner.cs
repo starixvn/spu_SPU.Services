@@ -169,7 +169,7 @@
             {
                 _capturingDataService.InsertTransaction(trans);
 
-                PushTransaction(trans);
+                PushTransactionToMonitor(trans);
 
                 _lastInsertTrans = DateTime.Now;
             }
@@ -185,9 +185,11 @@
             }
         }
 
-        private void PushTransaction(List<RawTransactionModel> trans)
+        private void PushTransactionToMonitor(List<RawTransactionModel> trans)
         {
-            var groupTrans = trans
+            if (ConfigurationManager.AppSettings["PushTrans-To-Monitor"] == "1")
+            {
+                var groupTrans = trans
                                 .Select(x => { x.TransTime = Convert.ToDateTime(x.TransTime.ToString("MM/dd/yyyy")); return x; })
                                 .GroupBy(x => new { x.SubscriberId, x.TransTime })
                                 .Select(x => new TransactionMonitoringModel
@@ -197,14 +199,15 @@
                                     TransTotal = x.Count()
                                 });
 
-            if (groupTrans != null && groupTrans.Any())
-            {
-                groupTrans.ToList().ForEach(x =>
+                if (groupTrans != null && groupTrans.Any())
                 {
-                    var message = new Message<TransactionMonitoringModel>(x, new MessageProperties() { DeliveryMode = 2, Priority = 9 });
+                    groupTrans.ToList().ForEach(x =>
+                    {
+                        var message = new Message<TransactionMonitoringModel>(x, new MessageProperties() { DeliveryMode = 2, Priority = 9 });
 
-                    _rabbitMQMonitor.AdvanceBus.Publish(_rabbitMQMonitor.Exchange, _rabbitMQMonitor.RoutingKey, true, message);
-                });
+                        _rabbitMQMonitor.AdvanceBus.Publish(_rabbitMQMonitor.Exchange, _rabbitMQMonitor.RoutingKey, true, message);
+                    });
+                }
             }
         }
 

@@ -64,7 +64,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Fanex.NAP.SPU.RawTransMonitoring.Service.exe.LOCAL.config" />
-    <None Include="Fanex.NAP.SPU.RawTransMonitoring.Service.exe.PRO.config" />
+    <Content Include="Fanex.NAP.SPU.RawTransMonitoring.Service.exe.PRO.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Fanex.NAP.DCS.Core\Fanex.NAP.DCS.Core.csproj">

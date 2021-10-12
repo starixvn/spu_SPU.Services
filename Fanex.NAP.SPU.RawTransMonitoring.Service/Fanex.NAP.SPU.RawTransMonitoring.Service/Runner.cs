@@ -19,10 +19,11 @@
     public partial class Runner : ServiceBase
     {
         private EasyNetQConnector _rabbitMQConsume;
+        private readonly object _lockObject = new object();
         private readonly ITransactionMonitoringService _transactionMonitoringService;
         private readonly List<TransactionMonitoringModel> _transactionList;
         private readonly System.Timers.Timer _timer;
-        private DateTime _lastInsertTrans;
+        private DateTime _lastInsertTrans;        
 
         public Runner()
         {
@@ -35,6 +36,7 @@
             _timer = new System.Timers.Timer();
             _timer.Elapsed += InsertTransactionByTimer;
             _timer.Interval = AppSettings.Interval;
+            _timer.Start();
         }
 
         protected override void OnStart(string[] args)
@@ -66,11 +68,9 @@
 
         private void InsertTransactionByTimer(object sender, ElapsedEventArgs e)
         {
-            if ((DateTime.Now - _lastInsertTrans).Minutes >= 1 && _transactionList.Count != 0)
+            if ((DateTime.Now - _lastInsertTrans).Minutes >= 1 && _transactionList.Count > 0)
             {
-                InsertTransactionMonitoring(_transactionList);
-
-                _transactionList.Clear();
+                InsertTransactionMonitoring(null, true);
             }
         }
 
@@ -78,22 +78,11 @@
         {
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
-                var trans = new List<TransactionMonitoringModel>();
-
                 _rabbitMQConsume.AdvanceBus.Consume<TransactionMonitoringModel>(_rabbitMQConsume.Queue, (message, info) =>
                 {
                     try
                     {
-                        var messageBody = message.Body;
-
-                        trans.Add(messageBody);
-
-                        if (trans.Count >= AppSettings.TransBatch)                        
-                        {
-                            InsertTransactionMonitoring(trans);
-
-                            trans.Clear();
-                        }
+                        InsertTransactionMonitoring(message.Body, false);
                     }
                     catch (Exception ex)
                     {
@@ -106,11 +95,29 @@
             }
         }
 
-        private void InsertTransactionMonitoring(List<TransactionMonitoringModel> trans)
+        private void InsertTransactionMonitoring(TransactionMonitoringModel tran, bool isTimer)
         {
             try
             {
-                _transactionMonitoringService.SumRawTransaction(trans);
+                lock(_lockObject)
+                {
+                    if (tran != null)
+                    {
+                        _transactionList.Add(tran);
+                    }
+
+                    if (_transactionList.Count > 0)
+                    {
+                        if (_transactionList.Count >= AppSettings.TransBatch || isTimer)
+                        {
+                            _transactionMonitoringService.SumRawTransaction(_transactionList);
+                           
+                            _transactionList.Clear();
+                        }
+                    }
+
+                    _lastInsertTrans = DateTime.Now;
+                }                                     
             }
             catch (Exception ex)
             {
@@ -118,10 +125,8 @@
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error(logMessage);                
-            }
-            finally
-            {
+                LogService.Error(logMessage);
+
                 _lastInsertTrans = DateTime.Now;
             }
         }
