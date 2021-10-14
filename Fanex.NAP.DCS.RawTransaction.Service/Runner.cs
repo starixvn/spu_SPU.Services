@@ -6,6 +6,7 @@
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.DCS.Core;
     using Fanex.NAP.DCS.Model;
+    using Fanex.NAP.DCS.Model.TransactionMonitoring;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
@@ -22,7 +23,8 @@
 
     public partial class Runner : ServiceBase
     {
-        private readonly EasyNetQConnector _rabbitMQ;
+        private EasyNetQConnector _rabbitMQConsume;
+        private EasyNetQConnector _rabbitMQMonitor;
         private readonly ICapturingDataService _capturingDataService;
         private readonly List<RawTransactionModel> _transactionList;
         private readonly System.Timers.Timer _timer;
@@ -34,16 +36,6 @@
 
             _capturingDataService = new CapturingDataService();
 
-            _rabbitMQ = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
-                                       AppSettings.RabbitMQ_VirtualHost,
-                                       AppSettings.RabbitMQ_PrefetchCount,
-                                       AppSettings.RabbitMQ_UserName,
-                                       AppSettings.RabbitMQ_Password);
-            _rabbitMQ.CreateBus()
-                     .DeclareExchange(AppSettings.RabbitMQ_Exchange)
-                     .DeclareQueue(AppSettings.RabbitMQ_QueueName)
-                     .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
-                     .Bind();
 
             _transactionList = new List<RawTransactionModel>();
 
@@ -52,13 +44,17 @@
             _timer = new System.Timers.Timer();
             _timer.Elapsed += InsertTransactionByTimer;
             _timer.Interval = AppSettings.Interval;
-            
+
         }
 
         protected override void OnStart(string[] args)
         {
             try
             {
+
+                ConsumeMessageBus();
+                MonitorMessageBus();
+
                 ConsumerTransactions();
 
                 LogService.Info($"Raw trans service is STARTED at {DateTime.Now}");
@@ -74,25 +70,57 @@
 
         protected override void OnStop()
         {
-            _rabbitMQ.Disposed();
+            _rabbitMQConsume.Disposed();
+            _rabbitMQMonitor.Disposed();
 
             LogService.Info($"Raw trans service is STOPED at {DateTime.Now}");
         }
 
         protected override void OnShutdown()
         {
-            _rabbitMQ.Disposed();
+            _rabbitMQConsume.Disposed();
+            _rabbitMQMonitor.Disposed();
 
             LogService.Info($"Raw trans service is STOPED at {DateTime.Now}");
+        }
+
+        private void ConsumeMessageBus()
+        {
+            _rabbitMQConsume = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
+                                      AppSettings.RabbitMQ_VirtualHost,
+                                      AppSettings.RabbitMQ_PrefetchCount,
+                                      AppSettings.RabbitMQ_UserName,
+                                      AppSettings.RabbitMQ_Password);
+
+            _rabbitMQConsume.CreateBus()
+                    .DeclareExchange(AppSettings.RabbitMQ_Exchange)
+                    .DeclareQueue(AppSettings.RabbitMQ_QueueName)
+                    .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
+                    .Bind();
+        }
+
+        private void MonitorMessageBus()
+        {
+            _rabbitMQMonitor = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
+                                      AppSettings.RabbitMQ_VirtualHost,
+                                      AppSettings.RabbitMQ_PrefetchCount,
+                                      AppSettings.RabbitMQ_UserName,
+                                      AppSettings.RabbitMQ_Password);
+
+            _rabbitMQMonitor.CreateBus()
+                    .DeclareExchange(AppSettings.RabbitMQ_Exchange_Monitor)
+                    .DeclareQueue(AppSettings.RabbitMQ_QueueName_Monitor)
+                    .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey_Monitor)
+                    .Bind();
         }
 
         private void ConsumerTransactions()
         {
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
-                var trans = new List<RawTransactionModel>();                                
+                var trans = new List<RawTransactionModel>();
 
-                _rabbitMQ.AdvanceBus.Consume<MessageQueue>(_rabbitMQ.Queue, (message, info) =>
+                _rabbitMQConsume.AdvanceBus.Consume<MessageQueue>(_rabbitMQConsume.Queue, (message, info) =>
                 {
                     try
                     {
@@ -141,6 +169,8 @@
             {
                 _capturingDataService.InsertTransaction(trans);
 
+                PushTransactionToMonitor(trans);
+
                 _lastInsertTrans = DateTime.Now;
             }
             catch (Exception ex)
@@ -155,10 +185,36 @@
             }
         }
 
+        private void PushTransactionToMonitor(List<RawTransactionModel> trans)
+        {
+            if (ConfigurationManager.AppSettings["PushTrans-To-Monitor"] == "1")
+            {
+                var groupTrans = trans
+                                .Select(x => { x.TransTime = Convert.ToDateTime(x.TransTime.ToString("MM/dd/yyyy")); return x; })
+                                .GroupBy(x => new { x.SubscriberId, x.TransTime })
+                                .Select(x => new TransactionMonitoringModel
+                                {
+                                    SubscriberID = x.Key.SubscriberId,
+                                    TransDate = x.Key.TransTime,
+                                    TransTotal = x.Count()
+                                });
+
+                if (groupTrans != null && groupTrans.Any())
+                {
+                    groupTrans.ToList().ForEach(x =>
+                    {
+                        var message = new Message<TransactionMonitoringModel>(x, new MessageProperties() { DeliveryMode = 2, Priority = 9 });
+
+                        _rabbitMQMonitor.AdvanceBus.Publish(_rabbitMQMonitor.Exchange, _rabbitMQMonitor.RoutingKey, true, message);
+                    });
+                }
+            }
+        }
+
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
             LogMessage(message);
-                        
+
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
@@ -190,7 +246,7 @@
             {
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
-                        
+
             var result = new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
@@ -198,6 +254,7 @@
                 TransStatus = Core.Utilities.ConvertBitArray2Int(transBit),
                 LoginName = message.Account,
                 SubscriberName = message.Subscriber,
+                SubscriberId = message.SubscriberId,
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
@@ -209,7 +266,7 @@
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null
-            };                       
+            };
 
             return result;
         }
@@ -290,7 +347,7 @@
                             {
                                 return Flagged.InvalidToken;
                             }
-                        }                                               
+                        }
 
                         if (string.IsNullOrWhiteSpace(analysis))
                         {
