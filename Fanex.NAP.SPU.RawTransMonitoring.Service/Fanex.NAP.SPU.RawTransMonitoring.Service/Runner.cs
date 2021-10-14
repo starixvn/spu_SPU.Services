@@ -18,25 +18,16 @@
 
     public partial class Runner : ServiceBase
     {
-        private EasyNetQConnector _rabbitMQConsume;
-        private readonly object _lockObject = new object();
+        private EasyNetQConnector _rabbitMQConsume;        
         private readonly ITransactionMonitoringService _transactionMonitoringService;
-        private readonly List<TransactionMonitoringModel> _transactionList;
-        private readonly System.Timers.Timer _timer;
-        private DateTime _lastInsertTrans;        
+        private readonly List<TransactionMonitoringModel> _transactionList;           
 
         public Runner()
         {
             InitializeComponent();
 
-            _transactionMonitoringService = new TransactionMonitoringService();
-            _lastInsertTrans = DateTime.Now;
-            _transactionList = new List<TransactionMonitoringModel>();
-
-            _timer = new System.Timers.Timer();
-            _timer.Elapsed += InsertTransactionByTimer;
-            _timer.Interval = AppSettings.Interval;
-            _timer.Start();
+            _transactionMonitoringService = new TransactionMonitoringService();            
+            _transactionList = new List<TransactionMonitoringModel>();          
         }
 
         protected override void OnStart(string[] args)
@@ -64,15 +55,7 @@
                     .DeclareQueue(AppSettings.RabbitMQ_QueueName_Monitor)
                     .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey_Monitor)
                     .Bind();
-        }
-
-        private void InsertTransactionByTimer(object sender, ElapsedEventArgs e)
-        {
-            if ((DateTime.Now - _lastInsertTrans).Minutes >= 1 && _transactionList.Count > 0)
-            {
-                InsertTransactionMonitoring(null, true);
-            }
-        }
+        }        
 
         private void ConsumerData()
         {
@@ -82,7 +65,7 @@
                 {
                     try
                     {
-                        InsertTransactionMonitoring(message.Body, false);
+                        InsertTransactionMonitoring(message.Body);
                     }
                     catch (Exception ex)
                     {
@@ -95,29 +78,21 @@
             }
         }
 
-        private void InsertTransactionMonitoring(TransactionMonitoringModel tran, bool isTimer)
+        private void InsertTransactionMonitoring(TransactionMonitoringModel tran)
         {
             try
             {
-                lock(_lockObject)
+                if (tran != null)
                 {
-                    if (tran != null)
-                    {
-                        _transactionList.Add(tran);
-                    }
+                    _transactionList.Add(tran);
+                }
 
-                    if (_transactionList.Count > 0)
-                    {
-                        if (_transactionList.Count >= AppSettings.TransBatch || isTimer)
-                        {
-                            _transactionMonitoringService.SumRawTransaction(_transactionList);
-                           
-                            _transactionList.Clear();
-                        }
-                    }
+                if (_transactionList.Count >= AppSettings.TransBatch)
+                {
+                    _transactionMonitoringService.SumRawTransaction(_transactionList);
 
-                    _lastInsertTrans = DateTime.Now;
-                }                                     
+                    _transactionList.Clear();
+                }
             }
             catch (Exception ex)
             {
@@ -125,10 +100,9 @@
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error(logMessage);
-
-                _lastInsertTrans = DateTime.Now;
+                LogService.Error(logMessage);                
             }
         }
     }
+
 }
