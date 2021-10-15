@@ -26,9 +26,7 @@
         private EasyNetQConnector _rabbitMQConsume;
         private EasyNetQConnector _rabbitMQMonitor;
         private readonly ICapturingDataService _capturingDataService;
-        private readonly List<RawTransactionModel> _transactionList;
-        private readonly System.Timers.Timer _timer;
-        private DateTime _lastInsertTrans;
+        private readonly List<RawTransactionModel> _transactionList;                
 
         public Runner()
         {
@@ -36,14 +34,7 @@
 
             _capturingDataService = new CapturingDataService();
 
-
-            _transactionList = new List<RawTransactionModel>();
-
-            _lastInsertTrans = DateTime.Now;
-
-            _timer = new System.Timers.Timer();
-            _timer.Elapsed += InsertTransactionByTimer;
-            _timer.Interval = AppSettings.Interval;
+            _transactionList = new List<RawTransactionModel>();                        
 
         }
 
@@ -142,6 +133,8 @@
                                 {
                                     InsertTransaction(trans);
 
+                                    PushTransactionToMonitor(trans);
+
                                     trans.Clear();
 
                                 }
@@ -167,11 +160,7 @@
         {
             try
             {
-                _capturingDataService.InsertTransaction(trans);
-
-                PushTransactionToMonitor(trans);
-
-                _lastInsertTrans = DateTime.Now;
+                _capturingDataService.InsertTransaction(trans);                                
             }
             catch (Exception ex)
             {
@@ -179,9 +168,7 @@
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error(logMessage);
-
-                _lastInsertTrans = DateTime.Now;
+                LogService.Error(logMessage);                                
             }
         }
 
@@ -269,16 +256,6 @@
             };
 
             return result;
-        }
-
-        private void InsertTransactionByTimer(object sender, ElapsedEventArgs e)
-        {
-            if ((DateTime.Now - _lastInsertTrans).Minutes >= 1 && _transactionList.Count != 0)
-            {
-                InsertTransaction(_transactionList);
-
-                _transactionList.Clear();
-            }
         }
 
         private static string EncodeCapturedData(DeviceInfoModel deviceInfo)

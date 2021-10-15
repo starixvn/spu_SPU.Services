@@ -63,8 +63,15 @@
                 _rabbitMQConsume.AdvanceBus.Consume<TransactionMonitoringModel>(_rabbitMQConsume.Queue, (message, info) =>
                 {
                     try
-                    {                       
-                        InsertTransactionMonitoring(message.Body);
+                    {
+                        _transactionList.Add(message.Body);
+
+                        if(_transactionList.Count >= AppSettings.TransBatch)
+                        {
+                            _transactionMonitoringService.SumRawTransaction(_transactionList);
+
+                            _transactionList.Clear();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -72,34 +79,10 @@
                             .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
                         LogService.Error(logMessage);
+
+                        _transactionList.Clear();
                     }
                 });
-            }
-        }
-
-        private void InsertTransactionMonitoring(TransactionMonitoringModel tran)
-        {
-            try
-            {
-                if (tran != null)
-                {
-                    _transactionList.Add(tran);                  
-                }
-
-                if (_transactionList.Count >= AppSettings.TransBatch)
-                {
-                    _transactionMonitoringService.SumRawTransaction(_transactionList);
-
-                    _transactionList.Clear();
-                }                
-            }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);                
             }
         }
     }
