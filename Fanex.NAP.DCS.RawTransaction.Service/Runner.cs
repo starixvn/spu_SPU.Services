@@ -194,7 +194,7 @@
                                 .GroupBy(x => new { x.SubscriberId, x.TransTime })
                                 .Select(x => new TransactionMonitoringModel
                                 {
-                                    SubscriberID = x.Key.SubscriberId,
+                                    SubscriberID = x.Key.SubscriberId,                                    
                                     TransDate = x.Key.TransTime,
                                     TransTotal = x.Count()
                                 });
@@ -318,12 +318,11 @@
             {
                 var accounts = AppSettings.WriteAccount.Split(new[] { ',', ';' });
 
-                if (accounts.Any(x => x.Equals(message.Account, StringComparison.OrdinalIgnoreCase)))
+                if (accounts.Any(x => x.Equals(message.Account, StringComparison.OrdinalIgnoreCase)) || message.SubscriberId == 0)
                 {
                     LogService.Info(JsonConvert.SerializeObject(message));
                 }
-            }
-
+            }           
         }
         private static Flagged Browserless(string token, string analysis, string userAgent, string deviceNo)
         {

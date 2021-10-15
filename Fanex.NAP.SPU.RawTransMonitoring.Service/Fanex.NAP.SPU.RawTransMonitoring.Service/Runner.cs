@@ -20,25 +20,24 @@
     {
         private EasyNetQConnector _rabbitMQConsume;        
         private readonly ITransactionMonitoringService _transactionMonitoringService;
-        private readonly List<TransactionMonitoringModel> _transactionList;           
-
+        private readonly List<TransactionMonitoringModel> _transactionList;        
+        
         public Runner()
         {
             InitializeComponent();
 
             _transactionMonitoringService = new TransactionMonitoringService();            
-            _transactionList = new List<TransactionMonitoringModel>();          
+            _transactionList = new List<TransactionMonitoringModel>();                   
         }
 
         protected override void OnStart(string[] args)
         {
             ConsumeMessageBus();
-            ConsumerData();
+            ConsumerData();            
         }
 
         protected override void OnStop()
         {
-            
             _rabbitMQConsume.Disposed();
         }
 
@@ -64,7 +63,7 @@
                 _rabbitMQConsume.AdvanceBus.Consume<TransactionMonitoringModel>(_rabbitMQConsume.Queue, (message, info) =>
                 {
                     try
-                    {
+                    {                       
                         InsertTransactionMonitoring(message.Body);
                     }
                     catch (Exception ex)
@@ -84,7 +83,7 @@
             {
                 if (tran != null)
                 {
-                    _transactionList.Add(tran);
+                    _transactionList.Add(tran);                  
                 }
 
                 if (_transactionList.Count >= AppSettings.TransBatch)
@@ -92,7 +91,7 @@
                     _transactionMonitoringService.SumRawTransaction(_transactionList);
 
                     _transactionList.Clear();
-                }
+                }                
             }
             catch (Exception ex)
             {
