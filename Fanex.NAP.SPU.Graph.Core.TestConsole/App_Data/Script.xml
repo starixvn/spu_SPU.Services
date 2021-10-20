@@ -3,5 +3,6 @@
   <Function Name="MiddleSerivce">
     <GraphSetting Key="CountTotal" SpName="CountTotal" DbName="GraphDB" />
     <GraphSetting Key="GetReport" SpName="GetReport" DbName="GraphDB" />
+    <GraphSetting Key="GetCustomerEvidenceLevel0" SpName="GetCustomerEvidenceLevel0" DbName="GraphDB" />
   </Function>
 </Functions>

@@ -119,6 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="App_Data\scripts\GetCustomerEvidenceLevel0.scrypt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="App_Data\scripts\GetReport.scrypt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
