@@ -1,0 +1,10 @@
+﻿USE ctsgraphdb
+MATCH (n:ScanCTSCustomer)
+WITH "jdbc:mysql://10.40.40.185:3307/CTS_DataCenter?user=harvey.vn&password=harvey@1234" as url, n.CurrentCTSCustID as currentCTSCustID
+CALL apoc.load.jdbcParams(url,"select CTSCustID from CTS_DataCenter.CTSCustomer where CTSCustID > ?
+order by CTSCustID limit 10000 ", [currentCTSCustID]) YIELD row
+match (c:CTSCustomer) where c.CTSCustID = toInteger(row.CTSCustID)
+set c:ExistInCTS
+with max(toInteger(row.CTSCustID)) as maxCTSCustID
+MATCH (n:ScanCTSCustomer)
+set n.CurrentCTSCustID = maxCTSCustID

@@ -1,0 +1,25 @@
+﻿//      Created:	Harvey.Nguyen
+//		Task:		Association Report [Redmine ID: #]       
+//		Param's Explanation (filtered by):
+//				- ip_AssCreatedFrom, ip_AssCreatedTo
+//				- ip_AccountStatus : (single selection) Disabled ; Open includes Active; Closed includes Suspended, View Only, Disabled, Inactive
+//				- ip_SubscriberList 
+//				- ip_AssStatus: 0:All; 1:Link; 2: Unlink  (multi-selection)
+//				- ip_EvidenceID
+//				- ip_AssType:  1: Device; 2:Manual; 3:IP  (single-selction)
+USE ctslocal
+MATCH (sub:Subscriber)<-[:BELONG_TO_SUB]-(c:FlaggedCustomer)-[:HAS_STATUS]->(st:StaticList),(c1:CTSCustomer)-[r:SEEN_ACCOUNT]-(c)-[:HAS_EVIDENCE]->(e:Evidence), (c)-[:HAS_CATEGORY]->(cate:CustomerCategory)
+WHERE sub.SubscriberID IN $ip_SubscriberList
+    AND st.ItemID IN $ip_AccountStatus AND st.ListID = 1
+    AND e.EvidenceID IN $ip_EvidenceID
+    AND r.FirstSeenDate >= datetime($ip_AssCreatedFrom) AND r.FirstSeenDate  < datetime($ip_AssCreatedTo)
+    AND (($ip_AssStatus = 0) 
+         	 OR ($ip_AssStatus = 1 AND NOT EXISTS ((c)-[:HAS_EXCEPTION]-(c1)))
+         	 OR ($ip_AssStatus = 2 AND EXISTS ((c)-[:HAS_EXCEPTION]-(c1)))) 
+RETURN DISTINCT c.CTSCustID AS CTSCustID
+    , c.Username AS Username
+    , sub.SubscriberName AS SubscriberName
+    , st.ItemNameDisplay AS AccountStatus
+    , collect(distinct e.EvidenceCode) AS EvidenceCodes
+    , collect(distinct cate.CategoryName) AS Categories
+SKIP $ip_SkipRows LIMIT $ip_TakeRows
