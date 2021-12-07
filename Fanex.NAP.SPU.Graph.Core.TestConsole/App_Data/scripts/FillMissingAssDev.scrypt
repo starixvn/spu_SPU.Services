@@ -1,0 +1,17 @@
+﻿USE ctsgraphdb
+MATCH (n:ScanCTSCustomer) WITH n.CurrentCTSCustID AS currentID
+match (c:CTSCustomer)
+where c.CTSCustID > currentID AND c.CTSCustID < 62456364 WITH c,currentID LIMIT 500 WITH max(c.CTSCustID) as maxCTSCustID,currentID
+MATCH (n:ScanCTSCustomer)
+SET n.CurrentCTSCustID = maxCTSCustID
+WITH currentID
+match (c:CTSCustomer)
+where c.CTSCustID > currentID AND c.CTSCustID < 62456364 WITH c LIMIT 500
+optional match (c:CTSCustomer)-[r:HAS_CATEGORY]->(ca:CustomerCategory)
+where ca.CategoryID IN [51,52,53,54,55,56,57,58,59,60,61,62,72,73,74,75,76,78,79,80,81,82,151,152,153,154,155,156,157,158,159,160,161,162]
+with c, count(ca) as NoPACate
+optional match (c:CTSCustomer)-[r:HAS_CATEGORY]->(ca:CustomerCategory)
+where ca.CategoryID IN [201,202,203,204,205,206,210,211,212,213,221,222,223,231,232,233,251,252,253,257,258,261,262,263,267,268,271,272,273,277,278,1001,1002]
+with c,NoPACate,count(ca) as NoNormalCate
+where NoPACate >= 1 and NoNormalCate >=1
+set c:DupCate

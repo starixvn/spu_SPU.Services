@@ -1,0 +1,17 @@
+﻿USE ctsgraphdb
+MATCH (n:ScanCTSCustomer)
+WITH "jdbc:mysql://10.40.40.185:3307/CTS_DataCenter?user=harvey.vn&password=harvey@1234" as url, n.CurrentCTSCustIDFilling as currentCTSCustID
+CALL apoc.load.jdbcParams(url,"select CTSCustID, CustID, CustSubID, RegisterName, UserName, UserName2, SubscriberID, CustStatusID from CTS_DataCenter.CTSCustomer where CTSCustID > ?
+order by CTSCustID limit 10000 ", [currentCTSCustID]) YIELD row
+MERGE (n:CTSCustomer {CTSCustID: toInteger(row.CTSCustID)})
+ON CREATE SET n.CustID = toInteger(row.CustID)
+    , n.CustSubID = toInteger(row.CustSubID)
+    , n.RegisterName=row.RegisterName
+    , n.Username = row.UserName
+    , n.Username2 = row.UserName2
+    , n.SubscriberID = toInteger(row.SubscriberID)
+    , n.CustStatusID = toInteger(row.CustStatusID)
+    , n:FillingNewCTSCustomer
+WITH MAX(toInteger(row.CTSCustID)) as maxCTSCustID
+MATCH (n:ScanCTSCustomer)
+SET n.CurrentCTSCustIDFilling = maxCTSCustID

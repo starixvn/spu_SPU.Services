@@ -74,8 +74,8 @@
         public ExecutionResult Execute(IDriver driver, string command, object parameters = null)
         {
 
-            using (driver)
-            {
+            //using (driver)
+            //{
                 var session = driver.AsyncSession();
                 var taskResult = session.WriteTransactionAsync(async tx =>
                 {
@@ -87,7 +87,7 @@
                 });
 
                 taskResult.Wait();
-            }
+            //}
 
             return new ExecutionResult
             {

@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Functions>
   <Function Name="MiddleSerivce">
-    <GraphSetting Key="CountTotal" SpName="CountTotal" DbName="GraphDB" />
-    <GraphSetting Key="GetReport" SpName="GetReport" DbName="GraphDB" />
-    <GraphSetting Key="GetCustomerEvidenceLevel0" SpName="GetCustomerEvidenceLevel0" DbName="GraphDB" />
+    <GraphSetting Key="FillMissingAssDev" SpName="FillMissingAssDev" DbName="GraphDB" />
   </Function>
 </Functions>
