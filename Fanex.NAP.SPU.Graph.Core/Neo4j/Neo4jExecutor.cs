@@ -47,7 +47,7 @@
 
             using (driver = GraphDatabase.Driver(configs[0], AuthTokens.Basic(configs[1], configs[2])))
             {
-                var session = driver.AsyncSession();
+                var session = driver.AsyncSession(SessionConfigBuilder.ForDatabase(configs[3]));
 
                 var taskResult = session.WriteTransactionAsync(async tx =>
                 {
@@ -73,10 +73,8 @@
 
         public ExecutionResult Execute(IDriver driver, string command, object parameters = null)
         {
-
-            //using (driver)
-            //{
-                var session = driver.AsyncSession();
+            var configs = ConfigurationManager.AppSettings["GraphDB"].ToString().Split(';');
+            var session = driver.AsyncSession(SessionConfigBuilder.ForDatabase(configs[3]));
                 var taskResult = session.WriteTransactionAsync(async tx =>
                 {
                     var result = await tx.RunAsync(command, parameters);
@@ -87,7 +85,6 @@
                 });
 
                 taskResult.Wait();
-            //}
 
             return new ExecutionResult
             {

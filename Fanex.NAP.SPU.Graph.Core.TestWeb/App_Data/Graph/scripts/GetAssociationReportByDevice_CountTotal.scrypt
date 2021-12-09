@@ -7,7 +7,6 @@
 //				- ip_AssStatus: 0:All; 1:Link; 2: Unlink  (multi-selection)
 //				- ip_EvidenceID
 //				- ip_AssType:  1: Device; 2:Manual; 3:IP  (single-selction)
-USE ctslocal
 MATCH (sub:Subscriber)<-[:BELONG_TO_SUB]-(c:FlaggedCustomer)-[:HAS_STATUS]->(st:StaticList),(c1:CTSCustomer)-[r:SEEN_ACCOUNT]-(c)-[:HAS_EVIDENCE]->(e:Evidence), (c)-[:HAS_CATEGORY]->(cate:CustomerCategory)
 WHERE sub.SubscriberID IN $ip_SubscriberList
     AND st.ItemID IN $ip_AccountStatus AND st.ListID = 1

@@ -1,0 +1,1 @@
+﻿create (c:CTSCustomer {CTSCustID: 9999999}) return c

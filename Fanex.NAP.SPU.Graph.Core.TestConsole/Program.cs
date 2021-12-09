@@ -18,11 +18,8 @@ namespace Fanex.NAP.SPU.Graph.Core.TestConsole
                 .RegisterCommandExecutor(new Neo4jExecutor())
                 .Run();
 
-            for (int i = 0; i < 60000000; i++)
-            {
-                DbSessionFactory.Execute("FillMissingAssDev");
-                Console.WriteLine($"Batch {i}");
-            }
+            DbSessionFactory.Execute("TestDb");
+            Console.WriteLine($"Done");
 
 
             Console.ReadLine();
