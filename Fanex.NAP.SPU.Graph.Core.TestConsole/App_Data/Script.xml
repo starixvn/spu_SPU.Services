@@ -2,6 +2,6 @@
 <Functions>
   <Function Name="MiddleSerivce">
     <GraphSetting Key="FillMissingAssDev" SpName="FillMissingAssDev" DbName="GraphDB" />
-    <GraphSetting Key="TestDb" SpName="TestDb" DbName="GraphDB" />
+    <GraphSetting Key="InitDataLocal" SpName="InitDataLocal" DbName="GraphDB" />
   </Function>
 </Functions>
