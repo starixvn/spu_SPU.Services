@@ -201,7 +201,7 @@
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
             LogMessage(message);
-
+            
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
@@ -314,17 +314,17 @@
                 {
                     if (deviceNo != "N/A" && Utilities.IsGuidDeviceId(deviceNo))
                     {
-                        if (string.IsNullOrWhiteSpace(token))
-                        {
-                            return Flagged.EmptyToken;
-                        }
-                        else
-                        {
-                            if (!IsValidateToken(token))
-                            {
-                                return Flagged.InvalidToken;
-                            }
-                        }
+                        //if (string.IsNullOrWhiteSpace(token))
+                        //{
+                        //    return Flagged.EmptyToken;
+                        //}
+                        //else
+                        //{
+                        //    if (!IsValidateToken(token))
+                        //    {
+                        //        return Flagged.InvalidToken;
+                        //    }
+                        //}
 
                         if (string.IsNullOrWhiteSpace(analysis))
                         {
