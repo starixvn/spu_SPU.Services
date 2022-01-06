@@ -3,5 +3,6 @@
   <Function Name="MiddleSerivce">
     <GraphSetting Key="FillMissingAssDev" SpName="FillMissingAssDev" DbName="GraphDB" />
     <GraphSetting Key="InitDataLocal" SpName="InitDataLocal" DbName="GraphDB" />
+    <GraphSetting Key="ArchiveCustomer" SpName="ArchiveCustomer" DbName="GraphDB" TimeOut="600"/>
   </Function>
 </Functions>

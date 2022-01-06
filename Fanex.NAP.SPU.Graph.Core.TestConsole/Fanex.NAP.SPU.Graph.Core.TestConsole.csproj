@@ -138,6 +138,9 @@
     <None Include="App_Data\scripts\FillMissingCTSCust.scrypt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="App_Data\scripts\ArchiveCustomer.scrypt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="App_Data\scripts\InitDataLocal.scrypt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

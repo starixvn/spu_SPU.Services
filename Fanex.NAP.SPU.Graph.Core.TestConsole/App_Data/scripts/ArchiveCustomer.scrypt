@@ -1,0 +1,1 @@
+﻿match (c:ArchivedCustomer) with c limit 500 detach delete c

@@ -1,10 +1,11 @@
 ﻿MATCH (n:SystemParam)
 WITH "jdbc:mysql://10.18.200.70:3307/CTS_DataCenter?user=harvey.vn&password=1234aa" as url, n.RunningCTSCustID as runningCTSCustID
-CALL apoc.load.jdbcParams(url,"select * from CTSCustomerClassification where CTSCustID > ? order by CTSCustID limit 50000",[runningCTSCustID]) YIELD row 
-MATCH (n:CTSCustomer {CustID:toInteger(row.CustID), CustSubID:0})
-            MERGE (c:CustomerCategory {CategoryID:row.CategoryID})
-            MERGE (n)-[r:HAS_CATEGORY]->(c)
-            ON CREATE SET r.CreatedDate=datetime()
+CALL apoc.load.jdbcParams(url,"select * from CTSCustomer where CTSCustID > ? order by CTSCustID limit 10000",[runningCTSCustID]) YIELD row 
+MATCH (n:CTSCustomer {CTSCustID:toInteger(row.CTSCustID)})
+            MATCH (s:Subscriber {SubscriberID:toInteger(row.SubscriberID)})
+            WHERE row.SubscriberID > 0
+            MERGE (n)-[r:BELONG_TO_SUB]->(s)
+            ON CREATE SET r.CreatedDate = datetime()
 WITH MAX(toInteger(row.CTSCustID)) as maxCTSCustID
 MATCH (n:SystemParam)
 SET n.RunningCTSCustID = maxCTSCustID

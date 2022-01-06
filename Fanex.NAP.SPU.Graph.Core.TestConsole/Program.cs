@@ -19,16 +19,33 @@ namespace Fanex.NAP.SPU.Graph.Core.TestConsole
                 .RegisterCommandExecutor(new Neo4jExecutor())
                 .Run();
             Stopwatch stopwatch = new Stopwatch();
-            for (int i = 0; i < 1456; i++)
+            try
             {
-                stopwatch.Restart();
-                DbSessionFactory.Execute("InitDataLocal");
-                stopwatch.Stop();
-                Console.WriteLine("Batch {1} - Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds, i);
-                if (stopwatch.ElapsedMilliseconds < 100)
+                for (int i = 0; i < 1000; i++)
                 {
-                    break;
+                    Console.WriteLine($"Batch {i} start");
+                    stopwatch.Restart();
+                    DbSessionFactory.Execute("ArchiveCustomer");
+                    stopwatch.Stop();
+                    Console.WriteLine("Batch {1} - Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds, i);
                 }
+
+                //for (int i = 0; i < 1000; i++)
+                //{
+                //    stopwatch.Restart();
+                //    DbSessionFactory.Execute("InitDataLocal");
+                //    stopwatch.Stop();
+                //    Console.WriteLine("Batch {1} - Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds, i);
+                //    if (stopwatch.ElapsedMilliseconds < 100)
+                //    {
+                //        break;
+                //    }
+                //}
+            }
+            catch (Exception ex )
+            {
+                Console.WriteLine(ex.Message + "\n" + ex.StackTrace);
+                throw;
             }
 
             Console.WriteLine($"Done");
