@@ -33,6 +33,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core.Te
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Graph.Core.TestWeb", "Fanex.NAP.SPU.Graph.Core.TestWeb\Fanex.NAP.SPU.Graph.Core.TestWeb.csproj", "{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.DCS.FP.RawTransaction.Service", "Fanex.NAP.DCS.FP.RawTransaction.Service\Fanex.NAP.DCS.FP.RawTransaction.Service.csproj", "{6CDA57FD-738D-47B0-9EAA-25CE9AB685C9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,10 @@ Global
 		{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE92893E-4A02-4F2D-9280-2E8BDB4390A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CDA57FD-738D-47B0-9EAA-25CE9AB685C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CDA57FD-738D-47B0-9EAA-25CE9AB685C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CDA57FD-738D-47B0-9EAA-25CE9AB685C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CDA57FD-738D-47B0-9EAA-25CE9AB685C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,9 +105,10 @@ Global
 		{2FBC2472-0B90-420B-9E5D-E0B32FD04CD2} = {9CE3D0DA-92D6-4C28-B4E9-5DE47D1CB46A}
 		{F0E11A73-E1E9-4DC5-9BF3-AE23A4B00DD4} = {9CE3D0DA-92D6-4C28-B4E9-5DE47D1CB46A}
 		{DE92893E-4A02-4F2D-9280-2E8BDB4390A9} = {9CE3D0DA-92D6-4C28-B4E9-5DE47D1CB46A}
+		{6CDA57FD-738D-47B0-9EAA-25CE9AB685C9} = {D14FA8AF-C30C-4F0B-9AE3-604E53382192}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.Logging.6.0.1304.0\lib\NET45
+		SolutionGuid = {6FBB2854-F1F7-4E67-B3C0-AF10017C4150}
 	EndGlobalSection
 EndGlobal
