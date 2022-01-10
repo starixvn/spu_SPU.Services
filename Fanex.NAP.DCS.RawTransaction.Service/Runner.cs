@@ -326,17 +326,17 @@
                         //    }
                         //}
 
-                        if (string.IsNullOrWhiteSpace(analysis))
-                        {
-                            return Flagged.EmptyAnalysis;
-                        }
-                        else
-                        {
-                            if (!IsValidAnalysisKey(analysis))
-                            {
-                                return Flagged.InvalidAnalysis;
-                            }
-                        }
+                        //if (string.IsNullOrWhiteSpace(analysis))
+                        //{
+                        //    return Flagged.EmptyAnalysis;
+                        //}
+                        //else
+                        //{
+                        //    if (!IsValidAnalysisKey(analysis))
+                        //    {
+                        //        return Flagged.InvalidAnalysis;
+                        //    }
+                        //}
 
                         if (string.IsNullOrWhiteSpace(userAgent))
                         {
