@@ -1,0 +1,55 @@
+﻿namespace Fanex.NAP.DCS.Model.FPRawTransaction
+{
+    using FileHelpers;
+    using System;
+    using System.Numerics;
+
+    [DelimitedRecord("|")]
+    public class FPRawTransactionModel
+    {
+        public string LoginName { get; set; }
+
+        public string SubscriberName { get; set; }
+
+        public int SubscriberId { get; set; }
+
+        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd HH:mm:ss.ffff")]
+        public DateTime TransTime { get; set; }
+
+        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd HH:mm:ss.ffff")]
+        public DateTime CreatedDate { get; set; }
+
+        public string DeviceCode { get; set; }
+
+        public string FingerprintCode { get; set; }
+
+        public string FingerprintMoreInfo { get; set; }
+
+        public string UserAgent { get; set; }
+
+        public string IP { get; set; }
+
+        [FieldConverter(typeof(ConvertBigInteger))]
+        public BigInteger IPId { get; set; }
+
+        public int PluginID { get; set; }
+
+        public string URL { get; set; }
+
+        public string Action { get; set; }
+
+        public string ActionResult { get; set; }
+
+        public string InvalidDevice { get; set; }
+
+        public int TransStatus { get; set; }
+
+        [FieldHidden]
+        public int TransId { get; set; }
+
+        [FieldConverter(typeof(ConvertBigInteger))]
+        public BigInteger FPSTransId { get; set; }
+
+        public int Flagged { get; set; }
+    }
+}

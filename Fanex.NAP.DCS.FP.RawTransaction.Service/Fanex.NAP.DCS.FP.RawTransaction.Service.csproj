@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BrowserlessDetection.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Runner.cs">
@@ -57,7 +59,7 @@
     <Compile Include="Runner.Designer.cs">
       <DependentUpon>Runner.cs</DependentUpon>
     </Compile>
-    <Compile Include="Services\CapturingFPService.cs" />
+    <Compile Include="Services\FPCapturingService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -74,6 +76,9 @@
     </PackageReference>
     <PackageReference Include="Fanex.Logging.Sentry.RavenClient">
       <Version>1.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Oneyed.DeviceDetector">
+      <Version>2.0.2</Version>
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
@@ -105,10 +110,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="App_Data\SPNames.LOCAL.xml" />
-    <Content Include="App_Data\SPNames.PRO.xml" />
-    <Content Include="App_Data\SPNames.UAT.xml" />
-    <Content Include="App_Data\SPNames.xml" />
+    <Content Include="App_Data\SPNames.LOCAL.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\SPNames.PRO.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\SPNames.UAT.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="App_Data\SPNames.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
