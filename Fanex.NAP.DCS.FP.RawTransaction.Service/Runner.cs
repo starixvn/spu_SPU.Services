@@ -176,19 +176,27 @@
                 InvalidDevice = string.IsNullOrWhiteSpace(invalidDevice) ? null : invalidDevice,
                 TransStatus = Core.Utilities.ConvertBitArray2Int(transBit),
                 LoginName = message.Account,
-                SubscriberName = message.Subscriber,
-                SubscriberId = message.SubscriberId,
+                SubscriberName = message.Subscriber,                
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
-                PluginID = 0,
-                Flagged = (int)flagged,
+                PluginID = 0,                
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
-                FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null
+                FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null,
+                //CustID = message.x,
+                //CustSubID = message.x,
+                //FPDeviceID = message.x
+                SubscriberId = message.SubscriberId,
+                //LoginName_Old = message.x,
+                //TransTime_Old = message.x,
+                //UserAgent_Old = message.x,
+                //IP_Old = message.x,
+                //URL_Old = message.x,
+                Flagged_Old = (int)flagged,
             };
 
             return result;
