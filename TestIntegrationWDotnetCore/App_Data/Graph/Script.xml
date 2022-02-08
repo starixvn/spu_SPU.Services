@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Functions>
+  <Function Name="Adhoc">
+    <GraphSetting Key="ScanCTSCustomer" SpName="ScanCTSCustomer" DbName="GraphDB" TimeOut="600"/>
+  </Function>
+
+</Functions>
