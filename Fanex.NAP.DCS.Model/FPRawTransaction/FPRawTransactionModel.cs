@@ -48,25 +48,10 @@
         public int TransId { get; set; }
 
         [FieldConverter(typeof(ConvertBigInteger))]
-        public BigInteger FPSTransId { get; set; }        
+        public BigInteger FPSTransId { get; set; }
 
-        public int CustID { get; set; }
+        public int Flagged { get; set; }
 
-        public int CustSubID { get; set; }
-
-        public long FPDeviceID { get; set; }
-
-        public string LoginName_Old { get; set; }
-
-        [FieldConverter(ConverterKind.Date, "yyyy-MM-dd HH:mm:ss.ffff")]
-        public DateTime TransTime_Old { get; set; }
-
-        public string UserAgent_Old { get; set; }
-
-        public string IP_Old { get; set; }
-
-        public string URL_Old { get; set; }
-
-        public int Flagged_Old { get; set; }
+        public string TransKey { get; set; }
     }
 }
