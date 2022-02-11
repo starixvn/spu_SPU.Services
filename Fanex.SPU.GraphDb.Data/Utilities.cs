@@ -11,7 +11,7 @@
             DirectoryInfo result;
             if (path.StartsWith("~"))
             {
-                var location = Assembly.GetExecutingAssembly().CodeBase;
+                var location = Assembly.GetExecutingAssembly().Location;
                 var file = new FileInfo(location.Replace("file:///", ""));
                 var isConsole = file.Directory.GetFiles("*exe").Any();
 
@@ -29,7 +29,7 @@
                 }
                 else
                 {
-                    result = file.Directory.Parent.GetDirectories(path.Replace("~/", ""))[0];
+                    result = file.Directory.GetDirectories(path.Replace("~/", ""))[0];
                     return result.FullName;
                 }
 
