@@ -63,8 +63,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fanex.NAP.DCS.FP.RawTransaction.Service.exe.LOCAL.config" />
-    <None Include="Fanex.NAP.DCS.FP.RawTransaction.Service.exe.PRO.config" />
+    <None Include="Fanex.NAP.DCS.FP.RawTransaction.Service.exe.LOCAL.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Fanex.NAP.DCS.FP.RawTransaction.Service.exe.PRO.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
