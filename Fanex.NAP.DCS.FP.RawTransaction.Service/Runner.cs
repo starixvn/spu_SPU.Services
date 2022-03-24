@@ -5,7 +5,7 @@
     using Fanex.Logging.Extensions;
     using Fanex.Logging.Extensions.Database;
     using Fanex.NAP.DCS.Core;
-    using Fanex.NAP.DCS.FP.RawTransaction.Services;    
+    using Fanex.NAP.DCS.FP.RawTransaction.Services;
     using Fanex.NAP.DCS.Model.FPRawTransaction;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
@@ -79,7 +79,7 @@
             {
                 var trans = new List<FPRawTransactionModel>();
 
-                _rabbitMQConsume.AdvanceBus.Consume<MessageQueue>(_rabbitMQConsume.Queue, (message, info) =>
+                _rabbitMQConsume.AdvanceBus.Consume<MessageQueue>(_rabbitMQConsume.Queue, async (message, info) =>
                 {
                     try
                     {
@@ -95,14 +95,20 @@
                             {
                                 var tran = TransformRawTransaction(messageBody);
 
-                                trans.Add(tran);
-
-                                if (trans.Count >= AppSettings.TransBatch)
+                                var url = ConfigurationManager.AppSettings["FPS-Web-API"] + "/getsubscriber/" + tran.SubscriberName;
+                                var result = await ApiHelper.Get<SubscriberModel>(url);
+                                if (result != null)
                                 {
-                                    InsertTransaction(trans);
+                                    trans.Add(tran);
 
-                                    trans.Clear();
+                                    if (trans.Count >= AppSettings.TransBatch)
+                                    {
+                                        InsertTransaction(trans);
+
+                                        trans.Clear();
+                                    }
                                 }
+
                             }
                         }
 
