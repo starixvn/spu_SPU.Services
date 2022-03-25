@@ -2,6 +2,7 @@
 using Fanex.NAP.SPU.Graph.Core.TestConsole.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 
@@ -18,16 +19,18 @@ namespace Fanex.NAP.SPU.Graph.Core.TestConsole
                 .RegisterCommandBuilder(new Neo4jCommandBuilder("~/App_Data/scripts"))
                 .RegisterCommandExecutor(new Neo4jExecutor())
                 .Run();
+
+            var scriptName = ConfigurationManager.AppSettings["ScriptNameToRun"];
             Stopwatch stopwatch = new Stopwatch();
             try
             {
-                for (int i = 0; i < 1000; i++)
+                for (int i = 0; i < 10000; i++)
                 {
                     Console.WriteLine($"Batch {i} start");
                     stopwatch.Restart();
-                    DbSessionFactory.Execute("ArchiveCustomer");
+                    DbSessionFactory.Execute(scriptName);
                     stopwatch.Stop();
-                    Console.WriteLine("Batch {1} - Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds, i);
+                    Console.WriteLine("{2} - Batch {1} - Elapsed Time is {0} ms", stopwatch.ElapsedMilliseconds, i, scriptName);
                 }
 
                 //for (int i = 0; i < 1000; i++)
