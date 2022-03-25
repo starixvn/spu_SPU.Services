@@ -127,16 +127,22 @@
                             {
                                 var tran = TransformRawTransaction(messageBody);
 
-                                trans.Add(tran);
-
-                                if (trans.Count >= AppSettings.TransBatch)
+                                if (String.IsNullOrEmpty(tran.LoginName))
                                 {
-                                    InsertTransaction(trans);
+                                    var transInfo = JsonConvert.SerializeObject(tran);
+                                    LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + transInfo);
+                                }
+                                else
+                                {
+                                    trans.Add(tran);
+                                    if (trans.Count >= AppSettings.TransBatch)
+                                    {
+                                        InsertTransaction(trans);
 
-                                    PushTransactionToMonitor(trans);
+                                        PushTransactionToMonitor(trans);
 
-                                    trans.Clear();
-
+                                        trans.Clear();
+                                    }
                                 }
                             }
 
