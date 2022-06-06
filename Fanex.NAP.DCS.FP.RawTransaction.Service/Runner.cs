@@ -94,10 +94,10 @@
                             if (!ignoreSubList.Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase)))
                             {
                                 var tran = TransformRawTransaction(messageBody);
-
                                 var url = ConfigurationManager.AppSettings["FPS-Web-API"] + "/getsubscriber/" + tran.SubscriberName;
                                 var result = await ApiHelper.Get<SubscriberModel>(url);
-                                if (result != null)
+
+                                if (result != null && !string.IsNullOrWhiteSpace(tran.TransKey))
                                 {
                                     trans.Add(tran);
 
@@ -106,9 +106,8 @@
                                         InsertTransaction(trans);
 
                                         trans.Clear();
-                                    }
+                                   }
                                 }
-
                             }
                         }
 
