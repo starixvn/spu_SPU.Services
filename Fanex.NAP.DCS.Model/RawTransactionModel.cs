@@ -51,6 +51,8 @@ namespace Fanex.NAP.DCS.Model
         public BigInteger FPSTransId { get; set; }
 
         public int Flagged { get; set; }
+
+        public string TransKey { get; set; }
     }
 
     public class ConvertBigInteger : ConverterBase

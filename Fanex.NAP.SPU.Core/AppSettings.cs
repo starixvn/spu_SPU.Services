@@ -60,6 +60,12 @@ namespace Fanex.NAP.SPU.Core
 
         public static string RabbitMQ_RoutingKey_Monitor => ConfigurationManager.AppSettings["Queue-RoutingKey-Monitor"];
 
+        public static string RabbitMQ_Exchange_FP => ConfigurationManager.AppSettings["Queue-Exchange-FP"];
+
+        public static string RabbitMQ_QueueName_FP => ConfigurationManager.AppSettings["Queue-Name-FP"];
+
+        public static string RabbitMQ_RoutingKey_FP => ConfigurationManager.AppSettings["Queue-RoutingKey-FP"];
+
         public static string RabbitMQ_Host => ConfigurationManager.AppSettings["Queue-Host"];
 
         public static string RabbitMQ_Post => ConfigurationManager.AppSettings["Queue-Port"];

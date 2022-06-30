@@ -57,6 +57,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FPRawTransaction\FPRawTransactionDataAccess.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="RawTransactionDataAccess.cs" />
     <Compile Include="CommonDataAccess.cs" />

@@ -1,0 +1,360 @@
+﻿namespace Fanex.NAP.DCS.FP.RawTransaction.Service
+{
+    using EasyNetQ;
+    using Fanex.Logging;
+    using Fanex.Logging.Extensions;
+    using Fanex.Logging.Extensions.Database;
+    using Fanex.NAP.DCS.Core;
+    using Fanex.NAP.DCS.FP.RawTransaction.Services;
+    using Fanex.NAP.DCS.Model.FPRawTransaction;
+    using Fanex.NAP.SPU.Core;
+    using Fanex.NAP.SPU.Queue;
+    using Fanex.Oneyed.Infrastructure.Models;
+    using Newtonsoft.Json;
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Configuration;
+    using System.Linq;
+    using System.ServiceProcess;
+    using System.Text.RegularExpressions;
+    using Utilities = Core.Utilities;
+
+    partial class Runner : ServiceBase
+    {
+        private EasyNetQConnector _rabbitMQConsume;
+        private readonly IFPCapturingService _fpcapturingService;
+
+        public Runner()
+        {
+            InitializeComponent();
+
+            _fpcapturingService = new FPCapturingService();
+        }
+
+        protected override void OnStart(string[] args)
+        {
+            try
+            {
+                ConsumeMessageBus();
+
+                ConsumerTransactions();
+
+                LogService.Info($"FP Raw trans service is STARTED at {DateTime.Now}");
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
+            }
+        }
+
+        protected override void OnStop()
+        {
+            _rabbitMQConsume.Disposed();
+
+            LogService.Info($"FP Raw trans service is STOPED at {DateTime.Now}");
+        }
+
+        private void ConsumeMessageBus()
+        {
+            _rabbitMQConsume = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
+                AppSettings.RabbitMQ_VirtualHost,
+                AppSettings.RabbitMQ_PrefetchCount,
+                AppSettings.RabbitMQ_UserName,
+                AppSettings.RabbitMQ_Password);
+
+            _rabbitMQConsume.CreateBus()
+                .DeclareExchange(AppSettings.RabbitMQ_Exchange_FP)
+                .DeclareQueue(AppSettings.RabbitMQ_QueueName_FP)
+                .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey_FP)
+                .Bind();
+        }
+
+        private void ConsumerTransactions()
+        {
+            if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
+            {
+                var trans = new List<FPRawTransactionModel>();
+
+                _rabbitMQConsume.AdvanceBus.Consume<MessageQueue>(_rabbitMQConsume.Queue, async (message, info) =>
+                {
+                    try
+                    {
+                        var messageBody = message.Body;
+
+                        var ignoreSubs = ConfigurationManager.AppSettings["Ignore-Subs"];
+
+                        if (!string.IsNullOrWhiteSpace(ignoreSubs))
+                        {
+                            var ignoreSubList = ignoreSubs.Split(';');
+
+                            if (!ignoreSubList.Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase)))
+                            {
+                                var tran = TransformRawTransaction(messageBody);
+                                var url = ConfigurationManager.AppSettings["FPS-Web-API"] + "/getsubscriber/" + tran.SubscriberName;
+                                var result = await ApiHelper.Get<SubscriberModel>(url);
+
+                                if (result != null && !string.IsNullOrWhiteSpace(tran.TransKey))
+                                {
+                                    trans.Add(tran);
+
+                                    if (trans.Count >= AppSettings.TransBatch)
+                                    {
+                                        InsertTransaction(trans);
+
+                                        trans.Clear();
+                                   }
+                                }
+                            }
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        var logMessage = new LogMessage(ex.Message)
+                            .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                        LogService.Error(logMessage);
+                    }
+                });
+            }
+        }
+
+        private void InsertTransaction(List<FPRawTransactionModel> trans)
+        {
+            try
+            {
+                _fpcapturingService.InsertTransaction(trans);
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
+            }
+        }
+
+        private FPRawTransactionModel TransformRawTransaction(MessageQueue message)
+        {
+            LogMessage(message);
+
+            var invalidDevice = string.Empty;
+            var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
+            var deviceInfo = _fpcapturingService.GetDeviceInfo(deviceCode);
+            var deviceNo = deviceInfo.DeviceNo;
+            var url = Utilities.GetURLFromDeviceCode(message.Device);
+            var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
+            var transBit = new BitArray(16);
+            var token = message.Token ?? string.Empty;
+            var analysis = Utilities.GetAnalysis(message.Device);
+
+            var flagged = Browserless(token, analysis, userAgent, deviceNo);
+
+            if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
+            {
+                deviceInfo.DeviceNo = null;
+                transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);
+            }
+            else
+            {
+                if (!Utilities.IsGuidDeviceId(deviceInfo.DeviceNo) || deviceInfo.InvalidDeviceId)
+                {
+                    invalidDevice = deviceCode;
+                    deviceInfo.DeviceNo = null;
+                    transBit.Set((int)TransStatus.InvalidDI, true);
+                }
+            }
+
+            if (ContainsUnicodeCharacter(message.Account))
+            {
+                transBit.Set((int)TransStatus.InvalidLoginName, true);
+            }
+
+            var result = new FPRawTransactionModel
+            {
+                DeviceCode = deviceInfo.DeviceNo,
+                InvalidDevice = string.IsNullOrWhiteSpace(invalidDevice) ? null : invalidDevice,
+                TransStatus = Core.Utilities.ConvertBitArray2Int(transBit),
+                LoginName = message.Account,
+                SubscriberName = message.Subscriber,
+                SubscriberId = message.SubscriberId,
+                TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
+                IP = message.IP,
+                IPId = message.IP.Ip2Long().IpNumber,
+                PluginID = 0,
+                Flagged = (int)flagged,
+                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
+                Action = message.Action,
+                ActionResult = message.ActionResult,
+                UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
+                FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
+                FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null,
+                TransKey = message.TransKey
+            };
+
+            return result;
+        }
+
+        private static string EncodeCapturedData(FPDeviceInfoModel deviceInfo)
+        {
+            return Cipher.Encrypt(string.Format("{0}#{1}#{2}#{3}#{4}",
+                deviceInfo.Battery,
+                deviceInfo.CapturedDate,
+                deviceInfo.OSName,
+                deviceInfo.TimeZone,
+                deviceInfo.LocalIps));
+        }
+
+        private static string SubStringUrl(string url)
+        {
+            return url.IndexOf('?') != -1 ? url.Substring(0, url.IndexOf('?')) : url;
+        }
+
+        private static string ConvertNA2Empty(string data)
+        {
+            return data != "N/A" ? data : null;
+        }
+
+        private static bool ContainsUnicodeCharacter(string input)
+        {
+            const int MaxAnsiCode = 255;
+
+            return input.Any(c => c > MaxAnsiCode);
+        }
+
+        private static String StripUnicodeCharactersFromString(string inputValue)
+        {
+            return Regex.Replace(inputValue, @"[^\u0000-\u007F]", String.Empty);
+        }
+
+        private static void LogMessage(MessageQueue message)
+        {
+            if (AppSettings.WriteLog)
+            {
+                var accounts = AppSettings.WriteAccount.Split(new[] { ',', ';' });
+
+                if (accounts.Any(x => x.Equals(message.Account, StringComparison.OrdinalIgnoreCase)) || message.SubscriberId == 0)
+                {
+                    LogService.Info(JsonConvert.SerializeObject(message));
+                }
+            }
+        }
+
+        private static Flagged Browserless(string token, string analysis, string userAgent, string deviceNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(deviceNo))
+                {
+                    return Flagged.EmptyDevice;
+                }
+                else
+                {
+                    if (deviceNo != "N/A" && Utilities.IsGuidDeviceId(deviceNo))
+                    {
+                        if (string.IsNullOrWhiteSpace(token))
+                        {
+                            return Flagged.EmptyToken;
+                        }
+                        else
+                        {
+                            if (!IsValidateToken(token))
+                            {
+                                return Flagged.InvalidToken;
+                            }
+                        }
+
+                        if (string.IsNullOrWhiteSpace(analysis))
+                        {
+                            return Flagged.EmptyAnalysis;
+                        }
+                        else
+                        {
+                            if (!IsValidAnalysisKey(analysis))
+                            {
+                                return Flagged.InvalidAnalysis;
+                            }
+                        }
+
+                        if (string.IsNullOrWhiteSpace(userAgent))
+                        {
+                            return Flagged.EmptyUserAgent;
+                        }
+                        else
+                        {
+                            if (IsHeadless(userAgent))
+                            {
+                                return Flagged.Headless;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        return Flagged.InvalidDevice;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Error(ex.Message);
+            }
+
+            return Flagged.Human;
+        }
+
+        private static bool IsValidateToken(string token)
+        {
+            var decryptedToken = BrowserlessDetection.Decrypt(token);
+            var splitedToken = decryptedToken.Split('@');
+            if (splitedToken.Length != 2)
+            {
+                return false;
+            }
+            else
+            {
+                if (splitedToken.Length > 0)
+                {
+                    var submitTime = DateTime.Parse(splitedToken[0]);
+
+                    if (DateTime.Now.ToUniversalTime() < submitTime)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsValidAnalysisKey(string analysis)
+        {
+            string JsEnabledKey = "js-enabled";
+            string[] AnalysisFormatKey = new string[] { "startTime", "version", "exceptions", "executions", "storages", "devices", "enable" };
+
+            if (!analysis.Contains(JsEnabledKey))
+            {
+                foreach (var analysiItem in AnalysisFormatKey)
+                {
+                    if (!analysis.Contains(analysiItem))
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        private static bool IsHeadless(string userAgent)
+        {
+            if (userAgent.Contains("Headless")) return true;
+
+            return false;
+        }
+    }
+}

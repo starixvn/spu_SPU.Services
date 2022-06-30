@@ -59,6 +59,10 @@
   <ItemGroup>
     <Compile Include="DeviceInfoModel.cs" />
     <Compile Include="Environment.cs" />
+    <Compile Include="FPRawTransaction\FPDeviceInfoModel.cs" />
+    <Compile Include="FPRawTransaction\FPRawTransactionModel.cs" />
+    <Compile Include="FPRawTransaction\FPScreenInfoModel.cs" />
+    <Compile Include="FPRawTransaction\SubscriberModel.cs" />
     <Compile Include="IpInfoModel.cs" />
     <Compile Include="IpModel.cs" />
     <Compile Include="TransactionMonitoring\TransactionMonitoringModel.cs" />

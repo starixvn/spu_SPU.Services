@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Functions>
+  <Function Name="CapturingTransaction">
+	  <Setting Key="FP_DCS_DC_Transform_RawTransOld_Insert" SpName="FP_DCS_DC_Transform_RawTransOld_Insert" DbName="MySQL.FPSTesting.fpsServiceAdmin" Timeout="600">
+    </Setting>   
+  </Function>
+</Functions>
