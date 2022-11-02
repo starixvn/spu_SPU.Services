@@ -99,9 +99,6 @@
 
                                 if (result != null && !string.IsNullOrWhiteSpace(tran.TransKey))
                                 {
-
-                                    LogService.Error(JsonConvert.SerializeObject(tran));
-
                                     trans.Add(tran);
 
                                     if (trans.Count >= AppSettings.TransBatch)
