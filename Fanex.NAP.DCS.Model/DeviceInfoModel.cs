@@ -31,5 +31,7 @@
         public bool IsNonManilaCSD { get; set; }
 
         public bool InvalidDeviceId { get; set; }
+
+        public BotD BotD { get; set; }
     }
 }

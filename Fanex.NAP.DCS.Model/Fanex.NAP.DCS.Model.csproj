@@ -57,6 +57,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BotD.cs" />
+    <Compile Include="BotDResult.cs" />
     <Compile Include="DeviceInfoModel.cs" />
     <Compile Include="Environment.cs" />
     <Compile Include="FPRawTransaction\FPDeviceInfoModel.cs" />

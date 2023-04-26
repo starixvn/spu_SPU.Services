@@ -62,6 +62,13 @@
 
         private DeviceInfoModel TransformDeviceInfo(DeviceDetector.Models.DeviceInfo deviceInfo)
         {
+            var botD = new BotD();
+            try
+            {
+                botD = string.IsNullOrEmpty(deviceInfo.BotD) ? new BotD()
+                        : JsonConvert.DeserializeObject<BotD>(deviceInfo.BotD);
+            } catch{}
+
             return new DeviceInfoModel
             {
                 AppVersion = deviceInfo.AppVersion,
@@ -84,7 +91,8 @@
                         ColorDepth = deviceInfo.Screen.ColorDepth,
                         Height = deviceInfo.Screen.Height,
                         Width = deviceInfo.Screen.Width
-                    }
+                    },
+                BotD = botD
             };
         }
     }
