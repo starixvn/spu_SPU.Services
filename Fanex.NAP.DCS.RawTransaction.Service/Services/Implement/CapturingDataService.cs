@@ -65,8 +65,18 @@
             var botD = new BotD();
             try
             {
-                botD = string.IsNullOrEmpty(deviceInfo.BotD) ? new BotD()
-                        : JsonConvert.DeserializeObject<BotD>(deviceInfo.BotD);
+                if (deviceInfo.BotD?.Result != null)
+                {
+                    botD = new BotD
+                    {
+                        Result = new BotDResult
+                        {
+                            Bot = deviceInfo.BotD.Result.Bot,
+                            BotKind = deviceInfo.BotD.Result.BotKind
+                        },
+                        Detection = deviceInfo.BotD.Detection
+                    };
+                }
             } catch{}
 
             return new DeviceInfoModel
