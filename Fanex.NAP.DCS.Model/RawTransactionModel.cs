@@ -52,9 +52,11 @@ namespace Fanex.NAP.DCS.Model
 
         public string TransKey { get; set; }
 
-        public string BotKind { get; set; }
+        public string FlaggedCode { get; set; }
 
         public string BotDetection { get; set; }
+
+        public string BotComponent { get; set; }
     }
 
     public class ConvertBigInteger : ConverterBase

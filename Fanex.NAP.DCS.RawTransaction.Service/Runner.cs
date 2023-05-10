@@ -212,12 +212,18 @@
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
-            var deviceNo = deviceInfo.DeviceNo;
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
-            var token = message.Token ?? string.Empty;
-            var analysis = Utilities.GetAnalysis(message.Device);
+
+            var flaggedCode = deviceInfo.BotD?.Result?.Bot == true ? deviceInfo.BotD.Result.BotKind : string.Empty;
+            if (string.IsNullOrEmpty(flaggedCode))
+            {
+                var analysis = Utilities.GetAnalysis(message.Device);
+
+                var browserless = Browserless(message.Token ?? string.Empty, analysis, userAgent, deviceInfo.DeviceNo);
+                flaggedCode = browserless.ToString();
+            }
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
@@ -258,31 +264,74 @@
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null,
                 TransKey = message.TransKey,
-                BotKind = deviceInfo.BotD?.Result?.Bot == true ? deviceInfo.BotD.Result.BotKind : "None",
-                BotDetection = GetBotDetectionTrue(deviceInfo.BotD?.Detection)
+                FlaggedCode = flaggedCode,
+                BotDetection = GetBotDetectionTrue(deviceInfo),
+                BotComponent = GetBotComponent(deviceInfo, flaggedCode)
             };
 
             return result;
         }
 
-        private string GetBotDetectionTrue(string detection)
+        private string GetBotDetectionTrue(DeviceInfoModel deviceInfo)
         {
             try
             {
-                JObject jObject = JObject.Parse(detection);
+                var detection = deviceInfo.BotD?.Detection;
+                if (!string.IsNullOrEmpty(detection))
+                {
+                    JObject jObject = JObject.Parse(detection);
 
-                IEnumerable<string> keys = jObject.Properties().Select(p => p.Name);
-                IEnumerable<string> filteredKeys = keys.Where(key => jObject[key]["bot"].Value<bool>());
+                    IEnumerable<string> filteredKeys = jObject.Properties()
+                        .Where(p => p.Value.Value<bool>("bot"))
+                        .Select(p => p.Name);
 
-                string[] result = filteredKeys.ToArray();
-
-                return string.Join(",", result);
+                    return string.Join(",", filteredKeys);
+                }
             }
-            catch
+            catch{}
+
+            return string.Empty;
+        }
+
+        private string GetBotComponent(DeviceInfoModel deviceInfo, string flaggedCode)
+        {
+            if (flaggedCode != Flagged.Human.ToString())
             {
-                LogService.Info("GetDetection Fail!"+ detection);
-                return string.Empty;
+                return deviceInfo.BotD?.Component ?? string.Empty;
             }
+
+            return string.Empty;
+        }
+
+        private static Flagged Browserless(string token, string analysis, string userAgent, string deviceNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(deviceNo))
+                {
+                    return Flagged.EmptyDevice;
+                }
+                else
+                {
+                    if (deviceNo != "N/A" && Utilities.IsGuidDeviceId(deviceNo))
+                    {
+                        if (string.IsNullOrWhiteSpace(userAgent))
+                        {
+                            return Flagged.EmptyUserAgent;
+                        }
+                    }
+                    else
+                    {
+                        return Flagged.InvalidDevice;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Error(ex.Message);
+            }
+
+            return Flagged.Human;
         }
 
         private static string EncodeCapturedData(DeviceInfoModel deviceInfo)

@@ -74,7 +74,8 @@
                             Bot = deviceInfo.BotD.Result.Bot,
                             BotKind = deviceInfo.BotD.Result.BotKind
                         },
-                        Detection = deviceInfo.BotD.Detection
+                        Detection = deviceInfo.BotD.Detection,
+                        Component = deviceInfo.BotD.Component
                     };
                 }
             } catch{}
