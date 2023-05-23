@@ -319,6 +319,13 @@
                         {
                             return Flagged.EmptyUserAgent;
                         }
+                        else
+                        {
+                            if (IsHeadless(userAgent))
+                            {
+                                return Flagged.Headless;
+                            }
+                        }
                     }
                     else
                     {
