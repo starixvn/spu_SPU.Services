@@ -11,6 +11,7 @@
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections;
     using System.Collections.Generic;
@@ -207,18 +208,22 @@
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
             LogMessage(message);
-            
+
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
-            var deviceNo = deviceInfo.DeviceNo;
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
-            var token = message.Token ?? string.Empty;
-            var analysis = Utilities.GetAnalysis(message.Device);
 
-            var flagged = Browserless(token, analysis, userAgent, deviceNo);
+            var flaggedCode = deviceInfo.BotD?.Result?.Bot == true ? deviceInfo.BotD.Result.BotKind : string.Empty;
+            if (string.IsNullOrEmpty(flaggedCode))
+            {
+                var analysis = Utilities.GetAnalysis(message.Device);
+
+                var browserless = Browserless(message.Token ?? string.Empty, analysis, userAgent, deviceInfo.DeviceNo);
+                flaggedCode = browserless.ToString();
+            }
 
             if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
             {
@@ -252,17 +257,81 @@
                 IP = message.IP,
                 IPId = message.IP.Ip2Long().IpNumber,
                 PluginID = 0,
-                Flagged = (int)flagged,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
                 ActionResult = message.ActionResult,
                 UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
                 FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
                 FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null,
-                TransKey = message.TransKey
+                TransKey = message.TransKey,
+                FlaggedCode = flaggedCode,
+                BotDetection = GetBotDetectionTrue(deviceInfo),
+                BotComponent = GetBotComponent(deviceInfo, flaggedCode)
             };
 
             return result;
+        }
+
+        private string GetBotDetectionTrue(DeviceInfoModel deviceInfo)
+        {
+            try
+            {
+                var detection = deviceInfo.BotD?.Detection;
+                if (!string.IsNullOrEmpty(detection))
+                {
+                    JObject jObject = JObject.Parse(detection);
+
+                    IEnumerable<string> filteredKeys = jObject.Properties()
+                        .Where(p => p.Value.Value<bool>("bot"))
+                        .Select(p => p.Name);
+
+                    return string.Join(",", filteredKeys);
+                }
+            }
+            catch{}
+
+            return string.Empty;
+        }
+
+        private string GetBotComponent(DeviceInfoModel deviceInfo, string flaggedCode)
+        {
+            if (flaggedCode != Flagged.Human.ToString())
+            {
+                return deviceInfo.BotD?.Component ?? string.Empty;
+            }
+
+            return string.Empty;
+        }
+
+        private static Flagged Browserless(string token, string analysis, string userAgent, string deviceNo)
+        {
+            try
+            {
+                if (string.IsNullOrWhiteSpace(deviceNo))
+                {
+                    return Flagged.EmptyDevice;
+                }
+                else
+                {
+                    if (deviceNo != "N/A" && Utilities.IsGuidDeviceId(deviceNo))
+                    {
+                        if (string.IsNullOrWhiteSpace(userAgent))
+                        {
+                            return Flagged.EmptyUserAgent;
+                        }
+                    }
+                    else
+                    {
+                        return Flagged.InvalidDevice;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LogService.Error(ex.Message);
+            }
+
+            return Flagged.Human;
         }
 
         private static string EncodeCapturedData(DeviceInfoModel deviceInfo)
@@ -308,68 +377,6 @@
                 }
             }           
         }
-        private static Flagged Browserless(string token, string analysis, string userAgent, string deviceNo)
-        {
-            try
-            {
-                if (string.IsNullOrWhiteSpace(deviceNo))
-                {
-                    return Flagged.EmptyDevice;
-                }
-                else
-                {
-                    if (deviceNo != "N/A" && Utilities.IsGuidDeviceId(deviceNo))
-                    {
-                        //if (string.IsNullOrWhiteSpace(token))
-                        //{
-                        //    return Flagged.EmptyToken;
-                        //}
-                        //else
-                        //{
-                        //    if (!IsValidateToken(token))
-                        //    {
-                        //        return Flagged.InvalidToken;
-                        //    }
-                        //}
-
-                        //if (string.IsNullOrWhiteSpace(analysis))
-                        //{
-                        //    return Flagged.EmptyAnalysis;
-                        //}
-                        //else
-                        //{
-                        //    if (!IsValidAnalysisKey(analysis))
-                        //    {
-                        //        return Flagged.InvalidAnalysis;
-                        //    }
-                        //}
-
-                        if (string.IsNullOrWhiteSpace(userAgent))
-                        {
-                            return Flagged.EmptyUserAgent;
-                        }
-                        else
-                        {
-                            if (IsHeadless(userAgent))
-                            {
-                                return Flagged.Headless;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        return Flagged.InvalidDevice;
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message);
-            }
-
-            return Flagged.Human;
-        }
-
 
         private static bool IsValidateToken(string token)
         {

@@ -62,6 +62,24 @@
 
         private DeviceInfoModel TransformDeviceInfo(DeviceDetector.Models.DeviceInfo deviceInfo)
         {
+            var botD = new BotD();
+            try
+            {
+                if (deviceInfo.BotD?.Result != null)
+                {
+                    botD = new BotD
+                    {
+                        Result = new BotDResult
+                        {
+                            Bot = deviceInfo.BotD.Result.Bot,
+                            BotKind = deviceInfo.BotD.Result.BotKind
+                        },
+                        Detection = deviceInfo.BotD.Detection,
+                        Component = deviceInfo.BotD.Component
+                    };
+                }
+            } catch{}
+
             return new DeviceInfoModel
             {
                 AppVersion = deviceInfo.AppVersion,
@@ -84,7 +102,8 @@
                         ColorDepth = deviceInfo.Screen.ColorDepth,
                         Height = deviceInfo.Screen.Height,
                         Width = deviceInfo.Screen.Width
-                    }
+                    },
+                BotD = botD
             };
         }
     }
