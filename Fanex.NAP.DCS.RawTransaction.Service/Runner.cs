@@ -212,6 +212,12 @@
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
+
+            if(deviceInfo.InvalidDeviceId)
+            {
+                LogService.Info("Device invalid: " + JsonConvert.SerializeObject(message));
+            }
+
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);

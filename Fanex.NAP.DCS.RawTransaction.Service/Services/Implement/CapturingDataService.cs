@@ -30,7 +30,7 @@
 
             var deviceInfo = DeviceFactory.GetDeviceInfo(deviceCode);
 
-            if (deviceInfo != null)
+            if (deviceInfo != null && !string.IsNullOrEmpty(deviceInfo.DeviceCode))
             {
                 return TransformDeviceInfo(deviceInfo);
             }

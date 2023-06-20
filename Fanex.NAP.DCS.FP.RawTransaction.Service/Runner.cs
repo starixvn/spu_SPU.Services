@@ -146,6 +146,12 @@
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _fpcapturingService.GetDeviceInfo(deviceCode);
+
+            if(deviceInfo.InvalidDeviceId)
+            {
+                LogService.Info("Device invalid: " + JsonConvert.SerializeObject(message));
+            }
+
             var deviceNo = deviceInfo.DeviceNo;
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
