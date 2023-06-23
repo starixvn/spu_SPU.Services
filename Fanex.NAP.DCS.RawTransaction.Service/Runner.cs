@@ -207,13 +207,13 @@
 
         private RawTransactionModel TransformRawTransaction(MessageQueue message)
         {
-            LogMessage(message);
+            //LogMessage(message);
 
             var invalidDevice = string.Empty;
             var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
             var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
 
-            if(deviceInfo.InvalidDeviceId)
+            if(deviceInfo.InvalidDeviceId && AppSettings.WriteLog)
             {
                 LogService.Info("Device invalid: " + JsonConvert.SerializeObject(message));
             }
