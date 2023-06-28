@@ -5,7 +5,7 @@
 
     interface ICapturingDataService
     {     
-        int InsertTransaction(List<RawTransactionModel> rawTrans);
+        int InsertTransaction(List<RawTransactionModel> rawTrans, bool isTransOfDBExtra);
 
         DeviceInfoModel GetDeviceInfo(string deviceCode);
     }

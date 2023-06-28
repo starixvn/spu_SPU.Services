@@ -111,43 +111,95 @@
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
                 var trans = new List<RawTransactionModel>();
+                var tranOfExtraSubs = new List<RawTransactionModel>();
 
                 _rabbitMQConsume.AdvanceBus.Consume<MessageQueue>(_rabbitMQConsume.Queue, (message, info) =>
                 {
                     try
                     {
+                        var isTransOfExtraSubs = false;
+                        var isTransOfDCSubs = true;
+                        
+                        var extraSubs = AppSettings.ExtraSubs;
+                        var ignoreSubs = AppSettings.IgnoreSubs;
+
                         var messageBody = message.Body;
 
-                        var ignoreSubs = ConfigurationManager.AppSettings["Ignore-Subs"];
+                        if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
+                        {                            
+                            messageBody.Subscriber = "CTMAX"; // hardcode for test
 
+                            isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
+                        }
                         if (!string.IsNullOrWhiteSpace(ignoreSubs))
                         {
-                            var ignoreSubList = ignoreSubs.Split(';');
+                            isTransOfDCSubs = !ignoreSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
+                        }
 
-                            if (!ignoreSubList.Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase)))
+                        var tran = TransformRawTransaction(messageBody);
+
+                        if (String.IsNullOrEmpty(tran.LoginName))
+                        {                          
+                            LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(tran));
+                        }
+                        else
+                        {
+                            if (isTransOfExtraSubs)
                             {
-                                var tran = TransformRawTransaction(messageBody);
+                                tranOfExtraSubs.Add(tran);
 
-                                if (String.IsNullOrEmpty(tran.LoginName))
+                                if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
                                 {
-                                    var transInfo = JsonConvert.SerializeObject(tran);
-                                    LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + transInfo);
-                                }
-                                else
-                                {
-                                    trans.Add(tran);
-                                    if (trans.Count >= AppSettings.TransBatch)
-                                    {
-                                        InsertTransaction(trans);
+                                    InsertTransaction(tranOfExtraSubs, true);
 
-                                        PushTransactionToMonitor(trans);
-
-                                        trans.Clear();
-                                    }
+                                    tranOfExtraSubs.Clear();
                                 }
                             }
+                            else if (isTransOfDCSubs)
+                            {
+                                trans.Add(tran);
 
+                                if (trans.Count >= AppSettings.TransBatch)
+                                {
+                                    InsertTransaction(trans, false);
+
+                                    PushTransactionToMonitor(trans);
+
+                                    trans.Clear();
+                                }
+                            }
                         }
+
+                        #region Delete
+                        //else if (!string.IsNullOrWhiteSpace(ignoreSubs)) 
+                        //{
+                        //    var ignoreSubList = ignoreSubs.Split(';');
+
+                        //    if (!ignoreSubList.Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase)))
+                        //    {
+                        //        var tran = TransformRawTransaction(messageBody);
+
+                        //        if (String.IsNullOrEmpty(tran.LoginName))
+                        //        {
+                        //            var transInfo = JsonConvert.SerializeObject(tran);
+                        //            LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + transInfo);
+                        //        }
+                        //        else
+                        //        {
+                        //            trans.Add(tran);
+
+                        //            if (trans.Count >= AppSettings.TransBatch)
+                        //            {
+                        //                InsertTransaction(trans, false);
+
+                        //                PushTransactionToMonitor(trans);
+
+                        //                trans.Clear();
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                        #endregion
 
                     }
                     catch (Exception ex)
@@ -158,16 +210,17 @@
                         LogService.Error(logMessage);
 
                         trans.Clear();
+                        tranOfExtraSubs.Clear();
                     }
                 });
             }
         }
 
-        private void InsertTransaction(List<RawTransactionModel> trans)
+        private void InsertTransaction(List<RawTransactionModel> trans, bool isTransOfDBExtra)
         {
             try
             {
-                _capturingDataService.InsertTransaction(trans);                                
+                _capturingDataService.InsertTransaction(trans, isTransOfDBExtra);                                
             }
             catch (Exception ex)
             {

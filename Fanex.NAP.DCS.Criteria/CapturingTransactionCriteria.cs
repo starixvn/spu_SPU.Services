@@ -9,7 +9,20 @@
         [SpParam(SqlParamName = "ip_RawTransJson")]
         public string RawTrans { get; set; }
 
-        public override string GetSettingKey() => "DCS_DC_Transform_RawTrans_Insert";
+        [SpParam(Ignored = true)]
+        public bool IsTransOfDBExtra { get; set; }
+
+        public override string GetSettingKey() 
+        {
+            if (this.IsTransOfDBExtra)
+            {
+                return "DCS_ET_Transform_RawTrans_Insert";
+            }
+            else
+            {
+                return "DCS_DC_Transform_RawTrans_Insert";
+            }            
+        }
 
         public override bool IsValid() => true;
     }
