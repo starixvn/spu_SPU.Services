@@ -126,9 +126,8 @@
                         var messageBody = message.Body;
 
                         if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
-                        {                            
-                            messageBody.Subscriber = "CTMAX"; // hardcode for test
-
+                        {
+                            messageBody.Subscriber = "velki";
                             isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
                         }
                         if (!string.IsNullOrWhiteSpace(ignoreSubs))
