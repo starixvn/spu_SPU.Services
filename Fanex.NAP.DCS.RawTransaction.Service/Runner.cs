@@ -127,7 +127,7 @@
 
                         if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
                         {
-                            messageBody.Subscriber = "velki";
+                            messageBody.Subscriber = "Velki";
                             isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
                         }
                         if (!string.IsNullOrWhiteSpace(ignoreSubs))
