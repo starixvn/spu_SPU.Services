@@ -266,7 +266,7 @@
                 TransKey = message.TransKey,
                 FlaggedCode = flaggedCode,
                 BotDetection = GetBotDetectionTrue(deviceInfo),
-                BotComponent = GetBotComponent(deviceInfo, flaggedCode)
+                BotComponent = deviceInfo.BotD?.Component ?? string.Empty
             };
 
             return result;
