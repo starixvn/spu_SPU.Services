@@ -323,7 +323,7 @@
                 TransKey = message.TransKey,
                 FlaggedCode = flaggedCode,
                 BotDetection = GetBotDetectionTrue(deviceInfo),
-                BotComponent = deviceInfo.BotD?.Component ?? string.Empty
+                BotComponent = GetBotComponent(deviceInfo, flaggedCode)
             };
 
             return result;
@@ -350,7 +350,15 @@
         }
         private string GetBotComponent(DeviceInfoModel deviceInfo, string flaggedCode)
         {
-            if (flaggedCode != Flagged.Human.ToString())
+            var storeBotComponent = ConfigurationManager.AppSettings["BotD-BotComponent-ForHuman"];
+            if (string.IsNullOrEmpty(storeBotComponent) || storeBotComponent == "0")
+            {
+                if (flaggedCode != Flagged.Human.ToString())
+                {
+                    return deviceInfo.BotD?.Component ?? string.Empty;
+                }
+            }
+            else
             {
                 return deviceInfo.BotD?.Component ?? string.Empty;
             }
