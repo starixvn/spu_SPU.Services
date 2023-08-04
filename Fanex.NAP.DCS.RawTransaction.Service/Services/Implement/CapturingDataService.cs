@@ -14,11 +14,11 @@
             capturingData = new DataAccess.RawTransactionDataAccess();           
         }
 
-        public int InsertTransaction(List<RawTransactionModel> rawTrans)
+        public int InsertTransaction(List<RawTransactionModel> rawTrans, bool isTransOfDBExtra)
         {
             var model = JsonConvert.SerializeObject(rawTrans);
 
-           return capturingData.InsertTransaction(model);
+            return capturingData.InsertTransaction(model, isTransOfDBExtra);
         }
 
         public DeviceInfoModel GetDeviceInfo(string deviceCode)

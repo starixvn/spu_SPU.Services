@@ -294,7 +294,15 @@ namespace Fanex.NAP.SPU.Core
 
         public static int TransBatch => Convert.ToInt32(ConfigurationManager.AppSettings["Trans-Batch"]);
 
+        public static int TransOfExtraSubsBatch => Convert.ToInt32(ConfigurationManager.AppSettings["TransOfExtraSubs-Batch"]);
+
         public static string HostPathForTransaction => ConfigurationManager.AppSettings["SelfHost-Url-Trans"];
+
+        public static string IgnoreSubs => ConfigurationManager.AppSettings["Ignore-Subs"];
+
+        public static string ExtraSubs => ConfigurationManager.AppSettings["Extra-Subs"];
+
+        public static bool IsReadyDbExtra => Convert.ToBoolean(ConfigurationManager.AppSettings["IsReadyDbExtra"]);        
 
         public static string HostPathForDevice => ConfigurationManager.AppSettings["SelfHost-Url-Device"];
 

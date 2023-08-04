@@ -19,7 +19,7 @@
     using System.Linq;
     using System.ServiceProcess;
     using System.Text.RegularExpressions;
-    using System.Timers;
+
     using Utilities = Core.Utilities;
 
     public partial class Runner : ServiceBase
@@ -27,7 +27,7 @@
         private EasyNetQConnector _rabbitMQConsume;
         private EasyNetQConnector _rabbitMQMonitor;
         private readonly ICapturingDataService _capturingDataService;
-        private readonly List<RawTransactionModel> _transactionList;                
+        private readonly List<RawTransactionModel> _transactionList;
 
         public Runner()
         {
@@ -35,7 +35,7 @@
 
             _capturingDataService = new CapturingDataService();
 
-            _transactionList = new List<RawTransactionModel>();                        
+            _transactionList = new List<RawTransactionModel>();
 
         }
 
@@ -43,10 +43,8 @@
         {
             try
             {
-
                 ConsumeMessageBus();
                 MonitorMessageBus();
-
                 ConsumerTransactions();
 
                 LogService.Info($"Raw trans service is STARTED at {DateTime.Now}");
@@ -111,44 +109,62 @@
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
                 var trans = new List<RawTransactionModel>();
+                var tranOfExtraSubs = new List<RawTransactionModel>();
 
                 _rabbitMQConsume.AdvanceBus.Consume<MessageQueue>(_rabbitMQConsume.Queue, (message, info) =>
                 {
                     try
                     {
+                        var isTransOfExtraSubs = false;
+                        var isTransOfDCSubs = true;
+
+                        var extraSubs = AppSettings.ExtraSubs;
+                        var ignoreSubs = AppSettings.IgnoreSubs;
+
                         var messageBody = message.Body;
 
-                        var ignoreSubs = ConfigurationManager.AppSettings["Ignore-Subs"];
-
+                        if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
+                        {
+                            isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
+                        }
                         if (!string.IsNullOrWhiteSpace(ignoreSubs))
                         {
-                            var ignoreSubList = ignoreSubs.Split(';');
-
-                            if (!ignoreSubList.Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase)))
-                            {
-                                var tran = TransformRawTransaction(messageBody);
-
-                                if (String.IsNullOrEmpty(tran.LoginName))
-                                {
-                                    var transInfo = JsonConvert.SerializeObject(tran);
-                                    LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + transInfo);
-                                }
-                                else
-                                {
-                                    trans.Add(tran);
-                                    if (trans.Count >= AppSettings.TransBatch)
-                                    {
-                                        InsertTransaction(trans);
-
-                                        PushTransactionToMonitor(trans);
-
-                                        trans.Clear();
-                                    }
-                                }
-                            }
-
+                            isTransOfDCSubs = !ignoreSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
                         }
 
+                        var tran = TransformRawTransaction(messageBody);
+
+                        if (String.IsNullOrEmpty(tran.LoginName))
+                        {
+                            LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(tran));
+                        }
+                        else
+                        {
+                            if (isTransOfExtraSubs)
+                            {
+                                tranOfExtraSubs.Add(tran);
+
+                                if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
+                                {
+                                    InsertTransaction(tranOfExtraSubs, true);
+
+                                    tranOfExtraSubs.Clear();
+                                }
+                            }
+                            else if (isTransOfDCSubs)
+                            {
+                                trans.Add(tran);
+
+                                if (trans.Count >= AppSettings.TransBatch)
+                                {
+                                    InsertTransaction(trans, false);
+
+                                    PushTransactionToMonitor(trans);
+
+                                    trans.Clear();
+                                }
+                            }
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -158,16 +174,17 @@
                         LogService.Error(logMessage);
 
                         trans.Clear();
+                        tranOfExtraSubs.Clear();
                     }
                 });
             }
         }
 
-        private void InsertTransaction(List<RawTransactionModel> trans)
+        private void InsertTransaction(List<RawTransactionModel> trans, bool isTransOfDBExtra)
         {
             try
             {
-                _capturingDataService.InsertTransaction(trans);                                
+                _capturingDataService.InsertTransaction(trans, isTransOfDBExtra);
             }
             catch (Exception ex)
             {
@@ -175,7 +192,7 @@
                     .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error(logMessage);                                
+                LogService.Error(logMessage);
             }
         }
 
@@ -183,15 +200,14 @@
         {
             if (ConfigurationManager.AppSettings["PushTrans-To-Monitor"] == "1")
             {
-                var groupTrans = trans
-                                .Select(x => { x.TransTime = Convert.ToDateTime(x.TransTime.ToString("MM/dd/yyyy")); return x; })
-                                .GroupBy(x => new { x.SubscriberId, x.TransTime })
-                                .Select(x => new TransactionMonitoringModel
-                                {
-                                    SubscriberID = x.Key.SubscriberId,                                    
-                                    TransDate = x.Key.TransTime,
-                                    TransTotal = x.Count()
-                                });
+                var groupTrans = trans.Select(x => { x.TransTime = Convert.ToDateTime(x.TransTime.ToString("MM/dd/yyyy")); return x; })
+                                    .GroupBy(x => new { x.SubscriberId, x.TransTime })
+                                    .Select(x => new TransactionMonitoringModel
+                                    {
+                                        SubscriberID = x.Key.SubscriberId,
+                                        TransDate = x.Key.TransTime,
+                                        TransTotal = x.Count()
+                                    });
 
                 if (groupTrans != null && groupTrans.Any())
                 {
@@ -280,7 +296,6 @@
                 if (!string.IsNullOrEmpty(detection))
                 {
                     JObject jObject = JObject.Parse(detection);
-
                     IEnumerable<string> filteredKeys = jObject.Properties()
                         .Where(p => p.Value.Value<bool>("bot"))
                         .Select(p => p.Name);
@@ -288,11 +303,10 @@
                     return string.Join(",", filteredKeys);
                 }
             }
-            catch{}
+            catch { }
 
             return string.Empty;
         }
-
         private string GetBotComponent(DeviceInfoModel deviceInfo, string flaggedCode)
         {
             if (flaggedCode != Flagged.Human.ToString())
@@ -382,7 +396,7 @@
                 {
                     LogService.Info(JsonConvert.SerializeObject(message));
                 }
-            }           
+            }
         }
 
         private static bool IsValidateToken(string token)
