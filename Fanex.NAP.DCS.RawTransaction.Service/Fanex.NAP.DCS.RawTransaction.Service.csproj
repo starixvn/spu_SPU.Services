@@ -136,6 +136,9 @@
     <PackageReference Include="Fanex.Oneyed.DeviceDetector">
       <Version>2.0.6</Version>
     </PackageReference>
+    <PackageReference Include="Fanex.Oneyed.Infrastructure">
+      <Version>1.0.4</Version>
+    </PackageReference>
     <PackageReference Include="log4net">
       <Version>2.0.12</Version>
     </PackageReference>
