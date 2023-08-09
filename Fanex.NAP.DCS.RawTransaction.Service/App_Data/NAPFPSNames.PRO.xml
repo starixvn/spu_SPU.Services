@@ -8,4 +8,7 @@
     </Setting>
 		<Setting Key="DCS_ET_Transform_RawTrans_Insert" SpName="DCS_ET_Transform_RawTrans_Insert" DbName="MySQL.DCS_Extra.ctsServiceAdmin" Timeout="600"></Setting>
   </Function>
+  <Function Name="IPInfo">
+    <Setting Key="GetLocationByIPList" SpName="GetLocationByIPList" DbName="SQL.FPS.IPDB.fpsWinService" Timeout="600"></Setting>
+  </Function>
 </Functions>

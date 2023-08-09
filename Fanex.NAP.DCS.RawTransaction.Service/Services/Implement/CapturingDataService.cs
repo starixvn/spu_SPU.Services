@@ -8,10 +8,12 @@
     public class CapturingDataService : ICapturingDataService
     {
         private readonly DataAccess.RawTransactionDataAccess capturingData;
+        private readonly DataAccess.CommonDataAccess commonDataAccess;
               
         public CapturingDataService()
         {
-            capturingData = new DataAccess.RawTransactionDataAccess();           
+            capturingData = new DataAccess.RawTransactionDataAccess();    
+            commonDataAccess    = new DataAccess.CommonDataAccess();
         }
 
         public int InsertTransaction(List<RawTransactionModel> rawTrans, bool isTransOfDBExtra)
@@ -105,6 +107,11 @@
                     },
                 BotD = botD
             };
+        }
+
+        public IEnumerable<IpInfoModel> GetIpInfoList(string ipAddressList)
+        {
+            return commonDataAccess.GetIpInfoList(ipAddressList);
         }
     }
 }

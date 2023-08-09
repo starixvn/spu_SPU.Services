@@ -19,6 +19,7 @@
     using System.Linq;
     using System.ServiceProcess;
     using System.Text.RegularExpressions;
+    using System.Linq;
 
     using Utilities = Core.Utilities;
 
@@ -146,7 +147,33 @@
 
                                 if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
                                 {
-                                    InsertTransaction(tranOfExtraSubs, true);
+                                    var ipAddressList = tranOfExtraSubs.Select(x => x.IPId).ToList();
+                                    var ipAddressJoined = string.Join(",", ipAddressList);
+                                    var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
+
+                                    if (ipInfoList != null && ipInfoList.Any())
+                                    {
+                                        var newTransOfExtraSubs = tranOfExtraSubs.Select(x =>
+                                        {
+                                            var ipInfo = ipInfoList.FirstOrDefault(y => x.IPId == y.IP);
+
+                                            x.Country = ipInfo.CountryName;
+                                            x.CountryCode = ipInfo.CountryCode;
+                                            x.Region = ipInfo.Region;
+                                            x.City = ipInfo.City;
+                                            x.ISP = ipInfo.ISP;
+
+                                            return x;
+                                        }).ToList();
+
+                                        InsertTransaction(newTransOfExtraSubs, true);
+                                    }
+                                    else
+                                    {
+                                        InsertTransaction(tranOfExtraSubs, true);
+
+
+                                    }
 
                                     tranOfExtraSubs.Clear();
                                 }

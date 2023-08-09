@@ -57,6 +57,16 @@ namespace Fanex.NAP.DCS.Model
         public string BotDetection { get; set; }
 
         public string BotComponent { get; set; }
+
+        public string Country { get; set; }
+
+        public string CountryCode { get; set; }
+
+        public string Region { get; set; }
+
+        public string City { get; set; }
+
+        public string ISP { get; set; }
     }
 
     public class ConvertBigInteger : ConverterBase

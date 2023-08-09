@@ -12,16 +12,16 @@ namespace Fanex.NAP.DCS.DataAccess
 {
     public class CommonDataAccess
     {
-        public IpInfoModel GetIpInfo(string ipAddress)
+        public IEnumerable<IpInfoModel> GetIpInfoList(string ipAddressList)
         {
             var criteria = new IpInfoCriteria
             {
-                IpAddress = ipAddress
+                IpAddressList = ipAddressList
             };
 
             using (var db = ObjectDbFactory.CreateInstance(criteria.GetSettingKey()))
             {
-                return db.QueryEntity<IpInfoModel>(criteria);
+                return db.Query<IpInfoModel>(criteria);
             }
         }
     }
