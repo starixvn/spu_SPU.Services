@@ -8,5 +8,7 @@
         int InsertTransaction(List<RawTransactionModel> rawTrans, bool isTransOfDBExtra);
 
         DeviceInfoModel GetDeviceInfo(string deviceCode);
+
+        IEnumerable<IpInfoModel> GetIpInfoList(string ipAddressList);
     }
 }
