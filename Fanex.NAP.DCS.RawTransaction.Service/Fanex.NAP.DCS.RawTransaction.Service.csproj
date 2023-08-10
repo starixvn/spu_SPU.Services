@@ -115,6 +115,12 @@
     <PackageReference Include="EasyNetQ">
       <Version>6.3.1</Version>
     </PackageReference>
+    <PackageReference Include="Fanex.Data">
+      <Version>4.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="Fanex.Data.MySql">
+      <Version>4.2.2</Version>
+    </PackageReference>
     <PackageReference Include="Fanex.Data.Repository">
       <Version>4.2.2</Version>
     </PackageReference>

@@ -10,7 +10,7 @@ namespace Fanex.NAP.DCS.Criteria
 {
     public class IpInfoCriteria : CriteriaBase
     {
-        [SpParam(SqlParamName = "@IPs")]
+        [SpParam(SqlParamName = "IPs")]
         public string IpAddressList { get; set; }
 
         public override string GetSettingKey()

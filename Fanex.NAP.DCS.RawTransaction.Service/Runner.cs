@@ -120,13 +120,25 @@
                         var isTransOfDCSubs = true;
 
                         var extraSubs = AppSettings.ExtraSubs;
+                        var extraSubsTest = AppSettings.ExtraSubsTest;
                         var ignoreSubs = AppSettings.IgnoreSubs;
 
                         var messageBody = message.Body;
 
                         if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
                         {
+                            if (!string.IsNullOrEmpty(extraSubsTest))
+                            {
+                                if (messageBody.Subscriber == extraSubsTest)
+                                {
+                                    var random = new Random();
+                                    var subIndex = random.Next(0, extraSubsTest.Length);
+                                    messageBody.Subscriber = extraSubs.Split(';')[subIndex];
+                                }
+                            }
+
                             isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
+
                         }
                         if (!string.IsNullOrWhiteSpace(ignoreSubs))
                         {
@@ -147,7 +159,7 @@
 
                                 if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
                                 {
-                                    var ipAddressList = tranOfExtraSubs.Select(x => x.IPId).ToList();
+                                    var ipAddressList = tranOfExtraSubs.Where(x => x.IPId != -1).Select(x => x.IPId).ToList();
                                     var ipAddressJoined = string.Join(",", ipAddressList);
                                     var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
 
@@ -157,11 +169,11 @@
                                         {
                                             var ipInfo = ipInfoList.FirstOrDefault(y => x.IPId == y.IP);
 
-                                            x.Country = ipInfo.CountryName;
-                                            x.CountryCode = ipInfo.CountryCode;
-                                            x.Region = ipInfo.Region;
-                                            x.City = ipInfo.City;
-                                            x.ISP = ipInfo.ISP;
+                                            x.Country = ipInfo?.Country;
+                                            x.CountryCode = ipInfo?.CountryCode;
+                                            x.Region = ipInfo?.Region;
+                                            x.City = ipInfo?.City;
+                                            x.ISP = ipInfo?.ISP;
 
                                             return x;
                                         }).ToList();
