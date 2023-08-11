@@ -32,6 +32,9 @@ namespace Fanex.NAP.DCS.Model
         [FieldConverter(typeof(ConvertBigInteger))]
         public BigInteger IPId { get; set; }
 
+        [FieldHidden]
+        public bool IsIPV6 { get; set; }
+
         public int PluginID { get; set; }
 
         public string URL { get; set; }

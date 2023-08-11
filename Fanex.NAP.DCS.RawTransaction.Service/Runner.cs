@@ -158,8 +158,8 @@
                                 tranOfExtraSubs.Add(tran);
 
                                 if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
-                                {
-                                    var ipAddressList = tranOfExtraSubs.Where(x => x.IPId != -1).Select(x => x.IPId).ToList();
+                                {                                    
+                                    var ipAddressList = tranOfExtraSubs.Where(x => x.IPId != -1 && !x.IsIPV6).Select(x => x.IPId).ToList();
                                     var ipAddressJoined = string.Join(",", ipAddressList);
                                     var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
 
@@ -301,6 +301,8 @@
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
 
+            var ipConverted = message.IP.Ip2Long();
+
             var result = new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
@@ -311,7 +313,8 @@
                 SubscriberId = message.SubscriberId,
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
-                IPId = message.IP.Ip2Long().IpNumber,
+                IPId = ipConverted.IpNumber,
+                IsIPV6 = ipConverted.IsIpV6,
                 PluginID = 0,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,
