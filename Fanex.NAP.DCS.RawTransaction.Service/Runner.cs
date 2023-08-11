@@ -174,7 +174,7 @@
                                             x.Region = ipInfo?.Region;
                                             x.City = ipInfo?.City;
                                             x.ISP = ipInfo?.ISP;
-                                            x.IPInfoCode = Cipher.Hashing2Int(string.Join(";", ipInfo?.CountryCode, ipInfo?.Region, ipInfo?.City));
+                                            x.IPInfoCode = Cipher.Hashing2Int(string.Join(";", ipInfo?.CountryCode, ipInfo?.Region, ipInfo?.City, ipInfo?.ISP));
 
                                             return x;
                                         }).ToList();
