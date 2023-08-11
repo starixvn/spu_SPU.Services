@@ -67,6 +67,8 @@ namespace Fanex.NAP.DCS.Model
         public string City { get; set; }
 
         public string ISP { get; set; }
+
+        public long IPInfoCode { get; set; }
     }
 
     public class ConvertBigInteger : ConverterBase
