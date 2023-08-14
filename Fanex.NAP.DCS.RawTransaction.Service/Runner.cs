@@ -19,6 +19,7 @@
     using System.Linq;
     using System.ServiceProcess;
     using System.Text.RegularExpressions;
+    using System.Linq;
 
     using Utilities = Core.Utilities;
 
@@ -119,13 +120,25 @@
                         var isTransOfDCSubs = true;
 
                         var extraSubs = AppSettings.ExtraSubs;
+                        var extraSubsTest = AppSettings.ExtraSubsTest;
                         var ignoreSubs = AppSettings.IgnoreSubs;
 
                         var messageBody = message.Body;
 
                         if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
                         {
+                            if (!string.IsNullOrEmpty(extraSubsTest))
+                            {
+                                if (messageBody.Subscriber == extraSubsTest)
+                                {
+                                    var random = new Random();
+                                    var subIndex = random.Next(0, extraSubsTest.Length);
+                                    messageBody.Subscriber = extraSubs.Split(';')[subIndex];
+                                }
+                            }
+
                             isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
+
                         }
                         if (!string.IsNullOrWhiteSpace(ignoreSubs))
                         {
@@ -145,8 +158,35 @@
                                 tranOfExtraSubs.Add(tran);
 
                                 if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
-                                {
-                                    InsertTransaction(tranOfExtraSubs, true);
+                                {                                    
+                                    var ipAddressList = tranOfExtraSubs.Where(x => x.IPId != -1 && !x.IsIPV6).Select(x => x.IPId).ToList();
+                                    var ipAddressJoined = string.Join(",", ipAddressList);
+                                    var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
+
+                                    if (ipInfoList != null && ipInfoList.Any())
+                                    {
+                                        var newTransOfExtraSubs = tranOfExtraSubs.Select(x =>
+                                        {
+                                            var ipInfo = ipInfoList.FirstOrDefault(y => x.IPId == y.IP);
+
+                                            x.Country = ipInfo?.Country;
+                                            x.CountryCode = ipInfo?.CountryCode;
+                                            x.Region = ipInfo?.Region;
+                                            x.City = ipInfo?.City;
+                                            x.ISP = ipInfo?.ISP;
+                                            x.IPInfoCode = Cipher.Hashing2Int(string.Join(";", ipInfo?.CountryCode, ipInfo?.Region, ipInfo?.City, ipInfo?.ISP));
+
+                                            return x;
+                                        }).ToList();
+
+                                        InsertTransaction(newTransOfExtraSubs, true);
+                                    }
+                                    else
+                                    {
+                                        InsertTransaction(tranOfExtraSubs, true);
+
+
+                                    }
 
                                     tranOfExtraSubs.Clear();
                                 }
@@ -261,6 +301,8 @@
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
 
+            var ipConverted = message.IP.Ip2Long();
+
             var result = new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
@@ -271,7 +313,8 @@
                 SubscriberId = message.SubscriberId,
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
-                IPId = message.IP.Ip2Long().IpNumber,
+                IPId = ipConverted.IpNumber,
+                IsIPV6 = ipConverted.IsIpV6,
                 PluginID = 0,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
                 Action = message.Action,

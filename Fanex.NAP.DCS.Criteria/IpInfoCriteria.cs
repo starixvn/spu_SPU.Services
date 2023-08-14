@@ -1,4 +1,5 @@
-﻿using Fanex.Data.Repository;
+﻿using Fanex.Data;
+using Fanex.Data.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,12 @@ namespace Fanex.NAP.DCS.Criteria
 {
     public class IpInfoCriteria : CriteriaBase
     {
-        public string IpAddress { get; set; }
+        [SpParam(SqlParamName = "IPs")]
+        public string IpAddressList { get; set; }
 
         public override string GetSettingKey()
         {
-            return "GetIPDetail";
+            return "GetLocationByIPList";
         }
 
         public override bool IsValid()
