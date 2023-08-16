@@ -285,7 +285,10 @@
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
 
-            deviceInfo.BotD = TransformBotd(message.BotD);
+            if(!string.IsNullOrWhiteSpace(message?.BotD))
+            {
+                deviceInfo.BotD = TransformBotd(message.BotD);
+            }            
 
             var flaggedCode = deviceInfo.BotD?.Result?.Bot == true ? deviceInfo.BotD.Result.BotKind : string.Empty;
             if (string.IsNullOrEmpty(flaggedCode))
@@ -327,7 +330,7 @@
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
                 IPId = ipConverted.IpNumber,
-                FakeIp = message.FakeIP,
+                FakeIP = message.FakeIP,
                 IsIPV6 = ipConverted.IsIpV6,
                 PluginID = 0,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
