@@ -20,7 +20,7 @@
     using System.ServiceProcess;
     using System.Text.RegularExpressions;
     using System.Linq;
-
+    using System.Timers;
     using Utilities = Core.Utilities;
 
     public partial class Runner : ServiceBase
@@ -275,9 +275,7 @@
             var flaggedCode = deviceInfo.BotD?.Result?.Bot == true ? deviceInfo.BotD.Result.BotKind : string.Empty;
             if (string.IsNullOrEmpty(flaggedCode))
             {
-                var analysis = Utilities.GetAnalysis(message.Device);
-
-                var browserless = Browserless(message.Token ?? string.Empty, analysis, userAgent, deviceInfo.DeviceNo);
+                var browserless = Browserless(userAgent, deviceInfo.DeviceNo);
                 flaggedCode = browserless.ToString();
             }
 
@@ -325,7 +323,7 @@
                 TransKey = message.TransKey,
                 FlaggedCode = flaggedCode,
                 BotDetection = GetBotDetectionTrue(deviceInfo),
-                BotComponent = deviceInfo.BotD?.Component ?? string.Empty
+                BotComponent = GetBotComponent(deviceInfo, flaggedCode)
             };
 
             return result;
@@ -352,7 +350,15 @@
         }
         private string GetBotComponent(DeviceInfoModel deviceInfo, string flaggedCode)
         {
-            if (flaggedCode != Flagged.Human.ToString())
+            var storeBotComponent = ConfigurationManager.AppSettings["BotD-BotComponent-ForHuman"];
+            if (string.IsNullOrEmpty(storeBotComponent) || storeBotComponent == "0")
+            {
+                if (flaggedCode != Flagged.Human.ToString())
+                {
+                    return deviceInfo.BotD?.Component ?? string.Empty;
+                }
+            }
+            else
             {
                 return deviceInfo.BotD?.Component ?? string.Empty;
             }
@@ -360,34 +366,28 @@
             return string.Empty;
         }
 
-        private static Flagged Browserless(string token, string analysis, string userAgent, string deviceNo)
+        private static Flagged Browserless(string userAgent, string deviceNo)
         {
             try
             {
+                if (!string.IsNullOrWhiteSpace(userAgent) && IsHeadless(userAgent))
+                {
+                    return Flagged.Headless;
+                }
+
                 if (string.IsNullOrWhiteSpace(deviceNo))
                 {
                     return Flagged.EmptyDevice;
                 }
-                else
+
+                if (deviceNo == "N/A" || !Utilities.IsGuidDeviceId(deviceNo))
                 {
-                    if (deviceNo != "N/A" && Utilities.IsGuidDeviceId(deviceNo))
-                    {
-                        if (string.IsNullOrWhiteSpace(userAgent))
-                        {
-                            return Flagged.EmptyUserAgent;
-                        }
-                        else
-                        {
-                            if (IsHeadless(userAgent))
-                            {
-                                return Flagged.Headless;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        return Flagged.InvalidDevice;
-                    }
+                    return Flagged.InvalidDevice;
+                }
+
+                if (string.IsNullOrWhiteSpace(userAgent))
+                {
+                    return Flagged.EmptyUserAgent;
                 }
             }
             catch (Exception ex)
@@ -407,6 +407,7 @@
                 deviceInfo.TimeZone,
                 deviceInfo.LocalIps));
         }
+
         private static string SubStringUrl(string url)
         {
             return url.IndexOf('?') != -1 ? url.Substring(0, url.IndexOf('?')) : url;
@@ -440,49 +441,6 @@
                     LogService.Info(JsonConvert.SerializeObject(message));
                 }
             }
-        }
-
-        private static bool IsValidateToken(string token)
-        {
-            var decryptedToken = BrowserlessDetection.Decrypt(token);
-            var splitedToken = decryptedToken.Split('@');
-            if (splitedToken.Length != 2)
-            {
-                return false;
-            }
-            else
-            {
-                if (splitedToken.Length > 0)
-                {
-                    var submitTime = DateTime.Parse(splitedToken[0]);
-
-                    if (DateTime.Now.ToUniversalTime() < submitTime)
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        private static bool IsValidAnalysisKey(string analysis)
-        {
-            string JsEnabledKey = "js-enabled";
-            string[] AnalysisFormatKey = new string[] { "startTime", "version", "exceptions", "executions", "storages", "devices", "enable" };
-
-            if (!analysis.Contains(JsEnabledKey))
-            {
-                foreach (var analysiItem in AnalysisFormatKey)
-                {
-                    if (!analysis.Contains(analysiItem))
-                    {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
         }
 
         private static bool IsHeadless(string userAgent)
