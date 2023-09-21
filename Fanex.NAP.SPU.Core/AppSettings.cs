@@ -304,7 +304,7 @@ namespace Fanex.NAP.SPU.Core
 
         public static string ExtraSubsTest => ConfigurationManager.AppSettings["Extra-Sub-Test"];
 
-        public static bool IsReadyDbExtra => Convert.ToBoolean(ConfigurationManager.AppSettings["IsReadyDbExtra"]);        
+        public static bool IsReadyDbExtra => Convert.ToBoolean(ConfigurationManager.AppSettings["IsReadyDbExtra"]);
 
         public static string HostPathForDevice => ConfigurationManager.AppSettings["SelfHost-Url-Device"];
 
@@ -345,6 +345,12 @@ namespace Fanex.NAP.SPU.Core
         public static string TGRSMailingArrListId => ConfigurationManager.AppSettings["TGRS-MailingArrListId"];
 
         public static string TGRSAutoTradingFilePassword => ConfigurationManager.AppSettings["TGRS-AutoTrading-File-Password"];
+
+        public static bool IsConsumeDCSExtra => Convert.ToBoolean(ConfigurationManager.AppSettings["Is-Consume-DCS-Extra"]);
+
+        public static string RabbitMQ_DCSExtraQueueName => ConfigurationManager.AppSettings["DCS-Extra-Queue-Name"];
+
+        public static string RabbitMQ_DCSExtraExchangeName => ConfigurationManager.AppSettings["DCS-Extra-Queue-Exchange"];
 
         public static int CustEvidenceFromFileChunkSize
         {

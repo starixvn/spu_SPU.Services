@@ -20,25 +20,31 @@
     using System.Linq;
     using System.ServiceProcess;
     using System.Text.RegularExpressions;
-    using System.Linq;
     using System.Timers;
     using Utilities = Core.Utilities;
+    using System.Threading.Tasks;
+    using System.Threading;
 
     public partial class Runner : ServiceBase
     {
         private EasyNetQConnector _rabbitMQConsume;
         private EasyNetQConnector _rabbitMQMonitor;
         private readonly ICapturingDataService _capturingDataService;
-        private readonly List<RawTransactionModel> _transactionList;
+
+        private readonly List<RawTransactionModel> transDcsSub = new List<RawTransactionModel>();
+        private readonly List<RawTransactionModel> tranOfExtraSubs = new List<RawTransactionModel>();
+
+        private readonly List<Task> taskDcsSubList = new List<Task>();
+        private readonly List<Task> taskExtraSubList = new List<Task>();
+
+        private readonly CancellationTokenSource cancellationTokenSourceDcsSub = new CancellationTokenSource();
+        private readonly CancellationTokenSource cancellationTokenSourceExtraSub = new CancellationTokenSource();
 
         public Runner()
         {
             InitializeComponent();
 
             _capturingDataService = new CapturingDataService();
-
-            _transactionList = new List<RawTransactionModel>();
-
         }
 
         protected override void OnStart(string[] args)
@@ -78,6 +84,8 @@
 
         private void ConsumeMessageBus()
         {
+            var exchangeName = AppSettings.IsConsumeDCSExtra ? AppSettings.RabbitMQ_DCSExtraExchangeName : AppSettings.RabbitMQ_Exchange;
+            var queueName = AppSettings.IsConsumeDCSExtra ? AppSettings.RabbitMQ_DCSExtraQueueName : AppSettings.RabbitMQ_QueueName;
             _rabbitMQConsume = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
                                       AppSettings.RabbitMQ_VirtualHost,
                                       AppSettings.RabbitMQ_PrefetchCount,
@@ -85,8 +93,8 @@
                                       AppSettings.RabbitMQ_Password);
 
             _rabbitMQConsume.CreateBus()
-                    .DeclareExchange(AppSettings.RabbitMQ_Exchange)
-                    .DeclareQueue(AppSettings.RabbitMQ_QueueName)
+                    .DeclareExchange(exchangeName)
+                    .DeclareQueue(queueName)
                     .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
                     .Bind();
         }
@@ -108,12 +116,12 @@
 
         private void ConsumerTransactions()
         {
-            if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
+            var isQueueConsume = AppSettings.IsConsumeDCSExtra ?
+                        ConfigurationManager.AppSettings["DCS-Extra-Queue-Consume"] == "1" :
+                        ConfigurationManager.AppSettings["Queue-Consume"] == "1";
+            if (isQueueConsume)
             {
-                var trans = new List<RawTransactionModel>();
-                var tranOfExtraSubs = new List<RawTransactionModel>();
-
-                _rabbitMQConsume.AdvanceBus.Consume<MessageQueue>(_rabbitMQConsume.Queue, (message, info) =>
+                _rabbitMQConsume.AdvanceBus.Consume(_rabbitMQConsume.Queue, (Action<IMessage<MessageQueue>, MessageReceivedInfo>)((message, info) =>
                 {
                     try
                     {
@@ -139,7 +147,6 @@
                             }
 
                             isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
-
                         }
                         if (!string.IsNullOrWhiteSpace(ignoreSubs))
                         {
@@ -156,54 +163,11 @@
                         {
                             if (isTransOfExtraSubs)
                             {
-                                tranOfExtraSubs.Add(tran);
-
-                                if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
-                                {                                    
-                                    var ipAddressList = tranOfExtraSubs.Where(x => x.IPId != -1 && !x.IsIPV6).Select(x => x.IPId).ToList();
-                                    var ipAddressJoined = string.Join(",", ipAddressList);
-                                    var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
-
-                                    if (ipInfoList != null && ipInfoList.Any())
-                                    {
-                                        var newTransOfExtraSubs = tranOfExtraSubs.Select(x =>
-                                        {
-                                            var ipInfo = ipInfoList.FirstOrDefault(y => x.IPId == y.IP);
-
-                                            x.Country = ipInfo?.Country;
-                                            x.CountryCode = ipInfo?.CountryCode;
-                                            x.Region = ipInfo?.Region;
-                                            x.City = ipInfo?.City;
-                                            x.ISP = ipInfo?.ISP;
-                                            x.IPInfoCode = Cipher.Hashing2Int(string.Join(";", ipInfo?.CountryCode, ipInfo?.Region, ipInfo?.City, ipInfo?.ISP));
-
-                                            return x;
-                                        }).ToList();
-
-                                        InsertTransaction(newTransOfExtraSubs, true);
-                                    }
-                                    else
-                                    {
-                                        InsertTransaction(tranOfExtraSubs, true);
-
-
-                                    }
-
-                                    tranOfExtraSubs.Clear();
-                                }
+                                HandleAddTransOfExtraSubs(tran);
                             }
                             else if (isTransOfDCSubs)
                             {
-                                trans.Add(tran);
-
-                                if (trans.Count >= AppSettings.TransBatch)
-                                {
-                                    InsertTransaction(trans, false);
-
-                                    PushTransactionToMonitor(trans);
-
-                                    trans.Clear();
-                                }
+                                HandleAddTransOfDCSSubs(_rabbitMQMonitor, tran);
                             }
                         }
                     }
@@ -211,54 +175,48 @@
                     {
                         var logMessage = new LogMessage(ex.Message)
                             .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
                         LogService.Error(logMessage);
-
-                        trans.Clear();
-                        tranOfExtraSubs.Clear();
                     }
-                });
+                }));
             }
         }
 
-        private void InsertTransaction(List<RawTransactionModel> trans, bool isTransOfDBExtra)
+        private void HandleAddTransOfDCSSubs(EasyNetQConnector rabbitMQMonitor, RawTransactionModel tran)
         {
-            try
+            transDcsSub.Add(tran);
+            if (transDcsSub.Count >= AppSettings.TransBatch)
             {
-                _capturingDataService.InsertTransaction(trans, isTransOfDBExtra);
+                InsertTransaction(transDcsSub, false);
+                PushTransactionToMonitor(transDcsSub, rabbitMQMonitor);
+                transDcsSub.Clear();
             }
-            catch (Exception ex)
+            else
             {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);
+                DelayTaskAddTransactionDcsSub();
             }
         }
 
-        private void PushTransactionToMonitor(List<RawTransactionModel> trans)
+        private void HandleAddTransOfExtraSubs(RawTransactionModel tran)
         {
-            if (ConfigurationManager.AppSettings["PushTrans-To-Monitor"] == "1")
+            tranOfExtraSubs.Add(tran);
+            if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
             {
-                var groupTrans = trans.Select(x => { x.TransTime = Convert.ToDateTime(x.TransTime.ToString("MM/dd/yyyy")); return x; })
-                                    .GroupBy(x => new { x.SubscriberId, x.TransTime })
-                                    .Select(x => new TransactionMonitoringModel
-                                    {
-                                        SubscriberID = x.Key.SubscriberId,
-                                        TransDate = x.Key.TransTime,
-                                        TransTotal = x.Count()
-                                    });
-
-                if (groupTrans != null && groupTrans.Any())
+                var ipInfoList = GetIpInfos();
+                if (ipInfoList != null && ipInfoList.Any())
                 {
-                    groupTrans.ToList().ForEach(x =>
-                    {
-                        var message = new Message<TransactionMonitoringModel>(x, new MessageProperties() { DeliveryMode = 2, Priority = 9 });
-
-                        _rabbitMQMonitor.AdvanceBus.Publish(_rabbitMQMonitor.Exchange, _rabbitMQMonitor.RoutingKey, true, message);
-                    });
+                    var newTransOfExtraSubs = GetNewTransExtraSub(ipInfoList);
+                    InsertTransaction(newTransOfExtraSubs, true);
                 }
+                else
+                {
+                    InsertTransaction(tranOfExtraSubs, true);
+                }
+
+                tranOfExtraSubs.Clear();
+            }
+            else
+            {
+                DelayTaskAddTransactionExtraSubs();
             }
         }
 
@@ -346,6 +304,73 @@
             };
 
             return result;
+        }
+
+        private void InsertTransaction(List<RawTransactionModel> trans, bool isTransOfDBExtra)
+        {
+            try
+            {
+                _capturingDataService.InsertTransaction(trans, isTransOfDBExtra);
+            }
+            catch (Exception ex)
+            {
+                var logMessage = new LogMessage(ex.Message)
+                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
+                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+
+                LogService.Error(logMessage);
+            }
+        }
+
+        private IEnumerable<IpInfoModel> GetIpInfos()
+        {
+            var ipAddressList = tranOfExtraSubs.Where(x => x.IPId != -1 && !x.IsIPV6).Select(x => x.IPId).ToList();
+            var ipAddressJoined = string.Join(",", ipAddressList);
+            var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
+            return ipInfoList;
+        }
+
+        private List<RawTransactionModel> GetNewTransExtraSub(IEnumerable<IpInfoModel> ipInfoList)
+        {
+            var newTransOfExtraSubs = tranOfExtraSubs.Select(x =>
+            {
+                var ipInfo = ipInfoList.FirstOrDefault(y => x.IPId == y.IP);
+
+                x.Country = ipInfo?.Country;
+                x.CountryCode = ipInfo?.CountryCode;
+                x.Region = ipInfo?.Region;
+                x.City = ipInfo?.City;
+                x.ISP = ipInfo?.ISP;
+                x.IPInfoCode = Cipher.Hashing2Int(string.Join(";", ipInfo?.CountryCode, ipInfo?.Region, ipInfo?.City, ipInfo?.ISP));
+
+                return x;
+            }).ToList();
+            return newTransOfExtraSubs;
+        }
+
+        private void PushTransactionToMonitor(List<RawTransactionModel> trans, EasyNetQConnector rabbitMQMonitor)
+        {
+            if (ConfigurationManager.AppSettings["PushTrans-To-Monitor"] == "1")
+            {
+                var groupTrans = trans.Select(x => { x.TransTime = Convert.ToDateTime(x.TransTime.ToString("MM/dd/yyyy")); return x; })
+                                    .GroupBy(x => new { x.SubscriberId, x.TransTime })
+                                    .Select(x => new TransactionMonitoringModel
+                                    {
+                                        SubscriberID = x.Key.SubscriberId,
+                                        TransDate = x.Key.TransTime,
+                                        TransTotal = x.Count()
+                                    });
+
+                if (groupTrans != null && groupTrans.Any())
+                {
+                    groupTrans.ToList().ForEach(x =>
+                    {
+                        var message = new Message<TransactionMonitoringModel>(x, new MessageProperties() { DeliveryMode = 2, Priority = 9 });
+
+                        rabbitMQMonitor.AdvanceBus.Publish(rabbitMQMonitor.Exchange, rabbitMQMonitor.RoutingKey, true, message);
+                    });
+                }
+            }
         }
 
         private string GetBotDetectionTrue(DeviceInfoModel deviceInfo)
@@ -467,6 +492,79 @@
             if (userAgent.Contains("Headless")) return true;
 
             return false;
+        }
+
+        private void DelayTaskAddTransactionExtraSubs()
+        {
+            if (!taskExtraSubList.Any())
+            {
+                LogService.Info("start DelayTaskAddTransactionExtraSubs at: " + DateTime.Now);
+                var delayTime = AppSettings.Interval * 60 * 1000;
+                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
+                {
+                    try
+                    {
+                        TriggerTaskAddTransactionExtraSubs();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        LogService.Info("Task of add transaction extra sub list was canceled.");
+                    }
+                }, cancellationTokenSourceExtraSub.Token);
+                taskExtraSubList.Add(taskDelay);
+            }
+        }
+
+        private void TriggerTaskAddTransactionExtraSubs()
+        {
+            if (tranOfExtraSubs.Any())
+            {
+                var ipInfoList = GetIpInfos();
+                if (ipInfoList != null && ipInfoList.Any())
+                {
+                    var newTransOfExtraSubs = GetNewTransExtraSub(ipInfoList);
+                    InsertTransaction(newTransOfExtraSubs, true);
+                }
+                else
+                {
+                    InsertTransaction(tranOfExtraSubs, true);
+                }
+            }
+
+            taskExtraSubList.Clear();
+            LogService.Info("end TriggerTaskAddTransactionExtraSubs at: " + DateTime.Now);
+        }
+
+        private void DelayTaskAddTransactionDcsSub()
+        {
+            if (!taskDcsSubList.Any())
+            {
+                LogService.Info("start DelayTaskAddTransactionDcsSub at: " + DateTime.Now);
+                var delayTime = AppSettings.Interval * 60 * 1000;
+                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
+                {
+                    try
+                    {
+                        TriggerTaskAddTransactionDcsSub();
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        LogService.Info("Task of add transaction dcs sub list was canceled.");
+                    }
+                }, cancellationTokenSourceDcsSub.Token);
+                taskDcsSubList.Add(taskDelay);
+            }
+        }
+
+        private void TriggerTaskAddTransactionDcsSub()
+        {
+            if (transDcsSub.Any())
+            {
+                InsertTransaction(transDcsSub, false);
+                transDcsSub.Clear();
+            }
+            taskDcsSubList.Clear();
+            LogService.Info("end TriggerTaskAddTransactionDcsSub at: " + DateTime.Now);
         }
     }
 }
