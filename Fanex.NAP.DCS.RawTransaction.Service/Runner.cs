@@ -3,33 +3,29 @@
     using EasyNetQ;
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
-    using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.DCS.Core;
     using Fanex.NAP.DCS.Model;
     using Fanex.NAP.DCS.Model.TransactionMonitoring;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
     using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
     using Renci.SshNet.Messages;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
     using System.ServiceProcess;
-    using System.Text.RegularExpressions;
-    using System.Timers;
-    using Utilities = Core.Utilities;
     using System.Threading.Tasks;
     using System.Threading;
+    using Fanex.NAP.DCS.RawTransaction.Service.Services.Implement;
+    using Fanex.NAP.DCS.RawTransaction.Service.Services.Interface;
 
     public partial class Runner : ServiceBase
     {
         private EasyNetQConnector _rabbitMQConsume;
         private EasyNetQConnector _rabbitMQMonitor;
         private readonly ICapturingDataService _capturingDataService;
+        private readonly IRawTransactionService _transactionService;
 
         private readonly List<RawTransactionModel> transDcsSub = new List<RawTransactionModel>();
         private readonly List<RawTransactionModel> tranOfExtraSubs = new List<RawTransactionModel>();
@@ -45,6 +41,7 @@
             InitializeComponent();
 
             _capturingDataService = new CapturingDataService();
+            _transactionService = new RawTransactionService();
         }
 
         protected override void OnStart(string[] args)
@@ -68,13 +65,15 @@
 
         protected override void OnStop()
         {
-            _rabbitMQConsume.Disposed();
-            _rabbitMQMonitor.Disposed();
-
-            LogService.Info($"Raw trans service is STOPED at {DateTime.Now}");
+            DisposedRabbitMQConnector();
         }
 
         protected override void OnShutdown()
+        {
+            DisposedRabbitMQConnector();
+        }
+
+        private void DisposedRabbitMQConnector()
         {
             _rabbitMQConsume.Disposed();
             _rabbitMQMonitor.Disposed();
@@ -86,12 +85,8 @@
         {
             var exchangeName = AppSettings.IsConsumeDCSExtra ? AppSettings.RabbitMQ_DCSExtraExchangeName : AppSettings.RabbitMQ_Exchange;
             var queueName = AppSettings.IsConsumeDCSExtra ? AppSettings.RabbitMQ_DCSExtraQueueName : AppSettings.RabbitMQ_QueueName;
-            _rabbitMQConsume = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
-                                      AppSettings.RabbitMQ_VirtualHost,
-                                      AppSettings.RabbitMQ_PrefetchCount,
-                                      AppSettings.RabbitMQ_UserName,
-                                      AppSettings.RabbitMQ_Password);
 
+            _rabbitMQConsume = RabbitMQConnector();
             _rabbitMQConsume.CreateBus()
                     .DeclareExchange(exchangeName)
                     .DeclareQueue(queueName)
@@ -101,12 +96,7 @@
 
         private void MonitorMessageBus()
         {
-            _rabbitMQMonitor = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
-                                      AppSettings.RabbitMQ_VirtualHost,
-                                      AppSettings.RabbitMQ_PrefetchCount,
-                                      AppSettings.RabbitMQ_UserName,
-                                      AppSettings.RabbitMQ_Password);
-
+            _rabbitMQMonitor = RabbitMQConnector();
             _rabbitMQMonitor.CreateBus()
                     .DeclareExchange(AppSettings.RabbitMQ_Exchange_Monitor)
                     .DeclareQueue(AppSettings.RabbitMQ_QueueName_Monitor)
@@ -114,48 +104,32 @@
                     .Bind();
         }
 
+        private EasyNetQConnector RabbitMQConnector()
+        {
+            var rabbitMQConnector = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
+                                      AppSettings.RabbitMQ_VirtualHost,
+                                      AppSettings.RabbitMQ_PrefetchCount,
+                                      AppSettings.RabbitMQ_UserName,
+                                      AppSettings.RabbitMQ_Password);
+            return rabbitMQConnector;
+        }
+
         private void ConsumerTransactions()
         {
-            var isQueueConsume = AppSettings.IsConsumeDCSExtra ?
-                        ConfigurationManager.AppSettings["DCS-Extra-Queue-Consume"] == "1" :
-                        ConfigurationManager.AppSettings["Queue-Consume"] == "1";
+            bool isQueueConsume = IsQueueConsume();
             if (isQueueConsume)
             {
                 _rabbitMQConsume.AdvanceBus.Consume(_rabbitMQConsume.Queue, (Action<IMessage<MessageQueue>, MessageReceivedInfo>)((message, info) =>
                 {
                     try
                     {
-                        var isTransOfExtraSubs = false;
-                        var isTransOfDCSubs = true;
-
-                        var extraSubs = AppSettings.ExtraSubs;
-                        var extraSubsTest = AppSettings.ExtraSubsTest;
-                        var ignoreSubs = AppSettings.IgnoreSubs;
-
                         var messageBody = message.Body;
+                        var isTransOfExtraSubs = IsTransactionOfExtraSubs(messageBody);
+                        var isTransOfDCSubs = IsTransactionOfDCSubs(messageBody);
 
-                        if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
-                        {
-                            if (!string.IsNullOrEmpty(extraSubsTest))
-                            {
-                                if (messageBody.Subscriber == extraSubsTest)
-                                {
-                                    var random = new Random();
-                                    var subIndex = random.Next(0, extraSubsTest.Length);
-                                    messageBody.Subscriber = extraSubs.Split(';')[subIndex];
-                                }
-                            }
+                        var tran = _transactionService.TransformRawTransaction(messageBody);
 
-                            isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
-                        }
-                        if (!string.IsNullOrWhiteSpace(ignoreSubs))
-                        {
-                            isTransOfDCSubs = !ignoreSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
-                        }
-
-                        var tran = TransformRawTransaction(messageBody);
-
-                        if (String.IsNullOrEmpty(tran.LoginName))
+                        if (string.IsNullOrEmpty(tran.LoginName))
                         {
                             LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(tran));
                         }
@@ -167,7 +141,7 @@
                             }
                             else if (isTransOfDCSubs)
                             {
-                                HandleAddTransOfDCSSubs(_rabbitMQMonitor, tran);
+                                HandleAddTransOfDCSSubs(tran);
                             }
                         }
                     }
@@ -181,45 +155,40 @@
             }
         }
 
-        private void HandleAddTransOfDCSSubs(EasyNetQConnector rabbitMQMonitor, RawTransactionModel tran)
+        private static bool IsQueueConsume()
         {
-            transDcsSub.Add(tran);
-            if (transDcsSub.Count >= AppSettings.TransBatch)
-            {
-                InsertTransaction(transDcsSub, false);
-                PushTransactionToMonitor(transDcsSub, rabbitMQMonitor);
-                transDcsSub.Clear();
-            }
-            else
-            {
-                DelayTaskAddTransactionDcsSub();
-            }
+            return AppSettings.IsConsumeDCSExtra ?
+                        ConfigurationManager.AppSettings["DCS-Extra-Queue-Consume"] == "1" :
+                        ConfigurationManager.AppSettings["Queue-Consume"] == "1";
         }
 
-        private void HandleAddTransOfExtraSubs(RawTransactionModel tran)
+        private bool IsTransactionOfExtraSubs(MessageQueue messageBody)
         {
-            tranOfExtraSubs.Add(tran);
-            if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
+            var extraSubs = AppSettings.ExtraSubs;
+            var extraSubsTest = AppSettings.ExtraSubsTest;
+            var ignoreSubs = AppSettings.IgnoreSubs;
+
+            if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
+
             {
-                var ipInfoList = GetIpInfos();
-                if (ipInfoList != null && ipInfoList.Any())
+                if (!string.IsNullOrEmpty(extraSubsTest) && messageBody.Subscriber == extraSubsTest)
+            if(!string.IsNullOrWhiteSpace(message?.BotD))
+            {
+                deviceInfo.BotD = TransformBotd(message.BotD);
+            }            
+
                 {
-                    var newTransOfExtraSubs = GetNewTransExtraSub(ipInfoList);
-                    InsertTransaction(newTransOfExtraSubs, true);
-                }
-                else
-                {
-                    InsertTransaction(tranOfExtraSubs, true);
+                    var random = new Random();
+                    var subIndex = random.Next(0, extraSubsTest.Length);
+                    messageBody.Subscriber = extraSubs.Split(';')[subIndex];
                 }
 
-                tranOfExtraSubs.Clear();
+                return extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
             }
-            else
-            {
-                DelayTaskAddTransactionExtraSubs();
-            }
+
+            return false;
         }
-
+        
         private BotD TransformBotd(string encodedBotD)
         {
             var botD = Fanex.DI.Core.Encoders.Base64.Decode(encodedBotD);
@@ -232,123 +201,37 @@
             return new BotD();
         }
 
-        private RawTransactionModel TransformRawTransaction(MessageQueue message)
+        private bool IsTransactionOfDCSubs(MessageQueue messageBody)
         {
-            LogMessage(message);
-            
-            var invalidDevice = string.Empty;
-            var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
-            var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
-            var url = Utilities.GetURLFromDeviceCode(message.Device);
-            var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
-            var transBit = new BitArray(16);
-
-            if(!string.IsNullOrWhiteSpace(message?.BotD))
-            {
-                deviceInfo.BotD = TransformBotd(message.BotD);
-            }            
-
-            var flaggedCode = deviceInfo.BotD?.Result?.Bot == true ? deviceInfo.BotD.Result.BotKind : string.Empty;
-            if (string.IsNullOrEmpty(flaggedCode))
-            {
-                var browserless = Browserless(userAgent, deviceInfo.DeviceNo);
-                flaggedCode = browserless.ToString();
-            }
-
-            if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
-            {
-                deviceInfo.DeviceNo = null;
-                transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);
-            }
-            else
-            {
-                if (!Utilities.IsGuidDeviceId(deviceInfo.DeviceNo) || deviceInfo.InvalidDeviceId)
-                {
-                    invalidDevice = deviceCode;
-                    deviceInfo.DeviceNo = null;
-                    transBit.Set((int)TransStatus.InvalidDI, true);
-                }
-            }
-
-            if (ContainsUnicodeCharacter(message.Account))
-            {
-                transBit.Set((int)TransStatus.InvalidLoginName, true);
-            }
-            var realIP = message.IP?.Trim();
-            var ipConverted = realIP.Ip2Long();
-
-            var result = new RawTransactionModel
-            {
-                DeviceCode = deviceInfo.DeviceNo,
-                InvalidDevice = string.IsNullOrWhiteSpace(invalidDevice) ? null : invalidDevice,
-                TransStatus = Core.Utilities.ConvertBitArray2Int(transBit),
-                LoginName = message.Account,
-                SubscriberName = message.Subscriber,
-                SubscriberId = message.SubscriberId,
-                TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
-                IP = realIP,
-                IPId = ipConverted.IpNumber,
+            var ignoreSubs = AppSettings.IgnoreSubs;
                 FakeIP = message.FakeIP?.Trim(),
-                IsIPV6 = ipConverted.IsIpV6,
-                PluginID = 0,
-                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
-                Action = message.Action,
-                ActionResult = message.ActionResult,
-                UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
-                FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
-                FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null,
-                TransKey = message.TransKey,
-                FlaggedCode = flaggedCode,
-                BotDetection = GetBotDetectionTrue(deviceInfo),
-                BotComponent = GetBotComponent(deviceInfo, flaggedCode)
-            };
 
-            return result;
-        }
-
-        private void InsertTransaction(List<RawTransactionModel> trans, bool isTransOfDBExtra)
-        {
-            try
+            if (!string.IsNullOrWhiteSpace(ignoreSubs))
             {
-                _capturingDataService.InsertTransaction(trans, isTransOfDBExtra);
+                return !ignoreSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
             }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
 
-                LogService.Error(logMessage);
+            return true;
+        }
+
+        private void HandleAddTransOfExtraSubs(RawTransactionModel tran)
+        {
+            tranOfExtraSubs.Add(tran);
+            var extraSubsFactory = new ExtraSubsTransactionFactory();
+            extraSubsFactory.HandleTransaction(tranOfExtraSubs, taskExtraSubList, cancellationTokenSourceExtraSub);
+        }
+
+        private void HandleAddTransOfDCSSubs(RawTransactionModel tran)
+        {
+            transDcsSub.Add(tran);
+            if(transDcsSub.Count >= AppSettings.TransBatch){
+                PushTransactionToMonitor(transDcsSub);
             }
+            var dcsSubsFactory = new DCSSubsTransactionFactory();
+            dcsSubsFactory.HandleTransaction(transDcsSub, taskDcsSubList, cancellationTokenSourceDcsSub);
         }
 
-        private IEnumerable<IpInfoModel> GetIpInfos()
-        {
-            var ipAddressList = tranOfExtraSubs.Where(x => x.IPId != -1 && !x.IsIPV6).Select(x => x.IPId).ToList();
-            var ipAddressJoined = string.Join(",", ipAddressList);
-            var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
-            return ipInfoList;
-        }
-
-        private List<RawTransactionModel> GetNewTransExtraSub(IEnumerable<IpInfoModel> ipInfoList)
-        {
-            var newTransOfExtraSubs = tranOfExtraSubs.Select(x =>
-            {
-                var ipInfo = ipInfoList.FirstOrDefault(y => x.IPId == y.IP);
-
-                x.Country = ipInfo?.Country;
-                x.CountryCode = ipInfo?.CountryCode;
-                x.Region = ipInfo?.Region;
-                x.City = ipInfo?.City;
-                x.ISP = ipInfo?.ISP;
-                x.IPInfoCode = Cipher.Hashing2Int(string.Join(";", ipInfo?.CountryCode, ipInfo?.Region, ipInfo?.City, ipInfo?.ISP));
-
-                return x;
-            }).ToList();
-            return newTransOfExtraSubs;
-        }
-
-        private void PushTransactionToMonitor(List<RawTransactionModel> trans, EasyNetQConnector rabbitMQMonitor)
+        private void PushTransactionToMonitor(List<RawTransactionModel> trans)
         {
             if (ConfigurationManager.AppSettings["PushTrans-To-Monitor"] == "1")
             {
@@ -367,204 +250,10 @@
                     {
                         var message = new Message<TransactionMonitoringModel>(x, new MessageProperties() { DeliveryMode = 2, Priority = 9 });
 
-                        rabbitMQMonitor.AdvanceBus.Publish(rabbitMQMonitor.Exchange, rabbitMQMonitor.RoutingKey, true, message);
+                        _rabbitMQMonitor.AdvanceBus.Publish(_rabbitMQMonitor.Exchange, _rabbitMQMonitor.RoutingKey, true, message);
                     });
                 }
             }
-        }
-
-        private string GetBotDetectionTrue(DeviceInfoModel deviceInfo)
-        {
-            try
-            {
-                var detection = deviceInfo.BotD?.Detection;
-                if (!string.IsNullOrEmpty(detection))
-                {
-                    JObject jObject = JObject.Parse(detection);
-                    IEnumerable<string> filteredKeys = jObject.Properties()
-                        .Where(p => p.Value.Value<bool>("bot"))
-                        .Select(p => p.Name);
-
-                    return string.Join(",", filteredKeys);
-                }
-            }
-            catch { }
-
-            return string.Empty;
-        }
-        private string GetBotComponent(DeviceInfoModel deviceInfo, string flaggedCode)
-        {
-            var storeBotComponent = ConfigurationManager.AppSettings["BotD-BotComponent-ForHuman"];
-            if (string.IsNullOrEmpty(storeBotComponent) || storeBotComponent == "0")
-            {
-                if (flaggedCode != Flagged.Human.ToString())
-                {
-                    return deviceInfo.BotD?.Component ?? string.Empty;
-                }
-            }
-            else
-            {
-                return deviceInfo.BotD?.Component ?? string.Empty;
-            }
-
-            return string.Empty;
-        }
-
-        private static Flagged Browserless(string userAgent, string deviceNo)
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(userAgent) && IsHeadless(userAgent))
-                {
-                    return Flagged.Headless;
-                }
-
-                if (string.IsNullOrWhiteSpace(deviceNo))
-                {
-                    return Flagged.EmptyDevice;
-                }
-
-                if (deviceNo == "N/A" || !Utilities.IsGuidDeviceId(deviceNo))
-                {
-                    return Flagged.InvalidDevice;
-                }
-
-                if (string.IsNullOrWhiteSpace(userAgent))
-                {
-                    return Flagged.EmptyUserAgent;
-                }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message);
-            }
-
-            return Flagged.Human;
-        }
-
-        private static string EncodeCapturedData(DeviceInfoModel deviceInfo)
-        {
-            return Cipher.Encrypt(string.Format("{0}#{1}#{2}#{3}#{4}",
-                deviceInfo.Battery,
-                deviceInfo.CapturedDate,
-                deviceInfo.OSName,
-                deviceInfo.TimeZone,
-                deviceInfo.LocalIps));
-        }
-
-        private static string SubStringUrl(string url)
-        {
-            return url.IndexOf('?') != -1 ? url.Substring(0, url.IndexOf('?')) : url;
-        }
-
-        private static string ConvertNA2Empty(string data)
-        {
-            return data != "N/A" ? data : null;
-        }
-
-        private static bool ContainsUnicodeCharacter(string input)
-        {
-            const int MaxAnsiCode = 255;
-
-            return input.Any(c => c > MaxAnsiCode);
-        }
-
-        private static String StripUnicodeCharactersFromString(string inputValue)
-        {
-            return Regex.Replace(inputValue, @"[^\u0000-\u007F]", String.Empty);
-        }
-
-        private static void LogMessage(MessageQueue message)
-        {
-            if (AppSettings.WriteLog)
-            {
-                var accounts = AppSettings.WriteAccount.Split(new[] { ',', ';' });
-
-                if (accounts.Any(x => x.Equals(message.Account, StringComparison.OrdinalIgnoreCase)) || message.SubscriberId == 0)
-                {
-                    LogService.Info(JsonConvert.SerializeObject(message));
-                }
-            }
-        }
-
-        private static bool IsHeadless(string userAgent)
-        {
-            if (userAgent.Contains("Headless")) return true;
-
-            return false;
-        }
-
-        private void DelayTaskAddTransactionExtraSubs()
-        {
-            if (!taskExtraSubList.Any())
-            {
-                LogService.Info("start DelayTaskAddTransactionExtraSubs at: " + DateTime.Now);
-                var delayTime = AppSettings.Interval * 60 * 1000;
-                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
-                {
-                    try
-                    {
-                        TriggerTaskAddTransactionExtraSubs();
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        LogService.Info("Task of add transaction extra sub list was canceled.");
-                    }
-                }, cancellationTokenSourceExtraSub.Token);
-                taskExtraSubList.Add(taskDelay);
-            }
-        }
-
-        private void TriggerTaskAddTransactionExtraSubs()
-        {
-            if (tranOfExtraSubs.Any())
-            {
-                var ipInfoList = GetIpInfos();
-                if (ipInfoList != null && ipInfoList.Any())
-                {
-                    var newTransOfExtraSubs = GetNewTransExtraSub(ipInfoList);
-                    InsertTransaction(newTransOfExtraSubs, true);
-                }
-                else
-                {
-                    InsertTransaction(tranOfExtraSubs, true);
-                }
-            }
-
-            taskExtraSubList.Clear();
-            LogService.Info("end TriggerTaskAddTransactionExtraSubs at: " + DateTime.Now);
-        }
-
-        private void DelayTaskAddTransactionDcsSub()
-        {
-            if (!taskDcsSubList.Any())
-            {
-                LogService.Info("start DelayTaskAddTransactionDcsSub at: " + DateTime.Now);
-                var delayTime = AppSettings.Interval * 60 * 1000;
-                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
-                {
-                    try
-                    {
-                        TriggerTaskAddTransactionDcsSub();
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        LogService.Info("Task of add transaction dcs sub list was canceled.");
-                    }
-                }, cancellationTokenSourceDcsSub.Token);
-                taskDcsSubList.Add(taskDelay);
-            }
-        }
-
-        private void TriggerTaskAddTransactionDcsSub()
-        {
-            if (transDcsSub.Any())
-            {
-                InsertTransaction(transDcsSub, false);
-                transDcsSub.Clear();
-            }
-            taskDcsSubList.Clear();
-            LogService.Info("end TriggerTaskAddTransactionDcsSub at: " + DateTime.Now);
-        }
+        }    
     }
 }

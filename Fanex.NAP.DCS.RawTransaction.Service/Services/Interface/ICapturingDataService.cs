@@ -1,6 +1,7 @@
 ﻿namespace Fanex.NAP.DCS.RawTransaction.Service
 {
     using Fanex.NAP.DCS.Model;
+    using Fanex.Oneyed.Infrastructure.Models;
     using System.Collections.Generic;
 
     interface ICapturingDataService

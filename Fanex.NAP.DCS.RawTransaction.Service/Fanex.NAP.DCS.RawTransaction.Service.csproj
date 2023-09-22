@@ -98,7 +98,12 @@
       <DependentUpon>ServiceInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Services\Implement\CapturingDataService.cs" />
+    <Compile Include="Services\Implement\DCSSubsTransactionFactory.cs" />
+    <Compile Include="Services\Implement\ExtraSubsTransactionFactory.cs" />
+    <Compile Include="Services\Implement\RawTransactionService.cs" />
+    <Compile Include="Services\Interface\AbstractFactoryTransaction.cs" />
     <Compile Include="Services\Interface\ICapturingDataService.cs" />
+    <Compile Include="Services\Interface\IRawTransactionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
