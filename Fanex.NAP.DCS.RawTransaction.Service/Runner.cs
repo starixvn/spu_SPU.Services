@@ -125,8 +125,6 @@
                     {
                         var messageBody = message.Body;
                         var isTransOfExtraSubs = IsTransactionOfExtraSubs(messageBody);
-                        var isTransOfDCSubs = IsTransactionOfDCSubs(messageBody);
-
                         var tran = _transactionService.TransformRawTransaction(messageBody);
 
                         if (string.IsNullOrEmpty(tran.LoginName))
@@ -139,7 +137,7 @@
                             {
                                 HandleAddTransOfExtraSubs(tran);
                             }
-                            else if (isTransOfDCSubs)
+                            else
                             {
                                 HandleAddTransOfDCSSubs(tran);
                             }
@@ -172,10 +170,8 @@
 
             {
                 if (!string.IsNullOrEmpty(extraSubsTest) && messageBody.Subscriber == extraSubsTest)
-            if(!string.IsNullOrWhiteSpace(message?.BotD))
-            {
-                deviceInfo.BotD = TransformBotd(message.BotD);
-            }            
+            if(!string.IsNullOrWhiteSpace(message?.BotD))          
+            {          
 
                 {
                     var random = new Random();
@@ -201,22 +197,11 @@
             return new BotD();
         }
 
-        private bool IsTransactionOfDCSubs(MessageQueue messageBody)
-        {
-            var ignoreSubs = AppSettings.IgnoreSubs;
                 FakeIP = message.FakeIP?.Trim(),
-
-            if (!string.IsNullOrWhiteSpace(ignoreSubs))
-            {
-                return !ignoreSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
-            }
-
-            return true;
-        }
-
         private void HandleAddTransOfExtraSubs(RawTransactionModel tran)
         {
             tranOfExtraSubs.Add(tran);
+            _transactionService.TransformTransactionByIps(tranOfExtraSubs);
             var extraSubsFactory = new ExtraSubsTransactionFactory();
             extraSubsFactory.HandleTransaction(tranOfExtraSubs, taskExtraSubList, cancellationTokenSourceExtraSub);
         }

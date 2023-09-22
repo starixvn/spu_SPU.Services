@@ -22,6 +22,5 @@
         protected abstract void InsertTransaction(List<RawTransactionModel> transactions);
         protected abstract void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource);
         protected abstract int GetBatchThreshold();
-        protected abstract bool IsTransOfDBExtra();
     }
 }

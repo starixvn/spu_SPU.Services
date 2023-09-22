@@ -92,6 +92,36 @@
             return result;
         }
 
+        public List<RawTransactionModel> TransformTransactionByIps(List<RawTransactionModel> transactions)
+        {
+            var ipInfoList = GetIpInfos(transactions);
+            if (ipInfoList != null && ipInfoList.Any())
+            {
+                transactions = transactions.Select(x =>
+                {
+                    var ipInfo = ipInfoList.FirstOrDefault(y => x.IPId == y.IP);
+
+                    x.Country = ipInfo?.Country;
+                    x.CountryCode = ipInfo?.CountryCode;
+                    x.Region = ipInfo?.Region;
+                    x.City = ipInfo?.City;
+                    x.ISP = ipInfo?.ISP;
+                    x.IPInfoCode = Cipher.Hashing2Int(string.Join(";", ipInfo?.CountryCode, ipInfo?.Region, ipInfo?.City, ipInfo?.ISP));
+
+                    return x;
+                }).ToList();
+            }
+            return transactions;
+        }
+
+        private IEnumerable<IpInfoModel> GetIpInfos(List<RawTransactionModel> transactions)
+        {
+            var ipAddressList = transactions.Where(x => x.IPId != -1 && !x.IsIPV6).Select(x => x.IPId).ToList();
+            var ipAddressJoined = string.Join(",", ipAddressList);
+            var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
+            return ipInfoList;
+        }
+
         private static void LogMessage(MessageQueue message)
         {
             if (AppSettings.WriteLog)

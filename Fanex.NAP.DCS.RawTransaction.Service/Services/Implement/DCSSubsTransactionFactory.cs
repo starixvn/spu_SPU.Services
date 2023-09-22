@@ -26,7 +26,7 @@
         {
             try
             {
-                _capturingDataService.InsertTransaction(transactions, IsTransOfDBExtra());
+                _capturingDataService.InsertTransaction(transactions, false);
             }
             catch (Exception ex)
             {
@@ -55,14 +55,13 @@
                         LogService.Info("Task of add transaction dcs sub list was canceled.");
                     }
                 }, tokenSource.Token);
+
                 tasks.Add(taskDelay);
             }
         }
 
 
         protected override int GetBatchThreshold() => AppSettings.TransBatch;
-
-        protected override bool IsTransOfDBExtra() => false;
 
         private void ProcessDelayedTask(List<RawTransactionModel> transactions, List<Task> tasks)
         {
