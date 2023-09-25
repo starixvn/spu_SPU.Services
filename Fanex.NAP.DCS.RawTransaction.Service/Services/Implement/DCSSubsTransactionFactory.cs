@@ -28,24 +28,21 @@
 
         protected override void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
         {
-            if (!tasks.Any())
+            LogService.Info("start DelayTaskAddTransactionDcsSub at: " + DateTime.Now);
+            var delayTime = AppSettings.Interval * 60 * 1000;
+            var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
             {
-                LogService.Info("start DelayTaskAddTransactionDcsSub at: " + DateTime.Now);
-                var delayTime = AppSettings.Interval * 60 * 1000;
-                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
+                try
                 {
-                    try
-                    {
-                        ProcessDelayedTask(transactions, tasks);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        LogService.Info("Task of add transaction dcs sub list was canceled.");
-                    }
-                }, tokenSource.Token);
+                    ProcessDelayedTask(transactions, tasks);
+                }
+                catch (OperationCanceledException)
+                {
+                    LogService.Info("Task of add transaction dcs sub list was canceled.");
+                }
+            }, tokenSource.Token);
 
-                tasks.Add(taskDelay);
-            }
+            tasks.Add(taskDelay);
         }
 
         private void ProcessDelayedTask(List<RawTransactionModel> transactions, List<Task> tasks)

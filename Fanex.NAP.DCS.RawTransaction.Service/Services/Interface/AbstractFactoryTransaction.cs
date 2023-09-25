@@ -33,6 +33,10 @@
                 LogService.Error(logMessage);
             }
         }
+        public void HandleDelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
+        {
+            DelayTask(transactions, tasks, tokenSource);
+        }
         protected abstract void InsertTransaction(List<RawTransactionModel> transactions);
        
         protected abstract void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource);
@@ -41,9 +45,6 @@
         {
             _rawTransactionService.TransformTransactionByIps(transactions);
         }
-        public void HandleDelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
-        {
-            DelayTask(transactions, tasks, tokenSource);
-        }
+       
     }
 }

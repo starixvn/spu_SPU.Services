@@ -25,6 +25,8 @@
         private EasyNetQConnector _rabbitMQConsume;
         private EasyNetQConnector _rabbitMQMonitor;
         private readonly IRawTransactionService _transactionService;
+        private readonly DCSSubsTransactionFactory _dCSSubsTransactionFactory;
+        private readonly ExtraSubsTransactionFactory _extraSubsTransactionFactory;
 
         private readonly List<RawTransactionModel> transDcsSub = new List<RawTransactionModel>();
         private readonly List<RawTransactionModel> tranOfExtraSubs = new List<RawTransactionModel>();
@@ -40,6 +42,8 @@
             InitializeComponent();
 
             _transactionService = new RawTransactionService();
+            _dCSSubsTransactionFactory = new DCSSubsTransactionFactory();
+            _extraSubsTransactionFactory = new ExtraSubsTransactionFactory();
         }
 
         protected override void OnStart(string[] args)
@@ -130,21 +134,21 @@
 
         private void ProcessTransaction(IMessage<MessageQueue>message)
         {
-            var tran = _transactionService.TransformRawTransaction(message.Body);
-            var isTransOfExtraSubs = IsTransactionOfExtraSubs(message.Body.Subscriber);
-            if (string.IsNullOrEmpty(tran.LoginName))
+            var transaction = _transactionService.TransformRawTransaction(message.Body);
+            var isTransOfExtraSubs = IsTransactionOfExtraSubs(transaction.SubscriberName);
+            if (string.IsNullOrEmpty(transaction.LoginName))
             {
-                LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(tran));
+                LogService.Error("Test Exeption: Subscribers " + transaction.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(transaction));
             }
             else
             {
                 if (isTransOfExtraSubs)
                 {
-                    HandleAddTransOfExtraSubs(tran);
+                    HandleAddTransOfExtraSubs(transaction);
                 }
                 else
                 {
-                    HandleAddTransOfDCSSubs(tran);
+                    HandleAddTransOfDCSSubs(transaction);
                 }
             }
         }
@@ -190,14 +194,12 @@
 
             if(tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
             {
-                var extraSubsFactory = new ExtraSubsTransactionFactory();
-                extraSubsFactory.HandleTransaction(tranOfExtraSubs);
+                _extraSubsTransactionFactory.HandleTransaction(tranOfExtraSubs);
             }
 
             if (!taskExtraSubList.Any())
             {
-                var extraSubsFactory = new ExtraSubsTransactionFactory();
-                extraSubsFactory.HandleDelayTask(tranOfExtraSubs, taskExtraSubList, cancellationTokenSourceExtraSub);
+                _extraSubsTransactionFactory.HandleDelayTask(tranOfExtraSubs, taskExtraSubList, cancellationTokenSourceExtraSub);
             }
         }
 
@@ -207,14 +209,12 @@
 
             if(transDcsSub.Count >= AppSettings.TransBatch){
                 PushTransactionToMonitor(transDcsSub);
-                var dcsSubsFactory = new DCSSubsTransactionFactory();
-                dcsSubsFactory.HandleTransaction(transDcsSub);
+                _dCSSubsTransactionFactory.HandleTransaction(transDcsSub);
             }
 
             if (!taskDcsSubList.Any())
             {
-                var dcsSubsFactory = new DCSSubsTransactionFactory();
-                dcsSubsFactory.HandleDelayTask(transDcsSub, taskDcsSubList, cancellationTokenSourceDcsSub);
+                _dCSSubsTransactionFactory.HandleDelayTask(transDcsSub, taskDcsSubList, cancellationTokenSourceDcsSub);
             }
         }
 
