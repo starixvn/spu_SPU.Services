@@ -27,7 +27,6 @@
 
         protected override void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
         {
-            LogService.Info("start DelayTaskAddTransactionExtraSubs at: " + DateTime.Now);
             var delayTime = AppSettings.Interval * 60 * 1000;
             var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
             {
@@ -50,7 +49,6 @@
                 InsertTransaction(transactions);
             }
             tasks.Clear();
-            LogService.Info("end TriggerTaskAddTransactionExtraSubs at: " + DateTime.Now);
         }
     }
 }
