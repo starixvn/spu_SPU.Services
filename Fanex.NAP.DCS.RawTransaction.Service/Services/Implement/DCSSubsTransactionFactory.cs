@@ -2,13 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Fanex.Logging;
-    using Fanex.Logging.Extensions.Database;
-    using Fanex.Logging.Extensions;
     using Fanex.NAP.DCS.Model;
     using Fanex.NAP.DCS.RawTransaction.Service.Services.Interface;
     using Fanex.NAP.SPU.Core;
@@ -24,18 +21,9 @@
 
         protected override void InsertTransaction(List<RawTransactionModel> transactions)
         {
-            try
-            {
-                _capturingDataService.InsertTransaction(transactions, false);
-            }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);
-            }
+            TransformTransactionByIps(transactions);
+            _capturingDataService.InsertTransaction(transactions, false);
+            transactions.Clear();
         }
 
         protected override void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
@@ -60,16 +48,12 @@
             }
         }
 
-
-        protected override int GetBatchThreshold() => AppSettings.TransBatch;
-
         private void ProcessDelayedTask(List<RawTransactionModel> transactions, List<Task> tasks)
         {
             if (transactions.Any())
             {
                 InsertTransaction(transactions);
             }
-            transactions.Clear();
             tasks.Clear();
             LogService.Info("end TriggerTaskAddTransactionDcsSub at: " + DateTime.Now);
         }

@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Fanex.Logging.Extensions.Database;
-using Fanex.Logging.Extensions;
-using Fanex.NAP.DCS.Model;
-using Fanex.NAP.DCS.RawTransaction.Service.Services.Interface;
-using Fanex.Logging;
-using Fanex.NAP.SPU.Core;
-using Fanex.NAP.DCS.Core;
-using System.Threading;
-
-namespace Fanex.NAP.DCS.RawTransaction.Service.Services.Implement
+﻿namespace Fanex.NAP.DCS.RawTransaction.Service.Services.Implement
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using Fanex.NAP.DCS.Model;
+    using Fanex.NAP.DCS.RawTransaction.Service.Services.Interface;
+    using Fanex.Logging;
+    using Fanex.NAP.SPU.Core;
+    using System.Threading;
+
     public class ExtraSubsTransactionFactory : AbstractFactoryTransaction
     {
         private readonly ICapturingDataService _capturingDataService;
@@ -24,43 +20,28 @@ namespace Fanex.NAP.DCS.RawTransaction.Service.Services.Implement
         }
         protected override void InsertTransaction(List<RawTransactionModel> transactions)
         {
-            try
-            {
-                _capturingDataService.InsertTransaction(transactions, true);
-            }
-            catch (Exception ex)
-            {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);
-            }
+            TransformTransactionByIps(transactions);
+            _capturingDataService.InsertTransaction(transactions, true);
+            transactions.Clear();
         }
 
         protected override void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
         {
-
-            if (!tasks.Any())
+            LogService.Info("start DelayTaskAddTransactionExtraSubs at: " + DateTime.Now);
+            var delayTime = AppSettings.Interval * 60 * 1000;
+            var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
             {
-                LogService.Info("start DelayTaskAddTransactionExtraSubs at: " + DateTime.Now);
-                var delayTime = AppSettings.Interval * 60 * 1000;
-                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
+                try
                 {
-                    try
-                    {
-                        ProcessDelayedTask(transactions, tasks);
-                    }
-                    catch (OperationCanceledException)
-                    {
-                        LogService.Info("Task of add transaction extra sub list was canceled.");
-                    }
-                }, tokenSource.Token);
-                tasks.Add(taskDelay);
-            }
+                    ProcessDelayedTask(transactions, tasks);
+                }
+                catch (OperationCanceledException)
+                {
+                    LogService.Info("Task of add transaction extra sub list was canceled.");
+                }
+            }, tokenSource.Token);
+            tasks.Add(taskDelay);
         }
-
-        protected override int GetBatchThreshold() => AppSettings.TransOfExtraSubsBatch;
 
         private void ProcessDelayedTask(List<RawTransactionModel> transactions, List<Task> tasks)
         {
@@ -68,7 +49,6 @@ namespace Fanex.NAP.DCS.RawTransaction.Service.Services.Implement
             {
                 InsertTransaction(transactions);
             }
-            transactions.Clear();
             tasks.Clear();
             LogService.Info("end TriggerTaskAddTransactionExtraSubs at: " + DateTime.Now);
         }

@@ -64,13 +64,15 @@
 
             var ipConverted = message.IP.Ip2Long();
 
+
+
             var result = new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
                 InvalidDevice = string.IsNullOrWhiteSpace(invalidDevice) ? null : invalidDevice,
                 TransStatus = Core.Utilities.ConvertBitArray2Int(transBit),
                 LoginName = message.Account,
-                SubscriberName = message.Subscriber,
+                SubscriberName = GetSubscriber(message.Subscriber),
                 SubscriberId = message.SubscriberId,
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
@@ -242,6 +244,22 @@
             }
 
             return string.Empty;
+        }
+
+        private string GetSubscriber(string subscriber)
+        {
+            var extraSubs = AppSettings.ExtraSubs;
+            var extraSubsTest = AppSettings.ExtraSubsTest;
+            var isMatchingSubscriberTest = !string.IsNullOrEmpty(extraSubsTest) && subscriber == extraSubsTest;
+
+            if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs) && isMatchingSubscriberTest)
+            {
+                var random = new Random();
+                var subIndex = random.Next(0, extraSubsTest.Length);
+                return extraSubs.Split(';')[subIndex];
+            }
+
+            return subscriber;
         }
     }
 }

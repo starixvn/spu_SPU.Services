@@ -24,7 +24,6 @@
     {
         private EasyNetQConnector _rabbitMQConsume;
         private EasyNetQConnector _rabbitMQMonitor;
-        private readonly ICapturingDataService _capturingDataService;
         private readonly IRawTransactionService _transactionService;
 
         private readonly List<RawTransactionModel> transDcsSub = new List<RawTransactionModel>();
@@ -40,7 +39,6 @@
         {
             InitializeComponent();
 
-            _capturingDataService = new CapturingDataService();
             _transactionService = new RawTransactionService();
         }
 
@@ -56,10 +54,7 @@
             }
             catch (Exception ex)
             {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);
+                LogException(ex);
             }
         }
 
@@ -123,33 +118,34 @@
                 {
                     try
                     {
-                        var messageBody = message.Body;
-                        var isTransOfExtraSubs = IsTransactionOfExtraSubs(messageBody);
-                        var tran = _transactionService.TransformRawTransaction(messageBody);
-
-                        if (string.IsNullOrEmpty(tran.LoginName))
-                        {
-                            LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(tran));
-                        }
-                        else
-                        {
-                            if (isTransOfExtraSubs)
-                            {
-                                HandleAddTransOfExtraSubs(tran);
-                            }
-                            else
-                            {
-                                HandleAddTransOfDCSSubs(tran);
-                            }
-                        }
+                        ProcessTransaction(message);
                     }
                     catch (Exception ex)
                     {
-                        var logMessage = new LogMessage(ex.Message)
-                            .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-                        LogService.Error(logMessage);
+                        LogException(ex);
                     }
                 }));
+            }
+        }
+
+        private void ProcessTransaction(IMessage<MessageQueue>message)
+        {
+            var tran = _transactionService.TransformRawTransaction(message.Body);
+            var isTransOfExtraSubs = IsTransactionOfExtraSubs(message.Body.Subscriber);
+            if (string.IsNullOrEmpty(tran.LoginName))
+            {
+                LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(tran));
+            }
+            else
+            {
+                if (isTransOfExtraSubs)
+                {
+                    HandleAddTransOfExtraSubs(tran);
+                }
+                else
+                {
+                    HandleAddTransOfDCSSubs(tran);
+                }
             }
         }
 
@@ -160,26 +156,16 @@
                         ConfigurationManager.AppSettings["Queue-Consume"] == "1";
         }
 
-        private bool IsTransactionOfExtraSubs(MessageQueue messageBody)
+        private bool IsTransactionOfExtraSubs(string subscriber)
         {
             var extraSubs = AppSettings.ExtraSubs;
-            var extraSubsTest = AppSettings.ExtraSubsTest;
-            var ignoreSubs = AppSettings.IgnoreSubs;
-
             if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
 
             {
-                if (!string.IsNullOrEmpty(extraSubsTest) && messageBody.Subscriber == extraSubsTest)
+                return extraSubs.Split(';').Any(x => x.Equals(subscriber, StringComparison.CurrentCultureIgnoreCase));
             if(!string.IsNullOrWhiteSpace(message?.BotD))          
             {          
 
-                {
-                    var random = new Random();
-                    var subIndex = random.Next(0, extraSubsTest.Length);
-                    messageBody.Subscriber = extraSubs.Split(';')[subIndex];
-                }
-
-                return extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
             }
 
             return false;
@@ -201,19 +187,35 @@
         private void HandleAddTransOfExtraSubs(RawTransactionModel tran)
         {
             tranOfExtraSubs.Add(tran);
-            _transactionService.TransformTransactionByIps(tranOfExtraSubs);
-            var extraSubsFactory = new ExtraSubsTransactionFactory();
-            extraSubsFactory.HandleTransaction(tranOfExtraSubs, taskExtraSubList, cancellationTokenSourceExtraSub);
+
+            if(tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
+            {
+                var extraSubsFactory = new ExtraSubsTransactionFactory();
+                extraSubsFactory.HandleTransaction(tranOfExtraSubs);
+            }
+
+            if (!taskExtraSubList.Any())
+            {
+                var extraSubsFactory = new ExtraSubsTransactionFactory();
+                extraSubsFactory.HandleDelayTask(tranOfExtraSubs, taskExtraSubList, cancellationTokenSourceExtraSub);
+            }
         }
 
         private void HandleAddTransOfDCSSubs(RawTransactionModel tran)
         {
             transDcsSub.Add(tran);
+
             if(transDcsSub.Count >= AppSettings.TransBatch){
                 PushTransactionToMonitor(transDcsSub);
+                var dcsSubsFactory = new DCSSubsTransactionFactory();
+                dcsSubsFactory.HandleTransaction(transDcsSub);
             }
-            var dcsSubsFactory = new DCSSubsTransactionFactory();
-            dcsSubsFactory.HandleTransaction(transDcsSub, taskDcsSubList, cancellationTokenSourceDcsSub);
+
+            if (!taskDcsSubList.Any())
+            {
+                var dcsSubsFactory = new DCSSubsTransactionFactory();
+                dcsSubsFactory.HandleDelayTask(transDcsSub, taskDcsSubList, cancellationTokenSourceDcsSub);
+            }
         }
 
         private void PushTransactionToMonitor(List<RawTransactionModel> trans)
@@ -239,6 +241,12 @@
                     });
                 }
             }
-        }    
+        }
+        private void LogException(Exception ex)
+        {
+            var logMessage = new LogMessage(ex.Message)
+                .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+            LogService.Error(logMessage);
+        }
     }
 }
