@@ -9,7 +9,6 @@
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
     using Newtonsoft.Json;
-    using Renci.SshNet.Messages;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
@@ -132,7 +131,7 @@
             }
         }
 
-        private void ProcessTransaction(IMessage<MessageQueue>message)
+        private void ProcessTransaction(IMessage<MessageQueue> message)
         {
             var transaction = _transactionService.TransformRawTransaction(message.Body);
             var isTransOfExtraSubs = IsTransactionOfExtraSubs(transaction.SubscriberName);
@@ -164,35 +163,18 @@
         {
             var extraSubs = AppSettings.ExtraSubs;
             if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
-
             {
                 return extraSubs.Split(';').Any(x => x.Equals(subscriber, StringComparison.CurrentCultureIgnoreCase));
-            if(!string.IsNullOrWhiteSpace(message?.BotD))          
-            {          
-
             }
 
             return false;
         }
-        
-        private BotD TransformBotd(string encodedBotD)
-        {
-            var botD = Fanex.DI.Core.Encoders.Base64.Decode(encodedBotD);
 
-            if(!string.IsNullOrEmpty(botD))
-            {
-                return JsonConvert.DeserializeObject<BotD>(botD);
-            }
-
-            return new BotD();
-        }
-
-                FakeIP = message.FakeIP?.Trim(),
         private void HandleAddTransOfExtraSubs(RawTransactionModel tran)
         {
             tranOfExtraSubs.Add(tran);
 
-            if(tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
+            if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
             {
                 _extraSubsTransactionFactory.HandleTransaction(tranOfExtraSubs);
             }
@@ -207,7 +189,8 @@
         {
             transDcsSub.Add(tran);
 
-            if(transDcsSub.Count >= AppSettings.TransBatch){
+            if (transDcsSub.Count >= AppSettings.TransBatch)
+            {
                 PushTransactionToMonitor(transDcsSub);
                 _dCSSubsTransactionFactory.HandleTransaction(transDcsSub);
             }

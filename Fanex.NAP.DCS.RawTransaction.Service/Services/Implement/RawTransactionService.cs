@@ -34,7 +34,10 @@
             var url = Utilities.GetURLFromDeviceCode(message.Device);
             var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
             var transBit = new BitArray(16);
-
+            if(!string.IsNullOrWhiteSpace(message?.BotD))
+            {
+                deviceInfo.BotD = TransformBotd(message.BotD);
+            }
             var flaggedCode = deviceInfo.BotD?.Result?.Bot == true ? deviceInfo.BotD.Result.BotKind : string.Empty;
             if (string.IsNullOrEmpty(flaggedCode))
             {
@@ -64,8 +67,6 @@
 
             var ipConverted = message.IP.Ip2Long();
 
-
-
             var result = new RawTransactionModel
             {
                 DeviceCode = deviceInfo.DeviceNo,
@@ -77,6 +78,7 @@
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
                 IP = message.IP,
                 IPId = ipConverted.IpNumber,
+                FakeIP = message.FakeIP,
                 IsIPV6 = ipConverted.IsIpV6,
                 PluginID = 0,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
@@ -135,6 +137,18 @@
                     LogService.Info(JsonConvert.SerializeObject(message));
                 }
             }
+        }
+
+        private BotD TransformBotd(string encodedBotD)
+        {
+            var botD = Fanex.DI.Core.Encoders.Base64.Decode(encodedBotD);
+
+            if (!string.IsNullOrEmpty(botD))
+            {
+                return JsonConvert.DeserializeObject<BotD>(botD);
+            }
+
+            return new BotD();
         }
 
         private static Flagged Browserless(string userAgent, string deviceNo)
