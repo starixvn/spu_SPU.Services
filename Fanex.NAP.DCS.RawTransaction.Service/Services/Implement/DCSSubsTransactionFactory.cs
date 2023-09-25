@@ -13,6 +13,8 @@
     public class DCSSubsTransactionFactory : AbstractFactoryTransaction
     {
         private readonly ICapturingDataService _capturingDataService;
+        private Task taskDcsSub = null;
+        private readonly CancellationTokenSource tokenSourceDcsSub = new CancellationTokenSource();
 
         public DCSSubsTransactionFactory()
         {
@@ -23,34 +25,39 @@
         {
             TransformTransactionByIps(transactions);
             _capturingDataService.InsertTransaction(transactions, false);
-            transactions.Clear();
         }
 
-        protected override void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
+        protected override void DelayTask(List<RawTransactionModel> transactions)
         {
-            var delayTime = AppSettings.Interval * 60 * 1000;
-            var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
+            if(taskDcsSub == null)
             {
-                try
+                var delayTime = AppSettings.Interval * 60 * 1000;
+                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
                 {
-                    ProcessDelayedTask(transactions, tasks);
-                }
-                catch (OperationCanceledException)
-                {
-                    LogService.Info("Task of add transaction dcs sub list was canceled.");
-                }
-            }, tokenSource.Token);
+                    try
+                    {
+                        ProcessDelayedTask(transactions);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        LogService.Info("Task of add transaction dcs sub list was canceled.");
+                    }
+                }, tokenSourceDcsSub.Token);
 
-            tasks.Add(taskDelay);
+                taskDcsSub = taskDelay;
+            }
         }
 
-        private void ProcessDelayedTask(List<RawTransactionModel> transactions, List<Task> tasks)
+        private void ProcessDelayedTask(List<RawTransactionModel> transactions)
         {
             if (transactions.Any())
             {
                 InsertTransaction(transactions);
             }
-            tasks.Clear();
+            taskDcsSub = null;
+            transactions.Clear();
         }
+
+        protected override int GetBatchThreshold() => AppSettings.TransBatch;
     }
 }

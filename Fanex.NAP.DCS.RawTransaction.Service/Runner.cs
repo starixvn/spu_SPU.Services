@@ -8,14 +8,11 @@
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
     using System.ServiceProcess;
-    using System.Threading.Tasks;
-    using System.Threading;
     using Fanex.NAP.DCS.RawTransaction.Service.Services.Implement;
     using Fanex.NAP.DCS.RawTransaction.Service.Services.Interface;
 
@@ -29,12 +26,6 @@
 
         private readonly List<RawTransactionModel> transDcsSub = new List<RawTransactionModel>();
         private readonly List<RawTransactionModel> tranOfExtraSubs = new List<RawTransactionModel>();
-
-        private readonly List<Task> taskDcsSubList = new List<Task>();
-        private readonly List<Task> taskExtraSubList = new List<Task>();
-
-        private readonly CancellationTokenSource cancellationTokenSourceDcsSub = new CancellationTokenSource();
-        private readonly CancellationTokenSource cancellationTokenSourceExtraSub = new CancellationTokenSource();
 
         public Runner()
         {
@@ -135,20 +126,16 @@
         {
             var transaction = _transactionService.TransformRawTransaction(message.Body);
             var isTransOfExtraSubs = IsTransactionOfExtraSubs(transaction.SubscriberName);
-            if (string.IsNullOrEmpty(transaction.LoginName))
+            if (isTransOfExtraSubs)
             {
-                LogService.Error("Test Exeption: Subscribers " + transaction.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(transaction));
+                LogService.Info("isTransOfExtraSubs" + transaction.LoginName);
+
+                HandleAddTransOfExtraSubs(transaction);
             }
             else
             {
-                if (isTransOfExtraSubs)
-                {
-                    HandleAddTransOfExtraSubs(transaction);
-                }
-                else
-                {
-                    HandleAddTransOfDCSSubs(transaction);
-                }
+                LogService.Info("isTransOfDCSSubs" + transaction.LoginName);
+                HandleAddTransOfDCSSubs(transaction);
             }
         }
 
@@ -173,31 +160,17 @@
         private void HandleAddTransOfExtraSubs(RawTransactionModel tran)
         {
             tranOfExtraSubs.Add(tran);
-
-            if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
-            {
-                _extraSubsTransactionFactory.HandleTransaction(tranOfExtraSubs);
-            }
-
-            if (!taskExtraSubList.Any())
-            {
-                _extraSubsTransactionFactory.HandleDelayTask(tranOfExtraSubs, taskExtraSubList, cancellationTokenSourceExtraSub);
-            }
+            _extraSubsTransactionFactory.HandleTransaction(tranOfExtraSubs);
         }
 
         private void HandleAddTransOfDCSSubs(RawTransactionModel tran)
         {
             transDcsSub.Add(tran);
-
+            _dCSSubsTransactionFactory.HandleTransaction(transDcsSub);
             if (transDcsSub.Count >= AppSettings.TransBatch)
             {
                 PushTransactionToMonitor(transDcsSub);
-                _dCSSubsTransactionFactory.HandleTransaction(transDcsSub);
-            }
-
-            if (!taskDcsSubList.Any())
-            {
-                _dCSSubsTransactionFactory.HandleDelayTask(transDcsSub, taskDcsSubList, cancellationTokenSourceDcsSub);
+                transDcsSub.Clear();
             }
         }
 

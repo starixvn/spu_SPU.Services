@@ -13,6 +13,8 @@
     public class ExtraSubsTransactionFactory : AbstractFactoryTransaction
     {
         private readonly ICapturingDataService _capturingDataService;
+        private Task taskExtraSub = null;
+        private readonly CancellationTokenSource tokenSourceExtraSub = new CancellationTokenSource();
 
         public ExtraSubsTransactionFactory()
         {
@@ -25,30 +27,36 @@
             transactions.Clear();
         }
 
-        protected override void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
+        protected override void DelayTask(List<RawTransactionModel> transactions)
         {
-            var delayTime = AppSettings.Interval * 60 * 1000;
-            var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
+            if(taskExtraSub == null)
             {
-                try
+                var delayTime = AppSettings.Interval * 60 * 1000;
+                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
                 {
-                    ProcessDelayedTask(transactions, tasks);
-                }
-                catch (OperationCanceledException)
-                {
-                    LogService.Info("Task of add transaction extra sub list was canceled.");
-                }
-            }, tokenSource.Token);
-            tasks.Add(taskDelay);
+                    try
+                    {
+                        ProcessDelayedTask(transactions);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        LogService.Info("Task of add transaction extra sub list was canceled.");
+                    }
+                }, tokenSourceExtraSub.Token);
+
+                taskExtraSub = taskDelay;
+            }
         }
 
-        private void ProcessDelayedTask(List<RawTransactionModel> transactions, List<Task> tasks)
+        private void ProcessDelayedTask(List<RawTransactionModel> transactions)
         {
             if (transactions.Any())
             {
                 InsertTransaction(transactions);
             }
-            tasks.Clear();
+            taskExtraSub = null;
         }
+
+        protected override int GetBatchThreshold() => AppSettings.TransOfExtraSubsBatch;
     }
 }

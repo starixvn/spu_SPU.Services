@@ -1,14 +1,13 @@
 ﻿namespace Fanex.NAP.DCS.RawTransaction.Service.Services.Interface
 {
     using System.Collections.Generic;
-    using System.Threading.Tasks;
-    using System.Threading;
     using Fanex.NAP.DCS.Model;
     using Fanex.NAP.DCS.RawTransaction.Service.Services.Implement;
     using Fanex.Logging.Extensions.Database;
     using Fanex.Logging.Extensions;
     using System;
     using Fanex.Logging;
+    using System.Threading.Tasks;
 
     public abstract class AbstractFactoryTransaction
     {
@@ -22,7 +21,14 @@
         {
             try
             {
-                InsertTransaction(transactions);
+                if (transactions.Count >= GetBatchThreshold())
+                {
+                    InsertTransaction(transactions);
+                }
+                else
+                {
+                    DelayTask(transactions);
+                }
             }
             catch (Exception ex)
             {
@@ -33,13 +39,11 @@
                 LogService.Error(logMessage);
             }
         }
-        public void HandleDelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource)
-        {
-            DelayTask(transactions, tasks, tokenSource);
-        }
+
         protected abstract void InsertTransaction(List<RawTransactionModel> transactions);
        
-        protected abstract void DelayTask(List<RawTransactionModel> transactions, List<Task> tasks, CancellationTokenSource tokenSource);
+        protected abstract void DelayTask(List<RawTransactionModel> transactions);
+        protected abstract int GetBatchThreshold();
 
         protected void TransformTransactionByIps(List<RawTransactionModel> transactions)
         {
