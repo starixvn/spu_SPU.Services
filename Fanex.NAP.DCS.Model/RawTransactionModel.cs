@@ -29,6 +29,8 @@ namespace Fanex.NAP.DCS.Model
                 
         public string IP { get; set; }
 
+        public string FakeIP { get; set; }
+
         [FieldConverter(typeof(ConvertBigInteger))]
         public BigInteger IPId { get; set; }
 
