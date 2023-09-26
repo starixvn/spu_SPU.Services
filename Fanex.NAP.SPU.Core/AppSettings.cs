@@ -290,7 +290,7 @@ namespace Fanex.NAP.SPU.Core
 
         public static string SiteId => ConfigurationManager.AppSettings["SiteId"];
 
-        public static int Interval => Convert.ToInt32(ConfigurationManager.AppSettings["Interval"]);
+        public static double Interval => Convert.ToDouble(ConfigurationManager.AppSettings["Interval"]);
 
         public static int TransBatch => Convert.ToInt32(ConfigurationManager.AppSettings["Trans-Batch"]);
 
