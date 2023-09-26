@@ -32,7 +32,7 @@
             if(taskExtraSub == null)
             {
                 var delayTime = AppSettings.Interval * 60 * 1000;
-                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
+                taskExtraSub = Task.Delay((int)delayTime).ContinueWith((task) =>
                 {
                     try
                     {
@@ -43,8 +43,6 @@
                         LogService.Info("Task of add transaction extra sub list was canceled.");
                     }
                 }, tokenSourceExtraSub.Token);
-
-                taskExtraSub = taskDelay;
             }
         }
 

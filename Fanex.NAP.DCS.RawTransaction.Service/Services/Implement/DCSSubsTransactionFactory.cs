@@ -32,7 +32,7 @@
             if(taskDcsSub == null)
             {
                 var delayTime = AppSettings.Interval * 60 * 1000;
-                var taskDelay = Task.Delay((int)delayTime).ContinueWith((task) =>
+                taskDcsSub = Task.Delay((int)delayTime).ContinueWith((task) =>
                 {
                     try
                     {
@@ -43,8 +43,6 @@
                         LogService.Info("Task of add transaction dcs sub list was canceled.");
                     }
                 }, tokenSourceDcsSub.Token);
-
-                taskDcsSub = taskDelay;
             }
         }
 
