@@ -65,7 +65,8 @@
                 transBit.Set((int)TransStatus.InvalidLoginName, true);
             }
 
-            var ipConverted = message.IP.Ip2Long();
+            var realIP = message.IP?.Trim();
+            var ipConverted = realIP.Ip2Long();
 
             var result = new RawTransactionModel
             {
@@ -76,9 +77,9 @@
                 SubscriberName = GetSubscriber(message.Subscriber),
                 SubscriberId = message.SubscriberId,
                 TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
-                IP = message.IP,
+                IP = realIP,
                 IPId = ipConverted.IpNumber,
-                FakeIP = message.FakeIP,
+                FakeIP = message.FakeIP?.Trim(),
                 IsIPV6 = ipConverted.IsIpV6,
                 PluginID = 0,
                 URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
