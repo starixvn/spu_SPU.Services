@@ -128,13 +128,10 @@
             var isTransOfExtraSubs = IsTransactionOfExtraSubs(transaction.SubscriberName);
             if (isTransOfExtraSubs)
             {
-                LogService.Info("isTransOfExtraSubs" + transaction.LoginName);
-
                 HandleAddTransOfExtraSubs(transaction);
             }
             else
             {
-                LogService.Info("isTransOfDCSSubs" + transaction.LoginName);
                 HandleAddTransOfDCSSubs(transaction);
             }
         }
