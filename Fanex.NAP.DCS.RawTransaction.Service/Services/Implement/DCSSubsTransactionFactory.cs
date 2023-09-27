@@ -31,8 +31,7 @@
         {
             if(taskDcsSub == null)
             {
-                var delayTime = AppSettings.Interval * 60 * 1000;
-                taskDcsSub = Task.Delay((int)delayTime).ContinueWith((task) =>
+                taskDcsSub = Task.Delay(AppSettings.Interval).ContinueWith((task) =>
                 {
                     try
                     {
