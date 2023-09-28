@@ -116,9 +116,13 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Fanex.NAP.DCS.RawTransaction.Service.exe.LOCAL.Extra.config">
+	<DependentUpon>App.config</DependentUpon>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Include="Fanex.NAP.DCS.RawTransaction.Service.exe.PRO.Extra.config" />
+    <Content Include="Fanex.NAP.DCS.RawTransaction.Service.exe.PRO.Extra.config">
+	<DependentUpon>App.config</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="EasyNetQ">

@@ -72,13 +72,10 @@
 
         private void ConsumeMessageBus()
         {
-            var exchangeName = AppSettings.IsConsumeDCSExtra ? AppSettings.RabbitMQ_DCSExtraExchangeName : AppSettings.RabbitMQ_Exchange;
-            var queueName = AppSettings.IsConsumeDCSExtra ? AppSettings.RabbitMQ_DCSExtraQueueName : AppSettings.RabbitMQ_QueueName;
-
             _rabbitMQConsume = RabbitMQConnector();
             _rabbitMQConsume.CreateBus()
-                    .DeclareExchange(exchangeName)
-                    .DeclareQueue(queueName)
+                    .DeclareExchange(AppSettings.RabbitMQ_Exchange)
+                    .DeclareQueue(AppSettings.RabbitMQ_QueueName)
                     .DeclareRoutingKey(AppSettings.RabbitMQ_RoutingKey)
                     .Bind();
         }
@@ -105,8 +102,7 @@
 
         private void ConsumerTransactions()
         {
-            bool isQueueConsume = IsQueueConsume();
-            if (isQueueConsume)
+            if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
                 _rabbitMQConsume.AdvanceBus.Consume(_rabbitMQConsume.Queue, (Action<IMessage<MessageQueue>, MessageReceivedInfo>)((message, info) =>
                 {
@@ -134,13 +130,6 @@
             {
                 HandleAddTransOfDCSSubs(transaction);
             }
-        }
-
-        private static bool IsQueueConsume()
-        {
-            return AppSettings.IsConsumeDCSExtra ?
-                        ConfigurationManager.AppSettings["DCS-Extra-Queue-Consume"] == "1" :
-                        ConfigurationManager.AppSettings["Queue-Consume"] == "1";
         }
 
         private bool IsTransactionOfExtraSubs(string subscriber)
