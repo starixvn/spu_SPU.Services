@@ -304,7 +304,7 @@ namespace Fanex.NAP.SPU.Core
 
         public static string ExtraSubsTest => ConfigurationManager.AppSettings["Extra-Sub-Test"];
 
-        public static bool IsReadyDbExtra => Convert.ToBoolean(ConfigurationManager.AppSettings["IsReadyDbExtra"]);        
+        public static bool IsReadyDbExtra => Convert.ToBoolean(ConfigurationManager.AppSettings["IsReadyDbExtra"]);
 
         public static string HostPathForDevice => ConfigurationManager.AppSettings["SelfHost-Url-Device"];
 

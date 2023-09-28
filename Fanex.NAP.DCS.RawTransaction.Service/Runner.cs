@@ -3,42 +3,37 @@
     using EasyNetQ;
     using Fanex.Logging;
     using Fanex.Logging.Extensions;
-    using Fanex.Logging.Extensions.Database;
-    using Fanex.NAP.DCS.Core;
     using Fanex.NAP.DCS.Model;
     using Fanex.NAP.DCS.Model.TransactionMonitoring;
     using Fanex.NAP.SPU.Core;
     using Fanex.NAP.SPU.Queue;
     using Fanex.Oneyed.Infrastructure.Models;
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Linq;
-    using Renci.SshNet.Messages;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Configuration;
     using System.Linq;
     using System.ServiceProcess;
-    using System.Text.RegularExpressions;
-    using System.Linq;
-    using System.Timers;
-    using Utilities = Core.Utilities;
+    using Fanex.NAP.DCS.RawTransaction.Service.Services.Implement;
+    using Fanex.NAP.DCS.RawTransaction.Service.Services.Interface;
 
     public partial class Runner : ServiceBase
     {
         private EasyNetQConnector _rabbitMQConsume;
         private EasyNetQConnector _rabbitMQMonitor;
-        private readonly ICapturingDataService _capturingDataService;
-        private readonly List<RawTransactionModel> _transactionList;
+        private readonly IRawTransactionService _transactionService;
+        private readonly DCSSubsTransactionFactory _dCSSubsTransactionFactory;
+        private readonly ExtraSubsTransactionFactory _extraSubsTransactionFactory;
+
+        private readonly List<RawTransactionModel> transDcsSub = new List<RawTransactionModel>();
+        private readonly List<RawTransactionModel> tranOfExtraSubs = new List<RawTransactionModel>();
 
         public Runner()
         {
             InitializeComponent();
 
-            _capturingDataService = new CapturingDataService();
-
-            _transactionList = new List<RawTransactionModel>();
-
+            _transactionService = new RawTransactionService();
+            _dCSSubsTransactionFactory = new DCSSubsTransactionFactory();
+            _extraSubsTransactionFactory = new ExtraSubsTransactionFactory();
         }
 
         protected override void OnStart(string[] args)
@@ -53,22 +48,21 @@
             }
             catch (Exception ex)
             {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                LogService.Error(logMessage);
+                LogException(ex);
             }
         }
 
         protected override void OnStop()
         {
-            _rabbitMQConsume.Disposed();
-            _rabbitMQMonitor.Disposed();
-
-            LogService.Info($"Raw trans service is STOPED at {DateTime.Now}");
+            DisposedRabbitMQConnector();
         }
 
         protected override void OnShutdown()
+        {
+            DisposedRabbitMQConnector();
+        }
+
+        private void DisposedRabbitMQConnector()
         {
             _rabbitMQConsume.Disposed();
             _rabbitMQMonitor.Disposed();
@@ -78,12 +72,7 @@
 
         private void ConsumeMessageBus()
         {
-            _rabbitMQConsume = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
-                                      AppSettings.RabbitMQ_VirtualHost,
-                                      AppSettings.RabbitMQ_PrefetchCount,
-                                      AppSettings.RabbitMQ_UserName,
-                                      AppSettings.RabbitMQ_Password);
-
+            _rabbitMQConsume = RabbitMQConnector();
             _rabbitMQConsume.CreateBus()
                     .DeclareExchange(AppSettings.RabbitMQ_Exchange)
                     .DeclareQueue(AppSettings.RabbitMQ_QueueName)
@@ -93,12 +82,7 @@
 
         private void MonitorMessageBus()
         {
-            _rabbitMQMonitor = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
-                                      AppSettings.RabbitMQ_VirtualHost,
-                                      AppSettings.RabbitMQ_PrefetchCount,
-                                      AppSettings.RabbitMQ_UserName,
-                                      AppSettings.RabbitMQ_Password);
-
+            _rabbitMQMonitor = RabbitMQConnector();
             _rabbitMQMonitor.CreateBus()
                     .DeclareExchange(AppSettings.RabbitMQ_Exchange_Monitor)
                     .DeclareQueue(AppSettings.RabbitMQ_QueueName_Monitor)
@@ -106,134 +90,73 @@
                     .Bind();
         }
 
+        private EasyNetQConnector RabbitMQConnector()
+        {
+            var rabbitMQConnector = new EasyNetQConnector(AppSettings.RabbitMQ_Host + ":" + AppSettings.RabbitMQ_Post,
+                                      AppSettings.RabbitMQ_VirtualHost,
+                                      AppSettings.RabbitMQ_PrefetchCount,
+                                      AppSettings.RabbitMQ_UserName,
+                                      AppSettings.RabbitMQ_Password);
+            return rabbitMQConnector;
+        }
+
         private void ConsumerTransactions()
         {
             if (ConfigurationManager.AppSettings["Queue-Consume"] == "1")
             {
-                var trans = new List<RawTransactionModel>();
-                var tranOfExtraSubs = new List<RawTransactionModel>();
-
-                _rabbitMQConsume.AdvanceBus.Consume<MessageQueue>(_rabbitMQConsume.Queue, (message, info) =>
+                _rabbitMQConsume.AdvanceBus.Consume(_rabbitMQConsume.Queue, (Action<IMessage<MessageQueue>, MessageReceivedInfo>)((message, info) =>
                 {
                     try
                     {
-                        var isTransOfExtraSubs = false;
-                        var isTransOfDCSubs = true;
-
-                        var extraSubs = AppSettings.ExtraSubs;
-                        var extraSubsTest = AppSettings.ExtraSubsTest;
-                        var ignoreSubs = AppSettings.IgnoreSubs;
-
-                        var messageBody = message.Body;
-
-                        if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
-                        {
-                            if (!string.IsNullOrEmpty(extraSubsTest))
-                            {
-                                if (messageBody.Subscriber == extraSubsTest)
-                                {
-                                    var random = new Random();
-                                    var subIndex = random.Next(0, extraSubsTest.Length);
-                                    messageBody.Subscriber = extraSubs.Split(';')[subIndex];
-                                }
-                            }
-
-                            isTransOfExtraSubs = extraSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
-
-                        }
-                        if (!string.IsNullOrWhiteSpace(ignoreSubs))
-                        {
-                            isTransOfDCSubs = !ignoreSubs.Split(';').Any(x => x.Equals(messageBody.Subscriber, StringComparison.CurrentCultureIgnoreCase));
-                        }
-
-                        var tran = TransformRawTransaction(messageBody);
-
-                        if (String.IsNullOrEmpty(tran.LoginName))
-                        {
-                            LogService.Error("Test Exeption: Subscribers " + tran.SubscriberName + " sent account loginName is null. \nTrans info: " + JsonConvert.SerializeObject(tran));
-                        }
-                        else
-                        {
-                            if (isTransOfExtraSubs)
-                            {
-                                tranOfExtraSubs.Add(tran);
-
-                                if (tranOfExtraSubs.Count >= AppSettings.TransOfExtraSubsBatch)
-                                {                                    
-                                    var ipAddressList = tranOfExtraSubs.Where(x => x.IPId != -1 && !x.IsIPV6).Select(x => x.IPId).ToList();
-                                    var ipAddressJoined = string.Join(",", ipAddressList);
-                                    var ipInfoList = _capturingDataService.GetIpInfoList(ipAddressJoined);
-
-                                    if (ipInfoList != null && ipInfoList.Any())
-                                    {
-                                        var newTransOfExtraSubs = tranOfExtraSubs.Select(x =>
-                                        {
-                                            var ipInfo = ipInfoList.FirstOrDefault(y => x.IPId == y.IP);
-
-                                            x.Country = ipInfo?.Country;
-                                            x.CountryCode = ipInfo?.CountryCode;
-                                            x.Region = ipInfo?.Region;
-                                            x.City = ipInfo?.City;
-                                            x.ISP = ipInfo?.ISP;
-                                            x.IPInfoCode = Cipher.Hashing2Int(string.Join(";", ipInfo?.CountryCode, ipInfo?.Region, ipInfo?.City, ipInfo?.ISP));
-
-                                            return x;
-                                        }).ToList();
-
-                                        InsertTransaction(newTransOfExtraSubs, true);
-                                    }
-                                    else
-                                    {
-                                        InsertTransaction(tranOfExtraSubs, true);
-
-
-                                    }
-
-                                    tranOfExtraSubs.Clear();
-                                }
-                            }
-                            else if (isTransOfDCSubs)
-                            {
-                                trans.Add(tran);
-
-                                if (trans.Count >= AppSettings.TransBatch)
-                                {
-                                    InsertTransaction(trans, false);
-
-                                    PushTransactionToMonitor(trans);
-
-                                    trans.Clear();
-                                }
-                            }
-                        }
+                        ProcessTransaction(message);
                     }
                     catch (Exception ex)
                     {
-                        var logMessage = new LogMessage(ex.Message)
-                            .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
-
-                        LogService.Error(logMessage);
-
-                        trans.Clear();
-                        tranOfExtraSubs.Clear();
+                        LogException(ex);
                     }
-                });
+                }));
             }
         }
 
-        private void InsertTransaction(List<RawTransactionModel> trans, bool isTransOfDBExtra)
+        private void ProcessTransaction(IMessage<MessageQueue> message)
         {
-            try
+            var transaction = _transactionService.TransformRawTransaction(message.Body);
+            var isTransOfExtraSubs = IsTransactionOfExtraSubs(transaction.SubscriberName);
+            if (isTransOfExtraSubs)
             {
-                _capturingDataService.InsertTransaction(trans, isTransOfDBExtra);
+                HandleAddTransOfExtraSubs(transaction);
             }
-            catch (Exception ex)
+            else
             {
-                var logMessage = new LogMessage(ex.Message)
-                    .AddSection("Data Info", DatabaseInfoGetters.GetDbExceptionInfo(ex))
-                   .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+                HandleAddTransOfDCSSubs(transaction);
+            }
+        }
 
-                LogService.Error(logMessage);
+        private bool IsTransactionOfExtraSubs(string subscriber)
+        {
+            var extraSubs = AppSettings.ExtraSubs;
+            if (AppSettings.IsReadyDbExtra && !string.IsNullOrWhiteSpace(extraSubs))
+            {
+                return extraSubs.Split(';').Any(x => x.Equals(subscriber, StringComparison.CurrentCultureIgnoreCase));
+            }
+
+            return false;
+        }
+
+        private void HandleAddTransOfExtraSubs(RawTransactionModel tran)
+        {
+            tranOfExtraSubs.Add(tran);
+            _extraSubsTransactionFactory.HandleTransaction(tranOfExtraSubs);
+        }
+
+        private void HandleAddTransOfDCSSubs(RawTransactionModel tran)
+        {
+            transDcsSub.Add(tran);
+            _dCSSubsTransactionFactory.HandleTransaction(transDcsSub);
+            if (transDcsSub.Count >= AppSettings.TransBatch)
+            {
+                PushTransactionToMonitor(transDcsSub);
+                transDcsSub.Clear();
             }
         }
 
@@ -261,212 +184,11 @@
                 }
             }
         }
-
-        private BotD TransformBotd(string encodedBotD)
+        private void LogException(Exception ex)
         {
-            var botD = Fanex.DI.Core.Encoders.Base64.Decode(encodedBotD);
-
-            if(!string.IsNullOrEmpty(botD))
-            {
-                return JsonConvert.DeserializeObject<BotD>(botD);
-            }
-
-            return new BotD();
-        }
-
-        private RawTransactionModel TransformRawTransaction(MessageQueue message)
-        {
-            LogMessage(message);
-            
-            var invalidDevice = string.Empty;
-            var deviceCode = Utilities.GetDeviceCodeFromCapturedData(message.Device);
-            var deviceInfo = _capturingDataService.GetDeviceInfo(deviceCode);
-            var url = Utilities.GetURLFromDeviceCode(message.Device);
-            var userAgent = Utilities.GetUserAgentFromDeviceCode(message.Device);
-            var transBit = new BitArray(16);
-
-            if(!string.IsNullOrWhiteSpace(message?.BotD))
-            {
-                deviceInfo.BotD = TransformBotd(message.BotD);
-            }            
-
-            var flaggedCode = deviceInfo.BotD?.Result?.Bot == true ? deviceInfo.BotD.Result.BotKind : string.Empty;
-            if (string.IsNullOrEmpty(flaggedCode))
-            {
-                var browserless = Browserless(userAgent, deviceInfo.DeviceNo);
-                flaggedCode = browserless.ToString();
-            }
-
-            if (string.IsNullOrWhiteSpace(deviceInfo.DeviceNo) || deviceInfo.DeviceNo == "N/A")
-            {
-                deviceInfo.DeviceNo = null;
-                transBit.Set((int)TransStatus.DeviceCodeIsEmpty, true);
-            }
-            else
-            {
-                if (!Utilities.IsGuidDeviceId(deviceInfo.DeviceNo) || deviceInfo.InvalidDeviceId)
-                {
-                    invalidDevice = deviceCode;
-                    deviceInfo.DeviceNo = null;
-                    transBit.Set((int)TransStatus.InvalidDI, true);
-                }
-            }
-
-            if (ContainsUnicodeCharacter(message.Account))
-            {
-                transBit.Set((int)TransStatus.InvalidLoginName, true);
-            }
-            var realIP = message.IP?.Trim();
-            var ipConverted = realIP.Ip2Long();
-
-            var result = new RawTransactionModel
-            {
-                DeviceCode = deviceInfo.DeviceNo,
-                InvalidDevice = string.IsNullOrWhiteSpace(invalidDevice) ? null : invalidDevice,
-                TransStatus = Core.Utilities.ConvertBitArray2Int(transBit),
-                LoginName = message.Account,
-                SubscriberName = message.Subscriber,
-                SubscriberId = message.SubscriberId,
-                TransTime = Convert.ToDateTime(message.TransDate.ToString("yyyy-MM-dd HH:mm:ss.ffff")),
-                IP = realIP,
-                IPId = ipConverted.IpNumber,
-                FakeIP = message.FakeIP?.Trim(),
-                IsIPV6 = ipConverted.IsIpV6,
-                PluginID = 0,
-                URL = string.IsNullOrWhiteSpace(url) ? ConvertNA2Empty(SubStringUrl(deviceInfo.HRef)) : SubStringUrl(url),
-                Action = message.Action,
-                ActionResult = message.ActionResult,
-                UserAgent = string.IsNullOrWhiteSpace(userAgent) ? ConvertNA2Empty(StripUnicodeCharactersFromString(deviceInfo.UserAgent)) : StripUnicodeCharactersFromString(userAgent),
-                FingerprintCode = deviceInfo.DeviceFPCode != "N/A" ? deviceInfo.DeviceFPCode : null,
-                FingerprintMoreInfo = deviceInfo.DeviceFPCode != "N/A" ? EncodeCapturedData(deviceInfo) : null,
-                TransKey = message.TransKey,
-                FlaggedCode = flaggedCode,
-                BotDetection = GetBotDetectionTrue(deviceInfo),
-                BotComponent = GetBotComponent(deviceInfo, flaggedCode)
-            };
-
-            return result;
-        }
-
-        private string GetBotDetectionTrue(DeviceInfoModel deviceInfo)
-        {
-            try
-            {
-                var detection = deviceInfo.BotD?.Detection;
-                if (!string.IsNullOrEmpty(detection))
-                {
-                    JObject jObject = JObject.Parse(detection);
-                    IEnumerable<string> filteredKeys = jObject.Properties()
-                        .Where(p => p.Value.Value<bool>("bot"))
-                        .Select(p => p.Name);
-
-                    return string.Join(",", filteredKeys);
-                }
-            }
-            catch { }
-
-            return string.Empty;
-        }
-        private string GetBotComponent(DeviceInfoModel deviceInfo, string flaggedCode)
-        {
-            var storeBotComponent = ConfigurationManager.AppSettings["BotD-BotComponent-ForHuman"];
-            if (string.IsNullOrEmpty(storeBotComponent) || storeBotComponent == "0")
-            {
-                if (flaggedCode != Flagged.Human.ToString())
-                {
-                    return deviceInfo.BotD?.Component ?? string.Empty;
-                }
-            }
-            else
-            {
-                return deviceInfo.BotD?.Component ?? string.Empty;
-            }
-
-            return string.Empty;
-        }
-
-        private static Flagged Browserless(string userAgent, string deviceNo)
-        {
-            try
-            {
-                if (!string.IsNullOrWhiteSpace(userAgent) && IsHeadless(userAgent))
-                {
-                    return Flagged.Headless;
-                }
-
-                if (string.IsNullOrWhiteSpace(deviceNo))
-                {
-                    return Flagged.EmptyDevice;
-                }
-
-                if (deviceNo == "N/A" || !Utilities.IsGuidDeviceId(deviceNo))
-                {
-                    return Flagged.InvalidDevice;
-                }
-
-                if (string.IsNullOrWhiteSpace(userAgent))
-                {
-                    return Flagged.EmptyUserAgent;
-                }
-            }
-            catch (Exception ex)
-            {
-                LogService.Error(ex.Message);
-            }
-
-            return Flagged.Human;
-        }
-
-        private static string EncodeCapturedData(DeviceInfoModel deviceInfo)
-        {
-            return Cipher.Encrypt(string.Format("{0}#{1}#{2}#{3}#{4}",
-                deviceInfo.Battery,
-                deviceInfo.CapturedDate,
-                deviceInfo.OSName,
-                deviceInfo.TimeZone,
-                deviceInfo.LocalIps));
-        }
-
-        private static string SubStringUrl(string url)
-        {
-            return url.IndexOf('?') != -1 ? url.Substring(0, url.IndexOf('?')) : url;
-        }
-
-        private static string ConvertNA2Empty(string data)
-        {
-            return data != "N/A" ? data : null;
-        }
-
-        private static bool ContainsUnicodeCharacter(string input)
-        {
-            const int MaxAnsiCode = 255;
-
-            return input.Any(c => c > MaxAnsiCode);
-        }
-
-        private static String StripUnicodeCharactersFromString(string inputValue)
-        {
-            return Regex.Replace(inputValue, @"[^\u0000-\u007F]", String.Empty);
-        }
-
-        private static void LogMessage(MessageQueue message)
-        {
-            if (AppSettings.WriteLog)
-            {
-                var accounts = AppSettings.WriteAccount.Split(new[] { ',', ';' });
-
-                if (accounts.Any(x => x.Equals(message.Account, StringComparison.OrdinalIgnoreCase)) || message.SubscriberId == 0)
-                {
-                    LogService.Info(JsonConvert.SerializeObject(message));
-                }
-            }
-        }
-
-        private static bool IsHeadless(string userAgent)
-        {
-            if (userAgent.Contains("Headless")) return true;
-
-            return false;
+            var logMessage = new LogMessage(ex.Message)
+                .AddSection("Exception Info", CommonInfoGetters.GetExceptionInfo(ex)).ToString();
+            LogService.Error(logMessage);
         }
     }
 }
